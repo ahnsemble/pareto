@@ -1,0 +1,15 @@
+[package]
+name = "tttg_forge_core"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+base64.workspace = true
+rmp-serde.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+fnv.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+approx.workspace = true
