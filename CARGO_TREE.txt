@@ -1,0 +1,124 @@
+tttg_forge_core v0.1.0 (/Users/woosung/Desktop/Dev/Projects/pareto/tttg_forge_core)
+├── base64 v0.22.1
+├── fnv v1.0.7
+├── rmp-serde v1.3.1
+│   ├── rmp v0.8.15
+│   │   └── num-traits v0.2.19
+│   │       [build-dependencies]
+│   │       └── autocfg v1.5.0
+│   └── serde v1.0.228
+│       ├── serde_core v1.0.228
+│       └── serde_derive v1.0.228 (proc-macro)
+│           ├── proc-macro2 v1.0.106
+│           │   └── unicode-ident v1.0.24
+│           ├── quote v1.0.45
+│           │   └── proc-macro2 v1.0.106 (*)
+│           └── syn v2.0.117
+│               ├── proc-macro2 v1.0.106 (*)
+│               ├── quote v1.0.45 (*)
+│               └── unicode-ident v1.0.24
+├── serde v1.0.228 (*)
+├── serde_json v1.0.149
+│   ├── itoa v1.0.18
+│   ├── memchr v2.8.0
+│   ├── serde_core v1.0.228
+│   └── zmij v1.0.21
+└── thiserror v1.0.69
+    └── thiserror-impl v1.0.69 (proc-macro)
+        ├── proc-macro2 v1.0.106 (*)
+        ├── quote v1.0.45 (*)
+        └── syn v2.0.117 (*)
+[dev-dependencies]
+└── approx v0.5.1
+    └── num-traits v0.2.19 (*)
+
+tttg_forge_optimizer v0.1.0 (/Users/woosung/Desktop/Dev/Projects/pareto/tttg_forge_optimizer)
+├── fnv v1.0.7
+├── serde v1.0.228 (*)
+├── serde_json v1.0.149 (*)
+├── thiserror v1.0.69 (*)
+└── tttg_forge_core v0.1.0 (/Users/woosung/Desktop/Dev/Projects/pareto/tttg_forge_core) (*)
+[dev-dependencies]
+├── approx v0.5.1 (*)
+└── criterion v0.5.1
+    ├── anes v0.1.6
+    ├── cast v0.3.0
+    ├── ciborium v0.2.2
+    │   ├── ciborium-io v0.2.2
+    │   ├── ciborium-ll v0.2.2
+    │   │   ├── ciborium-io v0.2.2
+    │   │   └── half v2.7.1
+    │   │       ├── cfg-if v1.0.4
+    │   │       └── zerocopy v0.8.48
+    │   │           └── zerocopy-derive v0.8.48 (proc-macro)
+    │   │               ├── proc-macro2 v1.0.106 (*)
+    │   │               ├── quote v1.0.45 (*)
+    │   │               └── syn v2.0.117 (*)
+    │   └── serde v1.0.228 (*)
+    ├── clap v4.6.1
+    │   └── clap_builder v4.6.0
+    │       ├── anstyle v1.0.14
+    │       └── clap_lex v1.1.0
+    ├── criterion-plot v0.5.0
+    │   ├── cast v0.3.0
+    │   └── itertools v0.10.5
+    │       └── either v1.15.0
+    ├── is-terminal v0.4.17
+    │   └── libc v0.2.186
+    ├── itertools v0.10.5 (*)
+    ├── num-traits v0.2.19 (*)
+    ├── once_cell v1.21.4
+    ├── oorandom v11.1.5
+    ├── plotters v0.3.7
+    │   ├── num-traits v0.2.19 (*)
+    │   ├── plotters-backend v0.3.7
+    │   └── plotters-svg v0.3.7
+    │       └── plotters-backend v0.3.7
+    ├── rayon v1.12.0
+    │   ├── either v1.15.0
+    │   └── rayon-core v1.13.0
+    │       ├── crossbeam-deque v0.8.6
+    │       │   ├── crossbeam-epoch v0.9.18
+    │       │   │   └── crossbeam-utils v0.8.21
+    │       │   └── crossbeam-utils v0.8.21
+    │       └── crossbeam-utils v0.8.21
+    ├── regex v1.12.3
+    │   ├── regex-automata v0.4.14
+    │   │   └── regex-syntax v0.8.10
+    │   └── regex-syntax v0.8.10
+    ├── serde v1.0.228 (*)
+    ├── serde_derive v1.0.228 (proc-macro) (*)
+    ├── serde_json v1.0.149 (*)
+    ├── tinytemplate v1.2.1
+    │   ├── serde v1.0.228 (*)
+    │   └── serde_json v1.0.149 (*)
+    └── walkdir v2.5.0
+        └── same-file v1.0.6
+
+tttg_forge_wasm v0.1.0 (/Users/woosung/Desktop/Dev/Projects/pareto/tttg_forge_wasm)
+├── js-sys v0.3.95
+│   ├── once_cell v1.21.4
+│   └── wasm-bindgen v0.2.118
+│       ├── cfg-if v1.0.4
+│       ├── once_cell v1.21.4
+│       ├── wasm-bindgen-macro v0.2.118 (proc-macro)
+│       │   ├── quote v1.0.45 (*)
+│       │   └── wasm-bindgen-macro-support v0.2.118
+│       │       ├── bumpalo v3.20.2
+│       │       ├── proc-macro2 v1.0.106 (*)
+│       │       ├── quote v1.0.45 (*)
+│       │       ├── syn v2.0.117 (*)
+│       │       └── wasm-bindgen-shared v0.2.118
+│       │           └── unicode-ident v1.0.24
+│       └── wasm-bindgen-shared v0.2.118 (*)
+│       [build-dependencies]
+│       └── rustversion v1.0.22 (proc-macro)
+├── serde v1.0.228 (*)
+├── serde-wasm-bindgen v0.6.5
+│   ├── js-sys v0.3.95 (*)
+│   ├── serde v1.0.228 (*)
+│   └── wasm-bindgen v0.2.118 (*)
+├── serde_json v1.0.149 (*)
+├── tttg_forge_core v0.1.0 (/Users/woosung/Desktop/Dev/Projects/pareto/tttg_forge_core) (*)
+├── tttg_forge_optimizer v0.1.0 (/Users/woosung/Desktop/Dev/Projects/pareto/tttg_forge_optimizer) (*)
+└── wasm-bindgen v0.2.118 (*)
