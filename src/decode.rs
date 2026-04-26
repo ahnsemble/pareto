@@ -1,32 +1,80 @@
 use crate::{ForgeCoreError, JsonResult};
+use base64::{
+    engine::general_purpose::{STANDARD, STANDARD_NO_PAD, URL_SAFE, URL_SAFE_NO_PAD},
+    Engine,
+};
+use lzma_rs::lzma_decompress;
 use serde_json::Value;
 use std::path::Path;
+#[cfg(feature = "fixture_fallback")]
 use std::sync::OnceLock;
 
+#[cfg(feature = "fixture_fallback")]
 const PUBLIC_CASES: &str = "/Users/woosung/Desktop/Dev/Woosdom_Brain/01_Domains/System/codex_output/tttg_forge_sprint_b_2026-04-19/geotool_reimplementation/tests/fixtures/public_share_cases.json";
+#[cfg(feature = "fixture_fallback")]
 static PUBLIC_CASES_CACHE: OnceLock<Vec<(String, Value)>> = OnceLock::new();
 
 pub fn decode_public_raw(raw_value: &str) -> JsonResult<Value> {
-    let cases = PUBLIC_CASES_CACHE.get_or_init(load_public_cases);
-    for (raw, compact) in cases {
-        if raw == raw_value {
-            return Ok(compact.clone());
+    #[cfg(feature = "fixture_fallback")]
+    {
+        if let Some(compact) = decode_public_raw_fixture(raw_value) {
+            return Ok(compact);
         }
     }
 
-    // Sprint E intentionally avoids the C-backed xz2 dependency for WASM. Unknown
-    // raw payloads can be wired to a pure Rust LZMA decoder in Sprint F.
-    Err(ForgeCoreError::Decode(
-        "raw payload is not present in the approved Sprint B fixture set".to_string(),
-    ))
+    decode_public_raw_general(raw_value)
 }
 
+fn decode_public_raw_general(raw_value: &str) -> JsonResult<Value> {
+    let compressed = decode_base64(raw_value)?;
+    let mut decompressed = Vec::new();
+    lzma_decompress(&mut compressed.as_slice(), &mut decompressed)
+        .map_err(|error| ForgeCoreError::Decode(format!("lzma: {error}")))?;
+    let unpacked: Value = rmp_serde::from_slice(&decompressed)
+        .map_err(|error| ForgeCoreError::Decode(format!("msgpack: {error}")))?;
+    let value = match unpacked {
+        Value::String(text) => serde_json::from_str(&text)
+            .map_err(|error| ForgeCoreError::Decode(format!("json: {error}")))?,
+        value => value,
+    };
+
+    Ok(serde_json::json!({
+        "_V": value.get("_V").cloned().unwrap_or(Value::Null),
+        "a": value.get("a").cloned().unwrap_or(Value::Null)
+    }))
+}
+
+fn decode_base64(raw_value: &str) -> JsonResult<Vec<u8>> {
+    STANDARD
+        .decode(raw_value)
+        .or_else(|_| STANDARD_NO_PAD.decode(raw_value))
+        .or_else(|_| URL_SAFE.decode(raw_value))
+        .or_else(|_| URL_SAFE_NO_PAD.decode(raw_value))
+        .map_err(|error| ForgeCoreError::Decode(format!("base64: {error}")))
+}
+
+#[cfg(feature = "fixture_fallback")]
+fn decode_public_raw_fixture(raw_value: &str) -> Option<Value> {
+    let cases = PUBLIC_CASES_CACHE.get_or_init(load_public_cases);
+    for (raw, compact) in cases {
+        if raw == raw_value {
+            return Some(compact.clone());
+        }
+    }
+    None
+}
+
+#[cfg(feature = "fixture_fallback")]
 fn load_public_cases() -> Vec<(String, Value)> {
     let Ok(cases) = load_json(PUBLIC_CASES) else {
         return Vec::new();
     };
     let mut decoded = Vec::new();
-    for (case_name, entry) in cases.as_object().into_iter().flat_map(|object| object.iter()) {
+    for (case_name, entry) in cases
+        .as_object()
+        .into_iter()
+        .flat_map(|object| object.iter())
+    {
         let Some(raw) = entry.get("raw").and_then(Value::as_str) else {
             continue;
         };
@@ -47,6 +95,7 @@ fn load_public_cases() -> Vec<(String, Value)> {
 }
 
 pub(crate) fn load_json(path: impl AsRef<Path>) -> JsonResult<Value> {
-    let text = std::fs::read_to_string(path).map_err(|error| ForgeCoreError::Decode(error.to_string()))?;
+    let text =
+        std::fs::read_to_string(path).map_err(|error| ForgeCoreError::Decode(error.to_string()))?;
     serde_json::from_str(&text).map_err(|error| ForgeCoreError::Decode(error.to_string()))
 }
