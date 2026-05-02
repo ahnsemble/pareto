@@ -1,0 +1,17 @@
+{
+  "case": "expand_compact_beta",
+  "operation": "expand",
+  "data": {
+    "cases": {
+      "beta": {
+        "compact": {"id": "beta", "tier": 2},
+        "expanded": {"id": "beta", "tier": 2, "slots": [{"name": "weapon"}]},
+        "sanitized": {"id": "beta", "tier": 2, "slots": [{"name": "weapon"}]},
+        "stats": {"score": 25.0, "damageFactor": 5.0}
+      }
+    }
+  },
+  "input": {"id": "beta", "tier": 2},
+  "strict": true,
+  "expected": {"id": "beta", "tier": 2, "slots": [{"name": "weapon"}]}
+}

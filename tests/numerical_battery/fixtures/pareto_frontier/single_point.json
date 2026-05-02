@@ -1,0 +1,7 @@
+{
+  "case": "single_point",
+  "candidates": [
+    {"label": "solo", "score": 100.0, "damage": 10.0}
+  ],
+  "expected_frontier": [0]
+}

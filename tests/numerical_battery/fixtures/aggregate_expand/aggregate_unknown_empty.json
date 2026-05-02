@@ -1,0 +1,7 @@
+{
+  "case": "aggregate_unknown_empty",
+  "operation": "aggregate",
+  "data": {"cases": {}},
+  "input": {"id": "unknown"},
+  "expected": {}
+}

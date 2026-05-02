@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #00e5ff;
+  --color-primary-strong: #00b3cc;
+  --color-secondary: #ff7847;
+  --color-accent: #c8ff5a;
+  --color-bg: #0a0d12;
+  --color-surface: #131820;
+  --color-surface-elev: #1c2330;
+  --color-text: #ededed;
+  --color-text-muted: #8b95a5;
+  --color-border: #2a3340;
+  --color-danger: #ff4d6d;
+
+  --font-sans: var(--font-geist-sans), Inter, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), "JetBrains Mono", ui-monospace, monospace;
+
+  --spacing-unit: 0.25rem;
+  --radius-none: 0;
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+
+  --color-focus-ring: var(--color-primary);
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+
+  --shadow-none: none;
+  --shadow-sm: 0 1px 0 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 24px -8px rgba(0, 0, 0, 0.6), 0 4px 8px -4px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 24px 48px -12px rgba(0, 0, 0, 0.7);
+  --shadow-glow-primary: 0 0 0 1px oklch(85.5% 0.131 207.5 / 0.4),
+    0 0 24px -4px oklch(85.5% 0.131 207.5 / 0.45);
+  --shadow-glow-accent: 0 0 0 1px oklch(95.5% 0.219 121 / 0.35),
+    0 0 20px -4px oklch(95.5% 0.219 121 / 0.4);
+  --shadow-glow-danger: 0 0 0 1px oklch(68.7% 0.218 12.5 / 0.5),
+    0 0 20px -4px oklch(68.7% 0.218 12.5 / 0.5);
+
+  --background: var(--color-bg);
+  --foreground: var(--color-text);
+}
+
+@layer base {
+  :where(button, [role="button"], a, input, select, textarea, summary, [role="switch"]):focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+    border-radius: var(--radius-sm);
+  }
+}
+
+@theme inline {
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-text);
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-surface: var(--color-surface);
+  --color-surface-elev: var(--color-surface-elev);
+  --color-muted: var(--color-text-muted);
+  --color-border: var(--color-border);
+  --color-accent: var(--color-accent);
+  --color-danger: var(--color-danger);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --radius-none: var(--radius-none);
+  --radius-xs: var(--radius-xs);
+  --radius-xl: var(--radius-xl);
+  --radius-2xl: var(--radius-2xl);
+  --radius-full: var(--radius-full);
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}

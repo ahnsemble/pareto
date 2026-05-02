@@ -1,0 +1,16 @@
+{
+  "case": "aggregate_expanded_alpha",
+  "operation": "aggregate",
+  "data": {
+    "cases": {
+      "alpha": {
+        "compact": {"id": "alpha"},
+        "expanded": {"id": "alpha", "expanded": true},
+        "sanitized": {"id": "alpha", "expanded": true, "sanitized": true},
+        "stats": {"score": 10.0, "damageFactor": 2.0}
+      }
+    }
+  },
+  "input": {"id": "alpha", "expanded": true},
+  "expected": {"score": 10.0, "damageFactor": 2.0}
+}

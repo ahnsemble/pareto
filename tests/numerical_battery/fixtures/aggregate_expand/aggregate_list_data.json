@@ -1,0 +1,13 @@
+{
+  "case": "aggregate_list_data",
+  "operation": "aggregate",
+  "data": [
+    {
+      "compact": {"id": "list-case"},
+      "expanded": {"id": "list-case", "fromList": true},
+      "stats": {"score": 7.0, "damageFactor": 1.5}
+    }
+  ],
+  "input": {"id": "list-case", "fromList": true},
+  "expected": {"score": 7.0, "damageFactor": 1.5}
+}

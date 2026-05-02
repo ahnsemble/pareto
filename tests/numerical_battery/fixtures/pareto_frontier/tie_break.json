@@ -1,0 +1,8 @@
+{
+  "case": "tie_break",
+  "candidates": [
+    {"label": "A", "score": 100.0, "damage": 10.0},
+    {"label": "B", "score": 100.0, "damage": 10.0}
+  ],
+  "expected_frontier": [0, 1]
+}

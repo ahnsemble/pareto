@@ -1,0 +1,14 @@
+{
+  "case": "expand_list_data",
+  "operation": "expand",
+  "data": [
+    {
+      "compact": {"id": "list-case"},
+      "expanded": {"id": "list-case", "fromList": true},
+      "stats": {"score": 7.0, "damageFactor": 1.5}
+    }
+  ],
+  "input": {"id": "list-case"},
+  "strict": true,
+  "expected": {"id": "list-case", "fromList": true}
+}

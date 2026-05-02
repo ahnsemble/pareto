@@ -1,0 +1,7 @@
+{
+  "case": "aggregate_inline_stats",
+  "operation": "aggregate",
+  "data": {"cases": {}},
+  "input": {"stats": {"score": 5.5, "damageFactor": 1.25, "bad": "ignored"}},
+  "expected": {"score": 5.5, "damageFactor": 1.25, "bad": 0.0}
+}

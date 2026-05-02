@@ -1,0 +1,8 @@
+{
+  "case": "expand_missing_non_strict",
+  "operation": "expand",
+  "data": {"cases": {}},
+  "input": {"id": "missing"},
+  "strict": false,
+  "expected": {"id": "missing"}
+}

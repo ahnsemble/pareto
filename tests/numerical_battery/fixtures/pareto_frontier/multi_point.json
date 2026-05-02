@@ -1,0 +1,11 @@
+{
+  "case": "multi_point",
+  "candidates": [
+    {"label": "balanced", "score": 100.0, "damage": 100.0},
+    {"label": "score-max", "score": 120.0, "damage": 70.0},
+    {"label": "damage-max", "score": 70.0, "damage": 120.0},
+    {"label": "dominated-low", "score": 90.0, "damage": 90.0},
+    {"label": "dominated-score-side", "score": 110.0, "damage": 60.0}
+  ],
+  "expected_frontier": [1, 0, 2]
+}

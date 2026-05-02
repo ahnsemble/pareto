@@ -1,0 +1,13 @@
+{
+  "case": "aggregate_stat_parts",
+  "operation": "aggregate",
+  "data": {"cases": {}},
+  "input": {
+    "statParts": [
+      {"score": 3.0, "damageFactor": 1.0},
+      {"score": 4.0, "damageFactor": 2.5, "text": "zero"},
+      ["ignored"]
+    ]
+  },
+  "expected": {"score": 7.0, "damageFactor": 3.5, "text": 0.0}
+}

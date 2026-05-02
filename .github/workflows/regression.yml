@@ -1,0 +1,257 @@
+name: Regression Automation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 14 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cargo:
+    name: cargo workspace
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Run cargo tests
+        run: |
+          set -o pipefail
+          mkdir -p artifacts
+          cargo test --workspace --release 2>&1 | tee artifacts/cargo-test.log
+
+      - name: Write cargo summary
+        if: always()
+        run: |
+          {
+            echo "## Cargo Regression"
+            echo
+            echo "- Trigger: \`${{ github.event_name }}\`"
+            echo
+            echo '```text'
+            if [ -f artifacts/cargo-test.log ]; then
+              grep "test result" artifacts/cargo-test.log || tail -n 80 artifacts/cargo-test.log
+            else
+              echo "cargo log was not created"
+            fi
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload cargo artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pareto-cargo-regression
+          path: artifacts/
+          if-no-files-found: warn
+
+  pytest_battery:
+    name: pytest numerical battery
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install wasm-pack
+        uses: taiki-e/install-action@v2
+        with:
+          tool: wasm-pack
+
+      - name: Build WASM package
+        run: wasm-pack build tttg_forge_wasm --target web --release
+
+      - name: Install pytest
+        run: python -m pip install --upgrade pip pytest
+
+      - name: Run numerical battery
+        run: |
+          set -o pipefail
+          mkdir -p artifacts
+          if python - <<'PY'
+          import importlib.util
+          spec = importlib.util.spec_from_file_location(
+              "battery_conftest",
+              "tests/numerical_battery/conftest.py",
+          )
+          module = importlib.util.module_from_spec(spec)
+          assert spec.loader is not None
+          spec.loader.exec_module(module)
+          raise SystemExit(0 if module.PYTHON_REFERENCE_ROOT.exists() else 1)
+          PY
+          then
+            python -m pytest tests/numerical_battery/ -q | tee artifacts/pytest-battery.log
+          else
+            {
+              echo "External reference fixtures are unavailable on this runner."
+              echo "Running repository-contained numerical battery subset."
+            } | tee artifacts/pytest-battery.log
+            python -m pytest \
+              tests/numerical_battery/test_aggregate_expand.py \
+              tests/numerical_battery/test_pareto_frontier_smoke.py \
+              -q | tee -a artifacts/pytest-battery.log
+          fi
+
+      - name: Write pytest summary
+        if: always()
+        run: |
+          {
+            echo "## Pytest Numerical Battery"
+            echo
+            echo "- GitHub-hosted runners skip vault-dependent reference fixtures."
+            echo "- Historical 73-case suite: skipped on GitHub-hosted runners; local cron carryover."
+            echo "- Full reference battery remains local cron carryover when fixtures are available."
+            echo "- Trigger: \`${{ github.event_name }}\`"
+            echo
+            echo '```text'
+            if [ -f artifacts/pytest-battery.log ]; then
+              tail -n 100 artifacts/pytest-battery.log
+            else
+              echo "pytest battery log was not created"
+            fi
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload pytest artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pareto-pytest-battery-regression
+          path: artifacts/
+          if-no-files-found: warn
+
+  frontend_build:
+    name: frontend build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install wasm-pack
+        uses: taiki-e/install-action@v2
+        with:
+          tool: wasm-pack
+
+      - name: Build WASM package
+        run: wasm-pack build tttg_forge_wasm --target web --release
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+  playwright_pareto:
+    name: playwright optimize
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install wasm-pack
+        uses: taiki-e/install-action@v2
+        with:
+          tool: wasm-pack
+
+      - name: Build WASM package
+        run: wasm-pack build tttg_forge_wasm --target web --release
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+      - name: Install Chromium
+        working-directory: frontend
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright optimize specs
+        working-directory: frontend
+        run: |
+          set -o pipefail
+          mkdir -p artifacts
+          npx playwright test e2e/optimize-worker.spec.ts e2e/optimize-mobile.spec.ts --reporter=list,html | tee artifacts/playwright.log
+
+      - name: Write Playwright summary
+        if: always()
+        working-directory: frontend
+        run: |
+          {
+            echo "## Pareto Playwright Regression"
+            echo
+            echo "- Specs: \`e2e/optimize-worker.spec.ts\`, \`e2e/optimize-mobile.spec.ts\`"
+            echo "- Trigger: \`${{ github.event_name }}\`"
+            echo
+            echo '```text'
+            if [ -f artifacts/playwright.log ]; then
+              tail -n 100 artifacts/playwright.log
+            else
+              echo "playwright log was not created"
+            fi
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload Playwright artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pareto-playwright-regression
+          path: |
+            frontend/artifacts/
+            frontend/playwright-report/
+            frontend/test-results/
+          if-no-files-found: warn

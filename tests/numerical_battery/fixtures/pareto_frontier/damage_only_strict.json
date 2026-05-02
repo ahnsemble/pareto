@@ -1,0 +1,8 @@
+{
+  "case": "damage_only_strict",
+  "candidates": [
+    {"label": "damage-edge", "score": 100.0, "damage": 12.0},
+    {"label": "dominated", "score": 100.0, "damage": 10.0}
+  ],
+  "expected_frontier": [0]
+}
