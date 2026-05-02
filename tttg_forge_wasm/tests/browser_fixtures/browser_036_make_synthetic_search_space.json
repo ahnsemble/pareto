@@ -1,0 +1,48 @@
+{
+  "args": [
+    2,
+    true,
+    false,
+    1000
+  ],
+  "category": "make_synthetic_search_space",
+  "expected": {
+    "slots": [
+      {
+        "choices": [
+          {
+            "damage_delta": 0,
+            "name": "baseline",
+            "score_delta": 0
+          },
+          {
+            "damage_delta": 1.1,
+            "name": "upgrade",
+            "score_delta": 11
+          }
+        ],
+        "name": "slot_00"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 0,
+            "name": "baseline",
+            "score_delta": 0
+          },
+          {
+            "damage_delta": 1.2,
+            "name": "upgrade",
+            "score_delta": 12
+          }
+        ],
+        "name": "slot_01"
+      }
+    ],
+    "top_k": 1000
+  },
+  "exportName": "make_synthetic_search_space",
+  "id": "browser_036",
+  "note": "synthetic search-space structural fixture",
+  "sourceId": "search-random-11"
+}

@@ -1,0 +1,869 @@
+{
+  "args": [
+    {
+      "collectibles": {
+        "Angelic Tear Crystal": {
+          "stars": 0
+        },
+        "Anti-Gravity Device": {
+          "stars": 3
+        },
+        "Antiparticle Gourd": {
+          "stars": 1
+        },
+        "Astral Dewdrop": {
+          "stars": 1
+        },
+        "Atomic Mech": {
+          "stars": 0
+        },
+        "Book of Ancient Wisdom": {
+          "stars": 0
+        },
+        "Clone Mirror": {
+          "stars": 0
+        },
+        "Comms Conch": {
+          "stars": 3
+        },
+        "Cosmic Compass": {
+          "stars": 4
+        },
+        "Cyber Totem": {
+          "stars": 0
+        },
+        "Dice of Destiny": {
+          "stars": 0
+        },
+        "Dimension Foil": {
+          "stars": 0
+        },
+        "Dragon Tooth": {
+          "stars": 0
+        },
+        "Dreamscape Puzzle": {
+          "stars": 0
+        },
+        "Elemental Ring": {
+          "stars": 2
+        },
+        "Eye of True Vision": {
+          "stars": 0
+        },
+        "Flaming Plume": {
+          "stars": 2
+        },
+        "Gene Splicer": {
+          "stars": 0
+        },
+        "Golden Cutlery": {
+          "stars": 1
+        },
+        "Golden Horn": {
+          "stars": 3
+        },
+        "High-Lat Energy Cube": {
+          "stars": 0
+        },
+        "Holodream Fluid": {
+          "stars": 0
+        },
+        "Human Genome Mapping": {
+          "stars": 0
+        },
+        "Hydraulic Flipper": {
+          "stars": 3
+        },
+        "Hyper Neuron": {
+          "stars": 0
+        },
+        "Immortal Lucky Coin": {
+          "stars": 0
+        },
+        "Infinity Score": {
+          "stars": 3
+        },
+        "Instellar Transition Matrix Design": {
+          "stars": 0
+        },
+        "Klein Bottle": {
+          "stars": 0
+        },
+        "Life Hourglass": {
+          "stars": 0
+        },
+        "Lucky Charm": {
+          "stars": 2
+        },
+        "Memory Editor": {
+          "stars": 1
+        },
+        "Mental Sync Helm": {
+          "stars": 0
+        },
+        "Micro Artificial Sun": {
+          "stars": 0
+        },
+        "Mini Dyson Sphere": {
+          "stars": 2
+        },
+        "Mystical Halo": {
+          "stars": 5
+        },
+        "Nano-Mimetic Mask": {
+          "stars": 1
+        },
+        "Neurochip": {
+          "stars": 3
+        },
+        "Nuclear Battery": {
+          "stars": 2
+        },
+        "Old Medical Book": {
+          "stars": 4
+        },
+        "Otherworld Key": {
+          "stars": 0
+        },
+        "Plasma Sword": {
+          "stars": 5
+        },
+        "Portable Mech Case": {
+          "stars": 0
+        },
+        "Primordial War Drum": {
+          "stars": 1
+        },
+        "Safehouse Map": {
+          "stars": 4
+        },
+        "Savior's Memento": {
+          "stars": 4
+        },
+        "Scientific Luminary's Journal": {
+          "stars": 3
+        },
+        "Shuttle Capsule": {
+          "stars": 3
+        },
+        "Spatial Rewinder": {
+          "stars": 0
+        },
+        "Star-Rail Passenger Card": {
+          "stars": 5
+        },
+        "Starcore Diamond": {
+          "stars": 0
+        },
+        "Super Circuit Board": {
+          "stars": 3
+        },
+        "Superhuman Pill": {
+          "stars": 0
+        },
+        "Tablet of Epics": {
+          "stars": 2
+        },
+        "Temporal Rewinder": {
+          "stars": 0
+        },
+        "Time Essence Bottle": {
+          "stars": 0
+        },
+        "Unicorn's Horn": {
+          "stars": 0
+        },
+        "Void Bloom": {
+          "stars": 0
+        },
+        "Wildfire Furnace": {
+          "stars": 4
+        },
+        "Wormhole Detector": {
+          "stars": 0
+        }
+      },
+      "customSets": {
+        "0": {
+          "collectibles": [
+            "None",
+            "None",
+            "None",
+            "None"
+          ],
+          "level": 0
+        },
+        "1": {
+          "collectibles": [
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None"
+          ],
+          "level": 0
+        },
+        "2": {
+          "collectibles": [
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None"
+          ],
+          "level": 0
+        }
+      },
+      "evoTree": {
+        "Expose Weakness": false,
+        "Overreaction": false,
+        "Viva la Materia": false,
+        "Watchmaker": false
+      },
+      "heroes": {
+        "April": {
+          "level": 120,
+          "stars": 0
+        },
+        "Catnips": {
+          "stars": 5
+        },
+        "Common": {
+          "level": 120,
+          "stars": 6
+        },
+        "Donatello": {
+          "stars": 0
+        },
+        "Joey": {
+          "level": 120,
+          "stars": 0
+        },
+        "King": {
+          "level": 120,
+          "stars": 2
+        },
+        "Master Yang": {
+          "level": 120,
+          "stars": 1
+        },
+        "Metalia": {
+          "level": 120,
+          "stars": 0
+        },
+        "Raphael": {
+          "level": 120,
+          "stars": 0
+        },
+        "Splinter": {
+          "level": 120,
+          "stars": 0
+        },
+        "Taloxa": {
+          "level": 120,
+          "stars": 6
+        },
+        "Tsukuyomi": {
+          "level": 120,
+          "stars": 6
+        },
+        "Wesson": {
+          "level": 120,
+          "stars": 1
+        },
+        "Worm": {
+          "stars": 1
+        },
+        "Yelena": {
+          "stars": 1
+        }
+      },
+      "heroesOptimizer": {
+        "entries": {
+          "April": {
+            "enabled": true,
+            "max": 12
+          },
+          "Common": {
+            "enabled": true,
+            "max": 12
+          },
+          "Donatello": {
+            "enabled": true,
+            "max": 12
+          },
+          "Joey": {
+            "enabled": true,
+            "max": 12
+          },
+          "King": {
+            "enabled": true,
+            "max": 12
+          },
+          "Leonardo": {
+            "enabled": true,
+            "max": 12
+          },
+          "Master Yang": {
+            "enabled": true,
+            "max": 12
+          },
+          "Metalia": {
+            "enabled": true,
+            "max": 12
+          },
+          "Michelangelo": {
+            "enabled": true,
+            "max": 12
+          },
+          "Raphael": {
+            "enabled": true,
+            "max": 12
+          },
+          "Splinter": {
+            "enabled": true,
+            "max": 12
+          },
+          "Taloxa": {
+            "enabled": true,
+            "max": 12
+          },
+          "Venato": {
+            "enabled": true,
+            "max": 12
+          },
+          "Worm": {
+            "enabled": true,
+            "max": 12
+          }
+        },
+        "mainHeroes": {
+          "Joey": {
+            "enabled": true,
+            "max": 12
+          },
+          "Master Yang": {
+            "enabled": true,
+            "max": 12
+          },
+          "Metalia": {
+            "enabled": true,
+            "max": 12
+          },
+          "Taloxa": {
+            "enabled": true,
+            "max": 12
+          },
+          "Venato": {
+            "enabled": true,
+            "max": 12
+          }
+        },
+        "minCores": 0,
+        "synergyLimit": 80,
+        "targetCores": 0,
+        "targetShards": 0
+      },
+      "items": {
+        "Armor": {
+          "c": 0,
+          "e": 1,
+          "name": "Evervoid Armor",
+          "v": 0,
+          "x": 0
+        },
+        "Belt": {
+          "c": 0,
+          "e": 1,
+          "name": "Stardust Sash",
+          "v": 0,
+          "x": 0
+        },
+        "Boots": {
+          "c": 0,
+          "e": 1,
+          "name": "Glacial Warboots",
+          "v": 0,
+          "x": 0
+        },
+        "Gloves": {
+          "c": 0,
+          "e": 1,
+          "name": "Moonscar Bracer",
+          "v": 1,
+          "x": 0
+        },
+        "Necklace": {
+          "base": 1,
+          "c": 0,
+          "e": 1,
+          "name": "Judgment Necklace",
+          "v": 1,
+          "x": 0
+        },
+        "Weapon": {
+          "c": 0,
+          "e": 1,
+          "name": "Twin Lance",
+          "v": 0,
+          "x": 0
+        }
+      },
+      "itemsOptimizer": {
+        "advanced": {
+          "c": 0,
+          "e": 0,
+          "limitC": false,
+          "limitE": false,
+          "limitMinCores": false,
+          "limitV": false,
+          "minCores": 0,
+          "v": 0
+        },
+        "entries": {
+          "Eternal Suit": {
+            "max": {
+              "base": 3,
+              "c": 10,
+              "e": 5,
+              "v": 5
+            },
+            "min": {},
+            "state": "enabled"
+          },
+          "Evervoid Armor": {
+            "max": {
+              "base": 3,
+              "c": 10,
+              "e": 5,
+              "v": 5,
+              "x": 0
+            },
+            "min": {},
+            "state": "enabled"
+          },
+          "Glacial Warboots": {
+            "max": {
+              "base": 3,
+              "c": 10,
+              "e": 5,
+              "v": 5
+            },
+            "min": {},
+            "state": "enabled"
+          },
+          "Judgment Necklace": {
+            "max": {
+              "base": 3,
+              "c": 10,
+              "e": 5,
+              "v": 5,
+              "x": 13
+            },
+            "min": {},
+            "state": "enabled"
+          },
+          "Moonscar Bracer": {
+            "max": {
+              "base": 3,
+              "c": 10,
+              "e": 5,
+              "v": 5
+            },
+            "min": {},
+            "state": "enabled"
+          },
+          "Stardust Sash": {
+            "max": {
+              "base": 3,
+              "c": 10,
+              "e": 5,
+              "v": 5
+            },
+            "min": {},
+            "state": "enabled"
+          },
+          "Twin Lance": {
+            "max": {
+              "base": 3,
+              "c": 10,
+              "e": 5,
+              "v": 5,
+              "x": 13
+            },
+            "min": {},
+            "state": "enabled"
+          },
+          "Twisting Belt": {
+            "max": {
+              "base": 3,
+              "c": 10,
+              "e": 5,
+              "v": 5
+            },
+            "min": {},
+            "state": "enabled"
+          },
+          "Voidwaker Emblem": {
+            "max": {
+              "base": 3,
+              "c": 10,
+              "e": 5,
+              "v": 5
+            },
+            "min": {},
+            "state": "enabled"
+          },
+          "Voidwaker Handguards": {
+            "max": {
+              "base": 3,
+              "c": 10,
+              "e": 5,
+              "v": 5
+            },
+            "min": {},
+            "state": "enabled"
+          },
+          "Voidwaker Treads": {
+            "max": {
+              "base": 3,
+              "c": 10,
+              "e": 5,
+              "v": 5
+            },
+            "min": {},
+            "state": "enabled"
+          }
+        },
+        "targetCores": 0,
+        "transmuteCores": 0
+      },
+      "meta": {
+        "atkBase": 68330.1,
+        "atkFinal": 85410,
+        "clanLevel": 0,
+        "designs": 0,
+        "eeOmnipower": null,
+        "eeSkills": [
+          -1,
+          -1,
+          -1
+        ],
+        "gameMode": "lme1",
+        "harmonyL": "Metalia",
+        "harmonyR": "King",
+        "lmeTestaments": 0,
+        "mainHero": "Taloxa",
+        "maxGear": 1,
+        "synergy": false,
+        "synergyLevel": 10,
+        "teamwork": []
+      },
+      "petSkills": {
+        "Battle Lust": {
+          "enabled": true,
+          "rarity": "Advanced"
+        },
+        "Encouragement": {
+          "enabled": true,
+          "rarity": "Super"
+        },
+        "Gary": {
+          "enabled": false,
+          "rarity": "Super"
+        },
+        "Inspiration": {
+          "enabled": true,
+          "rarity": "Super"
+        },
+        "Motivation": {
+          "enabled": true,
+          "rarity": "Super"
+        }
+      },
+      "pets": {
+        "active": "Rex",
+        "stars": {
+          "Rex": 10
+        },
+        "support": [
+          {
+            "name": "None",
+            "skill": [
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "name": "None",
+            "skill": [
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "name": "None",
+            "skill": [
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "name": "None",
+            "skill": [
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "name": "None",
+            "skill": [
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "name": "None",
+            "skill": [
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "name": "None",
+            "skill": [
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      },
+      "settings": {
+        "calcMode": "damage",
+        "experimentalFeatures": "",
+        "numberFormat": "group",
+        "revives": [
+          40,
+          70,
+          90
+        ]
+      },
+      "skills": {
+        "Ammo Thruster": true,
+        "Drill Shot Mode": true,
+        "Drone Mode": true,
+        "Energy Cube": true,
+        "Exo Bracer": true,
+        "Guardian Mode": true,
+        "HE Fuel": true,
+        "HP Bullet": true,
+        "Laser Mode": false,
+        "Lightning Mode": true,
+        "Molotov": false,
+        "Soccer Mode": false
+      },
+      "techs": {
+        "Antimatter Generator": {
+          "deployed": false
+        },
+        "Antimatter Maintainer": {
+          "deployed": true,
+          "rarity": "Legend",
+          "resonance": 3000
+        },
+        "Energy Diffuser": {
+          "deployed": true,
+          "rarity": "Legend",
+          "resonance": 2100
+        },
+        "Energy Guidance System": {
+          "deployed": true,
+          "mode": "Drone Mode",
+          "rarity": "Legend",
+          "resonance": 3000
+        },
+        "Exo-radicator": {
+          "deployed": true,
+          "rarity": "Legend"
+        },
+        "Hi-Maintainer": {
+          "deployed": false
+        },
+        "Phase Driver": {
+          "deployed": true,
+          "rarity": "Legend"
+        },
+        "Quantum Nanobot": {
+          "deployed": true,
+          "mode": "Soccer Mode",
+          "rarity": "Legend",
+          "resonance": 3000
+        }
+      },
+      "techsOptimizer": {
+        "chips": 1,
+        "expanded": false,
+        "fodder": 1,
+        "inputs": {
+          "Epic": 4,
+          "Epic1": 7,
+          "Epic2": 9,
+          "Epic3": 5,
+          "Legend": 1
+        },
+        "limit": "basic",
+        "modeEntries": {
+          "Boomerang Mode": {
+            "maxOverload": 18,
+            "maxResonance": 15000,
+            "minOverload": 0,
+            "minResonance": 0
+          },
+          "Brick Mode": {
+            "maxOverload": 18,
+            "maxResonance": 15000,
+            "minOverload": 0,
+            "minResonance": 0
+          },
+          "Drill Shot Mode": {
+            "maxOverload": 18,
+            "maxResonance": 15000,
+            "minOverload": 0,
+            "minResonance": 0
+          },
+          "Drone Mode": {
+            "maxOverload": 18,
+            "maxResonance": 15000,
+            "minOverload": 0,
+            "minResonance": 0
+          },
+          "Durian Mode": {
+            "maxOverload": 18,
+            "maxResonance": 15000,
+            "minOverload": 0,
+            "minResonance": 0
+          },
+          "Forcefield Mode": {
+            "maxOverload": 18,
+            "maxResonance": 15000,
+            "minOverload": 0,
+            "minResonance": 0
+          },
+          "Guardian Mode": {
+            "maxOverload": 18,
+            "maxResonance": 15000,
+            "minOverload": 0,
+            "minResonance": 0
+          },
+          "Laser Mode": {
+            "maxOverload": 18,
+            "maxResonance": 15000,
+            "minOverload": 0,
+            "minResonance": 0
+          },
+          "Lightning Mode": {
+            "maxOverload": 18,
+            "maxResonance": 15000,
+            "minOverload": 0,
+            "minResonance": 0
+          },
+          "Molotov Mode": {
+            "maxOverload": 18,
+            "maxResonance": 15000,
+            "minOverload": 0,
+            "minResonance": 0
+          },
+          "Rocket Mode": {
+            "maxOverload": 18,
+            "maxResonance": 15000,
+            "minOverload": 0,
+            "minResonance": 0
+          },
+          "Soccer Mode": {
+            "maxOverload": 18,
+            "maxResonance": 15000,
+            "minOverload": 0,
+            "minResonance": 0
+          }
+        },
+        "modes": [
+          "Drill Shot Mode",
+          "Soccer Mode",
+          "Lightning Mode",
+          "Guardian Mode",
+          "Drone Mode",
+          "Drone Mode"
+        ],
+        "overloadable": false,
+        "reservedLegends": 0,
+        "skills": 4,
+        "skillsMap": {
+          "Boomerang Mode": "enabled",
+          "Brick Mode": "disabled",
+          "Drill": "enabled",
+          "Drill Shot Mode": "forced",
+          "Drone": "enabled",
+          "Drone Mode": "forced",
+          "Durian Mode": "enabled",
+          "Forcefield Mode": "enabled",
+          "Guardian Mode": "forced",
+          "Laser Mode": "enabled",
+          "Lightning Mode": "forced",
+          "Molotov": "enabled",
+          "Molotov Mode": "enabled",
+          "Rocket": "disabled",
+          "Rocket Mode": "enabled",
+          "Soccer Mode": "forced"
+        },
+        "speedMode": 2,
+        "strategy": 1
+      },
+      "turf": {
+        "atkEquipPercent": [
+          0,
+          0
+        ],
+        "atkHeroPercent": [
+          0,
+          0
+        ],
+        "lme1Damage": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  ],
+  "category": "run_full_pipeline",
+  "expected": {
+    "damageFactor": 0,
+    "score": 0,
+    "stats": {}
+  },
+  "exportName": "run_full_pipeline",
+  "id": "browser_043",
+  "note": "browser WASM fixture fallback is unavailable, so expected stats may be empty",
+  "sourceId": "pipeline-sanitized-wCrs4v"
+}

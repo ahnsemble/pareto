@@ -1,0 +1,33 @@
+{
+  "args": [
+    1,
+    true,
+    false,
+    1
+  ],
+  "category": "make_synthetic_search_space",
+  "expected": {
+    "slots": [
+      {
+        "choices": [
+          {
+            "damage_delta": 0,
+            "name": "baseline",
+            "score_delta": 0
+          },
+          {
+            "damage_delta": 1.1,
+            "name": "upgrade",
+            "score_delta": 11
+          }
+        ],
+        "name": "slot_00"
+      }
+    ],
+    "top_k": 1
+  },
+  "exportName": "make_synthetic_search_space",
+  "id": "browser_021",
+  "note": "synthetic search-space structural fixture",
+  "sourceId": "search-fixed-01"
+}

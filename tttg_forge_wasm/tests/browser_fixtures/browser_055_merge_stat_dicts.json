@@ -1,0 +1,21 @@
+{
+  "args": [
+    [
+      {
+        "atk": -229.956915,
+        "critRate": 5,
+        "nonnumeric": "ignored"
+      }
+    ]
+  ],
+  "category": "merge_stat_dicts",
+  "expected": {
+    "atk": -229.956915,
+    "critRate": 5,
+    "nonnumeric": 0
+  },
+  "exportName": "merge_stat_dicts",
+  "id": "browser_055",
+  "note": "numeric/coercion export fixture",
+  "sourceId": "numeric-merge-05"
+}

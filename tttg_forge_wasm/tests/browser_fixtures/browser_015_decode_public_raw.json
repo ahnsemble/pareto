@@ -1,0 +1,18 @@
+{
+  "args": [
+    "XQAAgAD__________wBtAD7vd9IkUlU2m7xOmgCxOyHd2POJoLYLvB0weuUnqMm5MhaF3oczL0WOrB2dig2P0qcwbaQbYJvy41IaQrXfKptKep-KIc_NrIQzcWYlXxfVcishc5zB5v37o4A"
+  ],
+  "category": "decode_public_raw",
+  "expected": {
+    "_V": 4,
+    "a": {
+      "$": 85013,
+      "I": "lme1",
+      "seed": 13
+    }
+  },
+  "exportName": "decode_public_raw",
+  "id": "browser_015",
+  "note": "decode expectation=valid; browser output captured from wasm",
+  "sourceId": "decode-valid-13"
+}

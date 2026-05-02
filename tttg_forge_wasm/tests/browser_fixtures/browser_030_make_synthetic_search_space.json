@@ -1,0 +1,483 @@
+{
+  "args": [
+    31,
+    true,
+    true,
+    100
+  ],
+  "category": "make_synthetic_search_space",
+  "expected": {
+    "slots": [
+      {
+        "choices": [
+          {
+            "damage_delta": 3.1,
+            "name": "precision",
+            "score_delta": 13
+          },
+          {
+            "damage_delta": 16,
+            "name": "overload",
+            "score_delta": 5.2
+          }
+        ],
+        "name": "slot_00"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.2,
+            "name": "precision",
+            "score_delta": 14
+          },
+          {
+            "damage_delta": 17,
+            "name": "overload",
+            "score_delta": 5.4
+          }
+        ],
+        "name": "slot_01"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.3,
+            "name": "precision",
+            "score_delta": 15
+          },
+          {
+            "damage_delta": 18,
+            "name": "overload",
+            "score_delta": 5.6
+          }
+        ],
+        "name": "slot_02"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.4,
+            "name": "precision",
+            "score_delta": 16
+          },
+          {
+            "damage_delta": 19,
+            "name": "overload",
+            "score_delta": 5.8
+          }
+        ],
+        "name": "slot_03"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.5,
+            "name": "precision",
+            "score_delta": 17
+          },
+          {
+            "damage_delta": 20,
+            "name": "overload",
+            "score_delta": 6
+          }
+        ],
+        "name": "slot_04"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.6,
+            "name": "precision",
+            "score_delta": 18
+          },
+          {
+            "damage_delta": 21,
+            "name": "overload",
+            "score_delta": 6.2
+          }
+        ],
+        "name": "slot_05"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.7,
+            "name": "precision",
+            "score_delta": 19
+          },
+          {
+            "damage_delta": 22,
+            "name": "overload",
+            "score_delta": 6.4
+          }
+        ],
+        "name": "slot_06"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.8,
+            "name": "precision",
+            "score_delta": 20
+          },
+          {
+            "damage_delta": 23,
+            "name": "overload",
+            "score_delta": 6.6
+          }
+        ],
+        "name": "slot_07"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.9,
+            "name": "precision",
+            "score_delta": 21
+          },
+          {
+            "damage_delta": 24,
+            "name": "overload",
+            "score_delta": 6.8
+          }
+        ],
+        "name": "slot_08"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4,
+            "name": "precision",
+            "score_delta": 22
+          },
+          {
+            "damage_delta": 25,
+            "name": "overload",
+            "score_delta": 7
+          }
+        ],
+        "name": "slot_09"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4.1,
+            "name": "precision",
+            "score_delta": 23
+          },
+          {
+            "damage_delta": 26,
+            "name": "overload",
+            "score_delta": 7.2
+          }
+        ],
+        "name": "slot_10"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4.2,
+            "name": "precision",
+            "score_delta": 24
+          },
+          {
+            "damage_delta": 27,
+            "name": "overload",
+            "score_delta": 7.4
+          }
+        ],
+        "name": "slot_11"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4.3,
+            "name": "precision",
+            "score_delta": 25
+          },
+          {
+            "damage_delta": 28,
+            "name": "overload",
+            "score_delta": 7.6
+          }
+        ],
+        "name": "slot_12"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4.4,
+            "name": "precision",
+            "score_delta": 26
+          },
+          {
+            "damage_delta": 29,
+            "name": "overload",
+            "score_delta": 7.800000000000001
+          }
+        ],
+        "name": "slot_13"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4.5,
+            "name": "precision",
+            "score_delta": 27
+          },
+          {
+            "damage_delta": 30,
+            "name": "overload",
+            "score_delta": 8
+          }
+        ],
+        "name": "slot_14"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4.6,
+            "name": "precision",
+            "score_delta": 28
+          },
+          {
+            "damage_delta": 31,
+            "name": "overload",
+            "score_delta": 8.2
+          }
+        ],
+        "name": "slot_15"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4.7,
+            "name": "precision",
+            "score_delta": 29
+          },
+          {
+            "damage_delta": 32,
+            "name": "overload",
+            "score_delta": 8.4
+          }
+        ],
+        "name": "slot_16"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4.8,
+            "name": "precision",
+            "score_delta": 30
+          },
+          {
+            "damage_delta": 33,
+            "name": "overload",
+            "score_delta": 8.6
+          }
+        ],
+        "name": "slot_17"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4.9,
+            "name": "precision",
+            "score_delta": 31
+          },
+          {
+            "damage_delta": 34,
+            "name": "overload",
+            "score_delta": 8.8
+          }
+        ],
+        "name": "slot_18"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 5,
+            "name": "precision",
+            "score_delta": 32
+          },
+          {
+            "damage_delta": 35,
+            "name": "overload",
+            "score_delta": 9
+          }
+        ],
+        "name": "slot_19"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 5.1,
+            "name": "precision",
+            "score_delta": 33
+          },
+          {
+            "damage_delta": 36,
+            "name": "overload",
+            "score_delta": 9.2
+          }
+        ],
+        "name": "slot_20"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 5.2,
+            "name": "precision",
+            "score_delta": 34
+          },
+          {
+            "damage_delta": 37,
+            "name": "overload",
+            "score_delta": 9.4
+          }
+        ],
+        "name": "slot_21"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 5.300000000000001,
+            "name": "precision",
+            "score_delta": 35
+          },
+          {
+            "damage_delta": 38,
+            "name": "overload",
+            "score_delta": 9.600000000000001
+          }
+        ],
+        "name": "slot_22"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 5.4,
+            "name": "precision",
+            "score_delta": 36
+          },
+          {
+            "damage_delta": 39,
+            "name": "overload",
+            "score_delta": 9.8
+          }
+        ],
+        "name": "slot_23"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 5.5,
+            "name": "precision",
+            "score_delta": 37
+          },
+          {
+            "damage_delta": 40,
+            "name": "overload",
+            "score_delta": 10
+          }
+        ],
+        "name": "slot_24"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 5.6,
+            "name": "precision",
+            "score_delta": 38
+          },
+          {
+            "damage_delta": 41,
+            "name": "overload",
+            "score_delta": 10.2
+          }
+        ],
+        "name": "slot_25"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 5.7,
+            "name": "precision",
+            "score_delta": 39
+          },
+          {
+            "damage_delta": 42,
+            "name": "overload",
+            "score_delta": 10.4
+          }
+        ],
+        "name": "slot_26"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 5.800000000000001,
+            "name": "precision",
+            "score_delta": 40
+          },
+          {
+            "damage_delta": 43,
+            "name": "overload",
+            "score_delta": 10.600000000000001
+          }
+        ],
+        "name": "slot_27"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 5.9,
+            "name": "precision",
+            "score_delta": 41
+          },
+          {
+            "damage_delta": 44,
+            "name": "overload",
+            "score_delta": 10.8
+          }
+        ],
+        "name": "slot_28"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 6,
+            "name": "precision",
+            "score_delta": 42
+          },
+          {
+            "damage_delta": 45,
+            "name": "overload",
+            "score_delta": 11
+          }
+        ],
+        "name": "slot_29"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 6.1,
+            "name": "precision",
+            "score_delta": 43
+          },
+          {
+            "damage_delta": 46,
+            "name": "overload",
+            "score_delta": 11.2
+          }
+        ],
+        "name": "slot_30"
+      }
+    ],
+    "top_k": 100
+  },
+  "exportName": "make_synthetic_search_space",
+  "id": "browser_030",
+  "note": "synthetic search-space structural fixture",
+  "sourceId": "search-random-05"
+}

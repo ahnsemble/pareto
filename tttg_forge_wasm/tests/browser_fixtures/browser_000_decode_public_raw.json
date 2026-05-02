@@ -1,0 +1,32 @@
+{
+  "args": [
+    "XQAAAAK3CQAAAAAAAABtAlIGDy3Uia2uW1yO129jxwXjiHQU-WPVSgiewGDR8Fd-3R7yZI4n7rLp7oN7ao3cmLS-wzrnrvVaSR1jOG8ODb5GQZukxavIHhiSBWdRuFQtD91RoRdRWtgMwsZMlm9LinG3SLQaL9Z98gArg51s_eVqy5K0qIvSdai6508DQsWZXT_7d7eSqB6K5FyqdidFCj309acDmUhepTiFwItr8Z82RLq-FgtdwzoeDNGDw9c2N6l_yocBKZDcyvc4NK0qJG5-fWY_Vcd2qGQJjjRCtaPCMxQMwFjcu28G6QN7HIRqgG3X7MP_nBPK67iBVSGbnGDgF0lJqcgzBoE0vYAATvpt0dX9zD_Cz-613NG-WRsCvs0KlDcJjFZIAnpA13khzV0IfXc5-s6-lSx0VN7DFcc1QFtTsiouNwDuzQ0lR4XvLgtHAz0n8H638WtCR5URqqT1hI6f5V2_zXjpY0Cz-TyPhXwGw_WNUitf64VUPttWp9HFpGsXLcBQpMyQDPAiewxGz6dvhKzGU091zLG9FfZP98rfCFx5qxj2Qf5-VDGQs3yb9XHtlMcVOu_k9lLwzfMOEGajwvBEvNs24UT88GURjtSnxKLY8OfFRgvtf8WquUu2QhCFQNYvdh1wAwQ_hcKrQn4TxrXD4wykcqnDP2bvxIATAk0PxE1dgE2_egVF0PxGqkvWlDl6q__6_Sb0"
+  ],
+  "category": "decode_public_raw",
+  "expected": {
+    "_V": 4,
+    "a": {
+      "$": 85410,
+      "%": 1,
+      "(": 68330.1,
+      "*": 0,
+      "I": "lme1",
+      "J": 0,
+      "K": [
+        -1,
+        -1,
+        -1
+      ],
+      "b": 0,
+      "c": 11,
+      "d": 9,
+      "e": 5,
+      "f": [],
+      "g": 10
+    }
+  },
+  "exportName": "decode_public_raw",
+  "id": "browser_000",
+  "note": "decode expectation=valid; browser output captured from wasm",
+  "sourceId": "decode-fixture-wCrs4v"
+}

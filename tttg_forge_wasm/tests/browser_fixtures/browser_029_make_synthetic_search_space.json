@@ -1,0 +1,338 @@
+{
+  "args": [
+    32,
+    false,
+    false,
+    1
+  ],
+  "category": "make_synthetic_search_space",
+  "expected": {
+    "slots": [
+      {
+        "choices": [
+          {
+            "damage_delta": 1.1,
+            "name": "upgrade",
+            "score_delta": 11
+          }
+        ],
+        "name": "slot_00"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 1.2,
+            "name": "upgrade",
+            "score_delta": 12
+          }
+        ],
+        "name": "slot_01"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 1.3,
+            "name": "upgrade",
+            "score_delta": 13
+          }
+        ],
+        "name": "slot_02"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 1.4,
+            "name": "upgrade",
+            "score_delta": 14
+          }
+        ],
+        "name": "slot_03"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 1.5,
+            "name": "upgrade",
+            "score_delta": 15
+          }
+        ],
+        "name": "slot_04"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 1.6,
+            "name": "upgrade",
+            "score_delta": 16
+          }
+        ],
+        "name": "slot_05"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 1.7000000000000002,
+            "name": "upgrade",
+            "score_delta": 17
+          }
+        ],
+        "name": "slot_06"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 1.8,
+            "name": "upgrade",
+            "score_delta": 18
+          }
+        ],
+        "name": "slot_07"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 1.9,
+            "name": "upgrade",
+            "score_delta": 19
+          }
+        ],
+        "name": "slot_08"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 2,
+            "name": "upgrade",
+            "score_delta": 20
+          }
+        ],
+        "name": "slot_09"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 2.1,
+            "name": "upgrade",
+            "score_delta": 21
+          }
+        ],
+        "name": "slot_10"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 2.2,
+            "name": "upgrade",
+            "score_delta": 22
+          }
+        ],
+        "name": "slot_11"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 2.3,
+            "name": "upgrade",
+            "score_delta": 23
+          }
+        ],
+        "name": "slot_12"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 2.4000000000000004,
+            "name": "upgrade",
+            "score_delta": 24
+          }
+        ],
+        "name": "slot_13"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 2.5,
+            "name": "upgrade",
+            "score_delta": 25
+          }
+        ],
+        "name": "slot_14"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 2.6,
+            "name": "upgrade",
+            "score_delta": 26
+          }
+        ],
+        "name": "slot_15"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 2.7,
+            "name": "upgrade",
+            "score_delta": 27
+          }
+        ],
+        "name": "slot_16"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 2.8,
+            "name": "upgrade",
+            "score_delta": 28
+          }
+        ],
+        "name": "slot_17"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 2.9000000000000004,
+            "name": "upgrade",
+            "score_delta": 29
+          }
+        ],
+        "name": "slot_18"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3,
+            "name": "upgrade",
+            "score_delta": 30
+          }
+        ],
+        "name": "slot_19"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.1,
+            "name": "upgrade",
+            "score_delta": 31
+          }
+        ],
+        "name": "slot_20"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.2,
+            "name": "upgrade",
+            "score_delta": 32
+          }
+        ],
+        "name": "slot_21"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.3000000000000003,
+            "name": "upgrade",
+            "score_delta": 33
+          }
+        ],
+        "name": "slot_22"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.4000000000000004,
+            "name": "upgrade",
+            "score_delta": 34
+          }
+        ],
+        "name": "slot_23"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.5,
+            "name": "upgrade",
+            "score_delta": 35
+          }
+        ],
+        "name": "slot_24"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.6,
+            "name": "upgrade",
+            "score_delta": 36
+          }
+        ],
+        "name": "slot_25"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.7,
+            "name": "upgrade",
+            "score_delta": 37
+          }
+        ],
+        "name": "slot_26"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.8000000000000003,
+            "name": "upgrade",
+            "score_delta": 38
+          }
+        ],
+        "name": "slot_27"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.9000000000000004,
+            "name": "upgrade",
+            "score_delta": 39
+          }
+        ],
+        "name": "slot_28"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4,
+            "name": "upgrade",
+            "score_delta": 40
+          }
+        ],
+        "name": "slot_29"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4.1,
+            "name": "upgrade",
+            "score_delta": 41
+          }
+        ],
+        "name": "slot_30"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4.2,
+            "name": "upgrade",
+            "score_delta": 42
+          }
+        ],
+        "name": "slot_31"
+      }
+    ],
+    "top_k": 1
+  },
+  "exportName": "make_synthetic_search_space",
+  "id": "browser_029",
+  "note": "synthetic search-space structural fixture",
+  "sourceId": "search-random-04"
+}

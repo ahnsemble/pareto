@@ -1,0 +1,17 @@
+{
+  "args": [
+    0,
+    true,
+    true,
+    1
+  ],
+  "category": "make_synthetic_search_space",
+  "expected": {
+    "slots": [],
+    "top_k": 1
+  },
+  "exportName": "make_synthetic_search_space",
+  "id": "browser_038",
+  "note": "synthetic search-space structural fixture",
+  "sourceId": "search-random-13"
+}
