@@ -1,8 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { decodeRawUrl } from './lib/wasm';
+import { Link } from '../../i18n/navigation';
+import { decodeRawUrl } from '../lib/wasm';
 
 type DecodeState =
   | { phase: 'idle' }

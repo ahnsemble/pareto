@@ -11,7 +11,7 @@ import {
   YAxis,
 } from 'recharts';
 
-import type { BuildPoint } from '../../lib/wasm-worker';
+import type { BuildPoint } from '../../../lib/wasm-worker';
 
 interface Props {
   allPoints: BuildPoint[];

@@ -1,6 +1,6 @@
 'use client';
 
-import type { OptimizeResult } from '../../lib/wasm-worker';
+import type { OptimizeResult } from '../../../lib/wasm-worker';
 
 export type TwoDeckOverlayMode = 'pareto' | 'top5' | 'diff';
 

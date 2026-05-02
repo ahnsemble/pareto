@@ -1,14 +1,14 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
+import { Link } from '../../../i18n/navigation';
 import { COLLECTIBLES, HEROES, HeroOption } from './_components/heroes';
 import { OptimizeInputForm } from './_components/OptimizeInputForm';
 import { OptimizeResultGrid } from './_components/OptimizeResultGrid';
-import { getWorker } from '../lib/wasm-client';
-import type { OptimizeResult } from '../lib/wasm-worker';
+import { getWorker } from '../../lib/wasm-client';
+import type { OptimizeResult } from '../../lib/wasm-worker';
 
 const ParetoFrontierChart = dynamic(
   () =>

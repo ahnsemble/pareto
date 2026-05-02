@@ -1,6 +1,6 @@
 'use client';
 
-import type { BuildPoint } from '../../lib/wasm-worker';
+import type { BuildPoint } from '../../../lib/wasm-worker';
 
 interface Props {
   topBuilds: BuildPoint[];
