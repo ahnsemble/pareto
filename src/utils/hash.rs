@@ -23,7 +23,11 @@ pub struct DecodedBitmaskV2 {
     pub collectible_mask: u64,
 }
 
-pub fn compute_bitmask_v2(hero_id: u64, collectible_mask: u64, tech_mask: u64) -> Result<(u64, u64), BitmaskError> {
+pub fn compute_bitmask_v2(
+    hero_id: u64,
+    collectible_mask: u64,
+    tech_mask: u64,
+) -> Result<(u64, u64), BitmaskError> {
     require_range("hero_id", hero_id, MAX_HERO_ID)?;
     require_range("tech_mask", tech_mask, MAX_TECH_MASK)?;
     let collectible_hi = collectible_mask >> COLLECTIBLE_LOW_BITS;
@@ -39,7 +43,8 @@ pub fn decode_bitmask_v2(key: (u64, u64)) -> DecodedBitmaskV2 {
     let collectible_hi = hi & ((1 << COLLECTIBLE_HIGH_BITS) - 1);
     let tech_mask = (hi >> COLLECTIBLE_HIGH_BITS) & MAX_TECH_MASK;
     let hero_id = (hi >> (TECH_BITS + COLLECTIBLE_HIGH_BITS)) & MAX_HERO_ID;
-    let collectible_mask = (collectible_hi << COLLECTIBLE_LOW_BITS) | (lo & ((1 << COLLECTIBLE_LOW_BITS) - 1));
+    let collectible_mask =
+        (collectible_hi << COLLECTIBLE_LOW_BITS) | (lo & ((1 << COLLECTIBLE_LOW_BITS) - 1));
     DecodedBitmaskV2 {
         hero_id,
         tech_mask,
@@ -79,7 +84,11 @@ fn collectible_slot(collectible_id: &str) -> Result<u32, BitmaskError> {
         .parse()
         .map_err(|_| BitmaskError::BadCollectibleId(collectible_id.to_string()))?;
     if slot > 63 {
-        return Err(BitmaskError::OutOfRange("collectible slot", 63, slot as u64));
+        return Err(BitmaskError::OutOfRange(
+            "collectible slot",
+            63,
+            slot as u64,
+        ));
     }
     Ok(slot)
 }

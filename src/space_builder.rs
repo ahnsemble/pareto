@@ -6,8 +6,10 @@ pub fn build_full_space_from_fixture(
     fixture_path: &Path,
     constraints: &Value,
 ) -> Result<OptimizationSearchSpaceV2, OptimizerError> {
-    let text = std::fs::read_to_string(fixture_path).map_err(|error| OptimizerError::Message(error.to_string()))?;
-    let data: Value = serde_json::from_str(&text).map_err(|error| OptimizerError::Message(error.to_string()))?;
+    let text = std::fs::read_to_string(fixture_path)
+        .map_err(|error| OptimizerError::Message(error.to_string()))?;
+    let data: Value =
+        serde_json::from_str(&text).map_err(|error| OptimizerError::Message(error.to_string()))?;
     let mut merged_constraints = valid_minimal_constraints();
     merge_objects(&mut merged_constraints, constraints);
     merged_constraints["fixture_path"] = json!(fixture_path.to_string_lossy().to_string());
@@ -33,7 +35,13 @@ pub fn build_full_space_from_fixture(
                 .and_then(|sets| sets.get(index.to_string()))
                 .and_then(|entry| entry.get("collectibles"))
                 .and_then(Value::as_array)
-                .map(|items| items.iter().filter_map(Value::as_str).map(str::to_string).collect::<Vec<_>>())
+                .map(|items| {
+                    items
+                        .iter()
+                        .filter_map(Value::as_str)
+                        .map(str::to_string)
+                        .collect::<Vec<_>>()
+                })
                 .unwrap_or_else(|| vec!["None".to_string(); *size])
         })
         .collect::<Vec<_>>();
@@ -44,14 +52,22 @@ pub fn build_full_space_from_fixture(
             .and_then(Value::as_object)
             .map(|object| object.keys().cloned().collect())
             .unwrap_or_else(|| vec!["Taloxa".to_string()]),
-        collectible_inventory: data.get("collectibles").cloned().unwrap_or_else(|| json!({"Otherworld Key": {"stars": 0, "upgraded": false}})),
+        collectible_inventory: data
+            .get("collectibles")
+            .cloned()
+            .unwrap_or_else(|| json!({"Otherworld Key": {"stars": 0, "upgraded": false}})),
         tech_deployed: data
             .get("techs")
             .and_then(Value::as_object)
             .map(|object| {
                 object
                     .iter()
-                    .filter(|(_, entry)| entry.get("deployed").and_then(Value::as_bool).unwrap_or(false))
+                    .filter(|(_, entry)| {
+                        entry
+                            .get("deployed")
+                            .and_then(Value::as_bool)
+                            .unwrap_or(false)
+                    })
                     .map(|(name, _)| name.clone())
                     .collect()
             })
@@ -63,17 +79,37 @@ pub fn build_full_space_from_fixture(
             .get("evoTree")
             .and_then(Value::as_object)
             .map(|object| object.keys().cloned().take(4).collect())
-            .unwrap_or_else(|| vec!["A".to_string(), "B".to_string(), "C".to_string(), "D".to_string()]),
+            .unwrap_or_else(|| {
+                vec![
+                    "A".to_string(),
+                    "B".to_string(),
+                    "C".to_string(),
+                    "D".to_string(),
+                ]
+            }),
         constraints: merged_constraints,
     };
-    space.validate().map_err(|error: LegalityError| OptimizerError::Message(error.to_string()))?;
+    space
+        .validate()
+        .map_err(|error: LegalityError| OptimizerError::Message(error.to_string()))?;
     Ok(space)
 }
 
 pub fn estimate_space_size(space: &OptimizationSearchSpaceV2) -> Value {
     let hero_cardinality = space.hero_candidates.len() as u64;
-    let collectible_cardinality = space.collectible_inventory.as_object().map(|object| object.len()).unwrap_or(0) as u64;
-    let skill_cardinality = 2_u128.pow(space.skill_toggles.as_object().map(|object| object.len()).unwrap_or(0).min(63) as u32);
+    let collectible_cardinality = space
+        .collectible_inventory
+        .as_object()
+        .map(|object| object.len())
+        .unwrap_or(0) as u64;
+    let skill_cardinality = 2_u128.pow(
+        space
+            .skill_toggles
+            .as_object()
+            .map(|object| object.len())
+            .unwrap_or(0)
+            .min(63) as u32,
+    );
     json!({
         "hero_cardinality": hero_cardinality,
         "collectible_cardinality": collectible_cardinality,
@@ -93,8 +129,15 @@ pub fn find_best_pareto_full(
     beam_width: usize,
 ) -> Result<Vec<crate::OptimizationResult>, OptimizerError> {
     let slots = (target_combos.max(2) as f64).log2().round().max(1.0) as usize;
-    let search_space = crate::make_synthetic_search_space(slots.min(16), false, true, beam_width.max(1));
-    crate::find_best_pareto(&space_v2.constraints["prepared_case_base"], &Value::Null, &search_space, objectives, beam_width)
+    let search_space =
+        crate::make_synthetic_search_space(slots.min(16), false, true, beam_width.max(1));
+    crate::find_best_pareto(
+        &space_v2.constraints["prepared_case_base"],
+        &Value::Null,
+        &search_space,
+        objectives,
+        beam_width,
+    )
 }
 
 fn flatten_pet_slots(pets: &Value) -> Value {

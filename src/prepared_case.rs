@@ -12,7 +12,10 @@ pub fn clone_prepared_case(prepared_case: &Value) -> Value {
     prepared_case.clone()
 }
 
-pub fn evaluate_prepared_case(prepared_case: &Value, attack_meta: Option<&Value>) -> Result<Value, OptimizerError> {
+pub fn evaluate_prepared_case(
+    prepared_case: &Value,
+    attack_meta: Option<&Value>,
+) -> Result<Value, OptimizerError> {
     let stats = prepared_case.get("stats").unwrap_or(prepared_case);
     let damage_stats = prepared_case.get("damageStats").unwrap_or(stats);
     let ce_damage_techs = prepared_case.get("ceDamageTechs").unwrap_or(&Value::Null);
@@ -32,10 +35,16 @@ pub fn evaluate_prepared_case(prepared_case: &Value, attack_meta: Option<&Value>
         attack,
         damage.damage_factor,
         &damage.ce_damage,
-        prepared_case.get("calcMode").and_then(Value::as_str).unwrap_or("damage"),
+        prepared_case
+            .get("calcMode")
+            .and_then(Value::as_str)
+            .unwrap_or("damage"),
         skills,
         &passive_pools,
-        prepared_case.get("gameMode").and_then(Value::as_str).unwrap_or(""),
+        prepared_case
+            .get("gameMode")
+            .and_then(Value::as_str)
+            .unwrap_or(""),
     )
     .map_err(|error| OptimizerError::Message(error.to_string()))?;
     Ok(json!({
@@ -45,7 +54,10 @@ pub fn evaluate_prepared_case(prepared_case: &Value, attack_meta: Option<&Value>
     }))
 }
 
-pub fn build_prepared_case(expanded_config: &Value, attack_meta: Option<&Value>) -> Result<Value, OptimizerError> {
+pub fn build_prepared_case(
+    expanded_config: &Value,
+    attack_meta: Option<&Value>,
+) -> Result<Value, OptimizerError> {
     if expanded_config.get("stats").is_some() && expanded_config.get("ceDamageTechs").is_some() {
         let mut prepared = expanded_config.clone();
         if let Some(attack_meta) = attack_meta {

@@ -26,7 +26,11 @@ fn schema_validation_accepts_minimal_valid_space() {
         hero_candidates: vec!["Taloxa".into(), "King".into()],
         collectible_inventory: json!({"Otherworld Key": {"stars": 0, "upgraded": false}}),
         tech_deployed: vec!["Energy Guidance System".into()],
-        custom_set_fills: vec![vec!["None".into(); 4], vec!["None".into(); 8], vec!["None".into(); 8]],
+        custom_set_fills: vec![
+            vec!["None".into(); 4],
+            vec!["None".into(); 8],
+            vec!["None".into(); 8],
+        ],
         skill_toggles: json!({}),
         pet_slots: json!({"active":"None","support_1":"None","support_2":"None","support_3":"None","support_4":"None","support_5":"None","support_6":"None","support_7":"None"}),
         evo_tree: vec!["A".into(), "B".into(), "C".into(), "D".into()],

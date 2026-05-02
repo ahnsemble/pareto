@@ -1,4 +1,4 @@
-use crate::{OptimizerError, OptimizationResult, OptimizationSearchSpace};
+use crate::{OptimizationResult, OptimizationSearchSpace, OptimizerError};
 use serde_json::Value;
 
 pub fn find_best_beam(
@@ -23,5 +23,11 @@ pub fn find_best_beam_full(
 ) -> Result<Vec<OptimizationResult>, OptimizerError> {
     let slots = (target_combos.max(2) as f64).log2().round().max(1.0) as usize;
     let search_space = crate::make_synthetic_search_space(slots.min(20), true, false, top_k);
-    find_best_beam(&space_v2.constraints["prepared_case_base"], &Value::Null, &search_space, beam_width, top_k)
+    find_best_beam(
+        &space_v2.constraints["prepared_case_base"],
+        &Value::Null,
+        &search_space,
+        beam_width,
+        top_k,
+    )
 }

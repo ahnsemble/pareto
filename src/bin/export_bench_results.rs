@@ -15,9 +15,16 @@ fn main() {
         ("1e12", 0.056, 0.003735),
         ("1e15", 0.056, 0.003735),
     ] {
-        rows.push(measure("decode", space_size, python_ms, target_ms, 100, || {
-            let _ = decode_public_raw(RAW_WCRS4V).unwrap();
-        }));
+        rows.push(measure(
+            "decode",
+            space_size,
+            python_ms,
+            target_ms,
+            100,
+            || {
+                let _ = decode_public_raw(RAW_WCRS4V).unwrap();
+            },
+        ));
     }
 
     for (space_size, slots, python_ms, target_ms) in [
@@ -27,9 +34,16 @@ fn main() {
         ("1e15", 11, 20.32, 2.540701),
     ] {
         let space = make_synthetic_search_space(slots, true, false, 10);
-        rows.push(measure("branch_bound", space_size, python_ms, target_ms, 10, || {
-            let _ = find_best_bb(&prepared, &json!({}), &space, 10).unwrap();
-        }));
+        rows.push(measure(
+            "branch_bound",
+            space_size,
+            python_ms,
+            target_ms,
+            10,
+            || {
+                let _ = find_best_bb(&prepared, &json!({}), &space, 10).unwrap();
+            },
+        ));
     }
 
     for (space_size, slots, python_ms, target_ms) in [
@@ -39,9 +53,16 @@ fn main() {
         ("1e15", 11, 981.28, 163.546972),
     ] {
         let space = make_synthetic_search_space(slots, true, true, 10);
-        rows.push(measure("beam", space_size, python_ms, target_ms, 10, || {
-            let _ = find_best_beam(&prepared, &json!({}), &space, 64, 10).unwrap();
-        }));
+        rows.push(measure(
+            "beam",
+            space_size,
+            python_ms,
+            target_ms,
+            10,
+            || {
+                let _ = find_best_beam(&prepared, &json!({}), &space, 64, 10).unwrap();
+            },
+        ));
     }
 
     let output = json!({

@@ -1,15 +1,27 @@
-use crate::{OptimizerError, OptimizationResult, OptimizationSearchSpace, SearchSlot};
+use crate::{OptimizationResult, OptimizationSearchSpace, OptimizerError, SearchSlot};
 use serde_json::Value;
 use std::collections::BTreeMap;
 
-pub fn default_upper_bound(partial_build: &Value, remaining_slots: &[SearchSlot], _base_case: &Value) -> f64 {
+pub fn default_upper_bound(
+    partial_build: &Value,
+    remaining_slots: &[SearchSlot],
+    _base_case: &Value,
+) -> f64 {
     // The synthetic Sprint C search spaces only add non-negative deltas to fields
     // that the score engine treats monotonically. A super-choice completion can
     // only overestimate the best reachable completion score, never underestimate it.
-    let base = partial_build.get("score").and_then(Value::as_f64).unwrap_or(0.0);
+    let base = partial_build
+        .get("score")
+        .and_then(Value::as_f64)
+        .unwrap_or(0.0);
     base + remaining_slots
         .iter()
-        .map(|slot| slot.choices.iter().map(|choice| choice.score_delta).fold(0.0, f64::max))
+        .map(|slot| {
+            slot.choices
+                .iter()
+                .map(|choice| choice.score_delta)
+                .fold(0.0, f64::max)
+        })
         .sum::<f64>()
 }
 
@@ -25,7 +37,10 @@ pub fn find_best_brute(
             "search space has {total} combinations, which exceeds max_combos={max_combos}"
         )));
     }
-    let base_score = prepared_case.get("score").and_then(Value::as_f64).unwrap_or(0.0);
+    let base_score = prepared_case
+        .get("score")
+        .and_then(Value::as_f64)
+        .unwrap_or(0.0);
     let base_damage = prepared_case
         .get("damageFactor")
         .or_else(|| prepared_case.get("damage_factor"))
@@ -33,7 +48,14 @@ pub fn find_best_brute(
         .unwrap_or(0.0);
     let mut results = Vec::new();
     let mut build = BTreeMap::new();
-    dfs(0, base_score, base_damage, search_space, &mut build, &mut results);
+    dfs(
+        0,
+        base_score,
+        base_damage,
+        search_space,
+        &mut build,
+        &mut results,
+    );
     results.sort_by(|left, right| {
         right
             .score
@@ -51,7 +73,10 @@ pub fn find_best_bb(
     search_space: &OptimizationSearchSpace,
     top_k: usize,
 ) -> Result<Vec<OptimizationResult>, OptimizerError> {
-    let base_score = prepared_case.get("score").and_then(Value::as_f64).unwrap_or(0.0);
+    let base_score = prepared_case
+        .get("score")
+        .and_then(Value::as_f64)
+        .unwrap_or(0.0);
     let base_damage = prepared_case
         .get("damageFactor")
         .or_else(|| prepared_case.get("damage_factor"))
@@ -85,11 +110,18 @@ pub fn find_best_brute_full(
     max_combos: usize,
 ) -> Result<Vec<OptimizationResult>, OptimizerError> {
     if target_combos > max_combos {
-        return Err(OptimizerError::Message("target_combos exceeds max_combos".to_string()));
+        return Err(OptimizerError::Message(
+            "target_combos exceeds max_combos".to_string(),
+        ));
     }
     let slots = (target_combos.max(2) as f64).log2().round().max(1.0) as usize;
     let search_space = crate::make_synthetic_search_space(slots.min(20), true, false, 10);
-    find_best_brute(&space_v2.constraints["prepared_case_base"], &Value::Null, &search_space, max_combos)
+    find_best_brute(
+        &space_v2.constraints["prepared_case_base"],
+        &Value::Null,
+        &search_space,
+        max_combos,
+    )
 }
 
 pub fn find_best_bb_full(
@@ -99,7 +131,12 @@ pub fn find_best_bb_full(
 ) -> Result<Vec<OptimizationResult>, OptimizerError> {
     let slots = (target_combos.max(2) as f64).log2().round().max(1.0) as usize;
     let search_space = crate::make_synthetic_search_space(slots.min(20), true, false, top_k);
-    find_best_bb(&space_v2.constraints["prepared_case_base"], &Value::Null, &search_space, top_k)
+    find_best_bb(
+        &space_v2.constraints["prepared_case_base"],
+        &Value::Null,
+        &search_space,
+        top_k,
+    )
 }
 
 fn dfs(

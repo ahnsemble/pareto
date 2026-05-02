@@ -18,13 +18,30 @@ fn benches(c: &mut Criterion) {
     for (size, slots) in [("1e6", 8), ("1e9", 9), ("1e12", 10), ("1e15", 11)] {
         group.bench_function(format!("branch_bound/{size}"), |b| {
             let space = make_synthetic_search_space(slots, true, false, 10);
-            b.iter(|| find_best_bb(black_box(&prepared), black_box(&json!({})), black_box(&space), black_box(10)).unwrap())
+            b.iter(|| {
+                find_best_bb(
+                    black_box(&prepared),
+                    black_box(&json!({})),
+                    black_box(&space),
+                    black_box(10),
+                )
+                .unwrap()
+            })
         });
     }
     for (size, slots) in [("1e6", 8), ("1e9", 9), ("1e12", 10), ("1e15", 11)] {
         group.bench_function(format!("beam/{size}"), |b| {
             let space = make_synthetic_search_space(slots, true, true, 10);
-            b.iter(|| find_best_beam(black_box(&prepared), black_box(&json!({})), black_box(&space), black_box(64), black_box(10)).unwrap())
+            b.iter(|| {
+                find_best_beam(
+                    black_box(&prepared),
+                    black_box(&json!({})),
+                    black_box(&space),
+                    black_box(64),
+                    black_box(10),
+                )
+                .unwrap()
+            })
         });
     }
     group.finish();

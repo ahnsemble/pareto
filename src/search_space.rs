@@ -91,18 +91,20 @@ pub fn normalize_search_space(search_space: &OptimizationSearchSpace) -> Optimiz
 }
 
 pub fn optimistic_case(prepared_case: &Value, remaining_slots: &[SearchSlot]) -> Value {
-    let mut score = prepared_case.get("score").and_then(Value::as_f64).unwrap_or(0.0);
+    let mut score = prepared_case
+        .get("score")
+        .and_then(Value::as_f64)
+        .unwrap_or(0.0);
     let mut damage_factor = prepared_case
         .get("damageFactor")
         .or_else(|| prepared_case.get("damage_factor"))
         .and_then(Value::as_f64)
         .unwrap_or(0.0);
     for slot in remaining_slots {
-        if let Some(best) = slot
-            .choices
-            .iter()
-            .max_by(|left, right| (left.score_delta + left.damage_delta).total_cmp(&(right.score_delta + right.damage_delta)))
-        {
+        if let Some(best) = slot.choices.iter().max_by(|left, right| {
+            (left.score_delta + left.damage_delta)
+                .total_cmp(&(right.score_delta + right.damage_delta))
+        }) {
             score += best.score_delta;
             damage_factor += best.damage_delta;
         }
