@@ -15,7 +15,12 @@ pub mod synergy;
 pub mod tech;
 pub mod upgraded;
 
-use crate::{empty_object, expand::fixture_stats_for_config, JsonResult};
+use crate::{
+    empty_object,
+    expand::{fixture_stats_for_config, fixture_stats_for_config_in_memory},
+    score::{coerce_stat_dict, merge_stat_dicts},
+    JsonResult,
+};
 use serde_json::{Map, Value};
 
 pub use collectible_set::collectible_set_contribution;
@@ -35,6 +40,7 @@ pub use synergy::base_synergy_contribution;
 pub use tech::tech_stats_and_pools;
 pub use upgraded::upgraded_collectible_extra;
 
+/// Deprecated compatibility wrapper: may read fixture data from the filesystem.
 pub fn aggregate_all(expanded_config: &Value) -> JsonResult<Value> {
     if let Some(stats) = fixture_stats_for_config(expanded_config)? {
         return Ok(stats);
@@ -52,11 +58,31 @@ pub fn aggregate_all(expanded_config: &Value) -> JsonResult<Value> {
         if let Some(object) = part.as_object() {
             for (key, value) in object {
                 let current = merged.get(key).and_then(Value::as_f64).unwrap_or(0.0);
-                merged.insert(key.clone(), Value::from(current + value.as_f64().unwrap_or(0.0)));
+                merged.insert(
+                    key.clone(),
+                    Value::from(current + value.as_f64().unwrap_or(0.0)),
+                );
             }
         }
     }
     Ok(Value::Object(merged))
+}
+
+pub fn aggregate_in_memory(expanded_config: &Value, data: &Value) -> JsonResult<Value> {
+    if let Some(stats) = fixture_stats_for_config_in_memory(expanded_config, data)? {
+        return Ok(if stats.is_object() {
+            stats
+        } else {
+            empty_object()
+        });
+    }
+    if let Some(stats) = expanded_config.get("stats") {
+        return Ok(coerce_stat_dict(stats));
+    }
+    if let Some(parts) = expanded_config.get("statParts").and_then(Value::as_array) {
+        return Ok(merge_stat_dicts(parts));
+    }
+    Ok(empty_object())
 }
 
 pub(crate) fn empty_stats() -> Value {

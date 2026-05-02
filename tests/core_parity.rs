@@ -1,8 +1,8 @@
 use approx::assert_relative_eq;
 use serde_json::Value;
 use tttg_forge_core::{
-    aggregate_all, build_filtered_skills, calculate_damage_factor, calculate_score, decode_public_raw,
-    expand_compact, get_upgraded_collectibles, sanitize_expanded,
+    aggregate_all, build_filtered_skills, calculate_damage_factor, calculate_score,
+    decode_public_raw, expand_compact, get_upgraded_collectibles, sanitize_expanded,
 };
 
 const FIXTURE_ROOT: &str = "/Users/woosung/Desktop/Dev/Woosdom_Brain/01_Domains/System/codex_output/tttg_forge_sprint_b_2026-04-19/geotool_reimplementation/tests/fixtures";
@@ -34,7 +34,8 @@ fn expand_and_sanitize_match_public_case_wcrs4v() {
 #[test]
 fn aggregate_all_matches_fresh_js_stats_wcrs4v() {
     let case = &load_fixture("public_share_cases_fresh.json")["wCrs4v"];
-    let sanitized = sanitize_expanded(&expand_compact(&case["compact"], &[], true).unwrap()).unwrap();
+    let sanitized =
+        sanitize_expanded(&expand_compact(&case["compact"], &[], true).unwrap()).unwrap();
     assert_eq!(aggregate_all(&sanitized).unwrap(), case["stats"]);
 }
 
@@ -42,7 +43,11 @@ fn aggregate_all_matches_fresh_js_stats_wcrs4v() {
 fn score_helpers_match_synthetic_damage_a() {
     let case = load_fixture("synthetic_damage_a.json");
     let damage = calculate_damage_factor(&case["stats"], &case["ceDamageTechs"]).unwrap();
-    assert_relative_eq!(damage.damage_factor, case["expected"]["damageFactor"].as_f64().unwrap(), epsilon = 1e-9);
+    assert_relative_eq!(
+        damage.damage_factor,
+        case["expected"]["damageFactor"].as_f64().unwrap(),
+        epsilon = 1e-9
+    );
     assert_relative_eq!(
         damage.ce_damage["ssWeapon"].as_f64().unwrap(),
         case["expected"]["ceDamage"]["ssWeapon"].as_f64().unwrap(),
@@ -59,7 +64,11 @@ fn score_helpers_match_synthetic_damage_a() {
         case["gameMode"].as_str().unwrap(),
     )
     .unwrap();
-    assert_relative_eq!(score, case["expected"]["score"].as_f64().unwrap(), epsilon = 1e-9);
+    assert_relative_eq!(
+        score,
+        case["expected"]["score"].as_f64().unwrap(),
+        epsilon = 1e-9
+    );
 }
 
 #[test]

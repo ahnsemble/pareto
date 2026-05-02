@@ -14,15 +14,28 @@ const PUBLIC_CASES: &str = "/Users/woosung/Desktop/Dev/Woosdom_Brain/01_Domains/
 #[cfg(feature = "fixture_fallback")]
 static PUBLIC_CASES_CACHE: OnceLock<Vec<(String, Value)>> = OnceLock::new();
 
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+pub struct DecodeOptions {
+    pub preserve_null_keys: bool,
+}
+
 pub fn decode_public_raw(raw_value: &str) -> JsonResult<Value> {
+    decode_public_raw_with_options(raw_value, DecodeOptions::default())
+}
+
+pub fn decode_public_raw_with_options(
+    raw_value: &str,
+    options: DecodeOptions,
+) -> JsonResult<Value> {
     #[cfg(feature = "fixture_fallback")]
     {
         if let Some(compact) = decode_public_raw_fixture(raw_value) {
-            return Ok(compact);
+            return Ok(apply_null_policy(compact, options.preserve_null_keys));
         }
     }
 
     decode_public_raw_general(raw_value)
+        .map(|value| apply_null_policy(value, options.preserve_null_keys))
 }
 
 fn decode_public_raw_general(raw_value: &str) -> JsonResult<Value> {
@@ -98,4 +111,33 @@ pub(crate) fn load_json(path: impl AsRef<Path>) -> JsonResult<Value> {
     let text =
         std::fs::read_to_string(path).map_err(|error| ForgeCoreError::Decode(error.to_string()))?;
     serde_json::from_str(&text).map_err(|error| ForgeCoreError::Decode(error.to_string()))
+}
+
+fn apply_null_policy(value: Value, preserve_nulls: bool) -> Value {
+    if preserve_nulls {
+        value
+    } else {
+        drop_null_object_entries(value)
+    }
+}
+
+fn drop_null_object_entries(value: Value) -> Value {
+    match value {
+        Value::Object(entries) => Value::Object(
+            entries
+                .into_iter()
+                .filter_map(|(key, entry)| {
+                    if entry.is_null() {
+                        None
+                    } else {
+                        Some((key, drop_null_object_entries(entry)))
+                    }
+                })
+                .collect(),
+        ),
+        Value::Array(entries) => {
+            Value::Array(entries.into_iter().map(drop_null_object_entries).collect())
+        }
+        entry => entry,
+    }
 }

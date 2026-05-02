@@ -43,7 +43,8 @@ pub const DAMAGE_ORDER: &[&str] = &[
     "Brick Mode",
 ];
 
-pub const PASSIVE_DAMAGE_NAMES: &[&str] = &["Exo Bracer", "Ammo Thruster", "HE Fuel", "Energy Cube"];
+pub const PASSIVE_DAMAGE_NAMES: &[&str] =
+    &["Exo Bracer", "Ammo Thruster", "HE Fuel", "Energy Cube"];
 pub const MAX_DAMAGE_POOL_INDEX: usize = 59;
 
 pub fn tech_default_mode(name: &str) -> Option<&'static str> {
@@ -139,9 +140,9 @@ pub fn passive_multiplier(passive_name: &str, mode: &str, value: f64) -> f64 {
             _ => 1.0,
         },
         "Energy Cube" => match mode {
-            "ssWeapon" | "Lightning Mode" | "Rocket" | "Rocket Mode" | "Molotov" | "Molotov Mode"
-            | "Durian Mode" | "Soccer Mode" | "Boomerang Mode" | "Guardian Mode" | "Laser Mode"
-            | "Brick Mode" => value,
+            "ssWeapon" | "Lightning Mode" | "Rocket" | "Rocket Mode" | "Molotov"
+            | "Molotov Mode" | "Durian Mode" | "Soccer Mode" | "Boomerang Mode"
+            | "Guardian Mode" | "Laser Mode" | "Brick Mode" => value,
             _ => 1.0,
         },
         _ => 1.0,
@@ -149,7 +150,9 @@ pub fn passive_multiplier(passive_name: &str, mode: &str, value: f64) -> f64 {
 }
 
 pub fn damage_pool_index(mode: &str, passive_name: &str) -> Option<usize> {
-    let mode_index = DAMAGE_ORDER.iter().position(|candidate| *candidate == mode)?;
+    let mode_index = DAMAGE_ORDER
+        .iter()
+        .position(|candidate| *candidate == mode)?;
     let passive_index = PASSIVE_DAMAGE_NAMES
         .iter()
         .position(|candidate| *candidate == passive_name)?;

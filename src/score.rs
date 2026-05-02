@@ -1,12 +1,15 @@
 use crate::constants::{
-    damage_coefficient, damage_pool_index, passive_multiplier, tech_default_mode, tech_fallback_aliases, DAMAGE_ORDER,
-    PASSIVE_SKILLS, RECOGNIZED_TECH_SKILLS,
+    damage_coefficient, damage_pool_index, passive_multiplier, tech_default_mode,
+    tech_fallback_aliases, DAMAGE_ORDER, PASSIVE_SKILLS, RECOGNIZED_TECH_SKILLS,
 };
 use crate::{as_object, bool_value, num, DamageResult, ForgeCoreError, JsonResult};
 use serde_json::{json, Map, Value};
 use std::collections::BTreeSet;
 
-pub fn get_upgraded_collectibles(custom_sets: &Value, set_sizes: &[usize]) -> JsonResult<BTreeSet<String>> {
+pub fn get_upgraded_collectibles(
+    custom_sets: &Value,
+    set_sizes: &[usize],
+) -> JsonResult<BTreeSet<String>> {
     let mut upgraded = BTreeSet::new();
     for (index, custom_set) in as_object(custom_sets, "custom_sets")?.values().enumerate() {
         let Some(object) = custom_set.as_object() else {
@@ -17,10 +20,17 @@ pub fn get_upgraded_collectibles(custom_sets: &Value, set_sizes: &[usize]) -> Js
             .and_then(Value::as_array)
             .cloned()
             .unwrap_or_default();
-        let level = object.get("level").and_then(Value::as_i64).unwrap_or(0).max(0) as usize;
+        let level = object
+            .get("level")
+            .and_then(Value::as_i64)
+            .unwrap_or(0)
+            .max(0) as usize;
         let filled = collectibles
             .iter()
-            .filter(|name| name.as_str().is_some_and(|name| !name.is_empty() && name != "None"))
+            .filter(|name| {
+                name.as_str()
+                    .is_some_and(|name| !name.is_empty() && name != "None")
+            })
             .count();
         let required = set_sizes.get(index).copied().unwrap_or(filled);
         if filled != required {
@@ -68,11 +78,17 @@ pub fn build_filtered_skills(skills: &Value, techs: &Value, beta: bool) -> JsonR
     let deployed: BTreeSet<String> = get_deployed_modes(techs, beta)?.into_iter().collect();
     let mut filtered = Map::new();
     for passive in PASSIVE_SKILLS {
-        filtered.insert((*passive).to_string(), Value::Bool(bool_value(skills, passive)));
+        filtered.insert(
+            (*passive).to_string(),
+            Value::Bool(bool_value(skills, passive)),
+        );
     }
     for skill_name in RECOGNIZED_TECH_SKILLS {
         if deployed.contains(*skill_name) {
-            filtered.insert((*skill_name).to_string(), Value::Bool(bool_value(skills, skill_name)));
+            filtered.insert(
+                (*skill_name).to_string(),
+                Value::Bool(bool_value(skills, skill_name)),
+            );
         }
     }
     Ok(Value::Object(filtered))
@@ -146,7 +162,10 @@ pub fn calculate_score(
 ) -> JsonResult<f64> {
     let crit_rate_clamped = (num(stats, "critRate") / 100.0).clamp(0.0, 1.0);
     let crit_multiplier = (num(stats, "critDamage") / 100.0).max(2.0);
-    let attack_base = attack_meta.as_object().and_then(|object| object.get("atkBase")).and_then(Value::as_f64);
+    let attack_base = attack_meta
+        .as_object()
+        .and_then(|object| object.get("atkBase"))
+        .and_then(Value::as_f64);
     let attack_final = attack_meta
         .as_object()
         .and_then(|object| object.get("atkFinal"))
@@ -168,7 +187,9 @@ pub fn calculate_score(
         crit_rate_clamped * crit_multiplier + (1.0 - crit_rate_clamped),
         percent_multiplier(num(stats, "skillDamage").max(0.0)),
         percent_multiplier(num(stats, "vulnerability").max(0.0)),
-        percent_multiplier((num(stats, "shieldDamage") * num(stats, "shieldDamageUptime")).max(0.0)),
+        percent_multiplier(
+            (num(stats, "shieldDamage") * num(stats, "shieldDamageUptime")).max(0.0),
+        ),
         percent_multiplier(
             (num(stats, "poisoned") * num(stats, "poisonedUptime")).max(0.0)
                 + (num(stats, "weakened") * num(stats, "weakenedUptime")).max(0.0)
@@ -201,7 +222,12 @@ pub fn calculate_score(
     }
 
     if calc_mode == "damage" {
-        let inverse_damage_factor = 1.0 / if damage_factor == 0.0 { 1.0 } else { damage_factor };
+        let inverse_damage_factor = 1.0
+            / if damage_factor == 0.0 {
+                1.0
+            } else {
+                damage_factor
+            };
         let mut exo_correction = 0.0;
         let mut ammo_correction = 0.0;
         let mut fuel_correction = 0.0;
@@ -223,22 +249,34 @@ pub fn calculate_score(
             }
             let mut divisor = 1.0;
             if use_exo {
-                let value = pool(passive_pools, damage_pool_index(mode, "Exo Bracer").unwrap_or(usize::MAX));
+                let value = pool(
+                    passive_pools,
+                    damage_pool_index(mode, "Exo Bracer").unwrap_or(usize::MAX),
+                );
                 exo_correction += contribution * (value - 1.0);
                 divisor *= value;
             }
             if use_ammo {
-                let value = pool(passive_pools, damage_pool_index(mode, "Ammo Thruster").unwrap_or(usize::MAX));
+                let value = pool(
+                    passive_pools,
+                    damage_pool_index(mode, "Ammo Thruster").unwrap_or(usize::MAX),
+                );
                 ammo_correction += contribution * (value - 1.0);
                 divisor *= value;
             }
             if use_fuel {
-                let value = pool(passive_pools, damage_pool_index(mode, "HE Fuel").unwrap_or(usize::MAX));
+                let value = pool(
+                    passive_pools,
+                    damage_pool_index(mode, "HE Fuel").unwrap_or(usize::MAX),
+                );
                 fuel_correction += contribution * (value - 1.0);
                 divisor *= value;
             }
             if use_cube {
-                let value = pool(passive_pools, damage_pool_index(mode, "Energy Cube").unwrap_or(usize::MAX));
+                let value = pool(
+                    passive_pools,
+                    damage_pool_index(mode, "Energy Cube").unwrap_or(usize::MAX),
+                );
                 cube_correction += contribution * (value - 1.0);
                 divisor *= value;
             }
@@ -259,12 +297,36 @@ pub fn calculate_score(
         }
         normalization = normalization * inverse_damage_factor + 1.0;
         factors.extend([
-            if damage_factor == 0.0 { 1.0 } else { damage_factor },
-            if normalization == 0.0 { 1.0 } else { normalization },
-            if exo_correction == 0.0 { 1.0 } else { exo_correction },
-            if ammo_correction == 0.0 { 1.0 } else { ammo_correction },
-            if fuel_correction == 0.0 { 1.0 } else { fuel_correction },
-            if cube_correction == 0.0 { 1.0 } else { cube_correction },
+            if damage_factor == 0.0 {
+                1.0
+            } else {
+                damage_factor
+            },
+            if normalization == 0.0 {
+                1.0
+            } else {
+                normalization
+            },
+            if exo_correction == 0.0 {
+                1.0
+            } else {
+                exo_correction
+            },
+            if ammo_correction == 0.0 {
+                1.0
+            } else {
+                ammo_correction
+            },
+            if fuel_correction == 0.0 {
+                1.0
+            } else {
+                fuel_correction
+            },
+            if cube_correction == 0.0 {
+                1.0
+            } else {
+                cube_correction
+            },
         ]);
     }
 
@@ -292,7 +354,8 @@ pub fn merge_stat_dicts(parts: &[Value]) -> Value {
             continue;
         };
         for (key, value) in object {
-            let next = merged.get(key).and_then(Value::as_f64).unwrap_or(0.0) + value.as_f64().unwrap_or(0.0);
+            let next = merged.get(key).and_then(Value::as_f64).unwrap_or(0.0)
+                + value.as_f64().unwrap_or(0.0);
             merged.insert(key.clone(), json!(next));
         }
     }
@@ -316,7 +379,12 @@ pub fn coerce_stat_dict(value: &Value) -> Value {
 pub fn coerce_pool_vector(value: &Value) -> Vec<f64> {
     value
         .as_array()
-        .map(|items| items.iter().map(|entry| entry.as_f64().unwrap_or(0.0)).collect())
+        .map(|items| {
+            items
+                .iter()
+                .map(|entry| entry.as_f64().unwrap_or(0.0))
+                .collect()
+        })
         .unwrap_or_default()
 }
 

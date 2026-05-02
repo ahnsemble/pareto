@@ -5,7 +5,10 @@ use tttg_forge_core::*;
 const FIXTURE_ROOT: &str = "/Users/woosung/Desktop/Dev/Woosdom_Brain/01_Domains/System/codex_output/tttg_forge_sprint_b_2026-04-19/geotool_reimplementation/tests/fixtures";
 
 fn load_fixture(name: &str) -> Value {
-    serde_json::from_str(&std::fs::read_to_string(std::path::Path::new(FIXTURE_ROOT).join(name)).unwrap()).unwrap()
+    serde_json::from_str(
+        &std::fs::read_to_string(std::path::Path::new(FIXTURE_ROOT).join(name)).unwrap(),
+    )
+    .unwrap()
 }
 
 fn assert_synthetic_score(name: &str) {
@@ -22,7 +25,11 @@ fn assert_synthetic_score(name: &str) {
         case["gameMode"].as_str().unwrap(),
     )
     .unwrap();
-    assert_relative_eq!(score, case["expected"]["score"].as_f64().unwrap(), epsilon = 1e-9);
+    assert_relative_eq!(
+        score,
+        case["expected"]["score"].as_f64().unwrap(),
+        epsilon = 1e-9
+    );
 }
 
 #[test]
@@ -37,12 +44,18 @@ fn synthetic_multiplier_c_score_matches_python() {
 
 #[test]
 fn merge_stat_dicts_sums_numeric_keys() {
-    assert_eq!(merge_stat_dicts(&[json!({"atk": 2.0}), json!({"atk": 3.5, "hp": 1})]), json!({"atk": 5.5, "hp": 1.0}));
+    assert_eq!(
+        merge_stat_dicts(&[json!({"atk": 2.0}), json!({"atk": 3.5, "hp": 1})]),
+        json!({"atk": 5.5, "hp": 1.0})
+    );
 }
 
 #[test]
 fn coerce_pool_vector_preserves_numeric_entries() {
-    assert_eq!(coerce_pool_vector(&json!([1, 2.5, null])), vec![1.0, 2.5, 0.0]);
+    assert_eq!(
+        coerce_pool_vector(&json!([1, 2.5, null])),
+        vec![1.0, 2.5, 0.0]
+    );
 }
 
 macro_rules! core_smoke {

@@ -44,8 +44,13 @@ pub fn empty_object() -> Value {
     Value::Object(serde_json::Map::new())
 }
 
-pub fn as_object<'a>(value: &'a Value, label: &'static str) -> JsonResult<&'a serde_json::Map<String, Value>> {
-    value.as_object().ok_or(ForgeCoreError::ExpectedObject(label))
+pub fn as_object<'a>(
+    value: &'a Value,
+    label: &'static str,
+) -> JsonResult<&'a serde_json::Map<String, Value>> {
+    value
+        .as_object()
+        .ok_or(ForgeCoreError::ExpectedObject(label))
 }
 
 pub fn num(value: &Value, key: &str) -> f64 {
