@@ -1,0 +1,30 @@
+{
+  "args": [
+    {
+      "collectibles": {},
+      "heroes": {
+        "hero_5": {
+          "level": 111
+        }
+      },
+      "meta": {
+        "gameMode": "main"
+      },
+      "seed": 5,
+      "skills": {
+        "Exo Bracer": true,
+        "HE Fuel": true
+      }
+    }
+  ],
+  "category": "run_full_pipeline",
+  "expected": {
+    "damageFactor": 0,
+    "score": 0,
+    "stats": {}
+  },
+  "exportName": "run_full_pipeline",
+  "id": "browser_049",
+  "note": "browser WASM fixture fallback is unavailable, so expected stats may be empty",
+  "sourceId": "pipeline-unknown-05"
+}

@@ -1,0 +1,41 @@
+{
+  "args": [
+    [
+      {
+        "atk": -646.001684,
+        "critRate": 9,
+        "nonnumeric": "ignored"
+      },
+      {
+        "atk": -623.082679,
+        "critRate": 10,
+        "nonnumeric": "ignored"
+      },
+      {
+        "atk": 868.045151,
+        "critRate": 11,
+        "nonnumeric": "ignored"
+      },
+      {
+        "atk": 798.469471,
+        "critRate": 12,
+        "nonnumeric": "ignored"
+      },
+      {
+        "atk": 475.063847,
+        "critRate": 13,
+        "nonnumeric": "ignored"
+      }
+    ]
+  ],
+  "category": "merge_stat_dicts",
+  "expected": {
+    "atk": 872.4941060000001,
+    "critRate": 55,
+    "nonnumeric": 0
+  },
+  "exportName": "merge_stat_dicts",
+  "id": "browser_059",
+  "note": "numeric/coercion export fixture",
+  "sourceId": "numeric-merge-09"
+}

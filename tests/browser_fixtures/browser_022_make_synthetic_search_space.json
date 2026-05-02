@@ -1,0 +1,33 @@
+{
+  "args": [
+    1,
+    false,
+    true,
+    2
+  ],
+  "category": "make_synthetic_search_space",
+  "expected": {
+    "slots": [
+      {
+        "choices": [
+          {
+            "damage_delta": 3.1,
+            "name": "precision",
+            "score_delta": 13
+          },
+          {
+            "damage_delta": 16,
+            "name": "overload",
+            "score_delta": 5.2
+          }
+        ],
+        "name": "slot_00"
+      }
+    ],
+    "top_k": 2
+  },
+  "exportName": "make_synthetic_search_space",
+  "id": "browser_022",
+  "note": "synthetic search-space structural fixture",
+  "sourceId": "search-fixed-02"
+}

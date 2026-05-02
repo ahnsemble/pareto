@@ -1,0 +1,258 @@
+{
+  "args": [
+    16,
+    false,
+    true,
+    5
+  ],
+  "category": "make_synthetic_search_space",
+  "expected": {
+    "slots": [
+      {
+        "choices": [
+          {
+            "damage_delta": 3.1,
+            "name": "precision",
+            "score_delta": 13
+          },
+          {
+            "damage_delta": 16,
+            "name": "overload",
+            "score_delta": 5.2
+          }
+        ],
+        "name": "slot_00"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.2,
+            "name": "precision",
+            "score_delta": 14
+          },
+          {
+            "damage_delta": 17,
+            "name": "overload",
+            "score_delta": 5.4
+          }
+        ],
+        "name": "slot_01"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.3,
+            "name": "precision",
+            "score_delta": 15
+          },
+          {
+            "damage_delta": 18,
+            "name": "overload",
+            "score_delta": 5.6
+          }
+        ],
+        "name": "slot_02"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.4,
+            "name": "precision",
+            "score_delta": 16
+          },
+          {
+            "damage_delta": 19,
+            "name": "overload",
+            "score_delta": 5.8
+          }
+        ],
+        "name": "slot_03"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.5,
+            "name": "precision",
+            "score_delta": 17
+          },
+          {
+            "damage_delta": 20,
+            "name": "overload",
+            "score_delta": 6
+          }
+        ],
+        "name": "slot_04"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.6,
+            "name": "precision",
+            "score_delta": 18
+          },
+          {
+            "damage_delta": 21,
+            "name": "overload",
+            "score_delta": 6.2
+          }
+        ],
+        "name": "slot_05"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.7,
+            "name": "precision",
+            "score_delta": 19
+          },
+          {
+            "damage_delta": 22,
+            "name": "overload",
+            "score_delta": 6.4
+          }
+        ],
+        "name": "slot_06"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.8,
+            "name": "precision",
+            "score_delta": 20
+          },
+          {
+            "damage_delta": 23,
+            "name": "overload",
+            "score_delta": 6.6
+          }
+        ],
+        "name": "slot_07"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 3.9,
+            "name": "precision",
+            "score_delta": 21
+          },
+          {
+            "damage_delta": 24,
+            "name": "overload",
+            "score_delta": 6.8
+          }
+        ],
+        "name": "slot_08"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4,
+            "name": "precision",
+            "score_delta": 22
+          },
+          {
+            "damage_delta": 25,
+            "name": "overload",
+            "score_delta": 7
+          }
+        ],
+        "name": "slot_09"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4.1,
+            "name": "precision",
+            "score_delta": 23
+          },
+          {
+            "damage_delta": 26,
+            "name": "overload",
+            "score_delta": 7.2
+          }
+        ],
+        "name": "slot_10"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4.2,
+            "name": "precision",
+            "score_delta": 24
+          },
+          {
+            "damage_delta": 27,
+            "name": "overload",
+            "score_delta": 7.4
+          }
+        ],
+        "name": "slot_11"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4.3,
+            "name": "precision",
+            "score_delta": 25
+          },
+          {
+            "damage_delta": 28,
+            "name": "overload",
+            "score_delta": 7.6
+          }
+        ],
+        "name": "slot_12"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4.4,
+            "name": "precision",
+            "score_delta": 26
+          },
+          {
+            "damage_delta": 29,
+            "name": "overload",
+            "score_delta": 7.800000000000001
+          }
+        ],
+        "name": "slot_13"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4.5,
+            "name": "precision",
+            "score_delta": 27
+          },
+          {
+            "damage_delta": 30,
+            "name": "overload",
+            "score_delta": 8
+          }
+        ],
+        "name": "slot_14"
+      },
+      {
+        "choices": [
+          {
+            "damage_delta": 4.6,
+            "name": "precision",
+            "score_delta": 28
+          },
+          {
+            "damage_delta": 31,
+            "name": "overload",
+            "score_delta": 8.2
+          }
+        ],
+        "name": "slot_15"
+      }
+    ],
+    "top_k": 5
+  },
+  "exportName": "make_synthetic_search_space",
+  "id": "browser_028",
+  "note": "synthetic search-space structural fixture",
+  "sourceId": "search-random-03"
+}
