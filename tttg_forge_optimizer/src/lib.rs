@@ -6,6 +6,7 @@ pub mod prepared_case;
 pub mod schema;
 pub mod search_space;
 pub mod space_builder;
+pub mod twodeck;
 pub mod utils;
 
 pub use beam_search::*;
@@ -16,4 +17,5 @@ pub use prepared_case::*;
 pub use schema::*;
 pub use search_space::*;
 pub use space_builder::*;
+pub use twodeck::*;
 pub use utils::hash::*;

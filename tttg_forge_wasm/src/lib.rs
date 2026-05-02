@@ -3,6 +3,8 @@ use serde_json::{json, Value};
 use tttg_forge_core::DecodeOptions;
 use wasm_bindgen::prelude::*;
 
+pub mod twodeck;
+
 fn to_value(input: JsValue) -> Value {
     serde_wasm_bindgen::from_value(input).unwrap_or(Value::Null)
 }
