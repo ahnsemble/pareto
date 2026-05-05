@@ -16,10 +16,16 @@ import {
 import { PetStateId, petDelta } from './_components/pets';
 import { getWorker } from '../../lib/wasm-client';
 import type { OptimizeResult } from '../../lib/wasm-worker';
+import type { TwoDeckOverlayMode } from './_components/TwoDeckOverlay';
 
 const ParetoFrontierChart = dynamic(
   () =>
     import('./_components/ParetoFrontierChart').then((mod) => mod.ParetoFrontierChart),
+  { ssr: false, loading: () => <ChartSkeletonFallback /> },
+);
+
+const TwoDeckOverlay = dynamic(
+  () => import('./_components/TwoDeckOverlay').then((mod) => mod.TwoDeckOverlay),
   { ssr: false, loading: () => <ChartSkeletonFallback /> },
 );
 
@@ -56,6 +62,7 @@ const TOP_K = 5;
 
 export default function OptimizePage() {
   const t = useTranslations('optimize');
+  const tTwoDeck = useTranslations('twoDeck');
   const [selectedHero, setSelectedHero] = useState<string | null>(null);
   const [ownedSet, setOwnedSet] = useState<Set<number>>(new Set());
   const [equipped, setEquipped] = useState<EquippedMap>({});
@@ -63,6 +70,9 @@ export default function OptimizePage() {
   const [petState, setPetState] = useState<PetStateId>('early');
   const [run, setRun] = useState<RunState>({ phase: 'initializing' });
   const [showSkeleton, setShowSkeleton] = useState(false);
+  const [deckASnapshot, setDeckASnapshot] = useState<{ result: OptimizeResult; heroLabel: string } | null>(null);
+  const [deckBSnapshot, setDeckBSnapshot] = useState<{ result: OptimizeResult; heroLabel: string } | null>(null);
+  const [overlayMode, setOverlayMode] = useState<TwoDeckOverlayMode>('pareto');
 
   useEffect(() => {
     let cancelled = false;
@@ -258,6 +268,41 @@ export default function OptimizePage() {
                   heroLabel={heroDetail?.label ?? '—'}
                 />
               </div>
+              <div className="flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  data-testid="save-as-deck-a"
+                  onClick={() =>
+                    setDeckASnapshot({ result: run.result, heroLabel: heroDetail?.label ?? '—' })
+                  }
+                  className="min-h-[44px] rounded-md border border-[color:var(--color-primary)] px-4 py-2 font-mono text-xs text-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)]/10"
+                >
+                  {tTwoDeck('saveAsDeckA')}
+                </button>
+                <button
+                  type="button"
+                  data-testid="save-as-deck-b"
+                  onClick={() =>
+                    setDeckBSnapshot({ result: run.result, heroLabel: heroDetail?.label ?? '—' })
+                  }
+                  className="min-h-[44px] rounded-md border border-[color:var(--color-secondary)] px-4 py-2 font-mono text-xs text-[color:var(--color-secondary)] hover:bg-[color:var(--color-secondary)]/10"
+                >
+                  {tTwoDeck('saveAsDeckB')}
+                </button>
+                {(deckASnapshot || deckBSnapshot) && (
+                  <button
+                    type="button"
+                    data-testid="clear-deck-snapshots"
+                    onClick={() => {
+                      setDeckASnapshot(null);
+                      setDeckBSnapshot(null);
+                    }}
+                    className="min-h-[44px] rounded-md border border-[color:var(--color-border)] px-4 py-2 font-mono text-xs text-[color:var(--color-text-muted)] hover:text-[color:var(--color-text)]"
+                  >
+                    {tTwoDeck('clearSnapshots')}
+                  </button>
+                )}
+              </div>
             </>
           ) : run.phase === 'computing' ? (
             <ChartSkeleton />
@@ -269,6 +314,47 @@ export default function OptimizePage() {
           )}
         </div>
       </section>
+
+      {(deckASnapshot || deckBSnapshot) && (
+        <section
+          data-testid="two-deck-section"
+          className="rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface-elev)] p-5"
+        >
+          <header className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
+            <h2 className="text-sm uppercase tracking-wider text-[color:var(--color-text-muted)]">
+              {tTwoDeck('section')}
+            </h2>
+            <p className="font-mono text-xs text-[color:var(--color-text-muted)]">
+              A:{' '}
+              <span className="text-[color:var(--color-primary)]">
+                {deckASnapshot?.heroLabel ?? tTwoDeck('deckUnset')}
+              </span>
+              {' · '}
+              B:{' '}
+              <span className="text-[color:var(--color-secondary)]">
+                {deckBSnapshot?.heroLabel ?? tTwoDeck('deckUnset')}
+              </span>
+            </p>
+          </header>
+          {deckASnapshot && deckBSnapshot ? (
+            <TwoDeckOverlay
+              deckA={deckASnapshot.result}
+              deckB={deckBSnapshot.result}
+              labelA={deckASnapshot.heroLabel}
+              labelB={deckBSnapshot.heroLabel}
+              mode={overlayMode}
+              onModeChange={setOverlayMode}
+            />
+          ) : (
+            <p
+              data-testid="two-deck-overlay-pending"
+              className="text-sm text-[color:var(--color-text-muted)]"
+            >
+              {deckASnapshot ? tTwoDeck('pendingB') : tTwoDeck('pendingA')}
+            </p>
+          )}
+        </section>
+      )}
     </main>
   );
 }

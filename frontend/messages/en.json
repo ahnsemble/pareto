@@ -87,5 +87,22 @@
       "mid": "Mid",
       "endgame": "Endgame"
     }
+  },
+  "twoDeck": {
+    "section": "Deck Comparison",
+    "modePareto": "Frontier",
+    "modeTop5": "Top 5",
+    "modeDiff": "Diff",
+    "saveAsDeckA": "Save as Deck A",
+    "saveAsDeckB": "Save as Deck B",
+    "clearSnapshots": "Clear snapshots",
+    "deckUnset": "not set",
+    "uniqueLabel": "unique",
+    "sharedLabel": "shared",
+    "emptyData": "No data to compare",
+    "emptyBuilds": "No builds to compare.",
+    "pendingA": "Save Deck A to see the comparison",
+    "pendingB": "Save Deck B to see the comparison",
+    "modeAriaLabel": "deck comparison mode"
   }
 }

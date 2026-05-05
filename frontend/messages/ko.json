@@ -87,5 +87,22 @@
       "mid": "중기",
       "endgame": "엔드게임"
     }
+  },
+  "twoDeck": {
+    "section": "덱 비교",
+    "modePareto": "프론티어",
+    "modeTop5": "Top 5",
+    "modeDiff": "차이",
+    "saveAsDeckA": "덱 A로 저장",
+    "saveAsDeckB": "덱 B로 저장",
+    "clearSnapshots": "스냅샷 초기화",
+    "deckUnset": "미설정",
+    "uniqueLabel": "고유",
+    "sharedLabel": "공통",
+    "emptyData": "덱 비교 데이터가 없습니다",
+    "emptyBuilds": "비교할 빌드가 없습니다.",
+    "pendingA": "덱 A를 저장하면 비교가 표시됩니다",
+    "pendingB": "덱 B를 저장하면 비교가 표시됩니다",
+    "modeAriaLabel": "덱 비교 모드"
   }
 }
