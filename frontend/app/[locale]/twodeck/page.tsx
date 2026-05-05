@@ -1,14 +1,30 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '../../../i18n/navigation';
-import {
-  TwoDeckChart,
-  type DiffPoint,
-  type FrontierPoint,
-  type TwoDeckMode,
+import type {
+  DiffPoint,
+  FrontierPoint,
+  TwoDeckMode,
 } from '../../../components/charts/TwoDeckChart';
+
+// Sprint G.6 A T3: dynamic import with ssr:false eliminates Recharts ResponsiveContainer
+// width(-1)/height(-1) warnings emitted during SSR pre-render.
+const TwoDeckChart = dynamic(
+  () => import('../../../components/charts/TwoDeckChart').then((mod) => mod.TwoDeckChart),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        role="status"
+        aria-label="Loading chart"
+        className="h-[280px] sm:h-[360px] w-full animate-pulse rounded-md bg-[color:var(--color-surface)]"
+      />
+    ),
+  },
+);
 
 interface SimpleResult {
   label: string;
