@@ -60,5 +60,15 @@
     "terms": "이용약관",
     "privacy": "개인정보처리방침",
     "version": "버전"
+  },
+  "optimize": {
+    "ctaRun": "최적화",
+    "ctaComputing": "최적화 중…",
+    "ctaHeroFirst": "히어로를 먼저 선택하세요.",
+    "chartLoading": "차트 로딩 중",
+    "viewToList": "리스트 보기로 전환",
+    "viewToGrid": "그리드 보기로 전환",
+    "viewListLabel": "☰ 리스트",
+    "viewGridLabel": "⊞ 그리드"
   }
 }

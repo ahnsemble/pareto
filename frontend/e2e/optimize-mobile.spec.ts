@@ -8,7 +8,7 @@ test.describe('Mobile responsiveness (Sprint G.2 Session 3 carryover #5)', () =>
 
     await page.locator('#hero-select').selectOption('overlord');
 
-    const toggles = page.locator('button[role="switch"]');
+    const toggles = page.locator('button[role="switch"]:visible');
     await expect(toggles).toHaveCount(64);
     for (let i = 0; i < 12; i += 1) {
       await toggles.nth(i).click();
@@ -33,9 +33,13 @@ test.describe('Mobile responsiveness (Sprint G.2 Session 3 carryover #5)', () =>
   test('mobile 375px — collectible toggle grid reflows to 2 columns', async ({ page }) => {
     await page.goto('/optimize', { waitUntil: 'domcontentloaded' });
 
-    const firstToggle = page.locator('button[role="switch"]').first();
-    const secondToggle = page.locator('button[role="switch"]').nth(1);
-    const thirdToggle = page.locator('button[role="switch"]').nth(2);
+    // Sprint G.6 A T2.1: mobile defaults to list view; switch to grid to verify 2-col reflow
+    await page.getByTestId('collectible-view-toggle').click();
+
+    const gridToggles = page.locator('[data-testid="collectible-grid"] button[role="switch"]');
+    const firstToggle = gridToggles.first();
+    const secondToggle = gridToggles.nth(1);
+    const thirdToggle = gridToggles.nth(2);
 
     await firstToggle.waitFor({ state: 'visible' });
     const box1 = await firstToggle.boundingBox();

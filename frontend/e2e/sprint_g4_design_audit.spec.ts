@@ -52,7 +52,12 @@ test.describe('Sprint G.4 — Design Audit Cleanup (focus ring + touch targets +
 
   test('T2 — collectible pill hit-area ≥ 40×40 via ::before extension', async ({ page }) => {
     await page.goto('/optimize', { waitUntil: 'domcontentloaded' });
-    const firstPill = page.locator('button[role="switch"]').first();
+    // Sprint G.6 A T2.1: mobile defaults to list view; switch to grid to test the pill ::before pseudo
+    const toggle = page.getByTestId('collectible-view-toggle');
+    if (await toggle.isVisible()) {
+      await toggle.click();
+    }
+    const firstPill = page.locator('[data-testid="collectible-grid"] button[role="switch"]').first();
     await firstPill.waitFor({ state: 'visible' });
 
     const rects = await firstPill.evaluate((el) => {

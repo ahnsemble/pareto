@@ -1,6 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Link } from '../../../i18n/navigation';
@@ -13,15 +14,26 @@ import type { OptimizeResult } from '../../lib/wasm-worker';
 const ParetoFrontierChart = dynamic(
   () =>
     import('./_components/ParetoFrontierChart').then((mod) => mod.ParetoFrontierChart),
-  { ssr: false, loading: () => <ChartSkeleton /> },
+  { ssr: false, loading: () => <ChartSkeletonFallback /> },
 );
 
-function ChartSkeleton() {
+function ChartSkeletonFallback() {
   return (
     <div
       role="status"
       aria-label="Loading chart"
-      className="h-[360px] w-full animate-pulse rounded-md bg-[color:var(--color-surface)]"
+      className="h-[280px] sm:h-[360px] w-full animate-pulse rounded-md bg-[color:var(--color-surface)]"
+    />
+  );
+}
+
+function ChartSkeleton() {
+  const t = useTranslations('optimize');
+  return (
+    <div
+      role="status"
+      aria-label={t('chartLoading')}
+      className="h-[280px] sm:h-[360px] w-full animate-pulse rounded-md bg-[color:var(--color-surface)]"
     />
   );
 }
@@ -37,6 +49,7 @@ type RunState =
 const TOP_K = 5;
 
 export default function OptimizePage() {
+  const t = useTranslations('optimize');
   const [selectedHero, setSelectedHero] = useState<string | null>(null);
   const [ownedSet, setOwnedSet] = useState<Set<number>>(new Set());
   const [run, setRun] = useState<RunState>({ phase: 'initializing' });
@@ -114,7 +127,7 @@ export default function OptimizePage() {
 
   return (
     <main className="mx-auto max-w-6xl space-y-8 px-6 py-10">
-      <header className="flex items-baseline justify-between">
+      <header className="sticky top-0 z-10 -mx-6 border-b border-[color:var(--color-border)]/50 bg-[color:var(--color-bg)] px-6 pb-4 pt-2 flex items-baseline justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">
             <span className="text-[color:var(--color-primary)]">Pareto</span>{' '}
@@ -143,23 +156,23 @@ export default function OptimizePage() {
             onClearCollectibles={handleClearCollectibles}
             onSelectAllCollectibles={handleSelectAllCollectibles}
           />
-          <div className="mt-6 flex items-center gap-3">
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
             <button
               type="button"
               onClick={handleOptimize}
               disabled={!canOptimize}
               aria-disabled={!canOptimize}
               aria-describedby={!canOptimize ? 'optimize-disabled-reason' : undefined}
-              className="min-h-[44px] rounded-md bg-[color:var(--color-primary)] px-4 py-2.5 font-mono text-sm font-semibold text-[color:var(--color-bg)] transition hover:bg-[color:var(--color-primary-strong)] focus-visible:shadow-[var(--shadow-glow-primary)] disabled:cursor-not-allowed disabled:opacity-40"
+              className="min-h-[44px] w-full sm:w-auto rounded-md bg-[color:var(--color-primary)] px-4 py-2.5 font-mono text-sm font-semibold text-[color:var(--color-bg)] transition hover:bg-[color:var(--color-primary-strong)] focus-visible:shadow-[var(--shadow-glow-primary)] disabled:cursor-not-allowed disabled:opacity-40"
             >
-              {run.phase === 'computing' ? 'Optimizing…' : 'Optimize'}
+              {run.phase === 'computing' ? t('ctaComputing') : t('ctaRun')}
             </button>
             {!heroDetail && (
               <span
                 id="optimize-disabled-reason"
                 className="text-xs text-[color:var(--color-text-muted)]"
               >
-                Select a hero first.
+                {t('ctaHeroFirst')}
               </span>
             )}
             {run.phase === 'initializing' && (

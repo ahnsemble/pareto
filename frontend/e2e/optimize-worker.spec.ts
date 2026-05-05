@@ -18,7 +18,7 @@ test.describe('Comlink Worker browser verification (Sprint G.2 Session 3 carryov
 
     await page.locator('#hero-select').selectOption('overlord');
 
-    const toggles = page.locator('button[role="switch"]');
+    const toggles = page.locator('button[role="switch"]:visible');
     const count = await toggles.count();
     expect(count).toBe(64);
     for (let i = 0; i < 12; i += 1) {
@@ -82,7 +82,7 @@ test.describe('Comlink Worker browser verification (Sprint G.2 Session 3 carryov
 
     await page.goto('/optimize', { waitUntil: 'domcontentloaded' });
     await page.locator('#hero-select').selectOption('commando');
-    const toggles = page.locator('button[role="switch"]');
+    const toggles = page.locator('button[role="switch"]:visible');
     for (let i = 0; i < 8; i += 1) {
       await toggles.nth(i).click();
     }

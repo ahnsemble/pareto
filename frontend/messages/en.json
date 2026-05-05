@@ -60,5 +60,15 @@
     "terms": "Terms",
     "privacy": "Privacy",
     "version": "Version"
+  },
+  "optimize": {
+    "ctaRun": "Optimize",
+    "ctaComputing": "Optimizing…",
+    "ctaHeroFirst": "Select a hero first.",
+    "chartLoading": "Loading chart",
+    "viewToList": "Switch to list view",
+    "viewToGrid": "Switch to grid view",
+    "viewListLabel": "☰ List",
+    "viewGridLabel": "⊞ Grid"
   }
 }

@@ -89,7 +89,7 @@ export function ParetoFrontierChart({ allPoints, paretoFrontier, topBuilds }: Pr
       <div
         role="img"
         aria-labelledby="pareto-chart-empty"
-        className="flex h-[360px] w-full items-center justify-center rounded-md border border-dashed border-[color:var(--color-border)] p-10 text-center text-sm text-[color:var(--color-text-muted)]"
+        className="flex h-[280px] sm:h-[360px] w-full items-center justify-center rounded-md border border-dashed border-[color:var(--color-border)] p-10 text-center text-sm text-[color:var(--color-text-muted)]"
       >
         <span id="pareto-chart-empty">
           Run optimization to populate the Pareto frontier chart.
@@ -103,7 +103,7 @@ export function ParetoFrontierChart({ allPoints, paretoFrontier, topBuilds }: Pr
     <div
       role="img"
       aria-labelledby="pareto-chart-title"
-      className="h-[360px] w-full"
+      className="h-[280px] sm:h-[360px] w-full"
     >
       <h3 id="pareto-chart-title" className="sr-only">
         {summaryText}
