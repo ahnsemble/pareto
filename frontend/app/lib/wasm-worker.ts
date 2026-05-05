@@ -16,6 +16,8 @@ export interface OptimizeInput {
   tradeoff: boolean;
   topK: number;
   ownedCollectibles: number;
+  equipmentDelta?: Record<string, number>;
+  petDelta?: Record<string, number>;
 }
 
 export interface BuildPoint {
@@ -142,9 +144,13 @@ const workerApi = {
     const allPoints = enumerateCombos(space, MAX_COMBOS);
 
     const ownedBoost = 1 + Math.min(input.ownedCollectibles, 64) * 0.005;
+    const sumDelta = (delta?: Record<string, number>) =>
+      delta ? Object.values(delta).reduce((a, b) => a + b, 0) : 0;
+    const equipBoost = 1 + sumDelta(input.equipmentDelta);
+    const petBoost = 1 + sumDelta(input.petDelta);
     for (const point of allPoints) {
-      point.score *= ownedBoost;
-      point.damageFactor *= ownedBoost;
+      point.score *= ownedBoost * equipBoost;
+      point.damageFactor *= ownedBoost * petBoost;
     }
 
     const sortedByScore = [...allPoints].sort((a, b) => b.score - a.score);

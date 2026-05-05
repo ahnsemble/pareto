@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { HeroOption, HEROES, COLLECTIBLES } from './heroes';
+import { EQUIPMENT_SLOTS, EquipmentSlotId, EquippedMap } from './equipment';
+import { PETS, PET_STATE_IDS, PetStateId } from './pets';
 
 interface Props {
   selectedHero: string | null;
@@ -11,6 +13,12 @@ interface Props {
   onToggleCollectible: (id: number) => void;
   onClearCollectibles: () => void;
   onSelectAllCollectibles: () => void;
+  equipped: EquippedMap;
+  onEquipChange: (slotId: EquipmentSlotId, itemId: string) => void;
+  selectedPet: string | null;
+  onSelectPet: (id: string) => void;
+  petState: PetStateId;
+  onPetStateChange: (state: PetStateId) => void;
 }
 
 type ViewMode = 'grid' | 'list';
@@ -22,10 +30,21 @@ export function OptimizeInputForm({
   onToggleCollectible,
   onClearCollectibles,
   onSelectAllCollectibles,
+  equipped,
+  onEquipChange,
+  selectedPet,
+  onSelectPet,
+  petState,
+  onPetStateChange,
 }: Props) {
   const heroDetail: HeroOption | undefined = HEROES.find((h) => h.id === selectedHero);
   const [viewMode, setViewMode] = useState<ViewMode>('list');
   const t = useTranslations('optimize');
+  const tCard = useTranslations('card');
+  const tEquip = useTranslations('equipment');
+  const tPet = useTranslations('pet');
+  const equippedCount = EQUIPMENT_SLOTS.filter((s) => equipped[s.id]).length;
+  const petDetail = PETS.find((p) => p.id === selectedPet);
 
   return (
     <section className="space-y-6">
@@ -148,6 +167,92 @@ export function OptimizeInputForm({
               );
             })}
           </ul>
+        )}
+      </div>
+
+      <div data-testid="equipment-section">
+        <label className="mb-2 block text-xs uppercase tracking-wider text-[color:var(--color-text-muted)]">
+          3. {tCard('equipment')} ({equippedCount} / 3)
+        </label>
+        <div className="grid gap-2">
+          {EQUIPMENT_SLOTS.map((slot) => (
+            <div key={slot.id} className="flex items-center gap-3">
+              <span className="w-16 text-xs text-[color:var(--color-text-muted)]">
+                {tEquip(`slot.${slot.id}`)}
+              </span>
+              <select
+                data-testid={`equipment-${slot.id}`}
+                aria-label={tEquip(`slot.${slot.id}`)}
+                value={equipped[slot.id] ?? ''}
+                onChange={(e) => onEquipChange(slot.id, e.target.value)}
+                className="flex-1 rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-3 py-2 font-mono text-sm text-[color:var(--color-text)]"
+              >
+                <option value="">{tEquip('unselected')}</option>
+                {slot.options.map((opt) => (
+                  <option key={opt.id} value={opt.id}>
+                    {opt.nameKo} ({opt.grade})
+                  </option>
+                ))}
+              </select>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div data-testid="pet-section">
+        <label
+          htmlFor="pet-select"
+          className="mb-2 block text-xs uppercase tracking-wider text-[color:var(--color-text-muted)]"
+        >
+          4. {tCard('pet')}
+        </label>
+        <select
+          id="pet-select"
+          aria-label={tCard('pet')}
+          value={selectedPet ?? ''}
+          onChange={(e) => onSelectPet(e.target.value)}
+          className="w-full rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-3 py-2.5 font-mono text-sm text-[color:var(--color-text)]"
+        >
+          <option value="">{tPet('unselected')}</option>
+          {PETS.map((pet) => (
+            <option key={pet.id} value={pet.id}>
+              {pet.nameKo} — {pet.elementKo}
+            </option>
+          ))}
+        </select>
+        {petDetail && (
+          <>
+            <p className="mt-2 text-xs text-[color:var(--color-text-muted)]" data-testid="pet-tagline">
+              {petDetail.taglineKo}
+            </p>
+            <div className="mt-3" data-testid="pet-state-row">
+              <label className="text-xs text-[color:var(--color-text-muted)]">
+                {tPet('state.label')}
+              </label>
+              <div className="mt-1 flex gap-2">
+                {PET_STATE_IDS.map((state) => {
+                  const active = petState === state;
+                  return (
+                    <button
+                      key={state}
+                      type="button"
+                      onClick={() => onPetStateChange(state)}
+                      data-testid={`pet-state-${state}`}
+                      aria-pressed={active}
+                      className={
+                        'min-h-[44px] flex-1 rounded-md border px-3 py-2 font-mono text-xs transition ' +
+                        (active
+                          ? 'border-[color:var(--color-primary)] bg-[color:var(--color-primary)]/10 text-[color:var(--color-primary)]'
+                          : 'border-[color:var(--color-border)] text-[color:var(--color-text-muted)] hover:border-[color:var(--color-primary-strong)]')
+                      }
+                    >
+                      {tPet(`state.${state}`)}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </>
         )}
       </div>
     </section>

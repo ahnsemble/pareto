@@ -70,5 +70,22 @@
     "viewToGrid": "Switch to grid view",
     "viewListLabel": "☰ List",
     "viewGridLabel": "⊞ Grid"
+  },
+  "equipment": {
+    "unselected": "— none —",
+    "slot": {
+      "weapon": "Weapon",
+      "ring": "Ring",
+      "necklace": "Necklace"
+    }
+  },
+  "pet": {
+    "unselected": "Select a pet…",
+    "state": {
+      "label": "Evolution stage",
+      "early": "Early",
+      "mid": "Mid",
+      "endgame": "Endgame"
+    }
   }
 }

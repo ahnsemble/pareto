@@ -8,6 +8,12 @@ import { Link } from '../../../i18n/navigation';
 import { COLLECTIBLES, HEROES, HeroOption } from './_components/heroes';
 import { OptimizeInputForm } from './_components/OptimizeInputForm';
 import { OptimizeResultGrid } from './_components/OptimizeResultGrid';
+import {
+  EquipmentSlotId,
+  EquippedMap,
+  equipmentDelta,
+} from './_components/equipment';
+import { PetStateId, petDelta } from './_components/pets';
 import { getWorker } from '../../lib/wasm-client';
 import type { OptimizeResult } from '../../lib/wasm-worker';
 
@@ -52,6 +58,9 @@ export default function OptimizePage() {
   const t = useTranslations('optimize');
   const [selectedHero, setSelectedHero] = useState<string | null>(null);
   const [ownedSet, setOwnedSet] = useState<Set<number>>(new Set());
+  const [equipped, setEquipped] = useState<EquippedMap>({});
+  const [selectedPet, setSelectedPet] = useState<string | null>(null);
+  const [petState, setPetState] = useState<PetStateId>('early');
   const [run, setRun] = useState<RunState>({ phase: 'initializing' });
   const [showSkeleton, setShowSkeleton] = useState(false);
 
@@ -105,6 +114,15 @@ export default function OptimizePage() {
     [],
   );
 
+  const handleEquipChange = useCallback((slotId: EquipmentSlotId, itemId: string) => {
+    setEquipped((prev) => {
+      const next = { ...prev };
+      if (itemId) next[slotId] = itemId;
+      else delete next[slotId];
+      return next;
+    });
+  }, []);
+
   const handleOptimize = useCallback(async () => {
     if (!heroDetail) return;
     const startedAt = performance.now();
@@ -117,13 +135,15 @@ export default function OptimizePage() {
         tradeoff: heroDetail.tradeoff,
         topK: TOP_K,
         ownedCollectibles: ownedSet.size,
+        equipmentDelta: equipmentDelta(equipped),
+        petDelta: petDelta(selectedPet ? { id: selectedPet, state: petState } : null),
       });
       setRun({ phase: 'success', result });
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
       setRun({ phase: 'error', message });
     }
-  }, [heroDetail, ownedSet]);
+  }, [heroDetail, ownedSet, equipped, selectedPet, petState]);
 
   return (
     <main className="mx-auto max-w-6xl space-y-8 px-6 py-10">
@@ -155,6 +175,12 @@ export default function OptimizePage() {
             onToggleCollectible={handleToggleCollectible}
             onClearCollectibles={handleClearCollectibles}
             onSelectAllCollectibles={handleSelectAllCollectibles}
+            equipped={equipped}
+            onEquipChange={handleEquipChange}
+            selectedPet={selectedPet}
+            onSelectPet={setSelectedPet}
+            petState={petState}
+            onPetStateChange={setPetState}
           />
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
             <button

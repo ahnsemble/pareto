@@ -70,5 +70,22 @@
     "viewToGrid": "그리드 보기로 전환",
     "viewListLabel": "☰ 리스트",
     "viewGridLabel": "⊞ 그리드"
+  },
+  "equipment": {
+    "unselected": "— 미선택 —",
+    "slot": {
+      "weapon": "무기",
+      "ring": "반지",
+      "necklace": "목걸이"
+    }
+  },
+  "pet": {
+    "unselected": "펫을 선택하세요…",
+    "state": {
+      "label": "진화 단계",
+      "early": "초기",
+      "mid": "중기",
+      "endgame": "엔드게임"
+    }
   }
 }
