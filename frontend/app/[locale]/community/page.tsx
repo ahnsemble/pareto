@@ -468,60 +468,7 @@ function CommunityKorean() {
             지금 최적화 시작
           </Link>
         </div>
-        <ul className="flex flex-wrap justify-center gap-2 pt-2 text-sm">
-          <li>
-            <a
-              href="#"
-              className="inline-flex min-h-[40px] items-center rounded-md border border-[color:var(--color-border)] px-3 py-1.5 hover:border-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]"
-            >
-              네이버 카페 참여
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="inline-flex min-h-[40px] items-center rounded-md border border-[color:var(--color-border)] px-3 py-1.5 hover:border-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]"
-            >
-              디스코드 참여
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="inline-flex min-h-[40px] items-center rounded-md border border-[color:var(--color-border)] px-3 py-1.5 hover:border-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]"
-            >
-              인벤 게시판
-            </a>
-          </li>
-        </ul>
       </section>
-
-      <footer className="space-y-4 border-t border-[color:var(--color-border)] pt-8 text-sm text-[color:var(--color-text-muted)]">
-        <p className="font-medium text-[color:var(--color-text)]">
-          Pareto — Survivor.io (탕탕특공대) 빌드 최적화 도구
-        </p>
-        <ul className="flex flex-wrap gap-x-4 gap-y-2">
-          <li>MIT License</li>
-          <li>
-            <a href="#" className="hover:text-[color:var(--color-primary)]">
-              문의 / 버그 리포트
-            </a>
-          </li>
-          <li>
-            <a href="#" className="hover:text-[color:var(--color-primary)]">
-              이용약관
-            </a>
-          </li>
-          <li>
-            <a href="#" className="hover:text-[color:var(--color-primary)]">
-              개인정보처리방침
-            </a>
-          </li>
-        </ul>
-        <p className="max-w-2xl text-xs leading-relaxed">
-          Pareto는 Habby 또는 Survivor.io의 공식 제휴 도구가 아닙니다. 모든 게임 데이터는 공개 정보에 기반합니다.
-        </p>
-      </footer>
     </main>
   );
 }

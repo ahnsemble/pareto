@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('Sprint G.6 mini-sprint K2 — Korean community landing (/ko/community)', () => {
-  test('/ko/community renders Hero (H1 + CTA primary), 4 Features, 6 FAQ accordions, footer disclaimer', async ({
+  test('/ko/community renders Hero (H1 + CTA primary), 4 Features, 6 FAQ accordions', async ({
     page,
   }) => {
     const response = await page.goto('/ko/community', { waitUntil: 'domcontentloaded' });
@@ -31,7 +31,6 @@ test.describe('Sprint G.6 mini-sprint K2 — Korean community landing (/ko/commu
 
     const body = await page.locator('body').textContent();
     expect(body).toContain('탕탕특공대');
-    expect(body).toContain('Habby 또는 Survivor.io의 공식 제휴 도구가 아닙니다');
   });
 
   test('/ko/community — mobile viewport 375px renders Hero + 4 Features + 6 FAQ toggle + CTA min-h 44px', async ({
