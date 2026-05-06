@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { HeroOption, HEROES, COLLECTIBLES } from './heroes';
-import { EQUIPMENT_SLOTS, EquipmentSlotId, EquippedMap } from './equipment';
+import { EQUIPMENT_SLOTS, EquipmentSlotId, EquippedMap, EQUIPMENT_GRADE_KO } from './equipment';
 import { PETS, PET_STATE_IDS, PetStateId } from './pets';
 
 interface Props {
@@ -190,7 +190,7 @@ export function OptimizeInputForm({
                 <option value="">{tEquip('unselected')}</option>
                 {slot.options.map((opt) => (
                   <option key={opt.id} value={opt.id}>
-                    {opt.nameKo} ({opt.grade})
+                    {opt.nameKo} ({EQUIPMENT_GRADE_KO[opt.grade]})
                   </option>
                 ))}
               </select>

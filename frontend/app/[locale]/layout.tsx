@@ -16,10 +16,63 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-export const metadata: Metadata = {
-  title: 'Pareto',
-  description: 'WASM-powered build optimizer for Survivor.io',
-};
+const SITE_URL = 'https://pareto.app';
+
+const META_BY_LOCALE = {
+  en: {
+    title: 'Pareto — Build optimizer for Survivor.io',
+    description: 'WASM-powered Pareto frontier optimizer for Survivor.io builds. Compare decks, find optimal trade-offs.',
+    ogAlt: 'Pareto — Build optimizer for Survivor.io',
+  },
+  ko: {
+    title: '파레토 — 탕탕특공대 빌드 최적화 도구',
+    description: '빌드, 계산하지 말고 비교하세요. 파레토 프론티어로 최적 빌드를 한눈에 찾으세요.',
+    ogAlt: '파레토 — 탕탕특공대 빌드 최적화 도구',
+  },
+} as const;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const meta = META_BY_LOCALE[locale as keyof typeof META_BY_LOCALE] ?? META_BY_LOCALE.en;
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: meta.title,
+    description: meta.description,
+    alternates: {
+      canonical: `/${locale}`,
+      languages: {
+        en: '/en',
+        ko: '/ko',
+      },
+    },
+    openGraph: {
+      type: 'website',
+      siteName: 'Pareto',
+      title: meta.title,
+      description: meta.description,
+      url: `/${locale}`,
+      locale: locale === 'ko' ? 'ko_KR' : 'en_US',
+      images: [
+        {
+          url: '/og-community.png',
+          width: 1200,
+          height: 630,
+          alt: meta.ogAlt,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: meta.title,
+      description: meta.description,
+      images: ['/og-community.png'],
+    },
+  };
+}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

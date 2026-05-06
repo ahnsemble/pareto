@@ -1,0 +1,21 @@
+{
+  "redirects": [
+    { "source": "/", "destination": "/en", "type": 302 },
+    { "source": "/optimize", "destination": "/en/optimize", "type": 302 },
+    { "source": "/optimize/", "destination": "/en/optimize", "type": 302 },
+    { "source": "/twodeck", "destination": "/en/twodeck", "type": 302 },
+    { "source": "/twodeck/", "destination": "/en/twodeck", "type": 302 },
+    { "source": "/community", "destination": "/en/community", "type": 302 },
+    { "source": "/community/", "destination": "/en/community", "type": 302 }
+  ],
+  "rewrites": [
+    { "source": "/en", "destination": "/en.html" },
+    { "source": "/ko", "destination": "/ko.html" },
+    { "source": "/en/optimize", "destination": "/en/optimize.html" },
+    { "source": "/ko/optimize", "destination": "/ko/optimize.html" },
+    { "source": "/en/twodeck", "destination": "/en/twodeck.html" },
+    { "source": "/ko/twodeck", "destination": "/ko/twodeck.html" },
+    { "source": "/en/community", "destination": "/en/community.html" },
+    { "source": "/ko/community", "destination": "/ko/community.html" }
+  ]
+}

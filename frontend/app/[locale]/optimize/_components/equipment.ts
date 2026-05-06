@@ -2,6 +2,15 @@ export const EQUIPMENT_TOP3_SLOT_IDS = ['weapon', 'ring', 'necklace'] as const;
 export type EquipmentSlotId = (typeof EQUIPMENT_TOP3_SLOT_IDS)[number];
 export type EquipmentGrade = 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary' | 'mythic';
 
+export const EQUIPMENT_GRADE_KO: Record<EquipmentGrade, string> = {
+  common: '커먼',
+  uncommon: '언커먼',
+  rare: '레어',
+  epic: '에픽',
+  legendary: '레전드',
+  mythic: '미씩',
+};
+
 export interface EquipmentItem {
   id: string;
   name: string;
@@ -25,7 +34,7 @@ export const EQUIPMENT_SLOTS: EquipmentSlot[] = [
     labelKo: '무기',
     options: [
       { id: 'kunai', name: 'Kunai', nameKo: '쿠나이', slot: 'weapon', grade: 'epic', statBonus: { atk: 0.15, atkSpeed: 0.08 } },
-      { id: 'baseball-bat', name: 'Baseball Bat', nameKo: '야구방망이', slot: 'weapon', grade: 'rare', statBonus: { atk: 0.12, critDamage: 0.10 } },
+      { id: 'baseball-bat', name: 'Baseball Bat', nameKo: '야구 방망이', slot: 'weapon', grade: 'rare', statBonus: { atk: 0.12, critDamage: 0.10 } },
       { id: 'forcefield', name: 'Forcefield', nameKo: '포스필드', slot: 'weapon', grade: 'epic', statBonus: { atk: 0.10, def: 0.10 } },
       { id: 'lightchaser', name: 'Lightchaser', nameKo: '광속검', slot: 'weapon', grade: 'legendary', statBonus: { atk: 0.20, critRate: 0.12 } },
       { id: 'destroyer', name: 'Destroyer', nameKo: '파괴자', slot: 'weapon', grade: 'mythic', statBonus: { atk: 0.30, critDamage: 0.20 } },

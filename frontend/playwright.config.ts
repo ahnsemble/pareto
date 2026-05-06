@@ -23,7 +23,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'PORT=3032 npm run start',
+    command: 'npx --yes serve@14 out -l 3032 --no-clipboard',
     url: 'http://localhost:3032',
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
