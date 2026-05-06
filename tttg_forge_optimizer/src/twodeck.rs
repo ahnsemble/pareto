@@ -9,6 +9,7 @@ use crate::pareto_frontier::{pareto_frontier_strict, OptimizationResult};
 use serde::{Deserialize, Serialize};
 
 pub type FrontierPoint = OptimizationResult;
+pub const DEFAULT_TWODECK_TOP_K: usize = 5;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
@@ -37,16 +38,26 @@ pub fn pareto_twodeck_compute(
     deck_a: &[OptimizationResult],
     deck_b: &[OptimizationResult],
 ) -> TwoDeckResult {
+    pareto_twodeck_compute_with_top_k(deck_a, deck_b, DEFAULT_TWODECK_TOP_K)
+}
+
+pub fn pareto_twodeck_compute_with_top_k(
+    deck_a: &[OptimizationResult],
+    deck_b: &[OptimizationResult],
+    top_k: usize,
+) -> TwoDeckResult {
+    let top_k = top_k.max(1);
     let deck_a_frontier = pareto_frontier_strict(deck_a);
     let deck_b_frontier = pareto_frontier_strict(deck_b);
 
-    let mut combined: Vec<OptimizationResult> = Vec::with_capacity(deck_a_frontier.len() + deck_b_frontier.len());
+    let mut combined: Vec<OptimizationResult> =
+        Vec::with_capacity(deck_a_frontier.len() + deck_b_frontier.len());
     combined.extend_from_slice(&deck_a_frontier);
     combined.extend_from_slice(&deck_b_frontier);
     let mode_pareto = dedupe_frontier(pareto_frontier_strict(&combined));
 
-    let top5_a: Vec<FrontierPoint> = deck_a_frontier.iter().take(5).cloned().collect();
-    let top5_b: Vec<FrontierPoint> = deck_b_frontier.iter().take(5).cloned().collect();
+    let top5_a: Vec<FrontierPoint> = deck_a_frontier.iter().take(top_k).cloned().collect();
+    let top5_b: Vec<FrontierPoint> = deck_b_frontier.iter().take(top_k).cloned().collect();
 
     let mode_diff: Vec<DiffPoint> = mode_pareto
         .iter()
@@ -76,7 +87,9 @@ pub fn pareto_twodeck_compute(
 }
 
 fn points_equal(a: &OptimizationResult, b: &OptimizationResult) -> bool {
-    a.label == b.label && a.score.to_bits() == b.score.to_bits() && a.damage_factor.to_bits() == b.damage_factor.to_bits()
+    a.label == b.label
+        && a.score.to_bits() == b.score.to_bits()
+        && a.damage_factor.to_bits() == b.damage_factor.to_bits()
 }
 
 fn dedupe_frontier(points: Vec<OptimizationResult>) -> Vec<OptimizationResult> {
@@ -104,10 +117,7 @@ mod tests {
         assert_eq!(r.deck_a_frontier.len(), r.deck_b_frontier.len());
         assert_eq!(r.mode_pareto.len(), r.deck_a_frontier.len());
         assert_eq!(r.deck_a_frontier.len(), 2);
-        assert!(r
-            .mode_diff
-            .iter()
-            .all(|d| d.origin == DiffOrigin::Both));
+        assert!(r.mode_diff.iter().all(|d| d.origin == DiffOrigin::Both));
     }
 
     #[test]
@@ -130,10 +140,24 @@ mod tests {
         let b = vec![p("c", 1.5, 1.5), p("d", 0.5, 3.0)];
         let r = pareto_twodeck_compute(&a, &b);
         assert_eq!(r.mode_diff.len(), r.mode_pareto.len());
-        let only_a_count = r.mode_diff.iter().filter(|d| d.origin == DiffOrigin::OnlyA).count();
-        let only_b_count = r.mode_diff.iter().filter(|d| d.origin == DiffOrigin::OnlyB).count();
-        assert!(only_a_count >= 1, "expected at least one OnlyA in disjoint decks");
-        assert!(only_b_count >= 1, "expected at least one OnlyB in disjoint decks");
+        let only_a_count = r
+            .mode_diff
+            .iter()
+            .filter(|d| d.origin == DiffOrigin::OnlyA)
+            .count();
+        let only_b_count = r
+            .mode_diff
+            .iter()
+            .filter(|d| d.origin == DiffOrigin::OnlyB)
+            .count();
+        assert!(
+            only_a_count >= 1,
+            "expected at least one OnlyA in disjoint decks"
+        );
+        assert!(
+            only_b_count >= 1,
+            "expected at least one OnlyB in disjoint decks"
+        );
     }
 
     #[test]
@@ -153,19 +177,13 @@ mod tests {
         let r = pareto_twodeck_compute(&a, &[]);
         assert_eq!(r.deck_a_frontier.len(), 1);
         assert!(r.deck_b_frontier.is_empty());
-        assert!(r
-            .mode_diff
-            .iter()
-            .all(|d| d.origin == DiffOrigin::OnlyA));
+        assert!(r.mode_diff.iter().all(|d| d.origin == DiffOrigin::OnlyA));
         assert!(r.mode_top5.1.is_empty());
 
         let r2 = pareto_twodeck_compute(&[], &a);
         assert!(r2.deck_a_frontier.is_empty());
         assert_eq!(r2.deck_b_frontier.len(), 1);
-        assert!(r2
-            .mode_diff
-            .iter()
-            .all(|d| d.origin == DiffOrigin::OnlyB));
+        assert!(r2.mode_diff.iter().all(|d| d.origin == DiffOrigin::OnlyB));
     }
 
     #[test]
@@ -193,6 +211,22 @@ mod tests {
         assert_eq!(r.deck_b_frontier.len(), 8);
         assert_eq!(r.mode_top5.0.len(), 5, "top5 must cap A at 5");
         assert_eq!(r.mode_top5.1.len(), 5, "top5 must cap B at 5");
+    }
+
+    #[test]
+    fn test_twodeck_top_k_override_caps_each_frontier_side() {
+        let deck: Vec<OptimizationResult> = (0..8)
+            .map(|i| p(&format!("a{i}"), i as f64, (8 - i) as f64))
+            .collect();
+
+        let r = pareto_twodeck_compute_with_top_k(&deck, &deck, 2);
+
+        assert_eq!(r.deck_a_frontier.len(), 8);
+        assert_eq!(r.deck_b_frontier.len(), 8);
+        assert_eq!(r.mode_top5.0.len(), 2);
+        assert_eq!(r.mode_top5.1.len(), 2);
+        assert_eq!(r.mode_top5.0[0].label, "a7");
+        assert_eq!(r.mode_top5.1[1].label, "a6");
     }
 
     #[test]
