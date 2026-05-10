@@ -11,9 +11,10 @@ import { OptimizeResultGrid } from './_components/OptimizeResultGrid';
 import {
   EquipmentSlotId,
   EquippedMap,
+  EQUIPMENT_SLOTS,
   equipmentDelta,
 } from './_components/equipment';
-import { PetStateId, petDelta } from './_components/pets';
+import { PETS, PET_STATE_IDS, PetStateId, petDelta } from './_components/pets';
 import { getWorker } from '../../lib/wasm-client';
 import type { OptimizeResult } from '../../lib/wasm-worker';
 import type { TwoDeckOverlayMode } from './_components/TwoDeckOverlay';
@@ -59,6 +60,45 @@ type RunState =
   | { phase: 'error'; message: string };
 
 const TOP_K = 5;
+const SHARE_QUERY_VERSION = '1';
+
+type ShareCopyState = 'idle' | 'copied' | 'manual';
+
+function parseOwnedParam(value: string | null): Set<number> {
+  const ids = new Set<number>();
+  if (!value) return ids;
+  for (const token of value.split(',')) {
+    const id = Number(token);
+    if (Number.isInteger(id) && id >= 0 && id < COLLECTIBLES.length) {
+      ids.add(id);
+    }
+  }
+  return ids;
+}
+
+function serializeOwnedParam(ownedSet: Set<number>): string {
+  return Array.from(ownedSet)
+    .sort((a, b) => a - b)
+    .join(',');
+}
+
+function parseEquippedParams(params: URLSearchParams): EquippedMap {
+  const next: EquippedMap = {};
+  for (const slot of EQUIPMENT_SLOTS) {
+    const itemId = params.get(`eq_${slot.id}`);
+    if (itemId && slot.options.some((option) => option.id === itemId)) {
+      next[slot.id] = itemId;
+    }
+  }
+  return next;
+}
+
+function applyEquippedParams(params: URLSearchParams, equipped: EquippedMap) {
+  for (const slot of EQUIPMENT_SLOTS) {
+    const itemId = equipped[slot.id];
+    if (itemId) params.set(`eq_${slot.id}`, itemId);
+  }
+}
 
 export default function OptimizePage() {
   const t = useTranslations('optimize');
@@ -73,6 +113,8 @@ export default function OptimizePage() {
   const [deckASnapshot, setDeckASnapshot] = useState<{ result: OptimizeResult; heroLabel: string } | null>(null);
   const [deckBSnapshot, setDeckBSnapshot] = useState<{ result: OptimizeResult; heroLabel: string } | null>(null);
   const [overlayMode, setOverlayMode] = useState<TwoDeckOverlayMode>('pareto');
+  const [shareUrl, setShareUrl] = useState('');
+  const [shareCopyState, setShareCopyState] = useState<ShareCopyState>('idle');
 
   useEffect(() => {
     let cancelled = false;
@@ -98,6 +140,32 @@ export default function OptimizePage() {
       clearTimeout(skeletonTimer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('pf') !== SHARE_QUERY_VERSION && !params.has('hero')) return;
+
+    const hero = params.get('hero');
+    if (hero && HEROES.some((h) => h.id === hero)) {
+      setSelectedHero(hero);
+    }
+
+    setOwnedSet(parseOwnedParam(params.get('owned')));
+    setEquipped(parseEquippedParams(params));
+
+    const pet = params.get('pet');
+    if (pet && PETS.some((p) => p.id === pet)) {
+      setSelectedPet(pet);
+    }
+
+    const requestedPetState = params.get('petState');
+    if (
+      requestedPetState &&
+      PET_STATE_IDS.includes(requestedPetState as PetStateId)
+    ) {
+      setPetState(requestedPetState as PetStateId);
+    }
   }, []);
 
   const heroDetail: HeroOption | undefined = useMemo(
@@ -154,6 +222,36 @@ export default function OptimizePage() {
       setRun({ phase: 'error', message });
     }
   }, [heroDetail, ownedSet, equipped, selectedPet, petState]);
+
+  const buildShareUrl = useCallback(() => {
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams();
+    params.set('pf', SHARE_QUERY_VERSION);
+    if (selectedHero) params.set('hero', selectedHero);
+    const owned = serializeOwnedParam(ownedSet);
+    if (owned) params.set('owned', owned);
+    applyEquippedParams(params, equipped);
+    if (selectedPet) params.set('pet', selectedPet);
+    params.set('petState', petState);
+    url.search = params.toString();
+    url.hash = '';
+    return url.toString();
+  }, [selectedHero, ownedSet, equipped, selectedPet, petState]);
+
+  const handleShare = useCallback(async () => {
+    const nextShareUrl = buildShareUrl();
+    setShareUrl(nextShareUrl);
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(nextShareUrl);
+        setShareCopyState('copied');
+        return;
+      }
+    } catch {
+      // Fall through to the visible URL field when clipboard permission is denied.
+    }
+    setShareCopyState('manual');
+  }, [buildShareUrl]);
 
   return (
     <main className="mx-auto max-w-6xl space-y-8 px-6 py-10">
@@ -289,6 +387,14 @@ export default function OptimizePage() {
                 >
                   {tTwoDeck('saveAsDeckB')}
                 </button>
+                <button
+                  type="button"
+                  data-testid="share-url-button"
+                  onClick={handleShare}
+                  className="min-h-[44px] rounded-md border border-[color:var(--color-accent)] px-4 py-2 font-mono text-xs text-[color:var(--color-accent)] hover:bg-[color:var(--color-accent)]/10"
+                >
+                  Copy share URL
+                </button>
                 {(deckASnapshot || deckBSnapshot) && (
                   <button
                     type="button"
@@ -303,6 +409,32 @@ export default function OptimizePage() {
                   </button>
                 )}
               </div>
+              {shareUrl && (
+                <div className="rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-3">
+                  <label
+                    htmlFor="share-url-output"
+                    className="mb-2 block text-xs uppercase tracking-wider text-[color:var(--color-text-muted)]"
+                  >
+                    Share URL
+                  </label>
+                  <input
+                    id="share-url-output"
+                    data-testid="share-url-output"
+                    readOnly
+                    value={shareUrl}
+                    onFocus={(event) => event.currentTarget.select()}
+                    className="w-full rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-bg)] px-3 py-2 font-mono text-xs text-[color:var(--color-text)]"
+                  />
+                  <p
+                    data-testid="share-url-status"
+                    className="mt-2 text-xs text-[color:var(--color-text-muted)]"
+                  >
+                    {shareCopyState === 'copied'
+                      ? 'Copied to clipboard.'
+                      : 'Copy the URL manually.'}
+                  </p>
+                </div>
+              )}
             </>
           ) : run.phase === 'computing' ? (
             <ChartSkeleton />
