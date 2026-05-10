@@ -45,7 +45,7 @@ A. 기본 analytics spec은 PII와 raw build payload를 저장하지 않도록 �
 
 **Q. WASM size 기준은 무엇인가요?**
 
-A. production default package는 `225,000 B` 이하를 목표로 합니다.
+A. production default package는 raw `145,000 B`, gzip `60,000 B` 이하를 목표로 합니다.
 
 ## English
 
@@ -90,4 +90,4 @@ A. The default analytics spec is designed to avoid PII and raw build payloads.
 
 **Q. What is the WASM size target?**
 
-A. The production default package targets `225,000 B` or less.
+A. The production default package targets raw `145,000 B` and gzip `60,000 B` or less.
