@@ -15,10 +15,14 @@ pub struct BenchRegressionRow {
     pub loose_pruned_nodes: usize,
     pub loose_pruning_rate: f64,
     pub loose_mean_ms: f64,
+    #[serde(default)]
+    pub loose_stddev_ms: f64,
     pub tight_visited_nodes: usize,
     pub tight_pruned_nodes: usize,
     pub tight_pruning_rate: f64,
     pub tight_mean_ms: f64,
+    #[serde(default)]
+    pub tight_stddev_ms: f64,
     pub exact_match: bool,
 }
 
@@ -26,10 +30,21 @@ pub struct BenchRegressionRow {
 pub struct BenchRegressionReport {
     pub generated_by: String,
     pub iterations: usize,
+    #[serde(default)]
+    pub machine_id: String,
+    #[serde(default)]
+    pub warm_up_iterations: usize,
     pub rows: Vec<BenchRegressionRow>,
     pub average_pruning_delta: f64,
     pub average_wall_clock_delta: f64,
     pub all_exact_match: bool,
+}
+
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct BenchMachineProfile {
+    pub machine_id: String,
+    pub iterations: usize,
+    pub warm_up_iterations: usize,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -37,6 +52,21 @@ pub struct BenchRegressionPolicy {
     pub wall_clock_regression_limit: f64,
     pub min_wall_clock_abs_floor_ms: f64,
     pub pruning_rate_regression_limit: f64,
+    pub max_relative_stddev: f64,
+    pub minimum_pass_rate: f64,
+}
+
+impl Default for BenchMachineProfile {
+    fn default() -> Self {
+        Self {
+            machine_id: std::env::var("PARETO_BENCH_MACHINE_ID")
+                .ok()
+                .filter(|value| !value.trim().is_empty())
+                .unwrap_or_else(|| std::env::consts::ARCH.to_string()),
+            iterations: 50,
+            warm_up_iterations: 3,
+        }
+    }
 }
 
 impl Default for BenchRegressionPolicy {
@@ -45,12 +75,18 @@ impl Default for BenchRegressionPolicy {
             wall_clock_regression_limit: 1.50,
             min_wall_clock_abs_floor_ms: 0.050,
             pruning_rate_regression_limit: 0.05,
+            max_relative_stddev: 1.0,
+            minimum_pass_rate: 0.95,
         }
     }
 }
 
 pub fn benchmark_regression_report(iterations: usize) -> BenchRegressionReport {
-    let rows = benchmark_regression_rows(iterations);
+    let profile = BenchMachineProfile {
+        iterations: iterations.max(1),
+        ..BenchMachineProfile::default()
+    };
+    let rows = benchmark_regression_rows_with_profile(&profile);
     let average_pruning_delta = average(
         rows.iter()
             .map(|row| row.tight_pruning_rate - row.loose_pruning_rate),
@@ -65,7 +101,9 @@ pub fn benchmark_regression_report(iterations: usize) -> BenchRegressionReport {
     let all_exact_match = rows.iter().all(|row| row.exact_match);
     BenchRegressionReport {
         generated_by: "tttg_forge_optimizer::bench_regression".to_string(),
-        iterations: iterations.max(1),
+        iterations: profile.iterations,
+        machine_id: profile.machine_id,
+        warm_up_iterations: profile.warm_up_iterations,
         rows,
         average_pruning_delta,
         average_wall_clock_delta,
@@ -115,11 +153,30 @@ pub fn compare_bench_reports(
                 policy.pruning_rate_regression_limit * 100.0
             ));
         }
+        if current_row.tight_mean_ms > f64::EPSILON {
+            let relative_stddev = current_row.tight_stddev_ms / current_row.tight_mean_ms;
+            if relative_stddev > policy.max_relative_stddev {
+                failures.push(format!(
+                    "{} variance {:.2} > max {:.2}",
+                    current_row.sample, relative_stddev, policy.max_relative_stddev
+                ));
+            }
+        }
     }
     failures
 }
 
 pub fn benchmark_regression_rows(iterations: usize) -> Vec<BenchRegressionRow> {
+    let profile = BenchMachineProfile {
+        iterations: iterations.max(1),
+        ..BenchMachineProfile::default()
+    };
+    benchmark_regression_rows_with_profile(&profile)
+}
+
+pub fn benchmark_regression_rows_with_profile(
+    profile: &BenchMachineProfile,
+) -> Vec<BenchRegressionRow> {
     let prepared = json!({"score": 1000.0, "damageFactor": 100.0});
     sample_spaces()
         .into_iter()
@@ -131,14 +188,14 @@ pub fn benchmark_regression_rows(iterations: usize) -> Vec<BenchRegressionRow> {
                 &space,
                 top_k,
                 UpperBoundStrategy::LooseCombined,
-                iterations,
+                profile,
             );
             let tight = measure_strategy(
                 &prepared,
                 &space,
                 top_k,
                 UpperBoundStrategy::TightSeparate,
-                iterations,
+                profile,
             );
             BenchRegressionRow {
                 sample: sample.to_string(),
@@ -148,10 +205,12 @@ pub fn benchmark_regression_rows(iterations: usize) -> Vec<BenchRegressionRow> {
                 loose_pruned_nodes: loose.pruned_nodes,
                 loose_pruning_rate: loose.pruning_rate,
                 loose_mean_ms: loose.mean_ms,
+                loose_stddev_ms: loose.stddev_ms,
                 tight_visited_nodes: tight.visited_nodes,
                 tight_pruned_nodes: tight.pruned_nodes,
                 tight_pruning_rate: tight.pruning_rate,
                 tight_mean_ms: tight.mean_ms,
+                tight_stddev_ms: tight.stddev_ms,
                 exact_match: tight.results == brute && loose.results == brute,
             }
         })
@@ -187,6 +246,7 @@ struct StrategyMeasurement {
     pruned_nodes: usize,
     pruning_rate: f64,
     mean_ms: f64,
+    stddev_ms: f64,
 }
 
 fn measure_strategy(
@@ -194,20 +254,23 @@ fn measure_strategy(
     space: &OptimizationSearchSpace,
     top_k: usize,
     strategy: UpperBoundStrategy,
-    iterations: usize,
+    profile: &BenchMachineProfile,
 ) -> StrategyMeasurement {
-    let iterations = iterations.max(1);
-    for _ in 0..3 {
+    let iterations = profile.iterations.max(1);
+    for _ in 0..profile.warm_up_iterations {
         let _ = find_best_bb_with_strategy(prepared, &json!({}), space, top_k, strategy)
             .expect("benchmark warm-up sample must be valid");
     }
     let mut total_ms = 0.0;
+    let mut measurements = Vec::with_capacity(iterations);
     let mut latest = None;
     for _ in 0..iterations {
         let started = Instant::now();
         let outcome = find_best_bb_with_strategy(prepared, &json!({}), space, top_k, strategy)
             .expect("benchmark sample must be valid");
-        total_ms += started.elapsed().as_secs_f64() * 1000.0;
+        let elapsed_ms = started.elapsed().as_secs_f64() * 1000.0;
+        total_ms += elapsed_ms;
+        measurements.push(elapsed_ms);
         latest = Some(outcome);
     }
     let outcome = latest.expect("at least one iteration");
@@ -217,6 +280,7 @@ fn measure_strategy(
         pruned_nodes: outcome.metrics.pruned_nodes,
         pruning_rate: outcome.metrics.pruning_rate(),
         mean_ms: total_ms / iterations as f64,
+        stddev_ms: sample_stddev_ms(&measurements),
     }
 }
 
@@ -283,4 +347,28 @@ fn average(values: impl Iterator<Item = f64>) -> f64 {
     } else {
         sum / count as f64
     }
+}
+
+pub fn sample_stddev_ms(values: &[f64]) -> f64 {
+    if values.len() <= 1 {
+        return 0.0;
+    }
+    let mean = values.iter().sum::<f64>() / values.len() as f64;
+    let variance = values
+        .iter()
+        .map(|value| {
+            let delta = value - mean;
+            delta * delta
+        })
+        .sum::<f64>()
+        / values.len() as f64;
+    variance.sqrt()
+}
+
+pub fn bench_pass_rate(total_runs: usize, failed_runs: usize) -> f64 {
+    if total_runs == 0 {
+        return 1.0;
+    }
+    let failed = failed_runs.min(total_runs);
+    (total_runs - failed) as f64 / total_runs as f64
 }

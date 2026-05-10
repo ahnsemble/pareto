@@ -17,6 +17,7 @@ serde-wasm-bindgen.workspace = true
 
 [features]
 default = []
+compat-exports = []
 main-cli = []
 pareto-objective-wasm = []
 

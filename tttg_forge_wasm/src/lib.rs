@@ -19,7 +19,7 @@ fn to_json_js(value: Value) -> JsValue {
         .unwrap_or(JsValue::NULL)
 }
 
-#[wasm_bindgen]
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
 pub fn invoke_export(module_id: u32, export_name: &str, args: JsValue) -> JsValue {
     to_js(json!({
         "moduleId": module_id,
@@ -28,7 +28,7 @@ pub fn invoke_export(module_id: u32, export_name: &str, args: JsValue) -> JsValu
     }))
 }
 
-#[wasm_bindgen]
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
 pub fn bridge_set(values: JsValue) -> JsValue {
     let value = to_value(values);
     to_js(bridge_set_value(&value))
@@ -40,7 +40,7 @@ pub fn run_full_pipeline(config: JsValue) -> JsValue {
     to_json_js(run_full_pipeline_value(&config))
 }
 
-#[wasm_bindgen]
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
 pub fn expand_compact_js(
     compact: JsValue,
     data: JsValue,
@@ -56,7 +56,7 @@ pub fn expand_compact_js(
     )
 }
 
-#[wasm_bindgen]
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
 pub fn aggregate_in_memory_js(expanded_config: JsValue, data: JsValue) -> JsValue {
     let expanded_config = to_value(expanded_config);
     let data = to_value(data);
@@ -66,7 +66,7 @@ pub fn aggregate_in_memory_js(expanded_config: JsValue, data: JsValue) -> JsValu
     )
 }
 
-#[wasm_bindgen]
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
 pub fn run_full_pipeline_in_memory(config: JsValue, data: JsValue) -> JsValue {
     let config = to_value(config);
     let data = to_value(data);
@@ -84,12 +84,12 @@ pub fn run_full_pipeline_in_memory(config: JsValue, data: JsValue) -> JsValue {
     }))
 }
 
-#[wasm_bindgen]
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
 pub fn coerce_stat_dict(value: JsValue) -> JsValue {
     to_js(tttg_forge_core::coerce_stat_dict(&to_value(value)))
 }
 
-#[wasm_bindgen]
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
 pub fn coerce_pool_vector(value: JsValue) -> JsValue {
     to_js(json!(tttg_forge_core::coerce_pool_vector(&to_value(value))))
 }
@@ -99,7 +99,7 @@ pub fn get_base_stats() -> JsValue {
     to_js(tttg_forge_core::get_base_stats())
 }
 
-#[wasm_bindgen]
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
 pub fn merge_stat_dicts(parts: JsValue) -> JsValue {
     let value = to_value(parts);
     to_js(merge_stat_dicts_value(&value))
@@ -110,7 +110,7 @@ pub fn decode_public_raw(raw_value: &str) -> JsValue {
     decode_public_raw_js(raw_value, false)
 }
 
-#[wasm_bindgen]
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
 pub fn decode_public_raw_js(raw_value: &str, preserve_nulls: bool) -> JsValue {
     to_json_js(
         tttg_forge_core::decode_public_raw_with_options(
@@ -123,7 +123,7 @@ pub fn decode_public_raw_js(raw_value: &str, preserve_nulls: bool) -> JsValue {
     )
 }
 
-#[wasm_bindgen]
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
 pub fn calculate_damage_factor(stats: JsValue, ce_damage_techs: JsValue) -> JsValue {
     match tttg_forge_core::calculate_damage_factor(&to_value(stats), &to_value(ce_damage_techs)) {
         Ok(result) => to_js(json!(result)),
@@ -146,13 +146,13 @@ pub fn make_synthetic_search_space(
     )))
 }
 
-#[wasm_bindgen]
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
 pub fn pareto_frontier_smoke_js(candidates: JsValue) -> JsValue {
     let value = to_value(candidates);
     to_js(pareto_frontier_smoke_value(&value))
 }
 
-#[wasm_bindgen]
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
 pub fn pareto_frontier_smoke_wasm(points_json: &str) -> Result<JsValue, JsValue> {
     let candidates =
         serde_json::from_str::<Vec<tttg_forge_optimizer::ParetoSmokeCandidate>>(points_json)

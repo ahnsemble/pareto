@@ -4,7 +4,7 @@ use tttg_forge_optimizer::{
 };
 use wasm_bindgen::prelude::*;
 
-#[wasm_bindgen]
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
 pub fn pareto_twodeck_compute_wasm(
     deck_a_json: &str,
     deck_b_json: &str,

@@ -127,6 +127,7 @@ fn g5_bench_policy_custom_pruning_limit_can_relax_check() {
         wall_clock_regression_limit: 1.50,
         min_wall_clock_abs_floor_ms: 0.050,
         pruning_rate_regression_limit: 0.10,
+        ..BenchRegressionPolicy::default()
     };
 
     let failures = compare_bench_reports(&baseline, &current, &policy);
@@ -142,6 +143,7 @@ fn g5_bench_policy_custom_floor_can_relax_tiny_sample() {
         wall_clock_regression_limit: 1.50,
         min_wall_clock_abs_floor_ms: 0.25,
         pruning_rate_regression_limit: 0.05,
+        ..BenchRegressionPolicy::default()
     };
 
     let failures = compare_bench_reports(&baseline, &current, &policy);
@@ -174,6 +176,8 @@ fn report(rows: Vec<BenchRegressionRow>) -> BenchRegressionReport {
     BenchRegressionReport {
         generated_by: "g5-test".to_string(),
         iterations: 1,
+        machine_id: "g5-test-machine".to_string(),
+        warm_up_iterations: 0,
         rows,
         average_pruning_delta: 0.0,
         average_wall_clock_delta: 0.0,
@@ -190,10 +194,12 @@ fn row(sample: &str, tight_mean_ms: f64, pruning_rate: f64, exact: bool) -> Benc
         loose_pruned_nodes: 0,
         loose_pruning_rate: pruning_rate,
         loose_mean_ms: tight_mean_ms,
+        loose_stddev_ms: 0.0,
         tight_visited_nodes: 1,
         tight_pruned_nodes: 0,
         tight_pruning_rate: pruning_rate,
         tight_mean_ms,
+        tight_stddev_ms: 0.0,
         exact_match: exact,
     }
 }

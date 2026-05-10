@@ -1,6 +1,6 @@
 use tttg_forge_optimizer::{
-    benchmark_regression_rows, compare_bench_reports, BenchRegressionPolicy,
-    BenchRegressionReport, BenchRegressionRow,
+    bench_pass_rate, benchmark_regression_rows, compare_bench_reports, sample_stddev_ms,
+    BenchMachineProfile, BenchRegressionPolicy, BenchRegressionReport, BenchRegressionRow,
 };
 
 #[test]
@@ -31,6 +31,7 @@ fn bench_policy_allows_tiny_wall_clock_noise_with_absolute_floor() {
         wall_clock_regression_limit: 1.50,
         min_wall_clock_abs_floor_ms: 0.050,
         pruning_rate_regression_limit: 0.05,
+        ..BenchRegressionPolicy::default()
     };
 
     let failures = compare_bench_reports(&baseline, &current, &policy);
@@ -46,6 +47,7 @@ fn bench_policy_rejects_large_wall_clock_regression_after_floor() {
         wall_clock_regression_limit: 1.50,
         min_wall_clock_abs_floor_ms: 0.050,
         pruning_rate_regression_limit: 0.05,
+        ..BenchRegressionPolicy::default()
     };
 
     let failures = compare_bench_reports(&baseline, &current, &policy);
@@ -129,11 +131,145 @@ fn bench_policy_can_be_tightened_for_local_experiments() {
         wall_clock_regression_limit: 1.10,
         min_wall_clock_abs_floor_ms: 0.0,
         pruning_rate_regression_limit: 0.05,
+        ..BenchRegressionPolicy::default()
     };
 
     let failures = compare_bench_reports(&baseline, &current, &policy);
 
     assert_eq!(failures.len(), 1);
+}
+
+#[test]
+fn sample_stddev_is_zero_for_empty_measurements() {
+    assert_eq!(sample_stddev_ms(&[]), 0.0);
+}
+
+#[test]
+fn sample_stddev_is_zero_for_single_measurement() {
+    assert_eq!(sample_stddev_ms(&[1.0]), 0.0);
+}
+
+#[test]
+fn sample_stddev_tracks_variance_for_multiple_measurements() {
+    let stddev = sample_stddev_ms(&[1.0, 2.0, 3.0]);
+
+    assert!((stddev - 0.8164965809).abs() < 0.000001);
+}
+
+#[test]
+fn bench_pass_rate_is_one_when_no_runs_execute() {
+    assert_eq!(bench_pass_rate(0, 0), 1.0);
+}
+
+#[test]
+fn bench_pass_rate_counts_successes() {
+    assert_eq!(bench_pass_rate(50, 2), 0.96);
+}
+
+#[test]
+fn bench_pass_rate_never_drops_below_zero() {
+    assert_eq!(bench_pass_rate(5, 10), 0.0);
+}
+
+#[test]
+fn bench_machine_profile_default_uses_fifty_iterations() {
+    assert_eq!(BenchMachineProfile::default().iterations, 50);
+}
+
+#[test]
+fn bench_machine_profile_default_uses_three_warmups() {
+    assert_eq!(BenchMachineProfile::default().warm_up_iterations, 3);
+}
+
+#[test]
+fn bench_machine_profile_names_current_machine() {
+    assert!(!BenchMachineProfile::default().machine_id.is_empty());
+}
+
+#[test]
+fn benchmark_rows_include_tight_stddev_tracking() {
+    let rows = benchmark_regression_rows(1);
+
+    assert!(rows.iter().all(|row| row.tight_stddev_ms >= 0.0));
+}
+
+#[test]
+fn benchmark_rows_include_loose_stddev_tracking() {
+    let rows = benchmark_regression_rows(1);
+
+    assert!(rows.iter().all(|row| row.loose_stddev_ms >= 0.0));
+}
+
+#[test]
+fn bench_policy_reports_sample_name_when_variance_is_high() {
+    let baseline = report_with_row("sample", 1.0, 0.90, true);
+    let mut current = report_with_row("sample", 1.0, 0.90, true);
+    current.rows[0].tight_stddev_ms = 10.0;
+    let policy = BenchRegressionPolicy {
+        max_relative_stddev: 1.0,
+        ..BenchRegressionPolicy::default()
+    };
+
+    let failures = compare_bench_reports(&baseline, &current, &policy);
+
+    assert_eq!(failures.len(), 1);
+    assert!(failures[0].contains("sample variance"));
+}
+
+#[test]
+fn bench_policy_allows_low_relative_variance() {
+    let baseline = report_with_row("sample", 10.0, 0.90, true);
+    let mut current = report_with_row("sample", 10.0, 0.90, true);
+    current.rows[0].tight_stddev_ms = 0.2;
+
+    let failures = compare_bench_reports(&baseline, &current, &BenchRegressionPolicy::default());
+
+    assert!(failures.is_empty(), "{failures:?}");
+}
+
+#[test]
+fn bench_policy_ignores_variance_for_zero_mean() {
+    let baseline = report_with_row("sample", 0.0, 0.90, true);
+    let mut current = report_with_row("sample", 0.0, 0.90, true);
+    current.rows[0].tight_stddev_ms = 10.0;
+
+    let failures = compare_bench_reports(&baseline, &current, &BenchRegressionPolicy::default());
+
+    assert!(failures.is_empty(), "{failures:?}");
+}
+
+#[test]
+fn bench_policy_default_requires_ninety_five_percent_pass_rate() {
+    assert_eq!(BenchRegressionPolicy::default().minimum_pass_rate, 0.95);
+}
+
+#[test]
+fn bench_policy_default_limits_relative_stddev() {
+    assert_eq!(BenchRegressionPolicy::default().max_relative_stddev, 1.0);
+}
+
+#[test]
+fn bench_pass_rate_for_fifty_runs_accepts_two_failures() {
+    assert!(bench_pass_rate(50, 2) >= BenchRegressionPolicy::default().minimum_pass_rate);
+}
+
+#[test]
+fn bench_pass_rate_for_fifty_runs_rejects_three_failures() {
+    assert!(bench_pass_rate(50, 3) < BenchRegressionPolicy::default().minimum_pass_rate);
+}
+
+#[test]
+fn benchmark_report_records_machine_profile() {
+    let report = tttg_forge_optimizer::benchmark_regression_report(1);
+
+    assert!(!report.machine_id.is_empty());
+}
+
+#[test]
+fn benchmark_report_records_warm_up_iterations() {
+    let report = tttg_forge_optimizer::benchmark_regression_report(1);
+
+    assert_eq!(report.warm_up_iterations, 3);
 }
 
 fn report_with_row(sample: &str, tight_mean_ms: f64, pruning_rate: f64, exact: bool) -> BenchRegressionReport {
@@ -148,12 +284,16 @@ fn report_with_row(sample: &str, tight_mean_ms: f64, pruning_rate: f64, exact: b
             loose_pruned_nodes: 0,
             loose_pruning_rate: pruning_rate,
             loose_mean_ms: tight_mean_ms,
+            loose_stddev_ms: 0.0,
             tight_visited_nodes: 1,
             tight_pruned_nodes: 0,
             tight_pruning_rate: pruning_rate,
             tight_mean_ms,
+            tight_stddev_ms: 0.0,
             exact_match: exact,
         }],
+        machine_id: "test-machine".to_string(),
+        warm_up_iterations: 0,
         average_pruning_delta: 0.0,
         average_wall_clock_delta: 0.0,
         all_exact_match: exact,
