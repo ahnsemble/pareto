@@ -1,7 +1,10 @@
 use serde_json::json;
 use tttg_forge_optimizer::{
-    analytics_event_names, analytics_spec_json, friendly_error_message, safe_parse_json,
-    wasm_init_guard, AnalyticsEvent, AnalyticsEventPayload, AnalyticsEventType,
+    analytics_event_names, analytics_spec_json, browser_compat_guard, friendly_error_message,
+    memory_budget_guard, objective_score_guard, offline_cache_fallback,
+    pareto_frontier_result_guard, safe_parse_json, schema_migration_summary,
+    shared_array_buffer_guard, storage_quota_guard, wasm_init_guard, worker_concurrency_guard,
+    AnalyticsEvent, AnalyticsEventPayload, AnalyticsEventType, BrowserRuntimeCapabilities,
     ErrorLocale, ProductionErrorCode,
 };
 
@@ -57,14 +60,20 @@ fn production_error_serializes_code_and_i18n_key() {
 #[test]
 fn i18n_has_ten_english_error_messages() {
     for key in expected_error_keys() {
-        assert!(!friendly_error_message(ErrorLocale::En, key).is_empty(), "{key}");
+        assert!(
+            !friendly_error_message(ErrorLocale::En, key).is_empty(),
+            "{key}"
+        );
     }
 }
 
 #[test]
 fn i18n_has_ten_korean_error_messages() {
     for key in expected_error_keys() {
-        assert!(!friendly_error_message(ErrorLocale::Ko, key).is_empty(), "{key}");
+        assert!(
+            !friendly_error_message(ErrorLocale::Ko, key).is_empty(),
+            "{key}"
+        );
     }
 }
 
@@ -80,7 +89,12 @@ fn i18n_unknown_key_uses_generic_message() {
 fn analytics_event_names_cover_four_events() {
     assert_eq!(
         analytics_event_names(),
-        vec!["optimize_run", "share_url", "build_diff_view", "heatmap_view"]
+        vec![
+            "optimize_run",
+            "share_url",
+            "build_diff_view",
+            "heatmap_view"
+        ]
     );
 }
 
@@ -170,7 +184,10 @@ fn production_error_code_maps_to_stable_i18n_key() {
 
 #[test]
 fn production_error_code_maps_to_serializable_code() {
-    assert_eq!(ProductionErrorCode::WasmInitFailed.as_str(), "wasm_init_failed");
+    assert_eq!(
+        ProductionErrorCode::WasmInitFailed.as_str(),
+        "wasm_init_failed"
+    );
 }
 
 #[test]
@@ -252,6 +269,129 @@ fn analytics_event_default_opt_out_field_is_absent_from_event() {
     let value = serde_json::to_value(event).unwrap();
 
     assert!(value.get("optOut").is_none());
+}
+
+#[test]
+fn edge_schema_migration_summarizes_v17_to_v18_breaking_changes() {
+    let summary = schema_migration_summary(
+        "v17.1",
+        "v18.0",
+        &["relic_tier"],
+        &["legacy_attack"],
+        &[("atk", "attack")],
+    )
+    .unwrap();
+
+    assert_eq!(summary.added_fields, 1);
+    assert_eq!(summary.removed_fields, 1);
+    assert_eq!(summary.renamed_fields, 1);
+    assert!(summary.breaking_change);
+}
+
+#[test]
+fn edge_browser_compat_rejects_lockdown_runtime_without_workers() {
+    let err = browser_compat_guard(&BrowserRuntimeCapabilities {
+        webassembly: true,
+        web_workers: false,
+        local_storage: true,
+    })
+    .unwrap_err();
+
+    assert_eq!(err.code(), ProductionErrorCode::BrowserCompat);
+}
+
+#[test]
+fn edge_offline_mode_uses_cached_json_when_network_fetch_fails() {
+    let cached = offline_cache_fallback(false, Some(r#"{"cached":true}"#), 1024).unwrap();
+
+    assert_eq!(cached, json!({"cached": true}));
+}
+
+#[test]
+fn edge_offline_mode_reports_cache_miss_without_cached_payload() {
+    let err = offline_cache_fallback(false, None, 1024).unwrap_err();
+
+    assert_eq!(err.code(), ProductionErrorCode::OfflineCacheMiss);
+}
+
+#[test]
+fn edge_shared_array_buffer_guard_reports_missing_coop_coep_support() {
+    let err = shared_array_buffer_guard(false).unwrap_err();
+
+    assert_eq!(
+        err.code(),
+        ProductionErrorCode::SharedArrayBufferUnsupported
+    );
+}
+
+#[test]
+fn edge_memory_budget_guard_rejects_hundred_mb_search_space() {
+    let err = memory_budget_guard(101 * 1024 * 1024, 100 * 1024 * 1024).unwrap_err();
+
+    assert_eq!(err.code(), ProductionErrorCode::MemoryLimitExceeded);
+}
+
+#[test]
+fn edge_worker_concurrency_guard_rejects_parallel_race_window() {
+    let err = worker_concurrency_guard(2, 2).unwrap_err();
+
+    assert_eq!(err.code(), ProductionErrorCode::WorkerRace);
+}
+
+#[test]
+fn edge_fetch_status_guard_distinguishes_401_403_500_branches() {
+    assert_eq!(
+        tttg_forge_optimizer::fetch_status_guard(401)
+            .unwrap_err()
+            .code(),
+        ProductionErrorCode::FetchUnauthorized
+    );
+    assert_eq!(
+        tttg_forge_optimizer::fetch_status_guard(403)
+            .unwrap_err()
+            .code(),
+        ProductionErrorCode::FetchForbidden
+    );
+    assert_eq!(
+        tttg_forge_optimizer::fetch_status_guard(500)
+            .unwrap_err()
+            .code(),
+        ProductionErrorCode::FetchServerError
+    );
+}
+
+#[test]
+fn edge_objective_score_guard_rejects_nan_and_infinity() {
+    assert_eq!(
+        objective_score_guard(f64::NAN).unwrap_err().code(),
+        ProductionErrorCode::ObjectiveNonFinite
+    );
+    assert_eq!(
+        objective_score_guard(f64::INFINITY).unwrap_err().code(),
+        ProductionErrorCode::ObjectiveNonFinite
+    );
+}
+
+#[test]
+fn edge_pareto_frontier_guard_reports_empty_result() {
+    let err = pareto_frontier_result_guard(0).unwrap_err();
+
+    assert_eq!(err.code(), ProductionErrorCode::ParetoFrontierEmpty);
+}
+
+#[test]
+fn edge_storage_quota_guard_reports_private_mode_quota_failure() {
+    let err = storage_quota_guard(1024, 2048).unwrap_err();
+
+    assert_eq!(err.code(), ProductionErrorCode::StorageQuotaExceeded);
+}
+
+#[test]
+fn edge_catalog_covers_all_fifteen_production_scenarios() {
+    let scenarios = tttg_forge_optimizer::production_edge_case_catalog();
+
+    assert_eq!(scenarios.len(), 15);
+    assert!(scenarios.iter().any(|scenario| scenario.id == 15));
 }
 
 fn expected_error_keys() -> Vec<&'static str> {
