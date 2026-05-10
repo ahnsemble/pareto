@@ -15,6 +15,11 @@ wasm-bindgen.workspace = true
 js-sys.workspace = true
 serde-wasm-bindgen.workspace = true
 
+[features]
+default = []
+main-cli = []
+pareto-objective-wasm = []
+
 [dev-dependencies]
 wasm-bindgen-test = "0.3"
 

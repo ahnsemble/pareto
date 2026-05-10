@@ -10,16 +10,16 @@ pub fn pareto_twodeck_compute_wasm(
     deck_b_json: &str,
     constraints_json: &str,
 ) -> Result<JsValue, JsValue> {
-    let deck_a: Vec<OptimizationResult> = serde_json::from_str(deck_a_json)
-        .map_err(|e| JsValue::from_str(&format!("deck_a parse error: {e}")))?;
-    let deck_b: Vec<OptimizationResult> = serde_json::from_str(deck_b_json)
-        .map_err(|e| JsValue::from_str(&format!("deck_b parse error: {e}")))?;
+    let deck_a: Vec<OptimizationResult> =
+        serde_json::from_str(deck_a_json).map_err(|e| JsValue::from_str(&format!("deck_a:{e}")))?;
+    let deck_b: Vec<OptimizationResult> =
+        serde_json::from_str(deck_b_json).map_err(|e| JsValue::from_str(&format!("deck_b:{e}")))?;
     let top_k = top_k_from_constraints_json(constraints_json);
 
     let result = pareto_twodeck_compute_with_top_k(&deck_a, &deck_b, top_k);
 
-    let value = serde_json::to_value(&result)
-        .map_err(|e| JsValue::from_str(&format!("serialize error: {e}")))?;
+    let value =
+        serde_json::to_value(&result).map_err(|e| JsValue::from_str(&format!("serde:{e}")))?;
     serialize_for_js(value)
 }
 
@@ -27,7 +27,7 @@ fn serialize_for_js(value: Value) -> Result<JsValue, JsValue> {
     use serde::Serialize;
     value
         .serialize(&serde_wasm_bindgen::Serializer::json_compatible())
-        .map_err(|e| JsValue::from_str(&format!("js serialize error: {e}")))
+        .map_err(|e| JsValue::from_str(&format!("js:{e}")))
 }
 
 fn top_k_from_constraints_json(constraints_json: &str) -> usize {

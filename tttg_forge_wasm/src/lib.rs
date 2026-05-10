@@ -163,6 +163,21 @@ pub fn pareto_frontier_smoke_wasm(points_json: &str) -> Result<JsValue, JsValue>
 }
 
 #[wasm_bindgen]
+#[cfg(feature = "pareto-objective-wasm")]
+pub fn pareto_frontier_smoke_with_constraints_wasm(
+    points_json: &str,
+    constraints_json: &str,
+) -> Result<JsValue, JsValue> {
+    let candidates = serde_json::from_str::<Vec<Value>>(points_json)
+        .map_err(|error| JsValue::from_str(&format!("json: {error}")))?;
+    let constraints = serde_json::from_str::<Value>(constraints_json).unwrap_or(Value::Null);
+    Ok(to_json_js(json!(
+        tttg_forge_optimizer::pareto_frontier_smoke_with_constraints(&candidates, &constraints)
+    )))
+}
+
+#[wasm_bindgen]
+#[cfg(feature = "main-cli")]
 pub fn main_cli() -> Result<(), JsValue> {
     Ok(())
 }
@@ -244,6 +259,12 @@ fn pareto_frontier_smoke_value(value: &Value) -> Value {
     json!(tttg_forge_optimizer::pareto_frontier_smoke(&candidates))
 }
 
+#[cfg(all(test, feature = "pareto-objective-wasm"))]
+fn pareto_frontier_smoke_with_constraints_value(value: &Value, constraints: &Value) -> Value {
+    let candidates = value.as_array().cloned().unwrap_or_default();
+    json!(tttg_forge_optimizer::pareto_frontier_smoke_with_constraints(&candidates, constraints))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -274,6 +295,20 @@ mod tests {
     }
 
     #[test]
+    #[cfg(feature = "pareto-objective-wasm")]
+    fn native_pareto_frontier_constraints_preserve_lme1_specialist() {
+        let input = json!([
+            {"label": "normal", "score": 130.0, "damageFactor": 100.0, "lme1Damage": 3.0},
+            {"label": "lme1", "score": 100.0, "damageFactor": 90.0, "lme1Damage": 30.0}
+        ]);
+        let constraints = json!({"objectives": ["normal", "lme1"]});
+        assert_eq!(
+            pareto_frontier_smoke_with_constraints_value(&input, &constraints),
+            json!([0, 1])
+        );
+    }
+
+    #[test]
     fn native_run_full_pipeline_stat_parts_uses_general_path() {
         let input = json!({
             "statParts": [
@@ -288,5 +323,54 @@ mod tests {
         assert_eq!(actual["score"].as_f64().unwrap(), 7.0);
         assert_eq!(actual["damageFactor"].as_f64().unwrap(), 3.5);
         assert_eq!(actual["stats"]["text"].as_f64().unwrap(), 0.0);
+    }
+
+    #[test]
+    fn native_beta_flags_accepts_camel_case_config() {
+        let flags = beta_flags_from_config(&json!({"betaFlags": ["a", "b"]}));
+
+        assert_eq!(flags, vec!["a".to_string(), "b".to_string()]);
+    }
+
+    #[test]
+    fn native_beta_flags_accepts_snake_case_config() {
+        let flags = beta_flags_from_config(&json!({"beta_flags": ["x"]}));
+
+        assert_eq!(flags, vec!["x".to_string()]);
+    }
+
+    #[test]
+    fn native_bridge_set_non_array_returns_empty_object() {
+        assert_eq!(bridge_set_value(&json!({"not": "array"})), json!({}));
+    }
+
+    #[test]
+    fn native_merge_stat_dicts_non_array_returns_empty_object() {
+        assert_eq!(merge_stat_dicts_value(&json!({"not": "array"})), json!({}));
+    }
+
+    #[test]
+    fn native_pareto_frontier_smoke_non_array_returns_empty_frontier() {
+        assert_eq!(
+            pareto_frontier_smoke_value(&json!({"not": "array"})),
+            json!([])
+        );
+    }
+
+    #[test]
+    fn native_run_full_pipeline_invalid_raw_reports_error_payload() {
+        let actual = run_full_pipeline_value(&json!({"raw": "not-valid"}));
+
+        assert_eq!(actual["score"], json!(0.0));
+        assert!(actual["error"].as_str().unwrap().contains("decode"));
+    }
+
+    #[test]
+    fn native_run_full_pipeline_empty_config_is_zero_payload() {
+        let actual = run_full_pipeline_value(&json!({}));
+
+        assert_eq!(actual["score"], json!(0.0));
+        assert_eq!(actual["damageFactor"], json!(0.0));
+        assert_eq!(actual["stats"], json!({}));
     }
 }

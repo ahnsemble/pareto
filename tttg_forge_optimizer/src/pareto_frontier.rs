@@ -115,7 +115,7 @@ pub fn find_best_pareto(
     prepared_case: &serde_json::Value,
     _attack_meta: &serde_json::Value,
     search_space: &crate::search_space::OptimizationSearchSpace,
-    _objectives: &[String],
+    objectives: &[String],
     beam_width: usize,
 ) -> Result<Vec<OptimizationResult>, crate::OptimizerError> {
     let mut results = crate::branch_bound::find_best_brute(
@@ -125,5 +125,7 @@ pub fn find_best_pareto(
         usize::MAX,
     )?;
     results.truncate(beam_width.max(1));
-    Ok(pareto_frontier_strict(&results))
+    Ok(crate::pareto_frontier_results_by_objectives(
+        &results, objectives,
+    ))
 }

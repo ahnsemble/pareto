@@ -1,0 +1,79 @@
+{
+  "generated_by": "tttg_forge_optimizer::bench_regression",
+  "iterations": 50,
+  "rows": [
+    {
+      "sample": "small_tradeoff",
+      "combinations": 256,
+      "top_k": 10,
+      "loose_visited_nodes": 273,
+      "loose_pruned_nodes": 238,
+      "loose_pruning_rate": 0.4657534246575342,
+      "loose_mean_ms": 0.15534246000000002,
+      "tight_visited_nodes": 171,
+      "tight_pruned_nodes": 340,
+      "tight_pruning_rate": 0.6653620352250489,
+      "tight_mean_ms": 0.10983004000000002,
+      "exact_match": true
+    },
+    {
+      "sample": "medium_tradeoff",
+      "combinations": 1024,
+      "top_k": 5,
+      "loose_visited_nodes": 565,
+      "loose_pruned_nodes": 1482,
+      "loose_pruning_rate": 0.7239863214460186,
+      "loose_mean_ms": 0.11382834000000001,
+      "tight_visited_nodes": 113,
+      "tight_pruned_nodes": 1934,
+      "tight_pruning_rate": 0.9447972642892037,
+      "tight_mean_ms": 0.05389914,
+      "exact_match": true
+    },
+    {
+      "sample": "large_tradeoff",
+      "combinations": 4096,
+      "top_k": 5,
+      "loose_visited_nodes": 1399,
+      "loose_pruned_nodes": 6792,
+      "loose_pruning_rate": 0.829202783542913,
+      "loose_mean_ms": 0.30057588,
+      "tight_visited_nodes": 159,
+      "tight_pruned_nodes": 8032,
+      "tight_pruning_rate": 0.9805884507386156,
+      "tight_mean_ms": 0.06448084000000003,
+      "exact_match": true
+    },
+    {
+      "sample": "special_mode",
+      "combinations": 256,
+      "top_k": 5,
+      "loose_visited_nodes": 117,
+      "loose_pruned_nodes": 394,
+      "loose_pruning_rate": 0.7710371819960861,
+      "loose_mean_ms": 0.03106328,
+      "tight_visited_nodes": 75,
+      "tight_pruned_nodes": 436,
+      "tight_pruning_rate": 0.8532289628180039,
+      "tight_mean_ms": 0.025405179999999996,
+      "exact_match": true
+    },
+    {
+      "sample": "mixed_three_choice",
+      "combinations": 2187,
+      "top_k": 5,
+      "loose_visited_nodes": 109,
+      "loose_pruned_nodes": 3171,
+      "loose_pruning_rate": 0.9667682926829269,
+      "loose_mean_ms": 0.025120799999999992,
+      "tight_visited_nodes": 91,
+      "tight_pruned_nodes": 3189,
+      "tight_pruning_rate": 0.9722560975609756,
+      "tight_mean_ms": 0.023600940000000004,
+      "exact_match": true
+    }
+  ],
+  "average_pruning_delta": 0.1318969612612738,
+  "average_wall_clock_delta": 0.36951879489647016,
+  "all_exact_match": true
+}

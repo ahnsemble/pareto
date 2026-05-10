@@ -55,6 +55,60 @@ jobs:
           path: artifacts/
           if-no-files-found: warn
 
+  bench_regression:
+    name: optimizer bench regression
+    runs-on: ubuntu-latest
+    needs: [cargo]
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Run criterion benches
+        run: |
+          set -o pipefail
+          mkdir -p artifacts
+          cargo bench -p tttg_forge_optimizer --bench optimizer_benches 2>&1 | tee artifacts/cargo-bench.log
+
+      - name: Check benchmark regression
+        run: |
+          set -o pipefail
+          BENCH_REGRESSION_ITERATIONS=50 cargo run -p tttg_forge_optimizer --bin check_bench_regression --release 2>&1 | tee artifacts/bench-regression.log
+
+      - name: Write benchmark summary
+        if: always()
+        run: |
+          {
+            echo "## Optimizer Benchmark Regression"
+            echo
+            echo "- Trigger: \`${{ github.event_name }}\`"
+            echo
+            echo '```text'
+            if [ -f artifacts/bench-regression.log ]; then
+              tail -n 100 artifacts/bench-regression.log
+            elif [ -f artifacts/cargo-bench.log ]; then
+              tail -n 100 artifacts/cargo-bench.log
+            else
+              echo "benchmark logs were not created"
+            fi
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload benchmark artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pareto-bench-regression
+          path: |
+            artifacts/
+            target/bench_regression_current.json
+            target/criterion/
+          if-no-files-found: warn
+
   pytest_battery:
     name: pytest numerical battery
     runs-on: ubuntu-latest
@@ -259,7 +313,7 @@ jobs:
   telegram_brief:
     name: Telegram regression brief
     runs-on: ubuntu-latest
-    needs: [cargo, pytest_battery, frontend_build, playwright_pareto]
+    needs: [cargo, bench_regression, pytest_battery, frontend_build, playwright_pareto]
     if: always()
 
     steps:
@@ -275,6 +329,7 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           CARGO_STATUS: ${{ needs.cargo.result }}
+          BENCH_REGRESSION_STATUS: ${{ needs.bench_regression.result }}
           PYTEST_BATTERY_STATUS: ${{ needs.pytest_battery.result }}
           FRONTEND_BUILD_STATUS: ${{ needs.frontend_build.result }}
           PLAYWRIGHT_PARETO_STATUS: ${{ needs.playwright_pareto.result }}
@@ -290,6 +345,10 @@ jobs:
           if [ "$CARGO_STATUS" != "success" ]; then
             STATUS="FAIL"
             FAILED_JOBS="cargo=${CARGO_STATUS}"
+          fi
+          if [ "$BENCH_REGRESSION_STATUS" != "success" ]; then
+            STATUS="FAIL"
+            FAILED_JOBS="${FAILED_JOBS:+$FAILED_JOBS, }bench_regression=${BENCH_REGRESSION_STATUS}"
           fi
           if [ "$PYTEST_BATTERY_STATUS" != "success" ]; then
             STATUS="FAIL"
@@ -309,7 +368,7 @@ jobs:
 
           | Repo | Status | Job |
           |---|---:|---|
-          | Pareto | ${STATUS} | cargo + numerical + frontend + playwright |
+          | Pareto | ${STATUS} | cargo + bench + numerical + frontend + playwright |
           EOF
           )
 
