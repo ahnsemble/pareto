@@ -10,7 +10,9 @@ async function expectTouchTargetAtLeast44(locator: Locator) {
 test.describe('Self-fix mobile accessibility guards', () => {
   test('mobile optimize controls expose visible names and 44px touch targets', async ({
     page,
-  }) => {
+  }, testInfo) => {
+    test.skip(testInfo.project.name !== 'chromium-mobile-375', 'mobile-only guard');
+
     await page.goto('/en/optimize', { waitUntil: 'domcontentloaded' });
 
     const firstCollectible = page
