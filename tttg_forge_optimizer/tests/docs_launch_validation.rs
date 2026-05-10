@@ -74,6 +74,17 @@ fn launch_verify_workflow_runs_script_nightly() {
 }
 
 #[test]
+fn launch_verification_uses_s29_wasm_size_caps() {
+    let script = read("scripts/launch_verify.sh");
+    let workflow = read(".github/workflows/launch_verify.yml");
+
+    assert!(script.contains("LAUNCH_WASM_CAP_BYTES:-145000"));
+    assert!(script.contains("LAUNCH_WASM_GZIP_CAP_BYTES:-60000"));
+    assert!(workflow.contains("LAUNCH_WASM_CAP_BYTES: \"145000\""));
+    assert!(workflow.contains("LAUNCH_WASM_GZIP_CAP_BYTES: \"60000\""));
+}
+
+#[test]
 fn root_launch_checklist_splits_twenty_auto_and_ten_manual_items() {
     let checklist = read("LAUNCH_CHECKLIST.md");
 
@@ -94,7 +105,9 @@ fn launch_static_assets_include_manifest_and_headers() {
 fn changelog_covers_g1_through_g10() {
     let changelog = read("docs/CHANGELOG.md");
 
-    for sprint in ["G.1", "G.2", "G.3", "G.4", "G.5", "G.6", "G.7", "G.8", "G.9", "G.10"] {
+    for sprint in [
+        "G.1", "G.2", "G.3", "G.4", "G.5", "G.6", "G.7", "G.8", "G.9", "G.10",
+    ] {
         assert!(changelog.contains(sprint), "{sprint}");
     }
 }

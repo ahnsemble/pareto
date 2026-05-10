@@ -25,4 +25,4 @@ pareto-objective-wasm = []
 wasm-bindgen-test = "0.3"
 
 [package.metadata.wasm-pack.profile.release]
-wasm-opt = ["-Oz"]
+wasm-opt = ["-Oz", "--strip-debug", "--strip-producers"]

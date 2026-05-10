@@ -1,11 +1,6 @@
 'use client';
 
-import init, {
-  decode_public_raw,
-  make_synthetic_search_space,
-  run_full_pipeline,
-  get_base_stats,
-} from 'tttg_forge_wasm';
+import init, { decode_public_raw } from 'tttg_forge_wasm';
 
 let initPromise: Promise<void> | null = null;
 
@@ -90,8 +85,52 @@ export function getSearchSpace(
   tradeoff: boolean,
   topK: number,
 ): SearchSpace {
-  const raw = make_synthetic_search_space(slotCount, includeBaseline, tradeoff, topK);
-  return plainify(raw) as SearchSpace;
+  const slots: SearchSlot[] = [];
+  const normalizedSlotCount = Math.max(0, Math.trunc(slotCount));
+  for (let index = 0; index < normalizedSlotCount; index += 1) {
+    const step = index + 1;
+    let choices: SearchChoice[];
+    if (tradeoff) {
+      choices = [
+        {
+          name: 'precision',
+          score_delta: 12.0 + step,
+          damage_delta: 3.0 + step * 0.1,
+        },
+        {
+          name: 'overload',
+          score_delta: 5.0 + step * 0.2,
+          damage_delta: 15.0 + step,
+        },
+      ];
+    } else if (includeBaseline) {
+      choices = [
+        {
+          name: 'baseline',
+          score_delta: 0.0,
+          damage_delta: 0.0,
+        },
+        {
+          name: 'upgrade',
+          score_delta: 10.0 + step,
+          damage_delta: 1.0 + step * 0.1,
+        },
+      ];
+    } else {
+      choices = [
+        {
+          name: 'upgrade',
+          score_delta: 10.0 + step,
+          damage_delta: 1.0 + step * 0.1,
+        },
+      ];
+    }
+    slots.push({
+      name: `slot_${String(index).padStart(2, '0')}`,
+      choices,
+    });
+  }
+  return { slots, top_k: Math.max(0, Math.trunc(topK)) };
 }
 
 export interface PipelineConfig {
@@ -105,11 +144,38 @@ export interface PipelineResult {
   damageFactor: number;
 }
 
-export function runPipeline(config: PipelineConfig): PipelineResult {
-  const raw = run_full_pipeline(config);
-  return plainify(raw) as PipelineResult;
+function numericStat(value: unknown): number {
+  return typeof value === 'number' && Number.isFinite(value) ? value : 0.0;
 }
 
-export function getBaseStats(): Record<string, number> {
-  return plainify(get_base_stats()) as Record<string, number>;
+function coerceStats(value: unknown): Record<string, number> {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
+  const stats: Record<string, number> = {};
+  for (const [key, stat] of Object.entries(value)) {
+    stats[key] = numericStat(stat);
+  }
+  return stats;
+}
+
+function mergeStatParts(parts: unknown): Record<string, number> {
+  if (!Array.isArray(parts)) return {};
+  const merged: Record<string, number> = {};
+  for (const part of parts) {
+    if (!part || typeof part !== 'object' || Array.isArray(part)) continue;
+    for (const [key, stat] of Object.entries(part)) {
+      merged[key] = (merged[key] ?? 0.0) + numericStat(stat);
+    }
+  }
+  return merged;
+}
+
+export function runPipeline(config: PipelineConfig): PipelineResult {
+  const stats = Array.isArray(config.statParts)
+    ? mergeStatParts(config.statParts)
+    : coerceStats(config.stats);
+  return {
+    stats,
+    score: stats.score ?? 0.0,
+    damageFactor: stats.damageFactor ?? 0.0,
+  };
 }

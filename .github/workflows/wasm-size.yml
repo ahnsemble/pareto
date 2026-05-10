@@ -35,10 +35,15 @@ jobs:
         run: |
           set -o pipefail
           mkdir -p artifacts
-          SIZE="$(wc -c < tttg_forge_wasm/pkg/tttg_forge_wasm_bg.wasm | tr -d ' ')"
-          echo "{\"wasm_size\":${SIZE},\"cap\":225000}" | tee artifacts/wasm-size.json
-          if [ "$SIZE" -gt 225000 ]; then
-            echo "WASM size ${SIZE} exceeds 225000 bytes"
+          RAW_SIZE="$(wc -c < tttg_forge_wasm/pkg/tttg_forge_wasm_bg.wasm | tr -d ' ')"
+          GZIP_SIZE="$(gzip -n -c tttg_forge_wasm/pkg/tttg_forge_wasm_bg.wasm | wc -c | tr -d ' ')"
+          echo "{\"wasm_size\":${RAW_SIZE},\"cap\":145000,\"gzip_size\":${GZIP_SIZE},\"gzip_cap\":60000}" | tee artifacts/wasm-size.json
+          if [ "$RAW_SIZE" -gt 145000 ]; then
+            echo "WASM size ${RAW_SIZE} exceeds 145000 bytes"
+            exit 1
+          fi
+          if [ "$GZIP_SIZE" -gt 60000 ]; then
+            echo "WASM gzip size ${GZIP_SIZE} exceeds 60000 bytes"
             exit 1
           fi
 

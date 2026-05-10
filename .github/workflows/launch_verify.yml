@@ -16,8 +16,8 @@ jobs:
     env:
       BENCH_PROFILE: ci-ubuntu-latest
       BENCH_REGRESSION_ITERATIONS: "50"
-      LAUNCH_WASM_CAP_BYTES: "162860"
-      LAUNCH_WASM_GZIP_CAP_BYTES: "70000"
+      LAUNCH_WASM_CAP_BYTES: "145000"
+      LAUNCH_WASM_GZIP_CAP_BYTES: "60000"
 
     steps:
       - name: Checkout

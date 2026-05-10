@@ -34,7 +34,7 @@ pub fn bridge_set(values: JsValue) -> JsValue {
     to_js(bridge_set_value(&value))
 }
 
-#[wasm_bindgen]
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
 pub fn run_full_pipeline(config: JsValue) -> JsValue {
     let config = to_value(config);
     to_json_js(run_full_pipeline_value(&config))
@@ -94,6 +94,7 @@ pub fn coerce_pool_vector(value: JsValue) -> JsValue {
     to_js(json!(tttg_forge_core::coerce_pool_vector(&to_value(value))))
 }
 
+#[cfg(feature = "compat-exports")]
 #[wasm_bindgen]
 pub fn get_base_stats() -> JsValue {
     to_js(tttg_forge_core::get_base_stats())
@@ -107,7 +108,10 @@ pub fn merge_stat_dicts(parts: JsValue) -> JsValue {
 
 #[wasm_bindgen]
 pub fn decode_public_raw(raw_value: &str) -> JsValue {
-    decode_public_raw_js(raw_value, false)
+    to_json_js(
+        tttg_forge_core::decode_public_raw_with_options(raw_value, DecodeOptions::default())
+            .unwrap_or_else(|_| json!({"error": "decode_failed"})),
+    )
 }
 
 #[cfg_attr(feature = "compat-exports", wasm_bindgen)]
@@ -131,6 +135,7 @@ pub fn calculate_damage_factor(stats: JsValue, ce_damage_techs: JsValue) -> JsVa
     }
 }
 
+#[cfg(feature = "compat-exports")]
 #[wasm_bindgen]
 pub fn make_synthetic_search_space(
     slot_count: usize,

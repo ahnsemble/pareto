@@ -66,13 +66,19 @@ fn wasm_size_workflow_builds_default_production_wasm() {
 }
 
 #[test]
-fn wasm_size_workflow_enforces_g8_cap() {
-    assert!(wasm_size_workflow().contains("225000"));
+fn wasm_size_workflow_enforces_s29_raw_cap() {
+    assert!(wasm_size_workflow().contains("\\\"cap\\\":145000"));
+    assert!(wasm_size_workflow().contains("-gt 145000"));
 }
 
 #[test]
-fn wasm_size_workflow_records_wasm_byte_count() {
-    assert!(wasm_size_workflow().contains("wc -c"));
+fn wasm_size_workflow_records_raw_and_gzip_byte_counts() {
+    let workflow = wasm_size_workflow();
+
+    assert!(workflow.contains("RAW_SIZE"));
+    assert!(workflow.contains("GZIP_SIZE"));
+    assert!(workflow.contains("gzip -n -c"));
+    assert!(workflow.contains("\\\"gzip_cap\\\":60000"));
 }
 
 #[test]
