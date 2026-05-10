@@ -32,6 +32,23 @@ pub struct BenchRegressionReport {
     pub all_exact_match: bool,
 }
 
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct BenchRegressionPolicy {
+    pub wall_clock_regression_limit: f64,
+    pub min_wall_clock_abs_floor_ms: f64,
+    pub pruning_rate_regression_limit: f64,
+}
+
+impl Default for BenchRegressionPolicy {
+    fn default() -> Self {
+        Self {
+            wall_clock_regression_limit: 1.50,
+            min_wall_clock_abs_floor_ms: 0.050,
+            pruning_rate_regression_limit: 0.05,
+        }
+    }
+}
+
 pub fn benchmark_regression_report(iterations: usize) -> BenchRegressionReport {
     let rows = benchmark_regression_rows(iterations);
     let average_pruning_delta = average(
@@ -54,6 +71,52 @@ pub fn benchmark_regression_report(iterations: usize) -> BenchRegressionReport {
         average_wall_clock_delta,
         all_exact_match,
     }
+}
+
+pub fn compare_bench_reports(
+    baseline: &BenchRegressionReport,
+    current: &BenchRegressionReport,
+    policy: &BenchRegressionPolicy,
+) -> Vec<String> {
+    let mut failures = Vec::new();
+    for baseline_row in &baseline.rows {
+        let Some(current_row) = current
+            .rows
+            .iter()
+            .find(|row| row.sample == baseline_row.sample)
+        else {
+            failures.push(format!("missing sample {}", baseline_row.sample));
+            continue;
+        };
+        if !current_row.exact_match {
+            failures.push(format!("{} exact_match=false", current_row.sample));
+        }
+        let allowed_ms = (baseline_row.tight_mean_ms * policy.wall_clock_regression_limit)
+            .max(baseline_row.tight_mean_ms + policy.min_wall_clock_abs_floor_ms);
+        if current_row.tight_mean_ms > allowed_ms {
+            failures.push(format!(
+                "{} wall-clock {:.6}ms > allowed {:.6}ms (baseline {:.6}ms, limit {:.2}, floor {:.3}ms)",
+                current_row.sample,
+                current_row.tight_mean_ms,
+                allowed_ms,
+                baseline_row.tight_mean_ms,
+                policy.wall_clock_regression_limit,
+                policy.min_wall_clock_abs_floor_ms
+            ));
+        }
+        if current_row.tight_pruning_rate + policy.pruning_rate_regression_limit
+            < baseline_row.tight_pruning_rate
+        {
+            failures.push(format!(
+                "{} pruning {:.2}% < baseline {:.2}% - {:.2}pp",
+                current_row.sample,
+                current_row.tight_pruning_rate * 100.0,
+                baseline_row.tight_pruning_rate * 100.0,
+                policy.pruning_rate_regression_limit * 100.0
+            ));
+        }
+    }
+    failures
 }
 
 pub fn benchmark_regression_rows(iterations: usize) -> Vec<BenchRegressionRow> {
@@ -134,6 +197,10 @@ fn measure_strategy(
     iterations: usize,
 ) -> StrategyMeasurement {
     let iterations = iterations.max(1);
+    for _ in 0..3 {
+        let _ = find_best_bb_with_strategy(prepared, &json!({}), space, top_k, strategy)
+            .expect("benchmark warm-up sample must be valid");
+    }
     let mut total_ms = 0.0;
     let mut latest = None;
     for _ in 0..iterations {

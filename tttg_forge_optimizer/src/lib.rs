@@ -1,8 +1,10 @@
 pub mod beam_search;
 #[cfg(not(target_arch = "wasm32"))]
 pub mod bench_regression;
+pub mod build_diff;
 pub mod branch_bound;
 pub mod delta;
+pub mod heatmap;
 pub mod pareto_frontier;
 pub mod pareto_objectives;
 pub mod prepared_case;
@@ -15,8 +17,10 @@ pub mod utils;
 pub use beam_search::*;
 #[cfg(not(target_arch = "wasm32"))]
 pub use bench_regression::*;
+pub use build_diff::*;
 pub use branch_bound::*;
 pub use delta::*;
+pub use heatmap::*;
 pub use pareto_frontier::*;
 pub use pareto_objectives::*;
 pub use prepared_case::*;
