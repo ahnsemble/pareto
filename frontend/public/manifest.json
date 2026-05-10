@@ -1,0 +1,16 @@
+{
+  "name": "Pareto Forge",
+  "short_name": "Pareto",
+  "description": "Fast TTTG Forge build optimization and Pareto frontier comparison.",
+  "start_url": "/en",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/og-community.png",
+      "sizes": "1200x630",
+      "type": "image/png"
+    }
+  ]
+}

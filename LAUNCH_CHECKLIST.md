@@ -1,6 +1,4 @@
-# Launch Verification
-
-This document mirrors the root `LAUNCH_CHECKLIST.md` so release review can keep the historical docs path while using the new automation split.
+# Launch Checklist
 
 ## Automated Checks (20)
 
@@ -22,7 +20,7 @@ This document mirrors the root `LAUNCH_CHECKLIST.md` so release review can keep 
 - [ ] AUTO-16 README has Korean and English sections.
 - [ ] AUTO-17 LICENSE and NOTICE are present.
 - [ ] AUTO-18 CHANGELOG covers G.10.
-- [ ] AUTO-19 Checklist split remains 20 auto and 10 manual.
+- [ ] AUTO-19 This checklist remains split into 20 auto and 10 manual items.
 - [ ] AUTO-20 Git diff whitespace check passes.
 
 ## Manual Checks (10)
@@ -34,14 +32,16 @@ This document mirrors the root `LAUNCH_CHECKLIST.md` so release review can keep 
 - [ ] MANUAL-05 Launch post checklist reviewed.
 - [ ] MANUAL-06 Telegram brief delivery confirmed.
 - [ ] MANUAL-07 GA event delivery confirmed.
-- [ ] MANUAL-08 Lighthouse performance and accessibility production measurement attached.
+- [ ] MANUAL-08 Lighthouse production measurement attached.
 - [ ] MANUAL-09 Production domain reaches expected page.
 - [ ] MANUAL-10 SSL grade checked on production domain.
 
-## Commands
+## Execution
+
+Run automated checks with:
 
 ```bash
 scripts/launch_verify.sh
 ```
 
-The automated set intentionally stops at machine-verifiable gates. Visual UX, Lighthouse field measurement, Telegram delivery, GA delivery, domain reachability, and SSL grade remain manual release-owner checks.
+Nightly launch verification runs through `.github/workflows/launch_verify.yml`. Manual checks remain release-owner responsibilities because they require visual screenshots, external delivery channels, or production-domain evidence.

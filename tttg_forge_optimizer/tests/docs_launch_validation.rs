@@ -58,6 +58,39 @@ fn launch_checklist_mentions_lighthouse_and_accessibility() {
 }
 
 #[test]
+fn launch_verify_script_declares_twenty_automated_checks() {
+    let script = read("scripts/launch_verify.sh");
+
+    assert_eq!(script.matches("run_check \"AUTO-").count(), 20);
+}
+
+#[test]
+fn launch_verify_workflow_runs_script_nightly() {
+    let workflow = read(".github/workflows/launch_verify.yml");
+
+    assert!(workflow.contains("cron: '0 17 * * *'"));
+    assert!(workflow.contains("scripts/launch_verify.sh"));
+    assert!(workflow.contains("BENCH_REGRESSION_ITERATIONS: \"50\""));
+}
+
+#[test]
+fn root_launch_checklist_splits_twenty_auto_and_ten_manual_items() {
+    let checklist = read("LAUNCH_CHECKLIST.md");
+
+    assert_eq!(checklist.matches("- [ ] AUTO-").count(), 20);
+    assert_eq!(checklist.matches("- [ ] MANUAL-").count(), 10);
+}
+
+#[test]
+fn launch_static_assets_include_manifest_and_headers() {
+    let manifest = read("frontend/public/manifest.json");
+    let headers = read("frontend/public/_headers");
+
+    assert!(manifest.contains("\"name\""));
+    assert!(headers.contains("Content-Security-Policy"));
+}
+
+#[test]
 fn changelog_covers_g1_through_g10() {
     let changelog = read("docs/CHANGELOG.md");
 

@@ -1,0 +1,53 @@
+name: Launch Verify
+
+on:
+  schedule:
+    - cron: '0 17 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  launch_verify:
+    name: launch verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      BENCH_PROFILE: ci-ubuntu-latest
+      BENCH_REGRESSION_ITERATIONS: "50"
+      LAUNCH_WASM_CAP_BYTES: "162860"
+      LAUNCH_WASM_GZIP_CAP_BYTES: "70000"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install wasm-pack
+        uses: taiki-e/install-action@v2
+        with:
+          tool: wasm-pack
+
+      - name: Install frontend dependencies
+        run: npm ci
+        working-directory: frontend
+
+      - name: Run launch verification
+        run: scripts/launch_verify.sh
