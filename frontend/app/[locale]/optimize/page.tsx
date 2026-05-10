@@ -268,7 +268,7 @@ export default function OptimizePage() {
         </div>
         <Link
           href="/"
-          className="font-mono text-xs text-[color:var(--color-text-muted)] hover:text-[color:var(--color-primary)]"
+          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md font-mono text-xs text-[color:var(--color-text-muted)] hover:text-[color:var(--color-primary)]"
         >
           ← /
         </Link>
