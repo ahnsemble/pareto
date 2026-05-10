@@ -1,0 +1,11 @@
+Pareto Notice
+
+Pareto is an unofficial fan-made optimization and analysis tool.
+
+Survivor.io is owned by Habby. Pareto is not affiliated with, endorsed by, or
+sponsored by Habby or Survivor.io.
+
+This repository uses Rust and JavaScript dependencies whose licenses are
+expected to be MIT-compatible or otherwise compatible with distribution under
+the MIT License. Before public release, run the dependency license check used
+by the release owner and archive the generated license report.
