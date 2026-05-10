@@ -1,0 +1,51 @@
+name: WASM Size
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  wasm_size:
+    name: wasm size
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Install wasm-pack
+        uses: taiki-e/install-action@v2
+        with:
+          tool: wasm-pack
+
+      - name: Build production WASM
+        run: wasm-pack build tttg_forge_wasm --target web --release
+
+      - name: Check WASM size
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p artifacts
+          SIZE="$(wc -c < tttg_forge_wasm/pkg/tttg_forge_wasm_bg.wasm | tr -d ' ')"
+          echo "{\"wasm_size\":${SIZE},\"cap\":225000}" | tee artifacts/wasm-size.json
+          if [ "$SIZE" -gt 225000 ]; then
+            echo "WASM size ${SIZE} exceeds 225000 bytes"
+            exit 1
+          fi
+
+      - name: Upload size artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wasm-size
+          path: artifacts/wasm-size.json
+          if-no-files-found: error

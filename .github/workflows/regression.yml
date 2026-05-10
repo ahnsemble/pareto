@@ -137,8 +137,8 @@ jobs:
         with:
           tool: wasm-pack
 
-      - name: Build WASM package
-        run: wasm-pack build tttg_forge_wasm --target web --release
+      - name: Build WASM package with compatibility exports
+        run: wasm-pack build tttg_forge_wasm --target web --release -- --features compat-exports
 
       - name: Install pytest
         run: python -m pip install --upgrade pip pytest

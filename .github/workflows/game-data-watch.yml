@@ -1,0 +1,71 @@
+name: Game Data Watch
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Run without fetching remote URLs"
+        required: false
+        default: "true"
+
+permissions:
+  contents: read
+
+jobs:
+  game_data_watch:
+    name: game data watch
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TZ: Asia/Seoul
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run game data detector
+        id: detector
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p artifacts
+          DRY_RUN="${{ github.event.inputs.dry_run || 'true' }}"
+          if [ "$DRY_RUN" = "false" ]; then
+            python3 scripts/detect_game_data_changes.py | tee artifacts/game-data-watch.json
+          else
+            python3 scripts/detect_game_data_changes.py --dry-run | tee artifacts/game-data-watch.json
+          fi
+
+      - name: Upload detector artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: game-data-watch
+          path: artifacts/game-data-watch.json
+          if-no-files-found: error
+
+      - name: Send Telegram brief
+        if: failure()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        shell: bash
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "Telegram credentials missing, skip"
+            exit 0
+          fi
+          NOW="$(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+          MESSAGE="BRAIN_ESCALATION_REQUIRED
+          Pareto game data watch changed or failed at ${NOW} KST.
+          Artifact: game-data-watch"
+          curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d chat_id="${TELEGRAM_CHAT_ID}" \
+            --data-urlencode text="${MESSAGE}"
