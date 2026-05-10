@@ -4,6 +4,8 @@ pub mod bench_regression;
 pub mod build_diff;
 pub mod branch_bound;
 pub mod delta;
+#[cfg(not(target_arch = "wasm32"))]
+pub mod game_data;
 pub mod heatmap;
 pub mod pareto_frontier;
 pub mod pareto_objectives;
@@ -20,6 +22,8 @@ pub use bench_regression::*;
 pub use build_diff::*;
 pub use branch_bound::*;
 pub use delta::*;
+#[cfg(not(target_arch = "wasm32"))]
+pub use game_data::*;
 pub use heatmap::*;
 pub use pareto_frontier::*;
 pub use pareto_objectives::*;

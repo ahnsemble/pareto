@@ -44,6 +44,26 @@ fn resolve_objectives_expands_normal_and_dedupes_selected_axes() {
 }
 
 #[test]
+fn resolve_objectives_accepts_endless_echelon_aliases() {
+    assert_eq!(
+        resolve_pareto_objectives(&json!({
+            "objectives": ["Endless Echelon", "endless_echelon", "ee"]
+        })),
+        vec!["ee".to_string()]
+    );
+}
+
+#[test]
+fn resolve_objectives_accepts_turf_war_aliases() {
+    assert_eq!(
+        resolve_pareto_objectives(&json!({
+            "objectives": ["Turf War", "turf_war", "Turf"]
+        })),
+        vec!["turf".to_string()]
+    );
+}
+
+#[test]
 fn resolve_objectives_falls_back_when_array_has_no_valid_axes() {
     assert_eq!(
         resolve_pareto_objectives(&json!({"objectives": ["unknown"]})),
@@ -67,6 +87,125 @@ fn objective_value_reads_lme1_aliases_and_treats_missing_as_zero() {
         7.0
     );
     assert_eq!(objective_value(&json!({"score": 1.0}), "lme1"), 0.0);
+}
+
+#[test]
+fn objective_value_reads_ee_score_aliases() {
+    assert_eq!(
+        objective_value(&json!({"stats": {"endlessEchelonScore": 42.0}}), "ee"),
+        42.0
+    );
+    assert_eq!(objective_value(&json!({"ee_score": 11.0}), "ee"), 11.0);
+}
+
+#[test]
+fn objective_value_reads_turf_score_aliases() {
+    assert_eq!(
+        objective_value(&json!({"stats": {"turfWarScore": 19.0}}), "turf"),
+        19.0
+    );
+    assert_eq!(objective_value(&json!({"turf_damage": 8.0}), "turf"), 8.0);
+}
+
+#[test]
+fn ee_axis_preserves_endless_echelon_specialist() {
+    let candidates = vec![
+        json!({"label": "normal", "score": 120.0, "damageFactor": 110.0, "eeScore": 5.0}),
+        json!({"label": "ee", "score": 100.0, "damageFactor": 95.0, "eeScore": 40.0}),
+    ];
+
+    let frontier = pareto_frontier_smoke_by_objectives(&candidates, &["score", "damage", "ee"]);
+
+    assert_eq!(frontier, vec![0, 1]);
+}
+
+#[test]
+fn turf_axis_preserves_turf_war_specialist() {
+    let candidates = vec![
+        json!({"label": "normal", "score": 120.0, "damageFactor": 110.0, "turfScore": 5.0}),
+        json!({"label": "turf", "score": 100.0, "damageFactor": 95.0, "turfScore": 40.0}),
+    ];
+
+    let frontier = pareto_frontier_smoke_by_objectives(&candidates, &["score", "damage", "turf"]);
+
+    assert_eq!(frontier, vec![0, 1]);
+}
+
+#[test]
+fn objective_value_reads_endless_echelon_damage_alias() {
+    assert_eq!(
+        objective_value(&json!({"endlessEchelonDamage": 23.0}), "ee"),
+        23.0
+    );
+}
+
+#[test]
+fn objective_value_reads_turf_war_damage_alias() {
+    assert_eq!(
+        objective_value(&json!({"turfWarDamage": 17.0}), "turf"),
+        17.0
+    );
+}
+
+#[test]
+fn resolve_objectives_dedupes_mixed_case_mode_aliases() {
+    assert_eq!(
+        resolve_pareto_objectives(&json!({"objectives": ["EE", "ee", "TURF", "turf"]})),
+        vec!["ee".to_string(), "turf".to_string()]
+    );
+}
+
+#[test]
+fn resolve_objectives_accepts_hyphenated_mode_aliases() {
+    assert_eq!(
+        resolve_pareto_objectives(&json!({"objectives": ["endless-echelon", "turf-war"]})),
+        vec!["ee".to_string(), "turf".to_string()]
+    );
+}
+
+#[test]
+fn ee_axis_can_drop_candidate_dominated_on_mode_score() {
+    let candidates = vec![
+        json!({"label": "winner", "score": 120.0, "damageFactor": 100.0, "eeScore": 30.0}),
+        json!({"label": "loser", "score": 110.0, "damageFactor": 95.0, "eeScore": 20.0}),
+    ];
+
+    let frontier = pareto_frontier_smoke_by_objectives(&candidates, &["score", "damage", "ee"]);
+
+    assert_eq!(frontier, vec![0]);
+}
+
+#[test]
+fn turf_axis_can_drop_candidate_dominated_on_mode_score() {
+    let candidates = vec![
+        json!({"label": "winner", "score": 120.0, "damageFactor": 100.0, "turfScore": 30.0}),
+        json!({"label": "loser", "score": 110.0, "damageFactor": 95.0, "turfScore": 20.0}),
+    ];
+
+    let frontier = pareto_frontier_smoke_by_objectives(&candidates, &["score", "damage", "turf"]);
+
+    assert_eq!(frontier, vec![0]);
+}
+
+#[test]
+fn ee_and_turf_can_be_combined_with_normal_axes() {
+    assert_eq!(
+        resolve_pareto_objectives(&json!({"objectives": ["normal", "ee", "turf"]})),
+        vec![
+            "score".to_string(),
+            "damage".to_string(),
+            "ee".to_string(),
+            "turf".to_string()
+        ]
+    );
+}
+
+#[test]
+fn missing_ee_and_turf_values_are_zero() {
+    let candidate = json!({"score": 1.0});
+
+    assert_eq!(objective_value(&candidate, "ee"), 0.0);
+    assert_eq!(objective_value(&candidate, "turf"), 0.0);
 }
 
 #[test]

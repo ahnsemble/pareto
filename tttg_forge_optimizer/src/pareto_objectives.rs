@@ -8,14 +8,16 @@ pub fn resolve_pareto_objectives(constraints: &Value) -> Vec<String> {
     };
     let mut objectives = Vec::new();
     for entry in entries.iter().filter_map(Value::as_str) {
-        match entry {
+        let normalized = normalize_objective(entry);
+        match normalized {
             "normal" => {
                 push_unique(&mut objectives, "score");
                 push_unique(&mut objectives, "damage");
             }
             "score" | "damage" | "boss" | "lme1" | "ee" | "turf" => {
-                push_unique(&mut objectives, entry);
+                push_unique(&mut objectives, normalized);
             }
+            "" => {}
             _ => {}
         }
     }
@@ -32,11 +34,48 @@ pub fn objective_value(candidate: &Value, objective: &str) -> f64 {
         "damage" => &["damageFactor", "damage_factor", "damage"],
         "boss" => &["bossDamage", "boss_damage", "damageBoss"],
         "lme1" => &["lme1Damage", "lme1_damage"],
-        "ee" => &["eeDamage", "ee_damage"],
-        "turf" => &["turfScore", "turf_score"],
+        "ee" => &[
+            "eeScore",
+            "ee_score",
+            "eeDamage",
+            "ee_damage",
+            "endlessEchelonScore",
+            "endless_echelon_score",
+            "endlessEchelonDamage",
+            "endless_echelon_damage",
+        ],
+        "turf" => &[
+            "turfScore",
+            "turf_score",
+            "turfDamage",
+            "turf_damage",
+            "turfWarScore",
+            "turf_war_score",
+            "turfWarDamage",
+            "turf_war_damage",
+        ],
         _ => &[],
     };
     first_number(candidate, keys).unwrap_or(0.0)
+}
+
+fn normalize_objective(entry: &str) -> &'static str {
+    match entry
+        .trim()
+        .to_ascii_lowercase()
+        .replace([' ', '-'], "_")
+        .as_str()
+    {
+        "normal" => "normal",
+        "score" => "score",
+        "damage" => "damage",
+        "boss" | "boss_damage" => "boss",
+        "lme1" | "lme_1" | "lme1_damage" => "lme1",
+        "ee" | "endless_echelon" | "endless_echelon_score" | "endless_echelon_damage" => "ee",
+        "turf" | "turf_war" | "turf_score" | "turf_damage" | "turf_war_score"
+        | "turf_war_damage" => "turf",
+        _ => "",
+    }
 }
 
 pub fn pareto_frontier_smoke_with_constraints(

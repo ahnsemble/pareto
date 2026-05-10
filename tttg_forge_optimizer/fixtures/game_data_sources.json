@@ -1,0 +1,27 @@
+[
+  {
+    "id": "public_equipment_catalog",
+    "url": "https://raw.githubusercontent.com/woosdom-public/pareto-game-data/main/equipment/catalog.json",
+    "baseline_hash": "g6-equipment-catalog-v1"
+  },
+  {
+    "id": "public_pet_catalog",
+    "url": "https://raw.githubusercontent.com/woosdom-public/pareto-game-data/main/pets/catalog.json",
+    "baseline_hash": "g6-pet-catalog-v1"
+  },
+  {
+    "id": "public_skill_catalog",
+    "url": "https://raw.githubusercontent.com/woosdom-public/pareto-game-data/main/skills/catalog.json",
+    "baseline_hash": "g6-skill-catalog-v1"
+  },
+  {
+    "id": "public_tech_catalog",
+    "url": "https://raw.githubusercontent.com/woosdom-public/pareto-game-data/main/tech/catalog.json",
+    "baseline_hash": "g6-tech-catalog-v1"
+  },
+  {
+    "id": "public_mode_coefficients",
+    "url": "https://raw.githubusercontent.com/woosdom-public/pareto-game-data/main/modes/coefficients.json",
+    "baseline_hash": "g6-mode-coefficients-v1"
+  }
+]
