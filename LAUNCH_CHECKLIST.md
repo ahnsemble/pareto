@@ -4,7 +4,7 @@
 
 - [ ] AUTO-01 `cargo test --workspace --release` passes.
 - [ ] AUTO-02 Production WASM build passes.
-- [ ] AUTO-03 Raw WASM size is at or below `162,860 B`.
+- [ ] AUTO-03 Raw WASM size is at or below `145,000 B` (`LAUNCH_WASM_CAP_BYTES` env).
 - [ ] AUTO-04 Gzip WASM size is at or below launch cap.
 - [ ] AUTO-05 Bench regression check passes for the selected profile.
 - [ ] AUTO-06 i18n key consistency test passes.
