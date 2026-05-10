@@ -1,7 +1,7 @@
-use std::{env, fs, process};
+use std::{env, fs, path::PathBuf, process};
 use tttg_forge_optimizer::{
-    benchmark_regression_report, compare_bench_reports, BenchRegressionPolicy,
-    BenchRegressionReport,
+    bench_profile_baseline_path, benchmark_regression_report, compare_bench_reports,
+    detect_bench_profile, BenchRegressionPolicy, BenchRegressionReport,
 };
 
 const BASELINE_PATH: &str = "tttg_forge_optimizer/benches/baseline.json";
@@ -20,18 +20,22 @@ fn main() {
     )
     .expect("write current report");
 
+    let baseline_path = selected_baseline_path();
     if env::args().any(|arg| arg == "--write-baseline") {
+        if let Some(parent) = baseline_path.parent() {
+            fs::create_dir_all(parent).expect("baseline profile directory");
+        }
         fs::write(
-            BASELINE_PATH,
+            &baseline_path,
             serde_json::to_string_pretty(&current).expect("serialize baseline report"),
         )
         .expect("write baseline report");
-        println!("wrote {BASELINE_PATH}");
+        println!("wrote {}", baseline_path.display());
         return;
     }
 
     let baseline: BenchRegressionReport =
-        serde_json::from_str(&fs::read_to_string(BASELINE_PATH).expect("read benchmark baseline"))
+        serde_json::from_str(&fs::read_to_string(&baseline_path).expect("read benchmark baseline"))
             .expect("parse benchmark baseline");
     let policy = BenchRegressionPolicy::default();
     let failures = compare_bench_reports(&baseline, &current, &policy);
@@ -48,5 +52,17 @@ fn main() {
             eprintln!("- {failure}");
         }
         process::exit(1);
+    }
+}
+
+fn selected_baseline_path() -> PathBuf {
+    if let Ok(path) = env::var("BENCH_BASELINE_PATH") {
+        return PathBuf::from(path);
+    }
+    let profile_path = bench_profile_baseline_path(detect_bench_profile());
+    if profile_path.exists() {
+        profile_path
+    } else {
+        PathBuf::from(BASELINE_PATH)
     }
 }

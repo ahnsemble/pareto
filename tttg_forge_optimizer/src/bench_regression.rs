@@ -4,7 +4,7 @@ use crate::{
 };
 use serde::{Deserialize, Serialize};
 use serde_json::json;
-use std::time::Instant;
+use std::{fs, path::PathBuf, time::Instant};
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct BenchRegressionRow {
@@ -40,8 +40,23 @@ pub struct BenchRegressionReport {
     pub all_exact_match: bool,
 }
 
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Serialize, Deserialize)]
+pub enum BenchMachineProfileKind {
+    #[serde(rename = "local-mac-m1")]
+    LocalMacM1,
+    #[serde(rename = "local-mac-m2")]
+    LocalMacM2,
+    #[serde(rename = "ci-ubuntu-latest")]
+    CIUbuntuLatest,
+    #[serde(rename = "ci-macos-latest")]
+    CIMacosLatest,
+    #[serde(rename = "ci-windows-latest")]
+    CIWindowsLatest,
+}
+
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct BenchMachineProfile {
+    pub kind: BenchMachineProfileKind,
     pub machine_id: String,
     pub iterations: usize,
     pub warm_up_iterations: usize,
@@ -58,11 +73,13 @@ pub struct BenchRegressionPolicy {
 
 impl Default for BenchMachineProfile {
     fn default() -> Self {
+        let kind = detect_bench_profile();
         Self {
             machine_id: std::env::var("PARETO_BENCH_MACHINE_ID")
                 .ok()
                 .filter(|value| !value.trim().is_empty())
-                .unwrap_or_else(|| std::env::consts::ARCH.to_string()),
+                .unwrap_or_else(|| kind.as_str().to_string()),
+            kind,
             iterations: 50,
             warm_up_iterations: 3,
         }
@@ -172,6 +189,106 @@ pub fn benchmark_regression_rows(iterations: usize) -> Vec<BenchRegressionRow> {
         ..BenchMachineProfile::default()
     };
     benchmark_regression_rows_with_profile(&profile)
+}
+
+impl BenchMachineProfileKind {
+    pub fn all() -> Vec<Self> {
+        vec![
+            Self::LocalMacM1,
+            Self::LocalMacM2,
+            Self::CIUbuntuLatest,
+            Self::CIMacosLatest,
+            Self::CIWindowsLatest,
+        ]
+    }
+
+    pub fn as_str(self) -> &'static str {
+        match self {
+            Self::LocalMacM1 => "local-mac-m1",
+            Self::LocalMacM2 => "local-mac-m2",
+            Self::CIUbuntuLatest => "ci-ubuntu-latest",
+            Self::CIMacosLatest => "ci-macos-latest",
+            Self::CIWindowsLatest => "ci-windows-latest",
+        }
+    }
+
+    pub fn from_label(value: &str) -> Option<Self> {
+        match value.trim().to_ascii_lowercase().as_str() {
+            "local-mac-m1" | "mac-m1" | "m1" => Some(Self::LocalMacM1),
+            "local-mac-m2" | "mac-m2" | "m2" => Some(Self::LocalMacM2),
+            "ci-ubuntu-latest" | "ubuntu-latest" | "linux" => Some(Self::CIUbuntuLatest),
+            "ci-macos-latest" | "macos-latest" | "macos" => Some(Self::CIMacosLatest),
+            "ci-windows-latest" | "windows-latest" | "windows" => Some(Self::CIWindowsLatest),
+            _ => None,
+        }
+    }
+}
+
+pub fn detect_bench_profile() -> BenchMachineProfileKind {
+    let explicit = std::env::var("BENCH_PROFILE").ok();
+    let github_actions = std::env::var("GITHUB_ACTIONS").ok();
+    let runner_os = std::env::var("RUNNER_OS").ok();
+    detect_bench_profile_from_env(
+        explicit.as_deref(),
+        github_actions.as_deref(),
+        runner_os.as_deref(),
+        std::env::consts::OS,
+        std::env::consts::ARCH,
+    )
+}
+
+pub fn detect_bench_profile_from_env(
+    explicit_profile: Option<&str>,
+    github_actions: Option<&str>,
+    runner_os: Option<&str>,
+    local_os: &str,
+    local_arch: &str,
+) -> BenchMachineProfileKind {
+    if let Some(profile) = explicit_profile.and_then(BenchMachineProfileKind::from_label) {
+        return profile;
+    }
+    if github_actions
+        .map(|value| value.eq_ignore_ascii_case("true"))
+        .unwrap_or(false)
+    {
+        return match runner_os
+            .and_then(BenchMachineProfileKind::from_label)
+            .unwrap_or(BenchMachineProfileKind::CIUbuntuLatest)
+        {
+            BenchMachineProfileKind::CIMacosLatest => BenchMachineProfileKind::CIMacosLatest,
+            BenchMachineProfileKind::CIWindowsLatest => BenchMachineProfileKind::CIWindowsLatest,
+            _ => BenchMachineProfileKind::CIUbuntuLatest,
+        };
+    }
+    match (local_os, local_arch) {
+        ("macos", "aarch64") => BenchMachineProfileKind::LocalMacM2,
+        ("macos", _) => BenchMachineProfileKind::LocalMacM1,
+        _ => BenchMachineProfileKind::CIUbuntuLatest,
+    }
+}
+
+pub fn bench_profile_baseline_path(profile: BenchMachineProfileKind) -> PathBuf {
+    PathBuf::from("target")
+        .join("bench_profiles")
+        .join(format!("{}.json", profile.as_str()))
+}
+
+pub fn load_bench_baseline_for_profile(
+    profile: BenchMachineProfileKind,
+) -> Result<BenchRegressionReport, Box<dyn std::error::Error>> {
+    let path = bench_profile_baseline_path(profile);
+    let text = fs::read_to_string(resolve_repo_relative_path(&path))?;
+    let baseline = serde_json::from_str(&text)?;
+    Ok(baseline)
+}
+
+fn resolve_repo_relative_path(path: &PathBuf) -> PathBuf {
+    if path.exists() {
+        return path.clone();
+    }
+    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("..")
+        .join(path)
 }
 
 pub fn benchmark_regression_rows_with_profile(

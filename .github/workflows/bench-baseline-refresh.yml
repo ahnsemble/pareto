@@ -1,0 +1,37 @@
+name: Bench Baseline Refresh
+
+on:
+  schedule:
+    - cron: '0 15 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  refresh_ci_ubuntu_baseline:
+    name: refresh ci ubuntu baseline
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      BENCH_PROFILE: ci-ubuntu-latest
+      BENCH_REGRESSION_ITERATIONS: "50"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Measure CI baseline
+        run: |
+          set -o pipefail
+          cargo run -p tttg_forge_optimizer --bin check_bench_regression --release -- --write-baseline
+
+      - name: Upload refreshed baseline
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-ubuntu-bench-profile
+          path: target/bench_profiles/ci-ubuntu-latest.json
+          if-no-files-found: error

@@ -1,6 +1,9 @@
+use std::path::PathBuf;
 use tttg_forge_optimizer::{
-    bench_pass_rate, benchmark_regression_rows, compare_bench_reports, sample_stddev_ms,
-    BenchMachineProfile, BenchRegressionPolicy, BenchRegressionReport, BenchRegressionRow,
+    bench_pass_rate, bench_profile_baseline_path, benchmark_regression_rows, compare_bench_reports,
+    detect_bench_profile_from_env, load_bench_baseline_for_profile, sample_stddev_ms,
+    BenchMachineProfile, BenchMachineProfileKind, BenchRegressionPolicy, BenchRegressionReport,
+    BenchRegressionRow,
 };
 
 #[test]
@@ -272,7 +275,64 @@ fn benchmark_report_records_warm_up_iterations() {
     assert_eq!(report.warm_up_iterations, 3);
 }
 
-fn report_with_row(sample: &str, tight_mean_ms: f64, pruning_rate: f64, exact: bool) -> BenchRegressionReport {
+#[test]
+fn bench_profile_kind_covers_five_supported_profiles() {
+    let profiles = BenchMachineProfileKind::all();
+
+    assert_eq!(profiles.len(), 5);
+    assert!(profiles.contains(&BenchMachineProfileKind::LocalMacM1));
+    assert!(profiles.contains(&BenchMachineProfileKind::LocalMacM2));
+    assert!(profiles.contains(&BenchMachineProfileKind::CIUbuntuLatest));
+    assert!(profiles.contains(&BenchMachineProfileKind::CIMacosLatest));
+    assert!(profiles.contains(&BenchMachineProfileKind::CIWindowsLatest));
+}
+
+#[test]
+fn bench_profile_detects_explicit_env_override() {
+    let profile = detect_bench_profile_from_env(
+        Some("ci-ubuntu-latest"),
+        Some("false"),
+        Some("macOS"),
+        "macos",
+        "aarch64",
+    );
+
+    assert_eq!(profile, BenchMachineProfileKind::CIUbuntuLatest);
+}
+
+#[test]
+fn bench_profile_auto_detects_github_ubuntu_runner() {
+    let profile =
+        detect_bench_profile_from_env(None, Some("true"), Some("Linux"), "macos", "aarch64");
+
+    assert_eq!(profile, BenchMachineProfileKind::CIUbuntuLatest);
+}
+
+#[test]
+fn bench_profile_baseline_path_uses_target_profile_directory() {
+    let path = bench_profile_baseline_path(BenchMachineProfileKind::CIUbuntuLatest);
+
+    assert_eq!(
+        path,
+        PathBuf::from("target/bench_profiles/ci-ubuntu-latest.json")
+    );
+}
+
+#[test]
+fn bench_profile_loads_ci_ubuntu_baseline_json() {
+    let baseline =
+        load_bench_baseline_for_profile(BenchMachineProfileKind::CIUbuntuLatest).unwrap();
+
+    assert_eq!(baseline.machine_id, "ci-ubuntu-latest");
+    assert_eq!(baseline.rows.len(), 5);
+}
+
+fn report_with_row(
+    sample: &str,
+    tight_mean_ms: f64,
+    pruning_rate: f64,
+    exact: bool,
+) -> BenchRegressionReport {
     BenchRegressionReport {
         generated_by: "test".to_string(),
         iterations: 1,
