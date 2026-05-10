@@ -35,19 +35,28 @@ def main() -> int:
 
     rows = []
     for source in load_sources():
+        error = None
+        error_type = None
         if args.dry_run:
             current_hash = source["baseline_hash"]
         else:
-            current_hash = fetch_hash(source["url"], args.timeout)
-        rows.append(
-            {
-                "id": source["id"],
-                "url": source["url"],
-                "baseline_hash": source["baseline_hash"],
-                "current_hash": current_hash,
-                "changed": current_hash != source["baseline_hash"],
-            }
-        )
+            try:
+                current_hash = fetch_hash(source["url"], args.timeout)
+            except Exception as err:
+                current_hash = None
+                error = str(err)
+                error_type = type(err).__name__
+        row = {
+            "id": source["id"],
+            "url": source["url"],
+            "baseline_hash": source["baseline_hash"],
+            "current_hash": current_hash,
+            "changed": current_hash != source["baseline_hash"],
+        }
+        if error is not None:
+            row["error"] = error
+            row["error_type"] = error_type
+        rows.append(row)
     print(json.dumps({"source_count": len(rows), "rows": rows}, indent=2, sort_keys=True))
     return 1 if any(row["changed"] for row in rows) else 0
 
