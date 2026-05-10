@@ -1,3 +1,5 @@
+#[cfg(not(target_arch = "wasm32"))]
+pub mod analytics;
 pub mod beam_search;
 #[cfg(not(target_arch = "wasm32"))]
 pub mod bench_regression;
@@ -6,6 +8,8 @@ pub mod branch_bound;
 pub mod delta;
 #[cfg(not(target_arch = "wasm32"))]
 pub mod game_data;
+#[cfg(not(target_arch = "wasm32"))]
+pub mod hardening;
 pub mod heatmap;
 pub mod pareto_frontier;
 pub mod pareto_objectives;
@@ -16,6 +20,8 @@ pub mod space_builder;
 pub mod twodeck;
 pub mod utils;
 
+#[cfg(not(target_arch = "wasm32"))]
+pub use analytics::*;
 pub use beam_search::*;
 #[cfg(not(target_arch = "wasm32"))]
 pub use bench_regression::*;
@@ -24,6 +30,8 @@ pub use branch_bound::*;
 pub use delta::*;
 #[cfg(not(target_arch = "wasm32"))]
 pub use game_data::*;
+#[cfg(not(target_arch = "wasm32"))]
+pub use hardening::*;
 pub use heatmap::*;
 pub use pareto_frontier::*;
 pub use pareto_objectives::*;
