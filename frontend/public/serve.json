@@ -6,7 +6,8 @@
     { "source": "/twodeck", "destination": "/en/twodeck", "type": 302 },
     { "source": "/twodeck/", "destination": "/en/twodeck", "type": 302 },
     { "source": "/community", "destination": "/en/community", "type": 302 },
-    { "source": "/community/", "destination": "/en/community", "type": 302 }
+    { "source": "/community/", "destination": "/en/community", "type": 302 },
+    { "source": "/en/cache-sim", "destination": "/en/optimize", "type": 302 }
   ],
   "rewrites": [
     { "source": "/en", "destination": "/en.html" },

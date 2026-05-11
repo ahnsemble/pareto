@@ -1,0 +1,86 @@
+name: Lighthouse CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    name: lighthouse mobile guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install wasm-pack
+        uses: taiki-e/install-action@v2
+        with:
+          tool: wasm-pack
+
+      - name: Build WASM package
+        run: wasm-pack build tttg_forge_wasm --target web --release
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+      - name: Set up Chrome
+        id: setup-chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Run Lighthouse assertions
+        working-directory: frontend
+        env:
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+        run: |
+          set -o pipefail
+          mkdir -p artifacts/lighthouse
+          npx lhci collect
+          npx lhci assert
+          npx lhci assert --no-lighthouserc --budgetsFile=budget.json
+          npx lhci upload --target=filesystem --outputDir=artifacts/lighthouse
+
+      - name: Write Lighthouse summary
+        if: always()
+        working-directory: frontend
+        run: |
+          {
+            echo "## Lighthouse CI"
+            echo
+            echo "- Routes: /, /en/optimize, /ko/optimize, /en/cache-sim"
+            echo "- Assertions: Performance >= 80, Accessibility = 100, Best Practices = 100, SEO >= 95"
+            echo "- Budget file: frontend/budget.json"
+            echo
+            echo '```text'
+            find artifacts/lighthouse -maxdepth 1 -type f -name '*.json' -print 2>/dev/null | sort || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload Lighthouse artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pareto-lighthouse-ci
+          path: frontend/artifacts/lighthouse/
+          if-no-files-found: warn

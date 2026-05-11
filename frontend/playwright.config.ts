@@ -23,7 +23,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npx --yes serve@14 out -l 3032 --no-clipboard',
+    command: 'npx serve out -l 3032 --no-clipboard',
     url: 'http://localhost:3032',
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
