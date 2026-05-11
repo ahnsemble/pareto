@@ -52,8 +52,6 @@ function ChartSkeleton() {
 }
 
 type RunState =
-  | { phase: 'idle' }
-  | { phase: 'initializing' }
   | { phase: 'ready' }
   | { phase: 'computing'; startedAt: number }
   | { phase: 'success'; result: OptimizeResult }
@@ -108,39 +106,12 @@ export default function OptimizePage() {
   const [equipped, setEquipped] = useState<EquippedMap>({});
   const [selectedPet, setSelectedPet] = useState<string | null>(null);
   const [petState, setPetState] = useState<PetStateId>('early');
-  const [run, setRun] = useState<RunState>({ phase: 'initializing' });
-  const [showSkeleton, setShowSkeleton] = useState(false);
+  const [run, setRun] = useState<RunState>({ phase: 'ready' });
   const [deckASnapshot, setDeckASnapshot] = useState<{ result: OptimizeResult; heroLabel: string } | null>(null);
   const [deckBSnapshot, setDeckBSnapshot] = useState<{ result: OptimizeResult; heroLabel: string } | null>(null);
   const [overlayMode, setOverlayMode] = useState<TwoDeckOverlayMode>('pareto');
   const [shareUrl, setShareUrl] = useState('');
   const [shareCopyState, setShareCopyState] = useState<ShareCopyState>('idle');
-
-  useEffect(() => {
-    let cancelled = false;
-    const skeletonTimer = setTimeout(() => {
-      if (!cancelled && run.phase === 'initializing') setShowSkeleton(true);
-    }, 200);
-    (async () => {
-      try {
-        await getWorker();
-        if (!cancelled) {
-          setRun({ phase: 'ready' });
-          setShowSkeleton(false);
-        }
-      } catch (err) {
-        if (!cancelled) {
-          const message = err instanceof Error ? err.message : String(err);
-          setRun({ phase: 'error', message });
-        }
-      }
-    })();
-    return () => {
-      cancelled = true;
-      clearTimeout(skeletonTimer);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -309,11 +280,6 @@ export default function OptimizePage() {
                 {t('ctaHeroFirst')}
               </span>
             )}
-            {run.phase === 'initializing' && (
-              <span className="text-xs text-[color:var(--color-text-muted)]">
-                Initializing WASM worker…
-              </span>
-            )}
             {run.phase === 'success' && (
               <span className="font-mono text-xs text-[color:var(--color-text-muted)]">
                 {run.result.enumeratedCount} / {run.result.searchSpaceSize} combos in{' '}
@@ -321,11 +287,6 @@ export default function OptimizePage() {
               </span>
             )}
           </div>
-          {run.phase === 'initializing' && showSkeleton && (
-            <p className="mt-3 text-xs text-[color:var(--color-text-muted)]">
-              Loading optimizer…
-            </p>
-          )}
           {run.phase === 'error' && (
             <p className="mt-3 rounded border border-[color:var(--color-danger)]/40 bg-[color:var(--color-danger)]/10 p-3 text-xs text-[color:var(--color-danger)]">
               Optimization failed: {run.message}

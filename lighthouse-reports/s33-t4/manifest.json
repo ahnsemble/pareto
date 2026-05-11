@@ -1,0 +1,50 @@
+[
+  {
+    "url": "http://localhost:3032/",
+    "isRepresentativeRun": true,
+    "htmlPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/lighthouse-s33-t4/localhost--2026_05_11_12_18_03.report.html",
+    "jsonPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/lighthouse-s33-t4/localhost--2026_05_11_12_18_03.report.json",
+    "summary": {
+      "performance": 0.99,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://localhost:3032/en/optimize",
+    "isRepresentativeRun": true,
+    "htmlPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/lighthouse-s33-t4/localhost-en_optimize-2026_05_11_12_18_14.report.html",
+    "jsonPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/lighthouse-s33-t4/localhost-en_optimize-2026_05_11_12_18_14.report.json",
+    "summary": {
+      "performance": 0.99,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://localhost:3032/ko/optimize",
+    "isRepresentativeRun": true,
+    "htmlPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/lighthouse-s33-t4/localhost-ko_optimize-2026_05_11_12_18_24.report.html",
+    "jsonPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/lighthouse-s33-t4/localhost-ko_optimize-2026_05_11_12_18_24.report.json",
+    "summary": {
+      "performance": 0.99,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://localhost:3032/en/cache-sim",
+    "isRepresentativeRun": true,
+    "htmlPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/lighthouse-s33-t4/localhost-en_cache_sim-2026_05_11_12_18_34.report.html",
+    "jsonPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/lighthouse-s33-t4/localhost-en_cache_sim-2026_05_11_12_18_34.report.json",
+    "summary": {
+      "performance": 0.99,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    }
+  }
+]

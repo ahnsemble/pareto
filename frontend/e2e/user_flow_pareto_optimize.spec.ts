@@ -2,6 +2,23 @@ import { expect, test } from '@playwright/test';
 import { chooseRepresentativeInputs, optimizeAndWait } from './helpers/user-flow';
 
 test.describe('User flow — Pareto optimize end to end', () => {
+  test('defers the WASM worker fetch until the first optimize run', async ({ page }) => {
+    const wasmUrls: string[] = [];
+    page.on('requestfinished', (request) => {
+      const url = request.url();
+      if (url.includes('.wasm') || url.includes('tttg_forge_wasm')) {
+        wasmUrls.push(url);
+      }
+    });
+
+    await page.goto('/en/optimize', { waitUntil: 'networkidle' });
+    expect(wasmUrls).toEqual([]);
+
+    await chooseRepresentativeInputs(page, { collectibleCount: 4 });
+    await optimizeAndWait(page);
+    expect(wasmUrls.length).toBeGreaterThan(0);
+  });
+
   test('loads WASM, accepts equipment/pet/collectible inputs, renders top-N details, and generates a share URL', async ({
     page,
   }) => {

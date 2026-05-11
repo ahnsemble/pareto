@@ -14,7 +14,7 @@
   --color-danger: #ff4d6d;
 
   --font-sans: var(--font-geist-sans), Inter, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), "JetBrains Mono", ui-monospace, monospace;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   --spacing-unit: 0.25rem;
   --radius-none: 0;
