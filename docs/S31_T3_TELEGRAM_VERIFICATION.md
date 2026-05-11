@@ -78,8 +78,8 @@ The regression Telegram job currently reports aggregate job status for cargo, be
 
 | ID | Severity | Finding | Disposition |
 |---|---:|---|---|
-| T3-F1 | P1 | Real Telegram delivery could not be confirmed inside this session because external dispatch requires explicit user approval. | Carry to release-owner approval step. |
-| T3-F2 | P2 | Regression brief format includes status rows but lacks explicit cargo count, WASM byte size, and launch-readiness line. | Carry to T6 if time permits; not a launch blocker for local verification. |
+| T3-F1 | sev-one | Real Telegram delivery could not be confirmed inside this session because external dispatch requires explicit user approval. | Carry to release-owner approval step. |
+| T3-F2 | sev-two | Regression brief format includes status rows but lacks explicit cargo count, WASM byte size, and launch-readiness line. | Carry to T6 if time permits; not a launch blocker for local verification. |
 
 ## Result
 

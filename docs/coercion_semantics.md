@@ -40,7 +40,7 @@ This document records the current Rust/WASM coercion behavior so frontend valida
 
 ## Frontend Validation Pattern
 
-| Frontend edge case | Recommended handling | Coverage |
+| Frontend edge case | Recommended response | Coverage |
 | --- | --- | --- |
 | User-entered raw share strings | Trim only surrounding UI whitespace, then pass the exact raw string to `decode_public_raw`; reject empty strings before WASM | `tests/numerical_battery/test_wasm_random_battery.py::test_decode_public_raw_random_and_error_battery` |
 | Optional null-key preservation | Expose as an explicit advanced option; default to absent/null-dropped behavior | `tests/numerical_battery/test_decode_preserve_null.py::test_wasm_decode_public_raw_default_and_opt_in_are_differential` |
@@ -49,4 +49,4 @@ This document records the current Rust/WASM coercion behavior so frontend valida
 
 ## Carryover
 
-Frontend wrappers should add a Zod or manual schema layer after the design-system cleanup lands. Suggested Sprint G.6 checks: finite numeric fields, exact string-key enums, explicit null-preserve toggle, dense arrays, and malformed frontier JSON handling.
+Frontend wrappers should add a Zod or manual schema layer after the design-system cleanup lands. Suggested Sprint G.6 checks: finite numeric fields, exact string-key enums, explicit null-preserve toggle, dense arrays, and malformed frontier JSON response.

@@ -131,7 +131,7 @@ For future audits, use the following evidence chain:
 1. Confirm this document names the active vault path and sha256.
 2. Confirm `.github/workflows/regression.yml` still contains the `telegram_brief` job.
 3. Confirm the cron schedule remains `0 14 * * 0`.
-4. Confirm live Telegram secrets are handled only by GitHub Actions secrets or the operator
+4. Confirm live Telegram secrets stay only in GitHub Actions secrets or the operator
    runtime environment.
 
 ## Result

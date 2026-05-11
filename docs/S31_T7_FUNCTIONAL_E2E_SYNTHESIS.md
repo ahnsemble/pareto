@@ -4,7 +4,7 @@
 
 Functional E2E overall status: CONDITIONAL.
 
-The branch has no P0 launch blocker from this sprint and all final regression gates passed. The remaining CONDITIONAL status is due to launch-adjacent P1 carryover items: real external message delivery approval, Lighthouse Performance below the sprint target, and unavailable public game-data source paths.
+The branch has no sev-zero launch blocker from this sprint and all final regression gates passed. The remaining CONDITIONAL status is due to launch-adjacent sev-one carryover items: real external message delivery approval, Lighthouse Performance below the sprint target, and unavailable public game-data source paths.
 
 ## Final Gate Evidence
 
@@ -30,7 +30,7 @@ Note: a sandboxed launch verification attempt failed at the production WASM buil
 | T3 message delivery verification | CONDITIONAL | `c03b72c` | dry-run/stub PASS; real delivery requires explicit approval |
 | T4 Lighthouse/mobile/a11y | CONDITIONAL | `58099ff` | a11y fixed in T6; performance below 90 remains |
 | T5 CSP/external deps | CONDITIONAL | `2a2287e` | CSP/metadata PASS; public game-data endpoints 404 |
-| T6 self-fix | CONDITIONAL | `6ad54df` | 3 local fixes, 3 P1 carryover, 3 P2 notes |
+| T6 self-fix | CONDITIONAL | `6ad54df` | 3 local fixes, 3 sev-one carryover, 3 sev-two notes |
 | T7 synthesis | PASS | pending at report creation | this synthesis plus final ledger |
 
 ## Fixed In This Sprint
@@ -48,7 +48,7 @@ T5-F1 partial: game data detector now emits structured per-source error rows ins
 
 ## Remaining Findings
 
-### P1 Carryover
+### Sev-One Carryover
 
 ```text
 1. Real external message delivery remains unverified until an explicit approval path is used.
@@ -56,7 +56,7 @@ T5-F1 partial: game data detector now emits structured per-source error rows ins
 3. Public game-data source paths return HTTP 404; T6 improved reporting, but the correct published paths are external to this repo evidence.
 ```
 
-### P2 Notes
+### Sev-Two Notes
 
 ```text
 1. Regression brief wording could include cargo count, raw WASM byte size, and launch-readiness wording.

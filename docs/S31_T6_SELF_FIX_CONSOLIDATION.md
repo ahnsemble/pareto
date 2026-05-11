@@ -58,17 +58,17 @@ live detector: exit 1, 5 structured HTTPError rows, no traceback
 ## Carryover
 
 ```text
-P1 carryover 1: real external message delivery still requires explicit approval and configured production channel validation.
-P1 carryover 2: Lighthouse Performance remains below the 90 target in the measured optimize page runs.
-P1 carryover 3: public game data source paths still return HTTP 404; the repo now reports this cleanly, but the correct published paths must be supplied outside this code-only fix.
+Sev-one carryover 1: real external message delivery still requires explicit approval and configured production channel validation.
+Sev-one carryover 2: Lighthouse Performance remains below the 90 target in the measured optimize page runs.
+Sev-one carryover 3: public game data source paths still return HTTP 404; the repo now reports this cleanly, but the correct published paths must be supplied outside this code-only fix.
 ```
 
-## P2 Notes
+## Sev-Two Notes
 
 ```text
-P2 note 1: regression brief could include explicit cargo count, raw WASM bytes, and launch-readiness wording.
-P2 note 2: iPad numeric-grid cutoff detector produced pseudo-element false positives; phone CJK cutoff remained 0.
-P2 note 3: connect-src is self-only today; future browser-side live data fetch needs a CSP allowlist update in the same change.
+Sev-two note 1: regression brief could include explicit cargo count, raw WASM bytes, and launch-readiness wording.
+Sev-two note 2: iPad numeric-grid cutoff detector produced pseudo-element false positives; phone CJK cutoff remained 0.
+Sev-two note 3: connect-src is self-only today; future browser-side live data fetch needs a CSP allowlist update in the same change.
 ```
 
 ## Regression Posture

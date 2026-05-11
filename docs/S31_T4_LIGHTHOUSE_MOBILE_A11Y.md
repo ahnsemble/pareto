@@ -58,10 +58,10 @@ Lighthouse Accessibility category score is 100, but one audit still reports visi
 
 | ID | Severity | Finding | Disposition |
 |---|---:|---|---|
-| T4-F1 | P1 | Lighthouse Performance below 90 on production export measurements. | T6 candidate; may require deeper JS/LCP work. |
-| T4-F2 | P1 | Some interactive controls do not meet 44px touch-target dimensions. | T6 candidate. |
-| T4-F3 | P1 | Visible label / accessible name mismatch on mobile collectible list buttons. | T6 candidate. |
-| T4-F4 | P2 | iPad cutoff detector flags pseudo-element hit-area side effects on numeric grid buttons. | Reported as measurement caveat. |
+| T4-F1 | sev-one | Lighthouse Performance below 90 on production export measurements. | T6 candidate; may require deeper JS/LCP work. |
+| T4-F2 | sev-one | Some interactive controls do not meet 44px touch-target dimensions. | T6 candidate. |
+| T4-F3 | sev-one | Visible label / accessible name mismatch on mobile collectible list buttons. | T6 candidate. |
+| T4-F4 | sev-two | iPad cutoff detector flags pseudo-element hit-area side effects on numeric grid buttons. | Reported as measurement caveat. |
 
 ## Result
 

@@ -14,7 +14,7 @@
 
 ## G.7
 
-- Typed production errors, bilingual user-friendly error messages, and privacy-first analytics spec.
+- Typed production errors, bilingual clear user messages, and privacy-first analytics spec.
 
 ## G.6
 

@@ -59,8 +59,8 @@ Result: CONDITIONAL. This does not block the current browser app because the exp
 ## Findings
 
 ```text
-T5-F1 P1: game data live endpoint check reaches raw.githubusercontent.com but configured source paths return HTTP 404.
-T5-F2 P2: CSP connect-src is intentionally self-only; if browser-side live game data fetch is added later, the allowlist must be updated at the same time.
+T5-F1 sev-one: game data live endpoint check reaches raw.githubusercontent.com but configured source paths return HTTP 404.
+T5-F2 sev-two: CSP connect-src is intentionally self-only; if browser-side live game data fetch is added later, the allowlist must be updated at the same time.
 ```
 
 ## Commit Policy
