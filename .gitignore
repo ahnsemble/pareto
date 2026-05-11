@@ -1,2 +1,25 @@
 target/
 tttg_forge_optimizer/target/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node / Next.js (frontend covers most via frontend/.gitignore)
+node_modules/
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# secrets
+.env
+.env.*
+!.env.example
