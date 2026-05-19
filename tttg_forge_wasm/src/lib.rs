@@ -4,6 +4,11 @@ use tttg_forge_core::DecodeOptions;
 use wasm_bindgen::prelude::*;
 
 pub mod twodeck;
+pub mod optimizer;
+pub mod sio_state_translator;
+pub mod v3_damage;
+
+pub use v3_damage::v3_damage_value;
 
 fn to_value(input: JsValue) -> Value {
     serde_wasm_bindgen::from_value(input).unwrap_or(Value::Null)
@@ -133,6 +138,55 @@ pub fn calculate_damage_factor(stats: JsValue, ce_damage_techs: JsValue) -> JsVa
         Ok(result) => to_js(json!(result)),
         Err(error) => to_js(json!({"error": error.to_string()})),
     }
+}
+
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
+pub fn calculate_v3_final_damage(player_state: JsValue) -> JsValue {
+    to_json_js(v3_damage_value(&to_value(player_state)))
+}
+
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
+pub fn relic_core_optimize_js(player_state: JsValue, constraints: JsValue) -> JsValue {
+    to_json_js(optimizer::relic_core_optimize_value(
+        &to_value(player_state),
+        &to_value(constraints),
+    ))
+}
+
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
+pub fn twinborn_auto_assign_js(player_state: JsValue, chip_pool: JsValue) -> JsValue {
+    to_json_js(optimizer::twinborn_auto_assign_value(
+        &to_value(player_state),
+        &to_value(chip_pool),
+    ))
+}
+
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
+pub fn branch_bound_run_js(search_space: JsValue) -> JsValue {
+    to_json_js(optimizer::branch_bound_run_value(&to_value(search_space)))
+}
+
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
+pub fn beam_search_run_js(search_space: JsValue, beam_width: usize) -> JsValue {
+    to_json_js(optimizer::beam_search_run_value(
+        &to_value(search_space),
+        beam_width,
+    ))
+}
+
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
+pub fn pareto_frontier_compute_js(candidates: JsValue, objectives: JsValue) -> JsValue {
+    to_json_js(optimizer::pareto_frontier_compute_value(
+        &to_value(candidates),
+        &to_value(objectives),
+    ))
+}
+
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
+pub fn sio_export_to_player_state_patch_js(sio_export: JsValue) -> JsValue {
+    to_json_js(sio_state_translator::sio_export_to_player_state_patch_value(
+        &to_value(sio_export),
+    ))
 }
 
 #[cfg(feature = "compat-exports")]

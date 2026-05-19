@@ -17,7 +17,10 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "recharts": "^3.8.1",
-    "tttg_forge_wasm": "file:../tttg_forge_wasm/pkg"
+    "reselect": "^5.2.0",
+    "tttg_forge_wasm": "file:../tttg_forge_wasm/pkg",
+    "use-debounce": "^10.1.1",
+    "zustand": "^5.0.13"
   },
   "devDependencies": {
     "@lhci/cli": "^0.15.1",

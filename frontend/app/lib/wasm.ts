@@ -1,6 +1,15 @@
 'use client';
 
-import init, { decode_public_raw } from 'tttg_forge_wasm';
+import init, {
+  beam_search_run_js,
+  branch_bound_run_js,
+  calculate_v3_final_damage,
+  decode_public_raw,
+  pareto_frontier_compute_js,
+  relic_core_optimize_js,
+  sio_export_to_player_state_patch_js,
+  twinborn_auto_assign_js,
+} from 'tttg_forge_wasm';
 
 let initPromise: Promise<void> | null = null;
 
@@ -61,6 +70,109 @@ export function plainify(value: unknown): unknown {
 export async function decodeRawUrl(raw: string): Promise<unknown> {
   await initWasm();
   return plainify(decode_public_raw(raw));
+}
+
+export function calculateV3FinalDamage(playerState: unknown): unknown {
+  return plainify(calculate_v3_final_damage(playerState));
+}
+
+export interface OptimizerBuild {
+  label: string;
+  score: number;
+  damageFactor: number;
+  build: Record<string, unknown>;
+}
+
+export interface BranchBoundResult {
+  algorithm: 'branch_bound';
+  topK: number;
+  searchSpaceSize: number;
+  builds: OptimizerBuild[];
+  metrics: {
+    visited_nodes: number;
+    pruned_nodes: number;
+    leaf_nodes: number;
+    pruning_rate?: number;
+  };
+}
+
+export interface BeamSearchResult {
+  algorithm: 'beam_search';
+  beamWidth: number;
+  topK: number;
+  searchSpaceSize: number;
+  builds: OptimizerBuild[];
+}
+
+export interface ParetoFrontierResult {
+  algorithm: 'pareto_frontier';
+  objectives: string[];
+  indexes: number[];
+  frontier: OptimizerBuild[];
+}
+
+export interface RelicCoreOptimizerResult {
+  algorithm: 'relic_core';
+  constraintsSupportedCount: number;
+  topK: number;
+  searchSpaceSize: number;
+  builds: OptimizerBuild[];
+  paretoSet: OptimizerBuild[];
+  metrics: {
+    visited_nodes: number;
+    pruned_nodes: number;
+    leaf_nodes: number;
+  };
+  latencyMs: number;
+}
+
+export interface TwinbornAssignment {
+  techId: string;
+  chips: number;
+  manualChips: number;
+  autoDamageGain: number;
+}
+
+export interface TwinbornAutoAssignResult {
+  algorithm: 'twinborn_solver';
+  iterationCap: number;
+  iterations: number;
+  availableChips: number;
+  assignments: TwinbornAssignment[];
+  solverBuilds: OptimizerBuild[];
+}
+
+export function branchBoundRun(searchSpace: unknown): BranchBoundResult {
+  return plainify(branch_bound_run_js(searchSpace)) as BranchBoundResult;
+}
+
+export function beamSearchRun(searchSpace: unknown, beamWidth: number): BeamSearchResult {
+  return plainify(beam_search_run_js(searchSpace, beamWidth)) as BeamSearchResult;
+}
+
+export function paretoFrontierCompute(
+  candidates: unknown,
+  objectives: string[],
+): ParetoFrontierResult {
+  return plainify(pareto_frontier_compute_js(candidates, objectives)) as ParetoFrontierResult;
+}
+
+export function relicCoreOptimize(
+  playerState: unknown,
+  constraints: Record<string, number>,
+): RelicCoreOptimizerResult {
+  return plainify(relic_core_optimize_js(playerState, constraints)) as RelicCoreOptimizerResult;
+}
+
+export function twinbornAutoAssign(
+  playerState: unknown,
+  chipPool: Record<string, number>,
+): TwinbornAutoAssignResult {
+  return plainify(twinborn_auto_assign_js(playerState, chipPool)) as TwinbornAutoAssignResult;
+}
+
+export function sioExportToPlayerStatePatch(sioExport: unknown): unknown {
+  return plainify(sio_export_to_player_state_patch_js(sioExport));
 }
 
 export interface SearchChoice {
