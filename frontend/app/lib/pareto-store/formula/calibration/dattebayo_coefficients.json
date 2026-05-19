@@ -1,0 +1,2385 @@
+{
+  "metadata": {
+    "source_url": "https://docs.google.com/spreadsheets/d/1UQ00geSXjL3lRvrt5G80flwKyuCt5TZY8V_dF8Bw9D0/copy",
+    "export_url": "https://docs.google.com/spreadsheets/d/1UQ00geSXjL3lRvrt5G80flwKyuCt5TZY8V_dF8Bw9D0/export?format=xlsx",
+    "sio_tools_url": "https://sio-tools.vercel.app/",
+    "workbook_path": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/v3-calibration/dattebayo_v1_9_2.xlsx",
+    "workbook_sheet_count": 20,
+    "parsed_cell_count": 232,
+    "formula_stage_count": 9
+  },
+  "formula_coefficients": {
+    "stage1_base_normalization": {
+      "baseline_player_atk": 2316228.0,
+      "flat_attack_bonus": 1427218.1691568
+    },
+    "stage2_equipment_weapon": {
+      "ss_active_slot_bonus": 0.4,
+      "ss_af_step_bonus": 0.1,
+      "ss_chaos_step_bonus": 0.1,
+      "weapon_af_step_bonus": 0.1,
+      "ssweapon_chaos_total": 10.08,
+      "ssweapon_passive_factor": 1.0180018
+    },
+    "stage3_tech_parts": {
+      "tech_base_gain": 0.05,
+      "tech_twinborn_gain": 0.15,
+      "tech_resonance_chip_gain": 0.0005,
+      "destroyer_contribution_share": 0.0,
+      "ssweapon_contribution_share": 0.3234750159
+    },
+    "stage4_pet_resonance": {
+      "deployed_pet_gain": 0.600625,
+      "assist_pet_gain": 0.05,
+      "pet_resonance_atk_per_unit": 0.0001
+    },
+    "stage5_collectibles": {
+      "collectible_unlock_gain": 0.05,
+      "crit_rate_relics": 2.15,
+      "crit_damage_relics": 1.75
+    },
+    "stage6_lme_turf": {
+      "turf1_gain": 0.0,
+      "turf2_gain": 1.6,
+      "lme_damage_dealt_delta": -0.8
+    },
+    "stage7_conditionals": {
+      "venato_hp_scaling_factor": 0.6,
+      "taloxa_laceration_factor": 3.64,
+      "judgment_weakened_factor": 7.04,
+      "king_crit_expected_factor": 16.73,
+      "lme_boss_phase_weight": 2.6,
+      "lme_battle_phase_weight": 1.0,
+      "crit_rate_total": 4.05,
+      "crit_damage_additional": 14.73
+    },
+    "stage8_xeno_resonance": {
+      "default_xeno_delta": 0.600625,
+      "xeno_clucker_resonance_factor": 1.600625
+    },
+    "stage9_finalization": {
+      "mode_lme_weight": 1.0,
+      "mode_ee_weight": 1.0,
+      "mode_generic_weight": 1.0,
+      "dattebayo_multipliers_output": 606858439306.0,
+      "dattebayo_damage_output": 3.94228e+16
+    }
+  },
+  "cells": [
+    {
+      "stage": "stage1_base_normalization",
+      "named_range": "player_atk",
+      "sheet": "Home",
+      "cell": "B9",
+      "value": 2316228.0,
+      "formula": null
+    },
+    {
+      "stage": "stage1_base_normalization",
+      "named_range": "Multipliers_Output",
+      "sheet": "Home",
+      "cell": "E50",
+      "value": 606858439306,
+      "formula": "=IF(LMEmultipliersDebuff=true,\n(player_atk + 1427218.1691568)\n*(IF(MIN(critR_total + LMEdebuff_CritR, 100%) < 0%, 0%, MIN(critR_total + LMEdebuff_CritR, 100%)) * (MAX(critD_additional + LMEdebuff_CritD, 0%) + 2) + (1 - IF(MIN(critR_total + LMEdebuff_CritR, 100%) < 0%, 0%, MIN(critR_total + LMEdebuff_CritR, 100%))))\n\n*(MAX(skillDmg_total+LMEdebuff_SkillDmg, 0%)+1)\n*(MAX(vuln_total+LMEdebuff_Vuln, 0%)+1)\n*(MAX(shieldDmg_total+LMEdebuff_ShieldDmg, 0%)+1)\n*((MAX(debuffDmg_toPoisoned + LMEdebuff_toPoisoned, 0%) + MAX(debuffDmg_toWeakened + LMEdebuff_toWeakened, 0%) + MAX(debuffDmg_toChilled + LMEdebuff_toChilled, 0%) + debuffDmg_toExposed) + 1)\n*(clarity_total+1)\n*(eternalM_total+1)\n*(glacialB_total+1)\n*(laceration_total+1)\n*(cdr_total+1)\n*(weak_spot_total+1)\n*(ssgloves_laser+1)\n*(JoeyRipsDmg+1)\n*(Overload_total+1)\n*(TaloxaBeamDmg+1)\n*(XenoResonanceBuff_capy)*(XenoResonanceBuff_clucker)*(XenoResonanceBuff_puffo)\n*IF(active_HPBullet=true, st_HPBullet+1, 1)\n*(Esuit_dmg)*(Vneck_dmg)*(Vgloves_dmg)*(Vtreads_dmg)*(AoQ_dmg)*(TwistingBelt_dmg)*(SoD_dmg)*(1+LMEdebuff_DmgDealt)*(LMEdebuff_Turf2+1)\n*IF(active_LMEoverload=true, 2, 1)\n, \n(player_atk + 1427218.1691568)\n*(IF(MIN(critR_total , 100%) < 0%, 0%, MIN(critR_total , 100%)) * (MAX(critD_additional , 0%) + 2) + (1 - IF(MIN(critR_total , 100%) < 0%, 0%, MIN(critR_total , 100%))))\n*(skillDmg_total+1)\n*(vuln_total+1)\n*(shieldDmg_total+1)\n*(debuffDmg_toPoisoned + debuffDmg_toWeakened + debuffDmg_toChilled + debuffDmg_toExposed + 1)\n*(clarity_total+1)\n*(eternalM_total+1)\n*(glacialB_total+1)\n*(laceration_total+1)\n*(cdr_total+1)\n*(weak_spot_total+1)\n*(ssgloves_laser+1)\n*(JoeyRipsDmg+1)\n*(Overload_total+1)\n*(TaloxaBeamDmg+1)\n*(XenoResonanceBuff_capy)*(XenoResonanceBuff_clucker)*(XenoResonanceBuff_puffo)\n*IF(active_HPBullet=true, st_HPBullet+1, 1)\n*(Esuit_dmg)*(Vneck_dmg)*(Vgloves_dmg)*(Vtreads_dmg)*(AoQ_dmg)*(TwistingBelt_dmg)*(SoD_dmg)*(LMEdebuff_Turf1+1)\n)"
+    },
+    {
+      "stage": "stage1_base_normalization",
+      "named_range": "Dmg_output",
+      "sheet": "dmgWeightEstimator",
+      "cell": "D31",
+      "value": 3.94228e+16,
+      "formula": "=SUM(D8:D30)"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "named_range": "Chaos_ssweapon_total",
+      "sheet": "SSmiscPaths",
+      "cell": "D18",
+      "value": 10.08,
+      "formula": "=SUMIF($E$4:$E$17, TRUE, $D$4:$D$17)"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "named_range": "passives_ssweapon",
+      "sheet": "PassivesEffect",
+      "cell": "S7",
+      "value": 1.0180018,
+      "formula": "=IF(active_exoBracer, D7, 0) + IF(active_thruster, I7, 0) + IF(active_HEfuel, N7, 0) + 1"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "named_range": "Esuit_dmg",
+      "sheet": "QuickStart",
+      "cell": "U39",
+      "value": 1,
+      "formula": "=IF(active_Esuit=true, (EsuitBoost^Esuit_reviveCount), 1)"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "named_range": "Vneck_dmg",
+      "sheet": "QuickStart",
+      "cell": "X39",
+      "value": 1,
+      "formula": "=IF(active_Vneck=true, (vneck_lowhp +1) * vNeck_berserk, 1)"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "named_range": "Vgloves_dmg",
+      "sheet": "QuickStart",
+      "cell": "AA39",
+      "value": 1,
+      "formula": "=IF(active_Vgloves=TRUE, Vgloves_Instakill*(VglovesBoost+1), 1)\n"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "named_range": "Vtreads_dmg",
+      "sheet": "QuickStart",
+      "cell": "X57",
+      "value": 1,
+      "formula": "=IF(active_Vtreads=true, VtreadBosst+1, 1)"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "named_range": "AoQ_dmg",
+      "sheet": "QuickStart",
+      "cell": "U48",
+      "value": 1,
+      "formula": "=IF(active_AoQ=true, AoQBoost+1, 1)"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "named_range": "TwistingBelt_dmg",
+      "sheet": "QuickStart",
+      "cell": "X48",
+      "value": 1,
+      "formula": "=IF(active_TwistBelt=true, TwistBeltBoost+1, 1)"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "named_range": "SoD_dmg",
+      "sheet": "QuickStart",
+      "cell": "AA48",
+      "value": 1,
+      "formula": "=IF(active_SoD=true, SoDBoost+1, 1)"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "named_range": "af_e_ssweapon",
+      "sheet": "QuickStart",
+      "cell": "U13",
+      "value": 5.0,
+      "formula": null
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "named_range": "af_v_ssweapon",
+      "sheet": "QuickStart",
+      "cell": "U14",
+      "value": 4.0,
+      "formula": null
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "named_range": "af_c_ssweapon",
+      "sheet": "QuickStart",
+      "cell": "U15",
+      "value": 8.0,
+      "formula": null
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "named_range": "active_ssweapon",
+      "sheet": "QuickStart",
+      "cell": "T9",
+      "value": true,
+      "formula": null
+    },
+    {
+      "stage": "stage3_tech_parts",
+      "named_range": "ce_ssweapon",
+      "sheet": "dmgWeightEstimator",
+      "cell": "E8",
+      "value": 0.3234750159,
+      "formula": "=IFERROR(D8/Dmg_output, 0)"
+    },
+    {
+      "stage": "stage3_tech_parts",
+      "named_range": "ce_destroyer",
+      "sheet": "dmgWeightEstimator",
+      "cell": "E10",
+      "value": 0,
+      "formula": "=IFERROR(D10/Dmg_output, 0)"
+    },
+    {
+      "stage": "stage3_tech_parts",
+      "named_range": "ce_drill",
+      "sheet": "dmgWeightEstimator",
+      "cell": "E9",
+      "value": 0,
+      "formula": "=IFERROR(D9/Dmg_output, 0)"
+    },
+    {
+      "stage": "stage3_tech_parts",
+      "named_range": "ce_molotov",
+      "sheet": "dmgWeightEstimator",
+      "cell": "E11",
+      "value": 0.05523262833,
+      "formula": "=IFERROR(D11/Dmg_output, 0)"
+    },
+    {
+      "stage": "stage3_tech_parts",
+      "named_range": "ce_rpg",
+      "sheet": "dmgWeightEstimator",
+      "cell": "E12",
+      "value": 0,
+      "formula": "=IFERROR(D12/Dmg_output, 0)"
+    },
+    {
+      "stage": "stage3_tech_parts",
+      "named_range": "ce_TBdurian",
+      "sheet": "dmgWeightEstimator",
+      "cell": "E13",
+      "value": 0,
+      "formula": "=IFERROR(D13/Dmg_output, 0)"
+    },
+    {
+      "stage": "stage3_tech_parts",
+      "named_range": "ce_TBdestroyer",
+      "sheet": "dmgWeightEstimator",
+      "cell": "E15",
+      "value": 0.3859574714,
+      "formula": "=IFERROR(D15/Dmg_output, 0)"
+    },
+    {
+      "stage": "stage3_tech_parts",
+      "named_range": "ce_TBforcefield",
+      "sheet": "dmgWeightEstimator",
+      "cell": "E16",
+      "value": 0,
+      "formula": "=IFERROR(D16/Dmg_output, 0)"
+    },
+    {
+      "stage": "stage3_tech_parts",
+      "named_range": "ce_TBdrill",
+      "sheet": "dmgWeightEstimator",
+      "cell": "E17",
+      "value": 0.06872407339,
+      "formula": "=IFERROR(D17/Dmg_output, 0)"
+    },
+    {
+      "stage": "stage3_tech_parts",
+      "named_range": "ce_TBrpg",
+      "sheet": "dmgWeightEstimator",
+      "cell": "E18",
+      "value": 0,
+      "formula": "=IFERROR(D18/Dmg_output, 0)"
+    },
+    {
+      "stage": "stage3_tech_parts",
+      "named_range": "ce_TBlightning",
+      "sheet": "dmgWeightEstimator",
+      "cell": "E19",
+      "value": 0,
+      "formula": "=IFERROR(D19/Dmg_output, 0)"
+    },
+    {
+      "stage": "stage4_pet_resonance",
+      "named_range": "XenoResonanceBuff_capy",
+      "sheet": "QuickStart",
+      "cell": "F217",
+      "value": 1,
+      "formula": "=IF(active_capy,\n(((((xenoResRate_capy*(xenoResDmg_capy+1))+(1-xenoResRate_capy)) -1) * (4+xenoResDuration)/5) + 1),\n1)"
+    },
+    {
+      "stage": "stage4_pet_resonance",
+      "named_range": "XenoResonanceBuff_clucker",
+      "sheet": "QuickStart",
+      "cell": "F231",
+      "value": 1.600625,
+      "formula": "=IF(active_clucker,\n(((((xenoResRate_clucker*(xenoResDmg_clucker+1))+(1-xenoResRate_clucker)) -1) * (4+xenoResDuration)/5) + 1),\n1)"
+    },
+    {
+      "stage": "stage4_pet_resonance",
+      "named_range": "XenoResonanceBuff_puffo",
+      "sheet": "QuickStart",
+      "cell": "F245",
+      "value": 1,
+      "formula": "=IF(active_puffo,\n(((((xenoResRate_puffo*(xenoResDmg_puffo+1))+(1-xenoResRate_puffo)) -1) * (4+xenoResDuration)/5) + 1),\n1)"
+    },
+    {
+      "stage": "stage4_pet_resonance",
+      "named_range": "xenoDamage_capy",
+      "sheet": "QuickStart",
+      "cell": "R215",
+      "value": 0,
+      "formula": "=dmgWeightEstimator!D28"
+    },
+    {
+      "stage": "stage4_pet_resonance",
+      "named_range": "xenoDamage_clucker",
+      "sheet": "QuickStart",
+      "cell": "R229",
+      "value": 1753370000000000.0,
+      "formula": "=dmgWeightEstimator!D29"
+    },
+    {
+      "stage": "stage4_pet_resonance",
+      "named_range": "xenoDamage_puffo",
+      "sheet": "QuickStart",
+      "cell": "R243",
+      "value": 0,
+      "formula": "=dmgWeightEstimator!D30"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "named_range": "critR_relics",
+      "sheet": "CritRate",
+      "cell": "Q33",
+      "value": 2.15,
+      "formula": "=SUMIF($R$4:$R$32, TRUE, $Q$4:$Q$32)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "named_range": "critD_relics",
+      "sheet": "CritDamage",
+      "cell": "V35",
+      "value": 1.75,
+      "formula": "=SUMIF($W$4:$W$34, true, $V$4:$V$34)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "named_range": "skillDmg_synergy",
+      "sheet": "SkillDamage",
+      "cell": "W17",
+      "value": 1.4,
+      "formula": "=SUMIF($X$4:$X$16, TRUE, $W$4:$W$16)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "named_range": "vuln_synergy",
+      "sheet": "Vulnerability",
+      "cell": "W8",
+      "value": 0.25,
+      "formula": "=SUMIF($X$4:$X$7, TRUE, $W$4:$W$7)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "named_range": "shieldDmg_synergy",
+      "sheet": "ShieldDamage",
+      "cell": "V7",
+      "value": 0.45,
+      "formula": "=SUMIF($W$4:$W$6, TRUE, $V$4:$V$6)"
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "named_range": "LMEmultipliersDebuff",
+      "sheet": "QuickStart",
+      "cell": "P312",
+      "value": true,
+      "formula": null
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "named_range": "LMEdebuff_Turf1",
+      "sheet": "QuickStart",
+      "cell": "F313",
+      "value": 0.0,
+      "formula": null
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "named_range": "LMEdebuff_Turf2",
+      "sheet": "QuickStart",
+      "cell": "X313",
+      "value": 1.6,
+      "formula": null
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "named_range": "LMEdebuff_CritR",
+      "sheet": "QuickStart",
+      "cell": "J285",
+      "value": -2.7,
+      "formula": "=LMEdebuffCalc!$J$21"
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "named_range": "LMEdebuff_CritD",
+      "sheet": "QuickStart",
+      "cell": "P285",
+      "value": -8.75,
+      "formula": "=LMEdebuffCalc!$T$32"
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "named_range": "LMEdebuff_SkillDmg",
+      "sheet": "QuickStart",
+      "cell": "V285",
+      "value": -11.5,
+      "formula": "=LMEdebuffCalc!$O$36"
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "named_range": "LMEdebuff_Vuln",
+      "sheet": "QuickStart",
+      "cell": "J296",
+      "value": -2.2,
+      "formula": "=LMEdebuffCalc!$J$62"
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "named_range": "LMEdebuff_ShieldDmg",
+      "sheet": "QuickStart",
+      "cell": "D296",
+      "value": -5.25,
+      "formula": "=LMEdebuffCalc!$E$72"
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "named_range": "LMEdebuff_toPoisoned",
+      "sheet": "QuickStart",
+      "cell": "P296",
+      "value": -3.8,
+      "formula": "=LMEdebuffCalc!E87"
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "named_range": "LMEdebuff_toWeakened",
+      "sheet": "QuickStart",
+      "cell": "V296",
+      "value": -3.8,
+      "formula": "=LMEdebuffCalc!J87"
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "named_range": "LMEdebuff_toChilled",
+      "sheet": "QuickStart",
+      "cell": "D307",
+      "value": -3.8,
+      "formula": "=LMEdebuffCalc!O87"
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "named_range": "LMEdebuff_DmgDealt",
+      "sheet": "QuickStart",
+      "cell": "V307",
+      "value": -0.8,
+      "formula": "=LMEdebuffCalc!$T$61"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "named_range": "critR_total",
+      "sheet": "CritRate",
+      "cell": "B4",
+      "value": 4.05,
+      "formula": "=critR_heroes + critR_eq + critR_relics + critR_awakenings + critR_synergy + critR_other + critR_skills"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "named_range": "critD_base",
+      "sheet": "CritDamage",
+      "cell": "B9",
+      "value": 2.0,
+      "formula": null
+    },
+    {
+      "stage": "stage7_conditionals",
+      "named_range": "critD_additional",
+      "sheet": "CritDamage",
+      "cell": "B4",
+      "value": 14.73,
+      "formula": "=critD_heroes + critD_skills + critD_eq + critD_relics + critD_awakenings + critD_synergy + critD_other"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "named_range": "critD_total",
+      "sheet": "CritDamage",
+      "cell": "B14",
+      "value": 16.73,
+      "formula": "=critD_base + critD_additional"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "named_range": "debuffDmg_toPoisoned",
+      "sheet": "DebuffDamage",
+      "cell": "B4",
+      "value": 1.44,
+      "formula": "=H46"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "named_range": "debuffDmg_toWeakened",
+      "sheet": "DebuffDamage",
+      "cell": "B9",
+      "value": 6.04,
+      "formula": "=N57"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "named_range": "debuffDmg_toChilled",
+      "sheet": "DebuffDamage",
+      "cell": "B14",
+      "value": 5.44,
+      "formula": "=T54"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "named_range": "debuffDmg_toExposed",
+      "sheet": "DebuffDamage",
+      "cell": "B19",
+      "value": 0,
+      "formula": "=Z10"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "named_range": "laceration_total",
+      "sheet": "UniqueMultipliers",
+      "cell": "T35",
+      "value": 2.64,
+      "formula": "=IF(COUNTIF($U$4:$U$21, TRUE) = 0, \n    0%, \n    IF(COUNTIF($U$4:$U$13, TRUE) = 0, \n        SUMPRODUCT(($U$14:$U$34 = TRUE) * ($T$14:$T$34 * 5 / 20)), \n        SUMIF($U$4:$U$34, TRUE, $T$4:$T$34)\n    )\n)\n"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "named_range": "TaloxaBeamDmg",
+      "sheet": "UniqueMultipliers",
+      "cell": "AU12",
+      "value": 0.06,
+      "formula": "=Overload_total/10"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "named_range": "JoeyRipsDmg",
+      "sheet": "UniqueMultipliers",
+      "cell": "AJ16",
+      "value": 0,
+      "formula": "=SUMIF($AK$5:$AK$9, true, $AJ$5:$AJ$9)/650"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "named_range": "Overload_total",
+      "sheet": "UniqueMultipliers",
+      "cell": "AU10",
+      "value": 0.6,
+      "formula": "=SUMIF($AV$7:$AV$9, true, $AU$7:$AU$9) * $AU$6"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "named_range": "weak_spot_total",
+      "sheet": "UniqueMultipliers",
+      "cell": "AE9",
+      "value": 0,
+      "formula": "=SUMIF($AF$5:$AF$8, TRUE, $AE$5:$AE$8)*AE4"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "named_range": "ssgloves_laser",
+      "sheet": "UniqueMultipliers",
+      "cell": "AO6",
+      "value": 0.65,
+      "formula": "=SUMIF($AP$4:$AP$5, TRUE, $AO$4:$AO$5)*(10/20)"
+    },
+    {
+      "stage": "stage8_xeno_resonance",
+      "named_range": "xenoPoisonedDmg_capy",
+      "sheet": "QuickStart",
+      "cell": "L223",
+      "value": 0.0,
+      "formula": null
+    },
+    {
+      "stage": "stage8_xeno_resonance",
+      "named_range": "xenoPoisonedDmg_clucker",
+      "sheet": "QuickStart",
+      "cell": "L237",
+      "value": 0.0,
+      "formula": null
+    },
+    {
+      "stage": "stage8_xeno_resonance",
+      "named_range": "xenoPoisonedDmg_puffo",
+      "sheet": "QuickStart",
+      "cell": "L251",
+      "value": 0.0,
+      "formula": null
+    },
+    {
+      "stage": "stage8_xeno_resonance",
+      "named_range": "xenoWeakenedDmg_capy",
+      "sheet": "QuickStart",
+      "cell": "O223",
+      "value": 0.0,
+      "formula": null
+    },
+    {
+      "stage": "stage8_xeno_resonance",
+      "named_range": "xenoWeakenedDmg_clucker",
+      "sheet": "QuickStart",
+      "cell": "O237",
+      "value": 0.0,
+      "formula": null
+    },
+    {
+      "stage": "stage8_xeno_resonance",
+      "named_range": "xenoWeakenedDmg_puffo",
+      "sheet": "QuickStart",
+      "cell": "O251",
+      "value": 0.0,
+      "formula": null
+    },
+    {
+      "stage": "stage8_xeno_resonance",
+      "named_range": "xenoChilledDmg_capy",
+      "sheet": "QuickStart",
+      "cell": "R223",
+      "value": 0.0,
+      "formula": null
+    },
+    {
+      "stage": "stage8_xeno_resonance",
+      "named_range": "xenoChilledDmg_clucker",
+      "sheet": "QuickStart",
+      "cell": "R237",
+      "value": 0.0,
+      "formula": null
+    },
+    {
+      "stage": "stage8_xeno_resonance",
+      "named_range": "xenoChilledDmg_puffo",
+      "sheet": "QuickStart",
+      "cell": "R251",
+      "value": 0.0,
+      "formula": null
+    },
+    {
+      "stage": "stage8_xeno_resonance",
+      "named_range": "XenoResonanceBuff_clucker",
+      "sheet": "QuickStart",
+      "cell": "F231",
+      "value": 1.600625,
+      "formula": "=IF(active_clucker,\n(((((xenoResRate_clucker*(xenoResDmg_clucker+1))+(1-xenoResRate_clucker)) -1) * (4+xenoResDuration)/5) + 1),\n1)"
+    },
+    {
+      "stage": "stage9_finalization",
+      "named_range": "Multipliers_Output",
+      "sheet": "Home",
+      "cell": "E50",
+      "value": 606858439306,
+      "formula": "=IF(LMEmultipliersDebuff=true,\n(player_atk + 1427218.1691568)\n*(IF(MIN(critR_total + LMEdebuff_CritR, 100%) < 0%, 0%, MIN(critR_total + LMEdebuff_CritR, 100%)) * (MAX(critD_additional + LMEdebuff_CritD, 0%) + 2) + (1 - IF(MIN(critR_total + LMEdebuff_CritR, 100%) < 0%, 0%, MIN(critR_total + LMEdebuff_CritR, 100%))))\n\n*(MAX(skillDmg_total+LMEdebuff_SkillDmg, 0%)+1)\n*(MAX(vuln_total+LMEdebuff_Vuln, 0%)+1)\n*(MAX(shieldDmg_total+LMEdebuff_ShieldDmg, 0%)+1)\n*((MAX(debuffDmg_toPoisoned + LMEdebuff_toPoisoned, 0%) + MAX(debuffDmg_toWeakened + LMEdebuff_toWeakened, 0%) + MAX(debuffDmg_toChilled + LMEdebuff_toChilled, 0%) + debuffDmg_toExposed) + 1)\n*(clarity_total+1)\n*(eternalM_total+1)\n*(glacialB_total+1)\n*(laceration_total+1)\n*(cdr_total+1)\n*(weak_spot_total+1)\n*(ssgloves_laser+1)\n*(JoeyRipsDmg+1)\n*(Overload_total+1)\n*(TaloxaBeamDmg+1)\n*(XenoResonanceBuff_capy)*(XenoResonanceBuff_clucker)*(XenoResonanceBuff_puffo)\n*IF(active_HPBullet=true, st_HPBullet+1, 1)\n*(Esuit_dmg)*(Vneck_dmg)*(Vgloves_dmg)*(Vtreads_dmg)*(AoQ_dmg)*(TwistingBelt_dmg)*(SoD_dmg)*(1+LMEdebuff_DmgDealt)*(LMEdebuff_Turf2+1)\n*IF(active_LMEoverload=true, 2, 1)\n, \n(player_atk + 1427218.1691568)\n*(IF(MIN(critR_total , 100%) < 0%, 0%, MIN(critR_total , 100%)) * (MAX(critD_additional , 0%) + 2) + (1 - IF(MIN(critR_total , 100%) < 0%, 0%, MIN(critR_total , 100%))))\n*(skillDmg_total+1)\n*(vuln_total+1)\n*(shieldDmg_total+1)\n*(debuffDmg_toPoisoned + debuffDmg_toWeakened + debuffDmg_toChilled + debuffDmg_toExposed + 1)\n*(clarity_total+1)\n*(eternalM_total+1)\n*(glacialB_total+1)\n*(laceration_total+1)\n*(cdr_total+1)\n*(weak_spot_total+1)\n*(ssgloves_laser+1)\n*(JoeyRipsDmg+1)\n*(Overload_total+1)\n*(TaloxaBeamDmg+1)\n*(XenoResonanceBuff_capy)*(XenoResonanceBuff_clucker)*(XenoResonanceBuff_puffo)\n*IF(active_HPBullet=true, st_HPBullet+1, 1)\n*(Esuit_dmg)*(Vneck_dmg)*(Vgloves_dmg)*(Vtreads_dmg)*(AoQ_dmg)*(TwistingBelt_dmg)*(SoD_dmg)*(LMEdebuff_Turf1+1)\n)"
+    },
+    {
+      "stage": "stage9_finalization",
+      "named_range": "Dmg_output",
+      "sheet": "dmgWeightEstimator",
+      "cell": "D31",
+      "value": 3.94228e+16,
+      "formula": "=SUM(D8:D30)"
+    },
+    {
+      "stage": "stage9_finalization",
+      "named_range": "outputA",
+      "sheet": "Home",
+      "cell": "E52",
+      "value": false,
+      "formula": null
+    },
+    {
+      "stage": "stage9_finalization",
+      "named_range": "outputB",
+      "sheet": "Home",
+      "cell": "E53",
+      "value": true,
+      "formula": null
+    },
+    {
+      "stage": "stage9_finalization",
+      "named_range": "critRateHome",
+      "sheet": "Home",
+      "cell": "B20",
+      "value": 1.35,
+      "formula": "=IF(LMEmultipliersDebuff=TRUE, MAX(critR_total+LMEdebuff_CritR, 0%), critR_total)"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "sheet": "ATK%",
+      "cell": "G4",
+      "label": "SS Weapon",
+      "value": 0.4,
+      "formula": null,
+      "gate_cell": "H4",
+      "gate_value": true,
+      "gate_formula": "=active_ssweapon"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "sheet": "ATK%",
+      "cell": "G5",
+      "label": "AFv1 SS Weapon",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H5",
+      "gate_value": true,
+      "gate_formula": "=AND(active_ssweapon, af_v_ssweapon>=1)"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "sheet": "ATK%",
+      "cell": "G6",
+      "label": "AFe2 SS Weapon",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H6",
+      "gate_value": true,
+      "gate_formula": "=AND(active_ssweapon, af_e_ssweapon>=2)"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "sheet": "ATK%",
+      "cell": "G7",
+      "label": "SS Neck",
+      "value": 0.4,
+      "formula": null,
+      "gate_cell": "H7",
+      "gate_value": true,
+      "gate_formula": "=active_ssneck"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "sheet": "ATK%",
+      "cell": "G8",
+      "label": "AFv1 SS Neck",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H8",
+      "gate_value": true,
+      "gate_formula": "=AND(active_ssneck, af_v_ssneck>=1)"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "sheet": "ATK%",
+      "cell": "G9",
+      "label": "AFe2 SS Neck",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H9",
+      "gate_value": true,
+      "gate_formula": "=AND(active_ssneck, af_e_ssneck>=2)"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "sheet": "ATK%",
+      "cell": "G10",
+      "label": "Voidwaker Handguards",
+      "value": 0.4,
+      "formula": null,
+      "gate_cell": "H10",
+      "gate_value": true,
+      "gate_formula": "=active_ssgloves"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "sheet": "ATK%",
+      "cell": "G11",
+      "label": "AFv1 Voidwaker Handguards",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H11",
+      "gate_value": true,
+      "gate_formula": "=AND(active_ssgloves, af_v_ssgloves>=1)"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "sheet": "ATK%",
+      "cell": "G12",
+      "label": "AFe2 Voidwaker Handguards",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H12",
+      "gate_value": true,
+      "gate_formula": "=AND(active_ssgloves, af_e_ssgloves>=2)"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "sheet": "ATK%",
+      "cell": "G13",
+      "label": "Void Neck",
+      "value": 0.4,
+      "formula": null,
+      "gate_cell": "H13",
+      "gate_value": false,
+      "gate_formula": "=active_Vneck"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "sheet": "ATK%",
+      "cell": "G14",
+      "label": "AF2 Void Neck",
+      "value": 0.2,
+      "formula": null,
+      "gate_cell": "H14",
+      "gate_value": false,
+      "gate_formula": "=active_Vneck"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "sheet": "ATK%",
+      "cell": "G15",
+      "label": "Void Gloves",
+      "value": 0.4,
+      "formula": null,
+      "gate_cell": "H15",
+      "gate_value": false,
+      "gate_formula": "=active_Vgloves"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "sheet": "ATK%",
+      "cell": "G16",
+      "label": "AF2 Void Gloves",
+      "value": 0.2,
+      "formula": null,
+      "gate_cell": "H16",
+      "gate_value": false,
+      "gate_formula": "=active_Vgloves"
+    },
+    {
+      "stage": "stage2_equipment_weapon",
+      "sheet": "ATK%",
+      "cell": "G17",
+      "label": "Total",
+      "value": 1.8,
+      "formula": "=SUMIF(H4:H16, true, G4:G16)",
+      "gate_cell": "H17",
+      "gate_value": null,
+      "gate_formula": null
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L4",
+      "label": "20G Erudie Heirloom Set",
+      "value": 0.04,
+      "formula": null,
+      "gate_cell": "M4",
+      "gate_value": true,
+      "gate_formula": "=AND(stars_legendColSoD>=5, stars_legendColVP>=5, stars_legendColSOCCER>=5, stars_legendColLIGHTNING>=5)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L5",
+      "label": "20R Erudie Heirloom Set",
+      "value": 0.06,
+      "formula": null,
+      "gate_cell": "M5",
+      "gate_value": false,
+      "gate_formula": "=AND(stars_legendColSoD>=10, stars_legendColVP>=10, stars_legendColSOCCER>=10, stars_legendColLIGHTNING>=10)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L6",
+      "label": "20G Meaning of Life",
+      "value": 0.04,
+      "formula": null,
+      "gate_cell": "M6",
+      "gate_value": true,
+      "gate_formula": "=AND(stars_legendColESUIT>=5, stars_legendColEBELT>=5, stars_legendColDRILL>=5, stars_legendColRPG>=5)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L7",
+      "label": "20R Meaning of Life",
+      "value": 0.06,
+      "formula": null,
+      "gate_cell": "M7",
+      "gate_value": false,
+      "gate_formula": "=AND(stars_legendColESUIT>=10, stars_legendColEBELT>=10, stars_legendColDRILL>=10, stars_legendColRPG>=10)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L8",
+      "label": "20G Summon the Divine Dragon",
+      "value": 0.04,
+      "formula": null,
+      "gate_cell": "M8",
+      "gate_value": true,
+      "gate_formula": "=AND(stars_legendColDeathRay>=5, stars_legendColBrick>=5, stars_legendColVS>=5, stars_legendColVH>=5)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L9",
+      "label": "20R Summon the Divine Dragon",
+      "value": 0.06,
+      "formula": null,
+      "gate_cell": "M9",
+      "gate_value": false,
+      "gate_formula": "=AND(stars_legendColDeathRay>=10, stars_legendColBrick>=10, stars_legendColVS>=10, stars_legendColVH>=10)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L10",
+      "label": "20G Conduct Experiments",
+      "value": 0.04,
+      "formula": null,
+      "gate_cell": "M10",
+      "gate_value": true,
+      "gate_formula": "=AND(stars_legendColMolotov>=5, stars_legendColEneck>=5, stars_legendColEG>=5, stars_legendColVT>=5)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L11",
+      "label": "20R Conduct Experiments",
+      "value": 0.06,
+      "formula": null,
+      "gate_cell": "M11",
+      "gate_value": false,
+      "gate_formula": "=AND(stars_legendColMolotov>=10, stars_legendColEneck>=10, stars_legendColEG>=10, stars_legendColVT>=10)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L12",
+      "label": "25* Transgalactic Tentacle",
+      "value": 0.06,
+      "formula": null,
+      "gate_cell": "M12",
+      "gate_value": true,
+      "gate_formula": "=GoldStarsTotal_TBdestroyer + RedStarsTotal_TBdestroyer >=25"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L13",
+      "label": "25* Impression Idol",
+      "value": 0.06,
+      "formula": null,
+      "gate_cell": "M13",
+      "gate_value": true,
+      "gate_formula": "= GoldStarsTotal_TBforcefield + RedStarsTotal_TBforcefield >=25"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L14",
+      "label": "25* Multiverse Perspective",
+      "value": 0.06,
+      "formula": null,
+      "gate_cell": "M14",
+      "gate_value": true,
+      "gate_formula": "=GoldStarsTotal_TBdrill + RedStarsTotal_TBdrill >=25"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L15",
+      "label": "25* Hyperrift Tech",
+      "value": 0.06,
+      "formula": null,
+      "gate_cell": "M15",
+      "gate_value": true,
+      "gate_formula": "= GoldStarsTotal_TBrpg + RedStarsTotal_TBrpg >=25"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L16",
+      "label": "25* Rewriting the Stars Memory",
+      "value": 0.06,
+      "formula": null,
+      "gate_cell": "M16",
+      "gate_value": true,
+      "gate_formula": "= GoldStarsTotal_TBlightning + RedStarsTotal_TBlightning >=25"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L17",
+      "label": "25* Gold Finger",
+      "value": 0.06,
+      "formula": null,
+      "gate_cell": "M17",
+      "gate_value": true,
+      "gate_formula": "= GoldStarsTotal_TBboomerang + RedStarsTotal_TBboomerang >=25"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L18",
+      "label": "20G Open Void Gate",
+      "value": 0.04,
+      "formula": null,
+      "gate_cell": "M18",
+      "gate_value": true,
+      "gate_formula": "=AND(stars_legendColDURIAN>=5, stars_legendColSOCCER>=5, stars_EpicColSOCCER>=5, stars_EpicColDURIAN>=5)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L19",
+      "label": "20R Open Void Gate",
+      "value": 0.06,
+      "formula": null,
+      "gate_cell": "M19",
+      "gate_value": false,
+      "gate_formula": "=AND(stars_legendColDURIAN>=10, stars_legendColSOCCER>=10, stars_EpicColSOCCER>=10, stars_EpicColDURIAN>=10)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L20",
+      "label": "20G Close to Creation",
+      "value": 0.04,
+      "formula": null,
+      "gate_cell": "M20",
+      "gate_value": true,
+      "gate_formula": "=AND(stars_legendColDeathRay>=5, stars_legendColBrick>=5, stars_EpicColSOCCER>=5, stars_EpicColDURIAN>=5)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L21",
+      "label": "20R Close to Creation",
+      "value": 0.06,
+      "formula": null,
+      "gate_cell": "M21",
+      "gate_value": false,
+      "gate_formula": "=AND(stars_legendColDeathRay>=10, stars_legendColBrick>=10, stars_EpicColSOCCER>=10, stars_EpicColDURIAN>=10)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L22",
+      "label": "19G Genesis",
+      "value": 0.04,
+      "formula": null,
+      "gate_cell": "M22",
+      "gate_value": true,
+      "gate_formula": "=AND(stars_legendColSoD>=5, stars_EpicColVSuit>=5, stars_EpicColVH>=5)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L23",
+      "label": "19R Genesis",
+      "value": 0.06,
+      "formula": null,
+      "gate_cell": "M23",
+      "gate_value": false,
+      "gate_formula": "=AND(stars_legendColSoD>=10, stars_EpicColVSuit>=10, stars_EpicColVH>=10)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L26",
+      "label": "19G First Myth",
+      "value": 0.04,
+      "formula": null,
+      "gate_cell": "M26",
+      "gate_value": true,
+      "gate_formula": "=AND(stars_legendColDURIAN>=5, stars_EpicColAoQ>=5, stars_EpicColEG>=5)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L27",
+      "label": "19R First Myth",
+      "value": 0.06,
+      "formula": null,
+      "gate_cell": "M27",
+      "gate_value": false,
+      "gate_formula": "=AND(stars_legendColDURIAN>=10, stars_EpicColAoQ>=10, stars_EpicColEG>=10)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L28",
+      "label": "19G Parallel Dimension",
+      "value": 0.04,
+      "formula": null,
+      "gate_cell": "M28",
+      "gate_value": true,
+      "gate_formula": "=AND(stars_legendColSOCCER>=5, stars_EpicColVT>=5, stars_EpicColVS>=5)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L29",
+      "label": "19R Parallel Dimension",
+      "value": 0.06,
+      "formula": null,
+      "gate_cell": "M29",
+      "gate_value": false,
+      "gate_formula": "=AND(stars_legendColSOCCER>=10, stars_EpicColVT>=10, stars_EpicColVS>=10)"
+    },
+    {
+      "stage": "stage5_collectibles",
+      "sheet": "ATK%",
+      "cell": "L30",
+      "label": "19G Uncontrollable Superpower",
+      "value": 0.04,
+      "formula": null,
+      "gate_cell": "M30",
+      "gate_value": true,
+      "gate_formula": "=AND(stars_legendColESUIT>=5, stars_EpicColBrick>=5, stars_EpicColDeathRay>=5)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "G4",
+      "label": "Lv80 Tsukuyomi",
+      "value": 0.05,
+      "formula": null,
+      "gate_cell": "H4",
+      "gate_value": true,
+      "gate_formula": "=lv_tsukuyomi>=80"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "G5",
+      "label": "Lv80 King",
+      "value": 0.05,
+      "formula": null,
+      "gate_cell": "H5",
+      "gate_value": true,
+      "gate_formula": "=lv_king>=80"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "G6",
+      "label": "Lv80 Wesson",
+      "value": 0.05,
+      "formula": null,
+      "gate_cell": "H6",
+      "gate_value": true,
+      "gate_formula": "=lv_wesson>=80"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "G7",
+      "label": "Lv120 Common",
+      "value": 0.05,
+      "formula": null,
+      "gate_cell": "H7",
+      "gate_value": true,
+      "gate_formula": "=lv_common=120"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "G8",
+      "label": "Lv120 Common",
+      "value": 0.05,
+      "formula": null,
+      "gate_cell": "H8",
+      "gate_value": true,
+      "gate_formula": "=lv_squid=120"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "G9",
+      "label": "Lv120 Spongebob",
+      "value": 0.05,
+      "formula": null,
+      "gate_cell": "H9",
+      "gate_value": true,
+      "gate_formula": "=lv_spongebob=120"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "G10",
+      "label": "Lv120 Sandy",
+      "value": 0.05,
+      "formula": null,
+      "gate_cell": "H10",
+      "gate_value": true,
+      "gate_formula": "=lv_sandy=120"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "G11",
+      "label": "Lv120 Patrick",
+      "value": 0.05,
+      "formula": null,
+      "gate_cell": "H11",
+      "gate_value": true,
+      "gate_formula": "=lv_patrick=120"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "G12",
+      "label": "Lv120 Master Yang",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H12",
+      "gate_value": true,
+      "gate_formula": "=lv_yang=120"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "G13",
+      "label": "Y5 Leonardo",
+      "value": 0.08,
+      "formula": null,
+      "gate_cell": "H13",
+      "gate_value": true,
+      "gate_formula": "=stars_leo>=5"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "G14",
+      "label": "Y5 Raphael",
+      "value": 0.08,
+      "formula": null,
+      "gate_cell": "H14",
+      "gate_value": true,
+      "gate_formula": "=stars_raph>=5"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "G15",
+      "label": "Y5 Michelangelo",
+      "value": 0.08,
+      "formula": null,
+      "gate_cell": "H15",
+      "gate_value": true,
+      "gate_formula": "=stars_michy>=5"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "G16",
+      "label": "Y5 Donatello",
+      "value": 0.08,
+      "formula": null,
+      "gate_cell": "H16",
+      "gate_value": true,
+      "gate_formula": "=stars_dona>=5"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "G17",
+      "label": "Y5 Splinter",
+      "value": 0.08,
+      "formula": null,
+      "gate_cell": "H17",
+      "gate_value": true,
+      "gate_formula": "=stars_splinter>=5"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "G18",
+      "label": "Y5 April",
+      "value": 0.08,
+      "formula": null,
+      "gate_cell": "H18",
+      "gate_value": true,
+      "gate_formula": "=stars_april>=5"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "L4",
+      "label": "Leather Gloves",
+      "value": 0.05,
+      "formula": null,
+      "gate_cell": "M4",
+      "gate_value": false,
+      "gate_formula": null
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "L5",
+      "label": "Eternal Gloves",
+      "value": 0.2,
+      "formula": null,
+      "gate_cell": "M5",
+      "gate_value": false,
+      "gate_formula": null
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "L6",
+      "label": "AF3 Eternal Gloves",
+      "value": 0.03,
+      "formula": null,
+      "gate_cell": "M6",
+      "gate_value": false,
+      "gate_formula": null
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "L7",
+      "label": "Voidwaker Handguards",
+      "value": 0.3,
+      "formula": null,
+      "gate_cell": "M7",
+      "gate_value": true,
+      "gate_formula": "=active_ssgloves=true"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "L8",
+      "label": "AFv4 Voidwaker Handguards",
+      "value": 0.2,
+      "formula": null,
+      "gate_cell": "M8",
+      "gate_value": false,
+      "gate_formula": null
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "L9",
+      "label": "Metal Neckguard",
+      "value": 0,
+      "formula": "=IF($AG$10, IF($J$9 = \"Metal Neckguard\", 0.3, 0.5) * sixthsense_critR, 0)",
+      "gate_cell": "M9",
+      "gate_value": false,
+      "gate_formula": null
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "L10",
+      "label": "Eternal Necklace",
+      "value": 0,
+      "formula": "=IF($AG$10, IF($J$10 = \"Eternal Necklace\", 0.15, 0.2) * sixthsense_critR, 0)",
+      "gate_cell": "M10",
+      "gate_value": false,
+      "gate_formula": null
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "L11",
+      "label": "Voidwalker Emblem",
+      "value": 0.4,
+      "formula": null,
+      "gate_cell": "M11",
+      "gate_value": false,
+      "gate_formula": "=active_Vneck"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "L12",
+      "label": "R5 Lucky Charm - Voidwalker Emblem        ",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "M12",
+      "gate_value": false,
+      "gate_formula": "=AND(active_Vneck, st_EpicColVN=\"R5\")"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "L13",
+      "label": "Y3 Memory Editor - Voidwalker Emblem        ",
+      "value": 0.2,
+      "formula": null,
+      "gate_cell": "M13",
+      "gate_value": false,
+      "gate_formula": "=AND(active_Vneck, stars_legendColVN>=3)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "L14",
+      "label": "Y5 Memory Editor - Voidwalker Emblem        ",
+      "value": 0.2,
+      "formula": null,
+      "gate_cell": "M14",
+      "gate_value": false,
+      "gate_formula": "=AND(active_Vneck, stars_legendColVN>=5)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritRate",
+      "cell": "L15",
+      "label": "Total",
+      "value": 0.3,
+      "formula": "=SUMIF($M$4:$M$14, TRUE, $L$4:$L$14)",
+      "gate_cell": "M15",
+      "gate_value": null,
+      "gate_formula": null
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritDamage",
+      "cell": "G9",
+      "label": "Lv120 Tsukuyomi",
+      "value": 0.05,
+      "formula": null,
+      "gate_cell": "H9",
+      "gate_value": true,
+      "gate_formula": "=lv_tsukuyomi=120"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritDamage",
+      "cell": "G10",
+      "label": "Lv120 King",
+      "value": 0.05,
+      "formula": null,
+      "gate_cell": "H10",
+      "gate_value": true,
+      "gate_formula": "=lv_king=120"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritDamage",
+      "cell": "G11",
+      "label": "Lv120 Wesson",
+      "value": 0.05,
+      "formula": null,
+      "gate_cell": "H11",
+      "gate_value": true,
+      "gate_formula": "=lv_wesson=120"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritDamage",
+      "cell": "G12",
+      "label": "Lv120 Metalia",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H12",
+      "gate_value": true,
+      "gate_formula": "=lv_metallia=120"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritDamage",
+      "cell": "G13",
+      "label": "Lv120 Joey",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H13",
+      "gate_value": true,
+      "gate_formula": "=lv_joey=120"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritDamage",
+      "cell": "G14",
+      "label": "Lv120 Taloxa",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H14",
+      "gate_value": true,
+      "gate_formula": "=lv_taloxa=120"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "CritDamage",
+      "cell": "G15",
+      "label": "Total",
+      "value": 0.7,
+      "formula": "=SUMIF($H$4:$H$14, true, $G$4:$G$14)",
+      "gate_cell": "H15",
+      "gate_value": null,
+      "gate_formula": null
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "SkillDamage",
+      "cell": "G4",
+      "label": "SS Weapon",
+      "value": 0.6,
+      "formula": null,
+      "gate_cell": "H4",
+      "gate_value": true,
+      "gate_formula": "=active_ssweapon=true"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "SkillDamage",
+      "cell": "G5",
+      "label": "AFe3 SS Weapon",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H5",
+      "gate_value": true,
+      "gate_formula": "=AND(active_ssweapon=true, af_e_ssweapon>=3)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "SkillDamage",
+      "cell": "G6",
+      "label": "AFe5 SS Weapon",
+      "value": 0.35,
+      "formula": null,
+      "gate_cell": "H6",
+      "gate_value": true,
+      "gate_formula": "=AND(active_ssweapon=true, af_e_ssweapon=5)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "SkillDamage",
+      "cell": "G7",
+      "label": "C9 CFP set SS Weapon",
+      "value": 0.75,
+      "formula": "=IF(af_e_ssweapon=5, 75%, 50%)",
+      "gate_cell": "H7",
+      "gate_value": true,
+      "gate_formula": "=LET(\n  weaponScore, IF(active_ssweapon, af_c_ssweapon, 0),\n  chestScore, IF(chaosKeep_sschest=\"Keep\", af_c_sschest, 0),\n  neckScore, IF(chaosKeep_ssneck=\"Keep\", af_c_ssneck, 0),\n  beltScore, IF(chaosKeep_ssbelt = \"Keep\", af_c_ssbelt, 0),\n  glovesScore, 0,\n  bootsScore, 0,\n  weaponActive, IF(active_ssweapon, 1, 0),\n  totalScore, (weaponScore + chestScore + neckScore + beltScore + glovesScore + bootsScore) * weaponActive,\n  totalScore >= 9\n)\n"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "SkillDamage",
+      "cell": "G8",
+      "label": "C12 CFP set SS Weapon",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H8",
+      "gate_value": true,
+      "gate_formula": "=LET(\n  weaponScore, IF(active_ssweapon, af_c_ssweapon, 0),\n  chestScore, IF(chaosKeep_sschest=\"Keep\", af_c_sschest, 0),\n  neckScore, IF(chaosKeep_ssneck=\"Keep\", af_c_ssneck, 0),\n  beltScore, IF(chaosKeep_ssbelt = \"Keep\", af_c_ssbelt, 0),\n  glovesScore, 0,\n  bootsScore, 0,\n  weaponActive, IF(active_ssweapon, 1, 0),\n  totalScore, (weaponScore + chestScore + neckScore + beltScore + glovesScore + bootsScore) * weaponActive,\n  totalScore >= 12\n)\n"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "SkillDamage",
+      "cell": "G9",
+      "label": "C15 CFP set SS Weapon",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H9",
+      "gate_value": true,
+      "gate_formula": "=LET(\n  weaponScore, IF(active_ssweapon, af_c_ssweapon, 0),\n  chestScore, IF(chaosKeep_sschest=\"Keep\", af_c_sschest, 0),\n  neckScore, IF(chaosKeep_ssneck=\"Keep\", af_c_ssneck, 0),\n  beltScore, IF(chaosKeep_ssbelt = \"Keep\", af_c_ssbelt, 0),\n  glovesScore, 0,\n  bootsScore, 0,\n  weaponActive, IF(active_ssweapon, 1, 0),\n  totalScore, (weaponScore + chestScore + neckScore + beltScore + glovesScore + bootsScore) * weaponActive,\n  totalScore >= 15\n)\n"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "SkillDamage",
+      "cell": "G10",
+      "label": "C18 CFP set SS Weapon",
+      "value": 0.2,
+      "formula": null,
+      "gate_cell": "H10",
+      "gate_value": true,
+      "gate_formula": "=LET(\n  weaponScore, IF(active_ssweapon, af_c_ssweapon, 0),\n  chestScore, IF(chaosKeep_sschest=\"Keep\", af_c_sschest, 0),\n  neckScore, IF(chaosKeep_ssneck=\"Keep\", af_c_ssneck, 0),\n  beltScore, IF(chaosKeep_ssbelt = \"Keep\", af_c_ssbelt, 0),\n  glovesScore, 0,\n  bootsScore, 0,\n  weaponActive, IF(active_ssweapon, 1, 0),\n  totalScore, (weaponScore + chestScore + neckScore + beltScore + glovesScore + bootsScore) * weaponActive,\n  totalScore >= 18\n)\n"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "SkillDamage",
+      "cell": "G11",
+      "label": "C24 CFP set SS Weapon",
+      "value": 0.3,
+      "formula": null,
+      "gate_cell": "H11",
+      "gate_value": true,
+      "gate_formula": "=LET(\n  weaponScore, IF(active_ssweapon, af_c_ssweapon, 0),\n  chestScore, IF(chaosKeep_sschest=\"Keep\", af_c_sschest, 0),\n  neckScore, IF(chaosKeep_ssneck=\"Keep\", af_c_ssneck, 0),\n  beltScore, IF(chaosKeep_ssbelt = \"Keep\", af_c_ssbelt, 0),\n  glovesScore, 0,\n  bootsScore, 0,\n  weaponActive, IF(active_ssweapon, 1, 0),\n  totalScore, (weaponScore + chestScore + neckScore + beltScore + glovesScore + bootsScore) * weaponActive,\n  totalScore >= 24\n)\n"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "SkillDamage",
+      "cell": "G12",
+      "label": "C27 CFP set SS Weapon",
+      "value": 0.6,
+      "formula": null,
+      "gate_cell": "H12",
+      "gate_value": true,
+      "gate_formula": "=LET(\n  weaponScore, IF(active_ssweapon, af_c_ssweapon, 0),\n  chestScore, IF(chaosKeep_sschest=\"Keep\", af_c_sschest, 0),\n  neckScore, IF(chaosKeep_ssneck=\"Keep\", af_c_ssneck, 0),\n  beltScore, IF(chaosKeep_ssbelt = \"Keep\", af_c_ssbelt, 0),\n  glovesScore, 0,\n  bootsScore, 0,\n  weaponActive, IF(active_ssweapon, 1, 0),\n  totalScore, (weaponScore + chestScore + neckScore + beltScore + glovesScore + bootsScore) * weaponActive,\n  totalScore >= 27\n)\n"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "SkillDamage",
+      "cell": "G13",
+      "label": "C33 CFP set SS Weapon",
+      "value": 0.4,
+      "formula": null,
+      "gate_cell": "H13",
+      "gate_value": true,
+      "gate_formula": "=LET(\n  weaponScore, IF(active_ssweapon, af_c_ssweapon, 0),\n  chestScore, IF(chaosKeep_sschest=\"Keep\", af_c_sschest, 0),\n  neckScore, IF(chaosKeep_ssneck=\"Keep\", af_c_ssneck, 0),\n  beltScore, IF(chaosKeep_ssbelt = \"Keep\", af_c_ssbelt, 0),\n  glovesScore, 0,\n  bootsScore, 0,\n  weaponActive, IF(active_ssweapon, 1, 0),\n  totalScore, (weaponScore + chestScore + neckScore + beltScore + glovesScore + bootsScore) * weaponActive,\n  totalScore >= 33\n)\n"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "SkillDamage",
+      "cell": "G14",
+      "label": "R3 Erudite Heirloom Set",
+      "value": 0.3,
+      "formula": "=IF($H$6, 30%, 20%)",
+      "gate_cell": "H14",
+      "gate_value": true,
+      "gate_formula": "=AND(active_ssweapon, stars_legendColSoD>=8, stars_legendColVP>=8, stars_legendColSOCCER>=8, stars_legendColLIGHTNING>=8)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "SkillDamage",
+      "cell": "G15",
+      "label": "AFe3 Voidwaker Handguards",
+      "value": 0.3,
+      "formula": "=IF(AND(af_v_ssgloves>=4, critRateHome>=110%, critRateHome<130%), 15%, IF(critRateHome>=130%, 30%, 0%))\n",
+      "gate_cell": "H15",
+      "gate_value": true,
+      "gate_formula": "=AND(active_ssgloves=true, af_e_ssgloves>=3)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "SkillDamage",
+      "cell": "G16",
+      "label": "25* Summon the Divine Dragon",
+      "value": 0.3,
+      "formula": "=IF(AND(af_v_ssgloves>=4, critRateHome>=110%, critRateHome<130%), 15%, IF(critRateHome>=130%, 30%, 0%))\n",
+      "gate_cell": "H16",
+      "gate_value": true,
+      "gate_formula": "=AND(active_ssgloves=true, af_e_ssgloves>=3, stars_legendColDeathRay+stars_legendColBrick+stars_legendColVS+stars_legendColVH>=25)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "SkillDamage",
+      "cell": "G17",
+      "label": "AFv2 SS Armour",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H17",
+      "gate_value": true,
+      "gate_formula": "=AND(active_sschest=true, af_v_sschest>=2)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "SkillDamage",
+      "cell": "G18",
+      "label": "AFc4 SS Armour",
+      "value": 0.2,
+      "formula": null,
+      "gate_cell": "H18",
+      "gate_value": true,
+      "gate_formula": "=AND(active_sschest=true, af_c_sschest>=4)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "Vulnerability",
+      "cell": "G4",
+      "label": "Molotov Red or Eternal",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H4",
+      "gate_value": true,
+      "gate_formula": "=AND(active_molotov, TechRar_molotov<>\"Un-teched\")"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "Vulnerability",
+      "cell": "G5",
+      "label": "Molotov Y5 Epic Collectible",
+      "value": 0.05,
+      "formula": null,
+      "gate_cell": "H5",
+      "gate_value": true,
+      "gate_formula": "=AND(active_molotov, TechRar_molotov<>\"Un-teched\", OR(st_EpicColMolotov=\"Y5\", st_EpicColMolotov=\"R1\", st_EpicColMolotov=\"R2\", st_EpicColMolotov=\"R3\", st_EpicColMolotov=\"R4\", st_EpicColMolotov=\"R5\"))"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "Vulnerability",
+      "cell": "G6",
+      "label": "Molotov Y5 Legeend Collectible",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H6",
+      "gate_value": true,
+      "gate_formula": "=AND(active_molotov, TechRar_molotov<>\"Un-teched\", stars_legendColMolotov>=5)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "Vulnerability",
+      "cell": "G7",
+      "label": "Molotov 450 Resonance",
+      "value": 0.05,
+      "formula": null,
+      "gate_cell": "H7",
+      "gate_value": false,
+      "gate_formula": "=AND(active_molotov, TechRes_molotov>=450, TechRes_molotov<3000, OR(TechRar_molotov=\"Red\", TechRar_molotov=\"Eternal\"))"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "Vulnerability",
+      "cell": "G8",
+      "label": "Molotov 3000 Resonance",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H8",
+      "gate_value": true,
+      "gate_formula": "=AND(active_molotov, TechRes_molotov>=3000, TechRes_molotov<9000, OR(TechRar_molotov=\"Red\", TechRar_molotov=\"Eternal\"))"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "Vulnerability",
+      "cell": "G9",
+      "label": "Molotov 9000 Resonance",
+      "value": 0.15,
+      "formula": null,
+      "gate_cell": "H9",
+      "gate_value": false,
+      "gate_formula": "=AND(active_molotov, TechRes_molotov=9000, OR(TechRar_molotov=\"Red\", TechRar_molotov=\"Eternal\"))"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "Vulnerability",
+      "cell": "G10",
+      "label": "Drill/TB:Drill (Eternal)",
+      "value": 0.05,
+      "formula": null,
+      "gate_cell": "H10",
+      "gate_value": true,
+      "gate_formula": "=OR(TechRar_TBdrill=\"Eternal\", TechRar_drill=\"Eternal\")"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "Vulnerability",
+      "cell": "G11",
+      "label": "Solarian Ki Cyclone",
+      "value": 0.5,
+      "formula": null,
+      "gate_cell": "H11",
+      "gate_value": false,
+      "gate_formula": "=AND(main_yang=true, stars_yang>=3)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "Vulnerability",
+      "cell": "G12",
+      "label": "Listening Bug",
+      "value": 0.5,
+      "formula": null,
+      "gate_cell": "H12",
+      "gate_value": false,
+      "gate_formula": "=main_worm=true"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "Vulnerability",
+      "cell": "G13",
+      "label": "TB: Drone  200 Resonance",
+      "value": 0.15,
+      "formula": null,
+      "gate_cell": "H13",
+      "gate_value": true,
+      "gate_formula": "=AND(TechRes_TBdestroyer>=200, TechRar_TBdestroyer<>\"Un-teched\")"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "Vulnerability",
+      "cell": "G14",
+      "label": "TB: Drone  900 Resonance",
+      "value": 0.15,
+      "formula": null,
+      "gate_cell": "H14",
+      "gate_value": true,
+      "gate_formula": "=AND(TechRes_TBdestroyer>=900, TechRar_TBdestroyer<>\"Un-teched\")"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "Vulnerability",
+      "cell": "G15",
+      "label": "TB: Drone  2100 Resonance",
+      "value": 0.15,
+      "formula": null,
+      "gate_cell": "H15",
+      "gate_value": true,
+      "gate_formula": "=AND(TechRes_TBdestroyer>=2100, TechRar_TBdestroyer<>\"Un-teched\")"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "Vulnerability",
+      "cell": "G16",
+      "label": "TB: Drone  6000 Resonance",
+      "value": 0.15,
+      "formula": null,
+      "gate_cell": "H16",
+      "gate_value": true,
+      "gate_formula": "=AND(TechRes_TBdestroyer>=6000, TechRar_TBdestroyer<>\"Un-teched\")"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "Vulnerability",
+      "cell": "G17",
+      "label": "TB: Drone  10500 Resonance",
+      "value": 0.2,
+      "formula": null,
+      "gate_cell": "H17",
+      "gate_value": true,
+      "gate_formula": "=AND(TechRes_TBdestroyer>=10500, TechRar_TBdestroyer<>\"Un-teched\")"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "Vulnerability",
+      "cell": "G18",
+      "label": "TB: Drone  13500 Resonance",
+      "value": 0.2,
+      "formula": null,
+      "gate_cell": "H18",
+      "gate_value": true,
+      "gate_formula": "=AND(TechRes_TBdestroyer>=13500, TechRar_TBdestroyer<>\"Un-teched\")"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "ShieldDamage",
+      "cell": "G4",
+      "label": "Voidwaker Handguards",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H4",
+      "gate_value": true,
+      "gate_formula": "=active_ssgloves=true"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "ShieldDamage",
+      "cell": "G5",
+      "label": "AFv2 Voidwaker Handguards",
+      "value": 0.2,
+      "formula": null,
+      "gate_cell": "H5",
+      "gate_value": true,
+      "gate_formula": "=AND(active_ssgloves=true, af_v_ssgloves>=2)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "ShieldDamage",
+      "cell": "G6",
+      "label": "Y3 Summon the Divine Dragon",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H6",
+      "gate_value": true,
+      "gate_formula": "=AND(active_ssgloves, stars_legendColDeathRay>=3, stars_legendColBrick>=3, stars_legendColVS>=3, stars_legendColVH>=3)\n"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "ShieldDamage",
+      "cell": "G7",
+      "label": "AFe1 SS Armour",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H7",
+      "gate_value": true,
+      "gate_formula": "=AND(active_sschest=true, af_e_sschest>=1)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "ShieldDamage",
+      "cell": "G8",
+      "label": "AFe3 SS Armour",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H8",
+      "gate_value": true,
+      "gate_formula": "=AND(active_sschest=true, af_e_sschest>=3)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "ShieldDamage",
+      "cell": "G9",
+      "label": "AFe5 SS Armour",
+      "value": 0.2,
+      "formula": null,
+      "gate_cell": "H9",
+      "gate_value": true,
+      "gate_formula": "=AND(active_sschest=true, af_e_sschest=5)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "ShieldDamage",
+      "cell": "G10",
+      "label": "AFc2 SS Armour",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H10",
+      "gate_value": true,
+      "gate_formula": "=AND(active_sschest=true, af_c_sschest>=2)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "ShieldDamage",
+      "cell": "G11",
+      "label": "AFc10 SS Armour",
+      "value": 0.3,
+      "formula": null,
+      "gate_cell": "H11",
+      "gate_value": true,
+      "gate_formula": "=AND(active_sschest=true, af_c_sschest=10)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "ShieldDamage",
+      "cell": "G12",
+      "label": "Y3 Otherworld Treasure",
+      "value": 0.05,
+      "formula": null,
+      "gate_cell": "H12",
+      "gate_value": true,
+      "gate_formula": "=AND(active_sschest, stars_legendColLC>=3, stars_legendColDestroyer>=3, stars_legendColDURIAN>=3, stars_legendColGUARDIAN>=3)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "ShieldDamage",
+      "cell": "G13",
+      "label": "AFe5 SS Neck (effect on e5 SS Armour)",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H13",
+      "gate_value": false,
+      "gate_formula": "=AND(active_ssneck=true, af_e_ssneck=5, active_sschest=true, af_e_sschest=5)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "ShieldDamage",
+      "cell": "G14",
+      "label": "AFe1 SS Boot",
+      "value": 0.2,
+      "formula": null,
+      "gate_cell": "H14",
+      "gate_value": true,
+      "gate_formula": "=AND(active_ssboot=true, af_e_ssboot>=1)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "ShieldDamage",
+      "cell": "G15",
+      "label": "AFe3 SS Boot",
+      "value": 0.21,
+      "formula": null,
+      "gate_cell": "H15",
+      "gate_value": true,
+      "gate_formula": "=AND(active_ssboot=true, af_e_ssboot>=3)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "ShieldDamage",
+      "cell": "G16",
+      "label": "AFe5 SS Boot",
+      "value": 0.04,
+      "formula": "=IF(G$14=20%, 4%, 0%)",
+      "gate_cell": "H16",
+      "gate_value": true,
+      "gate_formula": "=AND(active_ssboot=true, af_e_ssboot=5)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "ShieldDamage",
+      "cell": "G17",
+      "label": "Y3 Conduct Experiments",
+      "value": 0.7,
+      "formula": "=IF(af_e_ssboot=5, 60%, 50%) + IF(R3_ssbootSet=true, 10%, 0)",
+      "gate_cell": "H17",
+      "gate_value": true,
+      "gate_formula": "=AND(active_ssboot, stars_legendColMolotov>=3, stars_legendColEneck>=3, stars_legendColEG>=3, stars_legendColVT>=3)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "ShieldDamage",
+      "cell": "G18",
+      "label": "AFv2 Twisting Belt",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "H18",
+      "gate_value": true,
+      "gate_formula": "=AND(active_ssbelt=true, af_v_ssbelt>=2)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "DebuffDamage",
+      "cell": "G4",
+      "label": "Lv1-Lv3 Metalia Combat Harmony Inflictor",
+      "value": null,
+      "formula": "=Images!$A$172",
+      "gate_cell": "I4",
+      "gate_value": false,
+      "gate_formula": "=AND(activeSynergy_metallia=true, lvSynergy_metallia>=1, lvSynergy_metallia<=3)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "DebuffDamage",
+      "cell": "G5",
+      "label": "Molotov 200-550 Res Inflictor",
+      "value": null,
+      "formula": "=Images!$A$139",
+      "gate_cell": "I5",
+      "gate_value": false,
+      "gate_formula": "=AND(TechRes_molotov>=200, TechRes_molotov<=550, TechRar_molotov<>\"Un-teched\")"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "DebuffDamage",
+      "cell": "G6",
+      "label": "Molotov 600-1500 Res Inflictor",
+      "value": null,
+      "formula": "=Images!$A$139",
+      "gate_cell": "I6",
+      "gate_value": false,
+      "gate_formula": "=AND(TechRes_molotov>=600, TechRes_molotov<=1500, TechRar_molotov<>\"Un-teched\")"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "DebuffDamage",
+      "cell": "G7",
+      "label": "Molotov 1650-1950 Res Inflictor",
+      "value": null,
+      "formula": "=Images!$A$139",
+      "gate_cell": "I7",
+      "gate_value": false,
+      "gate_formula": "=AND(TechRes_molotov>=1650, TechRes_molotov<=1950, TechRar_molotov<>\"Un-teched\")"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "DebuffDamage",
+      "cell": "G8",
+      "label": "Molotov 2100-9000 Res Inflictor",
+      "value": null,
+      "formula": "=Images!$A$139",
+      "gate_cell": "I8",
+      "gate_value": true,
+      "gate_formula": "=AND(TechRes_molotov>=2100, TechRes_molotov<=9000, TechRar_molotov<>\"Un-teched\")"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "DebuffDamage",
+      "cell": "G9",
+      "label": "Lv4-Lv5 Metalia Combat Harmony Inflictor",
+      "value": null,
+      "formula": "=Images!$A$172",
+      "gate_cell": "I9",
+      "gate_value": true,
+      "gate_formula": "=AND(activeSynergy_metallia=true, lvSynergy_metallia>=4)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "DebuffDamage",
+      "cell": "G10",
+      "label": "TB: Durian 300 Res Inflictor",
+      "value": null,
+      "formula": "=Images!$A$193",
+      "gate_cell": "I10",
+      "gate_value": false,
+      "gate_formula": "=AND(TechRes_TBdurian>=300, TechRar_TBdurian<>\"Un-teched\")"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "DebuffDamage",
+      "cell": "G11",
+      "label": "TB: RPG Red and Eternal Inflictor",
+      "value": null,
+      "formula": "=Images!$A$325",
+      "gate_cell": "I11",
+      "gate_value": false,
+      "gate_formula": "=TechRar_TBrpg<>\"Un-teched\""
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "DebuffDamage",
+      "cell": "G12",
+      "label": "Xeno Puffo Inflictor",
+      "value": null,
+      "formula": "=Images!$A$341",
+      "gate_cell": "I12",
+      "gate_value": false,
+      "gate_formula": "=active_puffo=true"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "DebuffDamage",
+      "cell": "G13",
+      "label": "Metalia Harmonic Power",
+      "value": null,
+      "formula": "=Images!$A$144",
+      "gate_cell": "I13",
+      "gate_value": false,
+      "gate_formula": "=main_metallia=true"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "DebuffDamage",
+      "cell": "G14",
+      "label": "AFc8 SS Armour",
+      "value": null,
+      "formula": "=Images!$A$56",
+      "gate_cell": "I14",
+      "gate_value": true,
+      "gate_formula": "=AND(active_sschest=true, af_c_sschest>=8)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "DebuffDamage",
+      "cell": "G15",
+      "label": "A2 Metalia",
+      "value": null,
+      "formula": "=Images!$A$134",
+      "gate_cell": "I15",
+      "gate_value": false,
+      "gate_formula": "=OR(AND(main_metallia=true, stars_metallia>=8), AND(team_metallia=true, stars_metallia>=8))"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "DebuffDamage",
+      "cell": "G16",
+      "label": "TB: Durian 900 Resonance",
+      "value": null,
+      "formula": "=Images!$A$193",
+      "gate_cell": "I16",
+      "gate_value": false,
+      "gate_formula": "=AND(TechRes_TBdurian>=900, TechRar_TBdurian<>\"Un-teched\")"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "DebuffDamage",
+      "cell": "G17",
+      "label": "TB: Durian 3000 Resonance",
+      "value": null,
+      "formula": "=Images!$A$193",
+      "gate_cell": "I17",
+      "gate_value": false,
+      "gate_formula": "=AND(TechRes_TBdurian>=3000, TechRar_TBdurian<>\"Un-teched\")"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "DebuffDamage",
+      "cell": "G18",
+      "label": "TB: Durian 7500 Resonance",
+      "value": null,
+      "formula": "=Images!$A$193",
+      "gate_cell": "I18",
+      "gate_value": false,
+      "gate_formula": "=AND(TechRes_TBdurian>=7500, TechRar_TBdurian<>\"Un-teched\")"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "DebuffDamage",
+      "cell": "G19",
+      "label": "TB: Durian 9000 Resonance",
+      "value": null,
+      "formula": "=Images!$A$193",
+      "gate_cell": "I19",
+      "gate_value": false,
+      "gate_formula": "=AND(TechRes_TBdurian>=9000, TechRar_TBdurian<>\"Un-teched\")"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "DebuffDamage",
+      "cell": "G20",
+      "label": "TB: Durian 10500 Resonance",
+      "value": null,
+      "formula": "=Images!$A$193",
+      "gate_cell": "I20",
+      "gate_value": false,
+      "gate_formula": "=AND(TechRes_TBdurian>=10500, TechRar_TBdurian<>\"Un-teched\")"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "UniqueMultipliers",
+      "cell": "T4",
+      "label": "Y1 Taloxa (Inflict Only)",
+      "value": 0.0,
+      "formula": null,
+      "gate_cell": "U4",
+      "gate_value": true,
+      "gate_formula": "=AND(main_taloxa=true, stars_taloxa>=1)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "UniqueMultipliers",
+      "cell": "T5",
+      "label": "Y3 Taloxa",
+      "value": 0.15,
+      "formula": null,
+      "gate_cell": "U5",
+      "gate_value": true,
+      "gate_formula": "=AND(main_taloxa=true, stars_taloxa>=3)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "UniqueMultipliers",
+      "cell": "T6",
+      "label": "Y6 Taloxa",
+      "value": 0.15,
+      "formula": null,
+      "gate_cell": "U6",
+      "gate_value": true,
+      "gate_formula": "=AND(main_taloxa=true, stars_taloxa>=6)"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "UniqueMultipliers",
+      "cell": "T7",
+      "label": "A1 Taloxa (RPG)",
+      "value": 0.1,
+      "formula": null,
+      "gate_cell": "U7",
+      "gate_value": true,
+      "gate_formula": "=OR(AND(main_taloxa=true, stars_taloxa>=7), AND(team_taloxa=true, stars_taloxa>=7))"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "UniqueMultipliers",
+      "cell": "T8",
+      "label": "A2 Taloxa (Laser Launcher)",
+      "value": 0.15,
+      "formula": null,
+      "gate_cell": "U8",
+      "gate_value": true,
+      "gate_formula": "=OR(AND(main_taloxa=true, stars_taloxa>=8), AND(team_taloxa=true, stars_taloxa>=8))"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "UniqueMultipliers",
+      "cell": "T9",
+      "label": "A4 Taloxa (Drone)",
+      "value": 0.25,
+      "formula": null,
+      "gate_cell": "U9",
+      "gate_value": true,
+      "gate_formula": "=OR(AND(main_taloxa=true, stars_taloxa>=10), AND(team_taloxa=true, stars_taloxa>=10))"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "UniqueMultipliers",
+      "cell": "T10",
+      "label": "A1 Leonardo",
+      "value": 0.02,
+      "formula": null,
+      "gate_cell": "U10",
+      "gate_value": true,
+      "gate_formula": "=OR(AND(main_leo=true, stars_leo>=7), AND(team_leo=true, stars_leo>=7))"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "UniqueMultipliers",
+      "cell": "T11",
+      "label": "A2 Leonardo",
+      "value": 0.02,
+      "formula": null,
+      "gate_cell": "U11",
+      "gate_value": true,
+      "gate_formula": "=OR(AND(main_leo=true, stars_leo>=8), AND(team_leo=true, stars_leo>=8))"
+    },
+    {
+      "stage": "stage7_conditionals",
+      "sheet": "UniqueMultipliers",
+      "cell": "T12",
+      "label": "A4 Leonardo",
+      "value": 0.03,
+      "formula": null,
+      "gate_cell": "U12",
+      "gate_value": true,
+      "gate_formula": "=OR(AND(main_leo=true, stars_leo>=10), AND(team_leo=true, stars_leo>=10))"
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "sheet": "LMEdebuffCalc",
+      "cell": "E4",
+      "label": 40.0,
+      "value": 120.0,
+      "formula": null,
+      "gate_cell": "F4",
+      "gate_value": true,
+      "gate_formula": "=LMEtestaments>=C4"
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "sheet": "LMEdebuffCalc",
+      "cell": "E5",
+      "label": 240.0,
+      "value": 120.0,
+      "formula": null,
+      "gate_cell": "F5",
+      "gate_value": true,
+      "gate_formula": "=LMEtestaments>=C5"
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "sheet": "LMEdebuffCalc",
+      "cell": "E6",
+      "label": 450.0,
+      "value": 180.0,
+      "formula": null,
+      "gate_cell": "F6",
+      "gate_value": true,
+      "gate_formula": "=LMEtestaments>=C6"
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "sheet": "LMEdebuffCalc",
+      "cell": "E7",
+      "label": 700.0,
+      "value": 180.0,
+      "formula": null,
+      "gate_cell": "F7",
+      "gate_value": true,
+      "gate_formula": "=LMEtestaments>=C7"
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "sheet": "LMEdebuffCalc",
+      "cell": "E8",
+      "label": 960.0,
+      "value": 300.0,
+      "formula": null,
+      "gate_cell": "F8",
+      "gate_value": true,
+      "gate_formula": "=LMEtestaments>=C8"
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "sheet": "LMEdebuffCalc",
+      "cell": "E9",
+      "label": 1260.0,
+      "value": 300.0,
+      "formula": null,
+      "gate_cell": "F9",
+      "gate_value": true,
+      "gate_formula": "=LMEtestaments>=C9"
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "sheet": "LMEdebuffCalc",
+      "cell": "E10",
+      "label": 1570.0,
+      "value": 300.0,
+      "formula": null,
+      "gate_cell": "F10",
+      "gate_value": true,
+      "gate_formula": "=LMEtestaments>=C10"
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "sheet": "LMEdebuffCalc",
+      "cell": "E11",
+      "label": 1920.0,
+      "value": 300.0,
+      "formula": null,
+      "gate_cell": "F11",
+      "gate_value": true,
+      "gate_formula": "=LMEtestaments>=C11"
+    },
+    {
+      "stage": "stage6_lme_turf",
+      "sheet": "LMEdebuffCalc",
+      "cell": "E12",
+      "label": 2270.0,
+      "value": 300.0,
+      "formula": null,
+      "gate_cell": "F12",
+      "gate_value": true,
+      "gate_formula": "=LMEtestaments>=C12"
+    }
+  ]
+}
