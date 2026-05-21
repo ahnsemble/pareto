@@ -1,0 +1,3033 @@
+{
+  "generatedAt": "2026-05-20T00:56:22.032Z",
+  "sioUrl": "https://sio-tools.vercel.app/",
+  "source": "live sio-tools UI capture",
+  "rarityOrder": [
+    "Eternal",
+    "Legend4",
+    "Legend3",
+    "Legend2",
+    "Legend1",
+    "Legend",
+    "Epic3",
+    "Epic2",
+    "Epic1",
+    "Epic"
+  ],
+  "playerState": {
+    "damage": {
+      "base_attack": 100000,
+      "skill_damage_percent": 0
+    },
+    "mode": "damage",
+    "selected_hero": {
+      "id": "common"
+    },
+    "conditional_state": {},
+    "xeno_transmute_modifier": null,
+    "ss_equipment": [],
+    "tech_configs": {
+      "energyGuidanceSystem": {
+        "resonance": 3000,
+        "mode": "droneMode",
+        "equipped": true,
+        "twinbornLevel": 0
+      },
+      "antimatterMaintainer": {
+        "resonance": 3000,
+        "mode": "drillShotMode",
+        "equipped": true,
+        "twinbornLevel": 0
+      },
+      "quantumNanobot": {
+        "resonance": 3000,
+        "mode": "durianMode",
+        "equipped": true,
+        "twinbornLevel": 0
+      },
+      "phaseDriver": {
+        "resonance": 0,
+        "mode": "lightningMode",
+        "equipped": false,
+        "twinbornLevel": 0
+      },
+      "energyDiffuser": {
+        "resonance": 2100,
+        "mode": "molotovMode",
+        "equipped": true,
+        "twinbornLevel": 0
+      },
+      "hiMaintainer": {
+        "resonance": 0,
+        "mode": "rocketMode",
+        "equipped": false,
+        "twinbornLevel": 0
+      },
+      "precisionDevice": {
+        "resonance": 0,
+        "mode": "droneMode",
+        "equipped": false,
+        "twinbornLevel": 0
+      },
+      "antimatterGenerator": {
+        "resonance": 0,
+        "mode": "drillShotMode",
+        "equipped": false,
+        "twinbornLevel": 0
+      },
+      "exoRadicator": {
+        "resonance": 0,
+        "mode": "guardianMode",
+        "equipped": false,
+        "twinbornLevel": 0
+      },
+      "hiGravityPulser": {
+        "resonance": 0,
+        "mode": "brickMode",
+        "equipped": false,
+        "twinbornLevel": 0
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "default_normal_legend2_epic8_chips100",
+      "inputs": {
+        "Legend": 2,
+        "Epic": 8
+      },
+      "chips": 100,
+      "skills": 4,
+      "optimizer": {
+        "strategy": "optimize",
+        "speedMode": "normal",
+        "fodder": "excess",
+        "overloadable": false,
+        "limit": "basic",
+        "modes": [
+          "molotovMode",
+          "durianMode",
+          "soccerMode",
+          "droneMode",
+          "forcefieldMode",
+          "drillShotMode",
+          "rocketMode",
+          "lightningMode",
+          "boomerangMode",
+          "guardianMode",
+          "laserMode",
+          "brickMode"
+        ],
+        "skillsMap": {
+          "Rocket": "disabled",
+          "Guardian Mode": "disabled"
+        }
+      },
+      "expected": [
+        {
+          "multiplierText": "6,137,868,863,016,276",
+          "multiplier": 6137868863016276,
+          "chipRemainder": 97,
+          "activeSkills": [
+            "Drone Mode",
+            "Drill Shot Mode",
+            "Soccer Mode",
+            "Molotov Mode"
+          ],
+          "rows": [
+            {
+              "part": "Energy Guidance System",
+              "rarity": "eternal",
+              "mode": "Drone Mode",
+              "rawText": [
+                "None",
+                "25 ×2.8",
+                "980",
+                "900"
+              ],
+              "images": [
+                {
+                  "alt": "Energy Guidance System",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drone Mode",
+                  "rarity": "drone_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Antimatter Maintainer",
+              "rarity": "eternal",
+              "mode": "Drill Shot Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "12 ×2.2",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Antimatter Maintainer",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drill Shot Mode",
+                  "rarity": "drill_shot_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Quantum Nanobot",
+              "rarity": "eternal",
+              "mode": "Soccer Mode",
+              "rawText": [
+                "16 ×2.4",
+                "360",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Quantum Nanobot",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Soccer Mode",
+                  "rarity": "soccer_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Phase Driver",
+              "rarity": "legend",
+              "mode": "Lightning Mode",
+              "rawText": [
+                "None",
+                "16 ×2.4",
+                "240",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Phase Driver",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Lightning Mode",
+                  "rarity": "lightning_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Exo-radicator",
+              "rarity": "legend",
+              "mode": "Guardian Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "12 ×2.2",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Exo-radicator",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Guardian Mode",
+                  "rarity": "guardian_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Hi-Gravity Pulser",
+              "rarity": "legend",
+              "mode": "Molotov Mode",
+              "rawText": [
+                "16 ×2.4",
+                "960",
+                "900"
+              ],
+              "images": [
+                {
+                  "alt": "Hi-Gravity Pulser",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Molotov Mode",
+                  "rarity": "molotov_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "multiplierText": "6,067,813,642,928,730",
+          "multiplier": 6067813642928730,
+          "chipRemainder": 98,
+          "activeSkills": [
+            "Drone Mode",
+            "Drill Shot Mode",
+            "Soccer Mode",
+            "Molotov Mode"
+          ],
+          "rows": [
+            {
+              "part": "Energy Guidance System",
+              "rarity": "eternal",
+              "mode": "Drone Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Energy Guidance System",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drone Mode",
+                  "rarity": "drone_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Antimatter Maintainer",
+              "rarity": "eternal",
+              "mode": "Drill Shot Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "6 ×1.8",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Antimatter Maintainer",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drill Shot Mode",
+                  "rarity": "drill_shot_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Quantum Nanobot",
+              "rarity": "eternal",
+              "mode": "Soccer Mode",
+              "rawText": [
+                "20 ×2.6",
+                "390",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Quantum Nanobot",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Soccer Mode",
+                  "rarity": "soccer_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Phase Driver",
+              "rarity": "legend",
+              "mode": "Lightning Mode",
+              "rawText": [
+                "None",
+                "None",
+                "6 ×1.8",
+                "90",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Phase Driver",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Lightning Mode",
+                  "rarity": "lightning_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Exo-radicator",
+              "rarity": "legend",
+              "mode": "Guardian Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "6 ×1.8",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Exo-radicator",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Guardian Mode",
+                  "rarity": "guardian_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Hi-Gravity Pulser",
+              "rarity": "legend",
+              "mode": "Molotov Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Hi-Gravity Pulser",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Molotov Mode",
+                  "rarity": "molotov_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "multiplierText": "6,029,966,321,522,614",
+          "multiplier": 6029966321522614,
+          "chipRemainder": 97,
+          "activeSkills": [
+            "Drone Mode",
+            "Drill Shot Mode",
+            "Soccer Mode",
+            "Molotov Mode"
+          ],
+          "rows": [
+            {
+              "part": "Energy Guidance System",
+              "rarity": "eternal",
+              "mode": "Drone Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "12 ×2.2",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Energy Guidance System",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drone Mode",
+                  "rarity": "drone_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Antimatter Maintainer",
+              "rarity": "eternal",
+              "mode": "Drill Shot Mode",
+              "rawText": [
+                "None",
+                "25 ×2.8",
+                "980",
+                "900"
+              ],
+              "images": [
+                {
+                  "alt": "Antimatter Maintainer",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drill Shot Mode",
+                  "rarity": "drill_shot_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Quantum Nanobot",
+              "rarity": "eternal",
+              "mode": "Soccer Mode",
+              "rawText": [
+                "16 ×2.4",
+                "360",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Quantum Nanobot",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Soccer Mode",
+                  "rarity": "soccer_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Phase Driver",
+              "rarity": "legend",
+              "mode": "Lightning Mode",
+              "rawText": [
+                "None",
+                "16 ×2.4",
+                "240",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Phase Driver",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Lightning Mode",
+                  "rarity": "lightning_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Exo-radicator",
+              "rarity": "legend",
+              "mode": "Guardian Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "12 ×2.2",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Exo-radicator",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Guardian Mode",
+                  "rarity": "guardian_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Hi-Gravity Pulser",
+              "rarity": "legend",
+              "mode": "Molotov Mode",
+              "rawText": [
+                "16 ×2.4",
+                "960",
+                "900"
+              ],
+              "images": [
+                {
+                  "alt": "Hi-Gravity Pulser",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Molotov Mode",
+                  "rarity": "molotov_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "multiplierText": "6,011,781,504,633,122",
+          "multiplier": 6011781504633122,
+          "chipRemainder": 98,
+          "activeSkills": [
+            "Drone Mode",
+            "Drill Shot Mode",
+            "Soccer Mode",
+            "Molotov Mode"
+          ],
+          "rows": [
+            {
+              "part": "Energy Guidance System",
+              "rarity": "eternal",
+              "mode": "Drone Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Energy Guidance System",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drone Mode",
+                  "rarity": "drone_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Antimatter Maintainer",
+              "rarity": "eternal",
+              "mode": "Drill Shot Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "6 ×1.8",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Antimatter Maintainer",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drill Shot Mode",
+                  "rarity": "drill_shot_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Quantum Nanobot",
+              "rarity": "eternal",
+              "mode": "Soccer Mode",
+              "rawText": [
+                "20 ×2.6",
+                "390",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Quantum Nanobot",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Soccer Mode",
+                  "rarity": "soccer_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Phase Driver",
+              "rarity": "legend",
+              "mode": "Boomerang Mode",
+              "rawText": [
+                "None",
+                "None",
+                "6 ×1.8",
+                "90",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Phase Driver",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Boomerang Mode",
+                  "rarity": "boomerang_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Exo-radicator",
+              "rarity": "legend",
+              "mode": "Guardian Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "6 ×1.8",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Exo-radicator",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Guardian Mode",
+                  "rarity": "guardian_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Hi-Gravity Pulser",
+              "rarity": "legend",
+              "mode": "Molotov Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Hi-Gravity Pulser",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Molotov Mode",
+                  "rarity": "molotov_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "multiplierText": "5,856,819,572,668,710",
+          "multiplier": 5856819572668710,
+          "chipRemainder": 98,
+          "activeSkills": [
+            "Drone Mode",
+            "Drill Shot Mode",
+            "Soccer Mode",
+            "Molotov Mode"
+          ],
+          "rows": [
+            {
+              "part": "Energy Guidance System",
+              "rarity": "eternal",
+              "mode": "Drone Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "6 ×1.8",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Energy Guidance System",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drone Mode",
+                  "rarity": "drone_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Antimatter Maintainer",
+              "rarity": "eternal",
+              "mode": "Drill Shot Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Antimatter Maintainer",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drill Shot Mode",
+                  "rarity": "drill_shot_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Quantum Nanobot",
+              "rarity": "eternal",
+              "mode": "Soccer Mode",
+              "rawText": [
+                "20 ×2.6",
+                "390",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Quantum Nanobot",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Soccer Mode",
+                  "rarity": "soccer_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Phase Driver",
+              "rarity": "legend",
+              "mode": "Lightning Mode",
+              "rawText": [
+                "None",
+                "None",
+                "6 ×1.8",
+                "90",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Phase Driver",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Lightning Mode",
+                  "rarity": "lightning_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Exo-radicator",
+              "rarity": "legend",
+              "mode": "Guardian Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "6 ×1.8",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Exo-radicator",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Guardian Mode",
+                  "rarity": "guardian_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Hi-Gravity Pulser",
+              "rarity": "legend",
+              "mode": "Molotov Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Hi-Gravity Pulser",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Molotov Mode",
+                  "rarity": "molotov_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "latencyMs": 1279.2707500000006,
+      "screenshotPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio-tech-live-screenshots/default_normal_legend2_epic8_chips100.png"
+    },
+    {
+      "id": "default_normal_legend1_epic6_chips40",
+      "inputs": {
+        "Legend": 1,
+        "Epic": 6
+      },
+      "chips": 40,
+      "skills": 4,
+      "optimizer": {
+        "strategy": "optimize",
+        "speedMode": "normal",
+        "fodder": "excess",
+        "overloadable": false,
+        "limit": "basic",
+        "modes": [
+          "molotovMode",
+          "durianMode",
+          "soccerMode",
+          "droneMode",
+          "forcefieldMode",
+          "drillShotMode",
+          "rocketMode",
+          "lightningMode",
+          "boomerangMode",
+          "guardianMode",
+          "laserMode",
+          "brickMode"
+        ],
+        "skillsMap": {
+          "Rocket": "disabled",
+          "Guardian Mode": "disabled"
+        }
+      },
+      "expected": [
+        {
+          "multiplierText": "3,984,573,842,158,953.5",
+          "multiplier": 3984573842158953.5,
+          "chipRemainder": 40,
+          "activeSkills": [
+            "Drone Mode",
+            "Drill Shot Mode",
+            "Soccer Mode",
+            "Molotov Mode"
+          ],
+          "rows": [
+            {
+              "part": "Energy Guidance System",
+              "rarity": "eternal",
+              "mode": "Drone Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "0 ×1",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Energy Guidance System",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drone Mode",
+                  "rarity": "drone_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Antimatter Maintainer",
+              "rarity": "eternal",
+              "mode": "Drill Shot Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "0 ×1",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Antimatter Maintainer",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drill Shot Mode",
+                  "rarity": "drill_shot_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Quantum Nanobot",
+              "rarity": "eternal",
+              "mode": "Soccer Mode",
+              "rawText": [
+                "9 ×2",
+                "300",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Quantum Nanobot",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Soccer Mode",
+                  "rarity": "soccer_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Phase Driver",
+              "rarity": "legend",
+              "mode": "Boomerang Mode",
+              "rawText": [
+                "None",
+                "None",
+                "1 ×1.2",
+                "60",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Phase Driver",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Boomerang Mode",
+                  "rarity": "boomerang_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Exo-radicator",
+              "rarity": "legend",
+              "mode": "Guardian Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "0 ×1",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Exo-radicator",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Guardian Mode",
+                  "rarity": "guardian_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Hi-Gravity Pulser",
+              "rarity": "legend",
+              "mode": "Molotov Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Hi-Gravity Pulser",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Molotov Mode",
+                  "rarity": "molotov_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "multiplierText": "3,981,119,807,968,455.5",
+          "multiplier": 3981119807968455.5,
+          "chipRemainder": 40,
+          "activeSkills": [
+            "Drone Mode",
+            "Drill Shot Mode",
+            "Soccer Mode",
+            "Molotov Mode"
+          ],
+          "rows": [
+            {
+              "part": "Energy Guidance System",
+              "rarity": "eternal",
+              "mode": "Drone Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "0 ×1",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Energy Guidance System",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drone Mode",
+                  "rarity": "drone_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Antimatter Maintainer",
+              "rarity": "eternal",
+              "mode": "Drill Shot Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "0 ×1",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Antimatter Maintainer",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drill Shot Mode",
+                  "rarity": "drill_shot_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Quantum Nanobot",
+              "rarity": "eternal",
+              "mode": "Soccer Mode",
+              "rawText": [
+                "9 ×2",
+                "300",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Quantum Nanobot",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Soccer Mode",
+                  "rarity": "soccer_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Phase Driver",
+              "rarity": "legend",
+              "mode": "Lightning Mode",
+              "rawText": [
+                "None",
+                "None",
+                "1 ×1.2",
+                "60",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Phase Driver",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Lightning Mode",
+                  "rarity": "lightning_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Exo-radicator",
+              "rarity": "legend",
+              "mode": "Guardian Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "0 ×1",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Exo-radicator",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Guardian Mode",
+                  "rarity": "guardian_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Hi-Gravity Pulser",
+              "rarity": "legend",
+              "mode": "Molotov Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Hi-Gravity Pulser",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Molotov Mode",
+                  "rarity": "molotov_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "multiplierText": "3,689,300,148,116,661.5",
+          "multiplier": 3689300148116661.5,
+          "chipRemainder": 39,
+          "activeSkills": [
+            "Drone Mode",
+            "Drill Shot Mode",
+            "Soccer Mode",
+            "Molotov Mode"
+          ],
+          "rows": [
+            {
+              "part": "Energy Guidance System",
+              "rarity": "eternal",
+              "mode": "Drone Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "2 ×1.4",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Energy Guidance System",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drone Mode",
+                  "rarity": "drone_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Antimatter Maintainer",
+              "rarity": "eternal",
+              "mode": "Drill Shot Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "2 ×1.4",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Antimatter Maintainer",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drill Shot Mode",
+                  "rarity": "drill_shot_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Quantum Nanobot",
+              "rarity": "eternal",
+              "mode": "Soccer Mode",
+              "rawText": [
+                "6 ×1.8",
+                "270",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Quantum Nanobot",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Soccer Mode",
+                  "rarity": "soccer_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Phase Driver",
+              "rarity": "legend",
+              "mode": "Boomerang Mode",
+              "rawText": [
+                "None",
+                "None",
+                "2 ×1.4",
+                "70",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Phase Driver",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Boomerang Mode",
+                  "rarity": "boomerang_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Exo-radicator",
+              "rarity": "legend",
+              "mode": "Guardian Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "2 ×1.4",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Exo-radicator",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Guardian Mode",
+                  "rarity": "guardian_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Hi-Gravity Pulser",
+              "rarity": "legend",
+              "mode": "Molotov Mode",
+              "rawText": [
+                "25 ×2.8",
+                "1120",
+                "900"
+              ],
+              "images": [
+                {
+                  "alt": "Hi-Gravity Pulser",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Molotov Mode",
+                  "rarity": "molotov_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "multiplierText": "3,686,102,072,398,808.5",
+          "multiplier": 3686102072398808.5,
+          "chipRemainder": 39,
+          "activeSkills": [
+            "Drone Mode",
+            "Drill Shot Mode",
+            "Soccer Mode",
+            "Molotov Mode"
+          ],
+          "rows": [
+            {
+              "part": "Energy Guidance System",
+              "rarity": "eternal",
+              "mode": "Drone Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "2 ×1.4",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Energy Guidance System",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drone Mode",
+                  "rarity": "drone_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Antimatter Maintainer",
+              "rarity": "eternal",
+              "mode": "Drill Shot Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "2 ×1.4",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Antimatter Maintainer",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drill Shot Mode",
+                  "rarity": "drill_shot_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Quantum Nanobot",
+              "rarity": "eternal",
+              "mode": "Soccer Mode",
+              "rawText": [
+                "6 ×1.8",
+                "270",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Quantum Nanobot",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Soccer Mode",
+                  "rarity": "soccer_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Phase Driver",
+              "rarity": "legend",
+              "mode": "Lightning Mode",
+              "rawText": [
+                "None",
+                "None",
+                "2 ×1.4",
+                "70",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Phase Driver",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Lightning Mode",
+                  "rarity": "lightning_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Exo-radicator",
+              "rarity": "legend",
+              "mode": "Guardian Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "2 ×1.4",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Exo-radicator",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Guardian Mode",
+                  "rarity": "guardian_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Hi-Gravity Pulser",
+              "rarity": "legend",
+              "mode": "Molotov Mode",
+              "rawText": [
+                "25 ×2.8",
+                "1120",
+                "900"
+              ],
+              "images": [
+                {
+                  "alt": "Hi-Gravity Pulser",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Molotov Mode",
+                  "rarity": "molotov_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "multiplierText": "3,627,645,165,350,326",
+          "multiplier": 3627645165350326,
+          "chipRemainder": 40,
+          "activeSkills": [
+            "Drone Mode",
+            "Drill Shot Mode",
+            "Lightning Mode",
+            "Molotov Mode"
+          ],
+          "rows": [
+            {
+              "part": "Energy Guidance System",
+              "rarity": "eternal",
+              "mode": "Drone Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "0 ×1",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Energy Guidance System",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drone Mode",
+                  "rarity": "drone_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Antimatter Maintainer",
+              "rarity": "eternal",
+              "mode": "Drill Shot Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "0 ×1",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Antimatter Maintainer",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drill Shot Mode",
+                  "rarity": "drill_shot_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Quantum Nanobot",
+              "rarity": "eternal",
+              "mode": "Soccer Mode",
+              "rawText": [
+                "9 ×2",
+                "300",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Quantum Nanobot",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Soccer Mode",
+                  "rarity": "soccer_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Phase Driver",
+              "rarity": "legend",
+              "mode": "Lightning Mode",
+              "rawText": [
+                "None",
+                "None",
+                "1 ×1.2",
+                "60",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Phase Driver",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Lightning Mode",
+                  "rarity": "lightning_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Exo-radicator",
+              "rarity": "legend",
+              "mode": "Guardian Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "0 ×1",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Exo-radicator",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Guardian Mode",
+                  "rarity": "guardian_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Hi-Gravity Pulser",
+              "rarity": "legend",
+              "mode": "Molotov Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Hi-Gravity Pulser",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Molotov Mode",
+                  "rarity": "molotov_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "latencyMs": 1199.7548339999994,
+      "screenshotPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio-tech-live-screenshots/default_normal_legend1_epic6_chips40.png"
+    },
+    {
+      "id": "default_normal_legend3_epic12_chips180",
+      "inputs": {
+        "Legend": 3,
+        "Epic": 12
+      },
+      "chips": 180,
+      "skills": 4,
+      "optimizer": {
+        "strategy": "optimize",
+        "speedMode": "normal",
+        "fodder": "excess",
+        "overloadable": false,
+        "limit": "basic",
+        "modes": [
+          "molotovMode",
+          "durianMode",
+          "soccerMode",
+          "droneMode",
+          "forcefieldMode",
+          "drillShotMode",
+          "rocketMode",
+          "lightningMode",
+          "boomerangMode",
+          "guardianMode",
+          "laserMode",
+          "brickMode"
+        ],
+        "skillsMap": {
+          "Rocket": "disabled",
+          "Guardian Mode": "disabled"
+        }
+      },
+      "expected": [
+        {
+          "multiplierText": "9,917,435,575,066,898",
+          "multiplier": 9917435575066898,
+          "chipRemainder": 180,
+          "activeSkills": [
+            "Drone Mode",
+            "Drill Shot Mode",
+            "Soccer Mode",
+            "Molotov Mode"
+          ],
+          "rows": [
+            {
+              "part": "Energy Guidance System",
+              "rarity": "eternal",
+              "mode": "Drone Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Energy Guidance System",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drone Mode",
+                  "rarity": "drone_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Antimatter Maintainer",
+              "rarity": "eternal",
+              "mode": "Drill Shot Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Antimatter Maintainer",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drill Shot Mode",
+                  "rarity": "drill_shot_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Quantum Nanobot",
+              "rarity": "eternal",
+              "mode": "Soccer Mode",
+              "rawText": [
+                "30 ×3",
+                "450",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Quantum Nanobot",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Soccer Mode",
+                  "rarity": "soccer_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Phase Driver",
+              "rarity": "legend",
+              "mode": "Lightning Mode",
+              "rawText": [
+                "30 ×3",
+                "450",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Phase Driver",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Lightning Mode",
+                  "rarity": "lightning_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Exo-radicator",
+              "rarity": "legend",
+              "mode": "Guardian Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "30 ×3",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Exo-radicator",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Guardian Mode",
+                  "rarity": "guardian_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Hi-Gravity Pulser",
+              "rarity": "legend",
+              "mode": "Molotov Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Hi-Gravity Pulser",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Molotov Mode",
+                  "rarity": "molotov_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "multiplierText": "9,908,331,663,452,074",
+          "multiplier": 9908331663452074,
+          "chipRemainder": 180,
+          "activeSkills": [
+            "Drone Mode",
+            "Drill Shot Mode",
+            "Soccer Mode",
+            "Molotov Mode"
+          ],
+          "rows": [
+            {
+              "part": "Energy Guidance System",
+              "rarity": "eternal",
+              "mode": "Drone Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Energy Guidance System",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drone Mode",
+                  "rarity": "drone_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Antimatter Maintainer",
+              "rarity": "eternal",
+              "mode": "Drill Shot Mode",
+              "rawText": [
+                "30 ×3",
+                "450",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Antimatter Maintainer",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drill Shot Mode",
+                  "rarity": "drill_shot_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Quantum Nanobot",
+              "rarity": "eternal",
+              "mode": "Soccer Mode",
+              "rawText": [
+                "30 ×3",
+                "450",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Quantum Nanobot",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Soccer Mode",
+                  "rarity": "soccer_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Phase Driver",
+              "rarity": "legend",
+              "mode": "Lightning Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "30 ×3",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Phase Driver",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Lightning Mode",
+                  "rarity": "lightning_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Exo-radicator",
+              "rarity": "legend",
+              "mode": "Guardian Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Exo-radicator",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Guardian Mode",
+                  "rarity": "guardian_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Hi-Gravity Pulser",
+              "rarity": "legend",
+              "mode": "Molotov Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Hi-Gravity Pulser",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Molotov Mode",
+                  "rarity": "molotov_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "multiplierText": "9,735,230,131,945,226",
+          "multiplier": 9735230131945226,
+          "chipRemainder": 180,
+          "activeSkills": [
+            "Drone Mode",
+            "Drill Shot Mode",
+            "Soccer Mode",
+            "Molotov Mode"
+          ],
+          "rows": [
+            {
+              "part": "Energy Guidance System",
+              "rarity": "eternal",
+              "mode": "Drone Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Energy Guidance System",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drone Mode",
+                  "rarity": "drone_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Antimatter Maintainer",
+              "rarity": "eternal",
+              "mode": "Drill Shot Mode",
+              "rawText": [
+                "30 ×3",
+                "450",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Antimatter Maintainer",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drill Shot Mode",
+                  "rarity": "drill_shot_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Quantum Nanobot",
+              "rarity": "eternal",
+              "mode": "Soccer Mode",
+              "rawText": [
+                "30 ×3",
+                "450",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Quantum Nanobot",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Soccer Mode",
+                  "rarity": "soccer_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Phase Driver",
+              "rarity": "legend",
+              "mode": "Boomerang Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "30 ×3",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Phase Driver",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Boomerang Mode",
+                  "rarity": "boomerang_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Exo-radicator",
+              "rarity": "legend",
+              "mode": "Guardian Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Exo-radicator",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Guardian Mode",
+                  "rarity": "guardian_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Hi-Gravity Pulser",
+              "rarity": "legend",
+              "mode": "Molotov Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Hi-Gravity Pulser",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Molotov Mode",
+                  "rarity": "molotov_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "multiplierText": "9,613,109,690,588,600",
+          "multiplier": 9613109690588600,
+          "chipRemainder": 180,
+          "activeSkills": [
+            "Drone Mode",
+            "Drill Shot Mode",
+            "Soccer Mode",
+            "Molotov Mode"
+          ],
+          "rows": [
+            {
+              "part": "Energy Guidance System",
+              "rarity": "eternal",
+              "mode": "Drone Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Energy Guidance System",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drone Mode",
+                  "rarity": "drone_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Antimatter Maintainer",
+              "rarity": "eternal",
+              "mode": "Drill Shot Mode",
+              "rawText": [
+                "30 ×3",
+                "450",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Antimatter Maintainer",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drill Shot Mode",
+                  "rarity": "drill_shot_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Quantum Nanobot",
+              "rarity": "eternal",
+              "mode": "Soccer Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Quantum Nanobot",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Soccer Mode",
+                  "rarity": "soccer_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Phase Driver",
+              "rarity": "legend",
+              "mode": "Lightning Mode",
+              "rawText": [
+                "30 ×3",
+                "450",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Phase Driver",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Lightning Mode",
+                  "rarity": "lightning_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Exo-radicator",
+              "rarity": "legend",
+              "mode": "Guardian Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "30 ×3",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Exo-radicator",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Guardian Mode",
+                  "rarity": "guardian_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Hi-Gravity Pulser",
+              "rarity": "legend",
+              "mode": "Molotov Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Hi-Gravity Pulser",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Molotov Mode",
+                  "rarity": "molotov_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "multiplierText": "9,465,834,172,724,716",
+          "multiplier": 9465834172724716,
+          "chipRemainder": 180,
+          "activeSkills": [
+            "Drone Mode",
+            "Drill Shot Mode",
+            "Soccer Mode",
+            "Molotov Mode"
+          ],
+          "rows": [
+            {
+              "part": "Energy Guidance System",
+              "rarity": "eternal",
+              "mode": "Drone Mode",
+              "rawText": [
+                "30 ×3",
+                "450",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Energy Guidance System",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drone Mode",
+                  "rarity": "drone_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Antimatter Maintainer",
+              "rarity": "eternal",
+              "mode": "Drill Shot Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Antimatter Maintainer",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Drill Shot Mode",
+                  "rarity": "drill_shot_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Quantum Nanobot",
+              "rarity": "eternal",
+              "mode": "Soccer Mode",
+              "rawText": [
+                "30 ×3",
+                "450",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Quantum Nanobot",
+                  "rarity": "eternal"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Soccer Mode",
+                  "rarity": "soccer_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Phase Driver",
+              "rarity": "legend",
+              "mode": "Lightning Mode",
+              "rawText": [
+                "None",
+                "None",
+                "None",
+                "30 ×3",
+                "0",
+                "0"
+              ],
+              "images": [
+                {
+                  "alt": "Phase Driver",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Lightning Mode",
+                  "rarity": "lightning_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Exo-radicator",
+              "rarity": "legend",
+              "mode": "Guardian Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Exo-radicator",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Guardian Mode",
+                  "rarity": "guardian_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            },
+            {
+              "part": "Hi-Gravity Pulser",
+              "rarity": "legend",
+              "mode": "Molotov Mode",
+              "rawText": [
+                "30 ×3",
+                "1200",
+                "1200"
+              ],
+              "images": [
+                {
+                  "alt": "Hi-Gravity Pulser",
+                  "rarity": "legend"
+                },
+                {
+                  "alt": "twin",
+                  "rarity": "twin"
+                },
+                {
+                  "alt": "Molotov Mode",
+                  "rarity": "molotov_mode"
+                },
+                {
+                  "alt": "Resonance Chip",
+                  "rarity": "resonance_chip"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "latencyMs": 1863.8798339999994,
+      "screenshotPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio-tech-live-screenshots/default_normal_legend3_epic12_chips180.png"
+    }
+  ]
+}

@@ -5,9 +5,12 @@ import {
   initWasm,
   getSearchSpace,
   runPipeline,
+  techOptimizerRun,
   SearchChoice,
   SearchSlot,
   SearchSpace,
+  type SioTechInventoryInput,
+  type TechOptimizerResult,
 } from './wasm';
 
 export interface OptimizeInput {
@@ -36,6 +39,15 @@ export interface OptimizeResult {
   enumeratedCount: number;
   pipelineSummary: { score: number; damageFactor: number };
   durationMs: number;
+}
+
+export interface TechOptimizeInput {
+  playerState: unknown;
+  topK: number;
+  beamWidth?: number;
+  maxExactNodes?: number;
+  sioTechInventory?: SioTechInventoryInput;
+  sioLm?: unknown;
 }
 
 const MAX_COMBOS = 50_000;
@@ -182,6 +194,20 @@ const workerApi = {
       pipelineSummary,
       durationMs: performance.now() - start,
     };
+  },
+
+  async optimizeTech(input: TechOptimizeInput): Promise<TechOptimizerResult> {
+    await initWasm();
+    const playerState =
+      input.sioLm && input.playerState && typeof input.playerState === 'object' && !Array.isArray(input.playerState)
+        ? { ...(input.playerState as Record<string, unknown>), sioLm: input.sioLm }
+        : input.playerState;
+    return techOptimizerRun(playerState, {
+      topK: Math.max(1, input.topK),
+      beamWidth: Math.max(1, input.beamWidth ?? 64),
+      maxExactNodes: Math.max(1, input.maxExactNodes ?? 250000),
+      ...(input.sioTechInventory ? { sioTechInventory: input.sioTechInventory } : {}),
+    });
   },
 };
 

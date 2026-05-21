@@ -41,7 +41,7 @@
     "slot": "Slot"
   },
   "frontier": {
-    "paretoFrontier": "Pareto Frontier",
+    "paretoFrontier": "Efficient Frontier",
     "top5": "Top 5",
     "diffHighlight": "Diff Highlight",
     "deckA": "Deck A",
@@ -91,10 +91,10 @@
     "fetchServerError": "The game data service returned a server error."
   },
   "meta": {
-    "appName": "Pareto Forge",
+    "appName": "Tangtang",
     "tagline": "Fast build optimization for TTTG Forge",
     "description": "Compare builds, inspect trade-offs, and export deterministic optimizer results.",
-    "author": "Pareto Forge Team",
+    "author": "Tangtang Team",
     "about": "About",
     "contact": "Contact",
     "terms": "Terms",

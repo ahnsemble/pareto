@@ -77,7 +77,7 @@ function ChartTooltip({ active, payload }: { active?: boolean; payload?: Tooltip
       <div>upgrades: <span className="text-[color:var(--color-text)]">{p.upgrades}</span></div>
       <div>score: <span className="text-[color:var(--color-accent)]">{p.score}</span></div>
       {p.isFrontier && (
-        <div className="mt-1 text-[color:var(--color-primary)]">on Pareto frontier</div>
+        <div className="mt-1 text-[color:var(--color-primary)]">on efficient frontier</div>
       )}
     </div>
   );
@@ -92,13 +92,13 @@ export function ParetoFrontierChart({ allPoints, paretoFrontier, topBuilds }: Pr
         className="flex h-[280px] sm:h-[360px] w-full items-center justify-center rounded-md border border-dashed border-[color:var(--color-border)] p-10 text-center text-sm text-[color:var(--color-text-muted)]"
       >
         <span id="pareto-chart-empty">
-          Run optimization to populate the Pareto frontier chart.
+          Run optimization to populate the efficient frontier chart.
         </span>
       </div>
     );
   }
   const data = buildChartData(allPoints, paretoFrontier, topBuilds);
-  const summaryText = `Pareto Frontier Chart — ${allPoints.length} builds, ${paretoFrontier.length} on frontier, top ${topBuilds.length}`;
+  const summaryText = `Efficient Frontier Chart — ${allPoints.length} builds, ${paretoFrontier.length} on frontier, top ${topBuilds.length}`;
   return (
     <div
       role="img"

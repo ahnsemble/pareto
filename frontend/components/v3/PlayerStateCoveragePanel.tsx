@@ -23,7 +23,7 @@ export function PlayerStateCoveragePanel() {
 
   return (
     <section className={cardClass} data-testid="v3-sio-coverage-panel">
-      <h3 className={sectionTitleClass}>sIO input coverage</h3>
+      <h3 className={sectionTitleClass}>Profile input coverage</h3>
       <div className="grid gap-2 text-xs sm:grid-cols-3">
         <p>
           Categories:{' '}

@@ -33,13 +33,7 @@ root_diff_case!(
     DiffDirection::Decreased,
     2.0
 );
-root_diff_case!(
-    g5_root_string_change,
-    "a",
-    "b",
-    DiffDirection::Changed,
-    0.0
-);
+root_diff_case!(g5_root_string_change, "a", "b", DiffDirection::Changed, 0.0);
 root_diff_case!(
     g5_root_bool_change,
     true,
@@ -71,12 +65,42 @@ macro_rules! heatmap_bucket_case {
     };
 }
 
-heatmap_bucket_case!(g5_heatmap_negative_score_dominant, -9.0, 2.0, HeatmapBucket::Score);
-heatmap_bucket_case!(g5_heatmap_negative_damage_dominant, 2.0, -9.0, HeatmapBucket::Damage);
-heatmap_bucket_case!(g5_heatmap_negative_balanced, -5.0, -4.5, HeatmapBucket::Balanced);
-heatmap_bucket_case!(g5_heatmap_zero_score_damage_dominant, 0.0, 3.0, HeatmapBucket::Damage);
-heatmap_bucket_case!(g5_heatmap_score_only_dominant, 3.0, 0.0, HeatmapBucket::Score);
-heatmap_bucket_case!(g5_heatmap_negative_zero_baseline, -0.0, 0.0, HeatmapBucket::Baseline);
+heatmap_bucket_case!(
+    g5_heatmap_negative_score_dominant,
+    -9.0,
+    2.0,
+    HeatmapBucket::Score
+);
+heatmap_bucket_case!(
+    g5_heatmap_negative_damage_dominant,
+    2.0,
+    -9.0,
+    HeatmapBucket::Damage
+);
+heatmap_bucket_case!(
+    g5_heatmap_negative_balanced,
+    -5.0,
+    -4.5,
+    HeatmapBucket::Balanced
+);
+heatmap_bucket_case!(
+    g5_heatmap_zero_score_damage_dominant,
+    0.0,
+    3.0,
+    HeatmapBucket::Damage
+);
+heatmap_bucket_case!(
+    g5_heatmap_score_only_dominant,
+    3.0,
+    0.0,
+    HeatmapBucket::Score
+);
+heatmap_bucket_case!(
+    g5_heatmap_negative_zero_baseline,
+    -0.0,
+    0.0,
+    HeatmapBucket::Baseline
+);
 
 #[test]
 fn g5_bench_policy_allows_multiple_samples_when_all_pass() {

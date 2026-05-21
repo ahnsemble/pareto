@@ -77,7 +77,10 @@ pub fn diff_game_data_snapshots(
             };
             GameDataChange {
                 id,
-                url: after.or(before).map(|snapshot| snapshot.url.clone()).unwrap_or_default(),
+                url: after
+                    .or(before)
+                    .map(|snapshot| snapshot.url.clone())
+                    .unwrap_or_default(),
                 before_hash: before.map(|snapshot| snapshot.content_hash.clone()),
                 after_hash: after.map(|snapshot| snapshot.content_hash.clone()),
                 status,

@@ -17,12 +17,9 @@ fn build_diff_reports_added_removed_and_changed_paths() {
     let diff = build_diff(&before, &after);
 
     assert_eq!(diff.changed_count, 4);
-    assert!(diff
-        .entries
-        .iter()
-        .any(|entry| entry.path == "weapon.atk"
-            && entry.direction == DiffDirection::Increased
-            && entry.magnitude == 3.5));
+    assert!(diff.entries.iter().any(|entry| entry.path == "weapon.atk"
+        && entry.direction == DiffDirection::Increased
+        && entry.magnitude == 3.5));
     assert!(diff
         .entries
         .iter()
@@ -107,7 +104,10 @@ fn build_diff_identical_objects_have_zero_entries() {
 
 #[test]
 fn build_diff_array_values_are_compared_as_leaf_values() {
-    let diff = build_diff(&json!({"skills": ["a", "b"]}), &json!({"skills": ["a", "c"]}));
+    let diff = build_diff(
+        &json!({"skills": ["a", "b"]}),
+        &json!({"skills": ["a", "c"]}),
+    );
 
     assert_eq!(diff.changed_count, 1);
     assert_eq!(diff.entries[0].path, "skills");
@@ -116,7 +116,10 @@ fn build_diff_array_values_are_compared_as_leaf_values() {
 
 #[test]
 fn build_diff_counts_added_and_removed_entries() {
-    let diff = build_diff(&json!({"removed": 1, "same": 2}), &json!({"added": 3, "same": 2}));
+    let diff = build_diff(
+        &json!({"removed": 1, "same": 2}),
+        &json!({"added": 3, "same": 2}),
+    );
 
     assert_eq!(diff.changed_count, 2);
     assert_eq!(diff.added_count, 1);

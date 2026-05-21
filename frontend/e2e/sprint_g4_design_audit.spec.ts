@@ -130,7 +130,7 @@ test.describe('Sprint G.4 — Design Audit Cleanup (focus ring + touch targets +
     expect(tokens.shadowGlowDanger).toMatch(/oklch|lab\(/);
   });
 
-  test('T5 — Pareto Frontier Chart exposes role=img + aria-labelledby (empty-state placeholder)', async ({ page }) => {
+  test('T5 — Efficient Frontier Chart exposes role=img + aria-labelledby (empty-state placeholder)', async ({ page }) => {
     await page.goto('/optimize', { waitUntil: 'domcontentloaded' });
     // Pre-run state shows the dashed placeholder, not the chart. Chart appears after Optimize click.
     await page.locator('#hero-select').selectOption('overlord');
@@ -138,7 +138,7 @@ test.describe('Sprint G.4 — Design Audit Cleanup (focus ring + touch targets +
     await expect(cta).toBeEnabled({ timeout: 10_000 });
     await cta.click();
 
-    const chart = page.getByRole('img', { name: /Pareto Frontier Chart/ });
+    const chart = page.getByRole('img', { name: /Efficient Frontier Chart/ });
     await expect(chart).toBeVisible({ timeout: 15_000 });
     const labelText = await chart.evaluate((el) => {
       const id = el.getAttribute('aria-labelledby');
@@ -147,7 +147,7 @@ test.describe('Sprint G.4 — Design Audit Cleanup (focus ring + touch targets +
       return labelEl?.textContent ?? null;
     });
     console.log(`[T5] aria-labelledby text: ${labelText}`);
-    expect(labelText).toMatch(/Pareto Frontier Chart/);
+    expect(labelText).toMatch(/Efficient Frontier Chart/);
     expect(labelText).toMatch(/builds/);
   });
 });

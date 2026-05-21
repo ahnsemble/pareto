@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Geist } from 'next/font/google';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale, getMessages } from 'next-intl/server';
@@ -14,16 +14,21 @@ const geistSans = Geist({
 
 const SITE_URL = 'https://pareto.app';
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
+
 const META_BY_LOCALE = {
   en: {
-    title: 'Pareto — Build optimizer for Survivor.io',
-    description: 'WASM-powered Pareto frontier optimizer for Survivor.io builds. Compare decks, find optimal trade-offs.',
-    ogAlt: 'Pareto — Build optimizer for Survivor.io',
+    title: 'Tangtang — Build optimizer for Survivor.io',
+    description: 'WASM-powered efficient-frontier optimizer for Survivor.io builds. Compare decks, find optimal trade-offs.',
+    ogAlt: 'Tangtang — Build optimizer for Survivor.io',
   },
   ko: {
-    title: '파레토 — 탕탕특공대 빌드 최적화 도구',
-    description: '빌드, 계산하지 말고 비교하세요. 파레토 프론티어로 최적 빌드를 한눈에 찾으세요.',
-    ogAlt: '파레토 — 탕탕특공대 빌드 최적화 도구',
+    title: 'Tangtang — 탕탕특공대 빌드 최적화 도구',
+    description: '빌드, 계산하지 말고 비교하세요. 효율 프론티어로 최적 빌드를 한눈에 찾으세요.',
+    ogAlt: 'Tangtang — 탕탕특공대 빌드 최적화 도구',
   },
 } as const;
 
@@ -47,7 +52,7 @@ export async function generateMetadata({
     },
     openGraph: {
       type: 'website',
-      siteName: 'Pareto',
+      siteName: 'Tangtang',
       title: meta.title,
       description: meta.description,
       url: `/${locale}`,

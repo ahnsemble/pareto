@@ -8,7 +8,7 @@ import { bootParetoStore, useParetoStore } from '../../lib/pareto-store/store';
 import { initWasm } from '../../lib/wasm';
 import {
   ModeSelectDropdown, OutputPanel, BaseInputsBox, ItemSelectGrids, WeaponUpgradeSlider,
-  TechSelectArray, SkillChoices, OptimizationTable, HeroSelectModal, CollectiblesAccordion,
+  TechPartsPanel, SkillChoices, OptimizationTable, HeroSelectModal, CollectiblesAccordion,
   TalentTurfMatrix, PetSelectRadio, XenoDetailsPanel, ReviveSettingsToggle, ResourceLockButton,
 } from '../../../components/v3';
 import { PlayerStateCoveragePanel } from '../../../components/v3/PlayerStateCoveragePanel';
@@ -41,7 +41,7 @@ export default function V3Page() {
     <main className="mx-auto max-w-6xl space-y-4 p-6">
       <header className="border-b border-[color:var(--color-border)]/50 pb-2">
         <h1 className="text-2xl font-semibold">
-          <span className="text-[color:var(--color-primary)]">Pareto</span>{' '}
+          <span className="text-[color:var(--color-primary)]">Tangtang</span>{' '}
           <span className="text-[color:var(--color-text)]">/ v3</span>
         </h1>
         <p className="text-xs text-[color:var(--color-text-muted)]">
@@ -51,7 +51,7 @@ export default function V3Page() {
           className={`mt-1 text-xs font-mono ${bootStatus === 'ok' ? 'text-[color:var(--color-accent)]' : bootStatus === 'pending' ? 'text-[color:var(--color-text-muted)]' : 'text-[color:var(--color-danger)]'}`}
           data-testid="v3-boot-status"
         >
-          {bootStatus === 'pending' ? 'Booting store…' : bootStatus === 'ok' ? '[ParetoStore] Boot OK — 8/8 invariants passed.' : bootStatus}
+          {bootStatus === 'pending' ? 'Booting store…' : bootStatus === 'ok' ? '[TangtangStore] Boot OK — 8/8 invariants passed.' : bootStatus}
         </p>
         <nav className="mt-3 flex flex-wrap gap-2">
           <Link
@@ -68,6 +68,13 @@ export default function V3Page() {
           >
             Twinborn
           </Link>
+          <Link
+            href="/v3/optimizer/tech-parts"
+            className="inline-flex min-h-[44px] items-center rounded-md border border-[color:var(--color-accent)] px-3 py-2 font-mono text-xs text-[color:var(--color-accent)] hover:bg-[color:var(--color-accent)]/10"
+            data-testid="v3-nav-tech-parts"
+          >
+            Tech Parts
+          </Link>
         </nav>
       </header>
 
@@ -79,13 +86,13 @@ export default function V3Page() {
             <HeroSelectModal />
             <ItemSelectGrids />
             <WeaponUpgradeSlider />
-            <TechSelectArray />
             <PetSelectRadio />
             <XenoDetailsPanel />
             <ReviveSettingsToggle />
           </div>
           <div className="space-y-4">
             <OutputPanel />
+            <TechPartsPanel />
             <PlayerStateCoveragePanel />
             <OptimizationTable />
             <SkillChoices />

@@ -1,8 +1,8 @@
 use serde_json::{json, Value};
 use tttg_forge_optimizer::{
     find_best_bb_with_metrics, find_best_beam, find_best_pareto, make_synthetic_search_space,
-    pareto_frontier_smoke_by_objectives, search_space_total, OptimizationSearchSpace,
-    SearchChoice, SearchSlot,
+    pareto_frontier_smoke_by_objectives, search_space_total, OptimizationSearchSpace, SearchChoice,
+    SearchSlot,
 };
 
 const RESOURCE_KEYS: [&str; 5] = [
@@ -64,7 +64,10 @@ pub fn pareto_frontier_compute_value(candidates: &Value, objectives: &Value) -> 
                 .collect::<Vec<_>>()
         })
         .unwrap_or_else(|| vec!["score".to_string(), "damage".to_string()]);
-    let objective_refs = objective_names.iter().map(String::as_str).collect::<Vec<_>>();
+    let objective_refs = objective_names
+        .iter()
+        .map(String::as_str)
+        .collect::<Vec<_>>();
     let indexes = pareto_frontier_smoke_by_objectives(&candidates, &objective_refs);
     let frontier = indexes
         .iter()
@@ -152,10 +155,7 @@ pub fn twinborn_auto_assign_value(player_state: &Value, chip_pool: &Value) -> Va
         .and_then(Value::as_array)
         .cloned()
         .unwrap_or_default();
-    let mut candidates = tech_parts
-        .iter()
-        .map(tech_candidate)
-        .collect::<Vec<_>>();
+    let mut candidates = tech_parts.iter().map(tech_candidate).collect::<Vec<_>>();
     candidates.sort_by(|left, right| {
         right
             .weight

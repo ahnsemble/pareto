@@ -1,0 +1,65 @@
+{
+  "playerState": {
+    "damage": {
+      "base_attack": 1000.0,
+      "skill_damage_percent": 10.0
+    },
+    "mode": "damage",
+    "selected_hero": {
+      "id": "common"
+    },
+    "conditional_state": {},
+    "xeno_transmute_modifier": null,
+    "ss_equipment": [],
+    "tech_configs": {
+      "energyGuidanceSystem": {
+        "resonance": 3000,
+        "mode": "laserMode",
+        "equipped": true,
+        "twinbornLevel": 3
+      }
+    }
+  },
+  "options": {
+    "topK": 5,
+    "maxExactNodes": 10,
+    "beamWidth": 16,
+    "techsOptimizer": {
+      "strategy": "precise+",
+      "speedMode": "full",
+      "fodder": "smart",
+      "skills": 6,
+      "chips": 100,
+      "overloadable": true,
+      "overload": "full",
+      "inputs": {
+        "legend": 2,
+        "epic": 8
+      },
+      "modes": [
+        "laserMode",
+        "rocketMode"
+      ],
+      "limit": "advanced",
+      "modeEntries": {
+        "rocketMode": {
+          "minResonance": 1000,
+          "maxResonance": 3000,
+          "minOverload": 0,
+          "maxOverload": 2
+        }
+      },
+      "skillsMap": {
+        "Laser": "disabled",
+        "Rocket": "preferred"
+      }
+    }
+  },
+  "expected": {
+    "optimizerSchema": "sio_techs_optimizer",
+    "scoringModel": "sio_v3_damage_formula_adapter",
+    "guarantee": "beam_bounded_formula",
+    "topLabel": "energyGuidanceSystem:rocketMode:tb5",
+    "topDamageFactor": 1.304394
+  }
+}

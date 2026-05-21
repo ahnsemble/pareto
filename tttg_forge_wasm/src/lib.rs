@@ -3,9 +3,10 @@ use serde_json::{json, Value};
 use tttg_forge_core::DecodeOptions;
 use wasm_bindgen::prelude::*;
 
-pub mod twodeck;
 pub mod optimizer;
 pub mod sio_state_translator;
+pub mod tech_parts;
+pub mod twodeck;
 pub mod v3_damage;
 
 pub use v3_damage::v3_damage_value;
@@ -184,8 +185,46 @@ pub fn pareto_frontier_compute_js(candidates: JsValue, objectives: JsValue) -> J
 
 #[cfg_attr(feature = "compat-exports", wasm_bindgen)]
 pub fn sio_export_to_player_state_patch_js(sio_export: JsValue) -> JsValue {
-    to_json_js(sio_state_translator::sio_export_to_player_state_patch_value(
-        &to_value(sio_export),
+    to_json_js(sio_state_translator::sio_export_to_player_state_patch_value(&to_value(sio_export)))
+}
+
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
+pub fn get_tech_parts_full_js() -> JsValue {
+    to_json_js(tech_parts::get_tech_parts_full_value())
+}
+
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
+pub fn compute_tech_modifier_js(
+    base_tech: JsValue,
+    target: JsValue,
+    twinborn_level: JsValue,
+) -> JsValue {
+    to_json_js(tech_parts::compute_tech_modifier_value(
+        &to_value(base_tech),
+        &to_value(target),
+        &to_value(twinborn_level),
+    ))
+}
+
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
+pub fn validate_tech_part_config_js(config: JsValue) -> JsValue {
+    to_json_js(tech_parts::validate_tech_part_config_value(&to_value(
+        config,
+    )))
+}
+
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
+pub fn validate_sio_tech_inventory_js(config: JsValue) -> JsValue {
+    to_json_js(tech_parts::validate_sio_tech_inventory_value(&to_value(
+        config,
+    )))
+}
+
+#[cfg_attr(feature = "compat-exports", wasm_bindgen)]
+pub fn tech_optimizer_run_js(player_state: JsValue, options: JsValue) -> JsValue {
+    to_json_js(tech_parts::tech_optimizer_run_value(
+        &to_value(player_state),
+        &to_value(options),
     ))
 }
 

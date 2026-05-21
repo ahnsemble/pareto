@@ -158,7 +158,7 @@ await check('Optimizer schemas expose items, techs, and heroes contracts', () =>
   assert.deepEqual(Object.keys(schemas.OPTIMIZER_SCHEMAS), ['items', 'techs', 'heroes']);
   assert.deepEqual(schemas.OPTIMIZER_SCHEMAS.techs.strategy, ['optimize', 'legend', 'eternal', 'selector', 'downgrade']);
   assert.deepEqual(schemas.OPTIMIZER_SCHEMAS.techs.speedMode, ['fast', 'normal', 'precise', 'precise+', 'full']);
-  assert.deepEqual(schemas.OPTIMIZER_SCHEMAS.techs.skillsMapState, ['disabled', 'enabled', 'preferred']);
+  assert.deepEqual(schemas.OPTIMIZER_SCHEMAS.techs.skillsMapState, ['disabled', 'enabled', 'preferred', 'forced']);
 });
 
 await check('Forbidden legacy labels are absent from schema payloads', () => {

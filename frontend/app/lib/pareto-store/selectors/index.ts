@@ -8,6 +8,7 @@ import type {
   CalculatorMode, IsolatedAreaPendingSpec, IsolatedXenoTarget,
   SSEquipmentState, XenoModifier, TechSlot,
 } from '../types';
+import type { TechPartConfigMap } from '../tech/types';
 import type { ParetoStore } from '../slices';
 import { calculateFinalDamage } from '../formula';
 import { createPlayerState } from '../playerState';
@@ -29,10 +30,13 @@ export const selectHero = (state: ParetoStore): { selected: HeroSchema; all: Her
 
 export const selectWeapons = (state: ParetoStore): WeaponSchema[] => state.weapons;
 
-export const selectTechParts = (state: ParetoStore): { parts: TechPartSchema[]; equipped: Record<TechSlot, string | null> } => ({
+export const selectTechParts = (state: ParetoStore): { parts: TechPartSchema[]; equipped: Record<TechSlot, string | null>; configs: TechPartConfigMap } => ({
   parts: state.tech_parts,
   equipped: state.equipped_slots,
+  configs: state.tech_configs,
 });
+
+export const selectTechConfigs = (state: ParetoStore): TechPartConfigMap => state.tech_configs;
 
 export const selectPets = (state: ParetoStore) => ({
   pets: state.pets,
@@ -75,7 +79,9 @@ export const selectXenoModifier = (state: ParetoStore): XenoModifier | null => {
 export const selectPlayerState = (state: ParetoStore): PlayerState => {
   const hero = selectHero(state);
   const equipment = selectEquipment(state);
-  const equippedTechIds = Object.values(state.equipped_slots).filter((id): id is string => id !== null);
+  const equippedTechIds = Object.values(state.tech_configs)
+    .filter((config) => config.equipped)
+    .map((config) => config.id);
   const deployedPet = state.pets.find((pet) => pet.id === state.deployed_pet_id);
   const selectedEquipment = (slot: 'weapon' | 'armor' | 'necklace' | 'belt' | 'gloves' | 'boots') =>
     equipment.find((item) => item.slot === slot);
@@ -158,9 +164,9 @@ export const selectPlayerState = (state: ParetoStore): PlayerState => {
     tech: {
       selected_attack_parts: equippedTechIds,
       selected_defense_parts: [],
-      resonance_level: state.tech_parts.reduce((sum, part) => sum + part.resonance_chip_allocated, 0),
-      chips_available: state.tech_parts.reduce((sum, part) => sum + part.resonance_chip_allocated, 0),
-      twinborn_enabled: Object.values(state.twinborn_enabled).some(Boolean),
+      resonance_level: Object.values(state.tech_configs).reduce((sum, config) => sum + config.resonance, 0),
+      chips_available: Object.values(state.tech_configs).reduce((sum, config) => sum + config.resonance, 0),
+      twinborn_enabled: Object.values(state.tech_configs).some((config) => config.equipped),
     },
     pet: {
       deployed_pet_id: state.deployed_pet_id ?? '',

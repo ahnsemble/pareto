@@ -1,7 +1,7 @@
 {
-  "name": "Pareto Forge",
-  "short_name": "Pareto",
-  "description": "Fast TTTG Forge build optimization and Pareto frontier comparison.",
+  "name": "Tangtang",
+  "short_name": "Tangtang",
+  "description": "Fast TTTG Forge build optimization and efficient-frontier comparison.",
   "start_url": "/en",
   "display": "standalone",
   "background_color": "#0f172a",

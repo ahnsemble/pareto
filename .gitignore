@@ -12,6 +12,9 @@ __pycache__/
 # Node / Next.js (frontend covers most via frontend/.gitignore)
 node_modules/
 
+# Local browser automation artifacts
+.playwright-cli/
+
 # OS
 .DS_Store
 

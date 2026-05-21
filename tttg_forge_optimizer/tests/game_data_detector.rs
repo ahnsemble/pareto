@@ -28,8 +28,16 @@ fn game_data_fixture_ids_are_unique() {
 
 #[test]
 fn detector_reports_changed_hash_for_existing_source() {
-    let before = vec![snapshot("alpha", "https://raw.githubusercontent.com/example/a.json", "h1")];
-    let after = vec![snapshot("alpha", "https://raw.githubusercontent.com/example/a.json", "h2")];
+    let before = vec![snapshot(
+        "alpha",
+        "https://raw.githubusercontent.com/example/a.json",
+        "h1",
+    )];
+    let after = vec![snapshot(
+        "alpha",
+        "https://raw.githubusercontent.com/example/a.json",
+        "h2",
+    )];
 
     let changes = diff_game_data_snapshots(&before, &after);
 
@@ -39,8 +47,16 @@ fn detector_reports_changed_hash_for_existing_source() {
 
 #[test]
 fn detector_reports_added_and_removed_sources() {
-    let before = vec![snapshot("old", "https://raw.githubusercontent.com/example/old.json", "h1")];
-    let after = vec![snapshot("new", "https://raw.githubusercontent.com/example/new.json", "h2")];
+    let before = vec![snapshot(
+        "old",
+        "https://raw.githubusercontent.com/example/old.json",
+        "h1",
+    )];
+    let after = vec![snapshot(
+        "new",
+        "https://raw.githubusercontent.com/example/new.json",
+        "h2",
+    )];
 
     let changes = diff_game_data_snapshots(&before, &after);
 
@@ -54,8 +70,16 @@ fn detector_reports_added_and_removed_sources() {
 
 #[test]
 fn detector_keeps_unchanged_sources_when_hash_matches() {
-    let before = vec![snapshot("same", "https://raw.githubusercontent.com/example/same.json", "h1")];
-    let after = vec![snapshot("same", "https://raw.githubusercontent.com/example/same.json", "h1")];
+    let before = vec![snapshot(
+        "same",
+        "https://raw.githubusercontent.com/example/same.json",
+        "h1",
+    )];
+    let after = vec![snapshot(
+        "same",
+        "https://raw.githubusercontent.com/example/same.json",
+        "h1",
+    )];
 
     let changes = diff_game_data_snapshots(&before, &after);
 
@@ -65,8 +89,16 @@ fn detector_keeps_unchanged_sources_when_hash_matches() {
 #[test]
 fn detector_output_is_sorted_by_id() {
     let before = vec![
-        snapshot("zeta", "https://raw.githubusercontent.com/example/z.json", "h1"),
-        snapshot("alpha", "https://raw.githubusercontent.com/example/a.json", "h1"),
+        snapshot(
+            "zeta",
+            "https://raw.githubusercontent.com/example/z.json",
+            "h1",
+        ),
+        snapshot(
+            "alpha",
+            "https://raw.githubusercontent.com/example/a.json",
+            "h1",
+        ),
     ];
     let after = before.clone();
 
@@ -80,8 +112,16 @@ fn detector_output_is_sorted_by_id() {
 
 #[test]
 fn detector_changed_source_keeps_before_and_after_hashes() {
-    let before = vec![snapshot("alpha", "https://raw.githubusercontent.com/example/a.json", "old")];
-    let after = vec![snapshot("alpha", "https://raw.githubusercontent.com/example/a.json", "new")];
+    let before = vec![snapshot(
+        "alpha",
+        "https://raw.githubusercontent.com/example/a.json",
+        "old",
+    )];
+    let after = vec![snapshot(
+        "alpha",
+        "https://raw.githubusercontent.com/example/a.json",
+        "new",
+    )];
 
     let changes = diff_game_data_snapshots(&before, &after);
 
@@ -93,7 +133,11 @@ fn detector_changed_source_keeps_before_and_after_hashes() {
 fn detector_added_source_has_no_before_hash() {
     let changes = diff_game_data_snapshots(
         &[],
-        &[snapshot("new", "https://raw.githubusercontent.com/example/new.json", "h2")],
+        &[snapshot(
+            "new",
+            "https://raw.githubusercontent.com/example/new.json",
+            "h2",
+        )],
     );
 
     assert_eq!(changes[0].before_hash, None);
@@ -103,7 +147,11 @@ fn detector_added_source_has_no_before_hash() {
 #[test]
 fn detector_removed_source_has_no_after_hash() {
     let changes = diff_game_data_snapshots(
-        &[snapshot("old", "https://raw.githubusercontent.com/example/old.json", "h1")],
+        &[snapshot(
+            "old",
+            "https://raw.githubusercontent.com/example/old.json",
+            "h1",
+        )],
         &[],
     );
 

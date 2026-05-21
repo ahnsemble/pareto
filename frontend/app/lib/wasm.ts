@@ -4,11 +4,16 @@ import init, {
   beam_search_run_js,
   branch_bound_run_js,
   calculate_v3_final_damage,
+  compute_tech_modifier_js,
   decode_public_raw,
+  get_tech_parts_full_js,
   pareto_frontier_compute_js,
   relic_core_optimize_js,
   sio_export_to_player_state_patch_js,
+  tech_optimizer_run_js,
   twinborn_auto_assign_js,
+  validate_sio_tech_inventory_js,
+  validate_tech_part_config_js,
 } from 'tttg_forge_wasm';
 
 let initPromise: Promise<void> | null = null;
@@ -142,6 +147,83 @@ export interface TwinbornAutoAssignResult {
   solverBuilds: OptimizerBuild[];
 }
 
+export interface TechPartsCatalog {
+  twinbornParts: Array<{ id: string; name: string }>;
+  activeSkills: Array<{ id: string; name: string }>;
+  modeVariants: Array<{ id: string; name: string }>;
+  rarities: string[];
+  techModifierMatrix: Array<{
+    baseTech: string;
+    target: string;
+    coefficient: number;
+    returnsLevel: boolean;
+  }>;
+  techModifierTargets: number;
+}
+
+export interface TechOptimizerResult {
+  algorithm: 'tech_optimizer';
+  error?: string;
+  exact: boolean;
+  reason?: string | null;
+  topK: number;
+  inventoryValidation?: SioInventoryValidation;
+  quality: {
+    guarantee: string;
+    best_score: number;
+    upper_bound_score: number;
+    score_gap_percent: number;
+  };
+  scope: {
+    optimizer_schema: string;
+    problem_scope: string;
+    scoring_model: string;
+    full_sio_equivalent: boolean;
+    enumerated_candidate_nodes: number;
+    estimated_full_joint_nodes: number;
+    estimated_schema_multiplier: number;
+    covered_dimensions: string[];
+    schema_dimensions: string[];
+    limitations: string[];
+  };
+  builds: Array<{
+    label: string;
+    score: number;
+    damageFactor: number;
+    config: Record<string, unknown>;
+  }>;
+  metrics: {
+    first_answer_ms: number;
+    latency_ms: number;
+    visited_nodes: number;
+    pruned_nodes: number;
+    frontier_size: number;
+    dominance_cache_hits: number;
+    mode_used: string;
+  };
+}
+
+export interface SioTechInventoryInput {
+  rarityCounts: Record<string, number>;
+  chips: number;
+  skillSlots: number;
+  overloadable: boolean;
+  maxOverload?: number;
+  modes: string[];
+  forcedSkills: string[];
+  preferredSkills: string[];
+  disabledSkills: string[];
+  speedMode: string;
+  limit: string;
+  candidatePreselectTopK?: number;
+}
+
+export interface SioInventoryValidation {
+  valid: boolean;
+  errors: string[];
+  warnings: string[];
+}
+
 export function branchBoundRun(searchSpace: unknown): BranchBoundResult {
   return plainify(branch_bound_run_js(searchSpace)) as BranchBoundResult;
 }
@@ -169,6 +251,48 @@ export function twinbornAutoAssign(
   chipPool: Record<string, number>,
 ): TwinbornAutoAssignResult {
   return plainify(twinborn_auto_assign_js(playerState, chipPool)) as TwinbornAutoAssignResult;
+}
+
+export function getTechPartsCatalog(): TechPartsCatalog {
+  return plainify(get_tech_parts_full_js()) as TechPartsCatalog;
+}
+
+export function computeTechModifier(
+  baseTech: string,
+  target: string,
+  twinbornLevel: number,
+): number {
+  const value = plainify(compute_tech_modifier_js(baseTech, target, twinbornLevel));
+  return typeof value === 'number' && Number.isFinite(value) ? value : 1.0;
+}
+
+export function validateTechPartConfig(config: unknown): { valid: boolean; errors: string[] } {
+  return plainify(validate_tech_part_config_js(config)) as { valid: boolean; errors: string[] };
+}
+
+export function validateSioTechInventory(config: unknown): SioInventoryValidation {
+  return plainify(validate_sio_tech_inventory_js(config)) as SioInventoryValidation;
+}
+
+export function techOptimizerRun(
+  playerState: unknown,
+  options: Record<string, unknown>,
+): TechOptimizerResult {
+  const started =
+    typeof performance !== 'undefined' && typeof performance.now === 'function'
+      ? performance.now()
+      : Date.now();
+  const result = plainify(tech_optimizer_run_js(playerState, options)) as TechOptimizerResult;
+  const ended =
+    typeof performance !== 'undefined' && typeof performance.now === 'function'
+      ? performance.now()
+      : Date.now();
+  const latencyMs = Math.max(0, ended - started);
+  if (result.metrics) {
+    result.metrics.latency_ms = latencyMs;
+    result.metrics.first_answer_ms = result.metrics.first_answer_ms || latencyMs;
+  }
+  return result;
 }
 
 export function sioExportToPlayerStatePatch(sioExport: unknown): unknown {

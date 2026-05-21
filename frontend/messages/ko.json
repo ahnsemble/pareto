@@ -41,7 +41,7 @@
     "slot": "슬롯"
   },
   "frontier": {
-    "paretoFrontier": "파레토 프론티어",
+    "paretoFrontier": "효율 프론티어",
     "top5": "상위 5",
     "diffHighlight": "차이점 강조",
     "deckA": "덱 A",
@@ -91,10 +91,10 @@
     "fetchServerError": "게임 데이터 서비스가 서버 오류를 반환했습니다."
   },
   "meta": {
-    "appName": "Pareto Forge",
+    "appName": "Tangtang",
     "tagline": "TTTG Forge 빌드 최적화를 빠르게 실행합니다",
     "description": "빌드를 비교하고 트레이드오프를 확인하며 결정론적 최적화 결과를 내보냅니다.",
-    "author": "Pareto Forge Team",
+    "author": "Tangtang Team",
     "about": "소개",
     "contact": "문의",
     "terms": "이용약관",

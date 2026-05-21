@@ -542,11 +542,6 @@ export interface WeaponUpgradeSliderProps {
   coresAvailable: number;
   onDebouncedChange(branch: 'eaf' | 'vaf', level: AstralForgeLevel): void;
 }
-export interface TechSelectArrayProps {
-  techParts: TechPartSchema[];
-  slots: TechSlot[];
-  onToggleTwinborn(id: string, enabled: boolean): void;
-}
 export interface SkillChoicesProps {
   maxSlots: number;
   selectedSkillIds: string[];

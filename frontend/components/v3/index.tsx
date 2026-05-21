@@ -9,13 +9,14 @@ import { useDebouncedCallback } from 'use-debounce';
 import { useShallow } from 'zustand/react/shallow';
 import { useParetoStore } from '../../app/lib/pareto-store/store';
 import {
-  selectBase, selectEquipment, selectHero, selectWeapons, selectTechParts,
+  selectBase, selectEquipment, selectHero, selectWeapons,
   selectPets, selectCollectibles, selectLmeTurf, selectMode, selectConditionalState,
   selectXenoPendingSpecs, selectFinalDamage,
 } from '../../app/lib/pareto-store/selectors';
 import { t } from '../../app/lib/pareto-store/i18n';
+import { TechPartsPanel } from './tech/TechPartsPanel';
 import type {
-  CalculatorMode, SSGradeSlot, HeroId, AstralForgeLevel, TechSlot, LmePhase,
+  CalculatorMode, SSGradeSlot, HeroId, AstralForgeLevel, LmePhase,
   IsolatedXenoTarget,
 } from '../../app/lib/pareto-store/types';
 
@@ -201,64 +202,6 @@ export function WeaponUpgradeSlider() {
                 className="mt-1 w-full"
               />
             </label>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-// ───────────────────────────── 6. TechSelectArray ─────────────────────────────
-export function TechSelectArray() {
-  const { parts, equipped } = useParetoStore(useShallow(selectTechParts));
-  const equipTech = useParetoStore((s) => s.equipTech);
-  const toggleTwinborn = useParetoStore((s) => s.toggleTwinborn);
-  const setResonanceChip = useParetoStore((s) => s.setResonanceChip);
-  const debouncedSetChip = useDebouncedCallback(
-    (techId: string, n: number) => setResonanceChip(techId, n),
-    DEBOUNCE_MS,
-  );
-  const slots: TechSlot[] = ['attack_1', 'attack_2', 'attack_3', 'defense_1', 'defense_2', 'defense_3'];
-  return (
-    <section className={cardClass} data-testid="v3-TechSelectArray">
-      <h3 className={sectionTitleClass}>Tech parts ({parts.length})</h3>
-      <div className="mb-3 grid grid-cols-3 gap-2 text-xs">
-        {slots.map((slot) => (
-          <label key={slot} className="text-[color:var(--color-text-muted)]">
-            {slot}
-            <select
-              className={inputClass + ' mt-1 text-xs'}
-              value={equipped[slot] ?? ''}
-              onChange={(e) => equipTech(slot, e.target.value)}
-            >
-              <option value="">—</option>
-              {parts.map((p) => (
-                <option key={p.id} value={p.id}>{p.display_name_en}</option>
-              ))}
-            </select>
-          </label>
-        ))}
-      </div>
-      <div className="space-y-2">
-        {parts.slice(0, 4).map((p) => (
-          <div key={p.id} className="flex items-center justify-between gap-2 rounded border border-[color:var(--color-border)] p-2">
-            <span className="text-xs">{p.display_name_en}</span>
-            <label className="flex items-center gap-1 text-xs text-[color:var(--color-text-muted)]">
-              <input
-                type="checkbox"
-                defaultChecked={p.is_twinborn}
-                onChange={(e) => toggleTwinborn(p.id, e.target.checked)}
-              />
-              Twinborn
-            </label>
-            <input
-              type="number"
-              defaultValue={p.resonance_chip_allocated}
-              min={0}
-              className={inputClass + ' w-20 text-xs'}
-              onChange={(e) => debouncedSetChip(p.id, Number(e.target.value))}
-              data-testid={`v3-tech-chip-${p.id}`}
-            />
           </div>
         ))}
       </div>
@@ -646,6 +589,8 @@ export function ResourceLockButton({
 // ───────────────────────────── Registry sanity check (matches UI_COMPONENT_REGISTRY) ─────────────────────────────
 export const V3_COMPONENTS = {
   ModeSelectDropdown, OutputPanel, BaseInputsBox, ItemSelectGrids, WeaponUpgradeSlider,
-  TechSelectArray, SkillChoices, OptimizationTable, HeroSelectModal, CollectiblesAccordion,
+  TechPartsPanel, SkillChoices, OptimizationTable, HeroSelectModal, CollectiblesAccordion,
   TalentTurfMatrix, PetSelectRadio, XenoDetailsPanel, ReviveSettingsToggle, ResourceLockButton,
 } as const;
+
+export { TechPartsPanel };

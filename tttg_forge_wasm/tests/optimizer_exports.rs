@@ -80,8 +80,7 @@ fn relic_core_optimize_js_uses_resource_constraints() {
         "topK": 4
     });
 
-    let actual =
-        tttg_forge_wasm::optimizer::relic_core_optimize_value(&player_state, &constraints);
+    let actual = tttg_forge_wasm::optimizer::relic_core_optimize_value(&player_state, &constraints);
 
     assert_eq!(actual["algorithm"], json!("relic_core"));
     assert_eq!(actual["constraintsSupportedCount"], json!(5));
@@ -102,8 +101,7 @@ fn twinborn_auto_assign_js_caps_iterations_and_assigns_chips() {
         "iterationCap": 10000
     });
 
-    let actual =
-        tttg_forge_wasm::optimizer::twinborn_auto_assign_value(&player_state, &chip_pool);
+    let actual = tttg_forge_wasm::optimizer::twinborn_auto_assign_value(&player_state, &chip_pool);
 
     assert_eq!(actual["algorithm"], json!("twinborn_solver"));
     assert_eq!(actual["iterationCap"], json!(10000));

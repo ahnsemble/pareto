@@ -3,8 +3,8 @@ pub mod analytics;
 pub mod beam_search;
 #[cfg(not(target_arch = "wasm32"))]
 pub mod bench_regression;
-pub mod build_diff;
 pub mod branch_bound;
+pub mod build_diff;
 pub mod delta;
 #[cfg(not(target_arch = "wasm32"))]
 pub mod game_data;
@@ -17,6 +17,8 @@ pub mod prepared_case;
 pub mod schema;
 pub mod search_space;
 pub mod space_builder;
+pub mod tech;
+pub mod tech_search;
 pub mod twodeck;
 pub mod utils;
 
@@ -25,8 +27,8 @@ pub use analytics::*;
 pub use beam_search::*;
 #[cfg(not(target_arch = "wasm32"))]
 pub use bench_regression::*;
-pub use build_diff::*;
 pub use branch_bound::*;
+pub use build_diff::*;
 pub use delta::*;
 #[cfg(not(target_arch = "wasm32"))]
 pub use game_data::*;
@@ -39,5 +41,6 @@ pub use prepared_case::*;
 pub use schema::*;
 pub use search_space::*;
 pub use space_builder::*;
+pub use tech_search::*;
 pub use twodeck::*;
 pub use utils::hash::*;

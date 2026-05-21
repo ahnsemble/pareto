@@ -10,6 +10,8 @@ import type {
   CalculatorMode, ConditionalCombatState,
   IsolatedAreaPendingSpec, IsolatedXenoTarget, RuntimeXenoEffectInput, XenoStageEffect,
 } from '../types';
+import type { TechMode, TechPartConfig, TechPartConfigMap, TwinbornCategory } from '../tech/types';
+import { cloneDefaultTechConfigs } from '../tech/defaults';
 import {
   HERO_SCHEMA_INDEX, WEAPON_SCHEMA_INDEX, TECH_PART_SCHEMA_INDEX,
   PET_SCHEMA_INDEX, COLLECTIBLE_EDITION_SCHEMA_INDEX,
@@ -142,6 +144,7 @@ export const createWeaponSlice: StateCreator<WeaponSliceState & WeaponSliceActio
 // ───────────────────────────── 5. techSlice (P3 01:107-122) ─────────────────────────────
 export interface TechSliceState {
   tech_parts: TechPartSchema[];
+  tech_configs: TechPartConfigMap;
   equipped_slots: Record<TechSlot, string | null>;
   twinborn_enabled: Record<string, boolean>;
 }
@@ -150,9 +153,17 @@ export interface TechSliceActions {
   unequipTech: (slot: TechSlot) => void;
   toggleTwinborn: (techId: string, enabled: boolean) => void;
   setResonanceChip: (techId: string, allocated: number) => void;
+  setTechPartConfig: (id: TwinbornCategory, config: Partial<TechPartConfig>) => void;
+  setTechPartEquipped: (id: TwinbornCategory, equipped: boolean) => void;
+  setTechPartMode: (id: TwinbornCategory, mode: TechMode | null) => void;
+  setTechPartResonance: (id: TwinbornCategory, resonance: number) => void;
+  setTechPartOverload: (id: TwinbornCategory, overload: number) => void;
+  setTechPartSupportParts: (id: TwinbornCategory, supportParts: boolean) => void;
+  setTechPartTwinbornLevel: (id: TwinbornCategory, twinbornLevel: TechPartConfig['twinbornLevel']) => void;
 }
 const INITIAL_TECH: TechSliceState = {
   tech_parts: TECH_PART_SCHEMA_INDEX,
+  tech_configs: cloneDefaultTechConfigs(),
   equipped_slots: {
     attack_1: null, attack_2: null, attack_3: null,
     defense_1: null, defense_2: null, defense_3: null,
@@ -166,6 +177,35 @@ export const createTechSlice: StateCreator<TechSliceState & TechSliceActions, []
   toggleTwinborn: (techId, enabled) => set((s) => ({ twinborn_enabled: { ...s.twinborn_enabled, [techId]: enabled } })),
   setResonanceChip: (techId, allocated) => set((s) => ({
     tech_parts: s.tech_parts.map((t) => t.id === techId ? { ...t, resonance_chip_allocated: Math.max(0, allocated) } : t),
+  })),
+  setTechPartConfig: (id, config) => set((s) => ({
+    tech_configs: {
+      ...s.tech_configs,
+      [id]: {
+        ...s.tech_configs[id],
+        ...config,
+        resonance: config.resonance === undefined ? s.tech_configs[id].resonance : Math.max(0, Math.trunc(config.resonance)),
+        overload: config.overload === undefined ? s.tech_configs[id].overload : Math.max(0, Math.trunc(config.overload)),
+      },
+    },
+  })),
+  setTechPartEquipped: (id, equipped) => set((s) => ({
+    tech_configs: { ...s.tech_configs, [id]: { ...s.tech_configs[id], equipped } },
+  })),
+  setTechPartMode: (id, mode) => set((s) => ({
+    tech_configs: { ...s.tech_configs, [id]: { ...s.tech_configs[id], mode } },
+  })),
+  setTechPartResonance: (id, resonance) => set((s) => ({
+    tech_configs: { ...s.tech_configs, [id]: { ...s.tech_configs[id], resonance: Math.max(0, Math.trunc(resonance)) } },
+  })),
+  setTechPartOverload: (id, overload) => set((s) => ({
+    tech_configs: { ...s.tech_configs, [id]: { ...s.tech_configs[id], overload: Math.max(0, Math.trunc(overload)) } },
+  })),
+  setTechPartSupportParts: (id, supportParts) => set((s) => ({
+    tech_configs: { ...s.tech_configs, [id]: { ...s.tech_configs[id], supportParts } },
+  })),
+  setTechPartTwinbornLevel: (id, twinbornLevel) => set((s) => ({
+    tech_configs: { ...s.tech_configs, [id]: { ...s.tech_configs[id], twinbornLevel } },
   })),
 });
 

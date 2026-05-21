@@ -374,7 +374,7 @@ export const OPTIMIZER_SCHEMAS = {
     overload: ['excess', 'full'],
     limit: ['basic', 'advanced'],
     modeEntryBounds: ['minResonance', 'maxResonance', 'minOverload', 'maxOverload'],
-    skillsMapState: ['disabled', 'enabled', 'preferred'],
+    skillsMapState: ['disabled', 'enabled', 'preferred', 'forced'],
   },
   heroes: {
     mainHeroes: 'hero keyed enabled/max map',

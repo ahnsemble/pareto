@@ -23,7 +23,7 @@ test.describe('Sprint Z — Relic Core Optimizer route', () => {
     await expect(page.locator('[data-testid="relic-core-latency"]')).toContainText('ms');
   });
 
-  test('R4 shows Pareto set visualization after run', async ({ page }) => {
+  test('R4 shows efficient set visualization after run', async ({ page }) => {
     await page.locator('[data-testid="relic-core-run"]').click();
     await expect(page.locator('[data-testid="relic-core-pareto-point"]')).toHaveCount(2);
   });

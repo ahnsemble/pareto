@@ -229,12 +229,12 @@ export default function OptimizePage() {
       <header className="sticky top-0 z-10 -mx-6 border-b border-[color:var(--color-border)]/50 bg-[color:var(--color-bg)] px-6 pb-4 pt-2 flex items-baseline justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">
-            <span className="text-[color:var(--color-primary)]">Pareto</span>{' '}
+            <span className="text-[color:var(--color-primary)]">Tangtang</span>{' '}
             <span className="text-[color:var(--color-text)]">/ optimize</span>
           </h1>
           <p className="mt-1 text-sm text-[color:var(--color-text-muted)]">
             Pick a hero, mark owned collectibles, then run the WASM optimizer in a Web
-            Worker. Results plot the Pareto frontier of damage vs. upgrade count.
+            Worker. Results plot the efficient frontier of damage vs. upgrade count.
           </p>
         </div>
         <Link
@@ -299,7 +299,7 @@ export default function OptimizePage() {
             <>
               <div>
                 <h2 className="mb-3 text-sm uppercase tracking-wider text-[color:var(--color-text-muted)]">
-                  Pareto frontier
+                  Efficient frontier
                 </h2>
                 <ParetoFrontierChart
                   allPoints={run.result.allPoints}
@@ -402,7 +402,7 @@ export default function OptimizePage() {
           ) : (
             <div className="rounded-xl border border-dashed border-[color:var(--color-border)] p-10 text-center text-sm text-[color:var(--color-text-muted)]">
               Configure inputs on the left and press <span className="font-mono">Optimize</span>{' '}
-              to see the Pareto frontier and top builds.
+              to see the efficient frontier and top builds.
             </div>
           )}
         </div>

@@ -13,7 +13,7 @@ test.describe('P4 V3 — Browser Smoke Test (6 scenarios)', () => {
 
   test('S1 — bootParetoStore passes 8/8 invariants (console.info)', async ({ page }) => {
     const bootStatus = page.locator('[data-testid="v3-boot-status"]');
-    await expect(bootStatus).toContainText('[ParetoStore] Boot OK — 8/8 invariants passed.', { timeout: 5000 });
+    await expect(bootStatus).toContainText('[TangtangStore] Boot OK — 8/8 invariants passed.', { timeout: 5000 });
   });
 
   test('S2 — selectFinalDamage > 0 on baseline input (Venato + LME + SS 6 default)', async ({ page }) => {

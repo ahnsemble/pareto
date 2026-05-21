@@ -91,7 +91,7 @@ pub fn damage_coefficient(name: &str) -> f64 {
         "Soccer Mode" => 19.7,
         "Drone Mode" => 48.22,
         "Forcefield Mode" => 18.94,
-        "Drill Shot Mode" => 38.8,
+        "Drill Shot Mode" => 36.8,
         "Rocket Mode" => 49.04,
         "Lightning Mode" => 56.59,
         "Boomerang Mode" => 24.36,

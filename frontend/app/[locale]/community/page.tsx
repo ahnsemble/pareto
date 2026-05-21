@@ -3,20 +3,20 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '../../../i18n/navigation';
 import { routing } from '../../../i18n/routing';
 
-const KO_TITLE = '파레토 — 탕탕특공대 빌드 최적화 도구 | Pareto Optimizer';
+const KO_TITLE = 'Tangtang — 탕탕특공대 빌드 최적화 도구';
 const KO_DESCRIPTION =
-  '탕탕특공대(Survivor.io) 장비·펫·테크 파츠 빌드를 파레토 프론티어로 최적화하세요. 두 빌드 동시 비교, 한국어 UI 완벽 지원. 무료 웹 도구.';
+  '탕탕특공대(Survivor.io) 장비·펫·테크 파츠 빌드를 효율 프론티어로 최적화하세요. 두 빌드 동시 비교, 한국어 UI 완벽 지원. 무료 웹 도구.';
 const KO_KEYWORDS = [
   '탕탕특공대 빌드',
   'Survivor.io 빌드 최적화',
-  '파레토 최적화',
+  '효율 프론티어 최적화',
   '탕탕특공대 장비 계산기',
   '탕탕특공대 덱 비교',
   'Survivor.io optimizer',
   'Survivor.io build calculator',
   '탕탕특공대 테크 파츠',
   '탕탕특공대 펫 티어',
-  'Pareto frontier tool',
+  'efficient frontier tool',
 ];
 
 export function generateStaticParams() {
@@ -44,15 +44,15 @@ export async function generateMetadata({
             url: '/og-community.png',
             width: 1200,
             height: 630,
-            alt: 'Pareto — 탕탕특공대 빌드 최적화 도구',
+            alt: 'Tangtang — 탕탕특공대 빌드 최적화 도구',
           },
         ],
       },
     };
   }
   return {
-    title: 'Pareto Community — Coming Soon',
-    description: 'Korean community landing for Pareto. English version coming soon.',
+    title: 'Tangtang Community — Coming Soon',
+    description: 'Korean community landing for Tangtang. English version coming soon.',
     robots: { index: false, follow: false },
   };
 }
@@ -64,8 +64,8 @@ interface FaqItem {
 
 const FAQ_ITEMS: FaqItem[] = [
   {
-    q: '파레토 프론티어가 뭔가요?',
-    a: '파레토 프론티어는 여러 능력치 (예: DPS + 생존력) 를 동시에 고려했을 때, 어느 하나도 손해 보지 않는 최적 빌드 조합의 경계선이에요. 이 경계선 위에 있는 빌드가 가장 효율적인 빌드입니다.',
+    q: '효율 프론티어가 뭔가요?',
+    a: '효율 프론티어는 여러 능력치 (예: DPS + 생존력) 를 동시에 고려했을 때, 어느 하나도 손해 보지 않는 최적 빌드 조합의 경계선이에요. 이 경계선 위에 있는 빌드가 가장 효율적인 빌드입니다.',
   },
   {
     q: '빌드를 어떻게 입력하나요?',
@@ -77,7 +77,7 @@ const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: '계산 결과가 정확한가요?',
-    a: 'WASM 기반 파레토 최적화 엔진이 브라우저에서 직접 계산합니다. 모든 연산은 수학적 모델에 기반하며, 인게임 실제 전투와는 시뮬레이션 오차가 있을 수 있어요. 결과는 빌드 방향성 판단의 참고 자료로 활용해 주세요.',
+    a: 'WASM 기반 최적화 엔진이 브라우저에서 직접 계산합니다. 모든 연산은 수학적 모델에 기반하며, 인게임 실제 전투와는 시뮬레이션 오차가 있을 수 있어요. 결과는 빌드 방향성 판단의 참고 자료로 활용해 주세요.',
   },
   {
     q: '빌드를 친구한테 공유할 수 있나요?',
@@ -176,13 +176,13 @@ function FeatureIconLanguage() {
 
 const FEATURES: FeatureItem[] = [
   {
-    title: '파레토 프론티어',
+    title: '효율 프론티어',
     body: '내 장비 조합의 최적 경계선을 한눈에 확인하세요. 어떤 빌드가 가장 효율적인지 차트로 바로 보여드립니다.',
     icon: <FeatureIconChart />,
   },
   {
     title: '덱 비교',
-    body: '두 빌드를 나란히 놓고 파레토 프론티어 위에서 비교하세요. 어디가 강하고 어디가 약한지 차이점을 강조해 드립니다.',
+    body: '두 빌드를 나란히 놓고 효율 프론티어 위에서 비교하세요. 어디가 강하고 어디가 약한지 차이점을 강조해 드립니다.',
     icon: <FeatureIconSplit />,
   },
   {
@@ -208,12 +208,12 @@ const STEPS: StepItem[] = [
     body: '보유한 장비·펫·테크 파츠를 선택하거나, 기존 빌드 JSON을 가져오세요. 드롭다운과 검색으로 빠르게 입력할 수 있습니다.',
   },
   {
-    title: '파레토 분석 실행',
+    title: '프론티어 분석 실행',
     body: 'WASM 엔진이 브라우저에서 직접 최적 조합을 계산합니다. 서버 전송 없이 내 데이터는 내 기기에만 머무릅니다.',
   },
   {
     title: '결과 비교 & 공유',
-    body: '파레토 프론티어에서 최적 빌드를 확인하고, 다른 빌드와 나란히 비교하세요. 빌드를 내보내서 커뮤니티에 공유할 수 있습니다.',
+    body: '효율 프론티어에서 최적 빌드를 확인하고, 다른 빌드와 나란히 비교하세요. 빌드를 내보내서 커뮤니티에 공유할 수 있습니다.',
   },
 ];
 
@@ -223,7 +223,7 @@ function HeroFrontierVisual() {
       viewBox="0 0 320 200"
       className="h-auto w-full max-w-md"
       role="img"
-      aria-label="파레토 프론티어 시각화 미리보기 — 산점도와 최적 경계선"
+      aria-label="효율 프론티어 시각화 미리보기 — 산점도와 최적 경계선"
     >
       <rect
         x="0"
@@ -284,7 +284,7 @@ function CommunityComingSoon() {
   return (
     <main className="mx-auto flex min-h-[60vh] max-w-2xl flex-col items-start justify-center gap-4 px-6 py-16">
       <h1 className="text-3xl font-semibold tracking-tight">
-        Pareto Community — Coming Soon in English
+        Tangtang Community — Coming Soon in English
       </h1>
       <p className="text-[color:var(--color-text-muted)]">
         Our community landing page is currently available in Korean. The English
@@ -325,7 +325,7 @@ function CommunityKorean() {
       >
         <div className="flex-1 space-y-6">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-[color:var(--color-primary)]">
-            Pareto · Survivor.io 빌드 최적화
+            Tangtang · Survivor.io 빌드 최적화
           </p>
           <h1
             id="hero-heading"
@@ -334,7 +334,7 @@ function CommunityKorean() {
             빌드, 계산하지 말고 비교하세요
           </h1>
           <p className="max-w-xl text-base text-[color:var(--color-text-muted)] sm:text-lg">
-            파레토 프론티어로 내 장비 조합의 최적 경계선을 한눈에. 탕탕특공대 빌드 최적화 도구.
+            효율 프론티어로 내 장비 조합의 최적 경계선을 한눈에. 탕탕특공대 빌드 최적화 도구.
           </p>
           <div className="flex flex-wrap gap-3 pt-2">
             <Link

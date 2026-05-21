@@ -85,12 +85,21 @@ fn v3_damage_full_path_applies_tech_pet_collectible_conditionals_xeno_and_mode()
     let actual = tttg_forge_wasm::v3_damage_value(&input);
     let expected_multiplier = 1.30 * 1.05 * 1.20;
 
-    assert_close(actual["final_damage"].as_f64().unwrap(), 100.0 * expected_multiplier);
-    assert_close(actual["damage_multiplier"].as_f64().unwrap(), expected_multiplier);
+    assert_close(
+        actual["final_damage"].as_f64().unwrap(),
+        100.0 * expected_multiplier,
+    );
+    assert_close(
+        actual["damage_multiplier"].as_f64().unwrap(),
+        expected_multiplier,
+    );
     assert_close(actual["channel_breakdown"]["en1"].as_f64().unwrap(), 1.30);
     assert_close(actual["channel_breakdown"]["en22"].as_f64().unwrap(), 1.20);
     assert_close(actual["channel_breakdown"]["en24"].as_f64().unwrap(), 1.05);
-    assert_eq!(actual["applied_conditionals"], json!(["king_crit_expectation", "lme_phase_weight"]));
+    assert_eq!(
+        actual["applied_conditionals"],
+        json!(["king_crit_expectation", "lme_phase_weight"])
+    );
 }
 
 #[test]
@@ -237,6 +246,9 @@ fn worm_cdr_multiplies_evotree_energy_cube_worm_and_rex() {
     let actual = tttg_forge_wasm::v3_damage_value(&input);
     let expected_a = 0.95 * 0.52 * 0.8 * 0.94 * 0.98 * 0.99;
     let expected = 1.0 / expected_a;
-    assert_close(actual["worm_cooldown_reduction"].as_f64().unwrap(), expected);
+    assert_close(
+        actual["worm_cooldown_reduction"].as_f64().unwrap(),
+        expected,
+    );
     assert_eq!(actual["worm_cdr_stage_count"], json!(6));
 }

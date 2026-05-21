@@ -17,7 +17,7 @@ export const UI_COMPONENT_REGISTRY = [
   'BaseInputsBox',
   'ItemSelectGrids',
   'WeaponUpgradeSlider',
-  'TechSelectArray',
+  'TechPartsPanel',
   'SkillChoices',
   'OptimizationTable',
   'HeroSelectModal',
@@ -75,10 +75,10 @@ export function bootParetoStore(): ParetoStore {
     const failureReport = failures
       .map((f) => `${f.invariant_id}: expected=${f.expected}, actual=${f.actual}`)
       .join('; ');
-    throw new Error(`[ParetoStore] Boot ABORTED — ${failures.length} count check invariant(s) failed: ${failureReport}`);
+    throw new Error(`[TangtangStore] Boot ABORTED — ${failures.length} count check invariant(s) failed: ${failureReport}`);
   }
 
-  console.info('[ParetoStore] Boot OK — 8/8 count check invariants passed.');
+  console.info('[TangtangStore] Boot OK — 8/8 count check invariants passed.');
   return state;
 }
 
