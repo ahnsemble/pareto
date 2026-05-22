@@ -162,6 +162,14 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-profile-import-field-review')).toContainText('165');
     await expect(page.getByTestId('tech-profile-import-field-review')).toContainText('Otherworld pet sync');
     await expect(page.getByTestId('tech-profile-import-field-review')).toContainText('42.5');
+    await expect(page.getByTestId('tech-account-summary')).toContainText('Final ATK');
+    await expect(page.getByTestId('tech-account-summary')).toContainText('550,220');
+    await expect(page.getByTestId('tech-account-summary')).toContainText('Crit');
+    await expect(page.getByTestId('tech-account-summary')).toContainText('147 / 822');
+    await expect(page.getByTestId('tech-account-summary')).toContainText('Conditions');
+    await expect(page.getByTestId('tech-account-summary')).toContainText('5');
+    await expect(page.getByTestId('tech-account-summary')).toContainText('Review');
+    await expect(page.getByTestId('tech-account-summary')).toContainText('3');
     await expect(page.getByTestId('tech-account-base-atk')).toHaveValue('126424');
     await expect(page.getByTestId('tech-account-final-atk')).toHaveValue('550220');
     await expect(page.getByTestId('tech-account-atk-percent')).toHaveValue('126');
@@ -197,7 +205,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
     const raw = readFixture('external-calculation-links/4ZgaBw.raw.txt');
     await page.getByTestId('tech-profile-import-input').fill(`https://sio-tools.vercel.app?raw=${raw}`);
     await page.getByRole('button', { name: 'Import profile' }).click();
-    await page.getByTestId('tech-optimizer-run').click();
+    await page.getByRole('button', { name: 'Run imported profile' }).click();
 
     await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
     await expect(page.getByTestId('tech-upgrade-recommendations')).toContainText('Next upgrades');
@@ -381,10 +389,11 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByRole('columnheader', { name: 'Chips left' })).toBeVisible();
     await expect(page.getByRole('columnheader', { name: 'Parts' })).toBeVisible();
 
-    await expect(page.getByTestId('tech-account-context')).toBeVisible();
+    const accountContext = page.getByTestId('tech-account-context');
+    await expect(accountContext).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Account context' })).toBeVisible();
     await expect(page.getByText('Base ATK')).toBeVisible();
-    await expect(page.getByText('Final ATK')).toBeVisible();
+    await expect(accountContext.locator('span').filter({ hasText: /^Final ATK$/ })).toBeVisible();
     await expect(page.getByText('Collections')).toBeVisible();
     await expect(page.getByText('Survivors')).toBeVisible();
     await expect(page.getByText('Pet awakening')).toBeVisible();

@@ -542,6 +542,26 @@ export function TechPartsOptimizerSurface() {
     : `Inventory blocked / ${inventoryValidation.errors.map(inventoryMessage).join(', ')}`;
   const playerStateForRun = useMemo(() => playerStateWithAccountContext(playerState, accountContext), [accountContext, playerState]);
   const sioLmContextForRun = useMemo(() => buildSioLmContext(accountContext), [accountContext]);
+  const handleTechRun = async () => {
+    setRunning(true);
+    setRunError(null);
+    try {
+      const worker = await getWorker();
+      const workerResult = await worker.optimizeTech({
+        playerState: playerStateForRun,
+        topK,
+        beamWidth,
+        maxExactNodes,
+        sioTechInventory: inventory,
+        sioLm: sioLmContextForRun,
+      });
+      setResult(workerResult);
+    } catch (error) {
+      setRunError(error instanceof Error ? error.message : String(error));
+    } finally {
+      setRunning(false);
+    }
+  };
   const handleProfileImport = async () => {
     setProfileImporting(true);
     try {
@@ -621,10 +641,13 @@ export function TechPartsOptimizerSurface() {
             onChange={setProfileImportText}
             onImport={handleProfileImport}
             onClear={handleClearProfileImport}
+            onRun={handleTechRun}
+            canRun={canRun}
             summary={profileImportSummary}
             coverage={profileImportCoverage}
             details={profileImportDetails}
             importing={profileImporting}
+            running={running}
           />
 
           <ResourceWalletPanel
@@ -808,26 +831,7 @@ export function TechPartsOptimizerSurface() {
               className={buttonClass + ' mt-4 w-full'}
               data-testid="tech-optimizer-run"
               disabled={!canRun}
-              onClick={async () => {
-                setRunning(true);
-                setRunError(null);
-                try {
-                  const worker = await getWorker();
-                  const workerResult = await worker.optimizeTech({
-                    playerState: playerStateForRun,
-                    topK,
-                    beamWidth,
-                    maxExactNodes,
-                    sioTechInventory: inventory,
-                    sioLm: sioLmContextForRun,
-                  });
-                  setResult(workerResult);
-                } catch (error) {
-                  setRunError(error instanceof Error ? error.message : String(error));
-                } finally {
-                  setRunning(false);
-                }
-              }}
+              onClick={handleTechRun}
             >
               {running ? 'Running' : 'Run'}
             </button>

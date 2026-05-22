@@ -47,19 +47,25 @@ export function ProfileImportPanel({
   onChange,
   onImport,
   onClear,
+  onRun,
+  canRun = false,
   summary,
   coverage = [],
   details = [],
   importing = false,
+  running = false,
 }: {
   value: string;
   onChange: (value: string) => void;
   onImport: () => void | Promise<void>;
   onClear?: () => void;
+  onRun?: () => void | Promise<void>;
+  canRun?: boolean;
   summary: string;
   coverage?: ProductImportCoverage[];
   details?: ProductImportFieldSummary[];
   importing?: boolean;
+  running?: boolean;
 }) {
   const importedCount = coverage.filter((item) => item.status === 'imported').length;
   const reviewCount = coverage.filter((item) => item.status === 'needsReview').length;
@@ -106,6 +112,16 @@ export function ProfileImportPanel({
               <span>Missing {missingCount}</span>
             </div>
             <p className="mt-2 text-[color:var(--color-text-muted)]">Editable after import. Review marked fields before running.</p>
+            {onRun ? (
+              <button
+                type="button"
+                className={buttonClass + ' mt-3 w-full'}
+                disabled={!canRun || importing}
+                onClick={onRun}
+              >
+                {running ? 'Running' : 'Run imported profile'}
+              </button>
+            ) : null}
             {details.length > 0 ? (
               <div className="mt-2 grid max-h-44 gap-1 overflow-y-auto pr-1" data-testid="tech-profile-import-field-review">
                 {details.map((item) => (

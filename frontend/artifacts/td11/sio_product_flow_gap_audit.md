@@ -512,3 +512,42 @@ status: `[PRODUCT-IMPROVEMENT-GREEN]`
   - Public UI remains Tangtang.
   - No user-facing SIO copy was added.
   - SIO LM/scoring core, Rust formula constants, and WASM scoring semantics were not changed.
+
+## Imported Profile Run Shortcut And Account Summary
+
+timestampKst: 2026-05-22T22:11:01+09:00
+status: `[PRODUCT-IMPROVEMENT-GREEN]`
+
+- Product behavior:
+  - Tangtang import review now includes a `Run imported profile` action, so users can import a calculation link/profile/screenshot text and run the optimized calculation from the same panel.
+  - The normal optimizer Run button and the imported-profile shortcut share the same unchanged run path.
+  - Account context now has a compact summary rail showing final ATK, crit rate/damage, active damage-condition count, and review-only captured input count.
+  - The summary updates after screenshot text import and keeps users oriented before they manually review or run.
+- RED/GREEN summary:
+  - RED e2e: imported calculation profile quick-run flow failed because `Run imported profile` did not exist.
+  - GREEN e2e: shortcut runs the imported profile and shows `Next upgrades`.
+  - RED e2e: screenshot text import lacked `tech-account-summary`.
+  - GREEN e2e: account summary shows `Final ATK 550,220`, `Crit 147 / 822`, `Conditions 5`, and `Review 3`.
+  - Regression RED: full TD-11 E2E exposed a strict locator collision for duplicate `Final ATK` labels.
+  - Regression GREEN: vocabulary test now targets the editable field label while preserving the new summary label.
+- Verification:
+  - `node scripts/profile_import_unit_test.mjs`: passed.
+  - `node scripts/external_calculation_link_unit_test.mjs`: passed, `rawLength=1350`, `compactVersion=5`.
+  - `node scripts/tech_account_context_unit_test.mjs`: passed.
+  - `npx tsc --noEmit`: passed.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts --grep "recalculates imported profile"`: passed, 2/2.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts --grep "imports in-game screenshot text"`: passed, 2/2.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts --grep "uses SIO product vocabulary"`: passed, 2/2 after locator fix.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts`: passed, 77 passed / 1 skipped.
+  - `npm run build`: passed, 22 static pages generated.
+  - `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs`: passed with `fullSioEquivalent=true`, `currentScorer=scorer=sio_full_lm_equivalence`, G0/G1/G2/G3/G6=true.
+  - `cargo test -p tttg_forge_optimizer --test tech_optimizer_performance -- --nocapture`: passed, 136/136.
+  - `cargo test -p tttg_forge_wasm --test tech_parts_exports -- --nocapture`: passed, 9/9.
+  - `wasm-pack build tttg_forge_wasm --target web --release -- --features compat-exports`: passed; only metadata/version warnings.
+- Intentional constraints kept:
+  - Public UI remains Tangtang.
+  - No user-facing SIO copy was added.
+  - `fullSioEquivalent=true` and `currentScorer=scorer=sio_full_lm_equivalence` remain green.
+  - SIO LM/scoring core, Rust formula constants, and WASM scoring semantics were not changed.
+  - Raw SIO LM JSON, scorer/debug/preselect/beam/exact node cap UI remain hidden.
+  - Internal `sio*` rename remains deferred to Post-Launch Gate 7.

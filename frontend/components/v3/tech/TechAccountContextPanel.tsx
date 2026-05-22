@@ -47,6 +47,24 @@ export function AccountContextPanel({
   const collectionRows = COLLECTIBLE_SET_INDEX.slice(0, 3);
   const petRows = PET_SCHEMA_INDEX.slice(0, 5);
   const mountRows = MOUNT_SCHEMA_INDEX.slice(0, 3);
+  const activeConditionCount = [
+    account.shieldDamage,
+    account.poisonedDamage,
+    account.weakenedDamage,
+    account.chilledDamage,
+    account.lacerationDamage,
+  ].filter((value) => value > 0).length;
+  const reviewOnlyCount = [
+    account.petAtk,
+    account.movementSpeed,
+    account.movementSpeedCap,
+  ].filter((value) => value > 0).length;
+  const summaryRows: Array<[string, string]> = [
+    ['Final ATK', contextNumber(account.finalAtk)],
+    ['Crit', `${contextNumber(account.critRate)} / ${contextNumber(account.critDamage)}`],
+    ['Conditions', contextNumber(activeConditionCount)],
+    ['Review', contextNumber(reviewOnlyCount)],
+  ];
   const equipmentSlotSections: Array<{
     id: 'weapon' | 'armor' | 'necklace' | 'belt' | 'gloves' | 'boots';
     label: string;
@@ -238,6 +256,14 @@ export function AccountContextPanel({
   return (
     <div className={panelClass} data-testid="tech-account-context">
       <h2 className={labelClass}>Account context</h2>
+      <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4" data-testid="tech-account-summary">
+        {summaryRows.map(([label, value]) => (
+          <div key={label} className="rounded-md border border-[color:var(--color-border)]/60 p-2">
+            <p className="text-[10px] uppercase text-[color:var(--color-text-muted)]">{label}</p>
+            <p className="mt-1 truncate font-mono text-sm text-[color:var(--color-text)]">{value}</p>
+          </div>
+        ))}
+      </div>
       <div className="mt-2 grid gap-1 text-xs text-[color:var(--color-text-muted)]">
         {sections.map((section) => (
           <section key={section.title} className="border-t border-[color:var(--color-border)]/50 py-3">
