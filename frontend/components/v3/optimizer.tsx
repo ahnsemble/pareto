@@ -723,6 +723,12 @@ export function TechPartsOptimizerSurface() {
                 [field]: Number.isFinite(value) ? value : 0,
               }))
             }
+            onNamedChange={(field, value) =>
+              setAccountContext((current) => ({
+                ...current,
+                [field]: value,
+              }))
+            }
           />
 
           <div className={panelClass}>

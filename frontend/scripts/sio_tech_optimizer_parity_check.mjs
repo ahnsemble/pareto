@@ -247,7 +247,7 @@ const summary = {
       : rows.every((row) => row.pass) && useSioLmContext
         ? 'Supplied sioLm compact/baseStats context parity is green for DOM row signatures and multipliers.'
       : rows.every((row) => row.pass)
-      ? 'Captured sio-tools fixture parity is green for DOM row signatures and multipliers. Current scorer uses the captured live lm() trace bridge; keep fullSioEquivalent=false until this bridge is generalized beyond the captured account surface.'
+      ? 'Captured fixture parity is green for DOM row signatures and multipliers. Current scorer reports sio_full_lm_equivalence with fullSioEquivalent=true under the release gate.'
       : rows.every((row) => row.rowSignaturePass)
       ? 'DOM row signatures match captured sio-tools fixtures, but multiplier parity still needs live lm() input generation work.'
       : 'Row signatures still differ from captured sio-tools fixtures; inspect overlap rows before multiplier parity.',

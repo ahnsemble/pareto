@@ -246,12 +246,25 @@ function createWorkerContext(sourceDir, posted) {
 }
 
 function patchBaseStatComponentCapture(code) {
-  const needle = 'll=(0,s.x)([';
-  const start = code.indexOf(needle);
-  if (start < 0) {
+  const candidates = [
+    {
+      needle: 'll=(0,s.x)([',
+      callStart: 'll=(0,s.x)(',
+      replacement: 'll=(0,s.x)(__llParts)',
+    },
+    {
+      needle: 'e7=(0,a.x)([',
+      callStart: 'e7=(0,a.x)(',
+      replacement: 'e7=(0,a.x)(__llParts)',
+    },
+  ];
+  const candidate = candidates
+    .map((item) => ({ ...item, start: code.indexOf(item.needle) }))
+    .find((item) => item.start >= 0);
+  if (!candidate) {
     throw new Error('Unable to find worker-skills ll base stat aggregation expression');
   }
-  const argumentStart = start + 'll=(0,s.x)('.length;
+  const argumentStart = candidate.start + candidate.callStart.length;
   let depth = 0;
   let inString = false;
   let expressionEnd = -1;
@@ -286,7 +299,7 @@ function patchBaseStatComponentCapture(code) {
   }
   const arrayExpression = code.slice(argumentStart, expressionEnd);
   const callEnd = code[expressionEnd] === ')' ? expressionEnd + 1 : expressionEnd;
-  return `${code.slice(0, start)}__llParts=${arrayExpression},ll=(0,s.x)(__llParts)${code.slice(
+  return `${code.slice(0, candidate.start)}__llParts=${arrayExpression},${candidate.replacement}${code.slice(
     callEnd,
   )}`;
 }
@@ -299,49 +312,73 @@ async function loadPatchedWorker(sourceDir, posted) {
   const sourcePath = path.join(sourceDir, 'worker-skills-8663.js');
   let code = fs.readFileSync(sourcePath, 'utf8');
   code = patchBaseStatComponentCapture(code);
-  const techStageStartNeedle =
-    'function Q(e,l){var t,r,o,n,s,a;if(!(null==l?void 0:l.deployed))return;let{rarity:c=p.LZ.Legend,resonance:h,overload:m}=l,b=null!=(n=l.mode)?n:g.zD[e],x=!!O[b],E=null==(t=d.c.techs[e])?void 0:t[b];';
-  const techStageStartReplacement =
-    'function Q(e,l){var t,r,o,n,s,a;if(!(null==l?void 0:l.deployed))return;let __beforeStats=self.__traceLmTechStageEnabled?{...N}:void 0;let{rarity:c=p.LZ.Legend,resonance:h,overload:m}=l,b=null!=(n=l.mode)?n:g.zD[e],x=!!O[b],E=null==(t=d.c.techs[e])?void 0:t[b];';
-  const techStageEndNeedle = 'X[b]=w,_+=w}';
-  const techStageEndReplacement =
-    'X[b]=w,_+=w,self.__traceLmTechStageEnabled&&self.__activeLmTechStageSnapshots&&self.__activeLmTechStageSnapshots.push({tech:e,mode:b,rarity:c,resonance:h,overload:m,active:x,beforeStats:__beforeStats,stats:{...N}})}';
-  const baseNeedle =
-    'let{ceDamage:o,passivePools:n}=E({evolvePassives:li,cooldownReduction:r,techs:e,skills:lh,collectibles:eO,upgradedCollectibles:e7,settings:e5,gameMode:eb,eeOmnipower:eA,eeSkills:eL,staticCache:e8,stableTechEntries:t?V:void 0},la);';
-  const baseReplacement =
-    'let __baseStatsBeforeTech={...la},__lmStatSnapshots=[],__recordLmStatSnapshot=e=>{self.__traceLmStatAttributionEnabled&&__lmStatSnapshots.push({label:e,stats:{...la}})};self.__activeLmTechStageSnapshots=self.__traceLmTechStageEnabled?[]:void 0;__recordLmStatSnapshot("beforeTech");let{ceDamage:o,passivePools:n}=E({evolvePassives:li,cooldownReduction:r,techs:e,skills:lh,collectibles:eO,upgradedCollectibles:e7,settings:e5,gameMode:eb,eeOmnipower:eA,eeSkills:eL,staticCache:e8,stableTechEntries:t?V:void 0},la);__recordLmStatSnapshot("afterTech");';
-  const activeSkillNeedle =
-    'la.cooldownReduction=r,e4>=7&&((lh["Rocket Mode"]||lh.Rocket)&&(la.lacerationUptime=1),e4>=8&&lh["Laser Mode"]&&(la.lacerationUptime=1),e4>=10&&(lh["Drone Mode"]||lh.Drone)&&(la.lacerationUptime=1));let s=0;';
-  const activeSkillReplacement =
-    'la.cooldownReduction=r,__recordLmStatSnapshot("afterCooldown"),e4>=7&&((lh["Rocket Mode"]||lh.Rocket)&&(la.lacerationUptime=1),e4>=8&&lh["Laser Mode"]&&(la.lacerationUptime=1),e4>=10&&(lh["Drone Mode"]||lh.Drone)&&(la.lacerationUptime=1));__recordLmStatSnapshot("afterActiveSkillPostprocess");let s=0;';
-  const equipmentNeedle = '(0,v.Dp)(la,ls[s]),(0,_.zP)(ld);';
-  const equipmentReplacement =
-    '(0,v.Dp)(la,ls[s]),__recordLmStatSnapshot("afterEquipmentTransmute"),(0,_.zP)(ld),__recordLmStatSnapshot("afterEquipmentDynamicSpecials");';
-  const needle = 'return(0,_.IE)(lv),(0,H.f)(la,lu,a,i,e5.calcMode,lh,n,eb)';
-  const replacement =
-    'return(()=>{(0,_.IE)(lv);__recordLmStatSnapshot("afterEvolvePassivesPostprocess");let __score=(0,H.f)(la,lu,a,i,e5.calcMode,lh,n,eb);if(__score>((self.__bestLmTrace&&self.__bestLmTrace.score)||0))self.__bestLmTrace={score:__score,mask:l,calcMode:e5.calcMode,gameMode:eb,attackMeta:{...lu},damageFactor:a,ceDamage:i,baseStats:{...__baseStatsBeforeTech},baseStatComponents:self.__traceLmBaseComponentsEnabled?__llParts.map(e=>e&&typeof e==="object"?{...e}:e):void 0,statSnapshots:self.__traceLmStatAttributionEnabled?__lmStatSnapshots.map(e=>({label:e.label,stats:{...e.stats}})):void 0,techStageSnapshots:self.__traceLmTechStageEnabled&&self.__activeLmTechStageSnapshots?self.__activeLmTechStageSnapshots.map(e=>({tech:e.tech,mode:e.mode,rarity:e.rarity,resonance:e.resonance,overload:e.overload,active:e.active,beforeStats:{...e.beforeStats},stats:{...e.stats}})):void 0,stats:{...la},skills:{...lh},techs:JSON.parse(JSON.stringify(e)),passivePools:Array.from(n||[])};return __score})()';
-  if (!code.includes(baseNeedle)) {
+  const patchSets = [
+    {
+      techStageStartNeedle:
+        'function Q(e,l){var t,r,o,n,s,a;if(!(null==l?void 0:l.deployed))return;let{rarity:c=p.LZ.Legend,resonance:h,overload:m}=l,b=null!=(n=l.mode)?n:g.zD[e],x=!!O[b],E=null==(t=d.c.techs[e])?void 0:t[b];',
+      techStageStartReplacement:
+        'function Q(e,l){var t,r,o,n,s,a;if(!(null==l?void 0:l.deployed))return;let __beforeStats=self.__traceLmTechStageEnabled?{...N}:void 0;let{rarity:c=p.LZ.Legend,resonance:h,overload:m}=l,b=null!=(n=l.mode)?n:g.zD[e],x=!!O[b],E=null==(t=d.c.techs[e])?void 0:t[b];',
+      techStageEndNeedle: 'X[b]=w,_+=w}',
+      techStageEndReplacement:
+        'X[b]=w,_+=w,self.__traceLmTechStageEnabled&&self.__activeLmTechStageSnapshots&&self.__activeLmTechStageSnapshots.push({tech:e,mode:b,rarity:c,resonance:h,overload:m,active:x,beforeStats:__beforeStats,stats:{...N}})}',
+      baseNeedle:
+        'let{ceDamage:o,passivePools:n}=E({evolvePassives:li,cooldownReduction:r,techs:e,skills:lh,collectibles:eO,upgradedCollectibles:e7,settings:e5,gameMode:eb,eeOmnipower:eA,eeSkills:eL,staticCache:e8,stableTechEntries:t?V:void 0},la);',
+      baseReplacement:
+        'let __baseStatsBeforeTech={...la},__lmStatSnapshots=[],__recordLmStatSnapshot=e=>{self.__traceLmStatAttributionEnabled&&__lmStatSnapshots.push({label:e,stats:{...la}})};self.__activeLmTechStageSnapshots=self.__traceLmTechStageEnabled?[]:void 0;__recordLmStatSnapshot("beforeTech");let{ceDamage:o,passivePools:n}=E({evolvePassives:li,cooldownReduction:r,techs:e,skills:lh,collectibles:eO,upgradedCollectibles:e7,settings:e5,gameMode:eb,eeOmnipower:eA,eeSkills:eL,staticCache:e8,stableTechEntries:t?V:void 0},la);__recordLmStatSnapshot("afterTech");',
+      activeSkillNeedle:
+        'la.cooldownReduction=r,e4>=7&&((lh["Rocket Mode"]||lh.Rocket)&&(la.lacerationUptime=1),e4>=8&&lh["Laser Mode"]&&(la.lacerationUptime=1),e4>=10&&(lh["Drone Mode"]||lh.Drone)&&(la.lacerationUptime=1));let s=0;',
+      activeSkillReplacement:
+        'la.cooldownReduction=r,__recordLmStatSnapshot("afterCooldown"),e4>=7&&((lh["Rocket Mode"]||lh.Rocket)&&(la.lacerationUptime=1),e4>=8&&lh["Laser Mode"]&&(la.lacerationUptime=1),e4>=10&&(lh["Drone Mode"]||lh.Drone)&&(la.lacerationUptime=1));__recordLmStatSnapshot("afterActiveSkillPostprocess");let s=0;',
+      equipmentNeedle: '(0,v.Dp)(la,ls[s]),(0,_.zP)(ld);',
+      equipmentReplacement:
+        '(0,v.Dp)(la,ls[s]),__recordLmStatSnapshot("afterEquipmentTransmute"),(0,_.zP)(ld),__recordLmStatSnapshot("afterEquipmentDynamicSpecials");',
+      scoreNeedle: 'return(0,_.IE)(lv),(0,H.f)(la,lu,a,i,e5.calcMode,lh,n,eb)',
+      scoreReplacement:
+        'return(()=>{(0,_.IE)(lv);__recordLmStatSnapshot("afterEvolvePassivesPostprocess");let __score=(0,H.f)(la,lu,a,i,e5.calcMode,lh,n,eb);if(__score>((self.__bestLmTrace&&self.__bestLmTrace.score)||0))self.__bestLmTrace={score:__score,mask:l,calcMode:e5.calcMode,gameMode:eb,attackMeta:{...lu},damageFactor:a,ceDamage:i,baseStats:{...__baseStatsBeforeTech},baseStatComponents:self.__traceLmBaseComponentsEnabled?__llParts.map(e=>e&&typeof e==="object"?{...e}:e):void 0,statSnapshots:self.__traceLmStatAttributionEnabled?__lmStatSnapshots.map(e=>({label:e.label,stats:{...e.stats}})):void 0,techStageSnapshots:self.__traceLmTechStageEnabled&&self.__activeLmTechStageSnapshots?self.__activeLmTechStageSnapshots.map(e=>({tech:e.tech,mode:e.mode,rarity:e.rarity,resonance:e.resonance,overload:e.overload,active:e.active,beforeStats:{...e.beforeStats},stats:{...e.stats}})):void 0,stats:{...la},skills:{...lh},techs:JSON.parse(JSON.stringify(e)),passivePools:Array.from(n||[])};return __score})()',
+    },
+    {
+      techStageStartNeedle:
+        'function K(e,r){var t,l,o,s,n,a;if(!(null==r?void 0:r.deployed))return;let{rarity:i=C.LZ.Legend,resonance:u,overload:b}=r,x=null!=(s=r.mode)?s:p.zD[e],k=!!S[x],M=null==(t=d.c.techs[e])?void 0:t[x];',
+      techStageStartReplacement:
+        'function K(e,r){var t,l,o,s,n,a;if(!(null==r?void 0:r.deployed))return;let __beforeStats=self.__traceLmTechStageEnabled?{...N}:void 0;let{rarity:i=C.LZ.Legend,resonance:u,overload:b}=r,x=null!=(s=r.mode)?s:p.zD[e],k=!!S[x],M=null==(t=d.c.techs[e])?void 0:t[x];',
+      techStageEndNeedle: 'W[x]=w,H+=w}',
+      techStageEndReplacement:
+        'W[x]=w,H+=w,self.__traceLmTechStageEnabled&&self.__activeLmTechStageSnapshots&&self.__activeLmTechStageSnapshots.push({tech:e,mode:x,rarity:i,resonance:u,overload:b,active:k,beforeStats:__beforeStats,stats:{...N}})}',
+      baseNeedle:
+        'let{ceDamage:o,passivePools:s}=k({evolvePassives:ro,cooldownReduction:l,techs:e,skills:ri,collectibles:eV,upgradedCollectibles:e4,settings:e1,gameMode:eN,eeOmnipower:eH,eeSkills:eX,staticCache:e5,stableTechEntries:t?ef:void 0},rl);',
+      baseReplacement:
+        'let __baseStatsBeforeTech={...rl},__lmStatSnapshots=[],__recordLmStatSnapshot=e=>{self.__traceLmStatAttributionEnabled&&__lmStatSnapshots.push({label:e,stats:{...rl}})};self.__activeLmTechStageSnapshots=self.__traceLmTechStageEnabled?[]:void 0;__recordLmStatSnapshot("beforeTech");let{ceDamage:o,passivePools:s}=k({evolvePassives:ro,cooldownReduction:l,techs:e,skills:ri,collectibles:eV,upgradedCollectibles:e4,settings:e1,gameMode:eN,eeOmnipower:eH,eeSkills:eX,staticCache:e5,stableTechEntries:t?ef:void 0},rl);__recordLmStatSnapshot("afterTech");',
+      activeSkillNeedle:
+        'rl.cooldownReduction=l,e3>=7&&((ri["Rocket Mode"]||ri.Rocket)&&(rl.lacerationUptime=1),e3>=8&&ri["Laser Mode"]&&(rl.lacerationUptime=1),e3>=10&&(ri["Drone Mode"]||ri.Drone)&&(rl.lacerationUptime=1));let n=0;',
+      activeSkillReplacement:
+        'rl.cooldownReduction=l,__recordLmStatSnapshot("afterCooldown"),e3>=7&&((ri["Rocket Mode"]||ri.Rocket)&&(rl.lacerationUptime=1),e3>=8&&ri["Laser Mode"]&&(rl.lacerationUptime=1),e3>=10&&(ri["Drone Mode"]||ri.Drone)&&(rl.lacerationUptime=1));__recordLmStatSnapshot("afterActiveSkillPostprocess");let n=0;',
+      equipmentNeedle: '(0,h.Dp)(rl,rt[n]),(0,R.zP)(rc);',
+      equipmentReplacement:
+        '(0,h.Dp)(rl,rt[n]),__recordLmStatSnapshot("afterEquipmentTransmute"),(0,R.zP)(rc),__recordLmStatSnapshot("afterEquipmentDynamicSpecials");',
+      scoreNeedle: 'return(0,R.IE)(ra),(0,W.f)(rl,rn,c,a,e1.calcMode,ri,s,eN)',
+      scoreReplacement:
+        'return(()=>{(0,R.IE)(ra);__recordLmStatSnapshot("afterEvolvePassivesPostprocess");let __score=(0,W.f)(rl,rn,c,a,e1.calcMode,ri,s,eN);if(__score>((self.__bestLmTrace&&self.__bestLmTrace.score)||0))self.__bestLmTrace={score:__score,mask:r,calcMode:e1.calcMode,gameMode:eN,attackMeta:{...rn},damageFactor:c,ceDamage:a,baseStats:{...__baseStatsBeforeTech},baseStatComponents:self.__traceLmBaseComponentsEnabled?__llParts.map(e=>e&&typeof e==="object"?{...e}:e):void 0,statSnapshots:self.__traceLmStatAttributionEnabled?__lmStatSnapshots.map(e=>({label:e.label,stats:{...e.stats}})):void 0,techStageSnapshots:self.__traceLmTechStageEnabled&&self.__activeLmTechStageSnapshots?self.__activeLmTechStageSnapshots.map(e=>({tech:e.tech,mode:e.mode,rarity:e.rarity,resonance:e.resonance,overload:e.overload,active:e.active,beforeStats:{...e.beforeStats},stats:{...e.stats}})):void 0,stats:{...rl},skills:{...ri},techs:JSON.parse(JSON.stringify(e)),passivePools:Array.from(s||[])};return __score})()',
+    },
+  ];
+  const patchSet = patchSets.find(
+    (item) =>
+      code.includes(item.baseNeedle) &&
+      code.includes(item.techStageStartNeedle) &&
+      code.includes(item.techStageEndNeedle) &&
+      code.includes(item.activeSkillNeedle) &&
+      code.includes(item.equipmentNeedle) &&
+      code.includes(item.scoreNeedle),
+  );
+  if (!patchSet) {
     throw new Error('Unable to patch worker-skills lm() base stats expression');
   }
-  if (!code.includes(techStageStartNeedle) || !code.includes(techStageEndNeedle)) {
-    throw new Error('Unable to patch worker-skills E() tech stage attribution');
-  }
-  if (!code.includes(activeSkillNeedle)) {
-    throw new Error('Unable to patch worker-skills lm() active skill postprocess expression');
-  }
-  if (!code.includes(equipmentNeedle)) {
-    throw new Error('Unable to patch worker-skills lm() equipment postprocess expression');
-  }
-  if (!code.includes(needle)) {
-    throw new Error('Unable to patch worker-skills lm() return expression');
-  }
   code = code
-    .replace(techStageStartNeedle, techStageStartReplacement)
-    .replace(techStageEndNeedle, techStageEndReplacement)
-    .replace(baseNeedle, baseReplacement)
-    .replace(activeSkillNeedle, activeSkillReplacement)
-    .replace(equipmentNeedle, equipmentReplacement)
-    .replace(needle, replacement);
+    .replace(patchSet.techStageStartNeedle, patchSet.techStageStartReplacement)
+    .replace(patchSet.techStageEndNeedle, patchSet.techStageEndReplacement)
+    .replace(patchSet.baseNeedle, patchSet.baseReplacement)
+    .replace(patchSet.activeSkillNeedle, patchSet.activeSkillReplacement)
+    .replace(patchSet.equipmentNeedle, patchSet.equipmentReplacement)
+    .replace(patchSet.scoreNeedle, patchSet.scoreReplacement);
   code = code.replace('_N_E=t.x()', 'self.__webpack_require__=t;self.__webpack_ready__=t.x()');
   vm.runInContext(code, context, { filename: sourcePath });
   await context.__webpack_ready__;

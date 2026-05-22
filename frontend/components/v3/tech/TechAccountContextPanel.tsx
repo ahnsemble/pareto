@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  COLLECTIBLE_ITEM_INDEX,
   COLLECTIBLE_SET_INDEX,
   HERO_SCHEMA_INDEX,
   MOUNT_SCHEMA_INDEX,
@@ -9,7 +10,7 @@ import {
 } from '../../../app/lib/pareto-store/schemas';
 import type { PlayerState } from '../../../app/lib/pareto-store/types';
 import { formatNumber, inputClass, labelClass, panelClass, selectClass } from '../optimizerUi';
-import type { TechAccountContextInput } from './techAccountContext';
+import type { TechAccountContextInput, TechAccountContextNamedField } from './techAccountContext';
 
 function contextNumber(value: number | null | undefined, digits = 0): string {
   return typeof value === 'number' && Number.isFinite(value) ? formatNumber(value, digits) : '0';
@@ -31,25 +32,31 @@ export function AccountContextPanel({
   playerState,
   account,
   onChange,
+  onNamedChange,
 }: {
   playerState: PlayerState;
   account: TechAccountContextInput;
   onChange: (field: keyof TechAccountContextInput, value: number) => void;
+  onNamedChange: (field: TechAccountContextNamedField, value: string) => void;
 }) {
   const equipment = playerState.equipment;
   const selectedHeroName = displayNameById(HERO_SCHEMA_INDEX, playerState.hero.selected_hero_id, 'Selected survivor');
   const deployedPetName = displayNameById(PET_SCHEMA_INDEX, playerState.pet.deployed_pet_id, 'Pet');
+  const selectedCollectibleName = displayNameById(COLLECTIBLE_ITEM_INDEX, playerState.collectible.target_collectible_id, 'None');
+  const selectedMountName = displayNameById(MOUNT_SCHEMA_INDEX, account.selectedMountId, 'Mount');
   const collectionRows = COLLECTIBLE_SET_INDEX.slice(0, 3);
   const petRows = PET_SCHEMA_INDEX.slice(0, 5);
   const mountRows = MOUNT_SCHEMA_INDEX.slice(0, 3);
   const equipmentSlotSections: Array<{
     id: 'weapon' | 'armor' | 'necklace' | 'belt' | 'gloves' | 'boots';
     label: string;
+    itemField: TechAccountContextNamedField;
     fields: Array<{ id: keyof TechAccountContextInput; label: string; testId: string; min: number; max?: number }>;
   }> = [
     {
       id: 'weapon',
       label: 'Weapon',
+      itemField: 'weaponItemId',
       fields: [
         { id: 'weaponEaf', label: 'EAF', testId: 'tech-account-weapon-eaf', min: 0, max: 5 },
         { id: 'weaponVaf', label: 'VAF', testId: 'tech-account-weapon-vaf', min: 0, max: 5 },
@@ -60,6 +67,7 @@ export function AccountContextPanel({
     {
       id: 'armor',
       label: 'Armor',
+      itemField: 'armorItemId',
       fields: [
         { id: 'armorEaf', label: 'EAF', testId: 'tech-account-armor-eaf', min: 0, max: 5 },
         { id: 'armorVaf', label: 'VAF', testId: 'tech-account-armor-vaf', min: 0, max: 5 },
@@ -70,6 +78,7 @@ export function AccountContextPanel({
     {
       id: 'necklace',
       label: 'Necklace',
+      itemField: 'necklaceItemId',
       fields: [
         { id: 'necklaceEaf', label: 'EAF', testId: 'tech-account-necklace-eaf', min: 0, max: 5 },
         { id: 'necklaceVaf', label: 'VAF', testId: 'tech-account-necklace-vaf', min: 0, max: 5 },
@@ -80,6 +89,7 @@ export function AccountContextPanel({
     {
       id: 'belt',
       label: 'Belt',
+      itemField: 'beltItemId',
       fields: [
         { id: 'beltEaf', label: 'EAF', testId: 'tech-account-belt-eaf', min: 0, max: 5 },
         { id: 'beltVaf', label: 'VAF', testId: 'tech-account-belt-vaf', min: 0, max: 5 },
@@ -90,6 +100,7 @@ export function AccountContextPanel({
     {
       id: 'gloves',
       label: 'Gloves',
+      itemField: 'glovesItemId',
       fields: [
         { id: 'glovesEaf', label: 'EAF', testId: 'tech-account-gloves-eaf', min: 0, max: 5 },
         { id: 'glovesVaf', label: 'VAF', testId: 'tech-account-gloves-vaf', min: 0, max: 5 },
@@ -100,6 +111,7 @@ export function AccountContextPanel({
     {
       id: 'boots',
       label: 'Boots',
+      itemField: 'bootsItemId',
       fields: [
         { id: 'bootsEaf', label: 'EAF', testId: 'tech-account-boots-eaf', min: 0, max: 5 },
         { id: 'bootsVaf', label: 'VAF', testId: 'tech-account-boots-vaf', min: 0, max: 5 },
@@ -214,6 +226,28 @@ export function AccountContextPanel({
             {section.detailLabel ? <p className="mt-1 text-xs text-[color:var(--color-text-muted)]">{section.detailLabel}</p> : null}
             {section.title === 'Collections' ? (
               <div className="mt-2 grid gap-2" data-testid="tech-collection-named-editor">
+                <label className="block text-sm text-[color:var(--color-text)]">
+                  <span className="text-xs text-[color:var(--color-text-muted)]">Target collectible</span>
+                  <select
+                    className={selectClass + ' mt-1'}
+                    data-testid="tech-collection-target-select"
+                    value={account.targetCollectibleId}
+                    onChange={(event) => onNamedChange('targetCollectibleId', event.target.value)}
+                  >
+                    <option value="">None</option>
+                    {COLLECTIBLE_ITEM_INDEX.slice(0, 20).map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.display_name_en}
+                      </option>
+                    ))}
+                  </select>
+                  <span
+                    className="mt-1 block text-xs text-[color:var(--color-text-muted)]"
+                    data-testid="tech-collection-selected-target"
+                  >
+                    Selected target: {selectedCollectibleName}
+                  </span>
+                </label>
                 {collectionRows.map((set) => (
                   <div
                     key={set.id}
@@ -232,24 +266,62 @@ export function AccountContextPanel({
                   className="rounded-md border border-[color:var(--color-border)]/60 p-2 text-xs text-[color:var(--color-text)]"
                   data-testid="tech-survivor-selector"
                 >
-                  <span className="text-[color:var(--color-text-muted)]">Selected survivor</span>
-                  <span className="ml-2 font-semibold">{selectedHeroName}</span>
+                  <label className="block text-sm text-[color:var(--color-text)]">
+                    <span className="text-xs text-[color:var(--color-text-muted)]">Selected survivor</span>
+                    <select
+                      className={selectClass + ' mt-1'}
+                      data-testid="tech-survivor-select"
+                      value={account.selectedHeroId}
+                      onChange={(event) => onNamedChange('selectedHeroId', event.target.value)}
+                    >
+                      {HERO_SCHEMA_INDEX.map((hero) => (
+                        <option key={hero.id} value={hero.id}>
+                          {hero.display_name_en}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <span className="mt-2 block font-semibold" data-testid="tech-survivor-selected-name">
+                    {selectedHeroName}
+                  </span>
                 </div>
                 <div
                   className="grid gap-2 sm:grid-cols-2"
                   data-testid="tech-teamwork-passive-picker"
                 >
                   <div className="rounded-md border border-[color:var(--color-border)]/60 p-2 text-xs" data-testid="tech-teamwork-row">
-                    <span className="font-semibold text-[color:var(--color-text)]">Teamwork passive</span>
-                    <span className="mt-1 block text-[color:var(--color-text-muted)]">
-                      {selectedHeroName} support slot summary
-                    </span>
+                    <label className="block text-sm text-[color:var(--color-text)]">
+                      <span className="text-xs text-[color:var(--color-text-muted)]">Teamwork passive</span>
+                      <select
+                        className={selectClass + ' mt-1'}
+                        data-testid="tech-teamwork-select"
+                        value={account.survivorTeamwork}
+                        onChange={(event) => onChange('survivorTeamwork', Number(event.target.value))}
+                      >
+                        {[0, 1, 2, 3, 4].map((value) => (
+                          <option key={value} value={value}>
+                            {value} slots
+                          </option>
+                        ))}
+                      </select>
+                    </label>
                   </div>
                   <div className="rounded-md border border-[color:var(--color-border)]/60 p-2 text-xs" data-testid="tech-passive-row">
-                    <span className="font-semibold text-[color:var(--color-text)]">Passive crit</span>
-                    <span className="mt-1 block text-[color:var(--color-text-muted)]">
-                      Numeric fallback remains editable
-                    </span>
+                    <label className="block text-sm text-[color:var(--color-text)]">
+                      <span className="text-xs text-[color:var(--color-text-muted)]">Passive crit</span>
+                      <select
+                        className={selectClass + ' mt-1'}
+                        data-testid="tech-passive-select"
+                        value={account.survivorPassiveCrit}
+                        onChange={(event) => onChange('survivorPassiveCrit', Number(event.target.value))}
+                      >
+                        {[0, 6, 12, 18, 24].map((value) => (
+                          <option key={value} value={value}>
+                            {value}%
+                          </option>
+                        ))}
+                      </select>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -257,21 +329,92 @@ export function AccountContextPanel({
             {section.title === 'Pet awakening' ? (
               <div className="mt-2 grid gap-2" data-testid="tech-pet-selector">
                 <div className="rounded-md border border-[color:var(--color-border)]/60 p-2 text-xs text-[color:var(--color-text)]">
-                  <span className="text-[color:var(--color-text-muted)]">Deployed pet</span>
-                  <span className="ml-2 font-semibold">{deployedPetName}</span>
+                  <label className="block text-sm text-[color:var(--color-text)]">
+                    <span className="text-xs text-[color:var(--color-text-muted)]">Deployed pet</span>
+                    <select
+                      className={selectClass + ' mt-1'}
+                      data-testid="tech-pet-deployed-select"
+                      value={account.deployedPetId}
+                      onChange={(event) => onNamedChange('deployedPetId', event.target.value)}
+                    >
+                      {PET_SCHEMA_INDEX.map((pet) => (
+                        <option key={pet.id} value={pet.id}>
+                          {pet.display_name_en}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <span className="mt-2 block font-semibold">{deployedPetName}</span>
                 </div>
                 <div className="grid gap-2 sm:grid-cols-2">
                   <div className="rounded-md border border-[color:var(--color-border)]/60 p-2 text-xs" data-testid="tech-pet-assist-1">
-                    Assist 1 · {petRows[0]?.display_name_en ?? 'Pet'}
+                    <label className="block text-sm text-[color:var(--color-text)]">
+                      <span className="text-xs text-[color:var(--color-text-muted)]">Assist 1</span>
+                      <select
+                        className={selectClass + ' mt-1'}
+                        data-testid="tech-pet-assist-1-select"
+                        value={account.assistPet1Id}
+                        onChange={(event) => {
+                          onNamedChange('assistPet1Id', event.target.value);
+                          onChange('petAssistPets', Math.max(account.petAssistPets, event.target.value ? 1 : 0));
+                        }}
+                      >
+                        <option value="">None</option>
+                        {petRows.map((pet) => (
+                          <option key={pet.id} value={pet.id}>
+                            {pet.display_name_en}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
                   </div>
                   <div className="rounded-md border border-[color:var(--color-border)]/60 p-2 text-xs" data-testid="tech-pet-assist-2">
-                    Assist 2 · {petRows[1]?.display_name_en ?? 'Pet'}
+                    <label className="block text-sm text-[color:var(--color-text)]">
+                      <span className="text-xs text-[color:var(--color-text-muted)]">Assist 2</span>
+                      <select
+                        className={selectClass + ' mt-1'}
+                        data-testid="tech-pet-assist-2-select"
+                        value={account.assistPet2Id}
+                        onChange={(event) => {
+                          onNamedChange('assistPet2Id', event.target.value);
+                          onChange('petAssistPets', Math.max(account.petAssistPets, event.target.value ? 2 : 0));
+                        }}
+                      >
+                        <option value="">None</option>
+                        {petRows.map((pet) => (
+                          <option key={pet.id} value={pet.id}>
+                            {pet.display_name_en}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
                   </div>
                 </div>
               </div>
             ) : null}
             {section.title === 'Mounts' ? (
               <div className="mt-2 grid gap-2" data-testid="tech-mount-puzzle-editor">
+                <label className="block rounded-md border border-[color:var(--color-border)]/60 p-2 text-sm text-[color:var(--color-text)]">
+                  <span className="text-xs text-[color:var(--color-text-muted)]">Selected mount</span>
+                  <select
+                    className={selectClass + ' mt-1'}
+                    data-testid="tech-mount-select"
+                    value={account.selectedMountId}
+                    onChange={(event) => onNamedChange('selectedMountId', event.target.value)}
+                  >
+                    {MOUNT_SCHEMA_INDEX.map((mount) => (
+                      <option key={mount.id} value={mount.id}>
+                        {mount.display_name_en}
+                      </option>
+                    ))}
+                  </select>
+                  <span
+                    className="mt-2 block text-xs font-semibold text-[color:var(--color-text)]"
+                    data-testid="tech-mount-selected-name"
+                  >
+                    {selectedMountName}
+                  </span>
+                </label>
                 {mountRows.map((mount, index) => (
                   <div
                     key={mount.id}
@@ -315,8 +458,8 @@ export function AccountContextPanel({
                       <select
                         className={selectClass + ' mt-1'}
                         data-testid={`tech-equipment-item-selector-${slot.id}`}
-                        value={equipment[slot.id].item_id}
-                        onChange={() => undefined}
+                        value={account[slot.itemField]}
+                        onChange={(event) => onNamedChange(slot.itemField, event.target.value)}
                       >
                         {SS_EQUIPMENT_SCHEMA_INDEX.filter((item) => item.slot === slot.id).map((item) => (
                           <option key={item.id} value={item.id}>

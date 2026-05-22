@@ -1,6 +1,18 @@
 import type { PlayerState } from '../../../app/lib/pareto-store/types';
 
 export type TechAccountContextInput = {
+  selectedHeroId: string;
+  targetCollectibleId: string;
+  deployedPetId: string;
+  assistPet1Id: string;
+  assistPet2Id: string;
+  selectedMountId: string;
+  weaponItemId: string;
+  armorItemId: string;
+  necklaceItemId: string;
+  beltItemId: string;
+  glovesItemId: string;
+  bootsItemId: string;
   baseAtk: number;
   finalAtk: number;
   atkPercent: number;
@@ -53,7 +65,23 @@ export type TechAccountContextInput = {
   lmeTurf: number;
 };
 
+export type TechAccountContextNamedField = {
+  [K in keyof TechAccountContextInput]: TechAccountContextInput[K] extends string ? K : never;
+}[keyof TechAccountContextInput];
+
 export const DEFAULT_TECH_ACCOUNT_CONTEXT: TechAccountContextInput = {
+  selectedHeroId: 'venato',
+  targetCollectibleId: '',
+  deployedPetId: 'rex',
+  assistPet1Id: '',
+  assistPet2Id: '',
+  selectedMountId: 'doomsteed',
+  weaponItemId: 'twinLance',
+  armorItemId: 'evervoidArmor',
+  necklaceItemId: 'judgmentNecklace',
+  beltItemId: 'stardustSash',
+  glovesItemId: 'moonscarBracer',
+  bootsItemId: 'glacialWarboots',
   baseAtk: 6101,
   finalAtk: 100000,
   atkPercent: 118,
@@ -172,6 +200,7 @@ export function playerStateWithAccountContext(playerState: PlayerState, account:
     },
     hero: {
       ...playerState.hero,
+      selected_hero_id: account.selectedHeroId as PlayerState['hero']['selected_hero_id'],
       selected_hero_level: clampInteger(account.survivorLevel, 1, 120),
       selected_hero_star: clampInteger(account.survivorStar, 0, 8),
       selected_hero_awakening: clampInteger(account.survivorAwakening, 0, 8),
@@ -182,6 +211,7 @@ export function playerStateWithAccountContext(playerState: PlayerState, account:
       ...playerState.equipment,
       weapon: {
         ...playerState.equipment.weapon,
+        item_id: account.weaponItemId,
         astral_forge_eaf_level: clampInteger(account.weaponEaf, 0, 5) as PlayerState['equipment']['weapon']['astral_forge_eaf_level'],
         astral_forge_vaf_level: clampInteger(account.weaponVaf, 0, 5) as PlayerState['equipment']['weapon']['astral_forge_vaf_level'],
         chaos_fusion_level: clampInteger(account.weaponChaos, 0, 10),
@@ -189,6 +219,7 @@ export function playerStateWithAccountContext(playerState: PlayerState, account:
       },
       armor: {
         ...playerState.equipment.armor,
+        item_id: account.armorItemId,
         astral_forge_eaf_level: clampInteger(account.armorEaf, 0, 5) as PlayerState['equipment']['armor']['astral_forge_eaf_level'],
         astral_forge_vaf_level: clampInteger(account.armorVaf, 0, 5) as PlayerState['equipment']['armor']['astral_forge_vaf_level'],
         chaos_fusion_level: clampInteger(account.armorChaos, 0, 10),
@@ -196,6 +227,7 @@ export function playerStateWithAccountContext(playerState: PlayerState, account:
       },
       necklace: {
         ...playerState.equipment.necklace,
+        item_id: account.necklaceItemId,
         astral_forge_eaf_level: clampInteger(account.necklaceEaf, 0, 5) as PlayerState['equipment']['necklace']['astral_forge_eaf_level'],
         astral_forge_vaf_level: clampInteger(account.necklaceVaf, 0, 5) as PlayerState['equipment']['necklace']['astral_forge_vaf_level'],
         chaos_fusion_level: clampInteger(account.necklaceChaos, 0, 10),
@@ -203,6 +235,7 @@ export function playerStateWithAccountContext(playerState: PlayerState, account:
       },
       belt: {
         ...playerState.equipment.belt,
+        item_id: account.beltItemId,
         astral_forge_eaf_level: clampInteger(account.beltEaf, 0, 5) as PlayerState['equipment']['belt']['astral_forge_eaf_level'],
         astral_forge_vaf_level: clampInteger(account.beltVaf, 0, 5) as PlayerState['equipment']['belt']['astral_forge_vaf_level'],
         chaos_fusion_level: clampInteger(account.beltChaos, 0, 10),
@@ -210,6 +243,7 @@ export function playerStateWithAccountContext(playerState: PlayerState, account:
       },
       gloves: {
         ...playerState.equipment.gloves,
+        item_id: account.glovesItemId,
         astral_forge_eaf_level: clampInteger(account.glovesEaf, 0, 5) as PlayerState['equipment']['gloves']['astral_forge_eaf_level'],
         astral_forge_vaf_level: clampInteger(account.glovesVaf, 0, 5) as PlayerState['equipment']['gloves']['astral_forge_vaf_level'],
         chaos_fusion_level: clampInteger(account.glovesChaos, 0, 10),
@@ -217,6 +251,7 @@ export function playerStateWithAccountContext(playerState: PlayerState, account:
       },
       boots: {
         ...playerState.equipment.boots,
+        item_id: account.bootsItemId,
         astral_forge_eaf_level: clampInteger(account.bootsEaf, 0, 5) as PlayerState['equipment']['boots']['astral_forge_eaf_level'],
         astral_forge_vaf_level: clampInteger(account.bootsVaf, 0, 5) as PlayerState['equipment']['boots']['astral_forge_vaf_level'],
         chaos_fusion_level: clampInteger(account.bootsChaos, 0, 10),
@@ -225,12 +260,13 @@ export function playerStateWithAccountContext(playerState: PlayerState, account:
     },
     pet: {
       ...playerState.pet,
+      deployed_pet_id: account.deployedPetId,
       awakening_level: clampInteger(account.petAwakening, 0, 8),
       deployed_is_xeno: account.petXeno >= 1,
       resonance_chance: Math.max(0, Math.trunc(account.petResonanceChance)),
       resonance_atk: Math.max(0, Math.trunc(account.petResonanceAtk)),
-      assist_pet_1_id: account.petAssistPets >= 1 ? (playerState.pet.assist_pet_1_id || 'assist_pet_1') : '',
-      assist_pet_2_id: account.petAssistPets >= 2 ? (playerState.pet.assist_pet_2_id || 'assist_pet_2') : '',
+      assist_pet_1_id: account.petAssistPets >= 1 ? account.assistPet1Id : '',
+      assist_pet_2_id: account.petAssistPets >= 2 ? account.assistPet2Id : '',
       xeno_preview_enabled: account.petXeno >= 1,
     },
     collectible: {
@@ -238,6 +274,7 @@ export function playerStateWithAccountContext(playerState: PlayerState, account:
       edition_progress: clampInteger(account.collectionSets, 0, 38),
       red_star_total: Math.max(0, Math.trunc(account.collectionStars)),
       custom_collection_slots: Math.max(0, Math.trunc(account.customCollectionSets)),
+      target_collectible_id: account.targetCollectibleId,
     },
     lme: {
       ...playerState.lme,

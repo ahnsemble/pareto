@@ -29,7 +29,6 @@ pub const DAMAGE_ORDER: &[&str] = &[
     "ssWeapon",
     "Lightning Mode",
     "Drill",
-    "Drill Shot Mode",
     "Rocket",
     "Rocket Mode",
     "Molotov",
@@ -45,7 +44,7 @@ pub const DAMAGE_ORDER: &[&str] = &[
 
 pub const PASSIVE_DAMAGE_NAMES: &[&str] =
     &["Exo Bracer", "Ammo Thruster", "HE Fuel", "Energy Cube"];
-pub const MAX_DAMAGE_POOL_INDEX: usize = 59;
+pub const MAX_DAMAGE_POOL_INDEX: usize = 55;
 
 pub fn tech_default_mode(name: &str) -> Option<&'static str> {
     match name {
@@ -91,7 +90,7 @@ pub fn damage_coefficient(name: &str) -> f64 {
         "Soccer Mode" => 19.7,
         "Drone Mode" => 48.22,
         "Forcefield Mode" => 18.94,
-        "Drill Shot Mode" => 36.8,
+        "Drill Shot Mode" => 46.21,
         "Rocket Mode" => 49.04,
         "Lightning Mode" => 56.59,
         "Boomerang Mode" => 24.36,
@@ -112,7 +111,7 @@ pub fn passive_multiplier(passive_name: &str, mode: &str, value: f64) -> f64 {
         "Exo Bracer" => match mode {
             "ssWeapon" => 1.0 + -0.025 * value,
             "Lightning Mode" => 1.0 + -0.0177 * value,
-            "Drill" | "Drill Shot Mode" => 1.0 + 0.3636 * value,
+            "Drill" => 1.0 + 0.3636 * value,
             "Rocket" | "Rocket Mode" => 1.0 + 0.0583 * value,
             "Molotov" => 1.0 + 0.1 * value,
             "Soccer Mode" => 1.0 + 0.1934 * value,
@@ -123,7 +122,7 @@ pub fn passive_multiplier(passive_name: &str, mode: &str, value: f64) -> f64 {
             "ssWeapon" => 1.0 + 0.025 * value,
             "Drone" => 1.0 + 0.1111 * value,
             "Lightning Mode" => 1.0 + 0.0267 * value,
-            "Drill" | "Drill Shot Mode" => 1.0 + 0.3922 * value,
+            "Drill" => 1.0 + 0.3922 * value,
             "Rocket" | "Rocket Mode" => 1.0 + 0.065 * value,
             "Soccer Mode" => 1.0 + 0.1116 * value,
             "Laser Mode" => 1.0 + value,

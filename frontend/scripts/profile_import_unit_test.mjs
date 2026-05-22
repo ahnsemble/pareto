@@ -94,4 +94,33 @@ assert.equal(flatAliasResult.account.finalAtk, 131000);
 assert.equal(flatAliasResult.tech.chips, 67);
 assert.equal(flatAliasResult.account.weaponEaf, 5);
 
+const namedAliasResult = parseProductProfileImport(JSON.stringify({
+  state: {
+    hero: { selected_hero_id: 'king' },
+    collectible: { target_collectible_id: 'atomicMech' },
+    pet: {
+      deployed_pet_id: 'croaky',
+      assist_pet_1_id: 'gary',
+      assist_pet_2_id: 'capy',
+    },
+    mount: { selected_mount_id: 'electricScooter' },
+    equipment: {
+      weapon: { item_id: 'twinLance' },
+      necklace: { item_id: 'voidwakerEmblem' },
+      boots: { item_id: 'voidwakerTreads' },
+    },
+  },
+}));
+
+assert.equal(namedAliasResult.ok, true);
+assert.equal(namedAliasResult.account.selectedHeroId, 'king');
+assert.equal(namedAliasResult.account.targetCollectibleId, 'atomicMech');
+assert.equal(namedAliasResult.account.deployedPetId, 'croaky');
+assert.equal(namedAliasResult.account.assistPet1Id, 'gary');
+assert.equal(namedAliasResult.account.assistPet2Id, 'capy');
+assert.equal(namedAliasResult.account.selectedMountId, 'electricScooter');
+assert.equal(namedAliasResult.account.weaponItemId, 'twinLance');
+assert.equal(namedAliasResult.account.necklaceItemId, 'voidwakerEmblem');
+assert.equal(namedAliasResult.account.bootsItemId, 'voidwakerTreads');
+
 console.log('profile_import_unit_test: passed');

@@ -2945,15 +2945,6 @@ fn ce_modifiers(mode: &str, transform: &SioLmStatTransform) -> SioCeModifiers {
                     (20.0, &[("h1", 0.1), ("h2", 0.1)][..]),
                 ],
             );
-            if ce_collectible_stars(transform, 28) >= 10.0 {
-                let red = ce_set_metric(transform, &[3, 19, 70, 80], "red");
-                if red >= 20.0 {
-                    modifiers.h2 += 0.041_333_568_269_983_79;
-                } else if ce_set_metric(transform, &[3, 19, 70, 80], "gold") >= 20.0 && red >= 10.0
-                {
-                    modifiers.h2 += 0.040_492_692_811_098_144;
-                }
-            }
             ce_apply_collectible(
                 &mut modifiers,
                 ce_collectible_stars(transform, 28),
@@ -2984,17 +2975,34 @@ fn ce_modifiers(mode: &str, transform: &SioLmStatTransform) -> SioCeModifiers {
             );
         }
         "Drill Shot Mode" => {
-            if ce_set_metric(transform, &[10, 22, 87, 90], "gold") >= 10.0 {
-                modifiers.mult += 0.111_948_051_948_052_02;
-            }
+            ce_apply_set(
+                &mut modifiers,
+                transform,
+                &[10, 22, 87, 90],
+                "gold",
+                &[
+                    (10.0, &[("h1", 0.1), ("h2", 0.1), ("h4", 0.15)][..]),
+                    (20.0, &[("h1", 0.18), ("h2", 0.18), ("h4", 0.25)][..]),
+                ],
+            );
+            ce_apply_set(
+                &mut modifiers,
+                transform,
+                &[10, 22, 87, 90],
+                "red",
+                &[
+                    (10.0, &[("h1", 0.18), ("h2", 0.18), ("h4", 0.25)][..]),
+                    (20.0, &[("h1", 0.25), ("h2", 0.25), ("h4", 0.35)][..]),
+                ],
+            );
             ce_apply_collectible(
                 &mut modifiers,
-                ce_collectible_stars(transform, 32),
+                ce_collectible_stars(transform, 107),
                 &[
-                    (0.0, &[("mult", 0.0)][..]),
-                    (3.0, &[("mult", 0.02)][..]),
-                    (5.0, &[("mult", 0.04)][..]),
-                    (10.0, &[("mult", 0.08)][..]),
+                    (0.0, &[("h5", 0.0)][..]),
+                    (3.0, &[("h5", 0.02)][..]),
+                    (5.0, &[("h5", 0.04)][..]),
+                    (10.0, &[("h5", 0.08)][..]),
                 ],
             );
         }
@@ -3038,7 +3046,7 @@ fn ce_modifiers(mode: &str, transform: &SioLmStatTransform) -> SioCeModifiers {
             );
             ce_apply_collectible(
                 &mut modifiers,
-                ce_collectible_stars(transform, 33),
+                ce_collectible_stars(transform, 108),
                 &[
                     (0.0, &[("mult", 0.0)][..]),
                     (3.0, &[("mult", 0.02)][..]),
@@ -3452,37 +3460,68 @@ fn sio_drill_shot_mode_ce_damage(
             h3 += deltas.2;
         }
     }
-    let resonance_output = drill_shot_resonance_output(resonance, h1, h2, h3, h4, h5);
+    let resonance_output =
+        drill_shot_resonance_output(resonance, h1, h2, h3, h4, h5, rarity == "Eternal");
     let mut output = (1.0 + modifiers.mult)
         * resonance_output
         * tttg_forge_core::constants::damage_coefficient("Drill Shot Mode");
-    if resonance >= 1_200.0 && ce_set_metric(transform, &[10, 22, 87, 90], "gold") >= 10.0 {
-        output *= 0.999_087_977_163_302_8;
-    }
     for passive in ["Exo Bracer", "Ammo Thruster", "HE Fuel", "Energy Cube"] {
         output *= passive_pool(passive_pools, "Drill Shot Mode", passive);
     }
     output
 }
 
-fn drill_shot_resonance_output(resonance: f64, h1: f64, h2: f64, h3: f64, h4: f64, h5: f64) -> f64 {
-    let e = 26.0 * 0.9;
-    let (r1, r2, tail) = threshold_tuple3(
+fn drill_shot_resonance_output(
+    resonance: f64,
+    h1: f64,
+    h2: f64,
+    h3: f64,
+    h4: f64,
+    h5: f64,
+    eternal: bool,
+) -> f64 {
+    let (h1_add, h2_add, h4_add, row_i, row_o, row_a) = threshold_tuple6(
         resonance,
         &[
-            (0.0, (1.0, 1.0, 0.0)),
-            (100.0, (1.18, 1.0, 0.0)),
-            (300.0, (1.18, 1.18, 0.0)),
-            (600.0, (1.18, 1.18, 0.4)),
-            (1_200.0, (1.36, 1.18, 0.4)),
-            (2_100.0, (1.51, 1.18, 0.4)),
-            (3_000.0, (1.51, 1.78, 0.4)),
-            (6_000.0, (1.51, 1.78, 0.7)),
-            (12_000.0, (1.51, 1.96, 0.7)),
-            (15_000.0, (1.96, 1.96, 0.7)),
+            (0.0, (0.0, 0.0, 0.0, 0.0, 1.0, 1.0)),
+            (100.0, (0.18, 0.0, 0.0, 0.0, 1.0, 1.0)),
+            (200.0, (0.18, 0.0, 0.0, 0.0, 1.0, 1.0)),
+            (300.0, (0.18, 0.18, 0.0, 0.0, 1.0, 1.0)),
+            (450.0, (0.18, 0.18, 0.0, 0.0, 1.0, 1.0)),
+            (600.0, (0.18, 0.18, 0.4, 0.0, 1.0, 1.0)),
+            (900.0, (0.18, 0.18, 0.4, 0.0, 1.0, 1.0)),
+            (1_200.0, (0.18, 0.18, 0.4, 0.18, 1.0, 1.0)),
+            (2_100.0, (0.18, 0.18, 0.4, 0.18, 1.15, 1.0)),
+            (3_000.0, (0.18, 0.18, 0.4, 0.18, 1.15, 1.6)),
+            (6_000.0, (0.18, 0.18, 0.7, 0.18, 1.15, 1.6)),
+            (9_000.0, (0.18, 0.18, 0.7, 0.18, 1.15, 1.6)),
+            (12_000.0, (0.18, 0.78, 0.7, 0.18, 1.15, 1.6)),
+            (13_500.0, (0.18, 0.78, 0.7, 0.18, 1.15, 1.6)),
+            (15_000.0, (0.18, 0.78, 0.7, 0.18, 1.6, 1.6)),
         ],
     );
-    ((26.0 + e * h1) * (h2 + r1) + 26.0 * (9.0 * h1 + h3 + r2)) * h4 + 15.6 * r1 * (h5 + tail)
+    let beam = h5 * h3;
+    let eternal_scale = if eternal { 2.0 } else { 1.0 };
+    let eternal_count = if eternal { 10.0 } else { 1.0 };
+    31.5
+        * eternal_scale
+        * beam
+        * (h1 + h1_add + 0.9 * row_i)
+        * (1.0 + (row_o - 1.0) * 0.95)
+        * 0.95
+        / 0.57
+        + 6.3
+            * (h2 + h2_add)
+            * beam
+            * (1.0 + (eternal_count + row_a - 2.0) * 0.95)
+            * 0.95
+            / 0.57
+        + 39.06 * (h4 + h4_add) * h3 / 0.6
+        + if eternal {
+            60.48 * h3 * 3.0 / 2.666_666_666_666_666_5
+        } else {
+            0.0
+        }
 }
 
 fn sio_lightning_mode_ce_damage(
@@ -3710,6 +3749,24 @@ fn threshold_tuple3(value: f64, thresholds: &[(f64, (f64, f64, f64))]) -> (f64, 
         .first()
         .map(|(_, value)| *value)
         .unwrap_or((0.0, 0.0, 0.0));
+    for (threshold, threshold_value) in thresholds {
+        if value >= *threshold {
+            selected = *threshold_value;
+        } else {
+            break;
+        }
+    }
+    selected
+}
+
+fn threshold_tuple6(
+    value: f64,
+    thresholds: &[(f64, (f64, f64, f64, f64, f64, f64))],
+) -> (f64, f64, f64, f64, f64, f64) {
+    let mut selected = thresholds
+        .first()
+        .map(|(_, value)| *value)
+        .unwrap_or((0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
     for (threshold, threshold_value) in thresholds {
         if value >= *threshold {
             selected = *threshold_value;

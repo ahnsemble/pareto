@@ -3,7 +3,7 @@ use std::collections::HashSet;
 
 use super::{str_value, SioLmStatTransform};
 
-const PASSIVE_POOL_COUNT: usize = 60;
+const PASSIVE_POOL_COUNT: usize = tttg_forge_core::constants::MAX_DAMAGE_POOL_INDEX + 1;
 
 pub(super) fn passive_pools_for_trace(
     techs: &Value,

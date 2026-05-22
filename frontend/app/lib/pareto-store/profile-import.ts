@@ -12,7 +12,19 @@ export type ProductProfileTechImport = Partial<{
   rarityCounts: Record<string, number>;
 }>;
 
-export type ProductProfileAccountImport = Partial<{
+type ProductProfileAccountImportShape = {
+  selectedHeroId: string;
+  targetCollectibleId: string;
+  deployedPetId: string;
+  assistPet1Id: string;
+  assistPet2Id: string;
+  selectedMountId: string;
+  weaponItemId: string;
+  armorItemId: string;
+  necklaceItemId: string;
+  beltItemId: string;
+  glovesItemId: string;
+  bootsItemId: string;
   baseAtk: number;
   finalAtk: number;
   atkPercent: number;
@@ -63,7 +75,15 @@ export type ProductProfileAccountImport = Partial<{
   bootsChaos: number;
   bootsXeno: number;
   lmeTurf: number;
-}>;
+};
+
+export type ProductProfileAccountImport = Partial<ProductProfileAccountImportShape>;
+type ProductProfileAccountStringField = {
+  [Key in keyof ProductProfileAccountImportShape]: ProductProfileAccountImportShape[Key] extends string ? Key : never;
+}[keyof ProductProfileAccountImportShape];
+type ProductProfileAccountNumberField = {
+  [Key in keyof ProductProfileAccountImportShape]: ProductProfileAccountImportShape[Key] extends number ? Key : never;
+}[keyof ProductProfileAccountImportShape];
 
 export type ProductProfileImportResult =
   | {
@@ -79,7 +99,21 @@ export type ProductProfileImportResult =
     };
 
 const ROOT_ALIASES = ['profile', 'playerState', 'player_state', 'state', 'export'] as const;
-const ACCOUNT_NUMBER_FIELDS: Array<[keyof ProductProfileAccountImport, readonly string[]]> = [
+const ACCOUNT_STRING_FIELDS: Array<[ProductProfileAccountStringField, readonly string[]]> = [
+  ['selectedHeroId', ['selectedHeroId', 'selected_hero_id', 'hero.selected_hero_id', 'hero.id']],
+  ['targetCollectibleId', ['targetCollectibleId', 'target_collectible_id', 'collectible.target_collectible_id']],
+  ['deployedPetId', ['deployedPetId', 'deployed_pet_id', 'pet.deployed_pet_id']],
+  ['assistPet1Id', ['assistPet1Id', 'assist_pet_1_id', 'pet.assist_pet_1_id']],
+  ['assistPet2Id', ['assistPet2Id', 'assist_pet_2_id', 'pet.assist_pet_2_id']],
+  ['selectedMountId', ['selectedMountId', 'selected_mount_id', 'mount.selected_mount_id']],
+  ['weaponItemId', ['weaponItemId', 'weapon_item_id', 'equipment.weapon.item_id']],
+  ['armorItemId', ['armorItemId', 'armor_item_id', 'equipment.armor.item_id']],
+  ['necklaceItemId', ['necklaceItemId', 'necklace_item_id', 'equipment.necklace.item_id']],
+  ['beltItemId', ['beltItemId', 'belt_item_id', 'equipment.belt.item_id']],
+  ['glovesItemId', ['glovesItemId', 'gloves_item_id', 'equipment.gloves.item_id']],
+  ['bootsItemId', ['bootsItemId', 'boots_item_id', 'equipment.boots.item_id']],
+];
+const ACCOUNT_NUMBER_FIELDS: Array<[ProductProfileAccountNumberField, readonly string[]]> = [
   ['baseAtk', ['baseAtk', 'base_atk', 'baseAttack', 'base_attack', 'damage.base_attack']],
   ['finalAtk', ['finalAtk', 'final_atk', 'finalAttack', 'final_attack', 'damage.final_attack']],
   ['atkPercent', ['atkPercent', 'atk_percent']],
@@ -165,6 +199,13 @@ function readNumber(source: unknown, candidates: readonly string[]): number | un
         ? Number(value.replace(/,/g, ''))
         : NaN;
   return Number.isFinite(number) ? number : undefined;
+}
+
+function readString(source: unknown, candidates: readonly string[]): string | undefined {
+  const value = readCandidate(source, candidates);
+  if (typeof value !== 'string') return undefined;
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : undefined;
 }
 
 function normalizeRarityCounts(value: unknown): Record<string, number> | undefined {
@@ -263,6 +304,14 @@ export function parseProductProfileImport(text: string): ProductProfileImportRes
   for (const [field, aliases] of ACCOUNT_NUMBER_FIELDS) {
     const value = readNumber(accountSource ?? source, aliases);
     if (value !== undefined) account[field] = value;
+  }
+  for (const [field, aliases] of ACCOUNT_STRING_FIELDS) {
+    const value = readString(accountSource ?? source, aliases);
+    if (value !== undefined) account[field] = value;
+  }
+  if (account.petAssistPets === undefined) {
+    if (account.assistPet2Id) account.petAssistPets = 2;
+    else if (account.assistPet1Id) account.petAssistPets = 1;
   }
 
   return {

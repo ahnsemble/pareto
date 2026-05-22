@@ -145,6 +145,35 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-account-weapon-eaf')).toHaveValue('4');
   });
 
+  test('imports named account selections into state-changing controls', async ({ page }) => {
+    await page.getByTestId('tech-profile-import-input').fill(JSON.stringify({
+      state: {
+        hero: { selected_hero_id: 'king' },
+        collectible: { target_collectible_id: 'atomicMech' },
+        pet: {
+          deployed_pet_id: 'croaky',
+          assist_pet_1_id: 'gary',
+          assist_pet_2_id: 'capy',
+        },
+        mount: { selected_mount_id: 'electricScooter' },
+        equipment: {
+          necklace: { item_id: 'voidwakerEmblem' },
+          boots: { item_id: 'voidwakerTreads' },
+        },
+      },
+    }));
+    await page.getByRole('button', { name: 'Import profile' }).click();
+
+    await expect(page.getByTestId('tech-survivor-select')).toHaveValue('king');
+    await expect(page.getByTestId('tech-collection-target-select')).toHaveValue('atomicMech');
+    await expect(page.getByTestId('tech-pet-deployed-select')).toHaveValue('croaky');
+    await expect(page.getByTestId('tech-pet-assist-1-select')).toHaveValue('gary');
+    await expect(page.getByTestId('tech-pet-assist-2-select')).toHaveValue('capy');
+    await expect(page.getByTestId('tech-mount-select')).toHaveValue('electricScooter');
+    await expect(page.getByTestId('tech-equipment-item-selector-necklace')).toHaveValue('voidwakerEmblem');
+    await expect(page.getByTestId('tech-equipment-item-selector-boots')).toHaveValue('voidwakerTreads');
+  });
+
   test('explains the top result in product terms', async ({ page }) => {
     await page.getByTestId('tech-optimizer-run').click();
 
@@ -318,6 +347,20 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-account-survivor-awakening')).toBeVisible();
   });
 
+  test('changes selected survivor and linked survivor controls from named inputs', async ({ page }) => {
+    await page.getByTestId('tech-survivor-select').selectOption('king');
+    await page.getByTestId('tech-teamwork-select').selectOption('4');
+    await page.getByTestId('tech-passive-select').selectOption('18');
+
+    await expect(page.getByTestId('tech-survivor-selected-name')).toContainText('King');
+    await expect(page.getByTestId('tech-account-survivor-teamwork')).toHaveValue('4');
+    await expect(page.getByTestId('tech-account-survivor-passive')).toHaveValue('18');
+
+    await page.getByTestId('tech-optimizer-run').click();
+    await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
+    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-full-sio-equivalent', 'true');
+  });
+
   test('shows teamwork and passive pickers alongside numeric survivor controls', async ({ page }) => {
     await expect(page.getByTestId('tech-teamwork-passive-picker')).toBeVisible();
     await expect(page.getByTestId('tech-teamwork-row').first()).toContainText(/Teamwork|passive/i);
@@ -355,6 +398,20 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-account-pet-resonance-atk')).toBeVisible();
   });
 
+  test('changes deployed and assist pets from named controls', async ({ page }) => {
+    await page.getByTestId('tech-pet-deployed-select').selectOption('croaky');
+    await page.getByTestId('tech-pet-assist-1-select').selectOption('gary');
+    await page.getByTestId('tech-pet-assist-2-select').selectOption('capy');
+
+    await expect(page.getByTestId('tech-pet-deployed-select')).toHaveValue('croaky');
+    await expect(page.getByTestId('tech-pet-assist-1-select')).toHaveValue('gary');
+    await expect(page.getByTestId('tech-pet-assist-2-select')).toHaveValue('capy');
+
+    await page.getByTestId('tech-optimizer-run').click();
+    await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
+    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-scoring-model', 'sio_full_lm_equivalence');
+  });
+
   test('edits mount core, puzzle, and stat context', async ({ page }) => {
     const account = page.getByTestId('tech-account-context');
     await expect(account.getByText('Mount detail')).toBeVisible();
@@ -381,6 +438,14 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-account-mount-cores')).toBeVisible();
     await expect(page.getByTestId('tech-account-mount-puzzle')).toBeVisible();
     await expect(page.getByTestId('tech-account-mount-stat')).toBeVisible();
+  });
+
+  test('changes selected mount from named controls', async ({ page }) => {
+    await page.getByTestId('tech-mount-select').selectOption('techHoverboard');
+
+    await expect(page.getByTestId('tech-mount-select')).toHaveValue('techHoverboard');
+    await expect(page.getByTestId('tech-mount-selected-name')).toContainText('Tech Hoverboard');
+    await expect(page.getByTestId('tech-account-mount-cores')).toBeVisible();
   });
 
   test('edits six-slot equipment forge, chaos, xeno, and otherworld context', async ({ page }) => {
@@ -419,6 +484,26 @@ test.describe('TD-11 — Tech optimizer route', () => {
       await expect(page.getByTestId(`tech-account-${slot}-chaos`)).toBeVisible();
       await expect(page.getByTestId(`tech-account-${slot}-xeno`)).toBeVisible();
     }
+  });
+
+  test('changes equipment items from six-slot selectors', async ({ page }) => {
+    await page.getByTestId('tech-equipment-item-selector-necklace').selectOption('voidwakerEmblem');
+    await page.getByTestId('tech-equipment-item-selector-boots').selectOption('voidwakerTreads');
+
+    await expect(page.getByTestId('tech-equipment-item-selector-necklace')).toHaveValue('voidwakerEmblem');
+    await expect(page.getByTestId('tech-equipment-item-selector-boots')).toHaveValue('voidwakerTreads');
+
+    await page.getByTestId('tech-optimizer-run').click();
+    await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
+    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-full-sio-equivalent', 'true');
+  });
+
+  test('changes collectible target from named collection controls', async ({ page }) => {
+    await page.getByTestId('tech-collection-target-select').selectOption('atomicMech');
+
+    await expect(page.getByTestId('tech-collection-target-select')).toHaveValue('atomicMech');
+    await expect(page.getByTestId('tech-collection-selected-target')).toContainText('Atomic Mech');
+    await expect(page.getByTestId('tech-account-collection-custom-sets')).toBeVisible();
   });
 
   test('keeps default search usable without exposing diagnostic controls', async ({ page }) => {
