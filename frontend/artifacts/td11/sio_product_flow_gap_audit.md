@@ -270,6 +270,14 @@ Existing comparison evidence used first:
   - `frontend/fixtures/external-calculation-links/4ZgaBw.expected.json`
 - Explicit non-goal:
   - Runtime player/account scraping is not part of this feature. Tangtang imports only values already present in the shared calculation profile, then lets the user review and edit them.
+- Implementation progress:
+  - Chunk 1 locked the canonical `4ZgaBw` raw fixture and expected summary.
+  - Chunk 2 added a network-free raw decoder test and the product-layer raw/link parser.
+  - RED: `node scripts/external_calculation_link_unit_test.mjs` failed because `external-calculation-link.ts` did not exist.
+  - GREEN: `node scripts/external_calculation_link_unit_test.mjs` passed with `rawLength=1350`, `compactVersion=5`; `npx tsc --noEmit` passed.
+  - Chunk 3 added compact `_V=5` expansion, normalized wallet/tech/account import fields, imported tech snapshot, and async `importProductProfileInput()`.
+  - RED: `node scripts/external_calculation_link_unit_test.mjs` failed because `external-calculation-profile.ts` did not exist.
+  - GREEN: `node scripts/profile_import_unit_test.mjs`, `node scripts/external_calculation_link_unit_test.mjs`, and `npx tsc --noEmit` passed.
 
 ## Current Product Contract
 

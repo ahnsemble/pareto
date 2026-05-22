@@ -9,6 +9,7 @@ import ts from 'typescript';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const tmpDir = resolve(tmpdir(), 'pareto-external-calculation-link-tests');
 const modulePath = resolve(__dirname, '../app/lib/pareto-store/external-calculation-link.ts');
+const profileModulePath = resolve(__dirname, '../app/lib/pareto-store/external-calculation-profile.ts');
 const rawPath = resolve(__dirname, '../fixtures/external-calculation-links/4ZgaBw.raw.txt');
 const expectedPath = resolve(__dirname, '../fixtures/external-calculation-links/4ZgaBw.expected.json');
 
@@ -56,6 +57,20 @@ assert.equal(parsedRaw.raw, raw);
 const parsedCode = parseExternalCalculationInput('https://sio-tools.vercel.app?code=4ZgaBw');
 assert.equal(parsedCode.kind, 'code');
 assert.equal(parsedCode.code, '4ZgaBw');
+
+const { normalizeExternalCalculationProfile } = await loadTsModule(
+  profileModulePath,
+  'external-calculation-profile',
+);
+const normalized = normalizeExternalCalculationProfile(decoded);
+
+assert.equal(normalized.ok, true);
+assert.ok(normalized.tech.chips >= 0);
+assert.ok(normalized.account.finalAtk > 0);
+assert.ok(normalized.account.baseAtk > 0);
+assert.ok(normalized.importedTechSnapshot.parts.length >= 6);
+assert.match(normalized.summary, /Imported/);
+assert.equal(JSON.stringify(normalized).includes('sioLm'), false);
 
 console.log(
   JSON.stringify({

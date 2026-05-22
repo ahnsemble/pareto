@@ -12,6 +12,31 @@ export type ProductProfileTechImport = Partial<{
   rarityCounts: Record<string, number>;
 }>;
 
+export type ImportedTechSnapshot = {
+  parts: Array<{
+    partName: string;
+    modeName?: string;
+    rarity?: string;
+    resonance?: number;
+    overload?: number;
+    deployed?: boolean;
+  }>;
+  optimizerSettings?: {
+    speedMode?: string;
+    limit?: string;
+    skillSlots?: number;
+    chips?: number;
+    overloadable?: boolean;
+  };
+};
+
+export type ProductImportCoverage = {
+  id: string;
+  label: string;
+  status: 'imported' | 'missing' | 'needsReview';
+  count?: number;
+};
+
 type ProductProfileAccountImportShape = {
   selectedHeroId: string;
   targetCollectibleId: string;
@@ -91,6 +116,8 @@ export type ProductProfileImportResult =
       wallet: ProductProfileWalletImport;
       tech: ProductProfileTechImport;
       account: ProductProfileAccountImport;
+      importedTechSnapshot?: ImportedTechSnapshot;
+      coverage?: ProductImportCoverage[];
       summary: string;
     }
   | {
@@ -321,4 +348,27 @@ export function parseProductProfileImport(text: string): ProductProfileImportRes
     account,
     summary: buildSummary(wallet, tech, account),
   };
+}
+
+export async function importProductProfileInput(
+  text: string,
+  options: { resolveCode?: (code: string) => Promise<string> } = {},
+): Promise<ProductProfileImportResult> {
+  const { parseExternalCalculationInput, decodeExternalCalculationRaw } = await import('./external-calculation-link');
+  const { normalizeExternalCalculationProfile } = await import('./external-calculation-profile');
+
+  try {
+    const parsed = parseExternalCalculationInput(text);
+    if (parsed.kind === 'json') return parseProductProfileImport(parsed.text);
+    if (parsed.kind === 'raw') return normalizeExternalCalculationProfile(await decodeExternalCalculationRaw(parsed.raw));
+    if (parsed.kind === 'code' && options.resolveCode) {
+      return normalizeExternalCalculationProfile(await decodeExternalCalculationRaw(await options.resolveCode(parsed.code)));
+    }
+    return { ok: false, error: 'Unsupported profile import input' };
+  } catch (error) {
+    return {
+      ok: false,
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
 }
