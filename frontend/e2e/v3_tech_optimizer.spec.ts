@@ -139,6 +139,17 @@ test.describe('TD-11 — Tech optimizer route', () => {
     expect(Number.parseFloat(firstAnswerText)).toBeLessThan(3000);
   });
 
+  test('shows concise calculation link errors without internals', async ({ page }) => {
+    await page.route('https://is.gd/forward.php**', async (route) => {
+      await route.fulfill({ status: 500, body: 'nope' });
+    });
+
+    await page.getByTestId('tech-profile-import-input').fill('https://sio-tools.vercel.app?code=bad123');
+    await page.getByRole('button', { name: 'Import profile' }).click();
+    await expect(page.getByTestId('tech-profile-import-summary')).toContainText('Profile import failed');
+    await expect(page.getByTestId('tech-profile-import-summary')).not.toContainText(/stack|SyntaxError|lzma|msgpack|sio/i);
+  });
+
   test('uses product validation copy without raw codes or stack traces', async ({ page }) => {
     await page.getByTestId('tech-inventory-chips').fill('1000');
 

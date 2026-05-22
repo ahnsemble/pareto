@@ -284,6 +284,9 @@ Existing comparison evidence used first:
   - Chunk 5 added product-level next-upgrade recommendations from imported snapshot plus optimizer output.
   - RED: recommendation unit failed because `tech-upgrade-recommendations.ts` did not exist; recommendation e2e failed because `tech-upgrade-recommendations` panel was missing.
   - GREEN: recommendation unit/e2e, profile import unit, external link unit, and `npx tsc --noEmit` passed.
+  - Chunk 6 added concise bad-link error coverage and updated naming/copy audit.
+  - RED note: the bad-link e2e passed immediately because Chunk 4 already normalized import failures while fixing the async import path.
+  - GREEN: bad-link e2e, external link unit, `npx tsc --noEmit`, and public leakage scan review passed with only internal/test/hidden-attribute allowlist hits.
 
 ## Current Product Contract
 
