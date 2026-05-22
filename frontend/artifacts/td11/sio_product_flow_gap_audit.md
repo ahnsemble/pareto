@@ -312,3 +312,43 @@ This slice closes the first-screen optimizer flow gap for resource wallet, human
 - richer survivor/teamwork/passive picker semantics beyond the current numeric-backed product controls,
 - richer pet assist/xeno semantics beyond current deployed/assist selectors,
 - full mount puzzle/collection model beyond selected mount and compact rows.
+
+## Calculation Link Import Final Gate
+
+timestampKst: 2026-05-22T18:10:01+09:00
+status: `[CHUNK-7-COMPLETE-LOCAL]`
+
+- Final product behavior:
+  - Tangtang accepts profile JSON, raw calculation payloads, `raw=` URLs, and short `code=` calculation links.
+  - Imported calculation profiles fill known wallet, tech inventory, optimizer setting, equipment, and account-context defaults.
+  - Imported values remain editable; Browser smoke verified `Tech resonance chips` changed to `12` after import.
+  - Fast optimizer run completed with 10 visible result rows and a product-level `Next upgrades` recommendation.
+  - Public UI scan and Browser smoke found no visible `SIO`, raw scoring model, `sioLm`, codec internals, stack traces, or raw mode ids in the import/recommendation flow.
+- RED/GREEN summary:
+  - Chunk 1 RED locked missing fixture expectation, then GREEN after canonical `4ZgaBw` raw/expected fixtures were added.
+  - Chunk 2 RED failed on missing calculation-link module, then GREEN after urlsafe-base64 -> LZMA -> msgpack -> compact JSON decoding.
+  - Chunk 3 RED failed on missing compact profile normalizer, then GREEN after `_V=5` expansion and product import normalization.
+  - Chunk 4 RED exposed JSON-only import copy and a client-bundle unsafe `lzma` package entry, then GREEN after async link import UI and browser-safe decoder entry.
+  - Chunk 5 RED failed on missing recommendation module/panel, then GREEN after `Next upgrades` generation and UI.
+  - Chunk 6 bad-link guard passed immediately because generic import error copy was already normalized; kept as regression coverage.
+- Final verification:
+  - `node scripts/profile_import_unit_test.mjs`: passed.
+  - `node scripts/external_calculation_link_unit_test.mjs`: passed, `rawLength=1350`, `compactVersion=5`.
+  - `npx tsc --noEmit`: passed.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts`: passed, 75 passed / 1 skipped.
+  - `npm run build`: passed on rerun, 22 static pages generated. The first concurrent build attempt failed with `PageNotFoundError: Cannot find module for page: /_document` while another Next/Playwright server was active; rerun completed cleanly.
+  - `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs`: passed with `fullSioEquivalent=true`, `currentScorer=scorer=sio_full_lm_equivalence`, G0/G1/G2/G3/G6=true.
+  - `cargo test -p tttg_forge_optimizer --test tech_optimizer_performance -- --nocapture`: passed, 136/136.
+  - `cargo test -p tttg_forge_wasm --test tech_parts_exports -- --nocapture`: passed, 9/9.
+  - `wasm-pack build tttg_forge_wasm --target web --release -- --features compat-exports`: passed; only existing metadata/version warnings.
+  - `git diff --check`: passed.
+- Browser smoke:
+  - URL: `http://127.0.0.1:3060/en/v3/optimizer/tech-parts`
+  - Import summary: `Imported calculation link / Imported account context / Imported tech inventory`.
+  - Coverage: Build stats, tech inventory, optimizer settings, equipment, account context, and profile domains imported.
+  - Result state: 10 result rows, first answer `529.1 ms`, recommendations visible.
+  - Screenshot: `frontend/artifacts/td11/tangtang_calculation_link_import_smoke.png`
+- Remaining intentional limitations:
+  - Live short-link import depends on `is.gd/forward.php` availability; tests mock that network edge.
+  - Tangtang imports only values encoded in the shared calculation profile; screenshot/account scraping remains a future fallback.
+  - Internal `sio*` names are intentionally not renamed in this slice and remain deferred to Post-Launch Gate 7.
