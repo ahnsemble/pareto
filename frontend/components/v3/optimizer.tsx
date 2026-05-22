@@ -200,6 +200,20 @@ function buildChipRemainder(build: TechOptimizerResult['builds'][number] | undef
   return typeof value === 'number' ? formatNumber(value, 0) : 'n/a';
 }
 
+function buildChipUsed(build: TechOptimizerResult['builds'][number] | undefined): string {
+  const loadout = buildLoadoutRows(build);
+  if (loadout.length === 0) return 'n/a';
+
+  let used = 0;
+  for (const row of loadout) {
+    const detail = row.sio as Record<string, unknown> | undefined;
+    const chip = detail?.chip;
+    if (typeof chip !== 'number' || !Number.isFinite(chip)) return 'n/a';
+    used += chip;
+  }
+  return formatNumber(used, 0);
+}
+
 function buildActiveSkills(build: TechOptimizerResult['builds'][number] | undefined): string {
   const candidate = build?.config?.sioCandidate as Record<string, unknown> | undefined;
   const skills = candidate?.activeSkills;
@@ -490,6 +504,7 @@ export function TechPartsOptimizerSurface() {
   const topLoadout = buildLoadoutRows(topBuild);
   const topPresentedLoadout = presentTechLoadoutRows(topLoadout);
   const activeSkills = buildActiveSkills(topBuild);
+  const chipUsed = buildChipUsed(topBuild);
   const chipRemainder = buildChipRemainder(topBuild);
   const canRun = bootStatus === 'ok' && inventoryValidation.valid && !running;
   const validationText = inventoryValidation.valid
@@ -781,7 +796,7 @@ export function TechPartsOptimizerSurface() {
                   : 'No parts selected'}
               </p>
               <p className="mt-2 font-mono text-xs">
-                Chips left {chipRemainder} · Active skills {activeSkills}
+                Chips used {chipUsed} · Chips left {chipRemainder} · Active skills {activeSkills}
               </p>
             </div>
           ) : (
@@ -789,7 +804,7 @@ export function TechPartsOptimizerSurface() {
               Run the optimizer to compare builds.
             </div>
           )}
-          <div className="mt-3 grid gap-2 sm:grid-cols-3">
+          <div className="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
             <div className="rounded-md border border-[color:var(--color-border)] p-3">
               <p className={labelClass}>First answer</p>
               <p className="mt-2 font-mono text-lg text-[color:var(--color-accent)]" data-testid="tech-optimizer-first-answer">
@@ -800,6 +815,12 @@ export function TechPartsOptimizerSurface() {
               <p className={labelClass}>Visited</p>
               <p className="mt-2 font-mono text-lg text-[color:var(--color-text)]" data-testid="tech-optimizer-visited">
                 {result ? formatNumber(result.metrics.visited_nodes, 0) : '0'}
+              </p>
+            </div>
+            <div className="rounded-md border border-[color:var(--color-border)] p-3">
+              <p className={labelClass}>Chips used</p>
+              <p className="mt-2 font-mono text-lg text-[color:var(--color-text)]" data-testid="tech-optimizer-chip-used">
+                {result ? chipUsed : 'n/a'}
               </p>
             </div>
             <div className="rounded-md border border-[color:var(--color-border)] p-3">
@@ -816,12 +837,13 @@ export function TechPartsOptimizerSurface() {
             </p>
           </div>
           <div className="mt-4 overflow-x-auto">
-            <table className="w-full min-w-[560px] font-mono text-xs">
+            <table className="w-full min-w-[640px] font-mono text-xs">
               <thead className="text-left text-[color:var(--color-text-muted)]">
                 <tr>
                   <th className="py-2">Build</th>
                   <th>Score</th>
                   <th>Damage</th>
+                  <th>Chips used</th>
                   <th>Chips left</th>
                   <th>Parts</th>
                 </tr>
@@ -837,6 +859,7 @@ export function TechPartsOptimizerSurface() {
                     <td className="max-w-[260px] truncate py-2 text-[color:var(--color-text)]">{`Build ${index + 1}`}</td>
                     <td>{formatCompactScientific(build.score)}</td>
                     <td>{formatCompactScientific(build.damageFactor)}</td>
+                    <td>{buildChipUsed(build)}</td>
                     <td>{buildChipRemainder(build)}</td>
                     <td>{buildLoadoutRows(build).length}</td>
                   </tr>

@@ -151,6 +151,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
     const summary = page.getByTestId('tech-optimizer-result-summary');
     await expect(summary).toBeVisible();
     await expect(summary).toContainText('Top build');
+    await expect(summary).toContainText('Chips used');
     await expect(summary).toContainText('Chips left');
     await expect(summary).toContainText('Active skills');
     await expect(summary).toContainText('Energy Guidance System');
@@ -187,6 +188,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-full-sio-equivalent', 'true');
     await expect(page.getByTestId('tech-optimizer-results')).not.toContainText('sio_candidate_generation');
     await expect(page.getByTestId('tech-optimizer-results')).not.toContainText('sio_full_lm_equivalence');
+    await expect(page.getByTestId('tech-optimizer-chip-used')).not.toContainText('n/a');
     await expect(page.getByTestId('tech-optimizer-chip-remainder')).not.toContainText('n/a');
     await expect(page.getByTestId('tech-optimizer-active-skills')).not.toContainText('none');
     const latencyText = await page.getByTestId('tech-optimizer-first-answer').innerText();
@@ -217,6 +219,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByText(/^Exact node cap$/)).toHaveCount(0);
     await expect(page.getByText(/^Chip rem$/)).toHaveCount(0);
     await expect(page.getByText(/^Rows$/)).toHaveCount(0);
+    await expect(page.getByRole('columnheader', { name: 'Chips used' })).toBeVisible();
     await expect(page.getByRole('columnheader', { name: 'Chips left' })).toBeVisible();
     await expect(page.getByRole('columnheader', { name: 'Parts' })).toBeVisible();
 
