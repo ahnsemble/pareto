@@ -21,7 +21,46 @@ const transpiled = ts.transpileModule(source, {
   },
 });
 const moduleUrl = `data:text/javascript;base64,${Buffer.from(transpiled.outputText).toString('base64')}`;
-const { DEFAULT_TECH_ACCOUNT_CONTEXT, buildSioLmContext } = await import(moduleUrl);
+const {
+  DEFAULT_TECH_ACCOUNT_CONTEXT,
+  buildSioLmContext,
+  normalizePetAssistContext,
+  petXenoStatusLabel,
+} = await import(moduleUrl);
+
+assert.equal(typeof normalizePetAssistContext, 'function');
+assert.equal(typeof petXenoStatusLabel, 'function');
+
+const duplicateAssist = normalizePetAssistContext({
+  ...DEFAULT_TECH_ACCOUNT_CONTEXT,
+  deployedPetId: 'croaky',
+  assistPet1Id: 'gary',
+  assistPet2Id: 'gary',
+  petAssistPets: 2,
+});
+
+assert.equal(duplicateAssist.assistPet1Id, 'gary');
+assert.equal(duplicateAssist.assistPet2Id, '');
+assert.equal(duplicateAssist.petAssistPets, 1);
+
+const deployedDuplicate = normalizePetAssistContext({
+  ...DEFAULT_TECH_ACCOUNT_CONTEXT,
+  deployedPetId: 'croaky',
+  assistPet1Id: 'croaky',
+  assistPet2Id: 'capy',
+  petAssistPets: 2,
+});
+
+assert.equal(deployedDuplicate.assistPet1Id, '');
+assert.equal(deployedDuplicate.assistPet2Id, '');
+assert.equal(deployedDuplicate.petAssistPets, 0);
+
+assert.equal(petXenoStatusLabel({ ...DEFAULT_TECH_ACCOUNT_CONTEXT, petXeno: 0 }), 'Xeno off');
+assert.equal(petXenoStatusLabel({ ...DEFAULT_TECH_ACCOUNT_CONTEXT, petXeno: 1 }), 'Xeno preview on');
+assert.equal(
+  petXenoStatusLabel({ ...DEFAULT_TECH_ACCOUNT_CONTEXT, petXeno: 1, petResonanceChance: 35, petResonanceAtk: 2100 }),
+  'Xeno resonance ready',
+);
 
 const context = buildSioLmContext({
   ...DEFAULT_TECH_ACCOUNT_CONTEXT,

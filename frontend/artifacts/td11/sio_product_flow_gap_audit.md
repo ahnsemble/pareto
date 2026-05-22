@@ -551,3 +551,42 @@ status: `[PRODUCT-IMPROVEMENT-GREEN]`
   - SIO LM/scoring core, Rust formula constants, and WASM scoring semantics were not changed.
   - Raw SIO LM JSON, scorer/debug/preselect/beam/exact node cap UI remain hidden.
   - Internal `sio*` rename remains deferred to Post-Launch Gate 7.
+
+## Tangtang Low-Impact Product Depth - Chunk 1
+
+timestampKst: 2026-05-23T08:52:37+09:00
+status: `[CHUNK-1-PET-ASSIST-XENO-GREEN]`
+
+- Product behavior:
+  - Deployed pet is filtered out of both assist selectors.
+  - Assist 1 and Assist 2 cannot duplicate each other in the named controls.
+  - Assist selection changes normalize the numeric assist count: Assist 1 -> `1`, Assist 2 -> `2`, clearing Assist 1 -> `0`, clearing Assist 2 -> `1`.
+  - Pet xeno review row now shows `Xeno off`, `Xeno preview on`, or `Xeno resonance ready`.
+- RED/GREEN summary:
+  - RED unit: `node scripts/tech_account_context_unit_test.mjs` failed with `normalizePetAssistContext` missing (`undefined !== function`).
+  - RED e2e: `npx playwright test e2e/v3_tech_optimizer.spec.ts --grep "keeps pet assist selections valid"` failed on desktop/mobile because `croaky` was still visible in assist options.
+  - GREEN unit: pet assist normalization and xeno status helper assertions passed.
+  - GREEN e2e: focused pet assist/xeno test passed on desktop/mobile, 2/2.
+- Verification:
+  - `node scripts/tech_account_context_unit_test.mjs`: passed.
+  - `npx tsc --noEmit`: passed.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts --grep "keeps pet assist selections valid"`: passed, 2/2.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts`: passed, 79 passed / 1 skipped.
+  - `npm run build`: passed, 22 static pages generated. Existing static export middleware/API-route warning only.
+  - `git diff --check`: passed.
+- Heavy verification:
+  - Omitted. This chunk did not change `buildSioLmContext`, `playerStateWithAccountContext`, optimizer request fields, Rust formula constants, or WASM scoring semantics.
+- Intentional constraints kept:
+  - Public UI remains Tangtang.
+  - No user-facing SIO copy was added.
+  - `fullSioEquivalent=true` and `currentScorer=scorer=sio_full_lm_equivalence` remain covered by existing product gate assertions.
+  - Raw SIO LM JSON, scorer/debug/preselect/beam/exact node cap UI remain hidden.
+  - Internal `sio*` rename remains deferred to Post-Launch Gate 7.
+- Artifacts:
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/components/v3/tech/techAccountContext.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/components/v3/tech/TechAccountContextPanel.tsx`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/scripts/tech_account_context_unit_test.mjs`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/e2e/v3_tech_optimizer.spec.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_product_flow_gap_audit.md`
+- Commit:
+  - Local commit created for this chunk; GitHub push/PR not performed.

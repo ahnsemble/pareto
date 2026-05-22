@@ -182,6 +182,34 @@ const DEFAULT_SIO_LM_CONTEXT: Record<string, unknown> = {
   enabledSkills: ['Energy Cube', 'HP Bullet', 'Exo Bracer', 'Ammo Thruster', 'HE Fuel', 'Drone Mode', 'Drill Shot Mode', 'Soccer Mode', 'Molotov Mode'],
 };
 
+export function normalizePetAssistContext(account: TechAccountContextInput): TechAccountContextInput {
+  let assistPet1Id = account.assistPet1Id;
+  let assistPet2Id = account.assistPet2Id;
+
+  if (assistPet1Id === account.deployedPetId) {
+    assistPet1Id = '';
+    assistPet2Id = '';
+  }
+  if (assistPet2Id === account.deployedPetId) {
+    assistPet2Id = '';
+  }
+  if (assistPet1Id && assistPet1Id === assistPet2Id) {
+    assistPet2Id = '';
+  }
+  if (!assistPet1Id) {
+    assistPet2Id = '';
+  }
+
+  const petAssistPets = assistPet2Id ? 2 : assistPet1Id ? 1 : 0;
+  return { ...account, assistPet1Id, assistPet2Id, petAssistPets };
+}
+
+export function petXenoStatusLabel(account: TechAccountContextInput): string {
+  if (account.petXeno < 1) return 'Xeno off';
+  if (account.petResonanceChance > 0 || account.petResonanceAtk > 0) return 'Xeno resonance ready';
+  return 'Xeno preview on';
+}
+
 function clampInteger(value: number, min: number, max: number): number {
   if (!Number.isFinite(value)) return min;
   return Math.max(min, Math.min(max, Math.trunc(value)));

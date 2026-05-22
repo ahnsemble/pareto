@@ -10,7 +10,12 @@ import {
 } from '../../../app/lib/pareto-store/schemas';
 import type { PlayerState } from '../../../app/lib/pareto-store/types';
 import { formatNumber, inputClass, labelClass, panelClass, selectClass } from '../optimizerUi';
-import type { TechAccountContextInput, TechAccountContextNamedField } from './techAccountContext';
+import {
+  normalizePetAssistContext,
+  petXenoStatusLabel,
+  type TechAccountContextInput,
+  type TechAccountContextNamedField,
+} from './techAccountContext';
 
 function contextNumber(value: number | null | undefined, digits = 0): string {
   return typeof value === 'number' && Number.isFinite(value) ? formatNumber(value, digits) : '0';
@@ -47,6 +52,15 @@ export function AccountContextPanel({
   const collectionRows = COLLECTIBLE_SET_INDEX.slice(0, 3);
   const petRows = PET_SCHEMA_INDEX.slice(0, 5);
   const mountRows = MOUNT_SCHEMA_INDEX.slice(0, 3);
+  const assistPet1Rows = petRows.filter((pet) => pet.id !== account.deployedPetId && pet.id !== account.assistPet2Id);
+  const assistPet2Rows = petRows.filter((pet) => pet.id !== account.deployedPetId && pet.id !== account.assistPet1Id);
+  const updatePetSelection = (patch: Partial<TechAccountContextInput>) => {
+    const next = normalizePetAssistContext({ ...account, ...patch });
+    if (next.deployedPetId !== account.deployedPetId) onNamedChange('deployedPetId', next.deployedPetId);
+    if (next.assistPet1Id !== account.assistPet1Id) onNamedChange('assistPet1Id', next.assistPet1Id);
+    if (next.assistPet2Id !== account.assistPet2Id) onNamedChange('assistPet2Id', next.assistPet2Id);
+    if (next.petAssistPets !== account.petAssistPets) onChange('petAssistPets', next.petAssistPets);
+  };
   const activeConditionCount = [
     account.shieldDamage,
     account.poisonedDamage,
@@ -380,7 +394,7 @@ export function AccountContextPanel({
                       className={selectClass + ' mt-1'}
                       data-testid="tech-pet-deployed-select"
                       value={account.deployedPetId}
-                      onChange={(event) => onNamedChange('deployedPetId', event.target.value)}
+                      onChange={(event) => updatePetSelection({ deployedPetId: event.target.value })}
                     >
                       {PET_SCHEMA_INDEX.map((pet) => (
                         <option key={pet.id} value={pet.id}>
@@ -399,13 +413,10 @@ export function AccountContextPanel({
                         className={selectClass + ' mt-1'}
                         data-testid="tech-pet-assist-1-select"
                         value={account.assistPet1Id}
-                        onChange={(event) => {
-                          onNamedChange('assistPet1Id', event.target.value);
-                          onChange('petAssistPets', Math.max(account.petAssistPets, event.target.value ? 1 : 0));
-                        }}
+                        onChange={(event) => updatePetSelection({ assistPet1Id: event.target.value })}
                       >
                         <option value="">None</option>
-                        {petRows.map((pet) => (
+                        {assistPet1Rows.map((pet) => (
                           <option key={pet.id} value={pet.id}>
                             {pet.display_name_en}
                           </option>
@@ -420,13 +431,10 @@ export function AccountContextPanel({
                         className={selectClass + ' mt-1'}
                         data-testid="tech-pet-assist-2-select"
                         value={account.assistPet2Id}
-                        onChange={(event) => {
-                          onNamedChange('assistPet2Id', event.target.value);
-                          onChange('petAssistPets', Math.max(account.petAssistPets, event.target.value ? 2 : 0));
-                        }}
+                        onChange={(event) => updatePetSelection({ assistPet2Id: event.target.value })}
                       >
                         <option value="">None</option>
-                        {petRows.map((pet) => (
+                        {assistPet2Rows.map((pet) => (
                           <option key={pet.id} value={pet.id}>
                             {pet.display_name_en}
                           </option>
@@ -434,6 +442,9 @@ export function AccountContextPanel({
                       </select>
                     </label>
                   </div>
+                </div>
+                <div className="rounded-md border border-[color:var(--color-border)]/60 p-2 text-xs" data-testid="tech-pet-xeno-status">
+                  {petXenoStatusLabel(account)}
                 </div>
               </div>
             ) : null}

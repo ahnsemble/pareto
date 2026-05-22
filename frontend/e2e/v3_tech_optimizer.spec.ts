@@ -550,6 +550,26 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-scoring-model', 'sio_full_lm_equivalence');
   });
 
+  test('keeps pet assist selections valid and explains xeno state', async ({ page }) => {
+    await page.getByTestId('tech-pet-deployed-select').selectOption('croaky');
+
+    await expect(page.getByTestId('tech-pet-assist-1-select').locator('option[value="croaky"]')).toHaveCount(0);
+    await expect(page.getByTestId('tech-pet-assist-2-select').locator('option[value="croaky"]')).toHaveCount(0);
+
+    await page.getByTestId('tech-pet-assist-1-select').selectOption('gary');
+    await expect(page.getByTestId('tech-account-pet-assist-pets')).toHaveValue('1');
+    await expect(page.getByTestId('tech-pet-assist-2-select').locator('option[value="gary"]')).toHaveCount(0);
+
+    await page.getByTestId('tech-pet-assist-2-select').selectOption('capy');
+    await expect(page.getByTestId('tech-account-pet-assist-pets')).toHaveValue('2');
+
+    await page.getByTestId('tech-account-pet-xeno').fill('1');
+    await expect(page.getByTestId('tech-pet-xeno-status')).toContainText('Xeno preview on');
+    await page.getByTestId('tech-account-pet-resonance-chance').fill('35');
+    await page.getByTestId('tech-account-pet-resonance-atk').fill('2100');
+    await expect(page.getByTestId('tech-pet-xeno-status')).toContainText('Xeno resonance ready');
+  });
+
   test('edits mount core, puzzle, and stat context', async ({ page }) => {
     const account = page.getByTestId('tech-account-context');
     await expect(account.getByText('Mount detail')).toBeVisible();
