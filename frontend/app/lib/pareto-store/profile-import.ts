@@ -261,11 +261,84 @@ function buildSummary(wallet: ProductProfileWalletImport, tech: ProductProfileTe
   return parts.length > 0 ? parts.join(' / ') : 'Profile imported';
 }
 
+function readScreenshotNumber(text: string, labels: readonly string[]): number | undefined {
+  const escapedLabels = labels.map((label) => label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+  const pattern = new RegExp(`(?:${escapedLabels})\\s*[:：]?\\s*([^\\n\\r]+)`, 'i');
+  const match = text.match(pattern);
+  if (!match) return undefined;
+  const numberMatch = match[1].match(/-?\d[\d,]*(?:\.\d+)?/);
+  if (!numberMatch) return undefined;
+  const value = Number(numberMatch[0].replace(/,/g, ''));
+  return Number.isFinite(value) ? value : undefined;
+}
+
+function parseScreenshotTextImport(text: string): ProductProfileImportResult | null {
+  const wallet: ProductProfileWalletImport = {};
+  const tech: ProductProfileTechImport = {};
+  const account: ProductProfileAccountImport = {};
+
+  const baseAtk = readScreenshotNumber(text, ['기본 공격력', 'Base ATK', 'Base attack']);
+  if (baseAtk !== undefined) account.baseAtk = baseAtk;
+
+  const finalAtk = readScreenshotNumber(text, ['최후의 공격', '최종 공격력', 'Final ATK', 'Final attack']);
+  if (finalAtk !== undefined) account.finalAtk = finalAtk;
+
+  const atkPercent = readScreenshotNumber(text, ['공격력 보너스', 'ATK bonus', 'ATK %']);
+  if (atkPercent !== undefined) account.atkPercent = atkPercent;
+
+  const critRate = readScreenshotNumber(text, ['치명타 확률', 'Crit rate']);
+  if (critRate !== undefined) account.critRate = critRate;
+
+  const critDamage = readScreenshotNumber(text, ['치명타 피해량', 'Crit damage']);
+  if (critDamage !== undefined) account.critDamage = critDamage;
+
+  const skillDamage = readScreenshotNumber(text, ['스킬 피해', 'Skill damage']);
+  if (skillDamage !== undefined) account.skillDamage = skillDamage;
+
+  const techResonanceChips = readScreenshotNumber(text, ['공진 칩', 'Tech resonance chips', 'Resonance chips']);
+  if (techResonanceChips !== undefined) {
+    wallet.techResonanceChips = techResonanceChips;
+    tech.chips = techResonanceChips;
+  }
+
+  const relicArtifactCores = readScreenshotNumber(text, ['신기 핵심', 'Relic core', 'Artifact core']);
+  if (relicArtifactCores !== undefined) wallet.relicArtifactCores = relicArtifactCores;
+
+  const survivorAwakeningCores = readScreenshotNumber(text, ['특공대 각성 코어', 'Survivor awakening core']);
+  if (survivorAwakeningCores !== undefined) wallet.survivorAwakeningCores = survivorAwakeningCores;
+
+  const otherworldForgeCores = readScreenshotNumber(text, ['이세계 코어', 'Otherworld core', 'Forge core']);
+  if (otherworldForgeCores !== undefined) wallet.otherworldForgeCores = otherworldForgeCores;
+
+  if (
+    !Object.values(wallet).some((value) => value !== undefined) &&
+    !Object.values(tech).some((value) => value !== undefined) &&
+    !Object.values(account).some((value) => value !== undefined)
+  ) {
+    return null;
+  }
+
+  return {
+    ok: true,
+    wallet,
+    tech,
+    account,
+    coverage: [
+      { id: 'screenshot-build-stats', label: 'Screenshot build stats', status: Object.keys(account).length > 0 ? 'imported' : 'missing' },
+      { id: 'screenshot-core-inventory', label: 'Screenshot core inventory', status: Object.keys(wallet).length > 0 ? 'imported' : 'missing' },
+      { id: 'screenshot-extra-stats', label: 'Screenshot extra stats', status: 'needsReview' },
+    ],
+    summary: 'Imported screenshot text / ' + buildSummary(wallet, tech, account),
+  };
+}
+
 export function parseProductProfileImport(text: string): ProductProfileImportResult {
   let parsed: unknown;
   try {
     parsed = JSON.parse(text);
   } catch (error) {
+    const screenshotImport = parseScreenshotTextImport(text);
+    if (screenshotImport) return screenshotImport;
     return {
       ok: false,
       error: `Invalid JSON: ${error instanceof Error ? error.message : String(error)}`,
@@ -365,7 +438,7 @@ export async function importProductProfileInput(
       const raw = await (options.resolveCode ?? resolveExternalCalculationCode)(parsed.code);
       return normalizeExternalCalculationProfile(await decodeExternalCalculationRaw(raw));
     }
-    return { ok: false, error: 'Unsupported profile import input' };
+    return parseProductProfileImport(text);
   } catch (error) {
     return {
       ok: false,

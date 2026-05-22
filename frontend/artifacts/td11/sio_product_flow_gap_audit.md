@@ -390,3 +390,37 @@ Follow-up implication:
 
 - The calculation-link import remains the fastest default path.
 - Screenshot/manual fallback should use these in-game-visible labels as canonical user-facing field names where the shared profile omits or stales a value.
+
+## Screenshot Text Import Fallback
+
+timestampKst: 2026-05-22T19:14:29+09:00
+status: `[PRODUCT-IMPROVEMENT-GREEN]`
+
+- Product behavior:
+  - The existing Tangtang import textarea now accepts pasted in-game screenshot/OCR text as a fallback input.
+  - Recognized labels fill editable account defaults and wallet fields:
+    - `기본 공격력` -> Base ATK.
+    - `최후의 공격` / `최종 공격력` -> Final ATK.
+    - `공격력 보너스` -> ATK %.
+    - `치명타 확률` -> Crit rate.
+    - `치명타 피해량` -> Crit damage.
+    - `스킬 피해` -> Skill damage.
+    - `공진 칩` -> Tech resonance chips.
+    - `신기 핵심` -> Relic / artifact cores.
+    - `특공대 각성 코어` -> Survivor awakening cores.
+    - `이세계 코어` -> Otherworld / forge cores.
+  - Extra screenshot-only stats such as pet ATK, movement speed, sync rate, and condition damage remain review-only for a future deeper account-context pass.
+- RED/GREEN:
+  - RED unit: `node scripts/profile_import_unit_test.mjs` failed on screenshot text with `false !== true`.
+  - RED e2e: screenshot text import showed `Profile import failed. Check the link or JSON and try again.`
+  - GREEN unit: screenshot text import now returns wallet/account defaults and `Imported screenshot text`.
+  - GREEN e2e: screenshot text fills Base ATK `126424`, Final ATK `550220`, ATK `126`, crit `147/822`, skill damage `477`, chips `21`, relic cores `74`, awakening cores `26`, otherworld cores `2`, and remains editable.
+- Verification:
+  - `node scripts/profile_import_unit_test.mjs`: passed.
+  - `node scripts/external_calculation_link_unit_test.mjs`: passed.
+  - `npx tsc --noEmit`: passed.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts --project=chromium-desktop --grep "screenshot text"`: passed.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts`: passed, 77 passed / 1 skipped.
+  - `npm run build`: passed, 22 static pages generated.
+  - `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs`: passed with `fullSioEquivalent=true`, `currentScorer=scorer=sio_full_lm_equivalence`.
+  - `git diff --check`: passed.

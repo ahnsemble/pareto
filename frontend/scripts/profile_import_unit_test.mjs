@@ -123,4 +123,37 @@ assert.equal(namedAliasResult.account.weaponItemId, 'twinLance');
 assert.equal(namedAliasResult.account.necklaceItemId, 'voidwakerEmblem');
 assert.equal(namedAliasResult.account.bootsItemId, 'voidwakerTreads');
 
+const screenshotTextResult = parseProductProfileImport(`
+특공대 속성
+기본 공격력 126424
+기본 HP 445223
+공격력 보너스 126%
+HP 보너스 136%
+최후의 공격 550220
+최후의 생명 2186560
+치명타 확률 147%
+치명타 피해량 822%
+스킬 피해 477%
+
+코어 보유량
+이세계 코어 2 / 0
+신기 핵심 74 / 67
+공진 칩 21 / 0
+특공대 각성 코어 26 / 0
+`);
+
+assert.equal(screenshotTextResult.ok, true);
+assert.equal(screenshotTextResult.account.baseAtk, 126424);
+assert.equal(screenshotTextResult.account.finalAtk, 550220);
+assert.equal(screenshotTextResult.account.atkPercent, 126);
+assert.equal(screenshotTextResult.account.critRate, 147);
+assert.equal(screenshotTextResult.account.critDamage, 822);
+assert.equal(screenshotTextResult.account.skillDamage, 477);
+assert.equal(screenshotTextResult.wallet.techResonanceChips, 21);
+assert.equal(screenshotTextResult.tech.chips, 21);
+assert.equal(screenshotTextResult.wallet.relicArtifactCores, 74);
+assert.equal(screenshotTextResult.wallet.survivorAwakeningCores, 26);
+assert.equal(screenshotTextResult.wallet.otherworldForgeCores, 2);
+assert.match(screenshotTextResult.summary, /Imported screenshot text/);
+
 console.log('profile_import_unit_test: passed');

@@ -125,6 +125,40 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-profile-import-summary')).toContainText('Imported calculation link');
   });
 
+  test('imports in-game screenshot text as editable account defaults', async ({ page }) => {
+    await page.getByTestId('tech-profile-import-input').fill(`
+특공대 속성
+기본 공격력 126424
+공격력 보너스 126%
+최후의 공격 550220
+치명타 확률 147%
+치명타 피해량 822%
+스킬 피해 477%
+코어 보유량
+이세계 코어 2 / 0
+신기 핵심 74 / 67
+공진 칩 21 / 0
+특공대 각성 코어 26 / 0
+`);
+    await page.getByRole('button', { name: 'Import profile' }).click();
+
+    await expect(page.getByTestId('tech-profile-import-summary')).toContainText('Imported screenshot text');
+    await expect(page.getByTestId('tech-account-base-atk')).toHaveValue('126424');
+    await expect(page.getByTestId('tech-account-final-atk')).toHaveValue('550220');
+    await expect(page.getByTestId('tech-account-atk-percent')).toHaveValue('126');
+    await expect(page.getByTestId('tech-account-crit-rate')).toHaveValue('147');
+    await expect(page.getByTestId('tech-account-crit-damage')).toHaveValue('822');
+    await expect(page.getByTestId('tech-account-skill-damage')).toHaveValue('477');
+    await expect(page.getByTestId('tech-inventory-chips')).toHaveValue('21');
+    await expect(page.getByTestId('tech-wallet-relic-artifact-cores')).toHaveValue('74');
+    await expect(page.getByTestId('tech-wallet-survivor-awakening-cores')).toHaveValue('26');
+    await expect(page.getByTestId('tech-wallet-otherworld-forge-cores')).toHaveValue('2');
+
+    await page.getByTestId('tech-account-final-atk').fill('550221');
+    await expect(page.getByTestId('tech-account-final-atk')).toHaveValue('550221');
+    await expect(page.getByText(/SIO/)).toHaveCount(0);
+  });
+
   test('recalculates imported profile quickly and recommends next upgrades', async ({ page }) => {
     const raw = readFixture('external-calculation-links/4ZgaBw.raw.txt');
     await page.getByTestId('tech-profile-import-input').fill(`https://sio-tools.vercel.app?raw=${raw}`);
