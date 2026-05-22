@@ -352,3 +352,41 @@ status: `[CHUNK-7-COMPLETE-LOCAL]`
   - Live short-link import depends on `is.gd/forward.php` availability; tests mock that network edge.
   - Tangtang imports only values encoded in the shared calculation profile; screenshot/account scraping remains a future fallback.
   - Internal `sio*` names are intentionally not renamed in this slice and remain deferred to Post-Launch Gate 7.
+
+## In-Game Screenshot Reference Values
+
+timestampKst: 2026-05-22T18:35:00+09:00
+status: `[USER-SCREENSHOT-REFERENCE-RECORDED]`
+
+The user supplied three in-game screenshots after final verification. These are not part of the calculation-link primary import path, but they are now recorded as reference values for a future screenshot/manual fallback and for human QA against in-game-visible fields:
+
+- Special ops attributes:
+  - base ATK: `126424`
+  - base HP: `445223`
+  - ATK bonus: `126%`
+  - HP bonus: `136%`
+  - final ATK: `550220`
+  - final HP: `2186560`
+  - crit rate: `147%`
+  - crit damage: `822%`
+  - skill damage: `477%`
+- Detailed attributes:
+  - shield damage increase: `165%`
+  - poisoned target damage increase: `45%`
+  - weakened target damage increase: `195%`
+  - chilled target damage increase: `257.5%`
+  - lacerated target damage increase: `85%`
+  - movement speed: `13`
+  - movement speed cap: `16`
+  - pet ATK: `355274`
+  - otherworld pet sync rate: `42.5%`
+- Core inventory:
+  - otherworld core: `2 / 0`
+  - relic core: `74 / 67`
+  - resonance chip: `21 / 0`
+  - special ops awakening core: `26 / 0`
+
+Follow-up implication:
+
+- The calculation-link import remains the fastest default path.
+- Screenshot/manual fallback should use these in-game-visible labels as canonical user-facing field names where the shared profile omits or stales a value.
