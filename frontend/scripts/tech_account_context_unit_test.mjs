@@ -24,8 +24,11 @@ const moduleUrl = `data:text/javascript;base64,${Buffer.from(transpiled.outputTe
 const {
   DEFAULT_TECH_ACCOUNT_CONTEXT,
   buildSioLmContext,
+  formatPassiveCritOptionLabel,
+  formatTeamworkOptionLabel,
   normalizePetAssistContext,
   petXenoStatusLabel,
+  survivorContextSummary,
 } = await import(moduleUrl);
 
 assert.equal(typeof normalizePetAssistContext, 'function');
@@ -60,6 +63,19 @@ assert.equal(petXenoStatusLabel({ ...DEFAULT_TECH_ACCOUNT_CONTEXT, petXeno: 1 })
 assert.equal(
   petXenoStatusLabel({ ...DEFAULT_TECH_ACCOUNT_CONTEXT, petXeno: 1, petResonanceChance: 35, petResonanceAtk: 2100 }),
   'Xeno resonance ready',
+);
+
+assert.equal(formatTeamworkOptionLabel(0), '0 slots / none');
+assert.equal(formatTeamworkOptionLabel(4), '4 slots / full');
+assert.equal(formatPassiveCritOptionLabel(0), 'No passive crit');
+assert.equal(formatPassiveCritOptionLabel(24), 'Crit +24%');
+assert.match(
+  survivorContextSummary({ ...DEFAULT_TECH_ACCOUNT_CONTEXT, selectedHeroId: 'king', survivorTeamwork: 4, survivorPassiveCrit: 24 }),
+  /full/,
+);
+assert.match(
+  survivorContextSummary({ ...DEFAULT_TECH_ACCOUNT_CONTEXT, selectedHeroId: 'king', survivorTeamwork: 4, survivorPassiveCrit: 24 }),
+  /Crit \+24%/,
 );
 
 const context = buildSioLmContext({

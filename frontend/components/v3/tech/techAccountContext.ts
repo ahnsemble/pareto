@@ -210,6 +210,25 @@ export function petXenoStatusLabel(account: TechAccountContextInput): string {
   return 'Xeno preview on';
 }
 
+export function formatTeamworkOptionLabel(value: number): string {
+  const labels: Record<number, string> = {
+    0: '0 slots / none',
+    1: '1 slot / starter',
+    2: '2 slots / standard',
+    3: '3 slots / advanced',
+    4: '4 slots / full',
+  };
+  return labels[value] ?? `${value} slots`;
+}
+
+export function formatPassiveCritOptionLabel(value: number): string {
+  return value <= 0 ? 'No passive crit' : `Crit +${value}%`;
+}
+
+export function survivorContextSummary(account: TechAccountContextInput): string {
+  return `${formatTeamworkOptionLabel(account.survivorTeamwork)} / ${formatPassiveCritOptionLabel(account.survivorPassiveCrit)}`;
+}
+
 function clampInteger(value: number, min: number, max: number): number {
   if (!Number.isFinite(value)) return min;
   return Math.max(min, Math.min(max, Math.trunc(value)));

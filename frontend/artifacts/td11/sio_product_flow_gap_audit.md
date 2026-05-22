@@ -590,3 +590,40 @@ status: `[CHUNK-1-PET-ASSIST-XENO-GREEN]`
   - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_product_flow_gap_audit.md`
 - Commit:
   - Local commit created for this chunk; GitHub push/PR not performed.
+
+## Tangtang Low-Impact Product Depth - Chunk 2
+
+timestampKst: 2026-05-23T08:58:12+09:00
+status: `[CHUNK-2-SURVIVOR-MEANING-GREEN]`
+
+- Product behavior:
+  - Teamwork select options now show semantic labels: none, starter, standard, advanced, full.
+  - Passive crit select options now show product labels such as `No passive crit` and `Crit +24%`.
+  - Survivor context summary row shows the selected survivor plus teamwork/passive meaning.
+- RED/GREEN summary:
+  - RED unit: `node scripts/tech_account_context_unit_test.mjs` failed because `formatTeamworkOptionLabel` was not a function.
+  - RED e2e: `npx playwright test e2e/v3_tech_optimizer.spec.ts --grep "survivor teamwork and passive choices"` failed on desktop/mobile because `tech-teamwork-select` still rendered `0 slots`.
+  - GREEN unit: teamwork/passive label helpers and survivor summary assertions passed.
+  - GREEN e2e: focused survivor semantics test passed on desktop/mobile, 2/2.
+- Verification:
+  - `node scripts/tech_account_context_unit_test.mjs`: passed.
+  - `npx tsc --noEmit`: passed.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts --grep "survivor teamwork and passive choices"`: passed, 2/2.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts`: passed, 81 passed / 1 skipped.
+  - `npm run build`: passed, 22 static pages generated. Existing static export middleware/API-route warning only.
+  - `git diff --check`: passed.
+- Heavy verification:
+  - Omitted. This chunk did not change `buildSioLmContext`, `playerStateWithAccountContext`, optimizer request fields, Rust formula constants, or WASM scoring semantics.
+- Intentional constraints kept:
+  - Public UI remains Tangtang.
+  - No user-facing SIO copy was added.
+  - Raw SIO LM JSON, scorer/debug/preselect/beam/exact node cap UI remain hidden.
+  - Internal `sio*` rename remains deferred to Post-Launch Gate 7.
+- Artifacts:
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/components/v3/tech/techAccountContext.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/components/v3/tech/TechAccountContextPanel.tsx`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/scripts/tech_account_context_unit_test.mjs`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/e2e/v3_tech_optimizer.spec.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_product_flow_gap_audit.md`
+- Commit:
+  - Local commit created for this chunk; GitHub push/PR not performed.

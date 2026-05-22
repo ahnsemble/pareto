@@ -11,8 +11,11 @@ import {
 import type { PlayerState } from '../../../app/lib/pareto-store/types';
 import { formatNumber, inputClass, labelClass, panelClass, selectClass } from '../optimizerUi';
 import {
+  formatPassiveCritOptionLabel,
+  formatTeamworkOptionLabel,
   normalizePetAssistContext,
   petXenoStatusLabel,
+  survivorContextSummary,
   type TechAccountContextInput,
   type TechAccountContextNamedField,
 } from './techAccountContext';
@@ -359,7 +362,7 @@ export function AccountContextPanel({
                       >
                         {[0, 1, 2, 3, 4].map((value) => (
                           <option key={value} value={value}>
-                            {value} slots
+                            {formatTeamworkOptionLabel(value)}
                           </option>
                         ))}
                       </select>
@@ -376,13 +379,16 @@ export function AccountContextPanel({
                       >
                         {[0, 6, 12, 18, 24].map((value) => (
                           <option key={value} value={value}>
-                            {value}%
+                            {formatPassiveCritOptionLabel(value)}
                           </option>
                         ))}
                       </select>
                     </label>
                   </div>
                 </div>
+                <p className="text-xs text-[color:var(--color-text-muted)]" data-testid="tech-survivor-context-summary">
+                  {selectedHeroName} / {survivorContextSummary(account)}
+                </p>
               </div>
             ) : null}
             {section.title === 'Pet awakening' ? (

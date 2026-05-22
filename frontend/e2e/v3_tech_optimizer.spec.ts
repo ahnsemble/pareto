@@ -507,6 +507,18 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-account-survivor-passive')).toBeVisible();
   });
 
+  test('shows survivor teamwork and passive choices with product meaning', async ({ page }) => {
+    await expect(page.getByTestId('tech-teamwork-select')).toContainText('0 slots / none');
+    await expect(page.getByTestId('tech-teamwork-select')).toContainText('4 slots / full');
+    await expect(page.getByTestId('tech-passive-select')).toContainText('No passive crit');
+    await expect(page.getByTestId('tech-passive-select')).toContainText('Crit +24%');
+
+    await page.getByTestId('tech-teamwork-select').selectOption('4');
+    await page.getByTestId('tech-passive-select').selectOption('24');
+    await expect(page.getByTestId('tech-survivor-context-summary')).toContainText('full');
+    await expect(page.getByTestId('tech-survivor-context-summary')).toContainText('Crit +24%');
+  });
+
   test('edits pet awakening, assist pets, xeno, and resonance context', async ({ page }) => {
     const account = page.getByTestId('tech-account-context');
     await expect(account.getByText('Pet detail')).toBeVisible();
