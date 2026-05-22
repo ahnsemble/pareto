@@ -27,6 +27,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-profile-import')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Import profile' })).toBeVisible();
     await expect(page.getByTestId('tech-profile-import-input')).toBeVisible();
+    await expect(page.getByTestId('tech-profile-import')).toContainText('screenshot text');
     await expect(page.getByText('SIO LM context')).toHaveCount(0);
     await expect(page.getByTestId('tech-sio-lm-context')).toHaveCount(0);
   });
@@ -155,6 +156,12 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-profile-import-review')).toContainText('Imported 2');
     await expect(page.getByTestId('tech-profile-import-review')).toContainText('Review 1');
     await expect(page.getByTestId('tech-profile-import-review')).toContainText('Editable after import');
+    await expect(page.getByTestId('tech-profile-import-field-review')).toContainText('Final ATK');
+    await expect(page.getByTestId('tech-profile-import-field-review')).toContainText('550220');
+    await expect(page.getByTestId('tech-profile-import-field-review')).toContainText('Shield damage');
+    await expect(page.getByTestId('tech-profile-import-field-review')).toContainText('165');
+    await expect(page.getByTestId('tech-profile-import-field-review')).toContainText('Otherworld pet sync');
+    await expect(page.getByTestId('tech-profile-import-field-review')).toContainText('42.5');
     await expect(page.getByTestId('tech-account-base-atk')).toHaveValue('126424');
     await expect(page.getByTestId('tech-account-final-atk')).toHaveValue('550220');
     await expect(page.getByTestId('tech-account-atk-percent')).toHaveValue('126');
@@ -179,6 +186,10 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-account-final-atk')).toHaveValue('550221');
     await page.getByTestId('tech-account-chilled-damage').fill('258');
     await expect(page.getByTestId('tech-account-chilled-damage')).toHaveValue('258');
+    await page.getByRole('button', { name: 'Clear import' }).click();
+    await expect(page.getByTestId('tech-profile-import-input')).toHaveValue('');
+    await expect(page.getByTestId('tech-profile-import-field-review')).toHaveCount(0);
+    await expect(page.getByTestId('tech-account-final-atk')).toHaveValue('550221');
     await expect(page.getByText(/SIO/)).toHaveCount(0);
   });
 

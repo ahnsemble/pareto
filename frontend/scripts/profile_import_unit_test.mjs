@@ -21,9 +21,10 @@ const transpiled = ts.transpileModule(source, {
   },
 });
 const moduleUrl = `data:text/javascript;base64,${Buffer.from(transpiled.outputText).toString('base64')}`;
-const { parseProductProfileImport } = await import(moduleUrl);
+const { buildProductImportFieldSummary, parseProductProfileImport } = await import(moduleUrl);
 
 assert.equal(typeof parseProductProfileImport, 'function');
+assert.equal(typeof buildProductImportFieldSummary, 'function');
 
 const payload = {
   wallet: { techResonanceChips: 77, relicArtifactCores: 4 },
@@ -173,5 +174,16 @@ assert.equal(screenshotTextResult.wallet.relicArtifactCores, 74);
 assert.equal(screenshotTextResult.wallet.survivorAwakeningCores, 26);
 assert.equal(screenshotTextResult.wallet.otherworldForgeCores, 2);
 assert.match(screenshotTextResult.summary, /Imported screenshot text/);
+
+const screenshotFieldSummary = buildProductImportFieldSummary(screenshotTextResult);
+const screenshotFieldText = JSON.stringify(screenshotFieldSummary);
+
+assert.match(screenshotFieldText, /Final ATK/);
+assert.match(screenshotFieldText, /550220/);
+assert.match(screenshotFieldText, /Shield damage/);
+assert.match(screenshotFieldText, /165/);
+assert.match(screenshotFieldText, /Otherworld pet sync/);
+assert.match(screenshotFieldText, /42.5/);
+assert.equal(screenshotFieldText.includes('sio'), false);
 
 console.log('profile_import_unit_test: passed');

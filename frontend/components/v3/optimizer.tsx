@@ -9,9 +9,11 @@ import {
   type ResourceWalletValues,
 } from '../../app/lib/pareto-store/resource-wallet';
 import {
+  buildProductImportFieldSummary,
   importProductProfileInput,
   type ImportedTechSnapshot,
   type ProductImportCoverage,
+  type ProductImportFieldSummary,
 } from '../../app/lib/pareto-store/profile-import';
 import { buildTechUpgradeRecommendations } from '../../app/lib/pareto-store/tech-upgrade-recommendations';
 import { getWorker } from '../../app/lib/wasm-client';
@@ -478,6 +480,7 @@ export function TechPartsOptimizerSurface() {
   const [profileImportText, setProfileImportText] = useState('');
   const [profileImportSummary, setProfileImportSummary] = useState('');
   const [profileImportCoverage, setProfileImportCoverage] = useState<ProductImportCoverage[]>([]);
+  const [profileImportDetails, setProfileImportDetails] = useState<ProductImportFieldSummary[]>([]);
   const [profileImporting, setProfileImporting] = useState(false);
   const [importedTechSnapshot, setImportedTechSnapshot] = useState<ImportedTechSnapshot | null>(null);
   const [resourceWallet, setResourceWallet] = useState<ResourceWalletValues>(DEFAULT_RESOURCE_WALLET_VALUES);
@@ -545,6 +548,7 @@ export function TechPartsOptimizerSurface() {
       const imported = await importProductProfileInput(profileImportText);
       if (!imported.ok) {
         setProfileImportCoverage([]);
+        setProfileImportDetails([]);
         setProfileImportSummary('Profile import failed. Check the link or JSON and try again.');
         return;
       }
@@ -580,10 +584,17 @@ export function TechPartsOptimizerSurface() {
       if (optimizerSettings?.overloadable !== undefined) setOverloadable(optimizerSettings.overloadable);
       setImportedTechSnapshot(imported.importedTechSnapshot ?? null);
       setProfileImportCoverage(imported.coverage ?? []);
+      setProfileImportDetails(buildProductImportFieldSummary(imported));
       setProfileImportSummary(imported.summary);
     } finally {
       setProfileImporting(false);
     }
+  };
+  const handleClearProfileImport = () => {
+    setProfileImportText('');
+    setProfileImportSummary('');
+    setProfileImportCoverage([]);
+    setProfileImportDetails([]);
   };
 
   return (
@@ -609,8 +620,10 @@ export function TechPartsOptimizerSurface() {
             value={profileImportText}
             onChange={setProfileImportText}
             onImport={handleProfileImport}
+            onClear={handleClearProfileImport}
             summary={profileImportSummary}
             coverage={profileImportCoverage}
+            details={profileImportDetails}
             importing={profileImporting}
           />
 

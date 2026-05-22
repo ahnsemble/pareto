@@ -5,7 +5,7 @@ import {
   type ResourceWalletId,
   type ResourceWalletValues,
 } from '../../../app/lib/pareto-store/resource-wallet';
-import type { ProductImportCoverage } from '../../../app/lib/pareto-store/profile-import';
+import type { ProductImportCoverage, ProductImportFieldSummary } from '../../../app/lib/pareto-store/profile-import';
 import { buttonClass, inputClass, labelClass, panelClass } from '../optimizerUi';
 
 export function ResourceWalletPanel({
@@ -46,15 +46,19 @@ export function ProfileImportPanel({
   value,
   onChange,
   onImport,
+  onClear,
   summary,
   coverage = [],
+  details = [],
   importing = false,
 }: {
   value: string;
   onChange: (value: string) => void;
   onImport: () => void | Promise<void>;
+  onClear?: () => void;
   summary: string;
   coverage?: ProductImportCoverage[];
+  details?: ProductImportFieldSummary[];
   importing?: boolean;
 }) {
   const importedCount = coverage.filter((item) => item.status === 'imported').length;
@@ -67,15 +71,22 @@ export function ProfileImportPanel({
         <div>
           <h2 className={labelClass}>Tangtang profile import</h2>
           <p className="mt-1 text-xs text-[color:var(--color-text-muted)]">
-            Paste a profile JSON or calculation link to fill this optimizer.
+            Paste a profile JSON, calculation link, or screenshot text to fill this optimizer.
           </p>
         </div>
-        <button type="button" className={buttonClass} disabled={importing || value.trim().length === 0} onClick={onImport}>
-          {importing ? 'Importing...' : 'Import profile'}
-        </button>
+        <div className="flex flex-wrap gap-2">
+          {onClear && (value.trim().length > 0 || summary || coverage.length > 0 || details.length > 0) ? (
+            <button type="button" className={buttonClass} disabled={importing} onClick={onClear}>
+              Clear import
+            </button>
+          ) : null}
+          <button type="button" className={buttonClass} disabled={importing || value.trim().length === 0} onClick={onImport}>
+            {importing ? 'Importing...' : 'Import profile'}
+          </button>
+        </div>
       </div>
       <label className="mt-3 block text-sm text-[color:var(--color-text)]">
-        <span className="text-xs text-[color:var(--color-text-muted)]">Profile JSON or calculation link</span>
+        <span className="text-xs text-[color:var(--color-text-muted)]">Profile JSON, calculation link, or screenshot text</span>
         <textarea
           className={inputClass + ' mt-1 min-h-28 resize-y'}
           data-testid="tech-profile-import-input"
@@ -95,6 +106,22 @@ export function ProfileImportPanel({
               <span>Missing {missingCount}</span>
             </div>
             <p className="mt-2 text-[color:var(--color-text-muted)]">Editable after import. Review marked fields before running.</p>
+            {details.length > 0 ? (
+              <div className="mt-2 grid max-h-44 gap-1 overflow-y-auto pr-1" data-testid="tech-profile-import-field-review">
+                {details.map((item) => (
+                  <div
+                    key={`${item.group}-${item.id}`}
+                    className="grid grid-cols-[minmax(0,1fr)_auto] gap-2 border-t border-[color:var(--color-border)]/40 py-1 font-mono text-[11px]"
+                  >
+                    <span className="truncate text-[color:var(--color-text-muted)]">
+                      {item.label}
+                      {item.needsReview ? ' / review' : ''}
+                    </span>
+                    <span className="max-w-[9rem] truncate text-right text-[color:var(--color-text)]">{item.value}</span>
+                  </div>
+                ))}
+              </div>
+            ) : null}
           </div>
           <div className="mt-2 flex flex-wrap gap-2" data-testid="tech-profile-import-coverage">
             {coverage.map((item) => (

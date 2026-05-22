@@ -476,3 +476,39 @@ status: `[PRODUCT-IMPROVEMENT-GREEN]`
   - SIO LM/scoring core, Rust formula constants, and WASM scoring semantics were not changed.
   - Raw SIO LM JSON, scorer/debug/preselect/beam/exact node cap UI remain hidden.
   - Internal `sio*` rename remains deferred to Post-Launch Gate 7.
+
+## Import Review Field Values And Clear UX
+
+timestampKst: 2026-05-22T21:20:36+09:00
+status: `[PRODUCT-IMPROVEMENT-GREEN]`
+
+- Product behavior:
+  - Tangtang import review now shows a compact field/value list after profile import, including values like `Final ATK 550220`, `Shield damage 165`, and `Otherworld pet sync 42.5`.
+  - Review-only captured inputs such as pet ATK and movement speed are marked with `/ review`.
+  - Import panel copy now explicitly says it accepts profile JSON, calculation links, or screenshot text.
+  - `Clear import` clears the pasted import text and review panels while preserving already-applied editable account values.
+- RED/GREEN summary:
+  - RED unit: `buildProductImportFieldSummary` was missing from `profile-import.ts`.
+  - GREEN unit: field summary contains product-facing labels/values and does not include `sio`.
+  - RED e2e: `tech-profile-import-field-review` was not found after screenshot text import.
+  - GREEN e2e: field review displays imported values on desktop/mobile.
+  - RED copy e2e: import panel lacked `screenshot text`.
+  - GREEN copy e2e: import panel advertises screenshot text input.
+  - RED clear e2e: `Clear import` button was missing.
+  - GREEN clear e2e: clear removes import text/review and keeps edited account values.
+- Verification:
+  - `node scripts/profile_import_unit_test.mjs`: passed.
+  - `node scripts/external_calculation_link_unit_test.mjs`: passed, `rawLength=1350`, `compactVersion=5`.
+  - `node scripts/tech_account_context_unit_test.mjs`: passed.
+  - `npx tsc --noEmit`: passed.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts`: passed, 77 passed / 1 skipped.
+  - `npm run build`: passed, 22 static pages generated.
+  - `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs`: passed with `fullSioEquivalent=true`, `currentScorer=scorer=sio_full_lm_equivalence`, G0/G1/G2/G3/G6=true.
+  - `cargo test -p tttg_forge_optimizer --test tech_optimizer_performance -- --nocapture`: passed, 136/136.
+  - `cargo test -p tttg_forge_wasm --test tech_parts_exports -- --nocapture`: passed, 9/9.
+  - `wasm-pack build tttg_forge_wasm --target web --release -- --features compat-exports`: passed; only metadata/version warnings.
+  - `git diff --check`: passed.
+- Intentional constraints kept:
+  - Public UI remains Tangtang.
+  - No user-facing SIO copy was added.
+  - SIO LM/scoring core, Rust formula constants, and WASM scoring semantics were not changed.

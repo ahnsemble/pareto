@@ -37,6 +37,14 @@ export type ProductImportCoverage = {
   count?: number;
 };
 
+export type ProductImportFieldSummary = {
+  id: string;
+  label: string;
+  value: string;
+  group: 'Wallet' | 'Tech' | 'Account';
+  needsReview?: boolean;
+};
+
 type ProductProfileAccountImportShape = {
   selectedHeroId: string;
   targetCollectibleId: string;
@@ -277,6 +285,84 @@ function buildSummary(wallet: ProductProfileWalletImport, tech: ProductProfileTe
   if (Object.values(tech).some((value) => value !== undefined)) parts.push('Imported tech inventory');
   if (Object.values(account).some((value) => value !== undefined)) parts.push('Imported account context');
   return parts.length > 0 ? parts.join(' / ') : 'Profile imported';
+}
+
+function formatImportValue(value: string | number | Record<string, number>): string {
+  if (typeof value === 'string') return value;
+  if (typeof value === 'number') return Number.isInteger(value) ? String(value) : String(value);
+  return Object.entries(value)
+    .map(([key, count]) => `${key} ${count}`)
+    .join(', ');
+}
+
+export function buildProductImportFieldSummary(
+  imported: Extract<ProductProfileImportResult, { ok: true }>,
+): ProductImportFieldSummary[] {
+  const rows: ProductImportFieldSummary[] = [];
+  const add = (
+    group: ProductImportFieldSummary['group'],
+    id: string,
+    label: string,
+    value: string | number | Record<string, number> | undefined,
+    needsReview = false,
+  ) => {
+    if (value === undefined) return;
+    if (typeof value === 'string' && value.trim().length === 0) return;
+    if (typeof value === 'object' && Object.keys(value).length === 0) return;
+    rows.push({ group, id, label, value: formatImportValue(value), needsReview });
+  };
+
+  add('Wallet', 'techResonanceChips', 'Tech resonance chips', imported.wallet.techResonanceChips);
+  add('Wallet', 'relicArtifactCores', 'Relic / artifact cores', imported.wallet.relicArtifactCores);
+  add('Wallet', 'survivorAwakeningCores', 'Survivor awakening cores', imported.wallet.survivorAwakeningCores);
+  add('Wallet', 'otherworldForgeCores', 'Otherworld / forge cores', imported.wallet.otherworldForgeCores);
+  add('Wallet', 'mountCores', 'Mount cores', imported.wallet.mountCores);
+  add('Tech', 'chips', 'Optimizer chips', imported.tech.chips);
+  add('Tech', 'skillSlots', 'Active skills', imported.tech.skillSlots);
+  add('Tech', 'rarityCounts', 'Tech rarity counts', imported.tech.rarityCounts);
+
+  const accountFields: Array<[keyof ProductProfileAccountImport, string, boolean?]> = [
+    ['baseAtk', 'Base ATK'],
+    ['finalAtk', 'Final ATK'],
+    ['atkPercent', 'ATK %'],
+    ['critRate', 'Crit rate'],
+    ['critDamage', 'Crit damage'],
+    ['skillDamage', 'Skill damage'],
+    ['shieldDamage', 'Shield damage'],
+    ['poisonedDamage', 'Poisoned target'],
+    ['weakenedDamage', 'Weakened target'],
+    ['chilledDamage', 'Chilled target'],
+    ['lacerationDamage', 'Lacerated target'],
+    ['otherworldPetSyncRate', 'Otherworld pet sync'],
+    ['petAtk', 'Pet ATK', true],
+    ['movementSpeed', 'Movement speed', true],
+    ['movementSpeedCap', 'Movement speed cap', true],
+    ['collectionSets', 'Collection set progress'],
+    ['collectionStars', 'Collection stars'],
+    ['customCollectionSets', 'Custom collection sets'],
+    ['survivorLevel', 'Survivor level'],
+    ['survivorStar', 'Survivor star'],
+    ['survivorAwakening', 'Survivor awakening'],
+    ['survivorTeamwork', 'Teamwork slots'],
+    ['survivorPassiveCrit', 'Passive crit'],
+    ['petAwakening', 'Pet awakening'],
+    ['petAssistPets', 'Assist pets'],
+    ['petXeno', 'Pet xeno'],
+    ['petResonanceChance', 'Pet resonance chance'],
+    ['petResonanceAtk', 'Pet resonance ATK'],
+    ['mountCores', 'Mount cores'],
+    ['mountPuzzleSlots', 'Mount puzzle slots'],
+    ['mountStatInputs', 'Mount stat inputs'],
+    ['mountAtk', 'Mount ATK %'],
+    ['mountSkillDamage', 'Mount skill %'],
+    ['equipmentOtherworldCores', 'Equipment otherworld cores'],
+    ['lmeTurf', 'Lunar Mine turf nodes'],
+  ];
+  for (const [field, label, needsReview] of accountFields) {
+    add('Account', String(field), label, imported.account[field] as string | number | undefined, needsReview);
+  }
+
+  return rows.slice(0, 24);
 }
 
 function readScreenshotNumber(text: string, labels: readonly string[]): number | undefined {
