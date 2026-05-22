@@ -13,6 +13,7 @@ import {
   type ImportedTechSnapshot,
   type ProductImportCoverage,
 } from '../../app/lib/pareto-store/profile-import';
+import { buildTechUpgradeRecommendations } from '../../app/lib/pareto-store/tech-upgrade-recommendations';
 import { getWorker } from '../../app/lib/wasm-client';
 import {
   initWasm,
@@ -41,6 +42,7 @@ import {
 } from './optimizerUi';
 import { AccountContextPanel } from './tech/TechAccountContextPanel';
 import { ProfileImportPanel, ResourceWalletPanel } from './tech/TechProductPanels';
+import { TechUpgradeRecommendations } from './tech/TechUpgradeRecommendations';
 import {
   DEFAULT_TECH_ACCOUNT_CONTEXT,
   buildSioLmContext,
@@ -201,9 +203,14 @@ function buildLoadoutRows(build: TechOptimizerResult['builds'][number] | undefin
 }
 
 function buildChipRemainder(build: TechOptimizerResult['builds'][number] | undefined): string {
+  const value = buildChipRemainderValue(build);
+  return typeof value === 'number' ? formatNumber(value, 0) : 'n/a';
+}
+
+function buildChipRemainderValue(build: TechOptimizerResult['builds'][number] | undefined): number | undefined {
   const candidate = build?.config?.sioCandidate as Record<string, unknown> | undefined;
   const value = candidate?.chipRemainder;
-  return typeof value === 'number' ? formatNumber(value, 0) : 'n/a';
+  return typeof value === 'number' ? value : undefined;
 }
 
 function buildChipUsed(build: TechOptimizerResult['builds'][number] | undefined): string {
@@ -472,7 +479,7 @@ export function TechPartsOptimizerSurface() {
   const [profileImportSummary, setProfileImportSummary] = useState('');
   const [profileImportCoverage, setProfileImportCoverage] = useState<ProductImportCoverage[]>([]);
   const [profileImporting, setProfileImporting] = useState(false);
-  const [, setImportedTechSnapshot] = useState<ImportedTechSnapshot | null>(null);
+  const [importedTechSnapshot, setImportedTechSnapshot] = useState<ImportedTechSnapshot | null>(null);
   const [resourceWallet, setResourceWallet] = useState<ResourceWalletValues>(DEFAULT_RESOURCE_WALLET_VALUES);
   const [rarityCounts, setRarityCounts] = useState(DEFAULT_RARITY_COUNTS);
   const [chips, setChips] = useState(40);
@@ -515,6 +522,15 @@ export function TechPartsOptimizerSurface() {
   const activeSkills = buildActiveSkills(topBuild);
   const chipUsed = buildChipUsed(topBuild);
   const chipRemainder = buildChipRemainder(topBuild);
+  const upgradeRecommendations = useMemo(
+    () =>
+      buildTechUpgradeRecommendations({
+        result,
+        importedTechSnapshot,
+        chipRemainder: buildChipRemainderValue(topBuild) ?? 0,
+      }),
+    [importedTechSnapshot, result, topBuild],
+  );
   const canRun = bootStatus === 'ok' && inventoryValidation.valid && !running;
   const validationText = inventoryValidation.valid
     ? inventoryValidation.warnings.length > 0
@@ -869,6 +885,7 @@ export function TechPartsOptimizerSurface() {
               {result ? activeSkills : 'none'}
             </p>
           </div>
+          <TechUpgradeRecommendations recommendations={result ? upgradeRecommendations : []} />
           <div className="mt-4 overflow-x-auto">
             <table className="w-full min-w-[640px] font-mono text-xs">
               <thead className="text-left text-[color:var(--color-text-muted)]">

@@ -281,6 +281,9 @@ Existing comparison evidence used first:
   - Chunk 4 updated the Tangtang import panel to accept profile JSON or calculation links, made import async, displayed coverage, and kept imported values editable.
   - RED: focused raw-link e2e failed with JSON-only import copy; an earlier compile failure also identified `lzma` package `index.js` as client-bundle unsafe, so the decoder now uses the browser-safe decompressor entry.
   - GREEN: raw-link e2e and mocked short-code e2e passed without live network; unit import scripts and `npx tsc --noEmit` passed.
+  - Chunk 5 added product-level next-upgrade recommendations from imported snapshot plus optimizer output.
+  - RED: recommendation unit failed because `tech-upgrade-recommendations.ts` did not exist; recommendation e2e failed because `tech-upgrade-recommendations` panel was missing.
+  - GREEN: recommendation unit/e2e, profile import unit, external link unit, and `npx tsc --noEmit` passed.
 
 ## Current Product Contract
 

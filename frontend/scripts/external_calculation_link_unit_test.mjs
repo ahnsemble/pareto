@@ -10,6 +10,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const tmpDir = resolve(tmpdir(), 'pareto-external-calculation-link-tests');
 const modulePath = resolve(__dirname, '../app/lib/pareto-store/external-calculation-link.ts');
 const profileModulePath = resolve(__dirname, '../app/lib/pareto-store/external-calculation-profile.ts');
+const recommendationModulePath = resolve(__dirname, '../app/lib/pareto-store/tech-upgrade-recommendations.ts');
 const rawPath = resolve(__dirname, '../fixtures/external-calculation-links/4ZgaBw.raw.txt');
 const expectedPath = resolve(__dirname, '../fixtures/external-calculation-links/4ZgaBw.expected.json');
 
@@ -83,6 +84,33 @@ assert.ok(normalized.account.baseAtk > 0);
 assert.ok(normalized.importedTechSnapshot.parts.length >= 6);
 assert.match(normalized.summary, /Imported/);
 assert.equal(JSON.stringify(normalized).includes('sioLm'), false);
+
+const { buildTechUpgradeRecommendations } = await loadTsModule(
+  recommendationModulePath,
+  'tech-upgrade-recommendations',
+);
+const recommendations = buildTechUpgradeRecommendations({
+  result: {
+    builds: [{
+      score: 123,
+      damageFactor: 456,
+      config: {
+        loadout: [
+          { part: 'energyGuidanceSystem', mode: 'droneMode', sio: { chip: 24, overload: 3 } },
+          { part: 'quantumNanobot', mode: 'durianMode', sio: { chip: 12, overload: 0 } },
+        ],
+      },
+    }],
+  },
+  importedTechSnapshot: {
+    parts: [{ partName: 'Energy Guidance System', modeName: 'Drone Mode', resonance: 3000, overload: 0, deployed: true }],
+  },
+  chipRemainder: 8,
+});
+
+assert.ok(recommendations.length > 0);
+assert.match(recommendations[0].title, /Upgrade|Allocate|Tune/);
+assert.equal(JSON.stringify(recommendations).includes('energyGuidanceSystem'), false);
 
 console.log(
   JSON.stringify({

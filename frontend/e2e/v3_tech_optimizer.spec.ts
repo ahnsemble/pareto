@@ -125,6 +125,20 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-profile-import-summary')).toContainText('Imported calculation link');
   });
 
+  test('recalculates imported profile quickly and recommends next upgrades', async ({ page }) => {
+    const raw = readFixture('external-calculation-links/4ZgaBw.raw.txt');
+    await page.getByTestId('tech-profile-import-input').fill(`https://sio-tools.vercel.app?raw=${raw}`);
+    await page.getByRole('button', { name: 'Import profile' }).click();
+    await page.getByTestId('tech-optimizer-run').click();
+
+    await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
+    await expect(page.getByTestId('tech-upgrade-recommendations')).toContainText('Next upgrades');
+    await expect(page.getByTestId('tech-upgrade-recommendations')).not.toContainText(/energyGuidanceSystem|droneMode|sio/i);
+
+    const firstAnswerText = await page.getByTestId('tech-optimizer-first-answer').innerText();
+    expect(Number.parseFloat(firstAnswerText)).toBeLessThan(3000);
+  });
+
   test('uses product validation copy without raw codes or stack traces', async ({ page }) => {
     await page.getByTestId('tech-inventory-chips').fill('1000');
 
