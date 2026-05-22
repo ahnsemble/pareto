@@ -1,0 +1,20 @@
+{
+  "code": "4ZgaBw",
+  "rawLength": 1350,
+  "decodedVersion": 5,
+  "expectedDomains": [
+    "meta",
+    "heroes",
+    "collectibles",
+    "items",
+    "techs",
+    "pets",
+    "mounts",
+    "techsOptimizer",
+    "turf"
+  ],
+  "expectedImportSummary": [
+    "Imported account context",
+    "Imported tech inventory"
+  ]
+}
