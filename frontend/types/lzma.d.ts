@@ -10,3 +10,15 @@ declare module 'lzma' {
     callback?: (result: unknown, error?: unknown) => void,
   ): unknown;
 }
+
+declare module 'lzma/src/lzma-d-min.js' {
+  const moduleValue: {
+    LZMA_WORKER?: {
+      decompress(
+        input: ArrayLike<number> | Buffer,
+        callback?: (result: unknown, error?: unknown) => void,
+      ): unknown;
+    };
+  };
+  export default moduleValue;
+}

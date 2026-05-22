@@ -8,7 +8,11 @@ import {
   DEFAULT_RESOURCE_WALLET_VALUES,
   type ResourceWalletValues,
 } from '../../app/lib/pareto-store/resource-wallet';
-import { parseProductProfileImport } from '../../app/lib/pareto-store/profile-import';
+import {
+  importProductProfileInput,
+  type ImportedTechSnapshot,
+  type ProductImportCoverage,
+} from '../../app/lib/pareto-store/profile-import';
 import { getWorker } from '../../app/lib/wasm-client';
 import {
   initWasm,
@@ -109,6 +113,8 @@ const SKILL_STATUS_LABEL: Record<SkillStatus, string> = {
   disabled: 'Excluded',
 };
 const DEFAULT_CANDIDATE_PRESELECT_TOP_K = 16;
+const SPEED_MODE_OPTIONS = ['fast', 'normal', 'precise', 'precise+', 'full'] as const;
+const LIMIT_OPTIONS = ['basic', 'advanced'] as const;
 
 function useV3OptimizerBoot(): BootState {
   const [bootStatus, setBootStatus] = useState<BootState>('pending');
@@ -464,6 +470,9 @@ export function TechPartsOptimizerSurface() {
   const [accountContext, setAccountContext] = useState(DEFAULT_TECH_ACCOUNT_CONTEXT);
   const [profileImportText, setProfileImportText] = useState('');
   const [profileImportSummary, setProfileImportSummary] = useState('');
+  const [profileImportCoverage, setProfileImportCoverage] = useState<ProductImportCoverage[]>([]);
+  const [profileImporting, setProfileImporting] = useState(false);
+  const [, setImportedTechSnapshot] = useState<ImportedTechSnapshot | null>(null);
   const [resourceWallet, setResourceWallet] = useState<ResourceWalletValues>(DEFAULT_RESOURCE_WALLET_VALUES);
   const [rarityCounts, setRarityCounts] = useState(DEFAULT_RARITY_COUNTS);
   const [chips, setChips] = useState(40);
@@ -514,35 +523,51 @@ export function TechPartsOptimizerSurface() {
     : `Inventory blocked / ${inventoryValidation.errors.map(inventoryMessage).join(', ')}`;
   const playerStateForRun = useMemo(() => playerStateWithAccountContext(playerState, accountContext), [accountContext, playerState]);
   const sioLmContextForRun = useMemo(() => buildSioLmContext(accountContext), [accountContext]);
-  const handleProfileImport = () => {
-    const imported = parseProductProfileImport(profileImportText);
-    if (!imported.ok) {
-      setProfileImportSummary('Profile import failed. Check the JSON and try again.');
-      return;
-    }
+  const handleProfileImport = async () => {
+    setProfileImporting(true);
+    try {
+      const imported = await importProductProfileInput(profileImportText);
+      if (!imported.ok) {
+        setProfileImportCoverage([]);
+        setProfileImportSummary('Profile import failed. Check the link or JSON and try again.');
+        return;
+      }
 
-    if (imported.wallet.techResonanceChips !== undefined) setChips(imported.wallet.techResonanceChips);
-    else if (imported.tech.chips !== undefined) setChips(imported.tech.chips);
-    if (imported.tech.skillSlots !== undefined) setSkillSlots(imported.tech.skillSlots);
-    if (imported.tech.rarityCounts) {
-      setRarityCounts((current) => ({
+      if (imported.wallet.techResonanceChips !== undefined) setChips(imported.wallet.techResonanceChips);
+      else if (imported.tech.chips !== undefined) setChips(imported.tech.chips);
+      if (imported.tech.skillSlots !== undefined) setSkillSlots(imported.tech.skillSlots);
+      if (imported.tech.rarityCounts) {
+        setRarityCounts((current) => ({
+          ...current,
+          ...imported.tech.rarityCounts,
+        }));
+      }
+      setAccountContext((current) => ({
         ...current,
-        ...imported.tech.rarityCounts,
+        ...Object.fromEntries(
+          Object.entries(imported.account).filter(([, value]) => value !== undefined),
+        ) as Partial<TechAccountContextInput>,
       }));
+      setResourceWallet((current) => ({
+        ...current,
+        ...Object.fromEntries(
+          Object.entries(imported.wallet).filter(([, value]) => value !== undefined),
+        ) as Partial<ResourceWalletValues>,
+      }));
+      const optimizerSettings = imported.importedTechSnapshot?.optimizerSettings;
+      if (optimizerSettings?.speedMode && (SPEED_MODE_OPTIONS as readonly string[]).includes(optimizerSettings.speedMode)) {
+        setSpeedMode(optimizerSettings.speedMode);
+      }
+      if (optimizerSettings?.limit && (LIMIT_OPTIONS as readonly string[]).includes(optimizerSettings.limit)) {
+        setLimit(optimizerSettings.limit);
+      }
+      if (optimizerSettings?.overloadable !== undefined) setOverloadable(optimizerSettings.overloadable);
+      setImportedTechSnapshot(imported.importedTechSnapshot ?? null);
+      setProfileImportCoverage(imported.coverage ?? []);
+      setProfileImportSummary(imported.summary);
+    } finally {
+      setProfileImporting(false);
     }
-    setAccountContext((current) => ({
-      ...current,
-      ...Object.fromEntries(
-        Object.entries(imported.account).filter(([, value]) => value !== undefined),
-      ) as Partial<TechAccountContextInput>,
-    }));
-    setResourceWallet((current) => ({
-      ...current,
-      ...Object.fromEntries(
-        Object.entries(imported.wallet).filter(([, value]) => value !== undefined),
-      ) as Partial<ResourceWalletValues>,
-    }));
-    setProfileImportSummary(imported.summary);
   };
 
   return (
@@ -569,6 +594,8 @@ export function TechPartsOptimizerSurface() {
             onChange={setProfileImportText}
             onImport={handleProfileImport}
             summary={profileImportSummary}
+            coverage={profileImportCoverage}
+            importing={profileImporting}
           />
 
           <ResourceWalletPanel
@@ -623,7 +650,7 @@ export function TechPartsOptimizerSurface() {
               <label className="block text-sm text-[color:var(--color-text)]">
                 <span className="text-xs text-[color:var(--color-text-muted)]">Search depth</span>
                 <select className={selectClass + ' mt-1'} value={speedMode} onChange={(event) => setSpeedMode(event.target.value)}>
-                  {['fast', 'normal', 'precise', 'precise+', 'full'].map((item) => (
+                  {SPEED_MODE_OPTIONS.map((item) => (
                     <option key={item} value={item}>
                       {item}
                     </option>
@@ -633,7 +660,7 @@ export function TechPartsOptimizerSurface() {
               <label className="block text-sm text-[color:var(--color-text)]">
                 <span className="text-xs text-[color:var(--color-text-muted)]">Input mode</span>
                 <select className={selectClass + ' mt-1'} value={limit} onChange={(event) => setLimit(event.target.value)}>
-                  {['basic', 'advanced'].map((item) => (
+                  {LIMIT_OPTIONS.map((item) => (
                     <option key={item} value={item}>
                       {item}
                     </option>

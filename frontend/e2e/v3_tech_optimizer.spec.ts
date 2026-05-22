@@ -1,6 +1,12 @@
 import { expect, test } from '@playwright/test';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 const OPTIMIZER_URL = '/en/v3/optimizer/tech-parts';
+
+function readFixture(name: string) {
+  return readFileSync(resolve(process.cwd(), 'fixtures', name), 'utf8').trim();
+}
 
 test.describe('TD-11 — Tech optimizer route', () => {
   test.beforeEach(async ({ page, baseURL }) => {
@@ -88,6 +94,35 @@ test.describe('TD-11 — Tech optimizer route', () => {
 
     await expect(page.getByTestId('tech-profile-import-summary')).toContainText('Profile import failed');
     await expect(page.getByTestId('tech-profile-import-summary')).not.toContainText(/SyntaxError|JSON\.parse|at /);
+  });
+
+  test('imports an external calculation raw link and keeps fields editable', async ({ page }) => {
+    const raw = readFixture('external-calculation-links/4ZgaBw.raw.txt');
+    await page.getByTestId('tech-profile-import-input').fill(`https://sio-tools.vercel.app?raw=${raw}`);
+    await page.getByRole('button', { name: 'Import profile' }).click();
+
+    await expect(page.getByTestId('tech-profile-import-summary')).toContainText('Imported calculation link');
+    await expect(page.getByTestId('tech-profile-import-coverage')).toContainText('Build stats');
+    await expect(page.getByTestId('tech-inventory-chips')).not.toHaveValue('40');
+
+    await page.getByTestId('tech-inventory-chips').fill('12');
+    await expect(page.getByTestId('tech-inventory-chips')).toHaveValue('12');
+    await expect(page.getByText(/SIO/)).toHaveCount(0);
+    await expect(page.getByText(/sioLm|sio_full_lm_equivalence/)).toHaveCount(0);
+  });
+
+  test('imports a mocked short calculation code without live network', async ({ page }) => {
+    const raw = readFixture('external-calculation-links/4ZgaBw.raw.txt');
+    await page.route('https://is.gd/forward.php**', async (route) => {
+      await route.fulfill({
+        contentType: 'application/json',
+        body: JSON.stringify({ url: `https://sio-tools.vercel.app?raw=${raw}` }),
+      });
+    });
+
+    await page.getByTestId('tech-profile-import-input').fill('https://sio-tools.vercel.app?code=4ZgaBw');
+    await page.getByRole('button', { name: 'Import profile' }).click();
+    await expect(page.getByTestId('tech-profile-import-summary')).toContainText('Imported calculation link');
   });
 
   test('uses product validation copy without raw codes or stack traces', async ({ page }) => {

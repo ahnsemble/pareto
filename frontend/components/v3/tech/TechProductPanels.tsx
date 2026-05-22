@@ -5,6 +5,7 @@ import {
   type ResourceWalletId,
   type ResourceWalletValues,
 } from '../../../app/lib/pareto-store/resource-wallet';
+import type { ProductImportCoverage } from '../../../app/lib/pareto-store/profile-import';
 import { buttonClass, inputClass, labelClass, panelClass } from '../optimizerUi';
 
 export function ResourceWalletPanel({
@@ -46,11 +47,15 @@ export function ProfileImportPanel({
   onChange,
   onImport,
   summary,
+  coverage = [],
+  importing = false,
 }: {
   value: string;
   onChange: (value: string) => void;
-  onImport: () => void;
+  onImport: () => void | Promise<void>;
   summary: string;
+  coverage?: ProductImportCoverage[];
+  importing?: boolean;
 }) {
   return (
     <div className={panelClass} data-testid="tech-profile-import">
@@ -58,15 +63,15 @@ export function ProfileImportPanel({
         <div>
           <h2 className={labelClass}>Tangtang profile import</h2>
           <p className="mt-1 text-xs text-[color:var(--color-text-muted)]">
-            Paste a profile export to fill this optimizer.
+            Paste a profile JSON or calculation link to fill this optimizer.
           </p>
         </div>
-        <button type="button" className={buttonClass} disabled={value.trim().length === 0} onClick={onImport}>
-          Import profile
+        <button type="button" className={buttonClass} disabled={importing || value.trim().length === 0} onClick={onImport}>
+          {importing ? 'Importing...' : 'Import profile'}
         </button>
       </div>
       <label className="mt-3 block text-sm text-[color:var(--color-text)]">
-        <span className="text-xs text-[color:var(--color-text-muted)]">Profile JSON</span>
+        <span className="text-xs text-[color:var(--color-text-muted)]">Profile JSON or calculation link</span>
         <textarea
           className={inputClass + ' mt-1 min-h-28 resize-y'}
           data-testid="tech-profile-import-input"
@@ -77,6 +82,19 @@ export function ProfileImportPanel({
       <p className="mt-2 min-h-5 text-xs text-[color:var(--color-text-muted)]" data-testid="tech-profile-import-summary">
         {summary}
       </p>
+      {coverage.length > 0 ? (
+        <div className="mt-2 flex flex-wrap gap-2" data-testid="tech-profile-import-coverage">
+          {coverage.map((item) => (
+            <span
+              key={item.id}
+              className="rounded-sm border border-[color:var(--color-border)] px-2 py-1 text-[11px] text-[color:var(--color-text-muted)]"
+            >
+              {item.label}: {item.status === 'imported' ? 'imported' : item.status === 'needsReview' ? 'review' : 'missing'}
+              {item.count !== undefined ? ` (${item.count})` : ''}
+            </span>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }

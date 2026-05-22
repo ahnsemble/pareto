@@ -4,6 +4,11 @@ export type ParsedExternalCalculationInput =
   | { kind: 'code'; code: string }
   | { kind: 'unsupported'; reason: string };
 
+type CalculationLinkFetcher = (url: string) => Promise<{
+  ok: boolean;
+  json: () => Promise<unknown>;
+}>;
+
 function base64UrlToSignedBytes(raw: string): number[] {
   const padded = raw.replace(/-/g, '+').replace(/_/g, '/').padEnd(Math.ceil(raw.length / 4) * 4, '=');
   const binary =
@@ -64,10 +69,12 @@ export function parseExternalCalculationInput(text: string): ParsedExternalCalcu
 }
 
 export async function decodeExternalCalculationRaw(raw: string): Promise<Record<string, unknown>> {
-  const lzma = await import('lzma');
+  const lzma = await import('lzma/src/lzma-d-min.js');
+  const decompressor = lzma.default.LZMA_WORKER;
+  if (!decompressor) throw new Error('Calculation link payload could not be decoded');
   const bytes = base64UrlToSignedBytes(raw);
   const packed = await new Promise<unknown>((resolve, reject) => {
-    const maybe = lzma.decompress(bytes, (result: unknown, error?: unknown) => {
+    const maybe = decompressor.decompress(bytes, (result: unknown, error?: unknown) => {
       if (error) reject(error);
       else resolve(result);
     });
@@ -75,4 +82,24 @@ export async function decodeExternalCalculationRaw(raw: string): Promise<Record<
   });
   const jsonText = decodeMsgpackString(toUnsignedBytes(packed));
   return JSON.parse(jsonText) as Record<string, unknown>;
+}
+
+export async function resolveExternalCalculationCode(
+  code: string,
+  fetcher: CalculationLinkFetcher = fetch,
+): Promise<string> {
+  const url = `https://is.gd/forward.php?format=json&shorturl=https://is.gd/${encodeURIComponent(code)}`;
+  try {
+    const response = await fetcher(url);
+    if (!response.ok) throw new Error('forward failed');
+    const payload = await response.json();
+    if (!payload || typeof payload !== 'object' || !('url' in payload)) {
+      throw new Error('missing target url');
+    }
+    const parsed = parseExternalCalculationInput(String((payload as { url: unknown }).url));
+    if (parsed.kind !== 'raw') throw new Error('missing raw payload');
+    return parsed.raw;
+  } catch {
+    throw new Error('Calculation link could not be opened');
+  }
 }

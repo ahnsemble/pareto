@@ -278,6 +278,9 @@ Existing comparison evidence used first:
   - Chunk 3 added compact `_V=5` expansion, normalized wallet/tech/account import fields, imported tech snapshot, and async `importProductProfileInput()`.
   - RED: `node scripts/external_calculation_link_unit_test.mjs` failed because `external-calculation-profile.ts` did not exist.
   - GREEN: `node scripts/profile_import_unit_test.mjs`, `node scripts/external_calculation_link_unit_test.mjs`, and `npx tsc --noEmit` passed.
+  - Chunk 4 updated the Tangtang import panel to accept profile JSON or calculation links, made import async, displayed coverage, and kept imported values editable.
+  - RED: focused raw-link e2e failed with JSON-only import copy; an earlier compile failure also identified `lzma` package `index.js` as client-bundle unsafe, so the decoder now uses the browser-safe decompressor entry.
+  - GREEN: raw-link e2e and mocked short-code e2e passed without live network; unit import scripts and `npx tsc --noEmit` passed.
 
 ## Current Product Contract
 

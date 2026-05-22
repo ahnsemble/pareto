@@ -26,14 +26,17 @@ function loadTsModule(sourcePath, outputName) {
       strict: true,
     },
   });
-  const lzmaUrl = pathToFileURL(resolve(__dirname, '../node_modules/lzma/index.js')).href;
-  const outputText = transpiled.outputText.replaceAll("import('lzma')", `import(${JSON.stringify(lzmaUrl)})`);
+  const lzmaUrl = pathToFileURL(resolve(__dirname, '../node_modules/lzma/src/lzma-d-min.js')).href;
+  const outputText = transpiled.outputText.replaceAll(
+    "import('lzma/src/lzma-d-min.js')",
+    `import(${JSON.stringify(lzmaUrl)})`,
+  );
   const outputPath = resolve(tmpDir, `${outputName}-${Date.now()}-${Math.random().toString(16).slice(2)}.mjs`);
   writeFileSync(outputPath, outputText);
   return import(pathToFileURL(outputPath));
 }
 
-const { decodeExternalCalculationRaw, parseExternalCalculationInput } = await loadTsModule(
+const { decodeExternalCalculationRaw, parseExternalCalculationInput, resolveExternalCalculationCode } = await loadTsModule(
   modulePath,
   'external-calculation-link',
 );
@@ -57,6 +60,15 @@ assert.equal(parsedRaw.raw, raw);
 const parsedCode = parseExternalCalculationInput('https://sio-tools.vercel.app?code=4ZgaBw');
 assert.equal(parsedCode.kind, 'code');
 assert.equal(parsedCode.code, '4ZgaBw');
+
+const rawFromCode = await resolveExternalCalculationCode('4ZgaBw', async (url) => {
+  assert.match(url, /is\.gd\/forward\.php/);
+  return {
+    ok: true,
+    json: async () => ({ url: `https://sio-tools.vercel.app?raw=${raw}` }),
+  };
+});
+assert.equal(rawFromCode, raw);
 
 const { normalizeExternalCalculationProfile } = await loadTsModule(
   profileModulePath,

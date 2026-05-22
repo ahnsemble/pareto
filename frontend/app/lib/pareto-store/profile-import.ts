@@ -354,15 +354,16 @@ export async function importProductProfileInput(
   text: string,
   options: { resolveCode?: (code: string) => Promise<string> } = {},
 ): Promise<ProductProfileImportResult> {
-  const { parseExternalCalculationInput, decodeExternalCalculationRaw } = await import('./external-calculation-link');
+  const { parseExternalCalculationInput, decodeExternalCalculationRaw, resolveExternalCalculationCode } = await import('./external-calculation-link');
   const { normalizeExternalCalculationProfile } = await import('./external-calculation-profile');
 
   try {
     const parsed = parseExternalCalculationInput(text);
     if (parsed.kind === 'json') return parseProductProfileImport(parsed.text);
     if (parsed.kind === 'raw') return normalizeExternalCalculationProfile(await decodeExternalCalculationRaw(parsed.raw));
-    if (parsed.kind === 'code' && options.resolveCode) {
-      return normalizeExternalCalculationProfile(await decodeExternalCalculationRaw(await options.resolveCode(parsed.code)));
+    if (parsed.kind === 'code') {
+      const raw = await (options.resolveCode ?? resolveExternalCalculationCode)(parsed.code);
+      return normalizeExternalCalculationProfile(await decodeExternalCalculationRaw(raw));
     }
     return { ok: false, error: 'Unsupported profile import input' };
   } catch (error) {
