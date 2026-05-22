@@ -134,6 +134,15 @@ test.describe('TD-11 — Tech optimizer route', () => {
 치명타 확률 147%
 치명타 피해량 822%
 스킬 피해 477%
+보호막 데미지 증가 165%
+중독 대상 데미지 증가 45%
+약화 대상 데미지 증가 195%
+빙결 대상 데미지 증가 257.5%
+열상 대상 데미지 증가 85%
+이동 속도 13
+이동 속도 상한 16
+펫 공격력 355274
+이세계 펫 동조율 42.5%
 코어 보유량
 이세계 코어 2 / 0
 신기 핵심 74 / 67
@@ -143,12 +152,24 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await page.getByRole('button', { name: 'Import profile' }).click();
 
     await expect(page.getByTestId('tech-profile-import-summary')).toContainText('Imported screenshot text');
+    await expect(page.getByTestId('tech-profile-import-review')).toContainText('Imported 2');
+    await expect(page.getByTestId('tech-profile-import-review')).toContainText('Review 1');
+    await expect(page.getByTestId('tech-profile-import-review')).toContainText('Editable after import');
     await expect(page.getByTestId('tech-account-base-atk')).toHaveValue('126424');
     await expect(page.getByTestId('tech-account-final-atk')).toHaveValue('550220');
     await expect(page.getByTestId('tech-account-atk-percent')).toHaveValue('126');
     await expect(page.getByTestId('tech-account-crit-rate')).toHaveValue('147');
     await expect(page.getByTestId('tech-account-crit-damage')).toHaveValue('822');
     await expect(page.getByTestId('tech-account-skill-damage')).toHaveValue('477');
+    await expect(page.getByTestId('tech-account-shield-damage')).toHaveValue('165');
+    await expect(page.getByTestId('tech-account-poisoned-damage')).toHaveValue('45');
+    await expect(page.getByTestId('tech-account-weakened-damage')).toHaveValue('195');
+    await expect(page.getByTestId('tech-account-chilled-damage')).toHaveValue('257.5');
+    await expect(page.getByTestId('tech-account-laceration-damage')).toHaveValue('85');
+    await expect(page.getByTestId('tech-account-movement-speed')).toHaveValue('13');
+    await expect(page.getByTestId('tech-account-movement-speed-cap')).toHaveValue('16');
+    await expect(page.getByTestId('tech-account-pet-atk')).toHaveValue('355274');
+    await expect(page.getByTestId('tech-account-otherworld-pet-sync-rate')).toHaveValue('42.5');
     await expect(page.getByTestId('tech-inventory-chips')).toHaveValue('21');
     await expect(page.getByTestId('tech-wallet-relic-artifact-cores')).toHaveValue('74');
     await expect(page.getByTestId('tech-wallet-survivor-awakening-cores')).toHaveValue('26');
@@ -156,6 +177,8 @@ test.describe('TD-11 — Tech optimizer route', () => {
 
     await page.getByTestId('tech-account-final-atk').fill('550221');
     await expect(page.getByTestId('tech-account-final-atk')).toHaveValue('550221');
+    await page.getByTestId('tech-account-chilled-damage').fill('258');
+    await expect(page.getByTestId('tech-account-chilled-damage')).toHaveValue('258');
     await expect(page.getByText(/SIO/)).toHaveCount(0);
   });
 
@@ -167,6 +190,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
 
     await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
     await expect(page.getByTestId('tech-upgrade-recommendations')).toContainText('Next upgrades');
+    await expect(page.getByTestId('tech-upgrade-recommendations')).toContainText(/Confidence: (high|medium|low)/);
     await expect(page.getByTestId('tech-upgrade-recommendations')).not.toContainText(/energyGuidanceSystem|droneMode|sio/i);
 
     const firstAnswerText = await page.getByTestId('tech-optimizer-first-answer').innerText();

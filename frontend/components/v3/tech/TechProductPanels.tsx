@@ -57,6 +57,10 @@ export function ProfileImportPanel({
   coverage?: ProductImportCoverage[];
   importing?: boolean;
 }) {
+  const importedCount = coverage.filter((item) => item.status === 'imported').length;
+  const reviewCount = coverage.filter((item) => item.status === 'needsReview').length;
+  const missingCount = coverage.filter((item) => item.status === 'missing').length;
+
   return (
     <div className={panelClass} data-testid="tech-profile-import">
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -83,17 +87,27 @@ export function ProfileImportPanel({
         {summary}
       </p>
       {coverage.length > 0 ? (
-        <div className="mt-2 flex flex-wrap gap-2" data-testid="tech-profile-import-coverage">
-          {coverage.map((item) => (
-            <span
-              key={item.id}
-              className="rounded-sm border border-[color:var(--color-border)] px-2 py-1 text-[11px] text-[color:var(--color-text-muted)]"
-            >
-              {item.label}: {item.status === 'imported' ? 'imported' : item.status === 'needsReview' ? 'review' : 'missing'}
-              {item.count !== undefined ? ` (${item.count})` : ''}
-            </span>
-          ))}
-        </div>
+        <>
+          <div className="mt-3 border-t border-[color:var(--color-border)]/60 pt-3 text-xs" data-testid="tech-profile-import-review">
+            <div className="flex flex-wrap gap-2 font-mono text-[11px] uppercase text-[color:var(--color-text-muted)]">
+              <span>Imported {importedCount}</span>
+              <span>Review {reviewCount}</span>
+              <span>Missing {missingCount}</span>
+            </div>
+            <p className="mt-2 text-[color:var(--color-text-muted)]">Editable after import. Review marked fields before running.</p>
+          </div>
+          <div className="mt-2 flex flex-wrap gap-2" data-testid="tech-profile-import-coverage">
+            {coverage.map((item) => (
+              <span
+                key={item.id}
+                className="rounded-sm border border-[color:var(--color-border)] px-2 py-1 text-[11px] text-[color:var(--color-text-muted)]"
+              >
+                {item.label}: {item.status === 'imported' ? 'imported' : item.status === 'needsReview' ? 'review' : 'missing'}
+                {item.count !== undefined ? ` (${item.count})` : ''}
+              </span>
+            ))}
+          </div>
+        </>
       ) : null}
     </div>
   );

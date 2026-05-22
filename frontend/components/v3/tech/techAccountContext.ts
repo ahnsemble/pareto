@@ -19,6 +19,15 @@ export type TechAccountContextInput = {
   critRate: number;
   critDamage: number;
   skillDamage: number;
+  shieldDamage: number;
+  poisonedDamage: number;
+  weakenedDamage: number;
+  chilledDamage: number;
+  lacerationDamage: number;
+  movementSpeed: number;
+  movementSpeedCap: number;
+  petAtk: number;
+  otherworldPetSyncRate: number;
   collectionSets: number;
   collectionStars: number;
   customCollectionSets: number;
@@ -88,6 +97,15 @@ export const DEFAULT_TECH_ACCOUNT_CONTEXT: TechAccountContextInput = {
   critRate: 310,
   critDamage: 580,
   skillDamage: 110,
+  shieldDamage: 55,
+  poisonedDamage: 10,
+  weakenedDamage: 15,
+  chilledDamage: 0,
+  lacerationDamage: 85,
+  movementSpeed: 0,
+  movementSpeedCap: 0,
+  petAtk: 0,
+  otherworldPetSyncRate: 0,
   collectionSets: 38,
   collectionStars: 0,
   customCollectionSets: 0,
@@ -179,6 +197,12 @@ export function buildSioLmContext(account: TechAccountContextInput): Record<stri
       critRate: account.critRate,
       critDamage: account.critDamage,
       skillDamage: account.skillDamage + account.mountSkillDamage,
+      shieldDamage: account.shieldDamage,
+      poisoned: account.poisonedDamage,
+      weakened: account.weakenedDamage,
+      chilled: account.chilledDamage,
+      laceration: account.lacerationDamage,
+      xenoSyncRate: account.otherworldPetSyncRate,
     },
     attackMeta: {
       atkBase: account.baseAtk,

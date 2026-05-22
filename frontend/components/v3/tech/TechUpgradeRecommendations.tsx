@@ -20,6 +20,10 @@ export function TechUpgradeRecommendations({
               <p className="text-sm font-semibold text-[color:var(--color-text)]">{item.title}</p>
               <p className="mt-1 text-xs text-[color:var(--color-text-muted)]">{item.action}</p>
               <p className="mt-1 text-xs text-[color:var(--color-text-muted)]">{item.reason}</p>
+              <p className="mt-2 font-mono text-[11px] uppercase text-[color:var(--color-text-muted)]">
+                Confidence: {item.confidence}
+                {item.expectedGainLabel ? ` / ${item.expectedGainLabel}` : ''}
+              </p>
             </li>
           ))}
         </ol>

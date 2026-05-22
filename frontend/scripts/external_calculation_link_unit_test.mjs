@@ -71,6 +71,23 @@ const rawFromCode = await resolveExternalCalculationCode('4ZgaBw', async (url) =
 });
 assert.equal(rawFromCode, raw);
 
+let retryAttempts = 0;
+const rawAfterRetry = await resolveExternalCalculationCode('4ZgaBw', async () => {
+  retryAttempts += 1;
+  if (retryAttempts === 1) {
+    return {
+      ok: false,
+      json: async () => ({}),
+    };
+  }
+  return {
+    ok: true,
+    json: async () => ({ url: `https://sio-tools.vercel.app?raw=${raw}` }),
+  };
+});
+assert.equal(rawAfterRetry, raw);
+assert.equal(retryAttempts, 2);
+
 const { normalizeExternalCalculationProfile } = await loadTsModule(
   profileModulePath,
   'external-calculation-profile',

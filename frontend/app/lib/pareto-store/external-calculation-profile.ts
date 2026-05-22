@@ -244,6 +244,20 @@ function normalizeAccount(expanded: Record<string, unknown>): ProductProfileAcco
   if (designs !== undefined) account.collectionStars = designs;
   if (maxGear !== undefined) account.mountPuzzleSlots = maxGear;
 
+  const directStatFields = [
+    ['skillDamage', 'skillDamage'],
+    ['critDamage', 'critDamage'],
+    ['shieldDamage', 'shieldDamage'],
+    ['poisoned', 'poisonedDamage'],
+    ['weakened', 'weakenedDamage'],
+    ['chilled', 'chilledDamage'],
+    ['laceration', 'lacerationDamage'],
+  ] as const;
+  for (const [sourceKey, accountKey] of directStatFields) {
+    const value = readNumber(expanded, sourceKey);
+    if (value !== undefined) account[accountKey] = value;
+  }
+
   const items = Array.isArray(expanded.items) ? expanded.items : [];
   for (const [index, item] of items.entries()) {
     if (!isRecord(item)) continue;

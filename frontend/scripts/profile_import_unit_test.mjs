@@ -134,6 +134,15 @@ HP 보너스 136%
 치명타 확률 147%
 치명타 피해량 822%
 스킬 피해 477%
+보호막 데미지 증가 165%
+중독 대상 데미지 증가 45%
+약화 대상 데미지 증가 195%
+빙결 대상 데미지 증가 257.5%
+열상 대상 데미지 증가 85%
+이동 속도 13
+이동 속도 상한 16
+펫 공격력 355274
+이세계 펫 동조율 42.5%
 
 코어 보유량
 이세계 코어 2 / 0
@@ -149,6 +158,15 @@ assert.equal(screenshotTextResult.account.atkPercent, 126);
 assert.equal(screenshotTextResult.account.critRate, 147);
 assert.equal(screenshotTextResult.account.critDamage, 822);
 assert.equal(screenshotTextResult.account.skillDamage, 477);
+assert.equal(screenshotTextResult.account.shieldDamage, 165);
+assert.equal(screenshotTextResult.account.poisonedDamage, 45);
+assert.equal(screenshotTextResult.account.weakenedDamage, 195);
+assert.equal(screenshotTextResult.account.chilledDamage, 257.5);
+assert.equal(screenshotTextResult.account.lacerationDamage, 85);
+assert.equal(screenshotTextResult.account.movementSpeed, 13);
+assert.equal(screenshotTextResult.account.movementSpeedCap, 16);
+assert.equal(screenshotTextResult.account.petAtk, 355274);
+assert.equal(screenshotTextResult.account.otherworldPetSyncRate, 42.5);
 assert.equal(screenshotTextResult.wallet.techResonanceChips, 21);
 assert.equal(screenshotTextResult.tech.chips, 21);
 assert.equal(screenshotTextResult.wallet.relicArtifactCores, 74);

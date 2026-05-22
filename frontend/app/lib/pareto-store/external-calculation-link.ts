@@ -89,17 +89,22 @@ export async function resolveExternalCalculationCode(
   fetcher: CalculationLinkFetcher = fetch,
 ): Promise<string> {
   const url = `https://is.gd/forward.php?format=json&shorturl=https://is.gd/${encodeURIComponent(code)}`;
-  try {
-    const response = await fetcher(url);
-    if (!response.ok) throw new Error('forward failed');
-    const payload = await response.json();
-    if (!payload || typeof payload !== 'object' || !('url' in payload)) {
-      throw new Error('missing target url');
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      const response = await fetcher(url);
+      if (!response.ok) throw new Error('forward failed');
+      const payload = await response.json();
+      if (!payload || typeof payload !== 'object' || !('url' in payload)) {
+        throw new Error('missing target url');
+      }
+      const parsed = parseExternalCalculationInput(String((payload as { url: unknown }).url));
+      if (parsed.kind !== 'raw') throw new Error('missing raw payload');
+      return parsed.raw;
+    } catch {
+      if (attempt === 1) {
+        throw new Error('Calculation link could not be opened');
+      }
     }
-    const parsed = parseExternalCalculationInput(String((payload as { url: unknown }).url));
-    if (parsed.kind !== 'raw') throw new Error('missing raw payload');
-    return parsed.raw;
-  } catch {
-    throw new Error('Calculation link could not be opened');
   }
+  throw new Error('Calculation link could not be opened');
 }

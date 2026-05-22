@@ -139,6 +139,16 @@ export function AccountContextPanel({
       summary: [['Mode', playerState.damage.combat_mode.toUpperCase()]],
     },
     {
+      title: 'Damage conditions',
+      fields: [
+        { id: 'shieldDamage', label: 'Shield damage', testId: 'tech-account-shield-damage', min: 0, max: 5000, step: 0.5 },
+        { id: 'poisonedDamage', label: 'Poisoned target', testId: 'tech-account-poisoned-damage', min: 0, max: 5000, step: 0.5 },
+        { id: 'weakenedDamage', label: 'Weakened target', testId: 'tech-account-weakened-damage', min: 0, max: 5000, step: 0.5 },
+        { id: 'chilledDamage', label: 'Chilled target', testId: 'tech-account-chilled-damage', min: 0, max: 5000, step: 0.5 },
+        { id: 'lacerationDamage', label: 'Lacerated target', testId: 'tech-account-laceration-damage', min: 0, max: 5000, step: 0.5 },
+      ],
+    },
+    {
       title: 'Collections',
       detailLabel: 'Collection detail',
       fields: [
@@ -179,6 +189,15 @@ export function AccountContextPanel({
       summary: [
         ['Main pet', contextLabel(playerState.pet.deployed_pet_id)],
         ['Xeno', playerState.pet.deployed_is_xeno ? 'on' : 'off'],
+      ],
+    },
+    {
+      title: 'Movement and pet totals',
+      fields: [
+        { id: 'petAtk', label: 'Pet ATK', testId: 'tech-account-pet-atk', min: 0, step: 1 },
+        { id: 'otherworldPetSyncRate', label: 'Otherworld pet sync', testId: 'tech-account-otherworld-pet-sync-rate', min: 0, max: 5000, step: 0.5 },
+        { id: 'movementSpeed', label: 'Movement speed', testId: 'tech-account-movement-speed', min: 0, max: 1000, step: 0.5 },
+        { id: 'movementSpeedCap', label: 'Movement speed cap', testId: 'tech-account-movement-speed-cap', min: 0, max: 1000, step: 0.5 },
       ],
     },
     {

@@ -56,6 +56,15 @@ type ProductProfileAccountImportShape = {
   critRate: number;
   critDamage: number;
   skillDamage: number;
+  shieldDamage: number;
+  poisonedDamage: number;
+  weakenedDamage: number;
+  chilledDamage: number;
+  lacerationDamage: number;
+  movementSpeed: number;
+  movementSpeedCap: number;
+  petAtk: number;
+  otherworldPetSyncRate: number;
   collectionSets: number;
   collectionStars: number;
   customCollectionSets: number;
@@ -147,6 +156,15 @@ const ACCOUNT_NUMBER_FIELDS: Array<[ProductProfileAccountNumberField, readonly s
   ['critRate', ['critRate', 'crit_rate']],
   ['critDamage', ['critDamage', 'crit_damage']],
   ['skillDamage', ['skillDamage', 'skill_damage']],
+  ['shieldDamage', ['shieldDamage', 'shield_damage', 'damage.shield_damage']],
+  ['poisonedDamage', ['poisonedDamage', 'poisoned_damage', 'poisoned', 'damage.poisoned']],
+  ['weakenedDamage', ['weakenedDamage', 'weakened_damage', 'weakened', 'damage.weakened']],
+  ['chilledDamage', ['chilledDamage', 'chilled_damage', 'chilled', 'damage.chilled']],
+  ['lacerationDamage', ['lacerationDamage', 'laceration_damage', 'laceration', 'damage.laceration']],
+  ['movementSpeed', ['movementSpeed', 'movement_speed']],
+  ['movementSpeedCap', ['movementSpeedCap', 'movement_speed_cap']],
+  ['petAtk', ['petAtk', 'pet_atk', 'pet.attack', 'pet.atk']],
+  ['otherworldPetSyncRate', ['otherworldPetSyncRate', 'otherworld_pet_sync_rate', 'xenoSyncRate', 'xeno_sync_rate']],
   ['collectionSets', ['collectionSets', 'collection_sets', 'collectible.edition_progress']],
   ['collectionStars', ['collectionStars', 'collection_stars', 'collectible.red_star_total']],
   ['customCollectionSets', ['customCollectionSets', 'custom_collection_sets', 'collectible.custom_collection_slots']],
@@ -264,12 +282,15 @@ function buildSummary(wallet: ProductProfileWalletImport, tech: ProductProfileTe
 function readScreenshotNumber(text: string, labels: readonly string[]): number | undefined {
   const escapedLabels = labels.map((label) => label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
   const pattern = new RegExp(`(?:${escapedLabels})\\s*[:：]?\\s*([^\\n\\r]+)`, 'i');
-  const match = text.match(pattern);
-  if (!match) return undefined;
-  const numberMatch = match[1].match(/-?\d[\d,]*(?:\.\d+)?/);
-  if (!numberMatch) return undefined;
-  const value = Number(numberMatch[0].replace(/,/g, ''));
-  return Number.isFinite(value) ? value : undefined;
+  for (const line of text.split(/\r?\n/)) {
+    const match = line.match(pattern);
+    if (!match) continue;
+    const numberMatch = match[1].match(/^\s*-?\d[\d,]*(?:\.\d+)?/);
+    if (!numberMatch) continue;
+    const value = Number(numberMatch[0].replace(/,/g, ''));
+    if (Number.isFinite(value)) return value;
+  }
+  return undefined;
 }
 
 function parseScreenshotTextImport(text: string): ProductProfileImportResult | null {
@@ -294,6 +315,33 @@ function parseScreenshotTextImport(text: string): ProductProfileImportResult | n
 
   const skillDamage = readScreenshotNumber(text, ['스킬 피해', 'Skill damage']);
   if (skillDamage !== undefined) account.skillDamage = skillDamage;
+
+  const shieldDamage = readScreenshotNumber(text, ['보호막 데미지 증가', 'Shield damage increase', 'Shield damage']);
+  if (shieldDamage !== undefined) account.shieldDamage = shieldDamage;
+
+  const poisonedDamage = readScreenshotNumber(text, ['중독 대상 데미지 증가', 'Poisoned target damage increase', 'Poisoned damage']);
+  if (poisonedDamage !== undefined) account.poisonedDamage = poisonedDamage;
+
+  const weakenedDamage = readScreenshotNumber(text, ['약화 대상 데미지 증가', 'Weakened target damage increase', 'Weakened damage']);
+  if (weakenedDamage !== undefined) account.weakenedDamage = weakenedDamage;
+
+  const chilledDamage = readScreenshotNumber(text, ['빙결 대상 데미지 증가', '감속 대상 데미지 증가', 'Chilled target damage increase', 'Chilled damage']);
+  if (chilledDamage !== undefined) account.chilledDamage = chilledDamage;
+
+  const lacerationDamage = readScreenshotNumber(text, ['열상 대상 데미지 증가', 'Lacerated target damage increase', 'Laceration damage']);
+  if (lacerationDamage !== undefined) account.lacerationDamage = lacerationDamage;
+
+  const movementSpeedCap = readScreenshotNumber(text, ['이동 속도 상한', 'Movement speed cap']);
+  if (movementSpeedCap !== undefined) account.movementSpeedCap = movementSpeedCap;
+
+  const movementSpeed = readScreenshotNumber(text, ['이동 속도', 'Movement speed']);
+  if (movementSpeed !== undefined) account.movementSpeed = movementSpeed;
+
+  const petAtk = readScreenshotNumber(text, ['펫 공격력', 'Pet ATK', 'Pet attack']);
+  if (petAtk !== undefined) account.petAtk = petAtk;
+
+  const otherworldPetSyncRate = readScreenshotNumber(text, ['이세계 펫 동조율', 'Otherworld pet sync rate', 'Pet sync rate']);
+  if (otherworldPetSyncRate !== undefined) account.otherworldPetSyncRate = otherworldPetSyncRate;
 
   const techResonanceChips = readScreenshotNumber(text, ['공진 칩', 'Tech resonance chips', 'Resonance chips']);
   if (techResonanceChips !== undefined) {
