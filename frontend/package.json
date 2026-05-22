@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "comlink": "^4.4.2",
+    "lzma": "^2.3.2",
     "next": "15.5.15",
     "next-intl": "^4.11.0",
     "react": "19.1.0",
