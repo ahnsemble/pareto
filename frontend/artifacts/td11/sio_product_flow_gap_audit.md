@@ -1064,6 +1064,65 @@ Do not change scoring formulas yet. The next safe step is a documentation/test g
 
 GitHub push/PR not performed.
 
+## Tangtang Formula Correction Candidates Gate
+
+timestampKst: 2026-05-23T21:42:32+09:00
+status: `[TANGTANG-FORMULA-CORRECTION-CANDIDATES-GREEN]`
+
+### Scope
+
+Documented direct-description-derived Tangtang formula correction candidates for the repeated Genesis threshold mismatch. This pass does not change formula semantics, scoring core, Rust damage formulas, WASM scoring behavior, optimizer ranking, or product UI.
+
+### Changes
+
+- Added `frontend/artifacts/td11/tangtang_formula_correction_candidates.json`.
+- Added `frontend/artifacts/td11/tangtang_formula_correction_candidates.md`.
+- Added `frontend/scripts/tangtang_formula_correction_candidates_unit_test.mjs`.
+- Updated `damage_formula_provenance_matrix.md` and its gate to reference the correction-candidate artifact.
+
+### Current Candidate
+
+- `collectible-set:genesis:gold:15:atkPercent`: current SIO/source/Rust threshold `gold >= 15`, direct Korean description captures show `gold >= 19`, value remains `atkPercent +4`.
+- `collectible-set:genesis:red:15:atkPercent`: current SIO/source/Rust threshold `red >= 15`, direct Korean description captures show `red >= 19`, value remains `atkPercent +6`.
+- Both candidates are threshold-only mismatches with repeated random-sample and targeted-follow-up direct capture artifacts.
+
+### Decision
+
+- Tangtang correction is documented but not applied.
+- `correctionEligibleNow=false`.
+- `canApplyTangtangFormulaCorrectionNow=false`.
+- `directObservedDamageTrialCount=0`.
+- `fullSioEquivalent=true` and `currentScorer=scorer=sio_full_lm_equivalence` remain unchanged.
+
+### Verification Log
+
+- `node scripts/tangtang_formula_correction_candidates_unit_test.mjs`: passed, 2 correction candidates.
+- `node scripts/damage_formula_provenance_matrix_unit_test.mjs`: passed, 367 rows.
+- `node scripts/tangtang_description_capture_import_unit_test.mjs`: passed, 12 capture rows.
+- `node scripts/tangtang_random_capture_sample_audit_unit_test.mjs`: passed, 30 raw images and 3 imported rows.
+- `node scripts/tangtang_targeted_capture_followup_audit_unit_test.mjs`: passed, 27 raw images and 2 reinforced rows.
+- `node scripts/tangtang_in_game_damage_validation_unit_test.mjs`: passed, 9 trial groups and 0 direct trials.
+- `node scripts/tangtang_damage_formula_spec_unit_test.mjs`: passed, 25 stages.
+- `node scripts/tangtang_description_formula_validation_unit_test.mjs`: passed, 8 groups and 0 description formula rows.
+- `node scripts/tangtang_first_party_description_source_inventory_unit_test.mjs`: passed, 8 source candidates.
+- `node scripts/sio_tools_formula_source_evidence_unit_test.mjs`: passed, 4650 source leaves.
+- `node scripts/in_game_description_evidence_unit_test.mjs`: passed, 6 rows.
+- `node scripts/sio_tools_live_evidence_matrix_unit_test.mjs`: passed, 20 rows.
+- `node scripts/sio_tools_targeted_live_evidence_unit_test.mjs`: passed, 5 rows.
+- `node scripts/mount_damage_source_fixture_unit_test.mjs`: passed, 3 rows.
+- `node scripts/collectible_effect_mapping_matrix_unit_test.mjs`: passed, 160 rows.
+- `node scripts/generic_aggregate_non_authority_gate.mjs`: passed, 4 rows.
+- `npx tsc --noEmit`: passed.
+- `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs`: passed.
+  - `fullSioEquivalent=true`
+  - `currentScorer=scorer=sio_full_lm_equivalence`
+  - `liveCaptureCount=26`
+  - `workerParity.arbitraryGeneratedLiveExpected=26/26`
+  - `G0/G1/G2/G3/G6=true`
+- `git diff --check`: passed.
+
+GitHub push/PR not performed.
+
 ## Tangtang Random Direct Capture Sample Audit
 
 timestampKst: 2026-05-23 19:42:04 KST

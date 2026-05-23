@@ -1,0 +1,184 @@
+{
+  "artifactPaths": {
+    "captureImportMatrix": "frontend/artifacts/td11/tangtang_description_capture_import_matrix.json",
+    "inGameDamageValidationMatrix": "frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json",
+    "json": "frontend/artifacts/td11/tangtang_formula_correction_candidates.json",
+    "markdown": "frontend/artifacts/td11/tangtang_formula_correction_candidates.md",
+    "randomCaptureAudit": "frontend/artifacts/td11/tangtang_random_capture_sample_audit.json",
+    "script": "frontend/scripts/tangtang_formula_correction_candidates_unit_test.mjs",
+    "targetedFollowupAudit": "frontend/artifacts/td11/tangtang_targeted_capture_followup_audit.json"
+  },
+  "behaviorChange": false,
+  "candidateRows": [
+    {
+      "atomRowId": "collectible-set:genesis:gold:15:atkPercent",
+      "candidateId": "tangtang-correction:collectible-set:genesis:gold:15:atkPercent:condition:15-to-19",
+      "capturedThreshold": {
+        "metric": "gold",
+        "threshold": 19
+      },
+      "captureId": "td11-capture-20260523-random-sample-genesis-gold-atk-percent",
+      "correctionEligibleNow": false,
+      "currentDecision": "Documented correction candidate only. Do not change Tangtang scoring until correction spec plus observed-damage confirmation exists.",
+      "currentSioConditionOrThreshold": "gold >= 15",
+      "currentSioParsedFormulaValue": 4,
+      "descriptionTextOriginal": "누적으로 19개의 금 별 획득\n공격력 +4%",
+      "directDescriptionConditionOrThreshold": "gold >= 19",
+      "directDescriptionParsedFormulaValue": 4,
+      "entityDisplayNameCaptured": "창세기",
+      "entityKey": "collectible-set:genesis",
+      "mismatchFields": [
+        "conditionOrThreshold"
+      ],
+      "mismatchType": "threshold-condition-only",
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "multiplierStageMatchesCurrent": true,
+      "operationBucket": "attack-aggregate",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "proposedTangtangConditionOrThreshold": "gold >= 19",
+      "rawCaptureArtifactCount": 2,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-random-sample/2.jpg",
+        "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/2.jpg"
+      ],
+      "rawCaptureEvidenceBuckets": [
+        "random-sample",
+        "targeted-followup"
+      ],
+      "requiresObservedDamageFollowUp": true,
+      "rustStatChannel": "atkPercent",
+      "scoringChangeApplied": false,
+      "sioCurrentHandling": "Genesis gold >= 15: atkPercent +4; tttg_forge_optimizer/src/tech/sio_config.rs:2525",
+      "sioSourceKey": "Genesis.stars.gold.15.atkPercent",
+      "sioSourcePath": "Genesis.stars.gold.15.atkPercent",
+      "sourceEntityDisplayName": "Genesis",
+      "sourceThreshold": {
+        "metric": "gold",
+        "threshold": 15
+      },
+      "statChannelMatchesCurrent": true,
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.genesis",
+      "valueMatchesCurrent": true
+    },
+    {
+      "atomRowId": "collectible-set:genesis:red:15:atkPercent",
+      "candidateId": "tangtang-correction:collectible-set:genesis:red:15:atkPercent:condition:15-to-19",
+      "capturedThreshold": {
+        "metric": "red",
+        "threshold": 19
+      },
+      "captureId": "td11-capture-20260523-random-sample-genesis-red-atk-percent",
+      "correctionEligibleNow": false,
+      "currentDecision": "Documented correction candidate only. Do not change Tangtang scoring until correction spec plus observed-damage confirmation exists.",
+      "currentSioConditionOrThreshold": "red >= 15",
+      "currentSioParsedFormulaValue": 6,
+      "descriptionTextOriginal": "누적으로 19개의 빨간 별 획득\n공격력 +6%",
+      "directDescriptionConditionOrThreshold": "red >= 19",
+      "directDescriptionParsedFormulaValue": 6,
+      "entityDisplayNameCaptured": "창세기",
+      "entityKey": "collectible-set:genesis",
+      "mismatchFields": [
+        "conditionOrThreshold"
+      ],
+      "mismatchType": "threshold-condition-only",
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "multiplierStageMatchesCurrent": true,
+      "operationBucket": "attack-aggregate",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "proposedTangtangConditionOrThreshold": "red >= 19",
+      "rawCaptureArtifactCount": 2,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg",
+        "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/1.jpg"
+      ],
+      "rawCaptureEvidenceBuckets": [
+        "random-sample",
+        "targeted-followup"
+      ],
+      "requiresObservedDamageFollowUp": true,
+      "rustStatChannel": "atkPercent",
+      "scoringChangeApplied": false,
+      "sioCurrentHandling": "Genesis red >= 15: atkPercent +6; tttg_forge_optimizer/src/tech/sio_config.rs:2525",
+      "sioSourceKey": "Genesis.stars.red.15.atkPercent",
+      "sioSourcePath": "Genesis.stars.red.15.atkPercent",
+      "sourceEntityDisplayName": "Genesis",
+      "sourceThreshold": {
+        "metric": "red",
+        "threshold": 15
+      },
+      "statChannelMatchesCurrent": true,
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.genesis",
+      "valueMatchesCurrent": true
+    }
+  ],
+  "claim": "description-derived-correction-candidates",
+  "correctionScope": {
+    "correctionType": "candidate-only-threshold-condition-correction",
+    "currentInGameCorrectnessClaim": "not-established",
+    "currentSioEquivalentClaim": "sio-tools-equivalent",
+    "formulaSemanticsChanged": false,
+    "primaryEvidenceLayer": "direct first-party item/effect description capture",
+    "scoringChangeApplied": false,
+    "secondaryEvidenceLayer": "direct observed damage follow-up only after description/SIO divergence",
+    "userFacingUiChanged": false
+  },
+  "decisionPolicy": {
+    "canApplyTangtangFormulaCorrectionNow": false,
+    "canChangeScoringNow": false,
+    "canKeepCurrentTangtangFormulaNow": true,
+    "currentCorrectionStatus": "candidate-documented-not-applied",
+    "requiredBeforeApplication": [
+      "keep the candidate isolated from SIO-equivalent source/live claims",
+      "write an explicit Tangtang correction spec that supersedes SIO only for the affected rows",
+      "add controlled observed-damage follow-up or an approved decision that description text alone is sufficient for this threshold-only input correction",
+      "update Rust/WASM scoring semantics behind a dedicated RED/GREEN behavior test",
+      "make the equivalence contract explicit because full SIO equivalence would no longer be the applicable claim for corrected rows"
+    ],
+    "whyNotApplied": "The direct first-party description captures repeatedly show a Genesis threshold mismatch, but no correction spec with observed-damage confirmation has been applied yet."
+  },
+  "equivalenceContract": {
+    "currentScorer": "sio_full_lm_equivalence",
+    "fullSioEquivalent": true,
+    "scorer": "sio_full_lm_equivalence"
+  },
+  "generatedAtKst": "2026-05-23",
+  "sourceInputs": [
+    "frontend/artifacts/td11/tangtang_description_capture_import_matrix.json",
+    "frontend/artifacts/td11/tangtang_description_capture_import_protocol.md",
+    "frontend/artifacts/td11/tangtang_random_capture_sample_audit.json",
+    "frontend/artifacts/td11/tangtang_random_capture_sample_audit.md",
+    "frontend/artifacts/td11/tangtang_targeted_capture_followup_audit.json",
+    "frontend/artifacts/td11/tangtang_targeted_capture_followup_audit.md",
+    "frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json",
+    "frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md",
+    "frontend/artifacts/td11/tangtang_damage_formula_spec.json",
+    "frontend/artifacts/td11/sio_lm_equivalence_matrix.json"
+  ],
+  "status": "[TANGTANG-FORMULA-CORRECTION-CANDIDATES-GREEN]",
+  "summary": {
+    "candidateRowsReadyForScoringChange": 0,
+    "correctionCandidateRows": 2,
+    "correctionEligibleRows": 0,
+    "directObservedDamageTrialCount": 0,
+    "genesisThresholdMismatchRows": 2,
+    "importedDescriptionCaptureRows": 12,
+    "importedDescriptionDivergenceRows": 2,
+    "multiplierStageMismatchRows": 0,
+    "observedDamageFollowUpRows": 2,
+    "randomSampleDivergenceRows": 2,
+    "statChannelMismatchRows": 0,
+    "targetedFollowupDivergenceRows": 2,
+    "targetedFollowupReinforcedRows": 2,
+    "thresholdOnlyMismatchRows": 2,
+    "valueMismatchRows": 0
+  },
+  "title": "Tangtang Formula Correction Candidates",
+  "verificationCommands": [
+    "node scripts/tangtang_formula_correction_candidates_unit_test.mjs",
+    "node scripts/tangtang_description_capture_import_unit_test.mjs",
+    "node scripts/tangtang_targeted_capture_followup_audit_unit_test.mjs",
+    "node scripts/tangtang_in_game_damage_validation_unit_test.mjs",
+    "SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs",
+    "git diff --check"
+  ]
+}

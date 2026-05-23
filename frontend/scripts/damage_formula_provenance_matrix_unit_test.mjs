@@ -14,6 +14,7 @@ const EXPECTED_DESCRIPTION_CAPTURE_MATCHED_ROWS = 10;
 const EXPECTED_DESCRIPTION_CAPTURE_DIVERGENCE_ROWS = 2;
 const EXPECTED_DESCRIPTION_CAPTURE_OBSERVED_FOLLOW_UP_ROWS = 2;
 const EXPECTED_FORMULA_ATOM_ROWS_REMAINING_WITHOUT_DIRECT_CAPTURE = 209;
+const EXPECTED_FORMULA_CORRECTION_CANDIDATE_ROWS = 2;
 
 const CONFIDENCE = new Set([
   'sio-live-equivalent',
@@ -176,6 +177,21 @@ const tangtangTargetedCaptureFollowupAuditPath = path.join(
 );
 const tangtangTargetedCaptureFollowupAudit = JSON.parse(
   await fs.readFile(tangtangTargetedCaptureFollowupAuditPath, 'utf8'),
+);
+const tangtangFormulaCorrectionCandidatesPath = path.join(
+  root,
+  'artifacts/td11/tangtang_formula_correction_candidates.json',
+);
+const tangtangFormulaCorrectionCandidates = JSON.parse(
+  await fs.readFile(tangtangFormulaCorrectionCandidatesPath, 'utf8'),
+);
+const tangtangFormulaCorrectionCandidatesMarkdownPath = path.join(
+  root,
+  'artifacts/td11/tangtang_formula_correction_candidates.md',
+);
+const tangtangFormulaCorrectionCandidatesMarkdown = await fs.readFile(
+  tangtangFormulaCorrectionCandidatesMarkdownPath,
+  'utf8',
 );
 const tangtangFirstPartyDescriptionSourceInventoryPath = path.join(
   root,
@@ -807,6 +823,78 @@ assert.equal(
   'targeted capture follow-up must reinforce the existing Genesis divergence candidates',
 );
 assert.equal(
+  tangtangFormulaCorrectionCandidates.status,
+  '[TANGTANG-FORMULA-CORRECTION-CANDIDATES-GREEN]',
+  'formula correction candidates status changed',
+);
+assert.equal(
+  tangtangFormulaCorrectionCandidates.claim,
+  'description-derived-correction-candidates',
+  'formula correction candidates claim changed',
+);
+assert.equal(
+  tangtangFormulaCorrectionCandidates.behaviorChange,
+  false,
+  'formula correction candidates must not imply behavior changes',
+);
+assert.equal(
+  tangtangFormulaCorrectionCandidates.summary.correctionCandidateRows,
+  EXPECTED_FORMULA_CORRECTION_CANDIDATE_ROWS,
+  'formula correction candidate row count changed',
+);
+assert.equal(
+  tangtangFormulaCorrectionCandidates.summary.genesisThresholdMismatchRows,
+  EXPECTED_FORMULA_CORRECTION_CANDIDATE_ROWS,
+  'Genesis threshold mismatch candidate row count changed',
+);
+assert.equal(
+  tangtangFormulaCorrectionCandidates.summary.thresholdOnlyMismatchRows,
+  EXPECTED_FORMULA_CORRECTION_CANDIDATE_ROWS,
+  'Genesis correction candidates must remain threshold-only mismatches',
+);
+assert.equal(
+  tangtangFormulaCorrectionCandidates.summary.valueMismatchRows,
+  0,
+  'Genesis correction candidates must not include value mismatches',
+);
+assert.equal(
+  tangtangFormulaCorrectionCandidates.summary.statChannelMismatchRows,
+  0,
+  'Genesis correction candidates must not include stat-channel mismatches',
+);
+assert.equal(
+  tangtangFormulaCorrectionCandidates.summary.directObservedDamageTrialCount,
+  0,
+  'formula correction candidates must not claim observed damage trials',
+);
+assert.equal(
+  tangtangFormulaCorrectionCandidates.decisionPolicy.canApplyTangtangFormulaCorrectionNow,
+  false,
+  'formula correction candidates cannot apply Tangtang correction now',
+);
+assert.deepEqual(
+  tangtangFormulaCorrectionCandidates.candidateRows.map((row) => row.atomRowId),
+  [
+    'collectible-set:genesis:gold:15:atkPercent',
+    'collectible-set:genesis:red:15:atkPercent',
+  ],
+  'formula correction candidates must stay limited to the two Genesis threshold rows',
+);
+assert.ok(
+  tangtangFormulaCorrectionCandidates.candidateRows.every((row) => (
+    row.currentSioConditionOrThreshold.endsWith('>= 15') &&
+    row.directDescriptionConditionOrThreshold.endsWith('>= 19') &&
+    row.valueMatchesCurrent &&
+    row.statChannelMatchesCurrent &&
+    !row.scoringChangeApplied
+  )),
+  'Genesis candidates must preserve the 15-to-19 threshold-only mismatch without scoring changes',
+);
+assert.ok(
+  tangtangFormulaCorrectionCandidatesMarkdown.includes('Can apply Tangtang correction now: `false`'),
+  'formula correction candidates markdown must keep correction application blocked',
+);
+assert.equal(
   tangtangFirstPartyDescriptionSourceInventory.status,
   '[TANGTANG-FIRST-PARTY-DESCRIPTION-SOURCE-INVENTORY-READY]',
   'first-party source inventory status changed',
@@ -1128,6 +1216,8 @@ Confidence values:
   - \`frontend/artifacts/td11/tangtang_random_capture_sample_audit.md\`
   - \`frontend/artifacts/td11/tangtang_targeted_capture_followup_audit.json\`
   - \`frontend/artifacts/td11/tangtang_targeted_capture_followup_audit.md\`
+  - \`frontend/artifacts/td11/tangtang_formula_correction_candidates.json\`
+  - \`frontend/artifacts/td11/tangtang_formula_correction_candidates.md\`
   - \`frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json\`
   - \`frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md\`
   - \`frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json\`
@@ -1248,6 +1338,25 @@ ${tangtangRandomCaptureSampleAudit.decision.directObservedDamageFollowUpOpenedFo
 ${tangtangTargetedCaptureFollowupAudit.decision.directObservedDamageFollowUpOpenedFor.map((rowId) => `  - \`${rowId}\``).join('\n')}
 - The Genesis threshold divergence candidates now have both random-sample and targeted follow-up direct capture artifacts.
 - Energy Guidance System, custom collection, Taloxia, collaboration battle, locked collectible, and Tech Hoverboard tooltip evidence remains preserved as raw direct evidence outside the current 221-row description atom ledger.
+- Formula/scoring/UI behavior did not change.
+
+## Formula Correction Candidates
+
+- Description-derived correction candidates are tracked separately from SIO-equivalent formula derivation:
+  - \`frontend/artifacts/td11/tangtang_formula_correction_candidates.json\`
+  - \`frontend/artifacts/td11/tangtang_formula_correction_candidates.md\`
+- Gate status: \`${tangtangFormulaCorrectionCandidates.status}\`
+- Gate claim: \`${tangtangFormulaCorrectionCandidates.claim}\`
+- Correction candidate rows: ${tangtangFormulaCorrectionCandidates.summary.correctionCandidateRows}
+- Genesis threshold mismatch rows: ${tangtangFormulaCorrectionCandidates.summary.genesisThresholdMismatchRows}
+- Threshold-only mismatch rows: ${tangtangFormulaCorrectionCandidates.summary.thresholdOnlyMismatchRows}
+- Value mismatch rows: ${tangtangFormulaCorrectionCandidates.summary.valueMismatchRows}
+- Stat-channel mismatch rows: ${tangtangFormulaCorrectionCandidates.summary.statChannelMismatchRows}
+- Direct observed damage trials: ${tangtangFormulaCorrectionCandidates.summary.directObservedDamageTrialCount}
+- Can apply Tangtang correction now: \`${tangtangFormulaCorrectionCandidates.decisionPolicy.canApplyTangtangFormulaCorrectionNow}\`
+- Current correction status: \`${tangtangFormulaCorrectionCandidates.decisionPolicy.currentCorrectionStatus}\`
+- Candidate rows:
+${tangtangFormulaCorrectionCandidates.candidateRows.map((row) => `  - \`${row.atomRowId}\`: ${row.currentSioConditionOrThreshold} -> ${row.directDescriptionConditionOrThreshold}, ${row.rustStatChannel} +${row.directDescriptionParsedFormulaValue}`).join('\n')}
 - Formula/scoring/UI behavior did not change.
 
 ## First-Party Description Source Inventory
