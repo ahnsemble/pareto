@@ -920,3 +920,64 @@ status: `[COLLECTION-UPGRADE-RECOMMENDATIONS-GREEN-DEPLOYED]`
 - Commit:
   - Implementation commit: `d5dd30d feat: recommend Tangtang collection upgrades`.
   - GitHub push/PR not performed.
+
+## Tangtang Import And Recommendation Structure Refactor
+
+timestampKst: 2026-05-23T11:42:48+09:00
+status: `[IMPORT-RECOMMENDATION-REFACTOR-GREEN]`
+
+- Product behavior:
+  - No intended user-facing behavior change.
+  - Tangtang public branding and product recommendation output remain unchanged.
+  - Collection upgrade recommendations still emit the same `collection-item` result for imported low-star/custom-set context.
+- Structural changes:
+  - Split profile import/snapshot types from `profile-import.ts` into `profile-import-types.ts`.
+  - Split collectible recommendation candidate selection/copy from `tech-upgrade-recommendations.ts` into `collectible-upgrade-recommendations.ts`.
+  - Moved recommendation shared type/input shape into `tech-upgrade-recommendation-types.ts`.
+  - Removed the duplicated collectible name list from recommendation code and now uses `COLLECTIBLE_ITEM_INDEX`.
+  - Kept `optimizer.tsx` behavior wiring intact except type import cleanup; extracting its import handler would add setter plumbing without reducing current risk.
+- Baseline before refactor:
+  - `node scripts/profile_import_unit_test.mjs`: passed.
+  - `node scripts/external_calculation_link_unit_test.mjs`: passed, `rawLength=1350`, `compactVersion=5`.
+  - `node scripts/tech_account_context_unit_test.mjs`: passed.
+  - `node scripts/tech_upgrade_recommendations_unit_test.mjs`: passed.
+  - `node scripts/vercel_config_unit_test.mjs`: passed.
+  - `npx tsc --noEmit`: passed.
+- Refactor verification:
+  - Focused post-split check: profile import, external calculation link, tech recommendations, and `tsc --noEmit` passed.
+  - `node scripts/profile_import_unit_test.mjs`: passed.
+  - `node scripts/external_calculation_link_unit_test.mjs`: passed, `rawLength=1350`, `compactVersion=5`.
+  - `node scripts/tech_account_context_unit_test.mjs`: passed.
+  - `node scripts/tech_upgrade_recommendations_unit_test.mjs`: passed.
+  - `node scripts/vercel_config_unit_test.mjs`: passed.
+  - `npx tsc --noEmit`: passed.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts --grep "recalculates imported profile quickly"`: passed, 2/2.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts`: passed, 89 passed / 1 skipped.
+  - `npm run build`: passed, 22 static pages generated. Existing static export middleware/API-route warning only.
+  - `git diff --check`: passed.
+- Heavy verification:
+  - Omitted. This refactor did not change `buildSioLmContext`, `playerStateWithAccountContext`, optimizer request fields, Rust formula constants, or WASM scoring semantics.
+- Intentional constraints kept:
+  - Public UI remains Tangtang.
+  - No user-facing SIO copy was added.
+  - `fullSioEquivalent=true` and `currentScorer=scorer=sio_full_lm_equivalence` remain asserted by existing e2e product gates.
+  - Raw SIO LM JSON, scorer/debug/preselect/beam/exact node cap UI remain hidden.
+  - SIO LM/scoring core, Rust formula constants, and WASM scoring semantics were not changed.
+  - Internal `sio*` rename remains deferred to Post-Launch Gate 7.
+  - GitHub push/PR not performed.
+- Artifacts:
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/app/lib/pareto-store/profile-import-types.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/app/lib/pareto-store/profile-import.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/app/lib/pareto-store/external-calculation-profile.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/app/lib/pareto-store/tech-upgrade-recommendation-types.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/app/lib/pareto-store/tech-upgrade-recommendations.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/app/lib/pareto-store/collectible-upgrade-recommendations.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/components/v3/optimizer.tsx`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/components/v3/tech/TechProductPanels.tsx`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/components/v3/tech/TechUpgradeRecommendations.tsx`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/scripts/external_calculation_link_unit_test.mjs`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/scripts/tech_upgrade_recommendations_unit_test.mjs`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_product_flow_gap_audit.md`
+- Commit:
+  - Implementation commit: `13f7012 refactor: split Tangtang import recommendations`.
+  - GitHub push/PR not performed.
