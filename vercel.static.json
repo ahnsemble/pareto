@@ -1,0 +1,68 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/", "destination": "/ko/v3/optimizer/tech-parts", "permanent": false },
+    { "source": "/optimize", "destination": "/ko/v3/optimizer/tech-parts", "permanent": false },
+    { "source": "/twodeck", "destination": "/ko/twodeck", "permanent": false },
+    { "source": "/community", "destination": "/ko/community", "permanent": false },
+    { "source": "/en/cache-sim", "destination": "/en/optimize", "permanent": false }
+  ],
+  "rewrites": [
+    { "source": "/en", "destination": "/en.html" },
+    { "source": "/ko", "destination": "/ko.html" },
+    { "source": "/en/optimize", "destination": "/en/optimize.html" },
+    { "source": "/ko/optimize", "destination": "/ko/optimize.html" },
+    { "source": "/en/twodeck", "destination": "/en/twodeck.html" },
+    { "source": "/ko/twodeck", "destination": "/ko/twodeck.html" },
+    { "source": "/en/community", "destination": "/en/community.html" },
+    { "source": "/ko/community", "destination": "/ko/community.html" },
+    { "source": "/en/v3", "destination": "/en/v3.html" },
+    { "source": "/ko/v3", "destination": "/ko/v3.html" },
+    { "source": "/en/v3/optimizer/relic-core", "destination": "/en/v3/optimizer/relic-core.html" },
+    { "source": "/ko/v3/optimizer/relic-core", "destination": "/ko/v3/optimizer/relic-core.html" },
+    { "source": "/en/v3/optimizer/tech-parts", "destination": "/en/v3/optimizer/tech-parts.html" },
+    { "source": "/ko/v3/optimizer/tech-parts", "destination": "/ko/v3/optimizer/tech-parts.html" },
+    { "source": "/en/v3/optimizer/twinborn-auto-assign", "destination": "/en/v3/optimizer/twinborn-auto-assign.html" },
+    { "source": "/ko/v3/optimizer/twinborn-auto-assign", "destination": "/ko/v3/optimizer/twinborn-auto-assign.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; connect-src 'self'; img-src 'self' data:; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+        },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+      ]
+    },
+    {
+      "source": "/_next/static/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*).svg",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*).png",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/favicon.ico",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    }
+  ]
+}
