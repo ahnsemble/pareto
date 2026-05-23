@@ -572,6 +572,41 @@ assert.equal(
   'direct first-party description-derived formula rows must start at zero',
 );
 assert.equal(
+  tangtangDescriptionFormulaValidation.formulaAtomSummary.totalRows,
+  221,
+  'description formula atom ledger row count changed',
+);
+assert.equal(
+  tangtangDescriptionFormulaValidation.formulaAtomSummary.stageBucketTaxonomyRows,
+  25,
+  'stage bucket taxonomy row count changed',
+);
+assert.equal(
+  tangtangDescriptionFormulaValidation.formulaAtomSummary.mountAtomRows,
+  26,
+  'mount formula atom row count changed',
+);
+assert.equal(
+  tangtangDescriptionFormulaValidation.formulaAtomSummary.survivorAtomRows,
+  11,
+  'survivor formula atom row count changed',
+);
+assert.equal(
+  tangtangDescriptionFormulaValidation.formulaAtomSummary.collectibleThresholdAtomRows,
+  170,
+  'collectible threshold formula atom row count changed',
+);
+assert.equal(
+  tangtangDescriptionFormulaValidation.formulaAtomSummary.collectibleSpecialRustMappingAtomRows,
+  14,
+  'collectible special Rust formula atom row count changed',
+);
+assert.equal(
+  tangtangDescriptionFormulaValidation.formulaAtomGraph.graphMode,
+  'deterministic-atom-ledger-not-graphrag',
+  'description formula validation should remain a deterministic atom ledger before GraphRAG',
+);
+assert.equal(
   tangtangDescriptionFormulaValidation.divergenceRows.length,
   0,
   'description/SIO divergence rows must start at zero',
@@ -880,6 +915,13 @@ ${renderCountTable(countBy('confidence'))}
 - Gate status: \`${tangtangDescriptionFormulaValidation.status}\`
 - Gate claim: \`${tangtangDescriptionFormulaValidation.claim}\`
 - Current description-derived formula correctness claim: \`${tangtangDescriptionFormulaValidation.validationScope.currentDescriptionFormulaCorrectnessClaim}\`
+- Formula atom rows: ${tangtangDescriptionFormulaValidation.formulaAtomSummary.totalRows}
+- Stage bucket taxonomy rows: ${tangtangDescriptionFormulaValidation.formulaAtomSummary.stageBucketTaxonomyRows}
+- Mount atom rows: ${tangtangDescriptionFormulaValidation.formulaAtomSummary.mountAtomRows}
+- Survivor atom rows: ${tangtangDescriptionFormulaValidation.formulaAtomSummary.survivorAtomRows}
+- Collectible threshold atom rows: ${tangtangDescriptionFormulaValidation.formulaAtomSummary.collectibleThresholdAtomRows}
+- Collectible special Rust mapping atom rows: ${tangtangDescriptionFormulaValidation.formulaAtomSummary.collectibleSpecialRustMappingAtomRows}
+- Graph mode: \`${tangtangDescriptionFormulaValidation.formulaAtomGraph.graphMode}\`
 - Direct first-party description-derived formula rows: ${tangtangDescriptionFormulaValidation.validationScope.directFirstPartyDescriptionFormulaRows}
 - Description/SIO divergence rows: ${tangtangDescriptionFormulaValidation.divergenceRows.length}
 - Can claim SIO formula description-correct: \`${tangtangDescriptionFormulaValidation.decisionPolicy.canClaimSioFormulaDescriptionCorrect}\`

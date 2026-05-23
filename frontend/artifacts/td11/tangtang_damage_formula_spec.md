@@ -94,6 +94,13 @@ Key source/live counts:
 - Claim: `description-derived-formula-validation-protocol`
 - Primary validation layer: `description-derived-formula-validation`
 - Current description-derived formula correctness claim: `not-established`
+- Formula atom rows: 221
+- Stage bucket taxonomy rows: 25
+- Mount atom rows: 26
+- Survivor atom rows: 11
+- Collectible threshold atom rows: 170
+- Collectible special Rust mapping atom rows: 14
+- Graph mode: `deterministic-atom-ledger-not-graphrag`
 - Direct first-party description-derived formula rows: 0
 - Description/SIO divergence rows: 0
 - Observed damage validation role: Observed damage validation is secondary confirmation for description-vs-SIO divergences, not the first validation layer.

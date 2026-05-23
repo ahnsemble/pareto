@@ -27,14 +27,21 @@
     "canApplyTangtangFormulaCorrection": false,
     "canClaimSioFormulaDescriptionCorrect": false,
     "claim": "description-derived-formula-validation-protocol",
+    "collectibleSpecialRustMappingAtomRows": 14,
+    "collectibleThresholdAtomRows": 170,
     "currentDescriptionFormulaCorrectnessClaim": "not-established",
     "descriptionDivergenceRows": 0,
     "directFirstPartyDescriptionFormulaRows": 0,
+    "formulaAtomRows": 221,
+    "graphMode": "deterministic-atom-ledger-not-graphrag",
     "matrixPath": "frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json",
+    "mountAtomRows": 26,
     "observedDamageValidationRole": "Observed damage validation is secondary confirmation for description-vs-SIO divergences, not the first validation layer.",
     "primaryValidationLayer": "description-derived-formula-validation",
     "protocolPath": "frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md",
-    "status": "[TANGTANG-DESCRIPTION-FORMULA-VALIDATION-PROTOCOL-READY]"
+    "stageBucketTaxonomyRows": 25,
+    "status": "[TANGTANG-DESCRIPTION-FORMULA-VALIDATION-PROTOCOL-READY]",
+    "survivorAtomRows": 11
   },
   "domainCoverage": [
     {

@@ -538,9 +538,17 @@ function buildSpec() {
       protocolPath: 'frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md',
       currentDescriptionFormulaCorrectnessClaim:
         descriptionFormulaValidationMatrix.validationScope.currentDescriptionFormulaCorrectnessClaim,
+      formulaAtomRows: descriptionFormulaValidationMatrix.formulaAtomSummary.totalRows,
+      stageBucketTaxonomyRows: descriptionFormulaValidationMatrix.formulaAtomSummary.stageBucketTaxonomyRows,
+      mountAtomRows: descriptionFormulaValidationMatrix.formulaAtomSummary.mountAtomRows,
+      survivorAtomRows: descriptionFormulaValidationMatrix.formulaAtomSummary.survivorAtomRows,
+      collectibleThresholdAtomRows: descriptionFormulaValidationMatrix.formulaAtomSummary.collectibleThresholdAtomRows,
+      collectibleSpecialRustMappingAtomRows:
+        descriptionFormulaValidationMatrix.formulaAtomSummary.collectibleSpecialRustMappingAtomRows,
       directFirstPartyDescriptionFormulaRows:
         descriptionFormulaValidationMatrix.validationScope.directFirstPartyDescriptionFormulaRows,
       descriptionDivergenceRows: descriptionFormulaValidationMatrix.divergenceRows.length,
+      graphMode: descriptionFormulaValidationMatrix.formulaAtomGraph.graphMode,
       primaryValidationLayer: 'description-derived-formula-validation',
       observedDamageValidationRole: descriptionFormulaValidationMatrix.decisionPolicy.observedDamageValidationRole,
       canClaimSioFormulaDescriptionCorrect:
@@ -708,6 +716,13 @@ ${spec.caveats.map((item) => `- ${item}`).join('\n')}
 - Claim: \`${spec.descriptionFormulaValidationGate.claim}\`
 - Primary validation layer: \`${spec.descriptionFormulaValidationGate.primaryValidationLayer}\`
 - Current description-derived formula correctness claim: \`${spec.descriptionFormulaValidationGate.currentDescriptionFormulaCorrectnessClaim}\`
+- Formula atom rows: ${spec.descriptionFormulaValidationGate.formulaAtomRows}
+- Stage bucket taxonomy rows: ${spec.descriptionFormulaValidationGate.stageBucketTaxonomyRows}
+- Mount atom rows: ${spec.descriptionFormulaValidationGate.mountAtomRows}
+- Survivor atom rows: ${spec.descriptionFormulaValidationGate.survivorAtomRows}
+- Collectible threshold atom rows: ${spec.descriptionFormulaValidationGate.collectibleThresholdAtomRows}
+- Collectible special Rust mapping atom rows: ${spec.descriptionFormulaValidationGate.collectibleSpecialRustMappingAtomRows}
+- Graph mode: \`${spec.descriptionFormulaValidationGate.graphMode}\`
 - Direct first-party description-derived formula rows: ${spec.descriptionFormulaValidationGate.directFirstPartyDescriptionFormulaRows}
 - Description/SIO divergence rows: ${spec.descriptionFormulaValidationGate.descriptionDivergenceRows}
 - Observed damage validation role: ${spec.descriptionFormulaValidationGate.observedDamageValidationRole}
@@ -771,6 +786,13 @@ assert.equal(spec.descriptionFormulaValidationGate.status, '[TANGTANG-DESCRIPTIO
 assert.equal(spec.descriptionFormulaValidationGate.claim, 'description-derived-formula-validation-protocol');
 assert.equal(spec.descriptionFormulaValidationGate.primaryValidationLayer, 'description-derived-formula-validation');
 assert.equal(spec.descriptionFormulaValidationGate.currentDescriptionFormulaCorrectnessClaim, 'not-established');
+assert.equal(spec.descriptionFormulaValidationGate.formulaAtomRows, 221);
+assert.equal(spec.descriptionFormulaValidationGate.stageBucketTaxonomyRows, 25);
+assert.equal(spec.descriptionFormulaValidationGate.mountAtomRows, 26);
+assert.equal(spec.descriptionFormulaValidationGate.survivorAtomRows, 11);
+assert.equal(spec.descriptionFormulaValidationGate.collectibleThresholdAtomRows, 170);
+assert.equal(spec.descriptionFormulaValidationGate.collectibleSpecialRustMappingAtomRows, 14);
+assert.equal(spec.descriptionFormulaValidationGate.graphMode, 'deterministic-atom-ledger-not-graphrag');
 assert.equal(spec.descriptionFormulaValidationGate.directFirstPartyDescriptionFormulaRows, 0);
 assert.equal(spec.descriptionFormulaValidationGate.descriptionDivergenceRows, 0);
 assert.equal(spec.descriptionFormulaValidationGate.canClaimSioFormulaDescriptionCorrect, false);
@@ -804,6 +826,7 @@ assert.ok(provenanceMatrix.includes('unsupported for formula input until fixture
 assert.ok(mdSerialized.includes('This is not a claim that every in-game description line was independently captured'));
 assert.ok(mdSerialized.includes('source/live SIO Tools-equivalent Tangtang damage formula derivation'));
 assert.ok(mdSerialized.includes('Description Formula Validation Gate'));
+assert.ok(mdSerialized.includes('Formula atom rows: 221'));
 assert.ok(mdSerialized.includes('Can run observed damage follow-up without description divergence: `false`'));
 
 if (writeMode) {

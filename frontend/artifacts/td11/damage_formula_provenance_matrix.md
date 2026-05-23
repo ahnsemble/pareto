@@ -98,6 +98,13 @@ Confidence values:
 - Gate status: `[TANGTANG-DESCRIPTION-FORMULA-VALIDATION-PROTOCOL-READY]`
 - Gate claim: `description-derived-formula-validation-protocol`
 - Current description-derived formula correctness claim: `not-established`
+- Formula atom rows: 221
+- Stage bucket taxonomy rows: 25
+- Mount atom rows: 26
+- Survivor atom rows: 11
+- Collectible threshold atom rows: 170
+- Collectible special Rust mapping atom rows: 14
+- Graph mode: `deterministic-atom-ledger-not-graphrag`
 - Direct first-party description-derived formula rows: 0
 - Description/SIO divergence rows: 0
 - Can claim SIO formula description-correct: `false`

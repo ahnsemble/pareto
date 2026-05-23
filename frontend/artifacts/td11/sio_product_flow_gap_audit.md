@@ -1127,9 +1127,17 @@ Added the primary validation gate for the user-corrected flow: capture item/effe
 - Updated `tangtang_damage_formula_spec.json` / `.md` and its gate to link the description-derived formula validation gate.
 - Updated `damage_formula_provenance_matrix.md` and its gate to show description-derived validation as the primary next layer.
 - Updated the observed-damage validation gate so it is follow-up confirmation only after a description-vs-SIO divergence exists.
+- Expanded the description validation matrix from an empty protocol into a deterministic formula atom ledger.
 
 ### Current Decision
 
+- Formula atom rows: `221`.
+  - Mount atoms: `26`.
+  - Target survivor atoms: `11`.
+  - Collectible threshold atoms: `170`.
+  - Collectible special Rust mapping atoms: `14`.
+- Stage bucket taxonomy rows: `25`.
+- Graph mode: `deterministic-atom-ledger-not-graphrag`.
 - Direct first-party description-derived formula rows: `0`.
 - Description/SIO divergence rows: `0`.
 - Current description-derived formula correctness claim: `not-established`.

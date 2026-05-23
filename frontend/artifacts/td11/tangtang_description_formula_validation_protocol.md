@@ -24,6 +24,41 @@ For every captured item/effect description, parse the original text into a formu
 
 Public-web text, SIO source rows, and live SIO worker parity can support triage, but they do not count as direct first-party description-derived formula rows.
 
+## Formula Atom Ledger
+
+The matrix now carries a deterministic formula atom ledger. This is the small DAG-style structure needed for bucket/stage classification; GraphRAG is not required before direct description rows exist.
+
+- Formula atom rows: 221
+- Stage bucket taxonomy rows: 25
+- Mount atom rows: 26
+- Survivor atom rows: 11
+- Collectible threshold atom rows: 170
+- Collectible special Rust mapping atom rows: 14
+- Direct first-party description-derived formula rows: 0
+- Description/SIO divergence rows: 0
+- Correction-eligible rows: 0
+
+Rows by atom type:
+
+| Value | Count |
+|---|---:|
+| collectible-special-rust-mapping | 14 |
+| collectible-threshold-source-claim | 170 |
+| mount-damage-source-claim | 3 |
+| mount-line-source-claim | 23 |
+| survivor-public-or-source-claim | 11 |
+
+Rows by comparison verdict:
+
+| Value | Count |
+|---|---:|
+| insufficient-direct-description-evidence | 214 |
+| public-web-corroborated-not-first-party | 7 |
+
+Graph mode: `deterministic-atom-ledger-not-graphrag`
+
+Graph rationale: The current problem is bucket/stage classification and evidence promotion, so a deterministic DAG ledger is sufficient before any GraphRAG layer.
+
 ## Required Row Fields
 
 - `rowId`
