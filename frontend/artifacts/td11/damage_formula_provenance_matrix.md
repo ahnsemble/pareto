@@ -33,6 +33,8 @@ Confidence values:
   - `frontend/artifacts/td11/tangtang_description_capture_import_protocol.md`
   - `frontend/artifacts/td11/tangtang_random_capture_sample_audit.json`
   - `frontend/artifacts/td11/tangtang_random_capture_sample_audit.md`
+  - `frontend/artifacts/td11/tangtang_targeted_capture_followup_audit.json`
+  - `frontend/artifacts/td11/tangtang_targeted_capture_followup_audit.md`
   - `frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json`
   - `frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md`
   - `frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json`
@@ -154,6 +156,25 @@ Confidence values:
   - `collectible-set:genesis:gold:15:atkPercent`
   - `collectible-set:genesis:red:15:atkPercent`
 - Non-imported groups remain preserved as raw direct evidence, but are outside the current 221-row description atom ledger.
+- Formula/scoring/UI behavior did not change.
+
+## Targeted Capture Follow-Up Audit
+
+- The latest 27-image targeted direct capture follow-up is summarized in:
+  - `frontend/artifacts/td11/tangtang_targeted_capture_followup_audit.json`
+  - `frontend/artifacts/td11/tangtang_targeted_capture_followup_audit.md`
+- Audit status: `[TANGTANG-TARGETED-CAPTURE-FOLLOWUP-AUDIT-GREEN]`
+- Raw images submitted: 27
+- Imported/reinforced atom rows from batch: 2
+- Matched SIO rows from batch: 0
+- Description/SIO divergence rows from batch: 2
+- Reinforced existing atom rows from batch: 2
+- Observed damage follow-up rows from batch: 2
+- Follow-up atom rows:
+  - `collectible-set:genesis:gold:15:atkPercent`
+  - `collectible-set:genesis:red:15:atkPercent`
+- The Genesis threshold divergence candidates now have both random-sample and targeted follow-up direct capture artifacts.
+- Energy Guidance System, custom collection, Taloxia, collaboration battle, locked collectible, and Tech Hoverboard tooltip evidence remains preserved as raw direct evidence outside the current 221-row description atom ledger.
 - Formula/scoring/UI behavior did not change.
 
 ## First-Party Description Source Inventory

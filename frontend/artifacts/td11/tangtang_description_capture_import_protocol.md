@@ -82,6 +82,8 @@ Matching mode: explicit atomRowId only
   - `frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg`
   - `frontend/artifacts/td11/captures/2026-05-23-random-sample/2.jpg`
   - `frontend/artifacts/td11/captures/2026-05-23-random-sample/6.jpg`
+  - `frontend/artifacts/td11/captures/2026-05-23-targeted-followup/1.jpg`
+  - `frontend/artifacts/td11/captures/2026-05-23-targeted-followup/2.jpg`
 
 ## Evidence Artifacts
 

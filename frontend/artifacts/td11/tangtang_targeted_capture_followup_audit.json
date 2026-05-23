@@ -1,0 +1,210 @@
+{
+  "artifactPaths": {
+    "json": "frontend/artifacts/td11/tangtang_targeted_capture_followup_audit.json",
+    "markdown": "frontend/artifacts/td11/tangtang_targeted_capture_followup_audit.md",
+    "script": "frontend/scripts/tangtang_targeted_capture_followup_audit_unit_test.mjs"
+  },
+  "behaviorChange": false,
+  "claim": "targeted-direct-capture-followup-audit",
+  "decision": {
+    "canApplyTangtangFormulaCorrectionNow": false,
+    "canClaimOfficialInGameFormulaVerification": false,
+    "directObservedDamageFollowUpOpenedFor": [
+      "collectible-set:genesis:gold:15:atkPercent",
+      "collectible-set:genesis:red:15:atkPercent"
+    ],
+    "reason": "The targeted follow-up strengthens the existing Genesis threshold divergence candidates with additional direct first-party captures. No scoring correction is applied until follow-up confirmation and a correction spec exist."
+  },
+  "generatedAtKst": "2026-05-23 20:15:00 KST",
+  "importedRowsFromBatch": [
+    {
+      "atomRowId": "collectible-set:genesis:gold:15:atkPercent",
+      "captureId": "td11-capture-20260523-random-sample-genesis-gold-atk-percent",
+      "comparisonVerdict": "description-sio-divergent-needs-confirmation",
+      "conditionOrThreshold": "gold >= 19",
+      "descriptionTextOriginal": "누적으로 19개의 금 별 획득\n공격력 +4%",
+      "mismatchFields": [
+        "conditionOrThreshold"
+      ],
+      "parsedFormulaOperation": "threshold_add_percent",
+      "parsedFormulaValue": 4,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/2.jpg"
+      ],
+      "rustStatChannel": "atkPercent"
+    },
+    {
+      "atomRowId": "collectible-set:genesis:red:15:atkPercent",
+      "captureId": "td11-capture-20260523-random-sample-genesis-red-atk-percent",
+      "comparisonVerdict": "description-sio-divergent-needs-confirmation",
+      "conditionOrThreshold": "red >= 19",
+      "descriptionTextOriginal": "누적으로 19개의 빨간 별 획득\n공격력 +6%",
+      "mismatchFields": [
+        "conditionOrThreshold"
+      ],
+      "parsedFormulaOperation": "threshold_add_percent",
+      "parsedFormulaValue": 6,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/1.jpg"
+      ],
+      "rustStatChannel": "atkPercent"
+    }
+  ],
+  "nonImportedGroups": [
+    {
+      "domain": "tech-part-energy-guidance-system",
+      "imageRefs": [
+        "3.jpg",
+        "4.jpg",
+        "5.jpg",
+        "6.jpg",
+        "7.jpg",
+        "8.jpg",
+        "9.jpg",
+        "10.jpg"
+      ],
+      "reason": "Energy Guidance System / dual resonance and grade skill text is direct evidence, but no current 221-row description atom ledger row exists for this subsystem.",
+      "sampleEffects": [
+        "dual drone single-shot damage tiers",
+        "vulnerability/status damage rows",
+        "skill damage rows",
+        "dual part grade skill text"
+      ]
+    },
+    {
+      "domain": "mount-tech-hoverboard-tooltip",
+      "imageRefs": [
+        "11.jpg"
+      ],
+      "reason": "Skateboard/Tech Hoverboard tooltip is direct evidence, but the visible tooltip is not a clean row-level match to the current mount line atom rows.",
+      "sampleEffects": [
+        "shield stack tooltip",
+        "damage reduction text",
+        "freeze-status wording"
+      ]
+    },
+    {
+      "domain": "custom-collection-set",
+      "imageRefs": [
+        "12.jpg",
+        "13.jpg",
+        "14.jpg",
+        "15.jpg",
+        "16.jpg"
+      ],
+      "reason": "Custom collection set slot/upgrade rows are preserved as direct evidence, but are outside the current collectible set threshold atom ids.",
+      "sampleEffects": [
+        "custom collection final attack/HP rows",
+        "crit damage / weakened / poisoned / chilled rows",
+        "slot upgrade explanation"
+      ]
+    },
+    {
+      "domain": "collectible-set-important-day-record",
+      "imageRefs": [
+        "17.jpg"
+      ],
+      "reason": "Important Day Record set rows are direct evidence, but no current atom row id was confidently mapped in this pass.",
+      "sampleEffects": [
+        "gold/red 15-star final attack/HP rows"
+      ]
+    },
+    {
+      "domain": "locked-collectible-item-unknown",
+      "imageRefs": [
+        "18.jpg",
+        "19.jpg"
+      ],
+      "reason": "Locked unknown collectible rows are direct evidence, but item identity and atom id are not established.",
+      "sampleEffects": [
+        "Twisting Belt HP rows",
+        "crit rate row",
+        "skill max-bound row"
+      ]
+    },
+    {
+      "domain": "survivor-taloxia",
+      "imageRefs": [
+        "20.jpg",
+        "21.jpg",
+        "22.jpg",
+        "26.jpg",
+        "27.jpg"
+      ],
+      "reason": "Taloxia skill/passive/awakening text is direct survivor evidence, but the current 221-row description atom ledger does not include Taloxia rows.",
+      "sampleEffects": [
+        "sync link tooltip",
+        "transform tooltip",
+        "firepower armament tooltip",
+        "awakening passive rows"
+      ]
+    },
+    {
+      "domain": "collaboration-battle",
+      "imageRefs": [
+        "23.jpg",
+        "24.jpg",
+        "25.jpg"
+      ],
+      "reason": "Collaboration battle upgrade rows are direct evidence, but no current formula atom ledger rows exist for this subsystem.",
+      "sampleEffects": [
+        "assist collaboration skill level upgrades",
+        "rage gain rows"
+      ]
+    }
+  ],
+  "sourceInputs": [
+    "frontend/artifacts/td11/tangtang_description_capture_import_matrix.json",
+    "frontend/artifacts/td11/tangtang_description_capture_inbox.json",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/1.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/2.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/3.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/4.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/5.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/6.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/7.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/8.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/9.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/10.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/11.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/12.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/13.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/14.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/15.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/16.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/17.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/18.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/19.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/20.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/21.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/22.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/23.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/24.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/25.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/26.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/27.jpg"
+  ],
+  "status": "[TANGTANG-TARGETED-CAPTURE-FOLLOWUP-AUDIT-GREEN]",
+  "summary": {
+    "cumulativeDescriptionSioDivergenceRows": 2,
+    "cumulativeDirectFirstPartyCaptureRows": 12,
+    "descriptionSioDivergenceRowsFromBatch": 2,
+    "formulaOrScoringBehaviorChange": false,
+    "importedAtomRowsFromBatch": 2,
+    "matchedSioRowsFromBatch": 0,
+    "observedDamageFollowUpRowsFromBatch": 2,
+    "rawImagesWithImportedAtoms": 2,
+    "rawImagesWithoutImportedAtoms": 25,
+    "reinforcedExistingAtomRowsFromBatch": 2,
+    "submittedRawImages": 27
+  },
+  "title": "Tangtang Targeted Direct Capture Follow-Up Audit",
+  "verificationCommands": [
+    "node scripts/tangtang_targeted_capture_followup_audit_unit_test.mjs",
+    "node scripts/tangtang_description_capture_import_unit_test.mjs",
+    "node scripts/tangtang_random_capture_sample_audit_unit_test.mjs",
+    "node scripts/tangtang_in_game_damage_validation_unit_test.mjs",
+    "SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs",
+    "git diff --check"
+  ]
+}

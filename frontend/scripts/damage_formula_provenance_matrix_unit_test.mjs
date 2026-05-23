@@ -170,6 +170,13 @@ const tangtangRandomCaptureSampleAuditPath = path.join(
   'artifacts/td11/tangtang_random_capture_sample_audit.json',
 );
 const tangtangRandomCaptureSampleAudit = JSON.parse(await fs.readFile(tangtangRandomCaptureSampleAuditPath, 'utf8'));
+const tangtangTargetedCaptureFollowupAuditPath = path.join(
+  root,
+  'artifacts/td11/tangtang_targeted_capture_followup_audit.json',
+);
+const tangtangTargetedCaptureFollowupAudit = JSON.parse(
+  await fs.readFile(tangtangTargetedCaptureFollowupAuditPath, 'utf8'),
+);
 const tangtangFirstPartyDescriptionSourceInventoryPath = path.join(
   root,
   'artifacts/td11/tangtang_first_party_description_source_inventory.json',
@@ -775,6 +782,31 @@ assert.equal(
   'random capture sample observed-damage follow-up count changed',
 );
 assert.equal(
+  tangtangTargetedCaptureFollowupAudit.status,
+  '[TANGTANG-TARGETED-CAPTURE-FOLLOWUP-AUDIT-GREEN]',
+  'targeted capture follow-up audit status changed',
+);
+assert.equal(
+  tangtangTargetedCaptureFollowupAudit.summary.submittedRawImages,
+  27,
+  'targeted capture follow-up raw image count changed',
+);
+assert.equal(
+  tangtangTargetedCaptureFollowupAudit.summary.importedAtomRowsFromBatch,
+  2,
+  'targeted capture follow-up imported/reinforced row count changed',
+);
+assert.equal(
+  tangtangTargetedCaptureFollowupAudit.summary.descriptionSioDivergenceRowsFromBatch,
+  EXPECTED_DESCRIPTION_CAPTURE_DIVERGENCE_ROWS,
+  'targeted capture follow-up divergence count changed',
+);
+assert.equal(
+  tangtangTargetedCaptureFollowupAudit.summary.reinforcedExistingAtomRowsFromBatch,
+  2,
+  'targeted capture follow-up must reinforce the existing Genesis divergence candidates',
+);
+assert.equal(
   tangtangFirstPartyDescriptionSourceInventory.status,
   '[TANGTANG-FIRST-PARTY-DESCRIPTION-SOURCE-INVENTORY-READY]',
   'first-party source inventory status changed',
@@ -1094,6 +1126,8 @@ Confidence values:
   - \`frontend/artifacts/td11/tangtang_description_capture_import_protocol.md\`
   - \`frontend/artifacts/td11/tangtang_random_capture_sample_audit.json\`
   - \`frontend/artifacts/td11/tangtang_random_capture_sample_audit.md\`
+  - \`frontend/artifacts/td11/tangtang_targeted_capture_followup_audit.json\`
+  - \`frontend/artifacts/td11/tangtang_targeted_capture_followup_audit.md\`
   - \`frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json\`
   - \`frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md\`
   - \`frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json\`
@@ -1196,6 +1230,24 @@ ${renderCountTable(countBy('confidence'))}
 - Follow-up atom rows:
 ${tangtangRandomCaptureSampleAudit.decision.directObservedDamageFollowUpOpenedFor.map((rowId) => `  - \`${rowId}\``).join('\n')}
 - Non-imported groups remain preserved as raw direct evidence, but are outside the current 221-row description atom ledger.
+- Formula/scoring/UI behavior did not change.
+
+## Targeted Capture Follow-Up Audit
+
+- The latest 27-image targeted direct capture follow-up is summarized in:
+  - \`frontend/artifacts/td11/tangtang_targeted_capture_followup_audit.json\`
+  - \`frontend/artifacts/td11/tangtang_targeted_capture_followup_audit.md\`
+- Audit status: \`${tangtangTargetedCaptureFollowupAudit.status}\`
+- Raw images submitted: ${tangtangTargetedCaptureFollowupAudit.summary.submittedRawImages}
+- Imported/reinforced atom rows from batch: ${tangtangTargetedCaptureFollowupAudit.summary.importedAtomRowsFromBatch}
+- Matched SIO rows from batch: ${tangtangTargetedCaptureFollowupAudit.summary.matchedSioRowsFromBatch}
+- Description/SIO divergence rows from batch: ${tangtangTargetedCaptureFollowupAudit.summary.descriptionSioDivergenceRowsFromBatch}
+- Reinforced existing atom rows from batch: ${tangtangTargetedCaptureFollowupAudit.summary.reinforcedExistingAtomRowsFromBatch}
+- Observed damage follow-up rows from batch: ${tangtangTargetedCaptureFollowupAudit.summary.observedDamageFollowUpRowsFromBatch}
+- Follow-up atom rows:
+${tangtangTargetedCaptureFollowupAudit.decision.directObservedDamageFollowUpOpenedFor.map((rowId) => `  - \`${rowId}\``).join('\n')}
+- The Genesis threshold divergence candidates now have both random-sample and targeted follow-up direct capture artifacts.
+- Energy Guidance System, custom collection, Taloxia, collaboration battle, locked collectible, and Tech Hoverboard tooltip evidence remains preserved as raw direct evidence outside the current 221-row description atom ledger.
 - Formula/scoring/UI behavior did not change.
 
 ## First-Party Description Source Inventory

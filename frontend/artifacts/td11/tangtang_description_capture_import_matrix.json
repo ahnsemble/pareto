@@ -289,13 +289,14 @@
         "parsedFormulaOperation": "threshold_add_percent",
         "parsedFormulaValue": 6,
         "rawCaptureArtifactPaths": [
-          "frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg"
+          "frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg",
+          "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/1.jpg"
         ],
         "rustStatChannel": "atkPercent",
         "screenContext": "collectible set detail / Genesis set bonus list",
         "sourceKind": "direct-first-party-in-game",
         "transcriptionConfidence": "high",
-        "transcriptionNotes": "Manual transcription from submitted in-game screenshot. Visible Korean condition says cumulative 19 red stars, which intentionally preserves a condition mismatch against the current source-derived atom id."
+        "transcriptionNotes": "Manual transcription from submitted in-game screenshots. Visible Korean condition says cumulative 19 red stars in both the random sample and targeted follow-up captures, which intentionally preserves a condition mismatch against the current source-derived atom id."
       },
       {
         "atomRowId": "collectible-set:genesis:gold:15:atkPercent",
@@ -315,13 +316,14 @@
         "parsedFormulaOperation": "threshold_add_percent",
         "parsedFormulaValue": 4,
         "rawCaptureArtifactPaths": [
-          "frontend/artifacts/td11/captures/2026-05-23-random-sample/2.jpg"
+          "frontend/artifacts/td11/captures/2026-05-23-random-sample/2.jpg",
+          "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/2.jpg"
         ],
         "rustStatChannel": "atkPercent",
         "screenContext": "collectible set detail / Genesis set bonus list",
         "sourceKind": "direct-first-party-in-game",
         "transcriptionConfidence": "high",
-        "transcriptionNotes": "Manual transcription from submitted in-game screenshot. Visible Korean condition says cumulative 19 gold stars, which intentionally preserves a condition mismatch against the current source-derived atom id."
+        "transcriptionNotes": "Manual transcription from submitted in-game screenshots. Visible Korean condition says cumulative 19 gold stars in both the random sample and targeted follow-up captures, which intentionally preserves a condition mismatch against the current source-derived atom id."
       },
       {
         "atomRowId": "collectible-item:instellarTransitionMatrixDesign:stars:8:critRate",
@@ -417,7 +419,9 @@
       "frontend/artifacts/td11/captures/2026-05-23-doomsteed-lines-5-8.jpg",
       "frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg",
       "frontend/artifacts/td11/captures/2026-05-23-random-sample/2.jpg",
-      "frontend/artifacts/td11/captures/2026-05-23-random-sample/6.jpg"
+      "frontend/artifacts/td11/captures/2026-05-23-random-sample/6.jpg",
+      "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/1.jpg",
+      "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/2.jpg"
     ],
     "matchedSioAtomRows": 10
   },
@@ -1158,7 +1162,8 @@
         "captureEvidenceTier": "direct-first-party-description",
         "captureId": "td11-capture-20260523-random-sample-genesis-gold-atk-percent",
         "rawCaptureArtifactPaths": [
-          "frontend/artifacts/td11/captures/2026-05-23-random-sample/2.jpg"
+          "frontend/artifacts/td11/captures/2026-05-23-random-sample/2.jpg",
+          "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/2.jpg"
         ],
         "sourceKind": "direct-first-party-in-game"
       },
@@ -1176,14 +1181,15 @@
       "parsedFormulaOperation": "threshold_add_percent",
       "parsedFormulaValue": 4,
       "rawCaptureArtifactPaths": [
-        "frontend/artifacts/td11/captures/2026-05-23-random-sample/2.jpg"
+        "frontend/artifacts/td11/captures/2026-05-23-random-sample/2.jpg",
+        "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/2.jpg"
       ],
       "requiresObservedDamageFollowUp": true,
       "rustStatChannel": "atkPercent",
       "screenContext": "collectible set detail / Genesis set bonus list",
       "sourceKind": "direct-first-party-in-game",
       "transcriptionConfidence": "high",
-      "transcriptionNotes": "Manual transcription from submitted in-game screenshot. Visible Korean condition says cumulative 19 gold stars, which intentionally preserves a condition mismatch against the current source-derived atom id."
+      "transcriptionNotes": "Manual transcription from submitted in-game screenshots. Visible Korean condition says cumulative 19 gold stars in both the random sample and targeted follow-up captures, which intentionally preserves a condition mismatch against the current source-derived atom id."
     },
     {
       "atomRowId": "collectible-set:genesis:red:15:atkPercent",
@@ -1236,7 +1242,8 @@
         "captureEvidenceTier": "direct-first-party-description",
         "captureId": "td11-capture-20260523-random-sample-genesis-red-atk-percent",
         "rawCaptureArtifactPaths": [
-          "frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg"
+          "frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg",
+          "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/1.jpg"
         ],
         "sourceKind": "direct-first-party-in-game"
       },
@@ -1254,14 +1261,15 @@
       "parsedFormulaOperation": "threshold_add_percent",
       "parsedFormulaValue": 6,
       "rawCaptureArtifactPaths": [
-        "frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg"
+        "frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg",
+        "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/1.jpg"
       ],
       "requiresObservedDamageFollowUp": true,
       "rustStatChannel": "atkPercent",
       "screenContext": "collectible set detail / Genesis set bonus list",
       "sourceKind": "direct-first-party-in-game",
       "transcriptionConfidence": "high",
-      "transcriptionNotes": "Manual transcription from submitted in-game screenshot. Visible Korean condition says cumulative 19 red stars, which intentionally preserves a condition mismatch against the current source-derived atom id."
+      "transcriptionNotes": "Manual transcription from submitted in-game screenshots. Visible Korean condition says cumulative 19 red stars in both the random sample and targeted follow-up captures, which intentionally preserves a condition mismatch against the current source-derived atom id."
     },
     {
       "atomRowId": "collectible-item:instellarTransitionMatrixDesign:stars:8:critRate",
