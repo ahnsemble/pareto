@@ -981,3 +981,85 @@ status: `[IMPORT-RECOMMENDATION-REFACTOR-GREEN]`
 - Commit:
   - Implementation commit: `13f7012 refactor: split Tangtang import recommendations`.
   - GitHub push/PR not performed.
+
+## Tangtang Damage Formula Source Audit
+
+timestampKst: 2026-05-23T11:58:16+09:00
+status: `[DAMAGE-FORMULA-SOURCE-AUDIT-GREEN-WITH-GAPS]`
+
+### Scope
+
+This audit checks whether the current Tangtang damage calculation surface is backed by SIO Tools source/captures, and separates that from the stronger claim that every in-game damage-increase description has been independently re-derived from game text.
+
+No formula code, scoring code, WASM bridge, optimizer semantics, UI labels, or public product behavior were changed in this audit.
+
+### Evidence Checked
+
+- SIO Tools GT source:
+  - `/Users/woosung/Desktop/Dev/Woosdom_Brain/01_Domains/시오툴/sio_tools_gt_master.md`
+  - `/Users/woosung/Desktop/Dev/Woosdom_Brain/01_Domains/시오툴/sio_tools_formulas_and_defaults.md`
+- Current equivalence gate:
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_lm_equivalence_matrix.json`
+- Formula/scoring code:
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/tttg_forge_core/src/v3_damage.rs`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/tttg_forge_core/src/constants.rs`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/tttg_forge_core/src/aggregate/*.rs`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/tttg_forge_optimizer/src/tech/sio_lm.rs`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/tttg_forge_optimizer/src/tech/sio_lm/equipment_transform.rs`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/tttg_forge_optimizer/src/tech/sio_config.rs`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/app/lib/pareto-store/schemas/index.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/app/lib/pareto-store/playerState/sio_input_inventory.md`
+
+### Overall Finding
+
+- Current production scoring is still SIO-equivalent:
+  - `fullSioEquivalent=true`
+  - `currentScorer=scorer=sio_full_lm_equivalence`
+  - SIO gate passed on 2026-05-23 with 26/26 live captured arbitrary compact cases and no account/equipment source residuals.
+- The implementation is source-backed primarily by SIO Tools JS bundle extraction, SIO live UI/worker captures, and compact-profile replay.
+- This is not the same as an independent in-game semantics proof. The repo does not yet contain a complete per-item ledger mapping:
+  - in-game Korean/English description text,
+  - SIO Tools source field/stat,
+  - Tangtang schema field,
+  - Rust multiplier stage,
+  - fixture/live trace proving the mapping.
+
+### Coverage Matrix
+
+| Domain | SIO-backed implementation status | Gap / caution | Recommended improvement |
+|---|---|---|---|
+| Damage multiplier core | Implemented in Rust as 31 multiplier stages with `dps_formula_multiplier_stages_count=31`; source docs require the same 31-stage mirror. | This proves SIO-style multiplier staging, not independent game-text semantics. | Add a formula provenance ledger for every stat channel and multiplier stage. |
+| SS equipment / weapon path | SIO default six-slot SS setup and 11 SS items are modeled; dynamic equipment transform and Rust SS conditionals exist. | Non-SS weapons in `WEAPON_SCHEMA_INDEX` such as Void Power, Sword of Disorder, Lightchaser, Kunai, Bat, Katana, Shotgun, Revolver are cataloged but not proven as full source-backed formulas. | Mark non-SS weapons as catalog/input-only until SIO/in-game fixture coverage exists, or add explicit source-backed formulas/tests. |
+| Survivors / 특공대 | Corrected SIO default roster includes TMNT heroes April, Splinter, Raphael, Donatello; schema mirrors Donatello. SIO equivalence matrix marks survivors/passives/harmony/teamwork as implemented-live-covered. | SpongeBob, Squidward, and Yelena are explicitly absent from the corrected SIO default docs. Rust core conditionals directly handle only a small subset such as King/Taloxa/Venato/Worm-style CDR effects; broader survivor effects are trusted through SIO compact transform/replay, not generic aggregation. | Decide whether absent collab survivors are unsupported or require a fresh SIO/game source refresh. Add per-survivor description-to-stat fixtures before claiming complete in-game coverage. |
+| Tech parts / 부품 | SIO tech modifier matrix is mirrored, including debuff coefficients such as Exo Bracer on SS Weapon / Lightning Mode. Tech CE damage/passive pools are reconstructed in the SIO LM path. | Good SIO coverage, but recommendation UI should not imply an in-game text audit beyond the SIO source. | Keep SIO equivalence tests as regression; add human-readable stat-channel mapping docs for each tech mode. |
+| Pets / 이세계펫 / xeno | SIO pet list is mirrored in product schema: Rex, Croaky, Gary, Capy, Clucker, Puffo, Blizzblast, Nutjob, Gourmeow. Xeno pet damage and CDR interactions exist in compact source transforms. | Internal compact code still uses source names such as `King Blizzblast` while product schema displays `Blizzblast`; this may be intentional source compatibility but is a drift risk. Generic `aggregate/pet.rs` returns empty stats. | Add a source-name alias table test for `Blizzblast`/`King Blizzblast` and `Clucker`/`Crucker`. Avoid relying on generic aggregate pet path until implemented or explicitly deprecated. |
+| Mounts / 탈것 | Compact mount rows can fold enabled mount stat lines with star multipliers, and the equivalence matrix marks `mounts` implemented-live-covered. | Existing matrix evidence still records that mount damage formulas were incomplete for live traces with empty `mounts:{}`; `ce_damage_static.mount` is set to 0. Generic mount formula coverage is therefore not independently strong. | Add targeted non-empty mount live captures and in-game text fixtures, especially for damage-bearing mount lines. |
+| Collections / 컬렉션 | SIO 110+ collectible index, Event placeholders, and 38 set model are mirrored in schema; equipment collectible item/set bonuses are applied in the SIO LM equipment transform. | Generic `aggregate/collectible_set.rs` returns empty stats. Per-collectible/set in-game description mapping is not complete in repo docs. | Build collectible item/set provenance ledger and assert every product-recommended collectible has a source-backed stat/equipment effect path. |
+| Generic aggregate modules | SIO LM production path reconstructs account/profile effects through compact transforms and live-backed replay. | `tttg_forge_core/src/aggregate/{hero,pet,tech,collectible_set}.rs` still return empty stats; any future path that bypasses SIO LM compact context can silently undercount. | Either implement the generic aggregators from the SIO ledger or hard-gate them as deprecated/non-authoritative for product scoring. |
+
+### Important Interpretation
+
+The current calculator appears to be a SIO Tools formula mirror, not a separately authored in-game formula engine. That is acceptable under the existing "SIO Tools 100% mirror" policy, and the current gate confirms the production scorer is aligned with that policy.
+
+The main risk is language drift: product/user wording can sound like "all in-game damage descriptions are verified," while the actual proof is "SIO Tools live/compact scoring is mirrored." These are close in practice, but not identical.
+
+### Verification Log
+
+- `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs`: passed.
+  - `fullSioEquivalent=true`
+  - `currentScorer=scorer=sio_full_lm_equivalence`
+  - `liveCaptureCount=26`
+  - `workerParity.arbitraryGeneratedLiveExpected=26/26`
+  - `G0/G1/G2/G3/G6=true`
+- `SIO_LM_FORCE_G3_RECON=1 cargo test -p tttg_forge_optimizer --test tech_optimizer_performance sio_lm_g3_generated_cases_reconstruct_live_trace_without_profile_residuals -- --nocapture`: passed, 1/1. The test reported that replay was skipped because the fixture source is stale against current worker replay, so this is only a harness health check, not fresh replay evidence.
+
+### Follow-up Recommendation
+
+Do not change scoring formulas yet. The next safe step is a documentation/test gate:
+
+1. Add `damage_formula_provenance_matrix.md` with one row per weapon/equipment, survivor, tech part, pet/xeno, mount, collectible item/set, and active multiplier stat.
+2. For each row, record `in_game_description`, `sio_source_key`, `tangtang_schema_key`, `rust_stat_channel`, `multiplier_stage`, `fixture/live_capture`, and `confidence`.
+3. Label confidence separately as `sio-live-equivalent`, `sio-source-only`, `catalog-only`, or `in-game-description-verified`.
+4. Only after that ledger exists should Tangtang change formulas or claim complete in-game description coverage.
+
+GitHub push/PR not performed.
