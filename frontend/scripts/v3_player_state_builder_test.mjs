@@ -184,6 +184,19 @@ await check('sIO export translator maps flat live profile aliases into PlayerSta
   assert.equal(state.ecosystem.share_code, '4Rgh7d');
   assert.equal(countSioInputFields(state), SIO_INPUT_FIELD_SPECS.length);
 });
+await check('sIO export translator keeps pet source aliases mapped to product pet ids', () => {
+  const cases = [
+    ['Clucker', 'crucker'],
+    ['Crucker', 'crucker'],
+    ['Blizzblast', 'blizzblast'],
+    ['King Blizzblast', 'blizzblast'],
+  ];
+
+  for (const [sourceName, productId] of cases) {
+    const state = translateSioExport({ pet: sourceName });
+    assert.equal(state.pet.deployed_pet_id, productId, sourceName);
+  }
+});
 await check('fixture registry defines ten live parity cases', () => {
   assert.equal(fixtures.SIO_LIVE_FIXTURE_CASES.length, 10);
 });

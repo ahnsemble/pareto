@@ -1064,6 +1064,41 @@ Do not change scoring formulas yet. The next safe step is a documentation/test g
 
 GitHub push/PR not performed.
 
+## Damage Formula Provenance Follow-Up Gate Slices
+
+timestampKst: 2026-05-23T13:10:00+09:00
+status: `[DAMAGE-FORMULA-PROVENANCE-FOLLOWUP-GATES-GREEN]`
+
+### Scope
+
+Split the v0 damage formula provenance matrix into smaller high-risk follow-up gates and added one import-boundary alias regression. No formula, scoring core, Rust damage code, WASM scoring semantics, optimizer ranking semantics, or user-facing UI copy changed.
+
+### Gate Slices Added
+
+- `DF-P1`: pet alias regression for Blizzblast / King Blizzblast and Clucker / Crucker.
+- `DF-P2`: non-SS weapons remain catalog-only and unsupported for formula input until fixture evidence exists.
+- `DF-P3`: mount damage confidence cannot be promoted without a non-empty mount damage fixture.
+- `DF-P4`: collectible item/set rows remain blocked on item/set description-to-stat-channel mapping.
+- `DF-P5`: SpongeBob, Squidward, and Yelena remain unsupported until source refresh.
+- `DF-P6`: Exo Bracer -> SS Weapon remains a visible `-0.025` debuff regression.
+- `DF-P7`: generic aggregate paths remain non-authoritative for product scoring.
+
+### Minimal Product Behavior Change
+
+- Import normalization now maps source alias `King Blizzblast` to product pet id `blizzblast`.
+- Existing `Clucker` / `Crucker` alias handling remains covered.
+- Public product naming remains Tangtang, and product schema display names remain `Blizzblast` and `Clucker`.
+
+### Verification Log
+
+- RED: `node scripts/damage_formula_provenance_matrix_unit_test.mjs` failed until the follow-up gate slices were generated into the checked-in matrix.
+- RED: `node scripts/v3_player_state_builder_test.mjs` failed because `King Blizzblast` imported as `king_blizzblast` instead of `blizzblast`.
+- GREEN:
+  - `node scripts/damage_formula_provenance_matrix_unit_test.mjs`: passed, 367 rows.
+  - `node scripts/v3_player_state_builder_test.mjs`: passed, 23 checks.
+
+GitHub push/PR not performed.
+
 ## Tangtang Damage Formula Provenance Matrix Gate
 
 timestampKst: 2026-05-23T12:20:00+09:00

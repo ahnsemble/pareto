@@ -85,6 +85,7 @@ function normalizeId(value: string): string {
   const aliases: Record<string, string> = {
     master_yang: 'masterYang',
     clucker: 'crucker',
+    king_blizzblast: 'blizzblast',
     twin_lance: 'twinLance',
     evervoid_armor: 'evervoidArmor',
     judgment_necklace: 'judgmentNecklace',

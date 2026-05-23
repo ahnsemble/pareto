@@ -115,6 +115,8 @@ const ABSENT_SURVIVORS = [
   ['yelena', 'Yelena'],
 ];
 
+const MOUNT_DAMAGE_FORMULA_FIXTURES = [];
+
 function slug(value) {
   return String(value)
     .replace(/[^A-Za-z0-9]+/g, '-')
@@ -182,7 +184,7 @@ for (const item of WEAPON_SCHEMA_INDEX) {
     multiplierStage: isTwinLance ? 'SS weapon stages and tech modifier ssWeapon edges' : 'none proven',
     liveEvidence: isTwinLance ? 'sio_lm_equivalence_matrix.equipment=implemented-live-covered' : 'none',
     confidence: isTwinLance ? 'sio-live-equivalent' : 'catalog-only',
-    nextAction: isTwinLance ? 'keep covered by SS equipment fixtures' : 'capture SIO/in-game formula fixture or mark unsupported in UI',
+    nextAction: isTwinLance ? 'keep covered by SS equipment fixtures' : 'unsupported for formula input until fixture evidence exists',
   });
 }
 
@@ -360,6 +362,97 @@ for (const stat of SIO_STATS_FIXED_ORDER) {
 const keys = rows.map((row) => row.key);
 assert.equal(new Set(keys).size, rows.length, 'provenance row keys must be unique');
 
+const rowByKey = new Map(rows.map((row) => [row.key, row]));
+
+function requireRow(key) {
+  const row = rowByKey.get(key);
+  assert.ok(row, `missing required provenance row: ${key}`);
+  return row;
+}
+
+function assertRow(row, expected) {
+  for (const [field, value] of Object.entries(expected)) {
+    assert.equal(row[field], value, `${row.key}.${field}`);
+  }
+}
+
+function assertIncludes(row, field, value) {
+  assert.ok(String(row[field]).includes(value), `${row.key}.${field} must include ${value}`);
+}
+
+const nonSsWeaponRows = rows.filter((row) => row.domain === 'weapon' && row.key !== 'weapon:twinLance');
+assert.equal(nonSsWeaponRows.length, WEAPON_SCHEMA_INDEX.length - 1, 'all non-SS weapons must be explicitly isolated');
+for (const row of nonSsWeaponRows) {
+  assertRow(row, {
+    confidence: 'catalog-only',
+    rustStatChannel: 'none proven',
+    multiplierStage: 'none proven',
+    liveEvidence: 'none',
+    nextAction: 'unsupported for formula input until fixture evidence exists',
+  });
+}
+
+const twinLanceWeaponRow = requireRow('weapon:twinLance');
+assertRow(twinLanceWeaponRow, {
+  confidence: 'sio-live-equivalent',
+  rustStatChannel: 'ssMiscPath / equipment transform',
+  nextAction: 'keep covered by SS equipment fixtures',
+});
+
+const blizzblastRow = requireRow('pet:blizzblast');
+assertRow(blizzblastRow, {
+  name: 'Blizzblast',
+  confidence: 'sio-live-equivalent',
+  nextAction: 'add alias regression test',
+});
+assertIncludes(blizzblastRow, 'sourceStatus', 'King Blizzblast');
+
+const cruckerRow = requireRow('pet:crucker');
+assertRow(cruckerRow, {
+  name: 'Clucker',
+  confidence: 'sio-live-equivalent',
+  nextAction: 'add alias regression test',
+});
+assertIncludes(cruckerRow, 'sourceStatus', 'Crucker');
+
+const mountRows = rows.filter((row) => row.domain === 'mount');
+assert.equal(mountRows.length, MOUNT_SCHEMA_INDEX.length, 'all mounts must be represented in the mount fixture gate slice');
+for (const row of mountRows) {
+  assert.equal(row.confidence, 'sio-source-only', `${row.key}.confidence`);
+  assertIncludes(row, 'rustStatChannel', 'mountDamage currently not strongly live-proven');
+  assert.equal(row.nextAction, 'capture non-empty mount live fixture with damage-bearing lines', `${row.key}.nextAction`);
+}
+const hasMountDamageFixture = MOUNT_DAMAGE_FORMULA_FIXTURES.some((fixture) => typeof fixture.mountDamageLine === 'string' && fixture.mountDamageLine.trim() !== '');
+const mountFormulaCompleteRows = mountRows.filter((row) => row.confidence === 'sio-live-equivalent' || row.confidence === 'in-game-description-verified');
+assert.equal(mountFormulaCompleteRows.length, 0, 'mount formula-complete rows require non-empty mountDamage fixture before confidence promotion');
+assert.equal(hasMountDamageFixture, false, 'mountDamage fixture list is intentionally empty until a non-empty live or approved fixture exists');
+
+const unsupportedSurvivorRows = rows.filter((row) => row.domain === 'survivor-unsupported');
+assert.deepEqual(
+  unsupportedSurvivorRows.map((row) => row.key).sort(),
+  ABSENT_SURVIVORS.map(([id]) => `survivor-unsupported:${id}`).sort(),
+  'unsupported survivors must stay explicit until source refresh',
+);
+for (const row of unsupportedSurvivorRows) {
+  assert.equal(row.confidence, 'unsupported-by-current-sio-source', `${row.key}.confidence`);
+  assert.equal(row.nextAction, 'refresh SIO/game source before supporting this survivor', `${row.key}.nextAction`);
+}
+
+const collectibleTextMappingRows = rows.filter((row) => row.domain === 'collectible-item' || row.domain === 'collectible-set');
+assert.equal(collectibleTextMappingRows.length, 118, 'collectible item/set text-mapping slice must remain explicit');
+for (const row of collectibleTextMappingRows) {
+  assert.equal(row.confidence, 'sio-source-only', `${row.key}.confidence`);
+  assertIncludes(row, 'nextAction', 'description');
+}
+
+const exoBracerSsWeaponRow = requireRow('tech-modifier:exoBracer->ssWeapon');
+assert.equal(TECH_MODIFIER_MATRIX.exoBracer.ssWeapon, -0.025, 'Exo Bracer -> SS Weapon coefficient must remain a debuff');
+assertIncludes(exoBracerSsWeaponRow, 'sourceStatus', '-0.025');
+assert.equal(exoBracerSsWeaponRow.nextAction, 'keep debuff regression visible in tests/docs');
+
+const genericAggregateRows = rows.filter((row) => row.rustStatChannel.includes('generic aggregate empty'));
+assert.ok(genericAggregateRows.length > 0, 'generic aggregate non-authoritative rows must stay visible');
+
 function countBy(field) {
   const counts = new Map();
   for (const row of rows) {
@@ -396,6 +489,80 @@ function renderRows() {
         row.nextAction,
       ].map(cell).join(' | '))
       .map((line) => `| ${line} |`),
+  ].join('\n');
+}
+
+const followUpGateSlices = [
+  {
+    gate: 'DF-P1',
+    slice: 'Pet alias regression',
+    rowsGuarded: 'pet:blizzblast; pet:crucker',
+    currentState: 'live-equivalent rows; product names stay Blizzblast/Clucker while source aliases include King Blizzblast/Crucker',
+    blocker: 'alias drift can silently break compact profile mapping',
+    nextGate: 'add or keep alias regression before changing pet translator, schema, or compact import handling',
+  },
+  {
+    gate: 'DF-P2',
+    slice: 'Non-SS weapons',
+    rowsGuarded: `${nonSsWeaponRows.length} weapon rows excluding Twin Lance`,
+    currentState: 'catalog-only; no proven Rust/stat channel or live fixture',
+    blocker: 'no independent formula fixture for non-SS weapon damage contribution',
+    nextGate: 'unsupported for formula input until fixture evidence exists',
+  },
+  {
+    gate: 'DF-P3',
+    slice: 'Mount damage line',
+    rowsGuarded: `${mountRows.length} mount rows`,
+    currentState: 'source-only; mountDamage is not strongly live-proven',
+    blocker: 'needs non-empty mount live capture with damage-bearing lines',
+    nextGate: 'capture a live fixture or add an explicitly sourced synthetic fixture before formula-completeness claims',
+  },
+  {
+    gate: 'DF-P4',
+    slice: 'Collectible item/set text mapping',
+    rowsGuarded: `${collectibleTextMappingRows.length} collectible item/set rows`,
+    currentState: 'source-only; compact path covered, per-description mapping not independently captured',
+    blocker: 'missing item/set in-game description to stat-channel mapping',
+    nextGate: 'map description -> source key -> Tangtang schema key -> Rust stat channel -> multiplier stage',
+  },
+  {
+    gate: 'DF-P5',
+    slice: 'Unsupported collaboration survivors',
+    rowsGuarded: unsupportedSurvivorRows.map((row) => row.key).join('; '),
+    currentState: 'unsupported by current corrected source',
+    blocker: 'SpongeBob/Squidward/Yelena need source refresh before support',
+    nextGate: 'refresh SIO/game source first; only then add schema/scoring support',
+  },
+  {
+    gate: 'DF-P6',
+    slice: 'Negative tech modifier',
+    rowsGuarded: 'tech-modifier:exoBracer->ssWeapon',
+    currentState: 'live-equivalent debuff row with coefficient -0.025',
+    blocker: 'debuff can be lost if coefficients are normalized as only-positive multipliers',
+    nextGate: 'keep debuff regression visible in tests/docs before editing tech modifier reconstruction',
+  },
+  {
+    gate: 'DF-P7',
+    slice: 'Generic aggregate non-authority',
+    rowsGuarded: `${genericAggregateRows.length} rows mentioning generic aggregate empty`,
+    currentState: 'matrix documents that product scoring relies on compact equivalence paths for these domains',
+    blocker: 'generic aggregate path is not an authoritative replacement for hero/pet/tech/collectible-set scoring',
+    nextGate: 'do not promote generic aggregate paths without domain-specific provenance and equivalence fixtures',
+  },
+];
+
+function renderFollowUpGateSlices() {
+  return [
+    '| Gate | Slice | Rows guarded | Current state | Blocker | Next gate |',
+    '|---|---|---|---|---|---|',
+    ...followUpGateSlices.map((row) => [
+      row.gate,
+      row.slice,
+      row.rowsGuarded,
+      row.currentState,
+      row.blocker,
+      row.nextGate,
+    ].map(cell).join(' | ')).map((line) => `| ${line} |`),
   ].join('\n');
 }
 
@@ -442,10 +609,18 @@ ${renderCountTable(countBy('confidence'))}
 - Collectible item/set rows are source-backed, but most still need item-level in-game description-to-stat mapping.
 - Generic aggregate modules remain non-authoritative for hero/pet/tech/collectible-set scoring; the current product scorer relies on the SIO LM compact path.
 
+## Follow-Up Gate Slices
+
+These slices split the v0 matrix into smaller high-risk gates. They are guardrails for future work, not permission to change formula semantics.
+
+${renderFollowUpGateSlices()}
+
 ## Matrix
 
 ${renderRows()}
 `;
+
+assert.match(matrix, /unsupported for formula input until fixture evidence exists/, 'non-SS weapon unsupported formula-input gate must stay visible');
 
 if (writeMode) {
   await fs.mkdir(path.dirname(matrixPath), { recursive: true });
