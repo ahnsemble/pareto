@@ -24,6 +24,8 @@ Confidence values:
   - `/Users/woosung/Desktop/Dev/Woosdom_Brain/01_Domains/시오툴/sio_tools_gt_master.md`
   - `/Users/woosung/Desktop/Dev/Woosdom_Brain/01_Domains/시오툴/sio_tools_formulas_and_defaults.md`
 - Evidence artifacts:
+  - `frontend/artifacts/td11/tangtang_damage_formula_spec.json`
+  - `frontend/artifacts/td11/tangtang_damage_formula_spec.md`
   - `frontend/artifacts/td11/sio_tools_live_evidence_matrix.json`
   - `frontend/artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json`
   - `frontend/artifacts/td11/in_game_description_evidence_matrix.json`
@@ -65,6 +67,24 @@ Confidence values:
 - Mounts now have public-web system/name evidence, a non-empty source fixture, source-proven active compact key `bJ.bj`, and two non-zero active mountDamage live rows; exact per-line in-game description text is still missing.
 - Collectible item/set rows now have a source/Rust-channel mapping artifact with threshold-level rows plus 7 SIO Tools live source-table cases; 4 named Starlight rows and 42 event slots remain catalog-only until source effect rows exist.
 - Generic aggregate modules now have a dedicated non-authority gate; the current product scorer relies on the SIO LM compact path.
+
+## Formula Derivation Spec
+
+- Formula derivation is now available as a SIO Tools-equivalent Tangtang spec:
+  - `frontend/artifacts/td11/tangtang_damage_formula_spec.json`
+  - `frontend/artifacts/td11/tangtang_damage_formula_spec.md`
+- Spec status: `[TANGTANG-DAMAGE-FORMULA-SPEC-GREEN]`
+- Spec claim: `sio-tools-equivalent`
+- Behavior change: `false`
+- Summary counts:
+  - Raw source stat leaves: 4650
+  - Mount normalized claims: 26
+  - Target survivor normalized claims: 11
+  - Collectible threshold rows: 170
+  - Collectible special Rust mappings: 14
+  - Direct in-game description verified rows: 0
+- Official/direct first-party in-game text verification remains incomplete.
+- Formula/scoring/UI behavior did not change.
 
 ## Follow-Up Gate Slices
 

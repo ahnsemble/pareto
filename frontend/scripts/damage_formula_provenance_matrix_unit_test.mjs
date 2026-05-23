@@ -130,6 +130,8 @@ const inGameDescriptionEvidence = JSON.parse(await fs.readFile(inGameDescription
 const inGameDescriptionEvidenceByKey = new Map(inGameDescriptionEvidence.rows.map((row) => [row.key, row]));
 const sioToolsFormulaSourceEvidencePath = path.join(root, 'artifacts/td11/sio_tools_formula_source_evidence_matrix.json');
 const sioToolsFormulaSourceEvidence = JSON.parse(await fs.readFile(sioToolsFormulaSourceEvidencePath, 'utf8'));
+const tangtangDamageFormulaSpecPath = path.join(root, 'artifacts/td11/tangtang_damage_formula_spec.json');
+const tangtangDamageFormulaSpec = JSON.parse(await fs.readFile(tangtangDamageFormulaSpecPath, 'utf8'));
 
 function slug(value) {
   return String(value)
@@ -396,6 +398,7 @@ for (const stat of SIO_STATS_FIXED_ORDER) {
 
 const keys = rows.map((row) => row.key);
 assert.equal(new Set(keys).size, rows.length, 'provenance row keys must be unique');
+assert.equal(rows.length, 367, 'provenance matrix row count changed unexpectedly');
 
 const rowByKey = new Map(rows.map((row) => [row.key, row]));
 
@@ -527,6 +530,15 @@ assert.equal(sioToolsFormulaSourceEvidence.summary.mountRawCumulativeLeafRows, 5
 assert.equal(sioToolsFormulaSourceEvidence.summary.collectibleThresholdRows, 170, 'collectible source threshold rows must stay captured');
 assert.equal(sioToolsFormulaSourceEvidence.summary.collectibleSpecialRustMappings, 14, 'collectible special Rust mappings must stay captured');
 assert.equal(sioToolsFormulaSourceEvidence.summary.inGameDescriptionVerifiedRows, 0, 'SIO Tools source evidence must not be promoted to direct in-game-description verified');
+assert.equal(tangtangDamageFormulaSpec.status, '[TANGTANG-DAMAGE-FORMULA-SPEC-GREEN]', 'Tangtang damage formula spec status changed');
+assert.equal(tangtangDamageFormulaSpec.claim, 'sio-tools-equivalent', 'Tangtang damage formula spec claim must remain limited');
+assert.equal(tangtangDamageFormulaSpec.behaviorChange, false, 'Tangtang damage formula spec cannot imply behavior changes');
+assert.equal(tangtangDamageFormulaSpec.summaryCounts.rawSourceLeafRows, 4650, 'formula spec raw source leaf count mismatch');
+assert.equal(tangtangDamageFormulaSpec.summaryCounts.mountNormalizedClaims, 26, 'formula spec mount normalized claim count mismatch');
+assert.equal(tangtangDamageFormulaSpec.summaryCounts.targetSurvivorNormalizedClaims, 11, 'formula spec target survivor normalized claim count mismatch');
+assert.equal(tangtangDamageFormulaSpec.summaryCounts.collectibleThresholdRows, 170, 'formula spec collectible threshold count mismatch');
+assert.equal(tangtangDamageFormulaSpec.summaryCounts.collectibleSpecialRustMappings, 14, 'formula spec collectible special Rust mapping count mismatch');
+assert.equal(tangtangDamageFormulaSpec.summaryCounts.inGameDescriptionVerifiedRows, 0, 'formula spec must not promote direct in-game verified rows');
 assert.equal(requireRow('survivor:spongebob').nextAction, 'replace public-web corroboration with direct in-game capture before formula semantics change');
 assert.equal(requireRow('survivor:squidward').nextAction, 'replace public-web corroboration with direct in-game capture before formula semantics change');
 assert.equal(requireRow('survivor:yelena').nextAction, 'capture missing direct in-game description rows before formula semantics change');
@@ -712,6 +724,8 @@ Confidence values:
   - \`/Users/woosung/Desktop/Dev/Woosdom_Brain/01_Domains/시오툴/sio_tools_gt_master.md\`
   - \`/Users/woosung/Desktop/Dev/Woosdom_Brain/01_Domains/시오툴/sio_tools_formulas_and_defaults.md\`
 - Evidence artifacts:
+  - \`frontend/artifacts/td11/tangtang_damage_formula_spec.json\`
+  - \`frontend/artifacts/td11/tangtang_damage_formula_spec.md\`
   - \`frontend/artifacts/td11/sio_tools_live_evidence_matrix.json\`
   - \`frontend/artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json\`
   - \`frontend/artifacts/td11/in_game_description_evidence_matrix.json\`
@@ -735,6 +749,24 @@ ${renderCountTable(countBy('confidence'))}
 - Mounts now have public-web system/name evidence, a non-empty source fixture, source-proven active compact key \`bJ.bj\`, and two non-zero active mountDamage live rows; exact per-line in-game description text is still missing.
 - Collectible item/set rows now have a source/Rust-channel mapping artifact with threshold-level rows plus 7 SIO Tools live source-table cases; 4 named Starlight rows and 42 event slots remain catalog-only until source effect rows exist.
 - Generic aggregate modules now have a dedicated non-authority gate; the current product scorer relies on the SIO LM compact path.
+
+## Formula Derivation Spec
+
+- Formula derivation is now available as a SIO Tools-equivalent Tangtang spec:
+  - \`frontend/artifacts/td11/tangtang_damage_formula_spec.json\`
+  - \`frontend/artifacts/td11/tangtang_damage_formula_spec.md\`
+- Spec status: \`${tangtangDamageFormulaSpec.status}\`
+- Spec claim: \`${tangtangDamageFormulaSpec.claim}\`
+- Behavior change: \`${tangtangDamageFormulaSpec.behaviorChange}\`
+- Summary counts:
+  - Raw source stat leaves: ${tangtangDamageFormulaSpec.summaryCounts.rawSourceLeafRows}
+  - Mount normalized claims: ${tangtangDamageFormulaSpec.summaryCounts.mountNormalizedClaims}
+  - Target survivor normalized claims: ${tangtangDamageFormulaSpec.summaryCounts.targetSurvivorNormalizedClaims}
+  - Collectible threshold rows: ${tangtangDamageFormulaSpec.summaryCounts.collectibleThresholdRows}
+  - Collectible special Rust mappings: ${tangtangDamageFormulaSpec.summaryCounts.collectibleSpecialRustMappings}
+  - Direct in-game description verified rows: ${tangtangDamageFormulaSpec.summaryCounts.inGameDescriptionVerifiedRows}
+- Official/direct first-party in-game text verification remains incomplete.
+- Formula/scoring/UI behavior did not change.
 
 ## Follow-Up Gate Slices
 

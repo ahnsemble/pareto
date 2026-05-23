@@ -1,0 +1,1301 @@
+{
+  "artifactPaths": {
+    "audit": "frontend/artifacts/td11/sio_product_flow_gap_audit.md",
+    "json": "frontend/artifacts/td11/tangtang_damage_formula_spec.json",
+    "markdown": "frontend/artifacts/td11/tangtang_damage_formula_spec.md",
+    "provenanceMatrix": "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+    "script": "frontend/scripts/tangtang_damage_formula_spec_unit_test.mjs"
+  },
+  "behaviorChange": false,
+  "caveats": [
+    "This spec claims only SIO Tools-equivalent Tangtang damage formula derivation, not a full direct first-party in-game text verification.",
+    "The requested Tangtang/Rust provenance en0-en24 labels are documented as the current local formula stage labels; live SIO trace factors include a standalone skillDamage factor, so trace indices must not be treated as direct official in-game stage labels.",
+    "non-SS weapons remain catalog-only and unsupported as formula inputs until fixture evidence exists.",
+    "SpongeBob/Squidward/Yelena are source/live backed but do not have direct first-party in-game description capture.",
+    "Mounts have source/live mountDamage evidence, but exact per-line in-game text capture is still missing.",
+    "Collectible item/set mapping is source/Rust backed, but item/set-level in-game description capture is incomplete.",
+    "Catalog-only collectible rows remain isolated.",
+    "No formula semantics, scoring core, Rust damage formula, WASM scoring behavior, optimizer ranking, or product UI changed."
+  ],
+  "claim": "sio-tools-equivalent",
+  "currentScorer": "sio_full_lm_equivalence",
+  "domainCoverage": [
+    {
+      "caveat": "Base attack rows are source-derived and rely on compact input reconstruction.",
+      "domain": "attack/base",
+      "evidenceArtifacts": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json"
+      ],
+      "sourceEvidenceCount": 8,
+      "stageRefs": [
+        "en0"
+      ],
+      "status": "source/live SIO Tools-equivalent"
+    },
+    {
+      "caveat": "SS equipment is live-equivalent; non-SS weapons remain catalog-only and unsupported as formula inputs.",
+      "domain": "equipment",
+      "evidenceArtifacts": [
+        "frontend/artifacts/td11/sio_lm_equivalence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md"
+      ],
+      "sourceEvidenceCount": 383,
+      "stageRefs": [
+        "en0",
+        "en10",
+        "en13",
+        "en14",
+        "en15",
+        "en16",
+        "en17",
+        "en18",
+        "en19",
+        "en21",
+        "en22"
+      ],
+      "status": "implemented-live-covered"
+    },
+    {
+      "caveat": "SpongeBob/Squidward/Yelena remain source/live backed without direct first-party description capture.",
+      "domain": "survivor",
+      "evidenceArtifacts": [
+        "frontend/artifacts/td11/in_game_description_evidence_matrix.json",
+        "frontend/artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json"
+      ],
+      "liveRows": 3,
+      "normalizedClaims": 11,
+      "sourceEvidenceCount": 440,
+      "stageRefs": [
+        "en0",
+        "en1",
+        "en2",
+        "en8",
+        "en12",
+        "en20"
+      ],
+      "status": "implemented-live-covered"
+    },
+    {
+      "caveat": "Pet and xeno effects are covered through compact SIO LM equivalence, not a direct per-skill in-game text audit.",
+      "domain": "pet",
+      "evidenceArtifacts": [
+        "frontend/artifacts/td11/sio_lm_equivalence_matrix.json"
+      ],
+      "sourceEvidenceCount": 56,
+      "stageRefs": [
+        "en23"
+      ],
+      "status": "implemented-live-covered"
+    },
+    {
+      "caveat": "Tech modifier and active-skill behavior remains governed by SIO LM/source equivalence gates.",
+      "domain": "tech",
+      "evidenceArtifacts": [
+        "frontend/artifacts/td11/sio_lm_equivalence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md"
+      ],
+      "sourceEvidenceCount": 914,
+      "stageRefs": [
+        "en1",
+        "en2",
+        "en3",
+        "en4",
+        "en8",
+        "en19",
+        "en22"
+      ],
+      "status": "implemented-live-covered"
+    },
+    {
+      "caveat": "mountDamage source/live evidence exists, but exact per-line in-game text capture is missing.",
+      "domain": "mount",
+      "evidenceArtifacts": [
+        "frontend/artifacts/td11/mount_damage_source_fixture.json",
+        "frontend/artifacts/td11/sio_tools_live_evidence_matrix.json"
+      ],
+      "liveRows": 2,
+      "normalizedClaims": 26,
+      "sourceEvidenceCount": 52,
+      "stageRefs": [
+        "en1",
+        "en3",
+        "en4",
+        "en8",
+        "en22"
+      ],
+      "status": "implemented-live-covered"
+    },
+    {
+      "catalogOnlyRows": 46,
+      "caveat": "Item/set mapping is source/Rust backed; item/set-level in-game description capture is incomplete and 46 catalog-only rows stay isolated.",
+      "domain": "collectible",
+      "evidenceArtifacts": [
+        "frontend/artifacts/td11/collectible_effect_mapping_matrix.json"
+      ],
+      "sourceEvidenceCount": 170,
+      "specialRustMappings": 14,
+      "stageRefs": [
+        "en1",
+        "en2",
+        "en3",
+        "en4",
+        "en8",
+        "en19",
+        "en22"
+      ],
+      "status": "implemented-live-covered",
+      "thresholdRows": 170
+    },
+    {
+      "caveat": "Custom-set rows are source/live equivalent through compact replay, not direct in-game text claims.",
+      "domain": "custom-set",
+      "evidenceArtifacts": [
+        "frontend/artifacts/td11/sio_lm_equivalence_matrix.json"
+      ],
+      "sourceEvidenceCount": 215,
+      "stageRefs": [
+        "en0",
+        "en1",
+        "en2",
+        "en3",
+        "en4",
+        "en8",
+        "en19",
+        "en22"
+      ],
+      "status": "implemented-live-covered"
+    },
+    {
+      "caveat": "LME phase damage is mode-dependent and remains a SIO Tools-equivalent derivation.",
+      "domain": "LME",
+      "evidenceArtifacts": [
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json"
+      ],
+      "sourceEvidenceCount": 2074,
+      "stageRefs": [
+        "en24"
+      ],
+      "status": "implemented-live-covered"
+    },
+    {
+      "caveat": "Effect rows feed stat channels through source/live gates and are not standalone official in-game formula proof.",
+      "domain": "effect",
+      "evidenceArtifacts": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json"
+      ],
+      "sourceEvidenceCount": 338,
+      "stageRefs": [
+        "en1",
+        "en2",
+        "en3",
+        "en4",
+        "en8",
+        "en19",
+        "en20",
+        "en22"
+      ],
+      "status": "source/live SIO Tools-equivalent"
+    },
+    {
+      "caveat": "Status damage uses source-derived channels plus uptime channels; direct first-party text verification remains incomplete.",
+      "domain": "status",
+      "evidenceArtifacts": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json"
+      ],
+      "sourceEvidenceCount": 1943,
+      "stageRefs": [
+        "en3",
+        "en4",
+        "en8"
+      ],
+      "status": "source/live SIO Tools-equivalent"
+    }
+  ],
+  "equivalenceContract": {
+    "currentScorer": "sio_full_lm_equivalence",
+    "fullSioEquivalent": true,
+    "gateReason": "G0/G1/G2/G3 are satisfied and G6 is closed because currentScorer=scorer=sio_full_lm_equivalence.",
+    "gateStatus": "[S80-G6-FULL-SIO-EQUIVALENCE-GREEN]",
+    "requiredProductState": "fullSioEquivalent=true and currentScorer=scorer=sio_full_lm_equivalence must remain true.",
+    "scorer": "sio_full_lm_equivalence"
+  },
+  "evidenceInterpretation": {
+    "directInGameVerifiedEvidence": "Direct first-party in-game description verification is reserved for independently captured in-game text mapped to source keys and Rust/stat channels.",
+    "directInGameVerifiedRows": 0,
+    "sourceDerivedEvidence": "Rows marked sio-tools-current-source-derived are current SIO Tools source/live evidence used for Tangtang equivalence.",
+    "warning": "Do not state that this is an official formula independently captured from every in-game description line."
+  },
+  "fullSioEquivalent": true,
+  "generatedAtKst": "2026-05-23",
+  "scorer": "sio_full_lm_equivalence",
+  "sourceInputs": [
+    "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+    "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+    "frontend/artifacts/td11/sio_tools_live_evidence_matrix.json",
+    "frontend/artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json",
+    "frontend/artifacts/td11/in_game_description_evidence_matrix.json",
+    "frontend/artifacts/td11/collectible_effect_mapping_matrix.json",
+    "frontend/artifacts/td11/mount_damage_source_fixture.json",
+    "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+    "frontend/artifacts/td11/sio_lm_input_summary_2026-05-20.json",
+    "frontend/artifacts/td11/sio_lm_equivalence_matrix.json",
+    "frontend/app/lib/pareto-store/schemas/index.ts",
+    "frontend/scripts/sio_tools_formula_source_evidence_unit_test.mjs",
+    "frontend/scripts/damage_formula_provenance_matrix_unit_test.mjs"
+  ],
+  "sourceInputsDigest": {
+    "inputSummaryCases": 3,
+    "provenanceMatrixContainsFormulaBacklog": true,
+    "traceCases": 3,
+    "traceStageProductPassed": 3
+  },
+  "stageOrder": [
+    "en0",
+    "en1",
+    "en2",
+    "en3",
+    "en4",
+    "en5",
+    "en6",
+    "en7",
+    "en8",
+    "en9",
+    "en10",
+    "en11",
+    "en12",
+    "en13",
+    "en14",
+    "en15",
+    "en16",
+    "en17",
+    "en18",
+    "en19",
+    "en20",
+    "en21",
+    "en22",
+    "en23",
+    "en24"
+  ],
+  "stageOrderLabels": [
+    "en0 attack aggregate",
+    "en1 crit expectation",
+    "en2 vulnerability",
+    "en3 shield damage uptime",
+    "en4 target status damage",
+    "en5 clarity",
+    "en6 eternal multiplier",
+    "en7 glacial bloodline",
+    "en8 laceration/divine fire",
+    "en9 Joey weak spot",
+    "en10 SS gloves laser",
+    "en11 flashrift rip",
+    "en12 Taloxa overload",
+    "en13 Eternal Suit boost",
+    "en14 Voidwaker Emblem boost",
+    "en15 Voidwaker Handguards instakill",
+    "en16 Voidwaker Treads boost",
+    "en17 chaos belt boost",
+    "en18 HP Bullet boost",
+    "en19 damage dealt",
+    "en20 adrenaline",
+    "en21 xeno transmute damage",
+    "en22 boss damage",
+    "en23 xeno resonance multiplier",
+    "en24 LME phase damage"
+  ],
+  "stages": {
+    "en0": {
+      "id": "en0",
+      "index": 0,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence.",
+        "Formula input channel(s) outside SIO_STATS_FIXED_ORDER: atkBase.",
+        "Attack aggregation depends on upstream compact stat reconstruction and is not a standalone in-game text claim."
+      ],
+      "label": "en0 attack aggregate",
+      "multiplierRole": "Attack aggregate over base, equipment, hero, percent, and final attack channels before downstream multipliers.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "evoTree": 1,
+        "heroes": 129,
+        "items": 65,
+        "sets": 58
+      },
+      "sourceDomains": [
+        "evoTree",
+        "heroes",
+        "items",
+        "sets"
+      ],
+      "sourceEvidenceCount": 253,
+      "statChannels": [
+        "atkBase",
+        "atkEquip",
+        "atkEquipPercent",
+        "atkHero",
+        "atkHeroPercent",
+        "atkPercent",
+        "atkFinal"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "attack",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en1": {
+      "id": "en1",
+      "index": 1,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence."
+      ],
+      "label": "en1 crit expectation",
+      "multiplierRole": "Expected critical hit multiplier from crit rate and crit damage channels.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "baseStats": 1,
+        "collectibles": 76,
+        "customSets": 56,
+        "ee": 11,
+        "evoTree": 1,
+        "harmony": 7,
+        "heroes": 108,
+        "items": 45,
+        "lme": 446,
+        "mounts": 6,
+        "pets": 7,
+        "petSkills": 5,
+        "sets": 6,
+        "synergy": 32,
+        "techs": 163
+      },
+      "sourceDomains": [
+        "baseStats",
+        "collectibles",
+        "customSets",
+        "ee",
+        "evoTree",
+        "harmony",
+        "heroes",
+        "items",
+        "lme",
+        "mounts",
+        "petSkills",
+        "pets",
+        "sets",
+        "synergy",
+        "techs"
+      ],
+      "sourceEvidenceCount": 970,
+      "statChannels": [
+        "critRate",
+        "critDamage"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "crit",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en10": {
+      "id": "en10",
+      "index": 10,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence."
+      ],
+      "label": "en10 SS gloves laser",
+      "multiplierRole": "SS gloves laser multiplier channel.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "items": 3
+      },
+      "sourceDomains": [
+        "items"
+      ],
+      "sourceEvidenceCount": 3,
+      "statChannels": [
+        "ssGlovesLaser"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "joeyWeakSpot",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en11": {
+      "id": "en11",
+      "index": 11,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence.",
+        "No raw current source stat leaf was present for this stage in the captured source evidence matrix."
+      ],
+      "label": "en11 flashrift rip",
+      "multiplierRole": "Flashrift rip multiplier channel.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {},
+      "sourceDomains": [],
+      "sourceEvidenceCount": 0,
+      "statChannels": [
+        "flashriftRip"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "ssGlovesLaser",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en12": {
+      "id": "en12",
+      "index": 12,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence."
+      ],
+      "label": "en12 Taloxa overload",
+      "multiplierRole": "Taloxa overload multiplier channel.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "heroes": 9
+      },
+      "sourceDomains": [
+        "heroes"
+      ],
+      "sourceEvidenceCount": 9,
+      "statChannels": [
+        "taloxaOverload"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "flashriftRip",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en13": {
+      "id": "en13",
+      "index": 13,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence."
+      ],
+      "label": "en13 Eternal Suit boost",
+      "multiplierRole": "Eternal Suit optional boost multiplier.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "items": 2
+      },
+      "sourceDomains": [
+        "items"
+      ],
+      "sourceEvidenceCount": 2,
+      "statChannels": [
+        "eternalSuitBoost"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "taloxaOverload",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en14": {
+      "id": "en14",
+      "index": 14,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence.",
+        "Voidwaker Emblem uptime remains governed by SIO LM/source equivalence evidence."
+      ],
+      "label": "en14 Voidwaker Emblem boost",
+      "multiplierRole": "Voidwaker Emblem optional boost multiplied by uptime.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "baseStats": 1,
+        "items": 4
+      },
+      "sourceDomains": [
+        "baseStats",
+        "items"
+      ],
+      "sourceEvidenceCount": 5,
+      "statChannels": [
+        "voidNeckBoost",
+        "voidNeckBoostUptime"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "eternalSuitBoost",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en15": {
+      "id": "en15",
+      "index": 15,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence."
+      ],
+      "label": "en15 Voidwaker Handguards instakill",
+      "multiplierRole": "Voidwaker Handguards instakill optional multiplier.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "items": 1
+      },
+      "sourceDomains": [
+        "items"
+      ],
+      "sourceEvidenceCount": 1,
+      "statChannels": [
+        "voidGlovesInstakill"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "voidNeckBoost",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en16": {
+      "id": "en16",
+      "index": 16,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence."
+      ],
+      "label": "en16 Voidwaker Treads boost",
+      "multiplierRole": "Voidwaker Treads optional boost multiplier.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "items": 1
+      },
+      "sourceDomains": [
+        "items"
+      ],
+      "sourceEvidenceCount": 1,
+      "statChannels": [
+        "voidBootsBoost"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "voidGlovesInstakill",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en17": {
+      "id": "en17",
+      "index": 17,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence.",
+        "No raw current source stat leaf was present for this stage in the captured source evidence matrix."
+      ],
+      "label": "en17 chaos belt boost",
+      "multiplierRole": "Chaos belt optional boost multiplier.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {},
+      "sourceDomains": [],
+      "sourceEvidenceCount": 0,
+      "statChannels": [
+        "chaosBeltBoost"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "voidBootsBoost",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en18": {
+      "id": "en18",
+      "index": 18,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence."
+      ],
+      "label": "en18 HP Bullet boost",
+      "multiplierRole": "HP Bullet optional boost multiplier.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "skills": 1
+      },
+      "sourceDomains": [
+        "skills"
+      ],
+      "sourceEvidenceCount": 1,
+      "statChannels": [
+        "hpBulletBoost"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "chaosBeltBoost",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en19": {
+      "id": "en19",
+      "index": 19,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence."
+      ],
+      "label": "en19 damage dealt",
+      "multiplierRole": "Damage dealt percentage multiplier.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "ee": 9,
+        "lme": 214
+      },
+      "sourceDomains": [
+        "ee",
+        "lme"
+      ],
+      "sourceEvidenceCount": 223,
+      "statChannels": [
+        "damageDealt"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "hpBulletBoost",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en2": {
+      "id": "en2",
+      "index": 2,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence.",
+        "The first live trace stage at the same numeric index is skillDamage; this spec keeps the requested Tangtang/Rust provenance label en2 vulnerability."
+      ],
+      "label": "en2 vulnerability",
+      "multiplierRole": "Positive vulnerability channel multiplier.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "harmony": 6,
+        "heroes": 17,
+        "items": 25,
+        "lme": 220,
+        "pets": 2,
+        "techs": 85
+      },
+      "sourceDomains": [
+        "harmony",
+        "heroes",
+        "items",
+        "lme",
+        "pets",
+        "techs"
+      ],
+      "sourceEvidenceCount": 355,
+      "statChannels": [
+        "vulnerability"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "skillDamage",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en20": {
+      "id": "en20",
+      "index": 20,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence."
+      ],
+      "label": "en20 adrenaline",
+      "multiplierRole": "Adrenaline percentage multiplier.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "heroes": 9
+      },
+      "sourceDomains": [
+        "heroes"
+      ],
+      "sourceEvidenceCount": 9,
+      "statChannels": [
+        "adrenaline"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "damageDealt",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en21": {
+      "id": "en21",
+      "index": 21,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence.",
+        "No raw current source stat leaf was present for this stage in the captured source evidence matrix."
+      ],
+      "label": "en21 xeno transmute damage",
+      "multiplierRole": "Xeno transmute damage percentage multiplier.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {},
+      "sourceDomains": [],
+      "sourceEvidenceCount": 0,
+      "statChannels": [
+        "damageTransmute"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "adrenaline",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en22": {
+      "id": "en22",
+      "index": 22,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence."
+      ],
+      "label": "en22 boss damage",
+      "multiplierRole": "Boss damage percentage multiplier.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "customSets": 3,
+        "harmony": 3,
+        "heroes": 5,
+        "items": 6,
+        "lme": 24,
+        "mounts": 2,
+        "pets": 6,
+        "sets": 1,
+        "synergy": 16,
+        "techs": 15
+      },
+      "sourceDomains": [
+        "customSets",
+        "harmony",
+        "heroes",
+        "items",
+        "lme",
+        "mounts",
+        "pets",
+        "sets",
+        "synergy",
+        "techs"
+      ],
+      "sourceEvidenceCount": 81,
+      "statChannels": [
+        "damageBoss"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "damageTransmute",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en23": {
+      "id": "en23",
+      "index": 23,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence.",
+        "No raw current source stat leaf was present for this stage in the captured source evidence matrix."
+      ],
+      "label": "en23 xeno resonance multiplier",
+      "multiplierRole": "Xeno resonance percentage multiplier.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {},
+      "sourceDomains": [],
+      "sourceEvidenceCount": 0,
+      "statChannels": [
+        "xenoResMultiplier"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "damageBoss",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en24": {
+      "id": "en24",
+      "index": 24,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence.",
+        "No raw current source stat leaf was present for this stage in the captured source evidence matrix.",
+        "LME phase damage is mode-dependent and represented here only as the requested en24 channel."
+      ],
+      "label": "en24 LME phase damage",
+      "multiplierRole": "LME phase damage percentage multiplier.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {},
+      "sourceDomains": [],
+      "sourceEvidenceCount": 0,
+      "statChannels": [
+        "lme1Damage"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "xenoResMultiplier",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en3": {
+      "id": "en3",
+      "index": 3,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence."
+      ],
+      "label": "en3 shield damage uptime",
+      "multiplierRole": "Shield damage channel weighted by uptime.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "baseStats": 1,
+        "ee": 2,
+        "heroes": 5,
+        "items": 49,
+        "lme": 221,
+        "mounts": 5,
+        "pets": 3,
+        "sets": 9,
+        "synergy": 32,
+        "techs": 141
+      },
+      "sourceDomains": [
+        "baseStats",
+        "ee",
+        "heroes",
+        "items",
+        "lme",
+        "mounts",
+        "pets",
+        "sets",
+        "synergy",
+        "techs"
+      ],
+      "sourceEvidenceCount": 468,
+      "statChannels": [
+        "shieldDamage",
+        "shieldDamageUptime"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "vulnerability",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en4": {
+      "id": "en4",
+      "index": 4,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence."
+      ],
+      "label": "en4 target status damage",
+      "multiplierRole": "Poisoned, weakened, chilled, and exposed status damage contribution.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "baseStats": 3,
+        "customSets": 108,
+        "ee": 6,
+        "harmony": 32,
+        "heroes": 18,
+        "items": 43,
+        "lme": 639,
+        "mounts": 20,
+        "pets": 22,
+        "sets": 6,
+        "synergy": 90,
+        "techs": 235
+      },
+      "sourceDomains": [
+        "baseStats",
+        "customSets",
+        "ee",
+        "harmony",
+        "heroes",
+        "items",
+        "lme",
+        "mounts",
+        "pets",
+        "sets",
+        "synergy",
+        "techs"
+      ],
+      "sourceEvidenceCount": 1222,
+      "statChannels": [
+        "poisoned",
+        "poisonedUptime",
+        "weakened",
+        "weakenedUptime",
+        "chilled",
+        "chilledUptime",
+        "exposedDamage"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "shieldDamage",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en5": {
+      "id": "en5",
+      "index": 5,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence."
+      ],
+      "label": "en5 clarity",
+      "multiplierRole": "Clarity percentage multiplier.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "items": 3
+      },
+      "sourceDomains": [
+        "items"
+      ],
+      "sourceEvidenceCount": 3,
+      "statChannels": [
+        "clarity"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "statusDamage",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en6": {
+      "id": "en6",
+      "index": 6,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence."
+      ],
+      "label": "en6 eternal multiplier",
+      "multiplierRole": "Eternal multiplier channel.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "items": 8
+      },
+      "sourceDomains": [
+        "items"
+      ],
+      "sourceEvidenceCount": 8,
+      "statChannels": [
+        "eternalMultiplier"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "clarity",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en7": {
+      "id": "en7",
+      "index": 7,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence."
+      ],
+      "label": "en7 glacial bloodline",
+      "multiplierRole": "Glacial Bloodline multiplier channel.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "items": 3
+      },
+      "sourceDomains": [
+        "items"
+      ],
+      "sourceEvidenceCount": 3,
+      "statChannels": [
+        "glacialBloodline"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "eternalMultiplier",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en8": {
+      "id": "en8",
+      "index": 8,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence."
+      ],
+      "label": "en8 laceration/divine fire",
+      "multiplierRole": "Laceration and Divine Fire damage channels weighted by uptime.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "baseStats": 2,
+        "harmony": 3,
+        "heroes": 45,
+        "items": 11,
+        "lme": 58,
+        "mounts": 7,
+        "sets": 2,
+        "synergy": 17,
+        "techs": 108
+      },
+      "sourceDomains": [
+        "baseStats",
+        "harmony",
+        "heroes",
+        "items",
+        "lme",
+        "mounts",
+        "sets",
+        "synergy",
+        "techs"
+      ],
+      "sourceEvidenceCount": 253,
+      "statChannels": [
+        "laceration",
+        "lacerationUptime",
+        "divineFire",
+        "divineFireUptime"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "glacialBloodline",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    },
+    "en9": {
+      "id": "en9",
+      "index": 9,
+      "knownCaveats": [
+        "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
+        "Source-derived rows must not be promoted to direct in-game-description-verified evidence."
+      ],
+      "label": "en9 Joey weak spot",
+      "multiplierRole": "Joey weak spot multiplier channel.",
+      "provenanceArtifactReferences": [
+        "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
+        "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
+        "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
+        "tttg_forge_core/src/v3_damage.rs"
+      ],
+      "sourceCountsByDomain": {
+        "heroes": 8
+      },
+      "sourceDomains": [
+        "heroes"
+      ],
+      "sourceEvidenceCount": 8,
+      "statChannels": [
+        "joeyWeakSpot"
+      ],
+      "traceReference": {
+        "firstTraceStageKeyAtSameIndex": "lacerationDivineFire",
+        "traceCases": 3,
+        "traceStageProductPassed": 3
+      }
+    }
+  },
+  "status": "[TANGTANG-DAMAGE-FORMULA-SPEC-GREEN]",
+  "summaryCounts": {
+    "collectibleCatalogOnlyRows": 46,
+    "collectibleRawThresholdLeafRows": 170,
+    "collectibleSpecialRustMappings": 14,
+    "collectibleThresholdRows": 170,
+    "inGameDescriptionVerifiedRows": 0,
+    "liveCaptureCount": 26,
+    "mountDamageSourceFixtureRows": 3,
+    "mountNormalizedClaims": 26,
+    "mountRawCumulativeLeafRows": 52,
+    "nonSsWeaponsUnsupportedCatalogOnly": 8,
+    "rawDirectStageCountFromSpec": 3878,
+    "rawSourceLeafRows": 4650,
+    "rawSourceLeafRowsWithDirectMultiplierStage": 3878,
+    "targetedLiveCaptureCases": 5,
+    "targetSurvivorNormalizedClaims": 11,
+    "targetSurvivorRawCumulativeLeafRows": 13,
+    "workerParityArbitraryGeneratedLiveExpected": "26/26"
+  },
+  "title": "Tangtang Damage Formula Derivation",
+  "unsupportedFormulaInputs": {
+    "catalogOnlyCollectibleRows": 46,
+    "nonSsWeapons": [
+      {
+        "displayName": "Baseball Bat",
+        "formulaInputStatus": "catalog-only unsupported",
+        "formulaInputSupported": false,
+        "id": "baseballBat"
+      },
+      {
+        "displayName": "Katana",
+        "formulaInputStatus": "catalog-only unsupported",
+        "formulaInputSupported": false,
+        "id": "katana"
+      },
+      {
+        "displayName": "Kunai",
+        "formulaInputStatus": "catalog-only unsupported",
+        "formulaInputSupported": false,
+        "id": "kunai"
+      },
+      {
+        "displayName": "Lightchaser",
+        "formulaInputStatus": "catalog-only unsupported",
+        "formulaInputSupported": false,
+        "id": "lightchaser"
+      },
+      {
+        "displayName": "Revolver",
+        "formulaInputStatus": "catalog-only unsupported",
+        "formulaInputSupported": false,
+        "id": "revolver"
+      },
+      {
+        "displayName": "Shotgun",
+        "formulaInputStatus": "catalog-only unsupported",
+        "formulaInputSupported": false,
+        "id": "shotgun"
+      },
+      {
+        "displayName": "Sword of Disorder",
+        "formulaInputStatus": "catalog-only unsupported",
+        "formulaInputSupported": false,
+        "id": "swordOfDisorder"
+      },
+      {
+        "displayName": "Void Power",
+        "formulaInputStatus": "catalog-only unsupported",
+        "formulaInputSupported": false,
+        "id": "voidPower"
+      }
+    ]
+  },
+  "verificationCommands": [
+    "node scripts/tangtang_damage_formula_spec_unit_test.mjs",
+    "node scripts/sio_tools_formula_source_evidence_unit_test.mjs",
+    "node scripts/damage_formula_provenance_matrix_unit_test.mjs",
+    "node scripts/in_game_description_evidence_unit_test.mjs",
+    "node scripts/sio_tools_live_evidence_matrix_unit_test.mjs",
+    "node scripts/sio_tools_targeted_live_evidence_unit_test.mjs",
+    "node scripts/mount_damage_source_fixture_unit_test.mjs",
+    "node scripts/collectible_effect_mapping_matrix_unit_test.mjs",
+    "node scripts/generic_aggregate_non_authority_gate.mjs",
+    "npx tsc --noEmit",
+    "SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs",
+    "git diff --check"
+  ]
+}

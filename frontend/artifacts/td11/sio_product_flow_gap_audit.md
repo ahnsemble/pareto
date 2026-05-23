@@ -1064,6 +1064,52 @@ Do not change scoring formulas yet. The next safe step is a documentation/test g
 
 GitHub push/PR not performed.
 
+## Tangtang Damage Formula Derivation Spec
+
+timestampKst: 2026-05-23T15:15:51+09:00
+status: `[TANGTANG-DAMAGE-FORMULA-SPEC-GREEN]`
+
+### Scope
+
+Derived and documented a SIO Tools-equivalent Tangtang damage formula spec from current source/live evidence. This pass does not claim full direct first-party in-game text verification and does not change formula semantics, scoring core, Rust damage formulas, WASM scoring behavior, optimizer ranking, or user-facing UI.
+
+### Changes
+
+- Added `frontend/artifacts/td11/tangtang_damage_formula_spec.json`.
+- Added `frontend/artifacts/td11/tangtang_damage_formula_spec.md`.
+- Added `frontend/scripts/tangtang_damage_formula_spec_unit_test.mjs`.
+- Updated `damage_formula_provenance_matrix.md` and its gate to reference the formula derivation spec.
+
+### Caveats
+
+- non-SS weapons remain catalog-only and unsupported as formula inputs.
+- SpongeBob/Squidward/Yelena remain source/live backed but not direct first-party in-game description verified.
+- Mounts remain source/live backed for `mountDamage`, but exact per-line in-game text capture is still missing.
+- Collectible item/set mapping remains source/Rust backed, but item/set-level in-game description capture is still incomplete.
+- Catalog-only collectible rows remain isolated.
+
+### Verification Log
+
+- `node scripts/tangtang_damage_formula_spec_unit_test.mjs`: passed, 25 stages.
+- `node scripts/sio_tools_formula_source_evidence_unit_test.mjs`: passed, 4,650 source leaves.
+- `node scripts/damage_formula_provenance_matrix_unit_test.mjs`: passed, 367 rows.
+- `node scripts/in_game_description_evidence_unit_test.mjs`: passed, 6 rows.
+- `node scripts/sio_tools_live_evidence_matrix_unit_test.mjs`: passed, 20 rows.
+- `node scripts/sio_tools_targeted_live_evidence_unit_test.mjs`: passed, 5 rows.
+- `node scripts/mount_damage_source_fixture_unit_test.mjs`: passed, 3 rows.
+- `node scripts/collectible_effect_mapping_matrix_unit_test.mjs`: passed, 160 rows.
+- `node scripts/generic_aggregate_non_authority_gate.mjs`: passed, 4 rows.
+- `npx tsc --noEmit`: passed.
+- `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs`: passed.
+  - `fullSioEquivalent=true`
+  - `currentScorer=scorer=sio_full_lm_equivalence`
+  - `liveCaptureCount=26`
+  - `workerParity.arbitraryGeneratedLiveExpected=26/26`
+  - `G0/G1/G2/G3/G6=true`
+- `git diff --check`: passed.
+
+GitHub push/PR not performed.
+
 ## Tangtang In-Game Description Evidence Pass
 
 timestampKst: 2026-05-23T14:45:00+09:00
