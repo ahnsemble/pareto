@@ -16,9 +16,9 @@ Current decision:
 - Description formula validation status: `[TANGTANG-DESCRIPTION-FORMULA-VALIDATION-PROTOCOL-READY]`
 - Direct first-party description-derived formula rows in formula-validation gate before capture import: 0
 - Description/SIO divergence rows: 0
-- Imported description capture rows: 12
-- Imported description/SIO divergence rows: 2
-- Imported observed damage follow-up rows: 2
+- Imported description capture rows: 14
+- Imported description/SIO divergence rows: 4
+- Imported observed damage follow-up rows: 4
 - SIO formula in-game correctness claim: `not-established`
 - Direct observed in-game damage trials: 0
 - Direct first-party description verified rows: 0
@@ -85,9 +85,9 @@ Replication requirement: A prior description-vs-SIO divergence needs at least th
 - Description formula validation claim: `description-derived-formula-validation-protocol`
 - Direct first-party description-derived formula rows in formula-validation gate before capture import: 0
 - Description/SIO divergence rows: 0
-- Imported description capture rows: 12
-- Imported description/SIO divergence rows: 2
-- Imported observed damage follow-up rows: 2
+- Imported description capture rows: 14
+- Imported description/SIO divergence rows: 4
+- Imported observed damage follow-up rows: 4
 - Formula behavior change: `false`
 - Raw source stat leaves: 4650
 - Live capture count: 26

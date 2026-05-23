@@ -1974,6 +1974,71 @@ Removed non-SS weapon fixture work from the active local backlog because those w
 
 GitHub push/PR not performed.
 
+## Additional Tangtang Set Threshold Capture Audit
+
+timestampKst: 2026-05-23T22:26:16+09:00
+status: `[TANGTANG-ADDITIONAL-SET-THRESHOLD-CAPTURE-AUDIT-GREEN]`
+
+### Scope
+
+Imported the latest four direct in-game screenshots as a targeted set-threshold audit. This pass adds only evidence/documentation gates and does not change formula semantics, scoring core, Rust damage formulas, WASM scoring behavior, optimizer ranking, or product UI.
+
+### Changes
+
+- Added `frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/1.jpg` through `4.jpg`.
+- Added `frontend/scripts/tangtang_additional_set_threshold_capture_audit_unit_test.mjs`.
+- Added `frontend/artifacts/td11/tangtang_additional_set_threshold_capture_audit.json`.
+- Added `frontend/artifacts/td11/tangtang_additional_set_threshold_capture_audit.md`.
+- Imported two Dream or Reality? damage-relevant rows into `tangtang_description_capture_inbox.json`.
+- Updated capture import, correction candidates, first-party source inventory, in-game damage validation, formula spec, targeted audit cumulative counts, and provenance matrix.
+
+### Result
+
+- `collectible-set:dreamOrReality:gold:15:atkPercent`: current source-derived condition `gold >= 15`, direct capture condition `gold >= 19`, value `atkPercent +4`.
+- `collectible-set:dreamOrReality:red:15:atkPercent`: current source-derived condition `red >= 15`, direct capture condition `red >= 19`, value `atkPercent +6`.
+- Cumulative direct first-party description capture rows: `14`.
+- Cumulative description/source divergence rows: `4`.
+- Cumulative formula correction candidate rows: `4`.
+- Correction-eligible rows: `0`.
+- Direct observed damage trials: `0`.
+
+### Caveats
+
+- These remain correction candidates only; no Tangtang scoring correction is applied.
+- The submitted HP-only set screenshots are preserved as raw direct evidence but are not promoted to damage formula atom rows in this pass.
+- This does not prove official full in-game damage correctness; it only extends direct first-party description evidence.
+- `fullSioEquivalent=true` and `currentScorer=scorer=sio_full_lm_equivalence` remain unchanged.
+
+### Verification Log
+
+- `node scripts/tangtang_additional_set_threshold_capture_audit_unit_test.mjs`: passed.
+- `node scripts/tangtang_description_capture_import_unit_test.mjs`: passed.
+- `node scripts/tangtang_random_capture_sample_audit_unit_test.mjs`: passed.
+- `node scripts/tangtang_targeted_capture_followup_audit_unit_test.mjs`: passed.
+- `node scripts/tangtang_formula_correction_candidates_unit_test.mjs`: passed.
+- `node scripts/tangtang_first_party_description_source_inventory_unit_test.mjs`: passed.
+- `node scripts/tangtang_in_game_damage_validation_unit_test.mjs`: passed.
+- `node scripts/tangtang_damage_formula_spec_unit_test.mjs`: passed.
+- `node scripts/tangtang_description_formula_validation_unit_test.mjs`: passed.
+- `node scripts/sio_tools_formula_source_evidence_unit_test.mjs`: passed.
+- `node scripts/damage_formula_provenance_matrix_unit_test.mjs`: passed.
+- `node scripts/in_game_description_evidence_unit_test.mjs`: passed.
+- `node scripts/sio_tools_live_evidence_matrix_unit_test.mjs`: passed.
+- `node scripts/sio_tools_targeted_live_evidence_unit_test.mjs`: passed.
+- `node scripts/mount_damage_source_fixture_unit_test.mjs`: passed.
+- `node scripts/collectible_effect_mapping_matrix_unit_test.mjs`: passed.
+- `node scripts/generic_aggregate_non_authority_gate.mjs`: passed.
+- `npx tsc --noEmit`: passed.
+- `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs`: passed.
+  - `fullSioEquivalent=true`
+  - `currentScorer=scorer=sio_full_lm_equivalence`
+  - `liveCaptureCount=26`
+  - `workerParity.arbitraryGeneratedLiveExpected=26/26`
+  - `G0/G1/G2/G3/G6=true`
+- `git diff --check`: passed.
+
+GitHub push/PR not performed.
+
 ## Tangtang Damage Formula Provenance Matrix Gate
 
 timestampKst: 2026-05-23T12:20:00+09:00

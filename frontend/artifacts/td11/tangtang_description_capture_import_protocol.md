@@ -11,12 +11,12 @@ This gate imports direct first-party item/effect in-game description captures in
 
 Current decision:
 
-- Capture inbox rows: 12
-- Direct first-party description capture rows: 12
-- Parsed description formula rows: 12
+- Capture inbox rows: 14
+- Direct first-party description capture rows: 14
+- Parsed description formula rows: 14
 - Matched SIO rows: 10
-- Description/SIO divergence rows: 2
-- Observed damage follow-up rows: 2
+- Description/SIO divergence rows: 4
+- Observed damage follow-up rows: 4
 - Can claim SIO formula description-correct: `false`
 - Can apply Tangtang formula correction: `false`
 
@@ -61,22 +61,24 @@ Matching mode: explicit atomRowId only
 
 | Outcome | Count |
 |---|---:|
-| imported capture rows | 12 |
-| accepted capture rows | 12 |
+| imported capture rows | 14 |
+| accepted capture rows | 14 |
 | rejected capture rows | 0 |
 | matched SIO rows | 10 |
 | ambiguous rows | 0 |
-| description/SIO divergence rows | 2 |
-| observed damage follow-up rows | 2 |
+| description/SIO divergence rows | 4 |
+| observed damage follow-up rows | 4 |
 | correction-eligible rows | 0 |
 
 ## First-Party Capture Coverage
 
-- Captured atom rows: 12
+- Captured atom rows: 14
 - Matched SIO atom rows: 10
-- Formula atom rows remaining without direct capture: 209
-- Imported entity display names: `종말의 전투마`, `창세기`, `천체 초월 행렬 도면`
+- Formula atom rows remaining without direct capture: 207
+- Imported entity display names: `꿈인가 현실인가?`, `종말의 전투마`, `창세기`, `천체 초월 행렬 도면`
 - Imported raw artifacts:
+  - `frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/1.jpg`
+  - `frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/2.jpg`
   - `frontend/artifacts/td11/captures/2026-05-23-doomsteed-lines-1-4.jpg`
   - `frontend/artifacts/td11/captures/2026-05-23-doomsteed-lines-5-8.jpg`
   - `frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg`

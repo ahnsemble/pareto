@@ -315,6 +315,58 @@
       "transcriptionNotes": "Manual transcription from submitted in-game screenshots. Visible Korean condition says cumulative 19 gold stars in both the random sample and targeted follow-up captures, which intentionally preserves a condition mismatch against the current source-derived atom id."
     },
     {
+      "atomRowId": "collectible-set:dreamOrReality:red:15:atkPercent",
+      "captureDateKst": "2026-05-23",
+      "captureEvidenceTier": "direct-first-party-description",
+      "captureId": "td11-capture-20260523-additional-dream-or-reality-red-atk-percent",
+      "conditionOrThreshold": "red >= 19",
+      "descriptionTextEnglishTranslation": "Dream or Reality? set: cumulative 19 red stars obtained: attack +6%.",
+      "descriptionTextOriginal": "누적으로 19개의 빨간 별 획득\n공격력 +6%",
+      "devicePlatform": "unknown",
+      "entityDisplayNameCaptured": "꿈인가 현실인가?",
+      "gameVersion": "not-visible-in-submitted-capture",
+      "language": "ko-KR",
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "ocrTextRaw": "",
+      "operationBucket": "attack-aggregate",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "parsedFormulaValue": 6,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/1.jpg"
+      ],
+      "rustStatChannel": "atkPercent",
+      "screenContext": "collectible set detail / Dream or Reality? set bonus list",
+      "sourceKind": "direct-first-party-in-game",
+      "transcriptionConfidence": "high",
+      "transcriptionNotes": "Manual transcription from submitted in-game screenshot. Visible Korean condition says cumulative 19 red stars, preserving a condition mismatch against the current source-derived atom id."
+    },
+    {
+      "atomRowId": "collectible-set:dreamOrReality:gold:15:atkPercent",
+      "captureDateKst": "2026-05-23",
+      "captureEvidenceTier": "direct-first-party-description",
+      "captureId": "td11-capture-20260523-additional-dream-or-reality-gold-atk-percent",
+      "conditionOrThreshold": "gold >= 19",
+      "descriptionTextEnglishTranslation": "Dream or Reality? set: cumulative 19 gold stars obtained: attack +4%.",
+      "descriptionTextOriginal": "누적으로 19개의 금 별 획득\n공격력 +4%",
+      "devicePlatform": "unknown",
+      "entityDisplayNameCaptured": "꿈인가 현실인가?",
+      "gameVersion": "not-visible-in-submitted-capture",
+      "language": "ko-KR",
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "ocrTextRaw": "",
+      "operationBucket": "attack-aggregate",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "parsedFormulaValue": 4,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/2.jpg"
+      ],
+      "rustStatChannel": "atkPercent",
+      "screenContext": "collectible set detail / Dream or Reality? set bonus list",
+      "sourceKind": "direct-first-party-in-game",
+      "transcriptionConfidence": "high",
+      "transcriptionNotes": "Manual transcription from submitted in-game screenshot. Visible Korean condition says cumulative 19 gold stars, preserving a condition mismatch against the current source-derived atom id."
+    },
+    {
       "atomRowId": "collectible-item:instellarTransitionMatrixDesign:stars:8:critRate",
       "captureDateKst": "2026-05-23",
       "captureEvidenceTier": "direct-first-party-description",

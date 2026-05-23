@@ -11,9 +11,10 @@ This artifact records description-derived Tangtang formula correction candidates
 
 Current decision:
 
-- Correction candidate rows: 2
+- Correction candidate rows: 4
 - Genesis threshold mismatch rows: 2
-- Threshold-only mismatch rows: 2
+- Dream or Reality? threshold mismatch rows: 2
+- Threshold-only mismatch rows: 4
 - Value mismatch rows: 0
 - Stat-channel mismatch rows: 0
 - Multiplier-stage mismatch rows: 0
@@ -27,6 +28,8 @@ Current decision:
 
 | Atom row | Current SIO condition | Direct description condition | Value | Channel | Raw capture evidence | Status |
 |---|---|---|---:|---|---|---|
+| collectible-set:dreamOrReality:gold:15:atkPercent | gold >= 15 | gold >= 19 | 4 | atkPercent | additional-set-thresholds | Documented correction candidate only. Do not change Tangtang scoring until correction spec plus observed-damage confirmation exists. |
+| collectible-set:dreamOrReality:red:15:atkPercent | red >= 15 | red >= 19 | 6 | atkPercent | additional-set-thresholds | Documented correction candidate only. Do not change Tangtang scoring until correction spec plus observed-damage confirmation exists. |
 | collectible-set:genesis:gold:15:atkPercent | gold >= 15 | gold >= 19 | 4 | atkPercent | random-sample, targeted-followup | Documented correction candidate only. Do not change Tangtang scoring until correction spec plus observed-damage confirmation exists. |
 | collectible-set:genesis:red:15:atkPercent | red >= 15 | red >= 19 | 6 | atkPercent | random-sample, targeted-followup | Documented correction candidate only. Do not change Tangtang scoring until correction spec plus observed-damage confirmation exists. |
 
@@ -34,7 +37,7 @@ Current decision:
 
 Current correction status: `candidate-documented-not-applied`
 
-Why not applied: The direct first-party description captures repeatedly show a Genesis threshold mismatch, but no correction spec with observed-damage confirmation has been applied yet.
+Why not applied: The direct first-party description captures repeatedly show threshold-only collectible set mismatches, but no correction spec with observed-damage confirmation has been applied yet.
 
 Required before application:
 

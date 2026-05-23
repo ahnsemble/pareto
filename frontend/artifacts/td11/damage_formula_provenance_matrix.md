@@ -131,14 +131,14 @@ Confidence values:
   - `frontend/artifacts/td11/tangtang_description_capture_import_protocol.md`
 - Gate status: `[TANGTANG-DESCRIPTION-CAPTURE-IMPORT-GATE-READY]`
 - Gate claim: `description-capture-import-gate`
-- Capture inbox rows: 12
-- Direct first-party description capture rows: 12
-- Parsed description formula rows: 12
+- Capture inbox rows: 14
+- Direct first-party description capture rows: 14
+- Parsed description formula rows: 14
 - Matched SIO rows: 10
-- Description/SIO divergence rows: 2
-- Observed damage follow-up rows: 2
-- Captured atom rows: 12
-- Formula atom rows remaining without direct capture: 209
+- Description/SIO divergence rows: 4
+- Observed damage follow-up rows: 4
+- Captured atom rows: 14
+- Formula atom rows remaining without direct capture: 207
 - Can run observed damage follow-up: `true`
 - Can apply Tangtang formula correction: `false`
 - Formula/scoring/UI behavior did not change.
@@ -179,6 +179,24 @@ Confidence values:
 - Energy Guidance System, custom collection, Taloxia, collaboration battle, locked collectible, and Tech Hoverboard tooltip evidence remains preserved as raw direct evidence outside the current 221-row description atom ledger.
 - Formula/scoring/UI behavior did not change.
 
+## Additional Set Threshold Capture Audit
+
+- The latest 4-image additional set threshold capture batch is summarized in:
+  - `frontend/artifacts/td11/tangtang_additional_set_threshold_capture_audit.json`
+  - `frontend/artifacts/td11/tangtang_additional_set_threshold_capture_audit.md`
+- Audit status: `[TANGTANG-ADDITIONAL-SET-THRESHOLD-CAPTURE-AUDIT-GREEN]`
+- Raw images submitted: 4
+- Imported atom rows from batch: 2
+- Description/SIO divergence rows from batch: 2
+- Correction candidate rows from batch: 2
+- Non-imported evidence groups: 1
+- Imported/candidate atom rows:
+  - `collectible-set:dreamOrReality:gold:15:atkPercent`
+  - `collectible-set:dreamOrReality:red:15:atkPercent`
+- The Dream or Reality? captures are damage-relevant threshold-only divergence candidates.
+- The HP-only set captures are preserved as raw direct evidence outside the damage formula atom ledger.
+- Formula/scoring/UI behavior did not change.
+
 ## Formula Correction Candidates
 
 - Description-derived correction candidates are tracked separately from SIO-equivalent formula derivation:
@@ -186,15 +204,18 @@ Confidence values:
   - `frontend/artifacts/td11/tangtang_formula_correction_candidates.md`
 - Gate status: `[TANGTANG-FORMULA-CORRECTION-CANDIDATES-GREEN]`
 - Gate claim: `description-derived-correction-candidates`
-- Correction candidate rows: 2
+- Correction candidate rows: 4
 - Genesis threshold mismatch rows: 2
-- Threshold-only mismatch rows: 2
+- Dream or Reality? threshold mismatch rows: 2
+- Threshold-only mismatch rows: 4
 - Value mismatch rows: 0
 - Stat-channel mismatch rows: 0
 - Direct observed damage trials: 0
 - Can apply Tangtang correction now: `false`
 - Current correction status: `candidate-documented-not-applied`
 - Candidate rows:
+  - `collectible-set:dreamOrReality:gold:15:atkPercent`: gold >= 15 -> gold >= 19, atkPercent +4
+  - `collectible-set:dreamOrReality:red:15:atkPercent`: red >= 15 -> red >= 19, atkPercent +6
   - `collectible-set:genesis:gold:15:atkPercent`: gold >= 15 -> gold >= 19, atkPercent +4
   - `collectible-set:genesis:red:15:atkPercent`: red >= 15 -> red >= 19, atkPercent +6
 - Formula/scoring/UI behavior did not change.
@@ -212,10 +233,10 @@ Confidence values:
 - Local app resource artifacts found: 0
 - Rows requiring direct description capture: 221
 - Direct first-party description-derived formula rows in formula-validation gate before capture import: 0
-- Direct first-party description capture rows: 12
-- Parsed description formula rows: 12
+- Direct first-party description capture rows: 14
+- Parsed description formula rows: 14
 - Matched SIO rows: 10
-- Formula atom rows remaining without direct capture: 209
+- Formula atom rows remaining without direct capture: 207
 - Public official web sufficient for formula validation: `false`
 - User one-by-one capture required: `true`
 - Formula/scoring/UI behavior did not change.

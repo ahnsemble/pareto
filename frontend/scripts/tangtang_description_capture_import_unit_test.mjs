@@ -33,12 +33,14 @@ const CAPTURE_REQUIRED_FIELDS = [
   'multiplierStage',
 ];
 
-const EXPECTED_CAPTURE_ROWS = 12;
+const EXPECTED_CAPTURE_ROWS = 14;
 const EXPECTED_MATCHED_SIO_ROWS = 10;
-const EXPECTED_DESCRIPTION_SIO_DIVERGENCE_ROWS = 2;
-const EXPECTED_OBSERVED_DAMAGE_FOLLOW_UP_ROWS = 2;
+const EXPECTED_DESCRIPTION_SIO_DIVERGENCE_ROWS = 4;
+const EXPECTED_OBSERVED_DAMAGE_FOLLOW_UP_ROWS = 4;
 const EXPECTED_CAPTURED_ATOM_ROW_IDS = [
   'collectible-item:instellarTransitionMatrixDesign:stars:8:critRate',
+  'collectible-set:dreamOrReality:gold:15:atkPercent',
+  'collectible-set:dreamOrReality:red:15:atkPercent',
   'collectible-set:genesis:gold:15:atkPercent',
   'collectible-set:genesis:red:15:atkPercent',
   'mount:doomsteed:line:1:poisoned',
@@ -491,8 +493,8 @@ assert.equal(matrix.summary.observedDamageFollowUpRows, EXPECTED_OBSERVED_DAMAGE
 assert.equal(matrix.summary.correctionEligibleRows, 0);
 assert.deepEqual(matrix.firstPartyCaptureCoverage.capturedAtomRowIds, EXPECTED_CAPTURED_ATOM_ROW_IDS);
 assert.equal(matrix.firstPartyCaptureCoverage.capturedAtomRows, EXPECTED_CAPTURE_ROWS);
-assert.equal(matrix.firstPartyCaptureCoverage.formulaAtomRowsRemainingWithoutDirectCapture, 209);
-assert.deepEqual(matrix.firstPartyCaptureCoverage.importedEntityDisplayNames, ['종말의 전투마', '창세기', '천체 초월 행렬 도면']);
+assert.equal(matrix.firstPartyCaptureCoverage.formulaAtomRowsRemainingWithoutDirectCapture, 207);
+assert.deepEqual(matrix.firstPartyCaptureCoverage.importedEntityDisplayNames, ['꿈인가 현실인가?', '종말의 전투마', '창세기', '천체 초월 행렬 도면']);
 await Promise.all(
   matrix.firstPartyCaptureCoverage.importedRawArtifacts.map((artifact) => fs.access(path.join(root, artifact.replace(/^frontend\//, '')))),
 );

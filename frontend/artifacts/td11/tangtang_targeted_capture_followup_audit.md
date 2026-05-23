@@ -15,8 +15,8 @@ behaviorChange: `false`
 - Description/SIO divergence rows from batch: 2
 - Reinforced existing atom rows from batch: 2
 - Observed damage follow-up rows from batch: 2
-- Cumulative direct first-party capture rows: 12
-- Cumulative description/SIO divergence rows: 2
+- Cumulative direct first-party capture rows: 14
+- Cumulative description/SIO divergence rows: 4
 - Formula/scoring behavior change: `false`
 
 ## Imported / Reinforced Rows

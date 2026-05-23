@@ -1,0 +1,120 @@
+{
+  "artifactPaths": {
+    "json": "frontend/artifacts/td11/tangtang_additional_set_threshold_capture_audit.json",
+    "markdown": "frontend/artifacts/td11/tangtang_additional_set_threshold_capture_audit.md",
+    "script": "frontend/scripts/tangtang_additional_set_threshold_capture_audit_unit_test.mjs"
+  },
+  "behaviorChange": false,
+  "claim": "additional-direct-capture-set-threshold-audit",
+  "correctionCandidateRowsFromBatch": [
+    {
+      "atomRowId": "collectible-set:dreamOrReality:gold:15:atkPercent",
+      "correctionEligibleNow": false,
+      "currentSioConditionOrThreshold": "gold >= 15",
+      "directDescriptionConditionOrThreshold": "gold >= 19",
+      "directDescriptionParsedFormulaValue": 4,
+      "mismatchType": "threshold-condition-only",
+      "rustStatChannel": "atkPercent"
+    },
+    {
+      "atomRowId": "collectible-set:dreamOrReality:red:15:atkPercent",
+      "correctionEligibleNow": false,
+      "currentSioConditionOrThreshold": "red >= 15",
+      "directDescriptionConditionOrThreshold": "red >= 19",
+      "directDescriptionParsedFormulaValue": 6,
+      "mismatchType": "threshold-condition-only",
+      "rustStatChannel": "atkPercent"
+    }
+  ],
+  "decision": {
+    "canApplyTangtangFormulaCorrectionNow": false,
+    "canClaimOfficialInGameFormulaVerification": false,
+    "importedAsDamageFormulaCandidates": [
+      "collectible-set:dreamOrReality:gold:15:atkPercent",
+      "collectible-set:dreamOrReality:red:15:atkPercent"
+    ],
+    "preservedOutsideDamageFormulaLedger": "The HP-only set screenshots are retained as raw direct evidence but are not promoted to damage formula correction candidates in this pass.",
+    "reason": "Dream or Reality? has direct first-party threshold divergence evidence against current source-derived atom rows. The HP-only set evidence does not alter the damage formula ledger."
+  },
+  "generatedAtKst": "2026-05-23 22:20:00 KST",
+  "importedRowsFromBatch": [
+    {
+      "atomRowId": "collectible-set:dreamOrReality:gold:15:atkPercent",
+      "captureId": "td11-capture-20260523-additional-dream-or-reality-gold-atk-percent",
+      "comparisonVerdict": "description-sio-divergent-needs-confirmation",
+      "conditionOrThreshold": "gold >= 19",
+      "descriptionTextOriginal": "누적으로 19개의 금 별 획득\n공격력 +4%",
+      "mismatchFields": [
+        "conditionOrThreshold"
+      ],
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "parsedFormulaValue": 4,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/2.jpg"
+      ],
+      "rustStatChannel": "atkPercent"
+    },
+    {
+      "atomRowId": "collectible-set:dreamOrReality:red:15:atkPercent",
+      "captureId": "td11-capture-20260523-additional-dream-or-reality-red-atk-percent",
+      "comparisonVerdict": "description-sio-divergent-needs-confirmation",
+      "conditionOrThreshold": "red >= 19",
+      "descriptionTextOriginal": "누적으로 19개의 빨간 별 획득\n공격력 +6%",
+      "mismatchFields": [
+        "conditionOrThreshold"
+      ],
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "parsedFormulaValue": 6,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/1.jpg"
+      ],
+      "rustStatChannel": "atkPercent"
+    }
+  ],
+  "nonImportedGroups": [
+    {
+      "domain": "collectible-set-hp-only-or-unmapped",
+      "imageRefs": [
+        "3.jpg",
+        "4.jpg"
+      ],
+      "reason": "The visible set rows show HP +4/+6% and generic final attack/HP bonuses. HP percent is not a current damage-formula atom in the 221-row ledger, so this pass preserves the raw evidence without promoting it to a damage correction candidate.",
+      "sampleEffects": [
+        "누적으로 19개의 금 별 획득 / HP +4%",
+        "누적으로 19개의 빨간 별 획득 / HP +6%",
+        "8/16/24-star final attack and HP bonuses"
+      ]
+    }
+  ],
+  "sourceInputs": [
+    "frontend/artifacts/td11/tangtang_description_capture_import_matrix.json",
+    "frontend/artifacts/td11/tangtang_description_capture_inbox.json",
+    "frontend/artifacts/td11/tangtang_formula_correction_candidates.json",
+    "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/1.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/2.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/3.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/4.jpg"
+  ],
+  "status": "[TANGTANG-ADDITIONAL-SET-THRESHOLD-CAPTURE-AUDIT-GREEN]",
+  "summary": {
+    "correctionCandidateRowsFromBatch": 2,
+    "descriptionSioDivergenceRowsFromBatch": 2,
+    "formulaOrScoringBehaviorChange": false,
+    "importedAtomRowsFromBatch": 2,
+    "matchedSioRowsFromBatch": 0,
+    "nonImportedEvidenceGroups": 1,
+    "rawImagesWithImportedAtoms": 2,
+    "rawImagesWithoutImportedAtoms": 2,
+    "submittedRawImages": 4
+  },
+  "title": "Tangtang Additional Set Threshold Capture Audit",
+  "verificationCommands": [
+    "node scripts/tangtang_additional_set_threshold_capture_audit_unit_test.mjs",
+    "node scripts/tangtang_description_capture_import_unit_test.mjs",
+    "node scripts/tangtang_formula_correction_candidates_unit_test.mjs",
+    "SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs",
+    "git diff --check"
+  ]
+}

@@ -21,13 +21,13 @@ No formula semantics, scoring core, Rust damage formulas, WASM scoring behavior,
 - Local app resource artifacts found: 0
 - Formula atom rows requiring direct description capture: 221
 - Direct first-party description-derived formula rows in formula-validation gate before capture import: 0
-- Capture inbox rows: 12
-- Direct first-party description capture rows: 12
-- Parsed description formula rows: 12
+- Capture inbox rows: 14
+- Direct first-party description capture rows: 14
+- Parsed description formula rows: 14
 - Matched SIO rows: 10
-- Description/SIO divergence rows: 2
-- Observed damage follow-up rows: 2
-- Formula atom rows remaining without direct capture: 209
+- Description/SIO divergence rows: 4
+- Observed damage follow-up rows: 4
+- Formula atom rows remaining without direct capture: 207
 - Can apply Tangtang formula correction now: `false`
 - Public official web sufficient for formula validation: `false`
 
@@ -49,7 +49,7 @@ No formula semantics, scoring core, Rust damage formulas, WASM scoring behavior,
 | Route | Qualifies now? | Current rows | Policy |
 |---|---:|---:|---|
 | Official public web/social announcements | false | 0 | Use as release or existence provenance only unless the official page itself exposes exact row-level original description text. |
-| Direct in-game UI screenshot/video capture | true | 12 | Preferred route for one-by-one validation: preserve raw screenshot/video plus exact original description text and map it to an atomRowId. |
+| Direct in-game UI screenshot/video capture | true | 14 | Preferred route for one-by-one validation: preserve raw screenshot/video plus exact original description text and map it to an atomRowId. |
 | Lawful app resource/localization inspection | false | 0 | Potentially valid only for lawfully obtained first-party static text resources; do not bypass encryption, DRM, auth, or protections. |
 | Third-party guides, wiki, Reddit, public mirrors | false | 0 | Corroboration and triage only; never promote to direct first-party description capture. |
 

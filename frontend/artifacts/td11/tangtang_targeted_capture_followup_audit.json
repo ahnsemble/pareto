@@ -186,8 +186,8 @@
   ],
   "status": "[TANGTANG-TARGETED-CAPTURE-FOLLOWUP-AUDIT-GREEN]",
   "summary": {
-    "cumulativeDescriptionSioDivergenceRows": 2,
-    "cumulativeDirectFirstPartyCaptureRows": 12,
+    "cumulativeDescriptionSioDivergenceRows": 4,
+    "cumulativeDirectFirstPartyCaptureRows": 14,
     "descriptionSioDivergenceRowsFromBatch": 2,
     "formulaOrScoringBehaviorChange": false,
     "importedAtomRowsFromBatch": 2,

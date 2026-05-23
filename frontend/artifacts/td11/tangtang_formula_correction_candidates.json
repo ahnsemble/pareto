@@ -11,6 +11,102 @@
   "behaviorChange": false,
   "candidateRows": [
     {
+      "atomRowId": "collectible-set:dreamOrReality:gold:15:atkPercent",
+      "candidateId": "tangtang-correction:collectible-set:dreamOrReality:gold:15:atkPercent:condition:15-to-19",
+      "capturedThreshold": {
+        "metric": "gold",
+        "threshold": 19
+      },
+      "captureId": "td11-capture-20260523-additional-dream-or-reality-gold-atk-percent",
+      "correctionEligibleNow": false,
+      "currentDecision": "Documented correction candidate only. Do not change Tangtang scoring until correction spec plus observed-damage confirmation exists.",
+      "currentSioConditionOrThreshold": "gold >= 15",
+      "currentSioParsedFormulaValue": 4,
+      "descriptionTextOriginal": "누적으로 19개의 금 별 획득\n공격력 +4%",
+      "directDescriptionConditionOrThreshold": "gold >= 19",
+      "directDescriptionParsedFormulaValue": 4,
+      "entityDisplayNameCaptured": "꿈인가 현실인가?",
+      "entityKey": "collectible-set:dreamOrReality",
+      "mismatchFields": [
+        "conditionOrThreshold"
+      ],
+      "mismatchType": "threshold-condition-only",
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "multiplierStageMatchesCurrent": true,
+      "operationBucket": "attack-aggregate",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "proposedTangtangConditionOrThreshold": "gold >= 19",
+      "rawCaptureArtifactCount": 1,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/2.jpg"
+      ],
+      "rawCaptureEvidenceBuckets": [
+        "additional-set-thresholds"
+      ],
+      "requiresObservedDamageFollowUp": true,
+      "rustStatChannel": "atkPercent",
+      "scoringChangeApplied": false,
+      "sioCurrentHandling": "Dream or Reality? gold >= 15: atkPercent +4; tttg_forge_optimizer/src/tech/sio_config.rs:2525",
+      "sioSourceKey": "Dream or Reality?.stars.gold.15.atkPercent",
+      "sioSourcePath": "Dream or Reality?.stars.gold.15.atkPercent",
+      "sourceEntityDisplayName": "Dream or Reality?",
+      "sourceThreshold": {
+        "metric": "gold",
+        "threshold": 15
+      },
+      "statChannelMatchesCurrent": true,
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.dreamOrReality",
+      "valueMatchesCurrent": true
+    },
+    {
+      "atomRowId": "collectible-set:dreamOrReality:red:15:atkPercent",
+      "candidateId": "tangtang-correction:collectible-set:dreamOrReality:red:15:atkPercent:condition:15-to-19",
+      "capturedThreshold": {
+        "metric": "red",
+        "threshold": 19
+      },
+      "captureId": "td11-capture-20260523-additional-dream-or-reality-red-atk-percent",
+      "correctionEligibleNow": false,
+      "currentDecision": "Documented correction candidate only. Do not change Tangtang scoring until correction spec plus observed-damage confirmation exists.",
+      "currentSioConditionOrThreshold": "red >= 15",
+      "currentSioParsedFormulaValue": 6,
+      "descriptionTextOriginal": "누적으로 19개의 빨간 별 획득\n공격력 +6%",
+      "directDescriptionConditionOrThreshold": "red >= 19",
+      "directDescriptionParsedFormulaValue": 6,
+      "entityDisplayNameCaptured": "꿈인가 현실인가?",
+      "entityKey": "collectible-set:dreamOrReality",
+      "mismatchFields": [
+        "conditionOrThreshold"
+      ],
+      "mismatchType": "threshold-condition-only",
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "multiplierStageMatchesCurrent": true,
+      "operationBucket": "attack-aggregate",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "proposedTangtangConditionOrThreshold": "red >= 19",
+      "rawCaptureArtifactCount": 1,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/1.jpg"
+      ],
+      "rawCaptureEvidenceBuckets": [
+        "additional-set-thresholds"
+      ],
+      "requiresObservedDamageFollowUp": true,
+      "rustStatChannel": "atkPercent",
+      "scoringChangeApplied": false,
+      "sioCurrentHandling": "Dream or Reality? red >= 15: atkPercent +6; tttg_forge_optimizer/src/tech/sio_config.rs:2525",
+      "sioSourceKey": "Dream or Reality?.stars.red.15.atkPercent",
+      "sioSourcePath": "Dream or Reality?.stars.red.15.atkPercent",
+      "sourceEntityDisplayName": "Dream or Reality?",
+      "sourceThreshold": {
+        "metric": "red",
+        "threshold": 15
+      },
+      "statChannelMatchesCurrent": true,
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.dreamOrReality",
+      "valueMatchesCurrent": true
+    },
+    {
       "atomRowId": "collectible-set:genesis:gold:15:atkPercent",
       "candidateId": "tangtang-correction:collectible-set:genesis:gold:15:atkPercent:condition:15-to-19",
       "capturedThreshold": {
@@ -134,7 +230,7 @@
       "update Rust/WASM scoring semantics behind a dedicated RED/GREEN behavior test",
       "make the equivalence contract explicit because full SIO equivalence would no longer be the applicable claim for corrected rows"
     ],
-    "whyNotApplied": "The direct first-party description captures repeatedly show a Genesis threshold mismatch, but no correction spec with observed-damage confirmation has been applied yet."
+    "whyNotApplied": "The direct first-party description captures repeatedly show threshold-only collectible set mismatches, but no correction spec with observed-damage confirmation has been applied yet."
   },
   "equivalenceContract": {
     "currentScorer": "sio_full_lm_equivalence",
@@ -157,19 +253,20 @@
   "status": "[TANGTANG-FORMULA-CORRECTION-CANDIDATES-GREEN]",
   "summary": {
     "candidateRowsReadyForScoringChange": 0,
-    "correctionCandidateRows": 2,
+    "correctionCandidateRows": 4,
     "correctionEligibleRows": 0,
     "directObservedDamageTrialCount": 0,
+    "dreamOrRealityThresholdMismatchRows": 2,
     "genesisThresholdMismatchRows": 2,
-    "importedDescriptionCaptureRows": 12,
-    "importedDescriptionDivergenceRows": 2,
+    "importedDescriptionCaptureRows": 14,
+    "importedDescriptionDivergenceRows": 4,
     "multiplierStageMismatchRows": 0,
-    "observedDamageFollowUpRows": 2,
+    "observedDamageFollowUpRows": 4,
     "randomSampleDivergenceRows": 2,
     "statChannelMismatchRows": 0,
     "targetedFollowupDivergenceRows": 2,
     "targetedFollowupReinforcedRows": 2,
-    "thresholdOnlyMismatchRows": 2,
+    "thresholdOnlyMismatchRows": 4,
     "valueMismatchRows": 0
   },
   "title": "Tangtang Formula Correction Candidates",

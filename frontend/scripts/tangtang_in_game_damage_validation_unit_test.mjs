@@ -6,9 +6,9 @@ const root = process.cwd();
 const writeMode = process.argv.includes('--write');
 const matrixPath = path.join(root, 'artifacts/td11/tangtang_in_game_damage_validation_matrix.json');
 const protocolPath = path.join(root, 'artifacts/td11/tangtang_in_game_damage_validation_protocol.md');
-const EXPECTED_IMPORTED_DESCRIPTION_CAPTURE_ROWS = 12;
-const EXPECTED_IMPORTED_DESCRIPTION_DIVERGENCE_ROWS = 2;
-const EXPECTED_IMPORTED_OBSERVED_DAMAGE_FOLLOW_UP_ROWS = 2;
+const EXPECTED_IMPORTED_DESCRIPTION_CAPTURE_ROWS = 14;
+const EXPECTED_IMPORTED_DESCRIPTION_DIVERGENCE_ROWS = 4;
+const EXPECTED_IMPORTED_OBSERVED_DAMAGE_FOLLOW_UP_ROWS = 4;
 
 const SOURCE_INPUTS = [
   'frontend/artifacts/td11/tangtang_damage_formula_spec.json',
@@ -264,7 +264,7 @@ function buildMatrix() {
     directObservedDamageTrials,
     decisionPolicy: {
       initialDecision:
-        'Partial direct first-party description capture rows exist; imported Genesis set rows currently produce description/SIO divergence candidates, so direct observed damage follow-up is allowed only for those divergent variables and no Tangtang correction is applied yet.',
+        'Partial direct first-party description capture rows exist; imported collectible set rows currently produce description/SIO divergence candidates, so direct observed damage follow-up is allowed only for those divergent variables and no Tangtang correction is applied yet.',
       canClaimSioFormulaInGameCorrect: false,
       canApplyTangtangFormulaCorrection: false,
       canRunObservedDamageFollowUpWithoutDescriptionDivergence: false,

@@ -9,12 +9,14 @@ const root = process.cwd();
 const buildDir = path.join(tmpdir(), 'pareto-damage-formula-provenance');
 const matrixPath = path.join(root, 'artifacts/td11/damage_formula_provenance_matrix.md');
 const writeMode = process.argv.includes('--write');
-const EXPECTED_DESCRIPTION_CAPTURE_ROWS = 12;
+const EXPECTED_DESCRIPTION_CAPTURE_ROWS = 14;
 const EXPECTED_DESCRIPTION_CAPTURE_MATCHED_ROWS = 10;
-const EXPECTED_DESCRIPTION_CAPTURE_DIVERGENCE_ROWS = 2;
-const EXPECTED_DESCRIPTION_CAPTURE_OBSERVED_FOLLOW_UP_ROWS = 2;
-const EXPECTED_FORMULA_ATOM_ROWS_REMAINING_WITHOUT_DIRECT_CAPTURE = 209;
-const EXPECTED_FORMULA_CORRECTION_CANDIDATE_ROWS = 2;
+const EXPECTED_DESCRIPTION_CAPTURE_DIVERGENCE_ROWS = 4;
+const EXPECTED_DESCRIPTION_CAPTURE_OBSERVED_FOLLOW_UP_ROWS = 4;
+const EXPECTED_FORMULA_ATOM_ROWS_REMAINING_WITHOUT_DIRECT_CAPTURE = 207;
+const EXPECTED_FORMULA_CORRECTION_CANDIDATE_ROWS = 4;
+const EXPECTED_GENESIS_CORRECTION_CANDIDATE_ROWS = 2;
+const EXPECTED_DREAM_OR_REALITY_CORRECTION_CANDIDATE_ROWS = 2;
 
 const CONFIDENCE = new Set([
   'sio-live-equivalent',
@@ -177,6 +179,13 @@ const tangtangTargetedCaptureFollowupAuditPath = path.join(
 );
 const tangtangTargetedCaptureFollowupAudit = JSON.parse(
   await fs.readFile(tangtangTargetedCaptureFollowupAuditPath, 'utf8'),
+);
+const tangtangAdditionalSetThresholdCaptureAuditPath = path.join(
+  root,
+  'artifacts/td11/tangtang_additional_set_threshold_capture_audit.json',
+);
+const tangtangAdditionalSetThresholdCaptureAudit = JSON.parse(
+  await fs.readFile(tangtangAdditionalSetThresholdCaptureAuditPath, 'utf8'),
 );
 const tangtangFormulaCorrectionCandidatesPath = path.join(
   root,
@@ -789,12 +798,12 @@ assert.equal(
 );
 assert.equal(
   tangtangRandomCaptureSampleAudit.summary.descriptionSioDivergenceRowsFromBatch,
-  EXPECTED_DESCRIPTION_CAPTURE_DIVERGENCE_ROWS,
+  2,
   'random capture sample divergence count changed',
 );
 assert.equal(
   tangtangRandomCaptureSampleAudit.summary.observedDamageFollowUpRowsFromBatch,
-  EXPECTED_DESCRIPTION_CAPTURE_OBSERVED_FOLLOW_UP_ROWS,
+  2,
   'random capture sample observed-damage follow-up count changed',
 );
 assert.equal(
@@ -814,13 +823,38 @@ assert.equal(
 );
 assert.equal(
   tangtangTargetedCaptureFollowupAudit.summary.descriptionSioDivergenceRowsFromBatch,
-  EXPECTED_DESCRIPTION_CAPTURE_DIVERGENCE_ROWS,
+  2,
   'targeted capture follow-up divergence count changed',
 );
 assert.equal(
   tangtangTargetedCaptureFollowupAudit.summary.reinforcedExistingAtomRowsFromBatch,
   2,
   'targeted capture follow-up must reinforce the existing Genesis divergence candidates',
+);
+assert.equal(
+  tangtangAdditionalSetThresholdCaptureAudit.status,
+  '[TANGTANG-ADDITIONAL-SET-THRESHOLD-CAPTURE-AUDIT-GREEN]',
+  'additional set threshold capture audit status changed',
+);
+assert.equal(
+  tangtangAdditionalSetThresholdCaptureAudit.summary.submittedRawImages,
+  4,
+  'additional set threshold raw image count changed',
+);
+assert.equal(
+  tangtangAdditionalSetThresholdCaptureAudit.summary.importedAtomRowsFromBatch,
+  2,
+  'additional set threshold imported row count changed',
+);
+assert.equal(
+  tangtangAdditionalSetThresholdCaptureAudit.summary.descriptionSioDivergenceRowsFromBatch,
+  2,
+  'additional set threshold divergence count changed',
+);
+assert.equal(
+  tangtangAdditionalSetThresholdCaptureAudit.summary.nonImportedEvidenceGroups,
+  1,
+  'additional set threshold non-imported group count changed',
 );
 assert.equal(
   tangtangFormulaCorrectionCandidates.status,
@@ -844,23 +878,28 @@ assert.equal(
 );
 assert.equal(
   tangtangFormulaCorrectionCandidates.summary.genesisThresholdMismatchRows,
-  EXPECTED_FORMULA_CORRECTION_CANDIDATE_ROWS,
+  EXPECTED_GENESIS_CORRECTION_CANDIDATE_ROWS,
   'Genesis threshold mismatch candidate row count changed',
+);
+assert.equal(
+  tangtangFormulaCorrectionCandidates.summary.dreamOrRealityThresholdMismatchRows,
+  EXPECTED_DREAM_OR_REALITY_CORRECTION_CANDIDATE_ROWS,
+  'Dream or Reality? threshold mismatch candidate row count changed',
 );
 assert.equal(
   tangtangFormulaCorrectionCandidates.summary.thresholdOnlyMismatchRows,
   EXPECTED_FORMULA_CORRECTION_CANDIDATE_ROWS,
-  'Genesis correction candidates must remain threshold-only mismatches',
+  'formula correction candidates must remain threshold-only mismatches',
 );
 assert.equal(
   tangtangFormulaCorrectionCandidates.summary.valueMismatchRows,
   0,
-  'Genesis correction candidates must not include value mismatches',
+  'formula correction candidates must not include value mismatches',
 );
 assert.equal(
   tangtangFormulaCorrectionCandidates.summary.statChannelMismatchRows,
   0,
-  'Genesis correction candidates must not include stat-channel mismatches',
+  'formula correction candidates must not include stat-channel mismatches',
 );
 assert.equal(
   tangtangFormulaCorrectionCandidates.summary.directObservedDamageTrialCount,
@@ -875,10 +914,12 @@ assert.equal(
 assert.deepEqual(
   tangtangFormulaCorrectionCandidates.candidateRows.map((row) => row.atomRowId),
   [
+    'collectible-set:dreamOrReality:gold:15:atkPercent',
+    'collectible-set:dreamOrReality:red:15:atkPercent',
     'collectible-set:genesis:gold:15:atkPercent',
     'collectible-set:genesis:red:15:atkPercent',
   ],
-  'formula correction candidates must stay limited to the two Genesis threshold rows',
+  'formula correction candidates must stay limited to direct first-party threshold-only rows',
 );
 assert.ok(
   tangtangFormulaCorrectionCandidates.candidateRows.every((row) => (
@@ -888,7 +929,7 @@ assert.ok(
     row.statChannelMatchesCurrent &&
     !row.scoringChangeApplied
   )),
-  'Genesis candidates must preserve the 15-to-19 threshold-only mismatch without scoring changes',
+  'formula correction candidates must preserve the 15-to-19 threshold-only mismatch without scoring changes',
 );
 assert.ok(
   tangtangFormulaCorrectionCandidatesMarkdown.includes('Can apply Tangtang correction now: `false`'),
@@ -1340,6 +1381,23 @@ ${tangtangTargetedCaptureFollowupAudit.decision.directObservedDamageFollowUpOpen
 - Energy Guidance System, custom collection, Taloxia, collaboration battle, locked collectible, and Tech Hoverboard tooltip evidence remains preserved as raw direct evidence outside the current 221-row description atom ledger.
 - Formula/scoring/UI behavior did not change.
 
+## Additional Set Threshold Capture Audit
+
+- The latest 4-image additional set threshold capture batch is summarized in:
+  - \`frontend/artifacts/td11/tangtang_additional_set_threshold_capture_audit.json\`
+  - \`frontend/artifacts/td11/tangtang_additional_set_threshold_capture_audit.md\`
+- Audit status: \`${tangtangAdditionalSetThresholdCaptureAudit.status}\`
+- Raw images submitted: ${tangtangAdditionalSetThresholdCaptureAudit.summary.submittedRawImages}
+- Imported atom rows from batch: ${tangtangAdditionalSetThresholdCaptureAudit.summary.importedAtomRowsFromBatch}
+- Description/SIO divergence rows from batch: ${tangtangAdditionalSetThresholdCaptureAudit.summary.descriptionSioDivergenceRowsFromBatch}
+- Correction candidate rows from batch: ${tangtangAdditionalSetThresholdCaptureAudit.summary.correctionCandidateRowsFromBatch}
+- Non-imported evidence groups: ${tangtangAdditionalSetThresholdCaptureAudit.summary.nonImportedEvidenceGroups}
+- Imported/candidate atom rows:
+${tangtangAdditionalSetThresholdCaptureAudit.decision.importedAsDamageFormulaCandidates.map((rowId) => `  - \`${rowId}\``).join('\n')}
+- The Dream or Reality? captures are damage-relevant threshold-only divergence candidates.
+- The HP-only set captures are preserved as raw direct evidence outside the damage formula atom ledger.
+- Formula/scoring/UI behavior did not change.
+
 ## Formula Correction Candidates
 
 - Description-derived correction candidates are tracked separately from SIO-equivalent formula derivation:
@@ -1349,6 +1407,7 @@ ${tangtangTargetedCaptureFollowupAudit.decision.directObservedDamageFollowUpOpen
 - Gate claim: \`${tangtangFormulaCorrectionCandidates.claim}\`
 - Correction candidate rows: ${tangtangFormulaCorrectionCandidates.summary.correctionCandidateRows}
 - Genesis threshold mismatch rows: ${tangtangFormulaCorrectionCandidates.summary.genesisThresholdMismatchRows}
+- Dream or Reality? threshold mismatch rows: ${tangtangFormulaCorrectionCandidates.summary.dreamOrRealityThresholdMismatchRows}
 - Threshold-only mismatch rows: ${tangtangFormulaCorrectionCandidates.summary.thresholdOnlyMismatchRows}
 - Value mismatch rows: ${tangtangFormulaCorrectionCandidates.summary.valueMismatchRows}
 - Stat-channel mismatch rows: ${tangtangFormulaCorrectionCandidates.summary.statChannelMismatchRows}

@@ -21,6 +21,8 @@ const SOURCE_INPUTS = [
 ];
 
 const EXPECTED_CANDIDATE_ROW_IDS = [
+  'collectible-set:dreamOrReality:gold:15:atkPercent',
+  'collectible-set:dreamOrReality:red:15:atkPercent',
   'collectible-set:genesis:gold:15:atkPercent',
   'collectible-set:genesis:red:15:atkPercent',
 ];
@@ -72,6 +74,9 @@ function rawCaptureEvidenceBuckets(paths) {
     }
     if (artifactPath.includes('/2026-05-23-targeted-followup/')) {
       buckets.add('targeted-followup');
+    }
+    if (artifactPath.includes('/2026-05-23-additional-set-thresholds/')) {
+      buckets.add('additional-set-thresholds');
     }
   }
   return [...buckets].sort();
@@ -160,6 +165,7 @@ function buildCandidateRows() {
 function buildMatrix() {
   const candidateRows = buildCandidateRows();
   const genesisRows = candidateRows.filter((row) => row.entityKey === 'collectible-set:genesis');
+  const dreamOrRealityRows = candidateRows.filter((row) => row.entityKey === 'collectible-set:dreamOrReality');
   const thresholdOnlyRows = candidateRows.filter((row) => (
     row.mismatchType === 'threshold-condition-only' &&
     row.mismatchFields.length === 1 &&
@@ -195,6 +201,7 @@ function buildMatrix() {
     summary: {
       correctionCandidateRows: candidateRows.length,
       genesisThresholdMismatchRows: genesisRows.length,
+      dreamOrRealityThresholdMismatchRows: dreamOrRealityRows.length,
       thresholdOnlyMismatchRows: thresholdOnlyRows.length,
       valueMismatchRows: valueMismatchRows.length,
       statChannelMismatchRows: statChannelMismatchRows.length,
@@ -215,7 +222,7 @@ function buildMatrix() {
       canChangeScoringNow: false,
       canKeepCurrentTangtangFormulaNow: true,
       whyNotApplied:
-        'The direct first-party description captures repeatedly show a Genesis threshold mismatch, but no correction spec with observed-damage confirmation has been applied yet.',
+        'The direct first-party description captures repeatedly show threshold-only collectible set mismatches, but no correction spec with observed-damage confirmation has been applied yet.',
       requiredBeforeApplication: [
         'keep the candidate isolated from SIO-equivalent source/live claims',
         'write an explicit Tangtang correction spec that supersedes SIO only for the affected rows',
@@ -276,6 +283,7 @@ Current decision:
 
 - Correction candidate rows: ${matrix.summary.correctionCandidateRows}
 - Genesis threshold mismatch rows: ${matrix.summary.genesisThresholdMismatchRows}
+- Dream or Reality? threshold mismatch rows: ${matrix.summary.dreamOrRealityThresholdMismatchRows}
 - Threshold-only mismatch rows: ${matrix.summary.thresholdOnlyMismatchRows}
 - Value mismatch rows: ${matrix.summary.valueMismatchRows}
 - Stat-channel mismatch rows: ${matrix.summary.statChannelMismatchRows}
@@ -324,15 +332,16 @@ assert.equal(matrix.equivalenceContract.scorer, 'sio_full_lm_equivalence');
 assert.equal(matrix.correctionScope.scoringChangeApplied, false);
 assert.equal(matrix.correctionScope.formulaSemanticsChanged, false);
 assert.equal(matrix.correctionScope.userFacingUiChanged, false);
-assert.equal(matrix.summary.correctionCandidateRows, 2);
+assert.equal(matrix.summary.correctionCandidateRows, 4);
 assert.equal(matrix.summary.genesisThresholdMismatchRows, 2);
-assert.equal(matrix.summary.thresholdOnlyMismatchRows, 2);
+assert.equal(matrix.summary.dreamOrRealityThresholdMismatchRows, 2);
+assert.equal(matrix.summary.thresholdOnlyMismatchRows, 4);
 assert.equal(matrix.summary.valueMismatchRows, 0);
 assert.equal(matrix.summary.statChannelMismatchRows, 0);
 assert.equal(matrix.summary.multiplierStageMismatchRows, 0);
-assert.equal(matrix.summary.importedDescriptionCaptureRows, 12);
-assert.equal(matrix.summary.importedDescriptionDivergenceRows, 2);
-assert.equal(matrix.summary.observedDamageFollowUpRows, 2);
+assert.equal(matrix.summary.importedDescriptionCaptureRows, 14);
+assert.equal(matrix.summary.importedDescriptionDivergenceRows, 4);
+assert.equal(matrix.summary.observedDamageFollowUpRows, 4);
 assert.equal(matrix.summary.correctionEligibleRows, 0);
 assert.equal(matrix.summary.randomSampleDivergenceRows, 2);
 assert.equal(matrix.summary.targetedFollowupDivergenceRows, 2);
@@ -346,37 +355,59 @@ assert.ok(matrix.candidateRows.every((row) => row.valueMatchesCurrent));
 assert.ok(matrix.candidateRows.every((row) => row.statChannelMatchesCurrent));
 assert.ok(matrix.candidateRows.every((row) => row.multiplierStageMatchesCurrent));
 assert.ok(matrix.candidateRows.every((row) => row.rustStatChannel === 'atkPercent'));
-assert.ok(matrix.candidateRows.every((row) => row.rawCaptureArtifactCount === 2));
-assert.ok(matrix.candidateRows.every((row) => row.rawCaptureEvidenceBuckets.join(',') === 'random-sample,targeted-followup'));
 assert.equal(
-  matrix.candidateRows.find((row) => row.atomRowId.includes(':gold:'))?.currentSioConditionOrThreshold,
+  matrix.candidateRows.find((row) => row.atomRowId === 'collectible-set:genesis:gold:15:atkPercent')?.rawCaptureEvidenceBuckets.join(','),
+  'random-sample,targeted-followup',
+);
+assert.equal(
+  matrix.candidateRows.find((row) => row.atomRowId === 'collectible-set:genesis:red:15:atkPercent')?.rawCaptureEvidenceBuckets.join(','),
+  'random-sample,targeted-followup',
+);
+assert.equal(
+  matrix.candidateRows.find((row) => row.atomRowId === 'collectible-set:dreamOrReality:gold:15:atkPercent')?.rawCaptureEvidenceBuckets.join(','),
+  'additional-set-thresholds',
+);
+assert.equal(
+  matrix.candidateRows.find((row) => row.atomRowId === 'collectible-set:dreamOrReality:red:15:atkPercent')?.rawCaptureEvidenceBuckets.join(','),
+  'additional-set-thresholds',
+);
+assert.equal(
+  matrix.candidateRows.find((row) => row.atomRowId === 'collectible-set:genesis:gold:15:atkPercent')?.currentSioConditionOrThreshold,
   'gold >= 15',
 );
 assert.equal(
-  matrix.candidateRows.find((row) => row.atomRowId.includes(':gold:'))?.directDescriptionConditionOrThreshold,
+  matrix.candidateRows.find((row) => row.atomRowId === 'collectible-set:genesis:gold:15:atkPercent')?.directDescriptionConditionOrThreshold,
   'gold >= 19',
 );
 assert.equal(
-  matrix.candidateRows.find((row) => row.atomRowId.includes(':gold:'))?.directDescriptionParsedFormulaValue,
+  matrix.candidateRows.find((row) => row.atomRowId === 'collectible-set:genesis:gold:15:atkPercent')?.directDescriptionParsedFormulaValue,
   4,
 );
 assert.equal(
-  matrix.candidateRows.find((row) => row.atomRowId.includes(':red:'))?.currentSioConditionOrThreshold,
+  matrix.candidateRows.find((row) => row.atomRowId === 'collectible-set:genesis:red:15:atkPercent')?.currentSioConditionOrThreshold,
   'red >= 15',
 );
 assert.equal(
-  matrix.candidateRows.find((row) => row.atomRowId.includes(':red:'))?.directDescriptionConditionOrThreshold,
+  matrix.candidateRows.find((row) => row.atomRowId === 'collectible-set:genesis:red:15:atkPercent')?.directDescriptionConditionOrThreshold,
   'red >= 19',
 );
 assert.equal(
-  matrix.candidateRows.find((row) => row.atomRowId.includes(':red:'))?.directDescriptionParsedFormulaValue,
+  matrix.candidateRows.find((row) => row.atomRowId === 'collectible-set:genesis:red:15:atkPercent')?.directDescriptionParsedFormulaValue,
   6,
+);
+assert.equal(
+  matrix.candidateRows.find((row) => row.atomRowId === 'collectible-set:dreamOrReality:gold:15:atkPercent')?.directDescriptionConditionOrThreshold,
+  'gold >= 19',
+);
+assert.equal(
+  matrix.candidateRows.find((row) => row.atomRowId === 'collectible-set:dreamOrReality:red:15:atkPercent')?.directDescriptionConditionOrThreshold,
+  'red >= 19',
 );
 assert.equal(matrix.decisionPolicy.currentCorrectionStatus, 'candidate-documented-not-applied');
 assert.equal(matrix.decisionPolicy.canApplyTangtangFormulaCorrectionNow, false);
 assert.equal(matrix.decisionPolicy.canChangeScoringNow, false);
 assert.equal(matrix.decisionPolicy.canKeepCurrentTangtangFormulaNow, true);
-assert.ok(captureImportProtocol.includes('Description/SIO divergence rows: 2'));
+assert.ok(captureImportProtocol.includes('Description/SIO divergence rows: 4'));
 assert.ok(randomCaptureAuditMarkdown.includes('Genesis'));
 assert.ok(targetedFollowupAuditMarkdown.includes('Genesis'));
 assert.ok(inGameDamageValidationProtocol.includes('Direct observed in-game damage trials: 0'));

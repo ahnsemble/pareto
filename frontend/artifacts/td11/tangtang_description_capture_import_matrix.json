@@ -326,6 +326,58 @@
         "transcriptionNotes": "Manual transcription from submitted in-game screenshots. Visible Korean condition says cumulative 19 gold stars in both the random sample and targeted follow-up captures, which intentionally preserves a condition mismatch against the current source-derived atom id."
       },
       {
+        "atomRowId": "collectible-set:dreamOrReality:red:15:atkPercent",
+        "captureDateKst": "2026-05-23",
+        "captureEvidenceTier": "direct-first-party-description",
+        "captureId": "td11-capture-20260523-additional-dream-or-reality-red-atk-percent",
+        "conditionOrThreshold": "red >= 19",
+        "descriptionTextEnglishTranslation": "Dream or Reality? set: cumulative 19 red stars obtained: attack +6%.",
+        "descriptionTextOriginal": "누적으로 19개의 빨간 별 획득\n공격력 +6%",
+        "devicePlatform": "unknown",
+        "entityDisplayNameCaptured": "꿈인가 현실인가?",
+        "gameVersion": "not-visible-in-submitted-capture",
+        "language": "ko-KR",
+        "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+        "ocrTextRaw": "",
+        "operationBucket": "attack-aggregate",
+        "parsedFormulaOperation": "threshold_add_percent",
+        "parsedFormulaValue": 6,
+        "rawCaptureArtifactPaths": [
+          "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/1.jpg"
+        ],
+        "rustStatChannel": "atkPercent",
+        "screenContext": "collectible set detail / Dream or Reality? set bonus list",
+        "sourceKind": "direct-first-party-in-game",
+        "transcriptionConfidence": "high",
+        "transcriptionNotes": "Manual transcription from submitted in-game screenshot. Visible Korean condition says cumulative 19 red stars, preserving a condition mismatch against the current source-derived atom id."
+      },
+      {
+        "atomRowId": "collectible-set:dreamOrReality:gold:15:atkPercent",
+        "captureDateKst": "2026-05-23",
+        "captureEvidenceTier": "direct-first-party-description",
+        "captureId": "td11-capture-20260523-additional-dream-or-reality-gold-atk-percent",
+        "conditionOrThreshold": "gold >= 19",
+        "descriptionTextEnglishTranslation": "Dream or Reality? set: cumulative 19 gold stars obtained: attack +4%.",
+        "descriptionTextOriginal": "누적으로 19개의 금 별 획득\n공격력 +4%",
+        "devicePlatform": "unknown",
+        "entityDisplayNameCaptured": "꿈인가 현실인가?",
+        "gameVersion": "not-visible-in-submitted-capture",
+        "language": "ko-KR",
+        "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+        "ocrTextRaw": "",
+        "operationBucket": "attack-aggregate",
+        "parsedFormulaOperation": "threshold_add_percent",
+        "parsedFormulaValue": 4,
+        "rawCaptureArtifactPaths": [
+          "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/2.jpg"
+        ],
+        "rustStatChannel": "atkPercent",
+        "screenContext": "collectible set detail / Dream or Reality? set bonus list",
+        "sourceKind": "direct-first-party-in-game",
+        "transcriptionConfidence": "high",
+        "transcriptionNotes": "Manual transcription from submitted in-game screenshot. Visible Korean condition says cumulative 19 gold stars, preserving a condition mismatch against the current source-derived atom id."
+      },
+      {
         "atomRowId": "collectible-item:instellarTransitionMatrixDesign:stars:8:critRate",
         "captureDateKst": "2026-05-23",
         "captureEvidenceTier": "direct-first-party-description",
@@ -370,6 +422,8 @@
   "firstPartyCaptureCoverage": {
     "capturedAtomRowIds": [
       "collectible-item:instellarTransitionMatrixDesign:stars:8:critRate",
+      "collectible-set:dreamOrReality:gold:15:atkPercent",
+      "collectible-set:dreamOrReality:red:15:atkPercent",
       "collectible-set:genesis:gold:15:atkPercent",
       "collectible-set:genesis:red:15:atkPercent",
       "mount:doomsteed:line:1:poisoned",
@@ -382,10 +436,14 @@
       "mount:doomsteed:line:7:poisoned",
       "mount:doomsteed:line:8:damageBoss"
     ],
-    "capturedAtomRows": 12,
+    "capturedAtomRows": 14,
     "capturedAtomRowsByEntityKey": {
       "collectible-item:instellarTransitionMatrixDesign": [
         "collectible-item:instellarTransitionMatrixDesign:stars:8:critRate"
+      ],
+      "collectible-set:dreamOrReality": [
+        "collectible-set:dreamOrReality:gold:15:atkPercent",
+        "collectible-set:dreamOrReality:red:15:atkPercent"
       ],
       "collectible-set:genesis": [
         "collectible-set:genesis:gold:15:atkPercent",
@@ -405,16 +463,20 @@
     },
     "domains": [
       "collectible-item:instellarTransitionMatrixDesign",
+      "collectible-set:dreamOrReality",
       "collectible-set:genesis",
       "mount:doomsteed"
     ],
-    "formulaAtomRowsRemainingWithoutDirectCapture": 209,
+    "formulaAtomRowsRemainingWithoutDirectCapture": 207,
     "importedEntityDisplayNames": [
+      "꿈인가 현실인가?",
       "종말의 전투마",
       "창세기",
       "천체 초월 행렬 도면"
     ],
     "importedRawArtifacts": [
+      "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/1.jpg",
+      "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/2.jpg",
       "frontend/artifacts/td11/captures/2026-05-23-doomsteed-lines-1-4.jpg",
       "frontend/artifacts/td11/captures/2026-05-23-doomsteed-lines-5-8.jpg",
       "frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg",
@@ -427,6 +489,162 @@
   },
   "generatedAtKst": "2026-05-23",
   "importedCaptureRows": [
+    {
+      "atomRowId": "collectible-set:dreamOrReality:gold:15:atkPercent",
+      "atomSnapshotBeforeCaptureImport": {
+        "atomType": "collectible-threshold-source-claim",
+        "caveats": [
+          "This atom must not change Tangtang scoring until direct description-derived comparison produces a divergence.",
+          "Collectible item/set direct in-game description capture remains incomplete."
+        ],
+        "comparisonVerdict": "insufficient-direct-description-evidence",
+        "conditionOrThreshold": "gold >= 15",
+        "correctionEligible": false,
+        "domain": "set-threshold",
+        "entityDisplayName": "Dream or Reality?",
+        "entityKey": "collectible-set:dreamOrReality",
+        "evidenceStatus": "sio-source-only",
+        "evidenceTier": "sio-tools-current-source-derived",
+        "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+        "operationBucket": "attack-aggregate",
+        "parsedFormulaOperation": "threshold_add_percent",
+        "parsedFormulaValue": 4,
+        "provenanceArtifactPaths": [
+          "frontend/artifacts/td11/collectible_effect_mapping_matrix.json",
+          "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json"
+        ],
+        "rawCaptureArtifactPaths": [],
+        "requiresDirectDescriptionCapture": true,
+        "requiresObservedDamageFollowUp": false,
+        "rowId": "collectible-set:dreamOrReality:gold:15:atkPercent",
+        "rustStatChannel": "atkPercent",
+        "sioCurrentHandling": "Dream or Reality? gold >= 15: atkPercent +4; tttg_forge_optimizer/src/tech/sio_config.rs:2525",
+        "sioSourceKey": "Dream or Reality?.stars.gold.15.atkPercent",
+        "sioSourcePath": "Dream or Reality?.stars.gold.15.atkPercent",
+        "sourceText": "Dream or Reality? gold >= 15: atkPercent +4",
+        "sourceTextStatus": "not independently captured",
+        "stageId": null,
+        "statChannel": "atkPercent",
+        "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.dreamOrReality"
+      },
+      "captureDateKst": "2026-05-23",
+      "captureEvidenceTier": "direct-first-party-description",
+      "captureId": "td11-capture-20260523-additional-dream-or-reality-gold-atk-percent",
+      "comparisonVerdict": "description-sio-divergent-needs-confirmation",
+      "conditionOrThreshold": "gold >= 19",
+      "correctionEligible": false,
+      "descriptionTextEnglishTranslation": "Dream or Reality? set: cumulative 19 gold stars obtained: attack +4%.",
+      "descriptionTextOriginal": "누적으로 19개의 금 별 획득\n공격력 +4%",
+      "devicePlatform": "unknown",
+      "directCaptureEvidence": {
+        "captureEvidenceTier": "direct-first-party-description",
+        "captureId": "td11-capture-20260523-additional-dream-or-reality-gold-atk-percent",
+        "rawCaptureArtifactPaths": [
+          "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/2.jpg"
+        ],
+        "sourceKind": "direct-first-party-in-game"
+      },
+      "entityDisplayNameCaptured": "꿈인가 현실인가?",
+      "gameVersion": "not-visible-in-submitted-capture",
+      "importStatus": "accepted",
+      "language": "ko-KR",
+      "mismatchFields": [
+        "conditionOrThreshold"
+      ],
+      "missingRequiredFields": [],
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "ocrTextRaw": "",
+      "operationBucket": "attack-aggregate",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "parsedFormulaValue": 4,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/2.jpg"
+      ],
+      "requiresObservedDamageFollowUp": true,
+      "rustStatChannel": "atkPercent",
+      "screenContext": "collectible set detail / Dream or Reality? set bonus list",
+      "sourceKind": "direct-first-party-in-game",
+      "transcriptionConfidence": "high",
+      "transcriptionNotes": "Manual transcription from submitted in-game screenshot. Visible Korean condition says cumulative 19 gold stars, preserving a condition mismatch against the current source-derived atom id."
+    },
+    {
+      "atomRowId": "collectible-set:dreamOrReality:red:15:atkPercent",
+      "atomSnapshotBeforeCaptureImport": {
+        "atomType": "collectible-threshold-source-claim",
+        "caveats": [
+          "This atom must not change Tangtang scoring until direct description-derived comparison produces a divergence.",
+          "Collectible item/set direct in-game description capture remains incomplete."
+        ],
+        "comparisonVerdict": "insufficient-direct-description-evidence",
+        "conditionOrThreshold": "red >= 15",
+        "correctionEligible": false,
+        "domain": "set-threshold",
+        "entityDisplayName": "Dream or Reality?",
+        "entityKey": "collectible-set:dreamOrReality",
+        "evidenceStatus": "sio-source-only",
+        "evidenceTier": "sio-tools-current-source-derived",
+        "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+        "operationBucket": "attack-aggregate",
+        "parsedFormulaOperation": "threshold_add_percent",
+        "parsedFormulaValue": 6,
+        "provenanceArtifactPaths": [
+          "frontend/artifacts/td11/collectible_effect_mapping_matrix.json",
+          "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json"
+        ],
+        "rawCaptureArtifactPaths": [],
+        "requiresDirectDescriptionCapture": true,
+        "requiresObservedDamageFollowUp": false,
+        "rowId": "collectible-set:dreamOrReality:red:15:atkPercent",
+        "rustStatChannel": "atkPercent",
+        "sioCurrentHandling": "Dream or Reality? red >= 15: atkPercent +6; tttg_forge_optimizer/src/tech/sio_config.rs:2525",
+        "sioSourceKey": "Dream or Reality?.stars.red.15.atkPercent",
+        "sioSourcePath": "Dream or Reality?.stars.red.15.atkPercent",
+        "sourceText": "Dream or Reality? red >= 15: atkPercent +6",
+        "sourceTextStatus": "not independently captured",
+        "stageId": null,
+        "statChannel": "atkPercent",
+        "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.dreamOrReality"
+      },
+      "captureDateKst": "2026-05-23",
+      "captureEvidenceTier": "direct-first-party-description",
+      "captureId": "td11-capture-20260523-additional-dream-or-reality-red-atk-percent",
+      "comparisonVerdict": "description-sio-divergent-needs-confirmation",
+      "conditionOrThreshold": "red >= 19",
+      "correctionEligible": false,
+      "descriptionTextEnglishTranslation": "Dream or Reality? set: cumulative 19 red stars obtained: attack +6%.",
+      "descriptionTextOriginal": "누적으로 19개의 빨간 별 획득\n공격력 +6%",
+      "devicePlatform": "unknown",
+      "directCaptureEvidence": {
+        "captureEvidenceTier": "direct-first-party-description",
+        "captureId": "td11-capture-20260523-additional-dream-or-reality-red-atk-percent",
+        "rawCaptureArtifactPaths": [
+          "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/1.jpg"
+        ],
+        "sourceKind": "direct-first-party-in-game"
+      },
+      "entityDisplayNameCaptured": "꿈인가 현실인가?",
+      "gameVersion": "not-visible-in-submitted-capture",
+      "importStatus": "accepted",
+      "language": "ko-KR",
+      "mismatchFields": [
+        "conditionOrThreshold"
+      ],
+      "missingRequiredFields": [],
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "ocrTextRaw": "",
+      "operationBucket": "attack-aggregate",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "parsedFormulaValue": 6,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/1.jpg"
+      ],
+      "requiresObservedDamageFollowUp": true,
+      "rustStatChannel": "atkPercent",
+      "screenContext": "collectible set detail / Dream or Reality? set bonus list",
+      "sourceKind": "direct-first-party-in-game",
+      "transcriptionConfidence": "high",
+      "transcriptionNotes": "Manual transcription from submitted in-game screenshot. Visible Korean condition says cumulative 19 red stars, preserving a condition mismatch against the current source-derived atom id."
+    },
     {
       "atomRowId": "mount:doomsteed:line:1:poisoned",
       "atomSnapshotBeforeCaptureImport": {
@@ -1376,16 +1594,16 @@
   ],
   "status": "[TANGTANG-DESCRIPTION-CAPTURE-IMPORT-GATE-READY]",
   "summary": {
-    "acceptedCaptureRows": 12,
+    "acceptedCaptureRows": 14,
     "ambiguousRows": 0,
-    "captureInboxRows": 12,
+    "captureInboxRows": 14,
     "correctionEligibleRows": 0,
-    "descriptionSioDivergenceRows": 2,
-    "directFirstPartyDescriptionCaptureRows": 12,
-    "importedCaptureRows": 12,
+    "descriptionSioDivergenceRows": 4,
+    "directFirstPartyDescriptionCaptureRows": 14,
+    "importedCaptureRows": 14,
     "matchedSioRows": 10,
-    "observedDamageFollowUpRows": 2,
-    "parsedDescriptionFormulaRows": 12,
+    "observedDamageFollowUpRows": 4,
+    "parsedDescriptionFormulaRows": 14,
     "rejectedCaptureRows": 0
   },
   "title": "Tangtang Description Capture Import Gate",
