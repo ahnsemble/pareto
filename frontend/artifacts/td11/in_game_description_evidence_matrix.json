@@ -1,0 +1,698 @@
+{
+  "behaviorChange": false,
+  "generatedAtKst": "2026-05-23",
+  "matrixVersion": "in-game-description-evidence-v1",
+  "purpose": "Evidence ledger for public-web/in-game-description-adjacent claims before any formula semantic change. It deliberately separates public guide/community evidence, current public worker source tables, and live replay evidence.",
+  "rows": [
+    {
+      "caveat": "Do not promote mount line stats to in-game-description-verified until exact in-game text/screenshot or first-party data is captured.",
+      "displayName": "Doomsteed",
+      "domain": "mount",
+      "evidenceState": "public-web-system-evidence-plus-current-source-only",
+      "exactInGameDescriptionStatus": "not-found-public-web",
+      "key": "mount:doomsteed",
+      "lineClaims": [
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 1,
+          "multiplierStage": "en4 target status damage",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "poisoned",
+          "sourceKey": "poisoned",
+          "sourcePath": "mounts.Doomsteed.lines.1.poisoned",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.doomsteed.lines.1.poisoned",
+          "value": 20
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 3,
+          "multiplierStage": "en4 target status damage",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "poisoned",
+          "sourceKey": "poisoned",
+          "sourcePath": "mounts.Doomsteed.lines.3.poisoned",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.doomsteed.lines.3.poisoned",
+          "value": 40
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 3,
+          "multiplierStage": "skillDamage direct stat channel",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "skillDamage",
+          "sourceKey": "skillDamage",
+          "sourcePath": "mounts.Doomsteed.lines.3.skillDamage",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.doomsteed.lines.3.skillDamage",
+          "value": 50
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 4,
+          "multiplierStage": "skillDamage direct stat channel",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "skillDamage",
+          "sourceKey": "skillDamage",
+          "sourcePath": "mounts.Doomsteed.lines.4.skillDamage",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.doomsteed.lines.4.skillDamage",
+          "value": 150
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 6,
+          "multiplierStage": "en4 target status damage",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "poisoned",
+          "sourceKey": "poisoned",
+          "sourcePath": "mounts.Doomsteed.lines.6.poisoned",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.doomsteed.lines.6.poisoned",
+          "value": 60
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 6,
+          "multiplierStage": "en8 laceration/divine fire",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "laceration",
+          "sourceKey": "laceration",
+          "sourcePath": "mounts.Doomsteed.lines.6.laceration",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.doomsteed.lines.6.laceration",
+          "value": 30
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 7,
+          "multiplierStage": "en4 target status damage",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "poisoned",
+          "sourceKey": "poisoned",
+          "sourcePath": "mounts.Doomsteed.lines.7.poisoned",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.doomsteed.lines.7.poisoned",
+          "value": 80
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 7,
+          "multiplierStage": "en22 boss damage",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "damageBoss",
+          "sourceKey": "damageBoss",
+          "sourcePath": "mounts.Doomsteed.lines.7.damageBoss",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.doomsteed.lines.7.damageBoss",
+          "value": 5
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 8,
+          "multiplierStage": "en22 boss damage",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "damageBoss",
+          "sourceKey": "damageBoss",
+          "sourcePath": "mounts.Doomsteed.lines.8.damageBoss",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.doomsteed.lines.8.damageBoss",
+          "value": 25
+        }
+      ],
+      "liveEvidence": "frontend/artifacts/td11/mount_damage_source_fixture.json",
+      "mountDamage": {
+        "activeLiveEvidence": false,
+        "mgCoefficient": 0,
+        "multiplierStage": "CE damage mount bucket",
+        "rustStatChannel": "mountDamage"
+      },
+      "publicClaimCount": 0,
+      "publicEvidenceSourceIds": [
+        "phasecast-mount-guide-2026-04-23",
+        "phasecast-mount-unlock-2026-04-16"
+      ],
+      "schemaCitation": [
+        "sio_tools_gt_master.md:176"
+      ],
+      "sourceClaimCount": 10,
+      "sourceName": "Doomsteed",
+      "sourceTable": {
+        "currentWorkerHash": "955cb880d975c11ea2c5f0da623444ab717bef8ac463a30395b9563c7df627d1",
+        "currentWorkerSourceId": "sio-tools-current-source-table-2026-05-23",
+        "localExtract": "frontend/artifacts/td11/sio_tools_formula_table_extract/extracted_tables/module37013_c_deployed_data_table.json",
+        "mountSourceFixture": "frontend/artifacts/td11/mount_damage_source_fixture.json"
+      },
+      "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.doomsteed"
+    },
+    {
+      "caveat": "Do not promote mount line stats to in-game-description-verified until exact in-game text/screenshot or first-party data is captured.",
+      "displayName": "Electric Scooter",
+      "domain": "mount",
+      "evidenceState": "public-web-system-evidence-plus-current-source-and-live-mountDamage",
+      "exactInGameDescriptionStatus": "not-found-public-web",
+      "key": "mount:electricScooter",
+      "lineClaims": [
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 1,
+          "multiplierStage": "en4 target status damage",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "weakened",
+          "sourceKey": "weakened",
+          "sourcePath": "mounts.Electric Scooter.lines.1.weakened",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.electricScooter.lines.1.weakened",
+          "value": 10
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 3,
+          "multiplierStage": "en4 target status damage",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "weakened",
+          "sourceKey": "weakened",
+          "sourcePath": "mounts.Electric Scooter.lines.3.weakened",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.electricScooter.lines.3.weakened",
+          "value": 30
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 4,
+          "multiplierStage": "en4 target status damage",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "weakened",
+          "sourceKey": "weakened",
+          "sourcePath": "mounts.Electric Scooter.lines.4.weakened",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.electricScooter.lines.4.weakened",
+          "value": 50
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 5,
+          "multiplierStage": "en1 crit expectation",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "critDamage",
+          "sourceKey": "critDamage",
+          "sourcePath": "mounts.Electric Scooter.lines.5.critDamage",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.electricScooter.lines.5.critDamage",
+          "value": 20
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 6,
+          "multiplierStage": "en8 laceration/divine fire",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "laceration",
+          "sourceKey": "laceration",
+          "sourcePath": "mounts.Electric Scooter.lines.6.laceration",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.electricScooter.lines.6.laceration",
+          "value": 10
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 7,
+          "multiplierStage": "en4 target status damage",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "weakened",
+          "sourceKey": "weakened",
+          "sourcePath": "mounts.Electric Scooter.lines.7.weakened",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.electricScooter.lines.7.weakened",
+          "value": 70
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 8,
+          "multiplierStage": "en8 laceration/divine fire",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "laceration",
+          "sourceKey": "laceration",
+          "sourcePath": "mounts.Electric Scooter.lines.8.laceration",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.electricScooter.lines.8.laceration",
+          "value": 20
+        }
+      ],
+      "liveEvidence": "frontend/artifacts/td11/sio_tools_live_evidence_matrix.json",
+      "mountDamage": {
+        "activeLiveEvidence": true,
+        "mgCoefficient": 77,
+        "multiplierStage": "CE damage mount bucket",
+        "rustStatChannel": "mountDamage",
+        "star8CeDamageMount": 11806.666666666666,
+        "star8MountDamage": 17710
+      },
+      "publicClaimCount": 0,
+      "publicEvidenceSourceIds": [
+        "phasecast-mount-guide-2026-04-23",
+        "phasecast-mount-unlock-2026-04-16"
+      ],
+      "schemaCitation": [
+        "sio_tools_gt_master.md:177"
+      ],
+      "sourceClaimCount": 8,
+      "sourceName": "Electric Scooter",
+      "sourceTable": {
+        "currentWorkerHash": "955cb880d975c11ea2c5f0da623444ab717bef8ac463a30395b9563c7df627d1",
+        "currentWorkerSourceId": "sio-tools-current-source-table-2026-05-23",
+        "localExtract": "frontend/artifacts/td11/sio_tools_formula_table_extract/extracted_tables/module37013_c_deployed_data_table.json",
+        "mountSourceFixture": "frontend/artifacts/td11/mount_damage_source_fixture.json"
+      },
+      "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.electricScooter"
+    },
+    {
+      "caveat": "Do not promote mount line stats to in-game-description-verified until exact in-game text/screenshot or first-party data is captured.",
+      "displayName": "Tech Hoverboard",
+      "domain": "mount",
+      "evidenceState": "public-web-system-evidence-plus-current-source-and-live-mountDamage",
+      "exactInGameDescriptionStatus": "not-found-public-web",
+      "key": "mount:techHoverboard",
+      "lineClaims": [
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 1,
+          "multiplierStage": "en4 target status damage",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "chilled",
+          "sourceKey": "chilled",
+          "sourcePath": "mounts.Tech Hoverboard.lines.1.chilled",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.techHoverboard.lines.1.chilled",
+          "value": 10
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 3,
+          "multiplierStage": "en4 target status damage",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "chilled",
+          "sourceKey": "chilled",
+          "sourcePath": "mounts.Tech Hoverboard.lines.3.chilled",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.techHoverboard.lines.3.chilled",
+          "value": 30
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 4,
+          "multiplierStage": "skillDamage direct stat channel",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "skillDamage",
+          "sourceKey": "skillDamage",
+          "sourcePath": "mounts.Tech Hoverboard.lines.4.skillDamage",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.techHoverboard.lines.4.skillDamage",
+          "value": 50
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 5,
+          "multiplierStage": "en4 target status damage",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "chilled",
+          "sourceKey": "chilled",
+          "sourcePath": "mounts.Tech Hoverboard.lines.5.chilled",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.techHoverboard.lines.5.chilled",
+          "value": 50
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 6,
+          "multiplierStage": "skillDamage direct stat channel",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "skillDamage",
+          "sourceKey": "skillDamage",
+          "sourcePath": "mounts.Tech Hoverboard.lines.6.skillDamage",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.techHoverboard.lines.6.skillDamage",
+          "value": 150
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 7,
+          "multiplierStage": "en4 target status damage",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "chilled",
+          "sourceKey": "chilled",
+          "sourcePath": "mounts.Tech Hoverboard.lines.7.chilled",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.techHoverboard.lines.7.chilled",
+          "value": 70
+        },
+        {
+          "evidenceStatus": "sio-source-table-only",
+          "evidenceSummary": "public web confirms mount line-effect system, but exact per-line stat text was not found",
+          "lineThreshold": 8,
+          "multiplierStage": "en3 shield damage uptime",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "shieldDamage",
+          "sourceKey": "shieldDamage",
+          "sourcePath": "mounts.Tech Hoverboard.lines.8.shieldDamage",
+          "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.techHoverboard.lines.8.shieldDamage",
+          "value": 50
+        }
+      ],
+      "liveEvidence": "frontend/artifacts/td11/sio_tools_live_evidence_matrix.json",
+      "mountDamage": {
+        "activeLiveEvidence": true,
+        "mgCoefficient": 100,
+        "multiplierStage": "CE damage mount bucket",
+        "rustStatChannel": "mountDamage",
+        "star8CeDamageMount": 33333.33333333333,
+        "star8MountDamage": 50000
+      },
+      "publicClaimCount": 0,
+      "publicEvidenceSourceIds": [
+        "phasecast-mount-guide-2026-04-23",
+        "phasecast-mount-unlock-2026-04-16"
+      ],
+      "schemaCitation": [
+        "sio_tools_gt_master.md:178"
+      ],
+      "sourceClaimCount": 8,
+      "sourceName": "Tech Hoverboard",
+      "sourceTable": {
+        "currentWorkerHash": "955cb880d975c11ea2c5f0da623444ab717bef8ac463a30395b9563c7df627d1",
+        "currentWorkerSourceId": "sio-tools-current-source-table-2026-05-23",
+        "localExtract": "frontend/artifacts/td11/sio_tools_formula_table_extract/extracted_tables/module37013_c_deployed_data_table.json",
+        "mountSourceFixture": "frontend/artifacts/td11/mount_damage_source_fixture.json"
+      },
+      "tangtangSchemaKey": "MOUNT_SCHEMA_INDEX.techHoverboard"
+    },
+    {
+      "caveat": "public source is still secondary/community evidence, not a first-party game screenshot",
+      "claims": [
+        {
+          "evidenceStatus": "public-web-corroborated",
+          "evidenceSummary": "public web/search evidence corroborates SpongeBob all-survivor ATK star row",
+          "multiplierStage": "en0 attack aggregate",
+          "publicEvidenceSourceIds": [
+            "mturbogamer-spongebob-2024-06",
+            "reddit-spongebob-squidward-current-2026-05-23"
+          ],
+          "rustStatChannel": "atkHeroPercent",
+          "sourceKey": "atkHeroPercent",
+          "sourcePath": "survivors.Spongebob.stars.5",
+          "tangtangSchemaKey": "HERO_SCHEMA_INDEX.spongebob.stars.5",
+          "value": 4
+        },
+        {
+          "evidenceStatus": "public-web-corroborated",
+          "evidenceSummary": "public web/search evidence corroborates SpongeBob level-40 crit-damage row",
+          "multiplierStage": "en1 crit expectation",
+          "publicEvidenceSourceIds": [
+            "mturbogamer-spongebob-2024-06",
+            "reddit-spongebob-squidward-current-2026-05-23"
+          ],
+          "rustStatChannel": "critDamage",
+          "sourceKey": "critDamage",
+          "sourcePath": "survivors.Spongebob.level.40",
+          "tangtangSchemaKey": "HERO_SCHEMA_INDEX.spongebob.level.40",
+          "value": 5
+        },
+        {
+          "evidenceStatus": "public-web-corroborated",
+          "evidenceSummary": "public web/search evidence corroborates SpongeBob level-120 crit-rate row",
+          "multiplierStage": "en1 crit expectation",
+          "publicEvidenceSourceIds": [
+            "mturbogamer-spongebob-2024-06",
+            "reddit-spongebob-squidward-current-2026-05-23"
+          ],
+          "rustStatChannel": "critRate",
+          "sourceKey": "critRate",
+          "sourcePath": "survivors.Spongebob.level.120",
+          "tangtangSchemaKey": "HERO_SCHEMA_INDEX.spongebob.level.120",
+          "value": 5
+        }
+      ],
+      "displayName": "SpongeBob",
+      "domain": "survivor",
+      "evidenceState": "public-web-corroborated-for-current-source-claims",
+      "exactInGameDescriptionStatus": "public-web-stat-text-corroborated",
+      "fullClaimCount": 3,
+      "key": "survivor:spongebob",
+      "liveEvidence": "frontend/artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json",
+      "publicClaimCount": 3,
+      "schemaCitation": [
+        "sio_tools_formula_table_extract/extracted_tables/module37013_f_default_config.json:607",
+        "tttg_forge_optimizer/src/tech/sio_config.rs:2670",
+        "tttg_forge_optimizer/src/tech/sio_config.rs:2815"
+      ],
+      "sourceClaimCount": 3,
+      "sourceName": "Spongebob",
+      "sources": [
+        "mturbogamer-spongebob-2024-06",
+        "reddit-spongebob-squidward-current-2026-05-23"
+      ],
+      "sourceTable": {
+        "currentWorkerHash": "955cb880d975c11ea2c5f0da623444ab717bef8ac463a30395b9563c7df627d1",
+        "currentWorkerSourceId": "sio-tools-current-source-table-2026-05-23",
+        "localExtract": "frontend/artifacts/td11/sio_tools_formula_table_extract/extracted_tables/module37013_c_deployed_data_table.json"
+      },
+      "tangtangSchemaKey": "HERO_SCHEMA_INDEX.spongebob"
+    },
+    {
+      "caveat": "public source is still secondary/community evidence, not a first-party game screenshot",
+      "claims": [
+        {
+          "evidenceStatus": "public-web-corroborated",
+          "evidenceSummary": "public current community search corroborates Squidward/SpongeBob all-survivor ATK star row",
+          "multiplierStage": "en0 attack aggregate",
+          "publicEvidenceSourceIds": [
+            "reddit-spongebob-squidward-current-2026-05-23"
+          ],
+          "rustStatChannel": "atkHeroPercent",
+          "sourceKey": "atkHeroPercent",
+          "sourcePath": "survivors.Squidward.stars.5",
+          "tangtangSchemaKey": "HERO_SCHEMA_INDEX.squidward.stars.5",
+          "value": 4
+        },
+        {
+          "evidenceStatus": "public-web-corroborated",
+          "evidenceSummary": "public current community search corroborates level-40 all-survivor crit-damage row",
+          "multiplierStage": "en1 crit expectation",
+          "publicEvidenceSourceIds": [
+            "reddit-spongebob-squidward-current-2026-05-23"
+          ],
+          "rustStatChannel": "critDamage",
+          "sourceKey": "critDamage",
+          "sourcePath": "survivors.Squidward.level.40",
+          "tangtangSchemaKey": "HERO_SCHEMA_INDEX.squidward.level.40",
+          "value": 5
+        },
+        {
+          "evidenceStatus": "public-web-corroborated",
+          "evidenceSummary": "public current community search corroborates level-120 all-survivor crit-rate row",
+          "multiplierStage": "en1 crit expectation",
+          "publicEvidenceSourceIds": [
+            "reddit-spongebob-squidward-current-2026-05-23"
+          ],
+          "rustStatChannel": "critRate",
+          "sourceKey": "critRate",
+          "sourcePath": "survivors.Squidward.level.120",
+          "tangtangSchemaKey": "HERO_SCHEMA_INDEX.squidward.level.120",
+          "value": 5
+        }
+      ],
+      "displayName": "Squidward",
+      "domain": "survivor",
+      "evidenceState": "public-web-corroborated-for-current-source-claims",
+      "exactInGameDescriptionStatus": "public-web-stat-text-corroborated",
+      "fullClaimCount": 3,
+      "key": "survivor:squidward",
+      "liveEvidence": "frontend/artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json",
+      "publicClaimCount": 3,
+      "schemaCitation": [
+        "sio_tools_formula_table_extract/extracted_tables/module37013_f_default_config.json:590",
+        "tttg_forge_optimizer/src/tech/sio_config.rs:2670",
+        "tttg_forge_optimizer/src/tech/sio_config.rs:2815"
+      ],
+      "sourceClaimCount": 3,
+      "sourceName": "Squidward",
+      "sources": [
+        "reddit-spongebob-squidward-current-2026-05-23"
+      ],
+      "sourceTable": {
+        "currentWorkerHash": "955cb880d975c11ea2c5f0da623444ab717bef8ac463a30395b9563c7df627d1",
+        "currentWorkerSourceId": "sio-tools-current-source-table-2026-05-23",
+        "localExtract": "frontend/artifacts/td11/sio_tools_formula_table_extract/extracted_tables/module37013_c_deployed_data_table.json"
+      },
+      "tangtangSchemaKey": "HERO_SCHEMA_INDEX.squidward"
+    },
+    {
+      "caveat": "unverified source-table claims stay source-only until direct in-game text is captured",
+      "claims": [
+        {
+          "evidenceStatus": "public-web-partial",
+          "evidenceSummary": "public guides corroborate Yelena level-based all-survivor ATK framing through level 120",
+          "multiplierStage": "en0 attack aggregate",
+          "publicEvidenceSourceIds": [
+            "fandom-characters-2026-05-23",
+            "mturbogamer-yelena-2023-09"
+          ],
+          "rustStatChannel": "atkHeroPercent",
+          "sourceKey": "atkHeroPercent",
+          "sourcePath": "survivors.Yelena.level.120",
+          "tangtangSchemaKey": "HERO_SCHEMA_INDEX.yelena.level.120",
+          "value": 5
+        },
+        {
+          "evidenceStatus": "sio-source-only",
+          "evidenceSummary": "current public web search did not expose a direct 10-star in-game description row",
+          "multiplierStage": "en1 crit expectation",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "critDamage",
+          "sourceKey": "critDamage",
+          "sourcePath": "survivors.Yelena.stars.10",
+          "tangtangSchemaKey": "HERO_SCHEMA_INDEX.yelena.stars.10",
+          "value": 20
+        },
+        {
+          "cumulativeValue": 45,
+          "evidenceStatus": "sio-source-only",
+          "evidenceSummary": "current public web search did not expose a direct 12-star in-game description row",
+          "multiplierStage": "en1 crit expectation",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "critDamage",
+          "sourceKey": "critDamage",
+          "sourcePath": "survivors.Yelena.stars.12",
+          "tangtangSchemaKey": "HERO_SCHEMA_INDEX.yelena.stars.12",
+          "value": 25
+        },
+        {
+          "evidenceStatus": "sio-source-only",
+          "evidenceSummary": "current public web search did not expose a direct passive vulnerability description row",
+          "multiplierStage": "en2 vulnerability",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "vulnerability",
+          "sourceKey": "vulnerability",
+          "sourcePath": "survivors.Yelena.passives.9",
+          "tangtangSchemaKey": "HERO_SCHEMA_INDEX.yelena.passives.9",
+          "value": 5
+        },
+        {
+          "cumulativeValue": 10,
+          "evidenceStatus": "sio-source-only",
+          "evidenceSummary": "current public web search did not expose a direct passive vulnerability description row",
+          "multiplierStage": "en2 vulnerability",
+          "publicEvidenceSourceIds": [],
+          "rustStatChannel": "vulnerability",
+          "sourceKey": "vulnerability",
+          "sourcePath": "survivors.Yelena.passives.11",
+          "tangtangSchemaKey": "HERO_SCHEMA_INDEX.yelena.passives.11",
+          "value": 5
+        }
+      ],
+      "displayName": "Yelena",
+      "domain": "survivor",
+      "evidenceState": "public-web-partial-current-source-table-required",
+      "exactInGameDescriptionStatus": "partial-public-web-stat-text",
+      "fullClaimCount": 5,
+      "key": "survivor:yelena",
+      "liveEvidence": "frontend/artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json",
+      "publicClaimCount": 1,
+      "schemaCitation": [
+        "sio_tools_formula_table_extract/extracted_tables/module37013_f_default_config.json:169",
+        "tttg_forge_optimizer/src/tech/sio_config.rs:2767",
+        "tttg_forge_optimizer/src/tech/sio_config.rs:2961"
+      ],
+      "sourceClaimCount": 5,
+      "sourceName": "Yelena",
+      "sources": [
+        "fandom-characters-2026-05-23",
+        "mturbogamer-yelena-2023-09"
+      ],
+      "sourceTable": {
+        "currentWorkerHash": "955cb880d975c11ea2c5f0da623444ab717bef8ac463a30395b9563c7df627d1",
+        "currentWorkerSourceId": "sio-tools-current-source-table-2026-05-23",
+        "localExtract": "frontend/artifacts/td11/sio_tools_formula_table_extract/extracted_tables/module37013_c_deployed_data_table.json"
+      },
+      "tangtangSchemaKey": "HERO_SCHEMA_INDEX.yelena"
+    }
+  ],
+  "sources": {
+    "fandomCharacters": {
+      "capturedAtKst": "2026-05-23",
+      "note": "Search/open evidence showed Yelena level bonuses through level 120, but not the current SIO 10/12-star and passive vulnerability rows.",
+      "sourceId": "fandom-characters-2026-05-23",
+      "sourceType": "public-web-guide",
+      "title": "Survivor.io Wiki / Characters",
+      "url": "https://survivorio.fandom.com/wiki/Characters"
+    },
+    "mturboSpongebob": {
+      "capturedAtKst": "2026-05-23",
+      "note": "Public search index evidence lists SpongeBob 5-star all-survivor ATK, level-40 crit-damage, and level-120 crit-rate bonuses.",
+      "sourceId": "mturbogamer-spongebob-2024-06",
+      "sourceType": "public-web-guide-search-index",
+      "title": "SpongeBob SquarePants Skills In Survivor.io",
+      "url": "https://mturbogamer.com/2024/06/30/spongebob-squarepants-skills-in-survivor-io/"
+    },
+    "mturboYelena": {
+      "capturedAtKst": "2026-05-23",
+      "note": "Older public guide confirms Yelena survivor level/skill framing, but it stops before the current source-only 10/12-star and passive rows.",
+      "sourceId": "mturbogamer-yelena-2023-09",
+      "sourceType": "public-web-guide",
+      "title": "Survivor.io: How To Unlock/Get Yelena",
+      "url": "https://mturbogamer.com/2023/09/survivor-io-how-to-unlock-get-yelena/"
+    },
+    "phasecastMountGuide": {
+      "capturedAtKst": "2026-05-23",
+      "note": "Public metadata confirms Doomsteed, Tech Hoverboard, Electric Scooter, mount shards, components, buffs, and line effects; it does not expose exact per-line stat values.",
+      "publishedAt": "2026-04-23T13:55:08.000Z",
+      "sourceId": "phasecast-mount-guide-2026-04-23",
+      "sourceType": "public-web-video-metadata",
+      "title": "Survivor.io Mount Guide - Everything You Need to Know",
+      "trpcUrl": "https://phasecast.com/api/trpc/videos.bySlug?batch=1&input=%7B%220%22%3A%7B%22json%22%3A%7B%22slug%22%3A%22survivorio-mount-guide-everything-you-need-to-know-doomsteed-hoverboard-scooter-W2pNmo%22%7D%7D%7D",
+      "url": "https://phasecast.com/videos/survivorio-mount-guide-everything-you-need-to-know-doomsteed-hoverboard-scooter-W2pNmo",
+      "youtubeId": "F9R49Hy44ck"
+    },
+    "phasecastMountUnlock": {
+      "capturedAtKst": "2026-05-23",
+      "note": "Public metadata confirms the vehicle system and the three current mount names plus shards/components/upgrades/sync/refinement/fusion.",
+      "publishedAt": "2026-04-16T08:57:32.000Z",
+      "sourceId": "phasecast-mount-unlock-2026-04-16",
+      "sourceType": "public-web-video-metadata",
+      "title": "How to Unlock Mounts in Survivor.io",
+      "trpcUrl": "https://phasecast.com/api/trpc/videos.bySlug?batch=1&input=%7B%220%22%3A%7B%22json%22%3A%7B%22slug%22%3A%22how-to-unlock-mounts-in-survivorio-new-vehicle-system-hoverboard-doom-steed-more-qPqOCM%22%7D%7D%7D",
+      "url": "https://phasecast.com/videos/how-to-unlock-mounts-in-survivorio-new-vehicle-system-hoverboard-doom-steed-more-qPqOCM",
+      "youtubeId": "TVeKiWy1vDg"
+    },
+    "redditSpongebobSquidward": {
+      "capturedAtKst": "2026-05-23",
+      "note": "Public search result corroborates the current SpongeBob/Squidward all-survivor crit-rate and related stat rows; not treated as first-party in-game capture.",
+      "sourceId": "reddit-spongebob-squidward-current-2026-05-23",
+      "sourceType": "public-community-search-index",
+      "title": "Survivor.io community current SpongeBob/Squidward stat discussion",
+      "url": "https://www.reddit.com/search/?q=%22SpongeBob%22%20%22Level%20120%22%20%22Crit%20Rate%22%20%22All%20Survivors%22%20%22Survivor.io%22"
+    },
+    "sioToolsCurrentTable": {
+      "capturedAtKst": "2026-05-23",
+      "localExtract": "frontend/artifacts/td11/sio_tools_formula_table_extract/extracted_tables/module37013_c_deployed_data_table.json",
+      "note": "Authoritative for current SIO Tools mirror/source semantics, but not independent in-game text.",
+      "sourceId": "sio-tools-current-source-table-2026-05-23",
+      "sourceType": "current-public-worker-source-table",
+      "title": "Current SIO Tools deployed source table extract",
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/7227.2d1c78b0f3f92fba.js?dpl=dpl_56iU76iXR6KnXd1j6BesFJBdsckh",
+      "versionHash": "955cb880d975c11ea2c5f0da623444ab717bef8ac463a30395b9563c7df627d1"
+    }
+  },
+  "summary": {
+    "mountRows": 3,
+    "mountRowsStillSourceOnlyForExactLineStats": 3,
+    "mountRowsWithExactInGameDescriptions": 0,
+    "nonZeroMountDamageLiveRows": 2,
+    "publicSourcesUsed": 7,
+    "rowsWithAllSourceClaimsPubliclyCorroborated": 2,
+    "rowsWithAnyPublicStatClaim": 3,
+    "rowsWithPartialPublicStatClaims": 1,
+    "survivorRows": 3,
+    "totalRows": 6
+  }
+}

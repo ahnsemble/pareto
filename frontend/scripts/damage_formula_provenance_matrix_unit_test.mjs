@@ -125,6 +125,9 @@ const genericAggregateNonAuthorityPath = path.join(root, 'artifacts/td11/generic
 const genericAggregateNonAuthority = JSON.parse(await fs.readFile(genericAggregateNonAuthorityPath, 'utf8'));
 const sioToolsLiveEvidencePath = path.join(root, 'artifacts/td11/sio_tools_live_evidence_matrix.json');
 const sioToolsLiveEvidence = JSON.parse(await fs.readFile(sioToolsLiveEvidencePath, 'utf8'));
+const inGameDescriptionEvidencePath = path.join(root, 'artifacts/td11/in_game_description_evidence_matrix.json');
+const inGameDescriptionEvidence = JSON.parse(await fs.readFile(inGameDescriptionEvidencePath, 'utf8'));
+const inGameDescriptionEvidenceByKey = new Map(inGameDescriptionEvidence.rows.map((row) => [row.key, row]));
 
 function slug(value) {
   return String(value)
@@ -199,6 +202,11 @@ for (const item of WEAPON_SCHEMA_INDEX) {
 
 for (const hero of HERO_SCHEMA_INDEX) {
   const isTargetedSurvivor = TARGETED_SURVIVOR_IDS.has(hero.id);
+  const descriptionEvidence = isTargetedSurvivor ? inGameDescriptionEvidenceByKey.get(`survivor:${hero.id}`) : null;
+  const publicClaimStatus = descriptionEvidence
+    ? `${descriptionEvidence.publicClaimCount}/${descriptionEvidence.sourceClaimCount} public stat claims`
+    : '';
+  const hasFullPublicClaimCoverage = descriptionEvidence?.publicClaimCount === descriptionEvidence?.sourceClaimCount;
   addRow({
     key: `survivor:${hero.id}`,
     domain: 'survivor',
@@ -210,12 +218,19 @@ for (const hero of HERO_SCHEMA_INDEX) {
     tangtangSchemaKey: `HERO_SCHEMA_INDEX.${hero.id}`,
     rustStatChannel: DIRECT_HERO_CHANNELS.get(hero.id) ?? 'SIO compact survivor/passive/teamwork transform; generic aggregate empty',
     multiplierStage: DIRECT_HERO_CHANNELS.get(hero.id) ?? 'upstream stat transform before 31-stage damage vector',
+    inGameDescription: descriptionEvidence
+      ? hasFullPublicClaimCoverage
+        ? `public-web corroborated for current source stat claims (${publicClaimStatus}); direct first-party capture still missing`
+        : `partial public-web evidence (${publicClaimStatus}); source-table-only claims remain`
+      : 'not independently captured',
     liveEvidence: isTargetedSurvivor
-      ? 'sio_tools_live_evidence_matrix.targetSurvivorLiveRows=3; targeted mainHero/h-array live fixtures captured for Yelena/Squidward/SpongeBob'
+      ? `sio_tools_live_evidence_matrix.targetSurvivorLiveRows=3; targeted mainHero/h-array live fixtures captured for Yelena/Squidward/SpongeBob; in_game_description_evidence=${publicClaimStatus}`
       : 'sio_lm_equivalence_matrix.survivors-passives-harmony-teamwork=implemented-live-covered',
     confidence: 'sio-live-equivalent',
     nextAction: isTargetedSurvivor
-      ? 'add in-game description row before editing survivor scoring semantics'
+      ? hasFullPublicClaimCoverage
+        ? 'replace public-web corroboration with direct in-game capture before formula semantics change'
+        : 'capture missing direct in-game description rows before formula semantics change'
       : 'add in-game description row for each star/awakening/passive effect',
   });
 }
@@ -277,6 +292,7 @@ for (const pet of PET_SCHEMA_INDEX) {
 
 for (const mount of MOUNT_SCHEMA_INDEX) {
   const hasActiveMountDamageLiveEvidence = ACTIVE_MOUNT_DAMAGE_LIVE_IDS.has(mount.id);
+  const descriptionEvidence = inGameDescriptionEvidenceByKey.get(`mount:${mount.id}`);
   addRow({
     key: `mount:${mount.id}`,
     domain: 'mount',
@@ -290,13 +306,16 @@ for (const mount of MOUNT_SCHEMA_INDEX) {
       ? 'compact mount stats + active mountDamage live trace'
       : 'compact mount stats; non-zero mountDamage not applicable/proven for this row',
     multiplierStage: 'mount-derived stat channels when present',
+    inGameDescription: descriptionEvidence
+      ? `public web confirms mount system/names; exact per-line text status=${descriptionEvidence.exactInGameDescriptionStatus}; ${descriptionEvidence.sourceClaimCount} source-table claims retained`
+      : 'not independently captured',
     liveEvidence: hasActiveMountDamageLiveEvidence
-      ? 'sio_tools_live_evidence_matrix.activeMountLiveRows=2; nonZeroMountDamageLiveRows=2; mountActiveShortKey=bj'
-      : 'sio_tools_live_evidence_matrix.mountLineStatsLiveRows=1; zero/non-active mount row only; mountActiveShortKey=bj',
+      ? `sio_tools_live_evidence_matrix.activeMountLiveRows=2; nonZeroMountDamageLiveRows=2; mountActiveShortKey=bj; in_game_description_evidence.mountExact=${inGameDescriptionEvidence.summary.mountRowsWithExactInGameDescriptions}/${inGameDescriptionEvidence.summary.mountRows}`
+      : `sio_tools_live_evidence_matrix.mountLineStatsLiveRows=1; zero/non-active mount row only; mountActiveShortKey=bj; in_game_description_evidence.mountExact=${inGameDescriptionEvidence.summary.mountRowsWithExactInGameDescriptions}/${inGameDescriptionEvidence.summary.mountRows}`,
     confidence: hasActiveMountDamageLiveEvidence ? 'sio-live-equivalent' : 'sio-source-only',
     nextAction: hasActiveMountDamageLiveEvidence
-      ? 'add in-game description row before editing mount scoring semantics'
-      : 'keep zero-coefficient/source row unless source changes',
+      ? 'capture exact mount line descriptions before editing mount scoring semantics'
+      : 'keep zero-coefficient/source row unless source changes; capture exact mount line descriptions if source changes',
   });
 }
 
@@ -447,12 +466,24 @@ for (const row of sourceOnlyMountRows) {
   assert.equal(row.confidence, 'sio-source-only', `${row.key}.confidence`);
   assertIncludes(row, 'rustStatChannel', 'non-zero mountDamage not applicable/proven');
   assertIncludes(row, 'liveEvidence', 'mountActiveShortKey=bj');
-  assert.equal(row.nextAction, 'keep zero-coefficient/source row unless source changes', `${row.key}.nextAction`);
+  assertIncludes(row, 'liveEvidence', 'in_game_description_evidence.mountExact=0/3');
+  assertIncludes(row, 'inGameDescription', 'exact per-line text status=not-found-public-web');
+  assert.equal(
+    row.nextAction,
+    'keep zero-coefficient/source row unless source changes; capture exact mount line descriptions if source changes',
+    `${row.key}.nextAction`,
+  );
 }
 for (const row of activeMountDamageLiveRows) {
   assertIncludes(row, 'rustStatChannel', 'active mountDamage live trace');
   assertIncludes(row, 'liveEvidence', 'nonZeroMountDamageLiveRows=2');
-  assert.equal(row.nextAction, 'add in-game description row before editing mount scoring semantics', `${row.key}.nextAction`);
+  assertIncludes(row, 'liveEvidence', 'in_game_description_evidence.mountExact=0/3');
+  assertIncludes(row, 'inGameDescription', 'exact per-line text status=not-found-public-web');
+  assert.equal(
+    row.nextAction,
+    'capture exact mount line descriptions before editing mount scoring semantics',
+    `${row.key}.nextAction`,
+  );
 }
 assert.equal(mountDamageSourceFixture.summary.totalRows, MOUNT_SCHEMA_INDEX.length, 'mount source fixture must cover all mounts');
 assert.equal(sioToolsLiveEvidence.summary.mountLiveRows, 4, 'live evidence matrix must include broad and active mount live capture rows');
@@ -470,6 +501,8 @@ assert.ok(
 );
 const mountFormulaCompleteRows = mountRows.filter((row) => row.confidence === 'sio-live-equivalent' || row.confidence === 'in-game-description-verified');
 assert.equal(mountFormulaCompleteRows.length, 2, 'active non-zero mountDamage live fixtures promote two mount rows');
+assert.equal(inGameDescriptionEvidence.summary.mountRowsWithExactInGameDescriptions, 0, 'mount public web evidence must not be over-promoted to exact in-game descriptions');
+assert.equal(inGameDescriptionEvidence.summary.mountRowsStillSourceOnlyForExactLineStats, 3, 'all mount line stats must remain source-only until exact text is captured');
 
 const unsupportedSurvivorRows = rows.filter((row) => row.domain === 'survivor-unsupported');
 assert.equal(unsupportedSurvivorRows.length, 0, 'SpongeBob/Squidward/Yelena are source-backed locally, not unsupported rows');
@@ -479,8 +512,14 @@ for (const row of targetedSurvivorRows) {
   assertIncludes(row, 'sourceStatus', 'Rust compact survivor transform');
   assertIncludes(row, 'sioSourceKey', 'module37013_f_default_config.json');
   assertIncludes(row, 'liveEvidence', 'targetSurvivorLiveRows=3');
-  assert.equal(row.nextAction, 'add in-game description row before editing survivor scoring semantics', `${row.key}.nextAction`);
+  assertIncludes(row, 'liveEvidence', 'in_game_description_evidence=');
+  assert.match(row.inGameDescription, /public-web|partial/, `${row.key}.inGameDescription`);
 }
+assert.equal(inGameDescriptionEvidence.summary.rowsWithAllSourceClaimsPubliclyCorroborated, 2, 'SpongeBob and Squidward public claims cover current source claims');
+assert.equal(inGameDescriptionEvidence.summary.rowsWithPartialPublicStatClaims, 1, 'Yelena must remain partially public-web corroborated');
+assert.equal(requireRow('survivor:spongebob').nextAction, 'replace public-web corroboration with direct in-game capture before formula semantics change');
+assert.equal(requireRow('survivor:squidward').nextAction, 'replace public-web corroboration with direct in-game capture before formula semantics change');
+assert.equal(requireRow('survivor:yelena').nextAction, 'capture missing direct in-game description rows before formula semantics change');
 
 assert.equal(collectibleEffectMapping.summary.totalRows, 160, 'collectible mapping artifact must cover all item, event, and set rows');
 assert.equal(collectibleEffectMapping.summary.catalogOnlyNamedItemRows, COLLECTIBLE_CATALOG_ONLY_ITEM_IDS.size, 'collectible mapping artifact must isolate schema-only named items');
@@ -583,9 +622,9 @@ const followUpGateSlices = [
     gate: 'DF-P3',
     slice: 'Mount damage line',
     rowsGuarded: `${mountRows.length} mount rows`,
-    currentState: `source-backed; live evidence matrix has ${sioToolsLiveEvidence.summary.mountLineStatsLiveRows} non-empty mount stat-line row, ${sioToolsLiveEvidence.summary.nonZeroMountDamageLiveRows} non-zero mountDamage live rows, and active compact key ${sioToolsLiveEvidence.summary.mountActiveShortKey}`,
-    blocker: 'active live evidence exists for non-zero rows; in-game description capture is still missing',
-    nextGate: 'add mount description rows before editing mount scoring semantics',
+    currentState: `source-backed; public web confirms mount system/names; live evidence matrix has ${sioToolsLiveEvidence.summary.mountLineStatsLiveRows} non-empty mount stat-line row, ${sioToolsLiveEvidence.summary.nonZeroMountDamageLiveRows} non-zero mountDamage live rows, and active compact key ${sioToolsLiveEvidence.summary.mountActiveShortKey}`,
+    blocker: `exact per-line in-game description text still missing (${inGameDescriptionEvidence.summary.mountRowsWithExactInGameDescriptions}/${inGameDescriptionEvidence.summary.mountRows})`,
+    nextGate: 'capture exact mount line descriptions before editing mount scoring semantics',
   },
   {
     gate: 'DF-P4',
@@ -599,9 +638,9 @@ const followUpGateSlices = [
     gate: 'DF-P5',
     slice: 'Collaboration survivor source reconciliation',
     rowsGuarded: targetedSurvivorRows.map((row) => row.key).join('; '),
-    currentState: `source-backed by runtime table and Rust compact transform; broad survivor live case exists and targetSurvivorLiveRows=${sioToolsLiveEvidence.summary.targetSurvivorLiveRows}`,
-    blocker: 'targeted live evidence exists; in-game description capture is still missing',
-    nextGate: 'add in-game description rows before changing survivor scoring semantics',
+    currentState: `source-backed by runtime table and Rust compact transform; targetSurvivorLiveRows=${sioToolsLiveEvidence.summary.targetSurvivorLiveRows}; public-web stat claim rows=${inGameDescriptionEvidence.summary.rowsWithAnyPublicStatClaim}`,
+    blocker: 'public web corroboration exists for SpongeBob/Squidward and partial Yelena, but direct first-party in-game capture is still missing',
+    nextGate: 'replace public-web corroboration with direct in-game capture before changing survivor scoring semantics',
   },
   {
     gate: 'DF-P6',
@@ -651,7 +690,7 @@ Confidence values:
 - \`sio-live-equivalent\`: covered by the current SIO LM full-equivalence/live replay gate.
 - \`sio-source-only\`: backed by SIO source/schema extraction, but lacking a targeted live or in-game text fixture.
 - \`catalog-only\`: present as a product/schema catalog row, but not proven as a formula input.
-- \`in-game-description-verified\`: reserved for rows with direct in-game description capture plus formula mapping. No row has this confidence in v0.
+- \`in-game-description-verified\`: reserved for rows with direct in-game description capture plus formula mapping. No row has this confidence in v1 because public-web evidence is tracked separately and not over-promoted.
 - \`unsupported-by-current-sio-source\`: explicitly requested/known entity, but absent from current corrected SIO source.
 
 ## Summary
@@ -665,6 +704,7 @@ Confidence values:
 - Evidence artifacts:
   - \`frontend/artifacts/td11/sio_tools_live_evidence_matrix.json\`
   - \`frontend/artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json\`
+  - \`frontend/artifacts/td11/in_game_description_evidence_matrix.json\`
   - \`frontend/artifacts/td11/collectible_effect_mapping_matrix.json\`
   - \`frontend/artifacts/td11/mount_damage_source_fixture.json\`
 
@@ -679,8 +719,8 @@ ${renderCountTable(countBy('confidence'))}
 ## High-Risk Gaps
 
 - Non-SS weapons are present as catalog rows but not proven as complete formula rows.
-- SpongeBob, Squidward, and Yelena now have targeted current-worker live fixtures; direct in-game description captures are still missing.
-- Mounts now have a non-empty source fixture, source-proven active compact key \`bJ.bj\`, and two non-zero active mountDamage live rows; direct in-game description captures are still missing.
+- SpongeBob and Squidward now have public-web corroboration for all current source stat claims, while Yelena is partial; direct first-party in-game captures are still missing.
+- Mounts now have public-web system/name evidence, a non-empty source fixture, source-proven active compact key \`bJ.bj\`, and two non-zero active mountDamage live rows; exact per-line in-game description text is still missing.
 - Collectible item/set rows now have a source/Rust-channel mapping artifact with threshold-level rows plus 7 SIO Tools live source-table cases; 4 named Starlight rows and 42 event slots remain catalog-only until source effect rows exist.
 - Generic aggregate modules now have a dedicated non-authority gate; the current product scorer relies on the SIO LM compact path.
 

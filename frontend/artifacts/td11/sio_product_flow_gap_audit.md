@@ -1064,6 +1064,57 @@ Do not change scoring formulas yet. The next safe step is a documentation/test g
 
 GitHub push/PR not performed.
 
+## Tangtang In-Game Description Evidence Pass
+
+timestampKst: 2026-05-23T14:45:00+09:00
+status: `[IN-GAME-DESCRIPTION-EVIDENCE-GREEN]`
+
+### Scope
+
+Collected the next layer of public-web/current-worker evidence for the high-risk survivor and mount rows. This pass is documentation and gate work only; it does not change formula semantics, SIO LM/scoring core, Rust damage formulas, WASM scoring behavior, optimizer ranking, or user-facing UI.
+
+### Changes
+
+- Added `frontend/artifacts/td11/in_game_description_evidence_matrix.json`.
+  - Total rows: 6.
+  - Survivor rows: Yelena, Squidward, SpongeBob.
+  - Mount rows: Doomsteed, Electric Scooter, Tech Hoverboard.
+  - Public sources used: 7.
+  - Rows with any public stat claim: 3.
+  - Rows with all current source claims publicly corroborated: 2 (`SpongeBob`, `Squidward`).
+  - Partial public stat claim row: 1 (`Yelena`; level-120 ATK is corroborated, 10/12-star crit-damage and passive vulnerability rows remain source-table-only).
+  - Mount exact in-game description rows: 0.
+  - Mount exact line stats still source-only: 3.
+  - Non-zero mountDamage live rows remain 2 (`Electric Scooter`, `Tech Hoverboard`).
+- Added `frontend/scripts/in_game_description_evidence_unit_test.mjs`.
+  - Generates and validates the evidence matrix.
+  - Keeps public-web evidence separate from direct first-party in-game capture.
+  - Keeps mount line stats source-only until exact in-game text/screenshot evidence is captured.
+- Updated `damage_formula_provenance_matrix.md` and its gate to consume the new evidence matrix.
+  - SpongeBob/Squidward now show `3/3` public-web corroboration for current source stat claims, but still require direct first-party capture before formula semantic changes.
+  - Yelena shows `1/5` public-web corroboration and keeps missing star/passive rows explicit.
+  - Mounts show public system/name evidence plus current source/live evidence, but exact per-line text remains `not-found-public-web`.
+
+### Verification Log
+
+- `node scripts/in_game_description_evidence_unit_test.mjs`: passed, 6 rows.
+- `node scripts/damage_formula_provenance_matrix_unit_test.mjs`: passed, 367 rows.
+- `node scripts/sio_tools_live_evidence_matrix_unit_test.mjs`: passed, 20 rows.
+- `node scripts/sio_tools_targeted_live_evidence_unit_test.mjs`: passed, 5 rows.
+- `node scripts/mount_damage_source_fixture_unit_test.mjs`: passed, 3 rows.
+- `node scripts/collectible_effect_mapping_matrix_unit_test.mjs`: passed, 160 rows.
+- `node scripts/generic_aggregate_non_authority_gate.mjs`: passed, 4 rows.
+- `npx tsc --noEmit`: passed.
+- `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs`: passed.
+  - `fullSioEquivalent=true`
+  - `currentScorer=scorer=sio_full_lm_equivalence`
+  - `liveCaptureCount=26`
+  - `workerParity.arbitraryGeneratedLiveExpected=26/26`
+  - `G0/G1/G2/G3/G6=true`
+- `git diff --check`: passed.
+
+GitHub push/PR not performed.
+
 ## SIO Tools Live Evidence Collection Pass
 
 timestampKst: 2026-05-23T14:10:00+09:00
