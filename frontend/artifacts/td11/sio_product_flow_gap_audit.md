@@ -1063,3 +1063,60 @@ Do not change scoring formulas yet. The next safe step is a documentation/test g
 4. Only after that ledger exists should Tangtang change formulas or claim complete in-game description coverage.
 
 GitHub push/PR not performed.
+
+## Tangtang Damage Formula Provenance Matrix Gate
+
+timestampKst: 2026-05-23T12:20:00+09:00
+status: `[DAMAGE-FORMULA-PROVENANCE-MATRIX-GREEN]`
+
+### Scope
+
+Built the first coverage/provenance gate requested by the damage formula source audit. This is documentation and validation only; no formula, scoring, optimizer, WASM, or UI behavior changed.
+
+### New Artifact
+
+- `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/damage_formula_provenance_matrix.md`
+  - Total rows: 367
+  - Domains:
+    - collectible event slots: 42
+    - collectible items: 80
+    - collectible sets: 38
+    - mounts: 3
+    - pets/xeno: 9
+    - SS equipment: 11
+    - stat channels: 71
+    - survivors: 15
+    - unsupported survivors: 3
+    - tech modifier edges: 37
+    - tech parts: 40
+    - weapons: 9
+    - xeno triggers: 9
+  - Confidence totals:
+    - `sio-live-equivalent`: 155
+    - `sio-source-only`: 159
+    - `catalog-only`: 50
+    - `unsupported-by-current-sio-source`: 3
+
+### New Verification Gate
+
+- `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/scripts/damage_formula_provenance_matrix_unit_test.mjs`
+  - Transpiles `schemas/index.ts`.
+  - Generates the expected matrix from the current schema constants.
+  - Validates the checked-in matrix is byte-for-byte current.
+  - Fails if a schema row is added without the provenance matrix being regenerated.
+
+### High-Risk Rows Now Explicit
+
+- `survivor:donatello` exists and is `sio-live-equivalent`.
+- `survivor-unsupported:spongebob`, `survivor-unsupported:squidward`, and `survivor-unsupported:yelena` are explicitly marked `unsupported-by-current-sio-source`.
+- `weapon:voidPower`, `weapon:swordOfDisorder`, `weapon:lightchaser`, and other non-SS weapons are `catalog-only`.
+- `mount:*` rows are `sio-source-only` and explicitly require non-empty mount live captures.
+- `stat:mountDamage` is `sio-source-only` and not mapped to a direct 31-stage multiplier slot.
+- `tech-modifier:exoBracer->ssWeapon` records the negative SIO coefficient `-0.025`.
+
+### Verification Log
+
+- `node scripts/damage_formula_provenance_matrix_unit_test.mjs --write`: wrote 367-row matrix.
+- `node scripts/damage_formula_provenance_matrix_unit_test.mjs`: passed, 367 rows.
+
+GitHub push/PR not performed.
