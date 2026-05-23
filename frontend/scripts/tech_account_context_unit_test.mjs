@@ -7,9 +7,13 @@ import ts from 'typescript';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const sourcePath = resolve(__dirname, '../components/v3/tech/techAccountContext.ts');
+const localeCopySourcePath = resolve(__dirname, '../components/v3/tech/techLocaleCopy.ts');
 
 if (!existsSync(sourcePath)) {
   throw new Error(`tech account context missing: ${sourcePath}`);
+}
+if (!existsSync(localeCopySourcePath)) {
+  throw new Error(`tech locale copy missing: ${localeCopySourcePath}`);
 }
 
 const source = readFileSync(sourcePath, 'utf8');
@@ -34,8 +38,41 @@ const {
   survivorContextSummary,
 } = await import(moduleUrl);
 
+const localeCopySource = readFileSync(localeCopySourcePath, 'utf8');
+const localeCopyTranspiled = ts.transpileModule(localeCopySource, {
+  compilerOptions: {
+    module: ts.ModuleKind.ES2022,
+    target: ts.ScriptTarget.ES2022,
+    strict: true,
+  },
+});
+const localeCopyModuleUrl = `data:text/javascript;base64,${Buffer.from(localeCopyTranspiled.outputText).toString('base64')}`;
+const {
+  getTechOptimizerCopy,
+  localizeTechInventoryMessage,
+  localizeTechResourceWalletFields,
+} = await import(localeCopyModuleUrl);
+
 assert.equal(typeof normalizePetAssistContext, 'function');
 assert.equal(typeof petXenoStatusLabel, 'function');
+assert.equal(typeof getTechOptimizerCopy, 'function');
+assert.equal(typeof localizeTechResourceWalletFields, 'function');
+assert.equal(typeof localizeTechInventoryMessage, 'function');
+
+const koCopy = getTechOptimizerCopy('ko');
+assert.equal(koCopy.titleSuffix, '테크 파츠');
+assert.equal(koCopy.profileImport.title, 'Tangtang 프로필 가져오기');
+assert.equal(koCopy.profileImport.action, '프로필 가져오기');
+assert.equal(koCopy.resourceWallet.title, '리소스 지갑');
+assert.equal(koCopy.inventory.title, '보유 테크 재료');
+assert.equal(koCopy.results.title, '랭킹 테크 빌드');
+assert.equal(localizeTechInventoryMessage('chips.gt_999', 'ko'), '기술 공명 칩은 999 이하여야 합니다');
+assert.equal(localizeTechInventoryMessage('chips.gt_999', 'en'), 'Tech resonance chips must be 999 or lower');
+
+const koWalletFields = localizeTechResourceWalletFields('ko');
+assert.equal(koWalletFields[0].label, '기술 공명 칩');
+assert.equal(koWalletFields[0].scopeLabel, '테크 최적화 지출');
+assert.equal(koWalletFields[1].scopeLabel, '계정 컨텍스트');
 
 const duplicateAssist = normalizePetAssistContext({
   ...DEFAULT_TECH_ACCOUNT_CONTEXT,

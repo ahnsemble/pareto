@@ -3,10 +3,33 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const OPTIMIZER_URL = '/en/v3/optimizer/tech-parts';
+const KO_OPTIMIZER_URL = '/ko/v3/optimizer/tech-parts';
 
 function readFixture(name: string) {
   return readFileSync(resolve(process.cwd(), 'fixtures', name), 'utf8').trim();
 }
+
+test.describe('TD-11 — Tech optimizer Korean route', () => {
+  test('renders Korean product copy on Korean route', async ({ page, baseURL }) => {
+    await page.goto(`${baseURL ?? 'http://localhost:3032'}${KO_OPTIMIZER_URL}`);
+    await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Boot OK');
+
+    await expect(page.getByRole('heading', { name: 'Tangtang / 테크 파츠' })).toBeVisible();
+    await expect(page.getByTestId('tech-profile-import')).toContainText('Tangtang 프로필 가져오기');
+    await expect(page.getByTestId('tech-profile-import')).toContainText('프로필 JSON, 계산 링크 또는 스크린샷 텍스트');
+    await expect(page.getByRole('button', { name: '프로필 가져오기' })).toBeVisible();
+    await expect(page.getByTestId('tech-resource-wallet')).toContainText('리소스 지갑');
+    await expect(page.getByTestId('tech-resource-wallet')).toContainText('기술 공명 칩');
+    await expect(page.getByTestId('tech-resource-wallet')).toContainText('계정 컨텍스트');
+    await expect(page.getByTestId('tech-inventory-contract')).toContainText('보유 테크 재료');
+    await expect(page.getByTestId('tech-inventory-contract')).toContainText('착용 중인 메인 파츠를 제외한 서브 파츠');
+    await expect(page.getByRole('heading', { name: '계정 컨텍스트' })).toBeVisible();
+    await expect(page.getByTestId('tech-optimizer-results')).toContainText('랭킹 테크 빌드');
+    await expect(page.getByText('Tangtang profile import')).toHaveCount(0);
+    await expect(page.getByText('Resource wallet')).toHaveCount(0);
+    await expect(page.getByText(/SIO/)).toHaveCount(0);
+  });
+});
 
 test.describe('TD-11 — Tech optimizer route', () => {
   test.beforeEach(async ({ page, baseURL }) => {

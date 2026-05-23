@@ -22,13 +22,14 @@ import {
   type TechAccountContextInput,
   type TechAccountContextNamedField,
 } from './techAccountContext';
+import { getTechOptimizerCopy } from './techLocaleCopy';
 
 function contextNumber(value: number | null | undefined, digits = 0): string {
   return typeof value === 'number' && Number.isFinite(value) ? formatNumber(value, digits) : '0';
 }
 
-function contextLabel(value: string | null | undefined): string {
-  return value && value.trim().length > 0 ? value : 'none';
+function contextLabel(value: string | null | undefined, emptyLabel = 'none'): string {
+  return value && value.trim().length > 0 ? value : emptyLabel;
 }
 
 function displayNameById<T extends { id: string; display_name_en: string }>(
@@ -44,17 +45,21 @@ export function AccountContextPanel({
   account,
   onChange,
   onNamedChange,
+  locale,
 }: {
   playerState: PlayerState;
   account: TechAccountContextInput;
   onChange: (field: keyof TechAccountContextInput, value: number) => void;
   onNamedChange: (field: TechAccountContextNamedField, value: string) => void;
+  locale?: string;
 }) {
+  const copy = getTechOptimizerCopy(locale);
+  const labels = copy.account.labels;
   const equipment = playerState.equipment;
-  const selectedHeroName = displayNameById(HERO_SCHEMA_INDEX, playerState.hero.selected_hero_id, 'Selected survivor');
-  const deployedPetName = displayNameById(PET_SCHEMA_INDEX, playerState.pet.deployed_pet_id, 'Pet');
-  const selectedCollectibleName = displayNameById(COLLECTIBLE_ITEM_INDEX, playerState.collectible.target_collectible_id, 'None');
-  const selectedMountName = displayNameById(MOUNT_SCHEMA_INDEX, account.selectedMountId, 'Mount');
+  const selectedHeroName = displayNameById(HERO_SCHEMA_INDEX, playerState.hero.selected_hero_id, copy.account.selectedSurvivorFallback);
+  const deployedPetName = displayNameById(PET_SCHEMA_INDEX, playerState.pet.deployed_pet_id, copy.account.petFallback);
+  const selectedCollectibleName = displayNameById(COLLECTIBLE_ITEM_INDEX, playerState.collectible.target_collectible_id, copy.account.selectedCollectibleFallback);
+  const selectedMountName = displayNameById(MOUNT_SCHEMA_INDEX, account.selectedMountId, copy.account.selectedMountFallback);
   const collectionRows = COLLECTIBLE_SET_INDEX.slice(0, 3);
   const petRows = PET_SCHEMA_INDEX.slice(0, 5);
   const mountRows = MOUNT_SCHEMA_INDEX.slice(0, 3);
@@ -80,10 +85,10 @@ export function AccountContextPanel({
     account.movementSpeedCap,
   ].filter((value) => value > 0).length;
   const summaryRows: Array<[string, string]> = [
-    ['Final ATK', contextNumber(account.finalAtk)],
-    ['Crit', `${contextNumber(account.critRate)} / ${contextNumber(account.critDamage)}`],
-    ['Conditions', contextNumber(activeConditionCount)],
-    ['Review', contextNumber(reviewOnlyCount)],
+    [copy.account.summary.finalAtk, contextNumber(account.finalAtk)],
+    [copy.account.summary.crit, `${contextNumber(account.critRate)} / ${contextNumber(account.critDamage)}`],
+    [copy.account.summary.conditions, contextNumber(activeConditionCount)],
+    [copy.account.summary.review, contextNumber(reviewOnlyCount)],
   ];
   const equipmentSlotSections: Array<{
     id: 'weapon' | 'armor' | 'necklace' | 'belt' | 'gloves' | 'boots';
@@ -93,7 +98,7 @@ export function AccountContextPanel({
   }> = [
     {
       id: 'weapon',
-      label: 'Weapon',
+      label: labels.weapon,
       itemField: 'weaponItemId',
       fields: [
         { id: 'weaponEaf', label: 'EAF', testId: 'tech-account-weapon-eaf', min: 0, max: 5 },
@@ -104,7 +109,7 @@ export function AccountContextPanel({
     },
     {
       id: 'armor',
-      label: 'Armor',
+      label: labels.armor,
       itemField: 'armorItemId',
       fields: [
         { id: 'armorEaf', label: 'EAF', testId: 'tech-account-armor-eaf', min: 0, max: 5 },
@@ -115,7 +120,7 @@ export function AccountContextPanel({
     },
     {
       id: 'necklace',
-      label: 'Necklace',
+      label: labels.necklace,
       itemField: 'necklaceItemId',
       fields: [
         { id: 'necklaceEaf', label: 'EAF', testId: 'tech-account-necklace-eaf', min: 0, max: 5 },
@@ -126,7 +131,7 @@ export function AccountContextPanel({
     },
     {
       id: 'belt',
-      label: 'Belt',
+      label: labels.belt,
       itemField: 'beltItemId',
       fields: [
         { id: 'beltEaf', label: 'EAF', testId: 'tech-account-belt-eaf', min: 0, max: 5 },
@@ -137,7 +142,7 @@ export function AccountContextPanel({
     },
     {
       id: 'gloves',
-      label: 'Gloves',
+      label: labels.gloves,
       itemField: 'glovesItemId',
       fields: [
         { id: 'glovesEaf', label: 'EAF', testId: 'tech-account-gloves-eaf', min: 0, max: 5 },
@@ -148,7 +153,7 @@ export function AccountContextPanel({
     },
     {
       id: 'boots',
-      label: 'Boots',
+      label: labels.boots,
       itemField: 'bootsItemId',
       fields: [
         { id: 'bootsEaf', label: 'EAF', testId: 'tech-account-boots-eaf', min: 0, max: 5 },
@@ -165,117 +170,117 @@ export function AccountContextPanel({
     summary?: Array<[string, string]>;
   }> = [
     {
-      title: 'Build stats',
+      title: labels.buildStats,
       fields: [
-        { id: 'baseAtk', label: 'Base ATK', testId: 'tech-account-base-atk', min: 0, step: 1 },
-        { id: 'finalAtk', label: 'Final ATK', testId: 'tech-account-final-atk', min: 0, step: 1 },
-        { id: 'atkPercent', label: 'ATK %', testId: 'tech-account-atk-percent', min: 0, max: 5000 },
-        { id: 'critRate', label: 'Crit rate', testId: 'tech-account-crit-rate', min: 0, max: 1000 },
-        { id: 'critDamage', label: 'Crit damage', testId: 'tech-account-crit-damage', min: 0, max: 5000 },
-        { id: 'skillDamage', label: 'Skill damage', testId: 'tech-account-skill-damage', min: 0, max: 5000 },
+        { id: 'baseAtk', label: labels.baseAtk, testId: 'tech-account-base-atk', min: 0, step: 1 },
+        { id: 'finalAtk', label: labels.finalAtk, testId: 'tech-account-final-atk', min: 0, step: 1 },
+        { id: 'atkPercent', label: labels.atkPercent, testId: 'tech-account-atk-percent', min: 0, max: 5000 },
+        { id: 'critRate', label: labels.critRate, testId: 'tech-account-crit-rate', min: 0, max: 1000 },
+        { id: 'critDamage', label: labels.critDamage, testId: 'tech-account-crit-damage', min: 0, max: 5000 },
+        { id: 'skillDamage', label: labels.skillDamage, testId: 'tech-account-skill-damage', min: 0, max: 5000 },
       ],
-      summary: [['Mode', playerState.damage.combat_mode.toUpperCase()]],
+      summary: [[labels.mode, playerState.damage.combat_mode.toUpperCase()]],
     },
     {
-      title: 'Damage conditions',
+      title: labels.damageConditions,
       fields: [
-        { id: 'shieldDamage', label: 'Shield damage', testId: 'tech-account-shield-damage', min: 0, max: 5000, step: 0.5 },
-        { id: 'poisonedDamage', label: 'Poisoned target', testId: 'tech-account-poisoned-damage', min: 0, max: 5000, step: 0.5 },
-        { id: 'weakenedDamage', label: 'Weakened target', testId: 'tech-account-weakened-damage', min: 0, max: 5000, step: 0.5 },
-        { id: 'chilledDamage', label: 'Chilled target', testId: 'tech-account-chilled-damage', min: 0, max: 5000, step: 0.5 },
-        { id: 'lacerationDamage', label: 'Lacerated target', testId: 'tech-account-laceration-damage', min: 0, max: 5000, step: 0.5 },
+        { id: 'shieldDamage', label: labels.shieldDamage, testId: 'tech-account-shield-damage', min: 0, max: 5000, step: 0.5 },
+        { id: 'poisonedDamage', label: labels.poisonedTarget, testId: 'tech-account-poisoned-damage', min: 0, max: 5000, step: 0.5 },
+        { id: 'weakenedDamage', label: labels.weakenedTarget, testId: 'tech-account-weakened-damage', min: 0, max: 5000, step: 0.5 },
+        { id: 'chilledDamage', label: labels.chilledTarget, testId: 'tech-account-chilled-damage', min: 0, max: 5000, step: 0.5 },
+        { id: 'lacerationDamage', label: labels.laceratedTarget, testId: 'tech-account-laceration-damage', min: 0, max: 5000, step: 0.5 },
       ],
     },
     {
-      title: 'Collections',
-      detailLabel: 'Collection detail',
+      title: labels.collections,
+      detailLabel: labels.collectionDetail,
       fields: [
-        { id: 'collectionSets', label: 'Set progress', testId: 'tech-account-collection-sets', min: 0, max: 38 },
-        { id: 'collectionStars', label: 'Set stars', testId: 'tech-account-collection-stars', min: 0 },
-        { id: 'customCollectionSets', label: 'Custom sets', testId: 'tech-account-collection-custom-sets', min: 0 },
+        { id: 'collectionSets', label: labels.setProgress, testId: 'tech-account-collection-sets', min: 0, max: 38 },
+        { id: 'collectionStars', label: labels.setStars, testId: 'tech-account-collection-stars', min: 0 },
+        { id: 'customCollectionSets', label: labels.customSets, testId: 'tech-account-collection-custom-sets', min: 0 },
       ],
       summary: [
-        ['Custom sets', contextNumber(playerState.collectible.custom_collection_slots)],
-        ['Collector heart', contextNumber(playerState.collectible.advanced_collector_heart_level)],
+        [labels.customSets, contextNumber(playerState.collectible.custom_collection_slots)],
+        [labels.collectorHeart, contextNumber(playerState.collectible.advanced_collector_heart_level)],
       ],
     },
     {
-      title: 'Survivors',
-      detailLabel: 'Survivor detail',
+      title: labels.survivors,
+      detailLabel: labels.survivorDetail,
       fields: [
-        { id: 'survivorLevel', label: 'Level', testId: 'tech-account-survivor-level', min: 1, max: 120 },
-        { id: 'survivorStar', label: 'Star', testId: 'tech-account-survivor-star', min: 0, max: 8 },
-        { id: 'survivorAwakening', label: 'Awakening', testId: 'tech-account-survivor-awakening', min: 0, max: 8 },
-        { id: 'survivorTeamwork', label: 'Teamwork slots', testId: 'tech-account-survivor-teamwork', min: 0, max: 4 },
-        { id: 'survivorPassiveCrit', label: 'Passive crit rate', testId: 'tech-account-survivor-passive', min: 0, max: 1000 },
+        { id: 'survivorLevel', label: labels.level, testId: 'tech-account-survivor-level', min: 1, max: 120 },
+        { id: 'survivorStar', label: labels.star, testId: 'tech-account-survivor-star', min: 0, max: 8 },
+        { id: 'survivorAwakening', label: labels.awakening, testId: 'tech-account-survivor-awakening', min: 0, max: 8 },
+        { id: 'survivorTeamwork', label: labels.teamworkSlots, testId: 'tech-account-survivor-teamwork', min: 0, max: 4 },
+        { id: 'survivorPassiveCrit', label: labels.passiveCritRate, testId: 'tech-account-survivor-passive', min: 0, max: 1000 },
       ],
       summary: [
-        ['Main', contextLabel(playerState.hero.selected_hero_id)],
-        ['Teamwork', contextNumber(playerState.hero.teamwork_slots_unlocked)],
+        [labels.main, contextLabel(playerState.hero.selected_hero_id, copy.common.none)],
+        [labels.teamwork, contextNumber(playerState.hero.teamwork_slots_unlocked)],
       ],
     },
     {
-      title: 'Pet awakening',
-      detailLabel: 'Pet detail',
+      title: labels.petAwakening,
+      detailLabel: labels.petDetail,
       fields: [
-        { id: 'petAwakening', label: 'Awakening', testId: 'tech-account-pet-awakening', min: 0, max: 8 },
-        { id: 'petAssistPets', label: 'Assist pets', testId: 'tech-account-pet-assist-pets', min: 0, max: 2 },
-        { id: 'petXeno', label: 'Xeno', testId: 'tech-account-pet-xeno', min: 0, max: 1 },
-        { id: 'petResonanceChance', label: 'Resonance chance', testId: 'tech-account-pet-resonance-chance', min: 0, max: 100 },
-        { id: 'petResonanceAtk', label: 'Resonance ATK', testId: 'tech-account-pet-resonance-atk', min: 0 },
+        { id: 'petAwakening', label: labels.awakening, testId: 'tech-account-pet-awakening', min: 0, max: 8 },
+        { id: 'petAssistPets', label: labels.assistPets, testId: 'tech-account-pet-assist-pets', min: 0, max: 2 },
+        { id: 'petXeno', label: labels.xeno, testId: 'tech-account-pet-xeno', min: 0, max: 1 },
+        { id: 'petResonanceChance', label: labels.resonanceChance, testId: 'tech-account-pet-resonance-chance', min: 0, max: 100 },
+        { id: 'petResonanceAtk', label: labels.resonanceAtk, testId: 'tech-account-pet-resonance-atk', min: 0 },
       ],
       summary: [
-        ['Main pet', contextLabel(playerState.pet.deployed_pet_id)],
-        ['Xeno', playerState.pet.deployed_is_xeno ? 'on' : 'off'],
+        [labels.mainPet, contextLabel(playerState.pet.deployed_pet_id, copy.common.none)],
+        [labels.xeno, playerState.pet.deployed_is_xeno ? (locale === 'ko' ? '켜짐' : 'on') : locale === 'ko' ? '꺼짐' : 'off'],
       ],
     },
     {
-      title: 'Movement and pet totals',
+      title: labels.movementAndPetTotals,
       fields: [
-        { id: 'petAtk', label: 'Pet ATK', testId: 'tech-account-pet-atk', min: 0, step: 1 },
-        { id: 'otherworldPetSyncRate', label: 'Otherworld pet sync', testId: 'tech-account-otherworld-pet-sync-rate', min: 0, max: 5000, step: 0.5 },
-        { id: 'movementSpeed', label: 'Movement speed', testId: 'tech-account-movement-speed', min: 0, max: 1000, step: 0.5 },
-        { id: 'movementSpeedCap', label: 'Movement speed cap', testId: 'tech-account-movement-speed-cap', min: 0, max: 1000, step: 0.5 },
+        { id: 'petAtk', label: labels.petAtk, testId: 'tech-account-pet-atk', min: 0, step: 1 },
+        { id: 'otherworldPetSyncRate', label: labels.otherworldPetSync, testId: 'tech-account-otherworld-pet-sync-rate', min: 0, max: 5000, step: 0.5 },
+        { id: 'movementSpeed', label: labels.movementSpeed, testId: 'tech-account-movement-speed', min: 0, max: 1000, step: 0.5 },
+        { id: 'movementSpeedCap', label: labels.movementSpeedCap, testId: 'tech-account-movement-speed-cap', min: 0, max: 1000, step: 0.5 },
       ],
     },
     {
-      title: 'Mounts',
-      detailLabel: 'Mount detail',
+      title: labels.mounts,
+      detailLabel: labels.mountDetail,
       fields: [
-        { id: 'mountCores', label: 'Mount cores', testId: 'tech-account-mount-cores', min: 0 },
-        { id: 'mountPuzzleSlots', label: 'Puzzle slots', testId: 'tech-account-mount-puzzle', min: 0 },
-        { id: 'mountStatInputs', label: 'Mount stat inputs', testId: 'tech-account-mount-stat', min: 0, max: 5000 },
-        { id: 'mountAtk', label: 'Mount ATK %', testId: 'tech-account-mount-atk', min: 0, max: 5000 },
-        { id: 'mountSkillDamage', label: 'Mount skill %', testId: 'tech-account-mount-skill', min: 0, max: 5000 },
+        { id: 'mountCores', label: labels.mountCores, testId: 'tech-account-mount-cores', min: 0 },
+        { id: 'mountPuzzleSlots', label: labels.puzzleSlots, testId: 'tech-account-mount-puzzle', min: 0 },
+        { id: 'mountStatInputs', label: labels.mountStatInputs, testId: 'tech-account-mount-stat', min: 0, max: 5000 },
+        { id: 'mountAtk', label: labels.mountAtk, testId: 'tech-account-mount-atk', min: 0, max: 5000 },
+        { id: 'mountSkillDamage', label: labels.mountSkillDamage, testId: 'tech-account-mount-skill', min: 0, max: 5000 },
       ],
     },
     {
-      title: 'Equipment forging',
-      detailLabel: 'Six-slot equipment',
+      title: labels.equipmentForging,
+      detailLabel: labels.sixSlotEquipment,
       fields: [
-        { id: 'equipmentOtherworldCores', label: 'Otherworld / forge cores', testId: 'tech-account-equipment-otherworld-cores', min: 0 },
+        { id: 'equipmentOtherworldCores', label: labels.otherworldForgeCores, testId: 'tech-account-equipment-otherworld-cores', min: 0 },
       ],
       summary: [
-        ['Weapon', contextLabel(equipment.weapon.item_id)],
-        ['Designs', contextNumber(equipment.weapon.designs_owned)],
+        [labels.weapon, contextLabel(equipment.weapon.item_id, copy.common.none)],
+        [labels.designs, contextNumber(equipment.weapon.designs_owned)],
       ],
     },
     {
-      title: 'Lunar Mine',
+      title: labels.lunarMine,
       fields: [
-        { id: 'lmeTurf', label: 'Turf nodes', testId: 'tech-account-lme-turf', min: 0 },
+        { id: 'lmeTurf', label: labels.turfNodes, testId: 'tech-account-lme-turf', min: 0 },
       ],
       summary: [
-        ['Phase', playerState.lme.battle_phase],
-        ['Player medals', contextNumber(playerState.lme.player_medals)],
-        ['Opponent medals', contextNumber(playerState.lme.opponent_medals)],
+        [labels.phase, playerState.lme.battle_phase],
+        [labels.playerMedals, contextNumber(playerState.lme.player_medals)],
+        [labels.opponentMedals, contextNumber(playerState.lme.opponent_medals)],
       ],
     },
   ];
 
   return (
     <div className={panelClass} data-testid="tech-account-context">
-      <h2 className={labelClass}>Account context</h2>
+      <h2 className={labelClass}>{copy.account.title}</h2>
       <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4" data-testid="tech-account-summary">
         {summaryRows.map(([label, value]) => (
           <div key={label} className="rounded-md border border-[color:var(--color-border)]/60 p-2">
@@ -289,17 +294,17 @@ export function AccountContextPanel({
           <section key={section.title} className="border-t border-[color:var(--color-border)]/50 py-3">
             <h3 className="text-xs font-semibold uppercase text-[color:var(--color-text)]">{section.title}</h3>
             {section.detailLabel ? <p className="mt-1 text-xs text-[color:var(--color-text-muted)]">{section.detailLabel}</p> : null}
-            {section.title === 'Collections' ? (
+            {section.title === labels.collections ? (
               <div className="mt-2 grid gap-2" data-testid="tech-collection-named-editor">
                 <label className="block text-sm text-[color:var(--color-text)]">
-                  <span className="text-xs text-[color:var(--color-text-muted)]">Target collectible</span>
+                  <span className="text-xs text-[color:var(--color-text-muted)]">{labels.targetCollectible}</span>
                   <select
                     className={selectClass + ' mt-1'}
                     data-testid="tech-collection-target-select"
                     value={account.targetCollectibleId}
                     onChange={(event) => onNamedChange('targetCollectibleId', event.target.value)}
                   >
-                    <option value="">None</option>
+                    <option value="">{copy.common.none}</option>
                     {COLLECTIBLE_ITEM_INDEX.slice(0, 20).map((item) => (
                       <option key={item.id} value={item.id}>
                         {item.display_name_en}
@@ -310,7 +315,7 @@ export function AccountContextPanel({
                     className="mt-1 block text-xs text-[color:var(--color-text-muted)]"
                     data-testid="tech-collection-selected-target"
                   >
-                    Selected target: {selectedCollectibleName}
+                    {copy.account.selectedTargetPrefix}: {selectedCollectibleName}
                   </span>
                 </label>
                 {collectionRows.map((set) => (
@@ -320,7 +325,7 @@ export function AccountContextPanel({
                     data-testid="tech-collection-named-row"
                   >
                     <span className="truncate text-[color:var(--color-text)]">{set.display_name_en}</span>
-                    <span className="font-mono text-[color:var(--color-text-muted)]">Set {set.collectible_count}</span>
+                    <span className="font-mono text-[color:var(--color-text-muted)]">{labels.set} {set.collectible_count}</span>
                   </div>
                 ))}
                 <div className="grid gap-2" data-testid="tech-collection-item-editor">
@@ -334,21 +339,21 @@ export function AccountContextPanel({
                     >
                       <span className="truncate text-[color:var(--color-text)]">{item.display_name_en}</span>
                       <span className="font-mono text-[color:var(--color-text-muted)]">
-                        {collectibleItemReviewMarker(account.targetCollectibleId === item.id)}
+                        {collectibleItemReviewMarker(account.targetCollectibleId === item.id, locale)}
                       </span>
                     </button>
                   ))}
                 </div>
               </div>
             ) : null}
-            {section.title === 'Survivors' ? (
+            {section.title === labels.survivors ? (
               <div className="mt-2 grid gap-2">
                 <div
                   className="rounded-md border border-[color:var(--color-border)]/60 p-2 text-xs text-[color:var(--color-text)]"
                   data-testid="tech-survivor-selector"
                 >
                   <label className="block text-sm text-[color:var(--color-text)]">
-                    <span className="text-xs text-[color:var(--color-text-muted)]">Selected survivor</span>
+                    <span className="text-xs text-[color:var(--color-text-muted)]">{labels.selectedSurvivor}</span>
                     <select
                       className={selectClass + ' mt-1'}
                       data-testid="tech-survivor-select"
@@ -372,7 +377,7 @@ export function AccountContextPanel({
                 >
                   <div className="rounded-md border border-[color:var(--color-border)]/60 p-2 text-xs" data-testid="tech-teamwork-row">
                     <label className="block text-sm text-[color:var(--color-text)]">
-                      <span className="text-xs text-[color:var(--color-text-muted)]">Teamwork passive</span>
+                      <span className="text-xs text-[color:var(--color-text-muted)]">{labels.teamworkPassive}</span>
                       <select
                         className={selectClass + ' mt-1'}
                         data-testid="tech-teamwork-select"
@@ -381,7 +386,7 @@ export function AccountContextPanel({
                       >
                         {[0, 1, 2, 3, 4].map((value) => (
                           <option key={value} value={value}>
-                            {formatTeamworkOptionLabel(value)}
+                            {formatTeamworkOptionLabel(value, locale)}
                           </option>
                         ))}
                       </select>
@@ -389,7 +394,7 @@ export function AccountContextPanel({
                   </div>
                   <div className="rounded-md border border-[color:var(--color-border)]/60 p-2 text-xs" data-testid="tech-passive-row">
                     <label className="block text-sm text-[color:var(--color-text)]">
-                      <span className="text-xs text-[color:var(--color-text-muted)]">Passive crit</span>
+                      <span className="text-xs text-[color:var(--color-text-muted)]">{labels.passiveCrit}</span>
                       <select
                         className={selectClass + ' mt-1'}
                         data-testid="tech-passive-select"
@@ -398,7 +403,7 @@ export function AccountContextPanel({
                       >
                         {[0, 6, 12, 18, 24].map((value) => (
                           <option key={value} value={value}>
-                            {formatPassiveCritOptionLabel(value)}
+                            {formatPassiveCritOptionLabel(value, locale)}
                           </option>
                         ))}
                       </select>
@@ -406,15 +411,15 @@ export function AccountContextPanel({
                   </div>
                 </div>
                 <p className="text-xs text-[color:var(--color-text-muted)]" data-testid="tech-survivor-context-summary">
-                  {selectedHeroName} / {survivorContextSummary(account)}
+                  {selectedHeroName} / {survivorContextSummary(account, locale)}
                 </p>
               </div>
             ) : null}
-            {section.title === 'Pet awakening' ? (
+            {section.title === labels.petAwakening ? (
               <div className="mt-2 grid gap-2" data-testid="tech-pet-selector">
                 <div className="rounded-md border border-[color:var(--color-border)]/60 p-2 text-xs text-[color:var(--color-text)]">
                   <label className="block text-sm text-[color:var(--color-text)]">
-                    <span className="text-xs text-[color:var(--color-text-muted)]">Deployed pet</span>
+                    <span className="text-xs text-[color:var(--color-text-muted)]">{labels.deployedPet}</span>
                     <select
                       className={selectClass + ' mt-1'}
                       data-testid="tech-pet-deployed-select"
@@ -433,14 +438,14 @@ export function AccountContextPanel({
                 <div className="grid gap-2 sm:grid-cols-2">
                   <div className="rounded-md border border-[color:var(--color-border)]/60 p-2 text-xs" data-testid="tech-pet-assist-1">
                     <label className="block text-sm text-[color:var(--color-text)]">
-                      <span className="text-xs text-[color:var(--color-text-muted)]">Assist 1</span>
+                      <span className="text-xs text-[color:var(--color-text-muted)]">{labels.assist1}</span>
                       <select
                         className={selectClass + ' mt-1'}
                         data-testid="tech-pet-assist-1-select"
                         value={account.assistPet1Id}
                         onChange={(event) => updatePetSelection({ assistPet1Id: event.target.value })}
                       >
-                        <option value="">None</option>
+                        <option value="">{copy.common.none}</option>
                         {assistPet1Rows.map((pet) => (
                           <option key={pet.id} value={pet.id}>
                             {pet.display_name_en}
@@ -451,14 +456,14 @@ export function AccountContextPanel({
                   </div>
                   <div className="rounded-md border border-[color:var(--color-border)]/60 p-2 text-xs" data-testid="tech-pet-assist-2">
                     <label className="block text-sm text-[color:var(--color-text)]">
-                      <span className="text-xs text-[color:var(--color-text-muted)]">Assist 2</span>
+                      <span className="text-xs text-[color:var(--color-text-muted)]">{labels.assist2}</span>
                       <select
                         className={selectClass + ' mt-1'}
                         data-testid="tech-pet-assist-2-select"
                         value={account.assistPet2Id}
                         onChange={(event) => updatePetSelection({ assistPet2Id: event.target.value })}
                       >
-                        <option value="">None</option>
+                        <option value="">{copy.common.none}</option>
                         {assistPet2Rows.map((pet) => (
                           <option key={pet.id} value={pet.id}>
                             {pet.display_name_en}
@@ -469,14 +474,14 @@ export function AccountContextPanel({
                   </div>
                 </div>
                 <div className="rounded-md border border-[color:var(--color-border)]/60 p-2 text-xs" data-testid="tech-pet-xeno-status">
-                  {petXenoStatusLabel(account)}
+                  {petXenoStatusLabel(account, locale)}
                 </div>
               </div>
             ) : null}
-            {section.title === 'Mounts' ? (
+            {section.title === labels.mounts ? (
               <div className="mt-2 grid gap-2" data-testid="tech-mount-puzzle-editor">
                 <label className="block rounded-md border border-[color:var(--color-border)]/60 p-2 text-sm text-[color:var(--color-text)]">
-                  <span className="text-xs text-[color:var(--color-text-muted)]">Selected mount</span>
+                  <span className="text-xs text-[color:var(--color-text-muted)]">{labels.selectedMount}</span>
                   <select
                     className={selectClass + ' mt-1'}
                     data-testid="tech-mount-select"
@@ -497,7 +502,7 @@ export function AccountContextPanel({
                   </span>
                 </label>
                 <p className="text-xs text-[color:var(--color-text-muted)]" data-testid="tech-mount-review-summary">
-                  {mountReviewSummary(account)}
+                  {mountReviewSummary(account, locale)}
                 </p>
                 {mountRows.map((mount, index) => (
                   <div
@@ -506,12 +511,12 @@ export function AccountContextPanel({
                     data-testid="tech-mount-puzzle-row"
                   >
                     <span className="truncate text-[color:var(--color-text)]">{mount.display_name_en}</span>
-                    <span className="font-mono text-[color:var(--color-text-muted)]">Puzzle {index + 1}</span>
+                    <span className="font-mono text-[color:var(--color-text-muted)]">{labels.puzzle} {index + 1}</span>
                   </div>
                 ))}
               </div>
             ) : null}
-            {section.title === 'Lunar Mine' ? (
+            {section.title === labels.lunarMine ? (
               <div className="mt-2 grid grid-cols-5 gap-2" data-testid="tech-lme-turf-presets">
                 {[0, 3, 6, 9, 12].map((value) => (
                   <button
@@ -520,7 +525,7 @@ export function AccountContextPanel({
                     className="rounded-md border border-[color:var(--color-border)]/60 px-2 py-1 text-xs"
                     onClick={() => onChange('lmeTurf', value)}
                   >
-                    {lmeTurfPresetLabel(value)}
+                    {lmeTurfPresetLabel(value, locale)}
                   </button>
                 ))}
               </div>
@@ -542,7 +547,7 @@ export function AccountContextPanel({
                 </label>
               ))}
             </div>
-            {section.title === 'Equipment forging' ? (
+            {section.title === labels.equipmentForging ? (
               <div className="mt-3 grid gap-3">
                 {equipmentSlotSections.map((slot) => (
                   <div
@@ -552,7 +557,7 @@ export function AccountContextPanel({
                   >
                     <h4 className="text-xs font-semibold uppercase text-[color:var(--color-text)]">{slot.label}</h4>
                     <label className="mt-2 block text-sm text-[color:var(--color-text)]">
-                      <span className="text-xs text-[color:var(--color-text-muted)]">Item</span>
+                      <span className="text-xs text-[color:var(--color-text-muted)]">{labels.item}</span>
                       <select
                         className={selectClass + ' mt-1'}
                         data-testid={`tech-equipment-item-selector-${slot.id}`}

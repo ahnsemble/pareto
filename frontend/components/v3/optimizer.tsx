@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { useLocale } from 'next-intl';
 import { Link } from '../../i18n/navigation';
 import { bootParetoStore, useParetoStore } from '../../app/lib/pareto-store/store';
 import { selectPlayerState } from '../../app/lib/pareto-store/selectors';
@@ -45,6 +46,12 @@ import {
 import { AccountContextPanel } from './tech/TechAccountContextPanel';
 import { ProfileImportPanel, ResourceWalletPanel } from './tech/TechProductPanels';
 import { TechUpgradeRecommendations } from './tech/TechUpgradeRecommendations';
+import {
+  getTechOptimizerCopy,
+  localizeProductImportSummary,
+  localizeTechInventoryMessage,
+  normalizeTechOptimizerLocale,
+} from './tech/techLocaleCopy';
 import {
   DEFAULT_TECH_ACCOUNT_CONTEXT,
   buildSioLmContext,
@@ -111,11 +118,6 @@ const DEFAULT_SKILL_STATUS = SIO_MODE_CHOICES.reduce(
   },
   {} as Record<SioModeId, SkillStatus>,
 );
-const SKILL_STATUS_LABEL: Record<SkillStatus, string> = {
-  auto: 'Auto',
-  locked: 'Locked',
-  disabled: 'Excluded',
-};
 const DEFAULT_CANDIDATE_PRESELECT_TOP_K = 16;
 const SPEED_MODE_OPTIONS = ['fast', 'normal', 'precise', 'precise+', 'full'] as const;
 const LIMIT_OPTIONS = ['basic', 'advanced'] as const;
@@ -182,21 +184,8 @@ function safeValidation(status: BootState, inventory: SioTechInventoryInput): Si
   }
 }
 
-const INVENTORY_MESSAGE_LABELS: Record<string, string> = {
-  'overload.max_requires_overloadable': 'Max overload is only used when Overload is enabled',
-  'overload.max_gt_18': 'Overload cap must be 18 or lower',
-  'overload.max_too_high': 'Max overload must be 18 or lower',
-  'chips.gt_999': 'Tech resonance chips must be 999 or lower',
-  'chips.too_high': 'Tech resonance chips must be 999 or lower',
-  'skill_slots.lt_1': 'Active skills must be at least 1',
-  'skill_slots.too_low': 'Skill slots must be at least 1',
-  'skill_slots.gt_6': 'Active skills must be 6 or lower',
-  'skill_slots.too_high': 'Skill slots must be 6 or lower',
-  wasm_pending: 'WASM is still loading',
-};
-
-function inventoryMessage(value: string): string {
-  return INVENTORY_MESSAGE_LABELS[value] ?? value;
+function inventoryMessage(value: string, locale: string = 'en'): string {
+  return localizeTechInventoryMessage(value, locale);
 }
 
 function buildLoadoutRows(build: TechOptimizerResult['builds'][number] | undefined): Array<Record<string, unknown>> {
@@ -229,10 +218,10 @@ function buildChipUsed(build: TechOptimizerResult['builds'][number] | undefined)
   return formatNumber(used, 0);
 }
 
-function buildActiveSkills(build: TechOptimizerResult['builds'][number] | undefined): string {
+function buildActiveSkills(build: TechOptimizerResult['builds'][number] | undefined, emptyLabel = 'none'): string {
   const candidate = build?.config?.sioCandidate as Record<string, unknown> | undefined;
   const skills = candidate?.activeSkills;
-  if (!Array.isArray(skills) || skills.length === 0) return 'none';
+  if (!Array.isArray(skills) || skills.length === 0) return emptyLabel;
   return skills.map((skill) => presentTechSkillName(String(skill))).join(', ');
 }
 
@@ -470,6 +459,8 @@ export function TwinbornAutoAssignSurface() {
 }
 
 export function TechPartsOptimizerSurface() {
+  const locale = normalizeTechOptimizerLocale(useLocale());
+  const copy = getTechOptimizerCopy(locale);
   const bootStatus = useV3OptimizerBoot();
   const storeState = useParetoStore();
   const playerState = useMemo(() => selectPlayerState(storeState), [storeState]);
@@ -522,7 +513,7 @@ export function TechPartsOptimizerSurface() {
   const topBuild = result?.builds?.[0];
   const topLoadout = buildLoadoutRows(topBuild);
   const topPresentedLoadout = presentTechLoadoutRows(topLoadout);
-  const activeSkills = buildActiveSkills(topBuild);
+  const activeSkills = buildActiveSkills(topBuild, copy.common.none);
   const chipUsed = buildChipUsed(topBuild);
   const chipRemainder = buildChipRemainder(topBuild);
   const upgradeRecommendations = useMemo(
@@ -537,9 +528,9 @@ export function TechPartsOptimizerSurface() {
   const canRun = bootStatus === 'ok' && inventoryValidation.valid && !running;
   const validationText = inventoryValidation.valid
     ? inventoryValidation.warnings.length > 0
-      ? `Inventory valid / ${inventoryValidation.warnings.map(inventoryMessage).join(', ')}`
-      : 'Inventory valid'
-    : `Inventory blocked / ${inventoryValidation.errors.map(inventoryMessage).join(', ')}`;
+      ? copy.inventory.validWithWarnings(inventoryValidation.warnings.map((message) => inventoryMessage(message, locale)).join(', '))
+      : copy.inventory.valid
+    : copy.inventory.blocked(inventoryValidation.errors.map((message) => inventoryMessage(message, locale)).join(', '));
   const playerStateForRun = useMemo(() => playerStateWithAccountContext(playerState, accountContext), [accountContext, playerState]);
   const sioLmContextForRun = useMemo(() => buildSioLmContext(accountContext), [accountContext]);
   const handleTechRun = async () => {
@@ -569,7 +560,7 @@ export function TechPartsOptimizerSurface() {
       if (!imported.ok) {
         setProfileImportCoverage([]);
         setProfileImportDetails([]);
-        setProfileImportSummary('Profile import failed. Check the link or JSON and try again.');
+        setProfileImportSummary(localizeProductImportSummary('Profile import failed. Check the link or JSON and try again.', locale));
         return;
       }
 
@@ -605,7 +596,7 @@ export function TechPartsOptimizerSurface() {
       setImportedTechSnapshot(imported.importedTechSnapshot ?? null);
       setProfileImportCoverage(imported.coverage ?? []);
       setProfileImportDetails(buildProductImportFieldSummary(imported));
-      setProfileImportSummary(imported.summary);
+      setProfileImportSummary(localizeProductImportSummary(imported.summary, locale));
     } finally {
       setProfileImporting(false);
     }
@@ -624,7 +615,7 @@ export function TechPartsOptimizerSurface() {
           <div>
             <h1 className="text-2xl font-semibold">
               <span className="text-[color:var(--color-primary)]">Tangtang</span>{' '}
-              <span className="text-[color:var(--color-text)]">/ tech parts</span>
+              <span className="text-[color:var(--color-text)]">/ {copy.titleSuffix}</span>
             </h1>
             <BootLine status={bootStatus} />
           </div>
@@ -648,6 +639,7 @@ export function TechPartsOptimizerSurface() {
             details={profileImportDetails}
             importing={profileImporting}
             running={running}
+            locale={locale}
           />
 
           <ResourceWalletPanel
@@ -659,13 +651,14 @@ export function TechPartsOptimizerSurface() {
               }
               setResourceWallet((current) => ({ ...current, [id]: value }));
             }}
+            locale={locale}
           />
 
           <div className={panelClass} data-testid="tech-inventory-contract">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
-                <h2 className="text-sm font-semibold text-[color:var(--color-text)]">Owned tech materials</h2>
-                <p className="mt-1 text-xs text-[color:var(--color-text-muted)]">Sub-parts excluding equipped main parts</p>
+                <h2 className="text-sm font-semibold text-[color:var(--color-text)]">{copy.inventory.title}</h2>
+                <p className="mt-1 text-xs text-[color:var(--color-text-muted)]">{copy.inventory.subtitle}</p>
               </div>
               <span
                 className={`font-mono text-xs ${inventoryValidation.valid ? 'text-[color:var(--color-accent)]' : 'text-[color:var(--color-danger)]'}`}
@@ -676,7 +669,7 @@ export function TechPartsOptimizerSurface() {
             </div>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               <label className="block text-sm text-[color:var(--color-text)]">
-                <span className="text-xs text-[color:var(--color-text-muted)]">Tech resonance chips</span>
+                <span className="text-xs text-[color:var(--color-text-muted)]">{copy.inventory.labels.chips}</span>
                 <input
                   className={inputClass + ' mt-1'}
                   data-testid="tech-inventory-chips"
@@ -688,7 +681,7 @@ export function TechPartsOptimizerSurface() {
                 />
               </label>
               <label className="block text-sm text-[color:var(--color-text)]">
-                <span className="text-xs text-[color:var(--color-text-muted)]">Active skills</span>
+                <span className="text-xs text-[color:var(--color-text-muted)]">{copy.inventory.labels.activeSkills}</span>
                 <input
                   className={inputClass + ' mt-1'}
                   data-testid="tech-inventory-skill-slots"
@@ -700,7 +693,7 @@ export function TechPartsOptimizerSurface() {
                 />
               </label>
               <label className="block text-sm text-[color:var(--color-text)]">
-                <span className="text-xs text-[color:var(--color-text-muted)]">Search depth</span>
+                <span className="text-xs text-[color:var(--color-text-muted)]">{copy.inventory.labels.searchDepth}</span>
                 <select className={selectClass + ' mt-1'} value={speedMode} onChange={(event) => setSpeedMode(event.target.value)}>
                   {SPEED_MODE_OPTIONS.map((item) => (
                     <option key={item} value={item}>
@@ -710,7 +703,7 @@ export function TechPartsOptimizerSurface() {
                 </select>
               </label>
               <label className="block text-sm text-[color:var(--color-text)]">
-                <span className="text-xs text-[color:var(--color-text-muted)]">Input mode</span>
+                <span className="text-xs text-[color:var(--color-text-muted)]">{copy.inventory.labels.inputMode}</span>
                 <select className={selectClass + ' mt-1'} value={limit} onChange={(event) => setLimit(event.target.value)}>
                   {LIMIT_OPTIONS.map((item) => (
                     <option key={item} value={item}>
@@ -726,10 +719,10 @@ export function TechPartsOptimizerSurface() {
                   checked={overloadable}
                   onChange={(event) => setOverloadable(event.target.checked)}
                 />
-                <span>Overload</span>
+                <span>{copy.inventory.labels.overload}</span>
               </label>
               <label className="block text-sm text-[color:var(--color-text)]">
-                <span className="text-xs text-[color:var(--color-text-muted)]">Overload cap</span>
+                <span className="text-xs text-[color:var(--color-text-muted)]">{copy.inventory.labels.overloadCap}</span>
                 <input
                   className={inputClass + ' mt-1'}
                   data-testid="tech-inventory-max-overload"
@@ -764,7 +757,7 @@ export function TechPartsOptimizerSurface() {
           </div>
 
           <div className={panelClass}>
-            <h2 className={labelClass}>Skill constraints</h2>
+            <h2 className={labelClass}>{copy.skill.title}</h2>
             <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
               {SIO_MODE_CHOICES.map(([mode, label]) => (
                 <button
@@ -778,7 +771,7 @@ export function TechPartsOptimizerSurface() {
                         : 'border-[color:var(--color-border)] bg-[color:var(--color-surface)] text-[color:var(--color-text)]'
                   }`}
                   data-testid={`tech-skill-status-${mode}`}
-                  aria-label={`${label} ${SKILL_STATUS_LABEL[skillStatus[mode]]}`}
+                  aria-label={`${label} ${copy.skill.status[skillStatus[mode]]}`}
                   onClick={() =>
                     setSkillStatus((current) => ({
                       ...current,
@@ -787,7 +780,7 @@ export function TechPartsOptimizerSurface() {
                   }
                 >
                   <span className="block truncate">{label}</span>
-                  <span className="mt-1 block font-mono text-[11px] uppercase">{SKILL_STATUS_LABEL[skillStatus[mode]]}</span>
+                  <span className="mt-1 block font-mono text-[11px] uppercase">{copy.skill.status[skillStatus[mode]]}</span>
                 </button>
               ))}
             </div>
@@ -808,13 +801,14 @@ export function TechPartsOptimizerSurface() {
                 [field]: value,
               }))
             }
+            locale={locale}
           />
 
           <div className={panelClass}>
-            <h2 className={labelClass}>Search</h2>
+            <h2 className={labelClass}>{copy.search.title}</h2>
             <div className="mt-3 grid gap-3">
               <label className="block text-sm text-[color:var(--color-text)]">
-                <span className="text-xs text-[color:var(--color-text-muted)]">Top builds</span>
+                <span className="text-xs text-[color:var(--color-text-muted)]">{copy.search.topBuilds}</span>
                 <input
                   className={inputClass + ' mt-1'}
                   data-testid="tech-optimizer-top-k"
@@ -833,11 +827,11 @@ export function TechPartsOptimizerSurface() {
               disabled={!canRun}
               onClick={handleTechRun}
             >
-              {running ? 'Running' : 'Run'}
+              {running ? copy.search.running : copy.search.run}
             </button>
             {runError ? (
               <p className="mt-2 font-mono text-xs text-[color:var(--color-danger)]" data-testid="tech-optimizer-error">
-                Optimizer run failed. Try different inputs.
+                {copy.search.failed}
               </p>
             ) : null}
           </div>
@@ -851,68 +845,68 @@ export function TechPartsOptimizerSurface() {
           data-full-sio-equivalent={result?.scope?.full_sio_equivalent ? 'true' : 'false'}
         >
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 className={labelClass}>Ranked tech builds</h2>
+            <h2 className={labelClass}>{copy.results.title}</h2>
           </div>
           {result ? (
             <div className="mt-3 rounded-md border border-[color:var(--color-border)] p-3 text-sm text-[color:var(--color-text)]" data-testid="tech-optimizer-result-summary">
-              <p className="font-semibold">Top build</p>
+              <p className="font-semibold">{copy.results.topBuild}</p>
               <p className="mt-1 text-xs text-[color:var(--color-text-muted)]">
                 {topPresentedLoadout[0]
                   ? `${topPresentedLoadout[0].partName} / ${topPresentedLoadout[0].modeName}`
-                  : 'No parts selected'}
+                  : copy.common.noPartsSelected}
               </p>
               <p className="mt-2 font-mono text-xs">
-                Chips used {chipUsed} · Chips left {chipRemainder} · Active skills {activeSkills}
+                {copy.results.summaryLine(chipUsed, chipRemainder, activeSkills)}
               </p>
             </div>
           ) : (
             <div className="mt-3 rounded-md border border-dashed border-[color:var(--color-border)] p-3 text-sm text-[color:var(--color-text-muted)]" data-testid="tech-optimizer-empty-state">
-              Run the optimizer to compare builds.
+              {copy.results.empty}
             </div>
           )}
           <div className="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
             <div className="rounded-md border border-[color:var(--color-border)] p-3">
-              <p className={labelClass}>First answer</p>
+              <p className={labelClass}>{copy.results.firstAnswer}</p>
               <p className="mt-2 font-mono text-lg text-[color:var(--color-accent)]" data-testid="tech-optimizer-first-answer">
                 {result ? `${formatNumber(result.metrics.first_answer_ms, 3)} ms` : '0 ms'}
               </p>
             </div>
             <div className="rounded-md border border-[color:var(--color-border)] p-3">
-              <p className={labelClass}>Visited</p>
+              <p className={labelClass}>{copy.results.visited}</p>
               <p className="mt-2 font-mono text-lg text-[color:var(--color-text)]" data-testid="tech-optimizer-visited">
                 {result ? formatNumber(result.metrics.visited_nodes, 0) : '0'}
               </p>
             </div>
             <div className="rounded-md border border-[color:var(--color-border)] p-3">
-              <p className={labelClass}>Chips used</p>
+              <p className={labelClass}>{copy.results.chipsUsed}</p>
               <p className="mt-2 font-mono text-lg text-[color:var(--color-text)]" data-testid="tech-optimizer-chip-used">
-                {result ? chipUsed : 'n/a'}
+                {result ? chipUsed : copy.common.unavailable}
               </p>
             </div>
             <div className="rounded-md border border-[color:var(--color-border)] p-3">
-              <p className={labelClass}>Chips left</p>
+              <p className={labelClass}>{copy.results.chipsLeft}</p>
               <p className="mt-2 font-mono text-lg text-[color:var(--color-text)]" data-testid="tech-optimizer-chip-remainder">
-                {result ? chipRemainder : 'n/a'}
+                {result ? chipRemainder : copy.common.unavailable}
               </p>
             </div>
           </div>
           <div className="mt-3 rounded-md border border-[color:var(--color-border)] p-3">
-            <p className={labelClass}>Active skills</p>
+            <p className={labelClass}>{copy.results.activeSkills}</p>
             <p className="mt-2 break-words font-mono text-sm text-[color:var(--color-text)]" data-testid="tech-optimizer-active-skills">
-              {result ? activeSkills : 'none'}
+              {result ? activeSkills : copy.common.none}
             </p>
           </div>
-          <TechUpgradeRecommendations recommendations={result ? upgradeRecommendations : []} />
+          <TechUpgradeRecommendations recommendations={result ? upgradeRecommendations : []} locale={locale} />
           <div className="mt-4 overflow-x-auto">
             <table className="w-full min-w-[640px] font-mono text-xs">
               <thead className="text-left text-[color:var(--color-text-muted)]">
                 <tr>
-                  <th className="py-2">Build</th>
-                  <th>Score</th>
-                  <th>Damage</th>
-                  <th>Chips used</th>
-                  <th>Chips left</th>
-                  <th>Parts</th>
+                  <th className="py-2">{copy.results.table.build}</th>
+                  <th>{copy.results.table.score}</th>
+                  <th>{copy.results.table.damage}</th>
+                  <th>{copy.results.chipsUsed}</th>
+                  <th>{copy.results.chipsLeft}</th>
+                  <th>{copy.results.table.parts}</th>
                 </tr>
               </thead>
               <tbody>
@@ -923,7 +917,7 @@ export function TechPartsOptimizerSurface() {
                     data-testid="tech-optimizer-result-row"
                     data-raw-label={build.label}
                   >
-                    <td className="max-w-[260px] truncate py-2 text-[color:var(--color-text)]">{`Build ${index + 1}`}</td>
+                    <td className="max-w-[260px] truncate py-2 text-[color:var(--color-text)]">{copy.results.buildLabel(index)}</td>
                     <td>{formatCompactScientific(build.score)}</td>
                     <td>{formatCompactScientific(build.damageFactor)}</td>
                     <td>{buildChipUsed(build)}</td>
@@ -946,8 +940,8 @@ export function TechPartsOptimizerSurface() {
                 >
                   <span className="truncate text-[color:var(--color-text)]">{row.partName}</span>
                   <span className="truncate">{row.modeName}</span>
-                  <span>Chip allocation {formatNumber(row.chipAllocation, 0)}</span>
-                  <span>Overload {formatNumber(row.overload, 0)}</span>
+                  <span>{copy.results.chipAllocation(formatNumber(row.chipAllocation, 0))}</span>
+                  <span>{copy.results.overload(formatNumber(row.overload, 0))}</span>
                 </div>
               );
             })}

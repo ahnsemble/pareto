@@ -204,13 +204,28 @@ export function normalizePetAssistContext(account: TechAccountContextInput): Tec
   return { ...account, assistPet1Id, assistPet2Id, petAssistPets };
 }
 
-export function petXenoStatusLabel(account: TechAccountContextInput): string {
+export function petXenoStatusLabel(account: TechAccountContextInput, locale: string = 'en'): string {
+  if (locale === 'ko') {
+    if (account.petXeno < 1) return 'Xeno 꺼짐';
+    if (account.petResonanceChance > 0 || account.petResonanceAtk > 0) return 'Xeno 공명 준비됨';
+    return 'Xeno 미리보기 켜짐';
+  }
   if (account.petXeno < 1) return 'Xeno off';
   if (account.petResonanceChance > 0 || account.petResonanceAtk > 0) return 'Xeno resonance ready';
   return 'Xeno preview on';
 }
 
-export function formatTeamworkOptionLabel(value: number): string {
+export function formatTeamworkOptionLabel(value: number, locale: string = 'en'): string {
+  if (locale === 'ko') {
+    const labels: Record<number, string> = {
+      0: '0칸 / 없음',
+      1: '1칸 / 시작',
+      2: '2칸 / 안정',
+      3: '3칸 / 강함',
+      4: '4칸 / 전체',
+    };
+    return labels[value] ?? `${value}칸`;
+  }
   const labels: Record<number, string> = {
     0: '0 slots / none',
     1: '1 slot / starter',
@@ -221,25 +236,29 @@ export function formatTeamworkOptionLabel(value: number): string {
   return labels[value] ?? `${value} slots`;
 }
 
-export function formatPassiveCritOptionLabel(value: number): string {
+export function formatPassiveCritOptionLabel(value: number, locale: string = 'en'): string {
+  if (locale === 'ko') return value <= 0 ? '패시브 치명 없음' : `치명 +${value}%`;
   return value <= 0 ? 'No passive crit' : `Crit +${value}%`;
 }
 
-export function survivorContextSummary(account: TechAccountContextInput): string {
-  return `${formatTeamworkOptionLabel(account.survivorTeamwork)} / ${formatPassiveCritOptionLabel(account.survivorPassiveCrit)}`;
+export function survivorContextSummary(account: TechAccountContextInput, locale: string = 'en'): string {
+  return `${formatTeamworkOptionLabel(account.survivorTeamwork, locale)} / ${formatPassiveCritOptionLabel(account.survivorPassiveCrit, locale)}`;
 }
 
-export function collectibleItemReviewMarker(isTarget: boolean): string {
+export function collectibleItemReviewMarker(isTarget: boolean, locale: string = 'en'): string {
+  if (locale === 'ko') return isTarget ? '목표' : '검토';
   return isTarget ? 'Target' : 'Review';
 }
 
-export function mountReviewSummary(account: TechAccountContextInput): string {
+export function mountReviewSummary(account: TechAccountContextInput, locale: string = 'en'): string {
   const puzzleSlots = Math.max(0, Math.trunc(account.mountPuzzleSlots));
   const mountCores = Math.max(0, Math.trunc(account.mountCores));
+  if (locale === 'ko') return `퍼즐 슬롯 ${puzzleSlots} / 탈것 코어 ${mountCores} / 검토용 퍼즐 행`;
   return `Puzzle slots ${puzzleSlots} / Mount cores ${mountCores} / Review-only puzzle rows`;
 }
 
-export function lmeTurfPresetLabel(value: number): string {
+export function lmeTurfPresetLabel(value: number, locale: string = 'en'): string {
+  if (locale === 'ko') return `${Math.max(0, Math.trunc(value))} 노드`;
   return `${Math.max(0, Math.trunc(value))} nodes`;
 }
 
