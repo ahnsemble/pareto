@@ -92,4 +92,19 @@ assert.ok(koChipRecommendation, 'expected a Korean chip recommendation');
 assert.match(koChipRecommendation.title, /칩 배분/);
 assert.doesNotMatch(koChipRecommendation.title, /Allocate chips/);
 
+const catalogOnlyRecommendations = buildTechUpgradeRecommendations({
+  result,
+  importedCollectibleSnapshot: {
+    items: [
+      { itemIndex: 76, stars: 1 },
+      { itemIndex: 80, stars: 1 },
+      { itemIndex: 0, stars: 8 },
+    ],
+  },
+});
+const catalogOnlyCollectionRecommendation = catalogOnlyRecommendations.find((item) => item.id === 'collection-item');
+assert.ok(catalogOnlyCollectionRecommendation, 'expected source-backed collectible item after catalog-only rows are skipped');
+assert.doesNotMatch(catalogOnlyCollectionRecommendation.title, /Libra Starlight|Event 1/);
+assert.match(catalogOnlyCollectionRecommendation.title, /Atomic Mech/);
+
 console.log('tech_upgrade_recommendations_unit_test: passed');

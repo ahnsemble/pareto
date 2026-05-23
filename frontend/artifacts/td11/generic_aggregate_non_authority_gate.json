@@ -1,0 +1,47 @@
+{
+  "generatedAtKst": "2026-05-23",
+  "status": "GENERIC-AGGREGATE-NON-AUTHORITY-GATE-V0",
+  "summary": {
+    "totalRows": 4,
+    "nonAuthoritativeRows": 4,
+    "productionScorer": "sio_full_lm_equivalence compact path"
+  },
+  "rows": [
+    {
+      "domain": "hero",
+      "sourcePath": "tttg_forge_core/src/aggregate/hero.rs",
+      "currentAuthority": "non-authoritative",
+      "productionScorer": "sio_full_lm_equivalence compact path",
+      "expectedMarker": "Ok(super::empty_stats())",
+      "risk": "Using this generic aggregate path as formula authority can undercount domain-specific SIO LM effects.",
+      "requiredBeforePromotion": "Add domain-specific provenance rows and equivalence fixtures before using this path for product scoring."
+    },
+    {
+      "domain": "pet",
+      "sourcePath": "tttg_forge_core/src/aggregate/pet.rs",
+      "currentAuthority": "non-authoritative",
+      "productionScorer": "sio_full_lm_equivalence compact path",
+      "expectedMarker": "Ok(super::empty_stats())",
+      "risk": "Using this generic aggregate path as formula authority can undercount domain-specific SIO LM effects.",
+      "requiredBeforePromotion": "Add domain-specific provenance rows and equivalence fixtures before using this path for product scoring."
+    },
+    {
+      "domain": "tech",
+      "sourcePath": "tttg_forge_core/src/aggregate/tech.rs",
+      "currentAuthority": "non-authoritative",
+      "productionScorer": "sio_full_lm_equivalence compact path",
+      "expectedMarker": "\"stats\": {}, \"ceDamage\": {}, \"passivePools\": []",
+      "risk": "Using this generic aggregate path as formula authority can undercount domain-specific SIO LM effects.",
+      "requiredBeforePromotion": "Add domain-specific provenance rows and equivalence fixtures before using this path for product scoring."
+    },
+    {
+      "domain": "collectible_set",
+      "sourcePath": "tttg_forge_core/src/aggregate/collectible_set.rs",
+      "currentAuthority": "non-authoritative",
+      "productionScorer": "sio_full_lm_equivalence compact path",
+      "expectedMarker": "Ok(super::empty_stats())",
+      "risk": "Using this generic aggregate path as formula authority can undercount domain-specific SIO LM effects.",
+      "requiredBeforePromotion": "Add domain-specific provenance rows and equivalence fixtures before using this path for product scoring."
+    }
+  ]
+}

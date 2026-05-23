@@ -256,6 +256,13 @@ export const COLLECTIBLE_EVENT_SLOTS: CollectibleItemSchema[] = Array.from({ len
   };
 });
 
+export const CATALOG_ONLY_COLLECTIBLE_ITEM_IDS = [
+  'libraStarlight',
+  'scorpioStarlight',
+  'sagittariusStarlight',
+  'capricornStarlight',
+] as const;
+
 export const COLLECTIBLE_ITEM_INDEX: CollectibleItemSchema[] = [
   ...collectibleItemNames.map((name) => ({ id: idFromName(name), display_name_en: name, display_name_ko: name, source_citations: [citation(378), formulaCitation(380)] })),
   ...COLLECTIBLE_EVENT_SLOTS,

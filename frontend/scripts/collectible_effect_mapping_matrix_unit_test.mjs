@@ -37,6 +37,7 @@ const schemas = require(path.join(buildDir, 'schemas/index.js'));
 const deployedData = JSON.parse(await fs.readFile(deployedDataPath, 'utf8'));
 
 const {
+  CATALOG_ONLY_COLLECTIBLE_ITEM_IDS,
   COLLECTIBLE_ITEM_INDEX,
   COLLECTIBLE_SET_INDEX,
 } = schemas;
@@ -323,7 +324,56 @@ const setRows = COLLECTIBLE_SET_INDEX.map((set) => {
   };
 });
 
+function itemThresholdRows(row) {
+  const nums = row.sourceStarStats.nums ?? [];
+  const vals = row.sourceStarStats.vals ?? [];
+  return nums.flatMap((threshold, index) => Object.entries(vals[index] ?? {}).map(([statChannel, value]) => ({
+    key: `${row.key}:stars:${threshold}:${statChannel}`,
+    parentKey: row.key,
+    kind: 'item-threshold',
+    name: row.name,
+    sourceDescription: `${row.name} stars >= ${threshold}: ${statChannel} +${value}`,
+    sioSourceKey: `${row.sioSourceKey}.stars.${threshold}.${statChannel}`,
+    sioSourceIndex: row.sioSourceIndex,
+    tangtangSchemaKey: row.tangtangSchemaKey,
+    rustLocation: 'tttg_forge_optimizer/src/tech/sio_config.rs:2459',
+    rustStatChannel: statChannel,
+    thresholdMetric: 'stars',
+    threshold,
+    value,
+    multiplierStage: 'derived_base_stats before 31-stage damage vector',
+    inGameDescriptionStatus: 'not independently captured',
+    confidence: row.confidence,
+  })));
+}
+
+function setThresholdRows(row) {
+  return Object.entries(row.sourceSetThresholds).flatMap(([metric, thresholds]) => (
+    Object.entries(thresholds ?? {}).flatMap(([threshold, stats]) => (
+      Object.entries(stats ?? {}).map(([statChannel, value]) => ({
+        key: `${row.key}:${metric}:${threshold}:${statChannel}`,
+        parentKey: row.key,
+        kind: 'set-threshold',
+        name: row.name,
+        sourceDescription: `${row.name} ${metric} >= ${threshold}: ${statChannel} +${value}`,
+        sioSourceKey: `${row.sioSourceKey}.stars.${metric}.${threshold}.${statChannel}`,
+        sioSourceIndex: null,
+        tangtangSchemaKey: row.tangtangSchemaKey,
+        rustLocation: 'tttg_forge_optimizer/src/tech/sio_config.rs:2525',
+        rustStatChannel: statChannel,
+        thresholdMetric: metric,
+        threshold: Number(threshold),
+        value,
+        multiplierStage: 'derived_base_set_stats before 31-stage damage vector',
+        inGameDescriptionStatus: 'not independently captured',
+        confidence: row.confidence,
+      }))
+    ))
+  ));
+}
+
 const rows = [...itemRows, ...setRows].sort((a, b) => a.key.localeCompare(b.key));
+const thresholdRows = [...itemRows.flatMap(itemThresholdRows), ...setRows.flatMap(setThresholdRows)].sort((a, b) => a.key.localeCompare(b.key));
 const eventRows = rows.filter((row) => row.kind === 'event-slot');
 const namedItemRows = itemRows.filter((row) => row.kind === 'item');
 const catalogOnlyNamedItemRows = itemRows.filter((row) => row.kind === 'catalog-only-item');
@@ -341,6 +391,7 @@ const artifact = {
     setRows: setRows.length,
     namedItemsWithSourceStarStats: namedItemRows.filter((row) => Object.keys(row.sourceStarStats).length > 0).length,
     setsWithSourceThresholds: setRowsWithSourceThresholds.length,
+    thresholdRows: thresholdRows.length,
     rowsWithSpecialRustMappings: rowsWithSpecialRustMappings.length,
     inGameDescriptionVerifiedRows: rows.filter((row) => row.inGameDescriptionStatus !== 'not independently captured').length,
   },
@@ -350,6 +401,7 @@ const artifact = {
     'This artifact maps source and Rust channels; it does not independently verify in-game description text.',
   ],
   rows,
+  thresholdRows,
 };
 
 const rowByKey = new Map(rows.map((row) => [row.key, row]));
@@ -366,6 +418,9 @@ assert.equal(artifact.summary.eventSlotRows, 42);
 assert.equal(artifact.summary.setRows, 38);
 assert.equal(artifact.summary.namedItemsWithSourceStarStats, 76);
 assert.equal(artifact.summary.setsWithSourceThresholds, 35);
+assert.ok(artifact.summary.thresholdRows > artifact.summary.totalRows, 'mapping must include threshold-level rows, not only entity rows');
+assert.ok(artifact.thresholdRows.some((row) => row.key === 'collectible-item:luckyCharm:stars:8:critRate'), 'item threshold rows must map individual stat channels');
+assert.ok(artifact.thresholdRows.some((row) => row.key === 'collectible-set:impressionIdols:red:20:skillDamage'), 'set threshold rows must map set metrics to stat channels');
 assert.equal(artifact.summary.inGameDescriptionVerifiedRows, 0);
 assert.ok(rows.every((row) => row.inGameDescriptionStatus === 'not independently captured'));
 assert.ok(eventRows.every((row) => row.confidence === 'catalog-only'));
@@ -374,7 +429,7 @@ assert.ok(catalogOnlyNamedItemRows.every((row) => row.confidence === 'catalog-on
 assert.ok(setRows.every((row) => row.confidence === 'sio-source-only'));
 assert.deepEqual(
   catalogOnlyNamedItemRows.map((row) => row.name).sort(),
-  ['Capricorn Starlight', 'Libra Starlight', 'Sagittarius Starlight', 'Scorpio Starlight'].sort(),
+  CATALOG_ONLY_COLLECTIBLE_ITEM_IDS.map((id) => COLLECTIBLE_ITEM_INDEX.find((item) => item.id === id).display_name_en).sort(),
 );
 
 assert.equal(requireRow('collectible-item:luckyCharm').sioSourceIndex, 41);

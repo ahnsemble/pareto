@@ -55,8 +55,8 @@ Confidence values:
 - Non-SS weapons are present as catalog rows but not proven as complete formula rows.
 - SpongeBob, Squidward, and Yelena are source-backed by the current runtime table and Rust compact transform, but still need targeted live and in-game description fixtures before live-equivalent claims.
 - Mounts now have a non-empty source fixture, but still need non-empty live captures with damage-bearing lines before claiming independent formula completeness.
-- Collectible item/set rows now have a source/Rust-channel mapping artifact; 4 named Starlight rows and 42 event slots remain catalog-only until source effect rows exist.
-- Generic aggregate modules remain non-authoritative for hero/pet/tech/collectible-set scoring; the current product scorer relies on the SIO LM compact path.
+- Collectible item/set rows now have a source/Rust-channel mapping artifact with threshold-level rows; 4 named Starlight rows and 42 event slots remain catalog-only until source effect rows exist.
+- Generic aggregate modules now have a dedicated non-authority gate; the current product scorer relies on the SIO LM compact path.
 
 ## Follow-Up Gate Slices
 
@@ -67,10 +67,10 @@ These slices split the v0 matrix into smaller high-risk gates. They are guardrai
 | DF-P1 | Pet alias regression | pet:blizzblast; pet:crucker | live-equivalent rows; product names stay Blizzblast/Clucker while source aliases include King Blizzblast/Crucker | alias drift can silently break compact profile mapping | add or keep alias regression before changing pet translator, schema, or compact import handling |
 | DF-P2 | Non-SS weapons | 8 weapon rows excluding Twin Lance | catalog-only; no proven Rust/stat channel or live fixture | no independent formula fixture for non-SS weapon damage contribution | unsupported for formula input until fixture evidence exists |
 | DF-P3 | Mount damage line | 3 mount rows | source-only; non-empty source fixture exists but mountDamage is not strongly live-proven | needs non-empty mount live capture with damage-bearing lines | capture a live fixture before formula-completeness claims |
-| DF-P4 | Collectible item/set text mapping | 114 source-backed rows plus 46 catalog-only rows | source-only mapping artifact exists; per-description mapping not independently captured | missing item/set in-game description to stat-channel mapping; 4 named Starlight rows and 42 event slots are catalog-only | map description -> source key -> Tangtang schema key -> Rust stat channel -> multiplier stage |
+| DF-P4 | Collectible item/set text mapping | 114 source-backed rows plus 46 catalog-only rows | source-only mapping artifact exists with 170 threshold rows; per-description mapping not independently captured | missing item/set in-game description to stat-channel mapping; 4 named Starlight rows and 42 event slots are catalog-only | map description -> source key -> Tangtang schema key -> Rust stat channel -> multiplier stage |
 | DF-P5 | Collaboration survivor source reconciliation | survivor:spongebob; survivor:squidward; survivor:yelena | source-backed by runtime table and Rust compact transform; no targeted live fixture yet | SpongeBob/Squidward/Yelena still need targeted live and in-game description captures before live-equivalent claims | add targeted fixtures before changing survivor scoring semantics |
 | DF-P6 | Negative tech modifier | tech-modifier:exoBracer->ssWeapon | live-equivalent debuff row with coefficient -0.025 | debuff can be lost if coefficients are normalized as only-positive multipliers | keep debuff regression visible in tests/docs before editing tech modifier reconstruction |
-| DF-P7 | Generic aggregate non-authority | 49 rows mentioning generic aggregate empty | matrix documents that product scoring relies on compact equivalence paths for these domains | generic aggregate path is not an authoritative replacement for hero/pet/tech/collectible-set scoring | do not promote generic aggregate paths without domain-specific provenance and equivalence fixtures |
+| DF-P7 | Generic aggregate non-authority | 49 matrix rows plus 4 generic aggregate source files | matrix and dedicated gate document that product scoring relies on compact equivalence paths for these domains | generic aggregate path is not an authoritative replacement for hero/pet/tech/collectible-set scoring | do not promote generic aggregate paths without domain-specific provenance and equivalence fixtures |
 
 ## Matrix
 

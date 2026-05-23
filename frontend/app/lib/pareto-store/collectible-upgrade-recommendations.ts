@@ -1,9 +1,10 @@
-import { COLLECTIBLE_ITEM_INDEX } from './schemas';
+import { CATALOG_ONLY_COLLECTIBLE_ITEM_IDS, COLLECTIBLE_ITEM_INDEX } from './schemas';
 import type { ImportedCollectibleSnapshot } from './profile-import-types';
 import type { TechRecommendationInput, TechUpgradeRecommendation } from './tech-upgrade-recommendation-types';
 
 const FIRST_EVENT_ITEM_INDEX = COLLECTIBLE_ITEM_INDEX.findIndex((item) => item.id === 'event1');
 const KNOWN_COLLECTIBLE_ITEM_COUNT = FIRST_EVENT_ITEM_INDEX >= 0 ? FIRST_EVENT_ITEM_INDEX : COLLECTIBLE_ITEM_INDEX.length;
+const CATALOG_ONLY_COLLECTIBLE_ITEM_ID_SET = new Set<string>(CATALOG_ONLY_COLLECTIBLE_ITEM_IDS);
 
 function collectibleName(itemIndex: number): string {
   return COLLECTIBLE_ITEM_INDEX[itemIndex]?.display_name_en ?? `Event ${itemIndex - KNOWN_COLLECTIBLE_ITEM_COUNT + 1}`;
@@ -13,11 +14,16 @@ function collectibleId(itemIndex: number): string {
   return COLLECTIBLE_ITEM_INDEX[itemIndex]?.id ?? `event${itemIndex - KNOWN_COLLECTIBLE_ITEM_COUNT + 1}`;
 }
 
+function isSourceBackedCollectibleItem(itemIndex: number): boolean {
+  const id = COLLECTIBLE_ITEM_INDEX[itemIndex]?.id;
+  return Boolean(id) && itemIndex < KNOWN_COLLECTIBLE_ITEM_COUNT && !CATALOG_ONLY_COLLECTIBLE_ITEM_ID_SET.has(id);
+}
+
 function selectCollectibleCandidate(
   snapshot: ImportedCollectibleSnapshot | null | undefined,
   targetCollectibleId?: string,
 ) {
-  const items = snapshot?.items ?? [];
+  const items = (snapshot?.items ?? []).filter((item) => isSourceBackedCollectibleItem(item.itemIndex));
   if (items.length === 0) return undefined;
   const target = targetCollectibleId
     ? items.find((item) => collectibleId(item.itemIndex) === targetCollectibleId)

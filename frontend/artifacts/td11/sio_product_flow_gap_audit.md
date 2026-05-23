@@ -1155,6 +1155,59 @@ Continued from the v0 provenance matrix into concrete improvement gates. This pa
 
 GitHub push/PR not performed.
 
+## Damage Formula Provenance Remaining Local Gates
+
+timestampKst: 2026-05-23T13:45:00+09:00
+status: `[DAMAGE-FORMULA-LOCAL-GATES-GREEN]`
+
+### Scope
+
+Removed non-SS weapon fixture work from the active local backlog because those weapons are not used by the current product flow. Continued with the locally actionable gaps: collectible threshold mapping, catalog-only collectible isolation, and generic aggregate non-authority gating.
+
+### Changes
+
+- Expanded the collectible effect mapping artifact from entity rows only to entity rows plus threshold rows.
+  - Entity rows: 160.
+  - Threshold rows: 170.
+  - Sample mapped rows now include `collectible-item:luckyCharm:stars:8:critRate` and `collectible-set:impressionIdols:red:20:skillDamage`.
+  - In-game description status remains `not independently captured`; these are source-derived threshold rows, not independent game screenshots.
+- Added `CATALOG_ONLY_COLLECTIBLE_ITEM_IDS` for the four named catalog-only Starlight rows.
+- Updated collection upgrade recommendations so catalog-only named items and event slots are skipped as recommendation candidates.
+  - This is a product-layer recommendation filter only; no scoring semantics changed.
+- Added a dedicated generic aggregate non-authority gate artifact for:
+  - `hero`
+  - `pet`
+  - `tech`
+  - `collectible_set`
+  - The gate records that production scoring authority remains the `sio_full_lm_equivalence` compact path.
+
+### Remaining Live/External Gaps
+
+- Mount `mountDamage` non-zero live capture still requires a live profile/capture that activates a damage-bearing mount.
+- SpongeBob/Squidward/Yelena source support is local, but live-equivalent promotion still needs targeted live fixtures and game-description capture.
+- Collectible threshold rows are source-derived; independent in-game description screenshots/text remain future evidence.
+
+### Verification Log
+
+- `node scripts/collectible_effect_mapping_matrix_unit_test.mjs`: passed, 160 entity rows and 170 threshold rows.
+- `node scripts/generic_aggregate_non_authority_gate.mjs`: passed, 4 rows.
+- `node scripts/damage_formula_provenance_matrix_unit_test.mjs`: passed, 367 rows.
+- `node scripts/tech_upgrade_recommendations_unit_test.mjs`: passed.
+- `node scripts/v3_data_model_gt_test.mjs`: passed, 10 checks.
+- `node scripts/external_calculation_link_unit_test.mjs`: passed, `rawLength=1350`, `compactVersion=5`.
+- `node scripts/v3_player_state_builder_test.mjs`: passed, 23 checks.
+- `node scripts/mount_damage_source_fixture_unit_test.mjs`: passed, 3 rows.
+- `npx tsc --noEmit`: passed.
+- `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs`: passed.
+  - `fullSioEquivalent=true`
+  - `currentScorer=scorer=sio_full_lm_equivalence`
+  - `liveCaptureCount=26`
+  - `workerParity.arbitraryGeneratedLiveExpected=26/26`
+  - `G0/G1/G2/G3/G6=true`
+- `git diff --check`: passed.
+
+GitHub push/PR not performed.
+
 ## Tangtang Damage Formula Provenance Matrix Gate
 
 timestampKst: 2026-05-23T12:20:00+09:00

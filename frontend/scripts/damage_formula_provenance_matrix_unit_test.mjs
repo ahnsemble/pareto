@@ -43,6 +43,7 @@ const require = createRequire(import.meta.url);
 const schemas = require(path.join(buildDir, 'schemas/index.js'));
 
 const {
+  CATALOG_ONLY_COLLECTIBLE_ITEM_IDS,
   COLLECTIBLE_ITEM_INDEX,
   COLLECTIBLE_SET_INDEX,
   HERO_SCHEMA_INDEX,
@@ -113,18 +114,15 @@ const DIRECT_HERO_CHANNELS = new Map([
 ]);
 
 const SOURCE_ONLY_SURVIVOR_IDS = new Set(['spongebob', 'squidward', 'yelena']);
-const COLLECTIBLE_CATALOG_ONLY_ITEM_IDS = new Set([
-  'libraStarlight',
-  'scorpioStarlight',
-  'sagittariusStarlight',
-  'capricornStarlight',
-]);
+const COLLECTIBLE_CATALOG_ONLY_ITEM_IDS = new Set(CATALOG_ONLY_COLLECTIBLE_ITEM_IDS);
 
 const MOUNT_DAMAGE_LIVE_FORMULA_FIXTURES = [];
 const mountDamageSourceFixturePath = path.join(root, 'artifacts/td11/mount_damage_source_fixture.json');
 const mountDamageSourceFixture = JSON.parse(await fs.readFile(mountDamageSourceFixturePath, 'utf8'));
 const collectibleEffectMappingPath = path.join(root, 'artifacts/td11/collectible_effect_mapping_matrix.json');
 const collectibleEffectMapping = JSON.parse(await fs.readFile(collectibleEffectMappingPath, 'utf8'));
+const genericAggregateNonAuthorityPath = path.join(root, 'artifacts/td11/generic_aggregate_non_authority_gate.json');
+const genericAggregateNonAuthority = JSON.parse(await fs.readFile(genericAggregateNonAuthorityPath, 'utf8'));
 
 function slug(value) {
   return String(value)
@@ -453,6 +451,15 @@ for (const row of sourceOnlySurvivorRows) {
 
 assert.equal(collectibleEffectMapping.summary.totalRows, 160, 'collectible mapping artifact must cover all item, event, and set rows');
 assert.equal(collectibleEffectMapping.summary.catalogOnlyNamedItemRows, COLLECTIBLE_CATALOG_ONLY_ITEM_IDS.size, 'collectible mapping artifact must isolate schema-only named items');
+assert.equal(collectibleEffectMapping.summary.thresholdRows, 170, 'collectible mapping artifact must include threshold-level source rows');
+assert.ok(
+  collectibleEffectMapping.thresholdRows.some((row) => row.key === 'collectible-item:luckyCharm:stars:8:critRate'),
+  'collectible item threshold row must map source threshold to stat channel',
+);
+assert.ok(
+  collectibleEffectMapping.thresholdRows.some((row) => row.key === 'collectible-set:impressionIdols:red:20:skillDamage'),
+  'collectible set threshold row must map source threshold to stat channel',
+);
 const collectibleTextMappingRows = rows.filter((row) => row.domain === 'collectible-item' || row.domain === 'collectible-set');
 assert.equal(collectibleTextMappingRows.length, 114, 'source-backed collectible item/set text-mapping slice must remain explicit');
 for (const row of collectibleTextMappingRows) {
@@ -478,6 +485,8 @@ assert.equal(exoBracerSsWeaponRow.nextAction, 'keep debuff regression visible in
 
 const genericAggregateRows = rows.filter((row) => row.rustStatChannel.includes('generic aggregate empty'));
 assert.ok(genericAggregateRows.length > 0, 'generic aggregate non-authoritative rows must stay visible');
+assert.equal(genericAggregateNonAuthority.summary.totalRows, 4, 'generic aggregate non-authority gate must cover hero/pet/tech/collectible_set');
+assert.equal(genericAggregateNonAuthority.summary.nonAuthoritativeRows, 4, 'generic aggregate paths must remain explicitly non-authoritative until promoted by evidence');
 
 function countBy(field) {
   const counts = new Map();
@@ -547,7 +556,7 @@ const followUpGateSlices = [
     gate: 'DF-P4',
     slice: 'Collectible item/set text mapping',
     rowsGuarded: `${collectibleTextMappingRows.length} source-backed rows plus ${collectibleCatalogOnlyRows.length} catalog-only rows`,
-    currentState: 'source-only mapping artifact exists; per-description mapping not independently captured',
+    currentState: `source-only mapping artifact exists with ${collectibleEffectMapping.summary.thresholdRows} threshold rows; per-description mapping not independently captured`,
     blocker: 'missing item/set in-game description to stat-channel mapping; 4 named Starlight rows and 42 event slots are catalog-only',
     nextGate: 'map description -> source key -> Tangtang schema key -> Rust stat channel -> multiplier stage',
   },
@@ -570,8 +579,8 @@ const followUpGateSlices = [
   {
     gate: 'DF-P7',
     slice: 'Generic aggregate non-authority',
-    rowsGuarded: `${genericAggregateRows.length} rows mentioning generic aggregate empty`,
-    currentState: 'matrix documents that product scoring relies on compact equivalence paths for these domains',
+    rowsGuarded: `${genericAggregateRows.length} matrix rows plus ${genericAggregateNonAuthority.summary.totalRows} generic aggregate source files`,
+    currentState: 'matrix and dedicated gate document that product scoring relies on compact equivalence paths for these domains',
     blocker: 'generic aggregate path is not an authoritative replacement for hero/pet/tech/collectible-set scoring',
     nextGate: 'do not promote generic aggregate paths without domain-specific provenance and equivalence fixtures',
   },
@@ -632,8 +641,8 @@ ${renderCountTable(countBy('confidence'))}
 - Non-SS weapons are present as catalog rows but not proven as complete formula rows.
 - SpongeBob, Squidward, and Yelena are source-backed by the current runtime table and Rust compact transform, but still need targeted live and in-game description fixtures before live-equivalent claims.
 - Mounts now have a non-empty source fixture, but still need non-empty live captures with damage-bearing lines before claiming independent formula completeness.
-- Collectible item/set rows now have a source/Rust-channel mapping artifact; 4 named Starlight rows and 42 event slots remain catalog-only until source effect rows exist.
-- Generic aggregate modules remain non-authoritative for hero/pet/tech/collectible-set scoring; the current product scorer relies on the SIO LM compact path.
+- Collectible item/set rows now have a source/Rust-channel mapping artifact with threshold-level rows; 4 named Starlight rows and 42 event slots remain catalog-only until source effect rows exist.
+- Generic aggregate modules now have a dedicated non-authority gate; the current product scorer relies on the SIO LM compact path.
 
 ## Follow-Up Gate Slices
 

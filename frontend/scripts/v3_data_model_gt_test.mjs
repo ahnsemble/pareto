@@ -145,6 +145,12 @@ await check('Collectible model exposes item index, 38 sets, and 42 event slots',
   assert.equal(schemas.COLLECTIBLE_SET_INDEX.filter((set) => set.collectible_count === 3).length, 17);
   assert.equal(schemas.COLLECTIBLE_SET_INDEX.length, 38);
   assert.equal(schemas.COLLECTIBLE_EVENT_SLOTS.length, 42);
+  assert.deepEqual(schemas.CATALOG_ONLY_COLLECTIBLE_ITEM_IDS, [
+    'libraStarlight',
+    'scorpioStarlight',
+    'sagittariusStarlight',
+    'capricornStarlight',
+  ]);
 });
 
 await check('Stats fixed-order array mirrors 71 keys with uptime map', () => {
