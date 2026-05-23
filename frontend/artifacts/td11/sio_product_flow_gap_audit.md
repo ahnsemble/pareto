@@ -1115,6 +1115,58 @@ Collected the next layer of public-web/current-worker evidence for the high-risk
 
 GitHub push/PR not performed.
 
+## SIO Tools Formula Source Evidence Pass
+
+timestampKst: 2026-05-23T14:58:00+09:00
+status: `[SIO-TOOLS-FORMULA-SOURCE-EVIDENCE-GREEN]`
+
+### Scope
+
+Filled the remaining direct-capture backlog with source-derived SIO Tools evidence where available. This pass records the current SIO Tools source table cells and normalized Tangtang provenance mappings; it still does not claim first-party in-game text capture and does not change formula semantics, scoring core, Rust damage formulas, WASM scoring behavior, optimizer ranking, or user-facing UI.
+
+### Changes
+
+- Added `frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json`.
+  - Raw current SIO Tools stat leaves: 4,650.
+  - Raw source leaves with direct multiplier stage mapping: 3,878.
+  - Target survivor normalized claims: 11.
+  - Target survivor raw cumulative cells: 13.
+  - Mount normalized claims: 26.
+  - Mount raw cumulative cells: 52.
+  - Collectible threshold rows: 170.
+  - Collectible raw threshold cells: 170.
+  - Collectible special Rust mappings: 14.
+  - Catalog-only collectible rows remain isolated: 46.
+  - Non-zero mountDamage live rows: 2.
+  - Target survivor live rows: 3.
+- Added `frontend/scripts/sio_tools_formula_source_evidence_unit_test.mjs`.
+  - Traverses `module37013_c_deployed_data_table.json` and records all numeric stat leaves whose keys are in `SIO_STATS_FIXED_ORDER`.
+  - Distinguishes raw cumulative SIO Tools source cells from normalized formula evidence rows.
+  - Links normalized source rows for target survivors, mounts, collectible thresholds, and collectible special Rust mappings.
+  - Keeps all rows as `sio-tools-current-source-derived`, not `in-game-description-verified`.
+- Updated `damage_formula_provenance_matrix.md` and its gate to consume the new source evidence.
+  - DF-P3 now records both 26 normalized mount claims and 52 raw cumulative mount source cells.
+  - DF-P4 now records 170 collectible source threshold cells and 14 special Rust mappings.
+  - DF-P5 now records 11 normalized target-survivor claims and 13 raw cumulative target-survivor source cells.
+
+### Verification Log
+
+- RED: `node scripts/sio_tools_formula_source_evidence_unit_test.mjs` failed until `sio_tools_formula_source_evidence_matrix.json` was generated.
+- GREEN:
+  - `node scripts/sio_tools_formula_source_evidence_unit_test.mjs`: passed, 4,650 source leaves.
+  - `node scripts/damage_formula_provenance_matrix_unit_test.mjs`: passed, 367 rows.
+  - `node scripts/in_game_description_evidence_unit_test.mjs`: passed, 6 rows.
+  - `node scripts/sio_tools_live_evidence_matrix_unit_test.mjs`: passed, 20 rows.
+  - `node scripts/sio_tools_targeted_live_evidence_unit_test.mjs`: passed, 5 rows.
+  - `node scripts/mount_damage_source_fixture_unit_test.mjs`: passed, 3 rows.
+  - `node scripts/collectible_effect_mapping_matrix_unit_test.mjs`: passed, 160 rows.
+  - `node scripts/generic_aggregate_non_authority_gate.mjs`: passed, 4 rows.
+  - `npx tsc --noEmit`: passed.
+  - `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs`: passed with `fullSioEquivalent=true`, `currentScorer=scorer=sio_full_lm_equivalence`, `liveCaptureCount=26`, `workerParity.arbitraryGeneratedLiveExpected=26/26`, and G0/G1/G2/G3/G6 all true.
+  - `git diff --check`: passed.
+
+GitHub push/PR not performed.
+
 ## SIO Tools Live Evidence Collection Pass
 
 timestampKst: 2026-05-23T14:10:00+09:00

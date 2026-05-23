@@ -27,6 +27,7 @@ Confidence values:
   - `frontend/artifacts/td11/sio_tools_live_evidence_matrix.json`
   - `frontend/artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json`
   - `frontend/artifacts/td11/in_game_description_evidence_matrix.json`
+  - `frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json`
   - `frontend/artifacts/td11/collectible_effect_mapping_matrix.json`
   - `frontend/artifacts/td11/mount_damage_source_fixture.json`
 
@@ -59,6 +60,7 @@ Confidence values:
 ## High-Risk Gaps
 
 - Non-SS weapons are present as catalog rows but not proven as complete formula rows.
+- SIO Tools formula source evidence now captures 4650 current source stat leaves across damage-relevant domains; these rows are source-derived evidence, not direct first-party in-game description captures.
 - SpongeBob and Squidward now have public-web corroboration for all current source stat claims, while Yelena is partial; direct first-party in-game captures are still missing.
 - Mounts now have public-web system/name evidence, a non-empty source fixture, source-proven active compact key `bJ.bj`, and two non-zero active mountDamage live rows; exact per-line in-game description text is still missing.
 - Collectible item/set rows now have a source/Rust-channel mapping artifact with threshold-level rows plus 7 SIO Tools live source-table cases; 4 named Starlight rows and 42 event slots remain catalog-only until source effect rows exist.
@@ -72,9 +74,9 @@ These slices split the v0 matrix into smaller high-risk gates. They are guardrai
 |---|---|---|---|---|---|
 | DF-P1 | Pet alias regression | pet:blizzblast; pet:crucker | live-equivalent rows; product names stay Blizzblast/Clucker while source aliases include King Blizzblast/Crucker | alias drift can silently break compact profile mapping | add or keep alias regression before changing pet translator, schema, or compact import handling |
 | DF-P2 | Non-SS weapons | 8 weapon rows excluding Twin Lance | catalog-only; no proven Rust/stat channel or live fixture | no independent formula fixture for non-SS weapon damage contribution | unsupported for formula input until fixture evidence exists |
-| DF-P3 | Mount damage line | 3 mount rows | source-backed; public web confirms mount system/names; live evidence matrix has 1 non-empty mount stat-line row, 2 non-zero mountDamage live rows, and active compact key bj | exact per-line in-game description text still missing (0/3) | capture exact mount line descriptions before editing mount scoring semantics |
-| DF-P4 | Collectible item/set text mapping | 114 source-backed rows plus 46 catalog-only rows | source-only mapping artifact exists with 170 threshold rows and 7 SIO Tools live source-table cases; per-description mapping not independently captured | missing item/set in-game description to stat-channel mapping; 4 named Starlight rows and 42 event slots are catalog-only | map description -> source key -> Tangtang schema key -> Rust stat channel -> multiplier stage |
-| DF-P5 | Collaboration survivor source reconciliation | survivor:spongebob; survivor:squidward; survivor:yelena | source-backed by runtime table and Rust compact transform; targetSurvivorLiveRows=3; public-web stat claim rows=3 | public web corroboration exists for SpongeBob/Squidward and partial Yelena, but direct first-party in-game capture is still missing | replace public-web corroboration with direct in-game capture before changing survivor scoring semantics |
+| DF-P3 | Mount damage line | 3 mount rows | source-backed; SIO Tools source evidence has 26 normalized mount claims and 52 raw cumulative mount stat cells; public web confirms mount system/names; live evidence matrix has 1 non-empty mount stat-line row, 2 non-zero mountDamage live rows, and active compact key bj | exact per-line in-game description text still missing (0/3) | capture exact mount line descriptions before editing mount scoring semantics |
+| DF-P4 | Collectible item/set text mapping | 114 source-backed rows plus 46 catalog-only rows | source-only mapping artifact exists with 170 threshold rows, 170 raw source threshold cells, 14 special Rust mappings, and 7 SIO Tools live source-table cases; per-description mapping not independently captured | missing item/set in-game description to stat-channel mapping; 4 named Starlight rows and 42 event slots are catalog-only | map description -> source key -> Tangtang schema key -> Rust stat channel -> multiplier stage |
+| DF-P5 | Collaboration survivor source reconciliation | survivor:spongebob; survivor:squidward; survivor:yelena | source-backed by runtime table and Rust compact transform; SIO Tools source evidence has 11 normalized target-survivor claims and 13 raw cumulative target-survivor stat cells; targetSurvivorLiveRows=3; public-web stat claim rows=3 | public web corroboration exists for SpongeBob/Squidward and partial Yelena, but direct first-party in-game capture is still missing | replace public-web corroboration with direct in-game capture before changing survivor scoring semantics |
 | DF-P6 | Negative tech modifier | tech-modifier:exoBracer->ssWeapon | live-equivalent debuff row with coefficient -0.025 | debuff can be lost if coefficients are normalized as only-positive multipliers | keep debuff regression visible in tests/docs before editing tech modifier reconstruction |
 | DF-P7 | Generic aggregate non-authority | 49 matrix rows plus 4 generic aggregate source files | matrix and dedicated gate document that product scoring relies on compact equivalence paths for these domains | generic aggregate path is not an authoritative replacement for hero/pet/tech/collectible-set scoring | do not promote generic aggregate paths without domain-specific provenance and equivalence fixtures |
 
