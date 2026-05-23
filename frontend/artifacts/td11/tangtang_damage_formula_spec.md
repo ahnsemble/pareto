@@ -114,15 +114,15 @@ Key source/live counts:
 - Import protocol: `frontend/artifacts/td11/tangtang_description_capture_import_protocol.md`
 - Status: `[TANGTANG-DESCRIPTION-CAPTURE-IMPORT-GATE-READY]`
 - Claim: `description-capture-import-gate`
-- Capture inbox rows: 9
-- Direct first-party description capture rows: 9
-- Parsed description formula rows: 9
-- Matched SIO rows: 9
-- Description/SIO divergence rows: 0
-- Observed damage follow-up rows: 0
-- Captured atom rows: 9
-- Formula atom rows remaining without direct capture: 212
-- Can run observed damage follow-up: `false`
+- Capture inbox rows: 12
+- Direct first-party description capture rows: 12
+- Parsed description formula rows: 12
+- Matched SIO rows: 10
+- Description/SIO divergence rows: 2
+- Observed damage follow-up rows: 2
+- Captured atom rows: 12
+- Formula atom rows remaining without direct capture: 209
+- Can run observed damage follow-up: `true`
 - Can apply Tangtang formula correction: `false`
 
 ## First-Party Description Source Inventory
@@ -137,10 +137,10 @@ Key source/live counts:
 - Local app resource artifacts found: 0
 - Rows requiring direct description capture: 221
 - Direct first-party description-derived formula rows in formula-validation gate before capture import: 0
-- Direct first-party description capture rows: 9
-- Parsed description formula rows: 9
-- Matched SIO rows: 9
-- Formula atom rows remaining without direct capture: 212
+- Direct first-party description capture rows: 12
+- Parsed description formula rows: 12
+- Matched SIO rows: 10
+- Formula atom rows remaining without direct capture: 209
 - User one-by-one capture required: `true`
 - Public official web sufficient for formula validation: `false`
 

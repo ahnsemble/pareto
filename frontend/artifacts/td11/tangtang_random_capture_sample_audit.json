@@ -1,0 +1,218 @@
+{
+  "artifactPaths": {
+    "json": "frontend/artifacts/td11/tangtang_random_capture_sample_audit.json",
+    "markdown": "frontend/artifacts/td11/tangtang_random_capture_sample_audit.md",
+    "script": "frontend/scripts/tangtang_random_capture_sample_audit_unit_test.mjs"
+  },
+  "behaviorChange": false,
+  "claim": "random-direct-capture-sample-audit",
+  "decision": {
+    "canApplyTangtangFormulaCorrectionNow": false,
+    "canClaimOfficialInGameFormulaVerification": false,
+    "directObservedDamageFollowUpOpenedFor": [
+      "collectible-set:genesis:gold:15:atkPercent",
+      "collectible-set:genesis:red:15:atkPercent"
+    ],
+    "reason": "The random sample found direct first-party rows that compare against the current atom ledger, including Genesis condition divergences. No scoring correction is applied until follow-up confirmation and a correction spec exist."
+  },
+  "generatedAtKst": "2026-05-23 19:30:00 KST",
+  "importedRowsFromBatch": [
+    {
+      "atomRowId": "collectible-set:genesis:gold:15:atkPercent",
+      "captureId": "td11-capture-20260523-random-sample-genesis-gold-atk-percent",
+      "comparisonVerdict": "description-sio-divergent-needs-confirmation",
+      "conditionOrThreshold": "gold >= 19",
+      "descriptionTextOriginal": "누적으로 19개의 금 별 획득\n공격력 +4%",
+      "mismatchFields": [
+        "conditionOrThreshold"
+      ],
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "parsedFormulaValue": 4,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-random-sample/2.jpg"
+      ],
+      "rustStatChannel": "atkPercent"
+    },
+    {
+      "atomRowId": "collectible-set:genesis:red:15:atkPercent",
+      "captureId": "td11-capture-20260523-random-sample-genesis-red-atk-percent",
+      "comparisonVerdict": "description-sio-divergent-needs-confirmation",
+      "conditionOrThreshold": "red >= 19",
+      "descriptionTextOriginal": "누적으로 19개의 빨간 별 획득\n공격력 +6%",
+      "mismatchFields": [
+        "conditionOrThreshold"
+      ],
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "parsedFormulaValue": 6,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg"
+      ],
+      "rustStatChannel": "atkPercent"
+    },
+    {
+      "atomRowId": "collectible-item:instellarTransitionMatrixDesign:stars:8:critRate",
+      "captureId": "td11-capture-20260523-random-sample-instellar-transition-matrix-crit-rate",
+      "comparisonVerdict": "matches-sio-description-derived",
+      "conditionOrThreshold": "stars >= 8",
+      "descriptionTextOriginal": "치명타 확률 +10%",
+      "mismatchFields": [],
+      "multiplierStage": "derived_base_stats before 31-stage damage vector",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "parsedFormulaValue": 10,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-random-sample/6.jpg"
+      ],
+      "rustStatChannel": "critRate"
+    }
+  ],
+  "nonImportedGroups": [
+    {
+      "domain": "collectible-aggregate-stats",
+      "imageRefs": [
+        "3.jpg",
+        "4.jpg"
+      ],
+      "reason": "aggregate stat summary screen; not a row-level item/set formula description",
+      "sampleEffects": [
+        "critRate 50%",
+        "critDamage 165%",
+        "skillDamage 110%",
+        "poisoned/weakened/chilled damage 35%"
+      ]
+    },
+    {
+      "domain": "collectible-item-non-ledger-rows",
+      "imageRefs": [
+        "5.jpg",
+        "7.jpg",
+        "8.jpg",
+        "9.jpg",
+        "29.jpg",
+        "30.jpg"
+      ],
+      "reason": "Instellar Transition Matrix Design rows for drone/system effects are not represented as current formula atom rows",
+      "sampleEffects": [
+        "guided-system attack +3/+4%",
+        "drone missile count +5/+10%",
+        "drone missile single damage +5/+10%"
+      ]
+    },
+    {
+      "domain": "sync-level-rows",
+      "imageRefs": [
+        "10.jpg",
+        "23.jpg",
+        "24.jpg",
+        "25.jpg",
+        "26.jpg",
+        "27.jpg",
+        "28.jpg"
+      ],
+      "reason": "commander synchronization rows are direct descriptions, but no current formula atom ledger rows exist for this subsystem",
+      "sampleEffects": [
+        "critDamage/skillDamage/status damage tiers",
+        "shield damage +5%",
+        "elite/boss damage +5%"
+      ]
+    },
+    {
+      "domain": "equipment-and-divine-forge-rows",
+      "imageRefs": [
+        "11.jpg",
+        "12.jpg",
+        "13.jpg",
+        "14.jpg",
+        "15.jpg",
+        "16.jpg",
+        "17.jpg",
+        "18.jpg"
+      ],
+      "reason": "SS equipment, forge, and belt skill text is important direct evidence but outside the current 221-row description atom ledger",
+      "sampleEffects": [
+        "skill attack +30% max 2 stacks",
+        "damage received +10%",
+        "energy-level damage/skill/crit/shield bonuses"
+      ]
+    },
+    {
+      "domain": "equipment-non-atom-row",
+      "imageRefs": [
+        "19.jpg"
+      ],
+      "reason": "Belt grade-skill text is direct evidence, but no current formula atom ledger row exists for this item text",
+      "sampleEffects": [
+        "skill damage random 80% to 150% +20%",
+        "HP +15/+25%"
+      ]
+    },
+    {
+      "domain": "pet-rows",
+      "imageRefs": [
+        "20.jpg",
+        "21.jpg",
+        "22.jpg"
+      ],
+      "reason": "pet resonance/support skill rows are direct descriptions, but no current formula atom ledger rows exist for this subsystem",
+      "sampleEffects": [
+        "pet resonance damage +1.5%",
+        "13% proc for owner damage +15.5% for 4s",
+        "poison/weaken support skill text"
+      ]
+    }
+  ],
+  "sourceInputs": [
+    "frontend/artifacts/td11/tangtang_description_capture_import_matrix.json",
+    "frontend/artifacts/td11/tangtang_description_capture_inbox.json",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/2.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/3.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/4.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/5.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/6.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/7.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/8.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/9.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/10.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/11.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/12.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/13.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/14.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/15.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/16.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/17.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/18.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/19.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/20.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/21.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/22.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/23.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/24.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/25.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/26.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/27.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/28.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/29.jpg",
+    "frontend/artifacts/td11/captures/2026-05-23-random-sample/30.jpg"
+  ],
+  "status": "[TANGTANG-RANDOM-CAPTURE-SAMPLE-AUDIT-GREEN]",
+  "summary": {
+    "descriptionSioDivergenceRowsFromBatch": 2,
+    "formulaOrScoringBehaviorChange": false,
+    "importedAtomRowsFromBatch": 3,
+    "matchedSioRowsFromBatch": 1,
+    "observedDamageFollowUpRowsFromBatch": 2,
+    "rawImagesWithImportedAtoms": 3,
+    "rawImagesWithoutImportedAtoms": 27,
+    "submittedRawImages": 30
+  },
+  "title": "Tangtang Random Direct Capture Sample Audit",
+  "verificationCommands": [
+    "node scripts/tangtang_random_capture_sample_audit_unit_test.mjs",
+    "node scripts/tangtang_description_capture_import_unit_test.mjs",
+    "node scripts/tangtang_in_game_damage_validation_unit_test.mjs",
+    "SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs",
+    "git diff --check"
+  ]
+}

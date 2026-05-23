@@ -31,6 +31,8 @@ Confidence values:
   - `frontend/artifacts/td11/tangtang_description_capture_inbox.json`
   - `frontend/artifacts/td11/tangtang_description_capture_import_matrix.json`
   - `frontend/artifacts/td11/tangtang_description_capture_import_protocol.md`
+  - `frontend/artifacts/td11/tangtang_random_capture_sample_audit.json`
+  - `frontend/artifacts/td11/tangtang_random_capture_sample_audit.md`
   - `frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json`
   - `frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md`
   - `frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json`
@@ -125,16 +127,33 @@ Confidence values:
   - `frontend/artifacts/td11/tangtang_description_capture_import_protocol.md`
 - Gate status: `[TANGTANG-DESCRIPTION-CAPTURE-IMPORT-GATE-READY]`
 - Gate claim: `description-capture-import-gate`
-- Capture inbox rows: 9
-- Direct first-party description capture rows: 9
-- Parsed description formula rows: 9
-- Matched SIO rows: 9
-- Description/SIO divergence rows: 0
-- Observed damage follow-up rows: 0
-- Captured atom rows: 9
-- Formula atom rows remaining without direct capture: 212
-- Can run observed damage follow-up: `false`
+- Capture inbox rows: 12
+- Direct first-party description capture rows: 12
+- Parsed description formula rows: 12
+- Matched SIO rows: 10
+- Description/SIO divergence rows: 2
+- Observed damage follow-up rows: 2
+- Captured atom rows: 12
+- Formula atom rows remaining without direct capture: 209
+- Can run observed damage follow-up: `true`
 - Can apply Tangtang formula correction: `false`
+- Formula/scoring/UI behavior did not change.
+
+## Random Capture Sample Audit
+
+- The latest 30-image direct capture sample is summarized in:
+  - `frontend/artifacts/td11/tangtang_random_capture_sample_audit.json`
+  - `frontend/artifacts/td11/tangtang_random_capture_sample_audit.md`
+- Audit status: `[TANGTANG-RANDOM-CAPTURE-SAMPLE-AUDIT-GREEN]`
+- Raw images submitted: 30
+- Imported atom rows from sample: 3
+- Matched SIO rows from sample: 1
+- Description/SIO divergence rows from sample: 2
+- Observed damage follow-up rows from sample: 2
+- Follow-up atom rows:
+  - `collectible-set:genesis:gold:15:atkPercent`
+  - `collectible-set:genesis:red:15:atkPercent`
+- Non-imported groups remain preserved as raw direct evidence, but are outside the current 221-row description atom ledger.
 - Formula/scoring/UI behavior did not change.
 
 ## First-Party Description Source Inventory
@@ -150,10 +169,10 @@ Confidence values:
 - Local app resource artifacts found: 0
 - Rows requiring direct description capture: 221
 - Direct first-party description-derived formula rows in formula-validation gate before capture import: 0
-- Direct first-party description capture rows: 9
-- Parsed description formula rows: 9
-- Matched SIO rows: 9
-- Formula atom rows remaining without direct capture: 212
+- Direct first-party description capture rows: 12
+- Parsed description formula rows: 12
+- Matched SIO rows: 10
+- Formula atom rows remaining without direct capture: 209
 - Public official web sufficient for formula validation: `false`
 - User one-by-one capture required: `true`
 - Formula/scoring/UI behavior did not change.

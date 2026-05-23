@@ -10,7 +10,11 @@ const writeMode = process.argv.includes('--write');
 const buildDir = path.join(tmpdir(), 'pareto-tangtang-damage-formula-spec');
 const jsonPath = path.join(root, 'artifacts/td11/tangtang_damage_formula_spec.json');
 const mdPath = path.join(root, 'artifacts/td11/tangtang_damage_formula_spec.md');
-const EXPECTED_DESCRIPTION_CAPTURE_ROWS = 9;
+const EXPECTED_DESCRIPTION_CAPTURE_ROWS = 12;
+const EXPECTED_DESCRIPTION_CAPTURE_MATCHED_ROWS = 10;
+const EXPECTED_DESCRIPTION_CAPTURE_DIVERGENCE_ROWS = 2;
+const EXPECTED_DESCRIPTION_CAPTURE_OBSERVED_FOLLOW_UP_ROWS = 2;
+const EXPECTED_FORMULA_ATOM_ROWS_REMAINING_WITHOUT_DIRECT_CAPTURE = 209;
 
 const REQUIRED_SOURCE_INPUTS = [
   'frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json',
@@ -919,14 +923,23 @@ assert.equal(
   EXPECTED_DESCRIPTION_CAPTURE_ROWS,
 );
 assert.equal(spec.descriptionCaptureImportGate.parsedDescriptionFormulaRows, EXPECTED_DESCRIPTION_CAPTURE_ROWS);
-assert.equal(spec.descriptionCaptureImportGate.matchedSioRows, EXPECTED_DESCRIPTION_CAPTURE_ROWS);
-assert.equal(spec.descriptionCaptureImportGate.descriptionSioDivergenceRows, 0);
-assert.equal(spec.descriptionCaptureImportGate.observedDamageFollowUpRows, 0);
+assert.equal(spec.descriptionCaptureImportGate.matchedSioRows, EXPECTED_DESCRIPTION_CAPTURE_MATCHED_ROWS);
+assert.equal(
+  spec.descriptionCaptureImportGate.descriptionSioDivergenceRows,
+  EXPECTED_DESCRIPTION_CAPTURE_DIVERGENCE_ROWS,
+);
+assert.equal(
+  spec.descriptionCaptureImportGate.observedDamageFollowUpRows,
+  EXPECTED_DESCRIPTION_CAPTURE_OBSERVED_FOLLOW_UP_ROWS,
+);
 assert.equal(spec.descriptionCaptureImportGate.capturedAtomRows, EXPECTED_DESCRIPTION_CAPTURE_ROWS);
-assert.equal(spec.descriptionCaptureImportGate.formulaAtomRowsRemainingWithoutDirectCapture, 212);
-assert.equal(spec.descriptionCaptureImportGate.canRunObservedDamageFollowUp, false);
+assert.equal(
+  spec.descriptionCaptureImportGate.formulaAtomRowsRemainingWithoutDirectCapture,
+  EXPECTED_FORMULA_ATOM_ROWS_REMAINING_WITHOUT_DIRECT_CAPTURE,
+);
+assert.equal(spec.descriptionCaptureImportGate.canRunObservedDamageFollowUp, true);
 assert.equal(spec.descriptionCaptureImportGate.canApplyTangtangFormulaCorrection, false);
-assert.ok(descriptionCaptureImportProtocol.includes('Capture inbox rows: 9'));
+assert.ok(descriptionCaptureImportProtocol.includes('Capture inbox rows: 12'));
 assert.equal(
   spec.firstPartyDescriptionSourceInventoryGate.status,
   '[TANGTANG-FIRST-PARTY-DESCRIPTION-SOURCE-INVENTORY-READY]',
@@ -946,8 +959,11 @@ assert.equal(
   spec.firstPartyDescriptionSourceInventoryGate.parsedDescriptionFormulaRows,
   EXPECTED_DESCRIPTION_CAPTURE_ROWS,
 );
-assert.equal(spec.firstPartyDescriptionSourceInventoryGate.matchedSioRows, EXPECTED_DESCRIPTION_CAPTURE_ROWS);
-assert.equal(spec.firstPartyDescriptionSourceInventoryGate.formulaAtomRowsRemainingWithoutDirectCapture, 212);
+assert.equal(spec.firstPartyDescriptionSourceInventoryGate.matchedSioRows, EXPECTED_DESCRIPTION_CAPTURE_MATCHED_ROWS);
+assert.equal(
+  spec.firstPartyDescriptionSourceInventoryGate.formulaAtomRowsRemainingWithoutDirectCapture,
+  EXPECTED_FORMULA_ATOM_ROWS_REMAINING_WITHOUT_DIRECT_CAPTURE,
+);
 assert.equal(spec.firstPartyDescriptionSourceInventoryGate.userOneByOneCaptureRequired, true);
 assert.equal(spec.firstPartyDescriptionSourceInventoryGate.publicOfficialWebSufficientForFormulaValidation, false);
 assert.ok(firstPartyDescriptionSourceInventoryMd.includes('Official/public sources with structured formula rows: 0'));

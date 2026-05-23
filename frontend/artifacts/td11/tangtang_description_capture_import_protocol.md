@@ -11,12 +11,12 @@ This gate imports direct first-party item/effect in-game description captures in
 
 Current decision:
 
-- Capture inbox rows: 9
-- Direct first-party description capture rows: 9
-- Parsed description formula rows: 9
-- Matched SIO rows: 9
-- Description/SIO divergence rows: 0
-- Observed damage follow-up rows: 0
+- Capture inbox rows: 12
+- Direct first-party description capture rows: 12
+- Parsed description formula rows: 12
+- Matched SIO rows: 10
+- Description/SIO divergence rows: 2
+- Observed damage follow-up rows: 2
 - Can claim SIO formula description-correct: `false`
 - Can apply Tangtang formula correction: `false`
 
@@ -61,24 +61,27 @@ Matching mode: explicit atomRowId only
 
 | Outcome | Count |
 |---|---:|
-| imported capture rows | 9 |
-| accepted capture rows | 9 |
+| imported capture rows | 12 |
+| accepted capture rows | 12 |
 | rejected capture rows | 0 |
-| matched SIO rows | 9 |
+| matched SIO rows | 10 |
 | ambiguous rows | 0 |
-| description/SIO divergence rows | 0 |
-| observed damage follow-up rows | 0 |
+| description/SIO divergence rows | 2 |
+| observed damage follow-up rows | 2 |
 | correction-eligible rows | 0 |
 
 ## First-Party Capture Coverage
 
-- Captured atom rows: 9
-- Matched SIO atom rows: 9
-- Formula atom rows remaining without direct capture: 212
-- Imported entity display names: `종말의 전투마`
+- Captured atom rows: 12
+- Matched SIO atom rows: 10
+- Formula atom rows remaining without direct capture: 209
+- Imported entity display names: `종말의 전투마`, `창세기`, `천체 초월 행렬 도면`
 - Imported raw artifacts:
   - `frontend/artifacts/td11/captures/2026-05-23-doomsteed-lines-1-4.jpg`
   - `frontend/artifacts/td11/captures/2026-05-23-doomsteed-lines-5-8.jpg`
+  - `frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg`
+  - `frontend/artifacts/td11/captures/2026-05-23-random-sample/2.jpg`
+  - `frontend/artifacts/td11/captures/2026-05-23-random-sample/6.jpg`
 
 ## Evidence Artifacts
 

@@ -259,9 +259,87 @@
       "sourceKind": "direct-first-party-in-game",
       "transcriptionConfidence": "high",
       "transcriptionNotes": "Manual transcription from submitted in-game screenshot; parsedFormulaValue uses the visible max 25% cap."
+    },
+    {
+      "atomRowId": "collectible-set:genesis:red:15:atkPercent",
+      "captureDateKst": "2026-05-23",
+      "captureEvidenceTier": "direct-first-party-description",
+      "captureId": "td11-capture-20260523-random-sample-genesis-red-atk-percent",
+      "conditionOrThreshold": "red >= 19",
+      "descriptionTextEnglishTranslation": "Genesis set: cumulative 19 red stars obtained: attack +6%.",
+      "descriptionTextOriginal": "누적으로 19개의 빨간 별 획득\n공격력 +6%",
+      "devicePlatform": "unknown",
+      "entityDisplayNameCaptured": "창세기",
+      "gameVersion": "not-visible-in-submitted-capture",
+      "language": "ko-KR",
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "ocrTextRaw": "",
+      "operationBucket": "attack-aggregate",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "parsedFormulaValue": 6,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg"
+      ],
+      "rustStatChannel": "atkPercent",
+      "screenContext": "collectible set detail / Genesis set bonus list",
+      "sourceKind": "direct-first-party-in-game",
+      "transcriptionConfidence": "high",
+      "transcriptionNotes": "Manual transcription from submitted in-game screenshot. Visible Korean condition says cumulative 19 red stars, which intentionally preserves a condition mismatch against the current source-derived atom id."
+    },
+    {
+      "atomRowId": "collectible-set:genesis:gold:15:atkPercent",
+      "captureDateKst": "2026-05-23",
+      "captureEvidenceTier": "direct-first-party-description",
+      "captureId": "td11-capture-20260523-random-sample-genesis-gold-atk-percent",
+      "conditionOrThreshold": "gold >= 19",
+      "descriptionTextEnglishTranslation": "Genesis set: cumulative 19 gold stars obtained: attack +4%.",
+      "descriptionTextOriginal": "누적으로 19개의 금 별 획득\n공격력 +4%",
+      "devicePlatform": "unknown",
+      "entityDisplayNameCaptured": "창세기",
+      "gameVersion": "not-visible-in-submitted-capture",
+      "language": "ko-KR",
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "ocrTextRaw": "",
+      "operationBucket": "attack-aggregate",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "parsedFormulaValue": 4,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-random-sample/2.jpg"
+      ],
+      "rustStatChannel": "atkPercent",
+      "screenContext": "collectible set detail / Genesis set bonus list",
+      "sourceKind": "direct-first-party-in-game",
+      "transcriptionConfidence": "high",
+      "transcriptionNotes": "Manual transcription from submitted in-game screenshot. Visible Korean condition says cumulative 19 gold stars, which intentionally preserves a condition mismatch against the current source-derived atom id."
+    },
+    {
+      "atomRowId": "collectible-item:instellarTransitionMatrixDesign:stars:8:critRate",
+      "captureDateKst": "2026-05-23",
+      "captureEvidenceTier": "direct-first-party-description",
+      "captureId": "td11-capture-20260523-random-sample-instellar-transition-matrix-crit-rate",
+      "conditionOrThreshold": "stars >= 8",
+      "descriptionTextEnglishTranslation": "Instellar Transition Matrix Design: crit rate +10%.",
+      "descriptionTextOriginal": "치명타 확률 +10%",
+      "devicePlatform": "unknown",
+      "entityDisplayNameCaptured": "천체 초월 행렬 도면",
+      "gameVersion": "not-visible-in-submitted-capture",
+      "language": "ko-KR",
+      "multiplierStage": "derived_base_stats before 31-stage damage vector",
+      "ocrTextRaw": "",
+      "operationBucket": "crit-expectation",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "parsedFormulaValue": 10,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-random-sample/6.jpg"
+      ],
+      "rustStatChannel": "critRate",
+      "screenContext": "collectible item detail / Instellar Transition Matrix Design star effect list",
+      "sourceKind": "direct-first-party-in-game",
+      "transcriptionConfidence": "high",
+      "transcriptionNotes": "Manual transcription from submitted in-game screenshot. The visible three red-star row is normalized to the current atom's stars >= 8 threshold."
     }
   ],
   "schemaVersion": 1,
-  "status": "[TANGTANG-DESCRIPTION-CAPTURE-INBOX-DOOMSTEED-DIRECT-ROWS]",
+  "status": "[TANGTANG-DESCRIPTION-CAPTURE-INBOX-RANDOM-SAMPLE-DIRECT-ROWS]",
   "title": "Tangtang Description Capture Inbox"
 }

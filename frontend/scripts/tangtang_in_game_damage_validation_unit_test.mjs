@@ -6,7 +6,9 @@ const root = process.cwd();
 const writeMode = process.argv.includes('--write');
 const matrixPath = path.join(root, 'artifacts/td11/tangtang_in_game_damage_validation_matrix.json');
 const protocolPath = path.join(root, 'artifacts/td11/tangtang_in_game_damage_validation_protocol.md');
-const EXPECTED_IMPORTED_DESCRIPTION_CAPTURE_ROWS = 9;
+const EXPECTED_IMPORTED_DESCRIPTION_CAPTURE_ROWS = 12;
+const EXPECTED_IMPORTED_DESCRIPTION_DIVERGENCE_ROWS = 2;
+const EXPECTED_IMPORTED_OBSERVED_DAMAGE_FOLLOW_UP_ROWS = 2;
 
 const SOURCE_INPUTS = [
   'frontend/artifacts/td11/tangtang_damage_formula_spec.json',
@@ -262,7 +264,7 @@ function buildMatrix() {
     directObservedDamageTrials,
     decisionPolicy: {
       initialDecision:
-        'Partial direct first-party description capture rows exist and match current SIO/Tangtang handling; no SIO/Tangtang divergence rows are present, so no direct observed damage follow-up should run yet.',
+        'Partial direct first-party description capture rows exist; imported Genesis set rows currently produce description/SIO divergence candidates, so direct observed damage follow-up is allowed only for those divergent variables and no Tangtang correction is applied yet.',
       canClaimSioFormulaInGameCorrect: false,
       canApplyTangtangFormulaCorrection: false,
       canRunObservedDamageFollowUpWithoutDescriptionDivergence: false,
@@ -316,7 +318,7 @@ function buildMatrix() {
     },
     blockers: [
       'Direct first-party description capture coverage is still partial; full description-derived formula coverage does not exist yet.',
-      'No description-derived SIO/Tangtang divergence rows exist yet.',
+      'Imported description/SIO divergence candidates exist and require confirmation before any Tangtang correction can be proposed.',
       'Direct observed damage trials remain secondary follow-up evidence only.',
       'Direct first-party in-game description verified rows remain 0.',
       'SIO Tools source/live equivalence is not the same as proving SIO formula correctness against game damage.',
@@ -487,8 +489,11 @@ assert.equal(
   matrix.validationScope.importedDescriptionCaptureRows,
   EXPECTED_IMPORTED_DESCRIPTION_CAPTURE_ROWS,
 );
-assert.equal(matrix.validationScope.importedDescriptionDivergenceRows, 0);
-assert.equal(matrix.validationScope.importedObservedDamageFollowUpRows, 0);
+assert.equal(matrix.validationScope.importedDescriptionDivergenceRows, EXPECTED_IMPORTED_DESCRIPTION_DIVERGENCE_ROWS);
+assert.equal(
+  matrix.validationScope.importedObservedDamageFollowUpRows,
+  EXPECTED_IMPORTED_OBSERVED_DAMAGE_FOLLOW_UP_ROWS,
+);
 assert.equal(matrix.validationScope.directObservedDamageTrialCount, 0);
 assert.equal(matrix.validationScope.directFirstPartyDescriptionVerifiedRows, 0);
 assert.equal(matrix.validationScope.fullSioEquivalent, true);
@@ -518,8 +523,14 @@ assert.equal(
   matrix.currentEvidenceSummary.importedDescriptionCaptureRows,
   EXPECTED_IMPORTED_DESCRIPTION_CAPTURE_ROWS,
 );
-assert.equal(matrix.currentEvidenceSummary.importedDescriptionDivergenceRows, 0);
-assert.equal(matrix.currentEvidenceSummary.importedObservedDamageFollowUpRows, 0);
+assert.equal(
+  matrix.currentEvidenceSummary.importedDescriptionDivergenceRows,
+  EXPECTED_IMPORTED_DESCRIPTION_DIVERGENCE_ROWS,
+);
+assert.equal(
+  matrix.currentEvidenceSummary.importedObservedDamageFollowUpRows,
+  EXPECTED_IMPORTED_OBSERVED_DAMAGE_FOLLOW_UP_ROWS,
+);
 assert.equal(matrix.directObservedDamageTrials.length, 0);
 assert.ok(matrix.trialGroups.length >= 8, 'high-risk in-game validation trial groups must stay explicit');
 assert.ok(matrix.trialGroups.some((group) => group.id === 'skill-damage-stage-order'));

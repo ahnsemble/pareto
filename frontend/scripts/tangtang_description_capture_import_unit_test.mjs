@@ -33,9 +33,14 @@ const CAPTURE_REQUIRED_FIELDS = [
   'multiplierStage',
 ];
 
-const EXPECTED_CAPTURE_ROWS = 9;
-const EXPECTED_MATCHED_SIO_ROWS = 9;
+const EXPECTED_CAPTURE_ROWS = 12;
+const EXPECTED_MATCHED_SIO_ROWS = 10;
+const EXPECTED_DESCRIPTION_SIO_DIVERGENCE_ROWS = 2;
+const EXPECTED_OBSERVED_DAMAGE_FOLLOW_UP_ROWS = 2;
 const EXPECTED_CAPTURED_ATOM_ROW_IDS = [
+  'collectible-item:instellarTransitionMatrixDesign:stars:8:critRate',
+  'collectible-set:genesis:gold:15:atkPercent',
+  'collectible-set:genesis:red:15:atkPercent',
   'mount:doomsteed:line:1:poisoned',
   'mount:doomsteed:line:3:poisoned',
   'mount:doomsteed:line:3:skillDamage',
@@ -243,6 +248,17 @@ function buildMatrix() {
   const observedDamageFollowUpRows = importedCaptureRows.filter((row) => row.requiresObservedDamageFollowUp);
   const capturedAtomRowIds = [...new Set(acceptedRows.map((row) => row.atomRowId))].sort();
   const matchedSioRows = importedCaptureRows.filter((row) => row.comparisonVerdict === 'matches-sio-description-derived');
+  const capturedAtomRowsByEntityKey = Object.fromEntries(
+    [...acceptedRows.reduce((map, row) => {
+      const entityKey = row.atomSnapshotBeforeCaptureImport?.entityKey ?? row.atomRowId.split(':').slice(0, 2).join(':');
+      const rowIds = map.get(entityKey) ?? new Set();
+      rowIds.add(row.atomRowId);
+      map.set(entityKey, rowIds);
+      return map;
+    }, new Map())]
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([entityKey, rowIds]) => [entityKey, [...rowIds].sort()]),
+  );
   return stableObject({
     title: 'Tangtang Description Capture Import Gate',
     generatedAtKst: formulaSpec.generatedAtKst,
@@ -304,11 +320,12 @@ function buildMatrix() {
     },
     firstPartyCaptureCoverage: {
       capturedAtomRowIds,
+      capturedAtomRowsByEntityKey,
       capturedAtomRows: capturedAtomRowIds.length,
       matchedSioAtomRows: matchedSioRows.length,
       formulaAtomRowsRemainingWithoutDirectCapture:
         descriptionFormulaValidation.formulaAtomSummary.totalRows - capturedAtomRowIds.length,
-      domain: 'mount:doomsteed',
+      domains: Object.keys(capturedAtomRowsByEntityKey),
       importedRawArtifacts: [
         ...new Set(
           acceptedRows.flatMap((row) => Array.isArray(row.rawCaptureArtifactPaths) ? row.rawCaptureArtifactPaths : []),
@@ -320,7 +337,9 @@ function buildMatrix() {
       currentDescriptionFormulaCorrectnessClaim:
         parsedRows.length === 0
           ? 'not-established'
-          : 'partial-direct-first-party-captures-match-current-handling',
+          : divergenceRows.length > 0
+            ? 'partial-direct-first-party-captures-have-description-sio-divergence'
+            : 'partial-direct-first-party-captures-match-current-handling',
       canClaimSioFormulaDescriptionCorrect: false,
       canApplyTangtangFormulaCorrection: false,
       canRunObservedDamageFollowUp: observedDamageFollowUpRows.length > 0,
@@ -467,19 +486,19 @@ assert.ok(
   matrix.importedCaptureRows.every((row) => row.importStatus !== 'accepted' || row.directCaptureEvidence?.rawCaptureArtifactPaths?.length > 0),
   'accepted capture rows must carry direct raw capture evidence separately from the pre-import atom snapshot',
 );
-assert.equal(matrix.summary.descriptionSioDivergenceRows, 0);
-assert.equal(matrix.summary.observedDamageFollowUpRows, 0);
+assert.equal(matrix.summary.descriptionSioDivergenceRows, EXPECTED_DESCRIPTION_SIO_DIVERGENCE_ROWS);
+assert.equal(matrix.summary.observedDamageFollowUpRows, EXPECTED_OBSERVED_DAMAGE_FOLLOW_UP_ROWS);
 assert.equal(matrix.summary.correctionEligibleRows, 0);
 assert.deepEqual(matrix.firstPartyCaptureCoverage.capturedAtomRowIds, EXPECTED_CAPTURED_ATOM_ROW_IDS);
 assert.equal(matrix.firstPartyCaptureCoverage.capturedAtomRows, EXPECTED_CAPTURE_ROWS);
-assert.equal(matrix.firstPartyCaptureCoverage.formulaAtomRowsRemainingWithoutDirectCapture, 212);
-assert.deepEqual(matrix.firstPartyCaptureCoverage.importedEntityDisplayNames, ['종말의 전투마']);
+assert.equal(matrix.firstPartyCaptureCoverage.formulaAtomRowsRemainingWithoutDirectCapture, 209);
+assert.deepEqual(matrix.firstPartyCaptureCoverage.importedEntityDisplayNames, ['종말의 전투마', '창세기', '천체 초월 행렬 도면']);
 await Promise.all(
   matrix.firstPartyCaptureCoverage.importedRawArtifacts.map((artifact) => fs.access(path.join(root, artifact.replace(/^frontend\//, '')))),
 );
 assert.equal(matrix.decisionPolicy.canClaimSioFormulaDescriptionCorrect, false);
 assert.equal(matrix.decisionPolicy.canApplyTangtangFormulaCorrection, false);
-assert.equal(matrix.decisionPolicy.canRunObservedDamageFollowUp, false);
+assert.equal(matrix.decisionPolicy.canRunObservedDamageFollowUp, true);
 assert.ok(descriptionFormulaValidationProtocol.includes('Formula atom rows: 221'));
 assert.ok(protocol.includes('direct first-party item/effect in-game description captures'));
 

@@ -270,6 +270,84 @@
         "sourceKind": "direct-first-party-in-game",
         "transcriptionConfidence": "high",
         "transcriptionNotes": "Manual transcription from submitted in-game screenshot; parsedFormulaValue uses the visible max 25% cap."
+      },
+      {
+        "atomRowId": "collectible-set:genesis:red:15:atkPercent",
+        "captureDateKst": "2026-05-23",
+        "captureEvidenceTier": "direct-first-party-description",
+        "captureId": "td11-capture-20260523-random-sample-genesis-red-atk-percent",
+        "conditionOrThreshold": "red >= 19",
+        "descriptionTextEnglishTranslation": "Genesis set: cumulative 19 red stars obtained: attack +6%.",
+        "descriptionTextOriginal": "누적으로 19개의 빨간 별 획득\n공격력 +6%",
+        "devicePlatform": "unknown",
+        "entityDisplayNameCaptured": "창세기",
+        "gameVersion": "not-visible-in-submitted-capture",
+        "language": "ko-KR",
+        "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+        "ocrTextRaw": "",
+        "operationBucket": "attack-aggregate",
+        "parsedFormulaOperation": "threshold_add_percent",
+        "parsedFormulaValue": 6,
+        "rawCaptureArtifactPaths": [
+          "frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg"
+        ],
+        "rustStatChannel": "atkPercent",
+        "screenContext": "collectible set detail / Genesis set bonus list",
+        "sourceKind": "direct-first-party-in-game",
+        "transcriptionConfidence": "high",
+        "transcriptionNotes": "Manual transcription from submitted in-game screenshot. Visible Korean condition says cumulative 19 red stars, which intentionally preserves a condition mismatch against the current source-derived atom id."
+      },
+      {
+        "atomRowId": "collectible-set:genesis:gold:15:atkPercent",
+        "captureDateKst": "2026-05-23",
+        "captureEvidenceTier": "direct-first-party-description",
+        "captureId": "td11-capture-20260523-random-sample-genesis-gold-atk-percent",
+        "conditionOrThreshold": "gold >= 19",
+        "descriptionTextEnglishTranslation": "Genesis set: cumulative 19 gold stars obtained: attack +4%.",
+        "descriptionTextOriginal": "누적으로 19개의 금 별 획득\n공격력 +4%",
+        "devicePlatform": "unknown",
+        "entityDisplayNameCaptured": "창세기",
+        "gameVersion": "not-visible-in-submitted-capture",
+        "language": "ko-KR",
+        "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+        "ocrTextRaw": "",
+        "operationBucket": "attack-aggregate",
+        "parsedFormulaOperation": "threshold_add_percent",
+        "parsedFormulaValue": 4,
+        "rawCaptureArtifactPaths": [
+          "frontend/artifacts/td11/captures/2026-05-23-random-sample/2.jpg"
+        ],
+        "rustStatChannel": "atkPercent",
+        "screenContext": "collectible set detail / Genesis set bonus list",
+        "sourceKind": "direct-first-party-in-game",
+        "transcriptionConfidence": "high",
+        "transcriptionNotes": "Manual transcription from submitted in-game screenshot. Visible Korean condition says cumulative 19 gold stars, which intentionally preserves a condition mismatch against the current source-derived atom id."
+      },
+      {
+        "atomRowId": "collectible-item:instellarTransitionMatrixDesign:stars:8:critRate",
+        "captureDateKst": "2026-05-23",
+        "captureEvidenceTier": "direct-first-party-description",
+        "captureId": "td11-capture-20260523-random-sample-instellar-transition-matrix-crit-rate",
+        "conditionOrThreshold": "stars >= 8",
+        "descriptionTextEnglishTranslation": "Instellar Transition Matrix Design: crit rate +10%.",
+        "descriptionTextOriginal": "치명타 확률 +10%",
+        "devicePlatform": "unknown",
+        "entityDisplayNameCaptured": "천체 초월 행렬 도면",
+        "gameVersion": "not-visible-in-submitted-capture",
+        "language": "ko-KR",
+        "multiplierStage": "derived_base_stats before 31-stage damage vector",
+        "ocrTextRaw": "",
+        "operationBucket": "crit-expectation",
+        "parsedFormulaOperation": "threshold_add_percent",
+        "parsedFormulaValue": 10,
+        "rawCaptureArtifactPaths": [
+          "frontend/artifacts/td11/captures/2026-05-23-random-sample/6.jpg"
+        ],
+        "rustStatChannel": "critRate",
+        "screenContext": "collectible item detail / Instellar Transition Matrix Design star effect list",
+        "sourceKind": "direct-first-party-in-game",
+        "transcriptionConfidence": "high",
+        "transcriptionNotes": "Manual transcription from submitted in-game screenshot. The visible three red-star row is normalized to the current atom's stars >= 8 threshold."
       }
     ],
     "sourceKindRequired": "direct-first-party-in-game"
@@ -278,8 +356,8 @@
   "decisionPolicy": {
     "canApplyTangtangFormulaCorrection": false,
     "canClaimSioFormulaDescriptionCorrect": false,
-    "canRunObservedDamageFollowUp": false,
-    "currentDescriptionFormulaCorrectnessClaim": "partial-direct-first-party-captures-match-current-handling",
+    "canRunObservedDamageFollowUp": true,
+    "currentDescriptionFormulaCorrectnessClaim": "partial-direct-first-party-captures-have-description-sio-divergence",
     "userFacingClaimLimit": "No user-facing formula correctness claim may be made from capture imports until direct first-party rows are parsed and compared."
   },
   "equivalenceContract": {
@@ -289,6 +367,9 @@
   },
   "firstPartyCaptureCoverage": {
     "capturedAtomRowIds": [
+      "collectible-item:instellarTransitionMatrixDesign:stars:8:critRate",
+      "collectible-set:genesis:gold:15:atkPercent",
+      "collectible-set:genesis:red:15:atkPercent",
       "mount:doomsteed:line:1:poisoned",
       "mount:doomsteed:line:3:poisoned",
       "mount:doomsteed:line:3:skillDamage",
@@ -299,17 +380,46 @@
       "mount:doomsteed:line:7:poisoned",
       "mount:doomsteed:line:8:damageBoss"
     ],
-    "capturedAtomRows": 9,
-    "domain": "mount:doomsteed",
-    "formulaAtomRowsRemainingWithoutDirectCapture": 212,
+    "capturedAtomRows": 12,
+    "capturedAtomRowsByEntityKey": {
+      "collectible-item:instellarTransitionMatrixDesign": [
+        "collectible-item:instellarTransitionMatrixDesign:stars:8:critRate"
+      ],
+      "collectible-set:genesis": [
+        "collectible-set:genesis:gold:15:atkPercent",
+        "collectible-set:genesis:red:15:atkPercent"
+      ],
+      "mount:doomsteed": [
+        "mount:doomsteed:line:1:poisoned",
+        "mount:doomsteed:line:3:poisoned",
+        "mount:doomsteed:line:3:skillDamage",
+        "mount:doomsteed:line:4:skillDamage",
+        "mount:doomsteed:line:6:laceration",
+        "mount:doomsteed:line:6:poisoned",
+        "mount:doomsteed:line:7:damageBoss",
+        "mount:doomsteed:line:7:poisoned",
+        "mount:doomsteed:line:8:damageBoss"
+      ]
+    },
+    "domains": [
+      "collectible-item:instellarTransitionMatrixDesign",
+      "collectible-set:genesis",
+      "mount:doomsteed"
+    ],
+    "formulaAtomRowsRemainingWithoutDirectCapture": 209,
     "importedEntityDisplayNames": [
-      "종말의 전투마"
+      "종말의 전투마",
+      "창세기",
+      "천체 초월 행렬 도면"
     ],
     "importedRawArtifacts": [
       "frontend/artifacts/td11/captures/2026-05-23-doomsteed-lines-1-4.jpg",
-      "frontend/artifacts/td11/captures/2026-05-23-doomsteed-lines-5-8.jpg"
+      "frontend/artifacts/td11/captures/2026-05-23-doomsteed-lines-5-8.jpg",
+      "frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg",
+      "frontend/artifacts/td11/captures/2026-05-23-random-sample/2.jpg",
+      "frontend/artifacts/td11/captures/2026-05-23-random-sample/6.jpg"
     ],
-    "matchedSioAtomRows": 9
+    "matchedSioAtomRows": 10
   },
   "generatedAtKst": "2026-05-23",
   "importedCaptureRows": [
@@ -996,6 +1106,238 @@
       "sourceKind": "direct-first-party-in-game",
       "transcriptionConfidence": "high",
       "transcriptionNotes": "Manual transcription from submitted in-game screenshot; parsedFormulaValue uses the visible max 25% cap."
+    },
+    {
+      "atomRowId": "collectible-set:genesis:gold:15:atkPercent",
+      "atomSnapshotBeforeCaptureImport": {
+        "atomType": "collectible-threshold-source-claim",
+        "caveats": [
+          "This atom must not change Tangtang scoring until direct description-derived comparison produces a divergence.",
+          "Collectible item/set direct in-game description capture remains incomplete."
+        ],
+        "comparisonVerdict": "insufficient-direct-description-evidence",
+        "conditionOrThreshold": "gold >= 15",
+        "correctionEligible": false,
+        "domain": "set-threshold",
+        "entityDisplayName": "Genesis",
+        "entityKey": "collectible-set:genesis",
+        "evidenceStatus": "sio-source-only",
+        "evidenceTier": "sio-tools-current-source-derived",
+        "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+        "operationBucket": "attack-aggregate",
+        "parsedFormulaOperation": "threshold_add_percent",
+        "parsedFormulaValue": 4,
+        "provenanceArtifactPaths": [
+          "frontend/artifacts/td11/collectible_effect_mapping_matrix.json",
+          "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json"
+        ],
+        "rawCaptureArtifactPaths": [],
+        "requiresDirectDescriptionCapture": true,
+        "requiresObservedDamageFollowUp": false,
+        "rowId": "collectible-set:genesis:gold:15:atkPercent",
+        "rustStatChannel": "atkPercent",
+        "sioCurrentHandling": "Genesis gold >= 15: atkPercent +4; tttg_forge_optimizer/src/tech/sio_config.rs:2525",
+        "sioSourceKey": "Genesis.stars.gold.15.atkPercent",
+        "sioSourcePath": "Genesis.stars.gold.15.atkPercent",
+        "sourceText": "Genesis gold >= 15: atkPercent +4",
+        "sourceTextStatus": "not independently captured",
+        "stageId": null,
+        "statChannel": "atkPercent",
+        "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.genesis"
+      },
+      "captureDateKst": "2026-05-23",
+      "captureEvidenceTier": "direct-first-party-description",
+      "captureId": "td11-capture-20260523-random-sample-genesis-gold-atk-percent",
+      "comparisonVerdict": "description-sio-divergent-needs-confirmation",
+      "conditionOrThreshold": "gold >= 19",
+      "correctionEligible": false,
+      "descriptionTextEnglishTranslation": "Genesis set: cumulative 19 gold stars obtained: attack +4%.",
+      "descriptionTextOriginal": "누적으로 19개의 금 별 획득\n공격력 +4%",
+      "devicePlatform": "unknown",
+      "directCaptureEvidence": {
+        "captureEvidenceTier": "direct-first-party-description",
+        "captureId": "td11-capture-20260523-random-sample-genesis-gold-atk-percent",
+        "rawCaptureArtifactPaths": [
+          "frontend/artifacts/td11/captures/2026-05-23-random-sample/2.jpg"
+        ],
+        "sourceKind": "direct-first-party-in-game"
+      },
+      "entityDisplayNameCaptured": "창세기",
+      "gameVersion": "not-visible-in-submitted-capture",
+      "importStatus": "accepted",
+      "language": "ko-KR",
+      "mismatchFields": [
+        "conditionOrThreshold"
+      ],
+      "missingRequiredFields": [],
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "ocrTextRaw": "",
+      "operationBucket": "attack-aggregate",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "parsedFormulaValue": 4,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-random-sample/2.jpg"
+      ],
+      "requiresObservedDamageFollowUp": true,
+      "rustStatChannel": "atkPercent",
+      "screenContext": "collectible set detail / Genesis set bonus list",
+      "sourceKind": "direct-first-party-in-game",
+      "transcriptionConfidence": "high",
+      "transcriptionNotes": "Manual transcription from submitted in-game screenshot. Visible Korean condition says cumulative 19 gold stars, which intentionally preserves a condition mismatch against the current source-derived atom id."
+    },
+    {
+      "atomRowId": "collectible-set:genesis:red:15:atkPercent",
+      "atomSnapshotBeforeCaptureImport": {
+        "atomType": "collectible-threshold-source-claim",
+        "caveats": [
+          "This atom must not change Tangtang scoring until direct description-derived comparison produces a divergence.",
+          "Collectible item/set direct in-game description capture remains incomplete."
+        ],
+        "comparisonVerdict": "insufficient-direct-description-evidence",
+        "conditionOrThreshold": "red >= 15",
+        "correctionEligible": false,
+        "domain": "set-threshold",
+        "entityDisplayName": "Genesis",
+        "entityKey": "collectible-set:genesis",
+        "evidenceStatus": "sio-source-only",
+        "evidenceTier": "sio-tools-current-source-derived",
+        "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+        "operationBucket": "attack-aggregate",
+        "parsedFormulaOperation": "threshold_add_percent",
+        "parsedFormulaValue": 6,
+        "provenanceArtifactPaths": [
+          "frontend/artifacts/td11/collectible_effect_mapping_matrix.json",
+          "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json"
+        ],
+        "rawCaptureArtifactPaths": [],
+        "requiresDirectDescriptionCapture": true,
+        "requiresObservedDamageFollowUp": false,
+        "rowId": "collectible-set:genesis:red:15:atkPercent",
+        "rustStatChannel": "atkPercent",
+        "sioCurrentHandling": "Genesis red >= 15: atkPercent +6; tttg_forge_optimizer/src/tech/sio_config.rs:2525",
+        "sioSourceKey": "Genesis.stars.red.15.atkPercent",
+        "sioSourcePath": "Genesis.stars.red.15.atkPercent",
+        "sourceText": "Genesis red >= 15: atkPercent +6",
+        "sourceTextStatus": "not independently captured",
+        "stageId": null,
+        "statChannel": "atkPercent",
+        "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.genesis"
+      },
+      "captureDateKst": "2026-05-23",
+      "captureEvidenceTier": "direct-first-party-description",
+      "captureId": "td11-capture-20260523-random-sample-genesis-red-atk-percent",
+      "comparisonVerdict": "description-sio-divergent-needs-confirmation",
+      "conditionOrThreshold": "red >= 19",
+      "correctionEligible": false,
+      "descriptionTextEnglishTranslation": "Genesis set: cumulative 19 red stars obtained: attack +6%.",
+      "descriptionTextOriginal": "누적으로 19개의 빨간 별 획득\n공격력 +6%",
+      "devicePlatform": "unknown",
+      "directCaptureEvidence": {
+        "captureEvidenceTier": "direct-first-party-description",
+        "captureId": "td11-capture-20260523-random-sample-genesis-red-atk-percent",
+        "rawCaptureArtifactPaths": [
+          "frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg"
+        ],
+        "sourceKind": "direct-first-party-in-game"
+      },
+      "entityDisplayNameCaptured": "창세기",
+      "gameVersion": "not-visible-in-submitted-capture",
+      "importStatus": "accepted",
+      "language": "ko-KR",
+      "mismatchFields": [
+        "conditionOrThreshold"
+      ],
+      "missingRequiredFields": [],
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "ocrTextRaw": "",
+      "operationBucket": "attack-aggregate",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "parsedFormulaValue": 6,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg"
+      ],
+      "requiresObservedDamageFollowUp": true,
+      "rustStatChannel": "atkPercent",
+      "screenContext": "collectible set detail / Genesis set bonus list",
+      "sourceKind": "direct-first-party-in-game",
+      "transcriptionConfidence": "high",
+      "transcriptionNotes": "Manual transcription from submitted in-game screenshot. Visible Korean condition says cumulative 19 red stars, which intentionally preserves a condition mismatch against the current source-derived atom id."
+    },
+    {
+      "atomRowId": "collectible-item:instellarTransitionMatrixDesign:stars:8:critRate",
+      "atomSnapshotBeforeCaptureImport": {
+        "atomType": "collectible-threshold-source-claim",
+        "caveats": [
+          "This atom must not change Tangtang scoring until direct description-derived comparison produces a divergence.",
+          "Collectible item/set direct in-game description capture remains incomplete."
+        ],
+        "comparisonVerdict": "insufficient-direct-description-evidence",
+        "conditionOrThreshold": "stars >= 8",
+        "correctionEligible": false,
+        "domain": "item-threshold",
+        "entityDisplayName": "Instellar Transition Matrix Design",
+        "entityKey": "collectible-item:instellarTransitionMatrixDesign",
+        "evidenceStatus": "sio-source-only",
+        "evidenceTier": "sio-tools-current-source-derived",
+        "multiplierStage": "derived_base_stats before 31-stage damage vector",
+        "operationBucket": "crit-expectation",
+        "parsedFormulaOperation": "threshold_add_percent",
+        "parsedFormulaValue": 10,
+        "provenanceArtifactPaths": [
+          "frontend/artifacts/td11/collectible_effect_mapping_matrix.json",
+          "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json"
+        ],
+        "rawCaptureArtifactPaths": [],
+        "requiresDirectDescriptionCapture": true,
+        "requiresObservedDamageFollowUp": false,
+        "rowId": "collectible-item:instellarTransitionMatrixDesign:stars:8:critRate",
+        "rustStatChannel": "critRate",
+        "sioCurrentHandling": "Instellar Transition Matrix Design stars >= 8: critRate +10; tttg_forge_optimizer/src/tech/sio_config.rs:2459",
+        "sioSourceKey": "Instellar Transition Matrix Design.stars.8.critRate",
+        "sioSourcePath": "Instellar Transition Matrix Design.stars.8.critRate",
+        "sourceText": "Instellar Transition Matrix Design stars >= 8: critRate +10",
+        "sourceTextStatus": "not independently captured",
+        "stageId": null,
+        "statChannel": "critRate",
+        "tangtangSchemaKey": "COLLECTIBLE_ITEM_INDEX.instellarTransitionMatrixDesign"
+      },
+      "captureDateKst": "2026-05-23",
+      "captureEvidenceTier": "direct-first-party-description",
+      "captureId": "td11-capture-20260523-random-sample-instellar-transition-matrix-crit-rate",
+      "comparisonVerdict": "matches-sio-description-derived",
+      "conditionOrThreshold": "stars >= 8",
+      "correctionEligible": false,
+      "descriptionTextEnglishTranslation": "Instellar Transition Matrix Design: crit rate +10%.",
+      "descriptionTextOriginal": "치명타 확률 +10%",
+      "devicePlatform": "unknown",
+      "directCaptureEvidence": {
+        "captureEvidenceTier": "direct-first-party-description",
+        "captureId": "td11-capture-20260523-random-sample-instellar-transition-matrix-crit-rate",
+        "rawCaptureArtifactPaths": [
+          "frontend/artifacts/td11/captures/2026-05-23-random-sample/6.jpg"
+        ],
+        "sourceKind": "direct-first-party-in-game"
+      },
+      "entityDisplayNameCaptured": "천체 초월 행렬 도면",
+      "gameVersion": "not-visible-in-submitted-capture",
+      "importStatus": "accepted",
+      "language": "ko-KR",
+      "mismatchFields": [],
+      "missingRequiredFields": [],
+      "multiplierStage": "derived_base_stats before 31-stage damage vector",
+      "ocrTextRaw": "",
+      "operationBucket": "crit-expectation",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "parsedFormulaValue": 10,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-random-sample/6.jpg"
+      ],
+      "requiresObservedDamageFollowUp": false,
+      "rustStatChannel": "critRate",
+      "screenContext": "collectible item detail / Instellar Transition Matrix Design star effect list",
+      "sourceKind": "direct-first-party-in-game",
+      "transcriptionConfidence": "high",
+      "transcriptionNotes": "Manual transcription from submitted in-game screenshot. The visible three red-star row is normalized to the current atom's stars >= 8 threshold."
     }
   ],
   "importPolicy": {
@@ -1026,16 +1368,16 @@
   ],
   "status": "[TANGTANG-DESCRIPTION-CAPTURE-IMPORT-GATE-READY]",
   "summary": {
-    "acceptedCaptureRows": 9,
+    "acceptedCaptureRows": 12,
     "ambiguousRows": 0,
-    "captureInboxRows": 9,
+    "captureInboxRows": 12,
     "correctionEligibleRows": 0,
-    "descriptionSioDivergenceRows": 0,
-    "directFirstPartyDescriptionCaptureRows": 9,
-    "importedCaptureRows": 9,
-    "matchedSioRows": 9,
-    "observedDamageFollowUpRows": 0,
-    "parsedDescriptionFormulaRows": 9,
+    "descriptionSioDivergenceRows": 2,
+    "directFirstPartyDescriptionCaptureRows": 12,
+    "importedCaptureRows": 12,
+    "matchedSioRows": 10,
+    "observedDamageFollowUpRows": 2,
+    "parsedDescriptionFormulaRows": 12,
     "rejectedCaptureRows": 0
   },
   "title": "Tangtang Description Capture Import Gate",

@@ -9,7 +9,11 @@ const root = process.cwd();
 const buildDir = path.join(tmpdir(), 'pareto-damage-formula-provenance');
 const matrixPath = path.join(root, 'artifacts/td11/damage_formula_provenance_matrix.md');
 const writeMode = process.argv.includes('--write');
-const EXPECTED_DESCRIPTION_CAPTURE_ROWS = 9;
+const EXPECTED_DESCRIPTION_CAPTURE_ROWS = 12;
+const EXPECTED_DESCRIPTION_CAPTURE_MATCHED_ROWS = 10;
+const EXPECTED_DESCRIPTION_CAPTURE_DIVERGENCE_ROWS = 2;
+const EXPECTED_DESCRIPTION_CAPTURE_OBSERVED_FOLLOW_UP_ROWS = 2;
+const EXPECTED_FORMULA_ATOM_ROWS_REMAINING_WITHOUT_DIRECT_CAPTURE = 209;
 
 const CONFIDENCE = new Set([
   'sio-live-equivalent',
@@ -161,6 +165,11 @@ const tangtangDescriptionCaptureImportProtocol = await fs.readFile(
   tangtangDescriptionCaptureImportProtocolPath,
   'utf8',
 );
+const tangtangRandomCaptureSampleAuditPath = path.join(
+  root,
+  'artifacts/td11/tangtang_random_capture_sample_audit.json',
+);
+const tangtangRandomCaptureSampleAudit = JSON.parse(await fs.readFile(tangtangRandomCaptureSampleAuditPath, 'utf8'));
 const tangtangFirstPartyDescriptionSourceInventoryPath = path.join(
   root,
   'artifacts/td11/tangtang_first_party_description_source_inventory.json',
@@ -179,9 +188,9 @@ const tangtangFirstPartyDescriptionSourceInventoryProtocol = await fs.readFile(
 const tangtangInGameDamageValidationPath = path.join(root, 'artifacts/td11/tangtang_in_game_damage_validation_matrix.json');
 const tangtangInGameDamageValidation = JSON.parse(await fs.readFile(tangtangInGameDamageValidationPath, 'utf8'));
 const doomsteedDirectCaptureAtomRows =
-  tangtangDescriptionCaptureImport.firstPartyCaptureCoverage.domain === 'mount:doomsteed'
-    ? tangtangDescriptionCaptureImport.firstPartyCaptureCoverage.capturedAtomRows
-    : 0;
+  tangtangDescriptionCaptureImport.firstPartyCaptureCoverage.capturedAtomRowIds.filter((rowId) => (
+    rowId.startsWith('mount:doomsteed:')
+  )).length;
 
 function slug(value) {
   return String(value)
@@ -689,7 +698,7 @@ assert.equal(
 assert.equal(
   tangtangDescriptionCaptureImport.summary.captureInboxRows,
   EXPECTED_DESCRIPTION_CAPTURE_ROWS,
-  'capture inbox should contain the current direct first-party Doomsteed rows',
+  'capture inbox should contain the current direct first-party capture rows',
 );
 assert.equal(
   tangtangDescriptionCaptureImport.summary.directFirstPartyDescriptionCaptureRows,
@@ -703,18 +712,18 @@ assert.equal(
 );
 assert.equal(
   tangtangDescriptionCaptureImport.summary.matchedSioRows,
-  EXPECTED_DESCRIPTION_CAPTURE_ROWS,
-  'current Doomsteed capture rows should match SIO/Tangtang handling',
+  EXPECTED_DESCRIPTION_CAPTURE_MATCHED_ROWS,
+  'matched capture row count changed',
 );
 assert.equal(
   tangtangDescriptionCaptureImport.summary.descriptionSioDivergenceRows,
-  0,
-  'description capture import divergence rows must start at zero',
+  EXPECTED_DESCRIPTION_CAPTURE_DIVERGENCE_ROWS,
+  'description capture import divergence rows changed',
 );
 assert.equal(
   tangtangDescriptionCaptureImport.summary.observedDamageFollowUpRows,
-  0,
-  'description capture import must not open observed-damage follow-up without divergence',
+  EXPECTED_DESCRIPTION_CAPTURE_OBSERVED_FOLLOW_UP_ROWS,
+  'description capture import observed-damage follow-up rows changed',
 );
 assert.equal(
   tangtangDescriptionCaptureImport.decisionPolicy.canApplyTangtangFormulaCorrection,
@@ -723,8 +732,8 @@ assert.equal(
 );
 assert.equal(
   tangtangDescriptionCaptureImport.decisionPolicy.canRunObservedDamageFollowUp,
-  false,
-  'description capture import cannot run observed damage follow-up without imported divergence',
+  true,
+  'description capture import should open follow-up for imported divergences',
 );
 assert.equal(
   tangtangDescriptionCaptureImport.atomLedgerContract.formulaAtomRows,
@@ -732,8 +741,38 @@ assert.equal(
   'description capture import must use the current atom ledger',
 );
 assert.ok(
-  tangtangDescriptionCaptureImportProtocol.includes('Capture inbox rows: 9'),
+  tangtangDescriptionCaptureImportProtocol.includes(`Capture inbox rows: ${EXPECTED_DESCRIPTION_CAPTURE_ROWS}`),
   'description capture import protocol must show the current capture state',
+);
+assert.equal(
+  tangtangRandomCaptureSampleAudit.status,
+  '[TANGTANG-RANDOM-CAPTURE-SAMPLE-AUDIT-GREEN]',
+  'random capture sample audit status changed',
+);
+assert.equal(
+  tangtangRandomCaptureSampleAudit.summary.submittedRawImages,
+  30,
+  'random capture sample raw image count changed',
+);
+assert.equal(
+  tangtangRandomCaptureSampleAudit.summary.importedAtomRowsFromBatch,
+  3,
+  'random capture sample imported row count changed',
+);
+assert.equal(
+  tangtangRandomCaptureSampleAudit.summary.matchedSioRowsFromBatch,
+  1,
+  'random capture sample matched row count changed',
+);
+assert.equal(
+  tangtangRandomCaptureSampleAudit.summary.descriptionSioDivergenceRowsFromBatch,
+  EXPECTED_DESCRIPTION_CAPTURE_DIVERGENCE_ROWS,
+  'random capture sample divergence count changed',
+);
+assert.equal(
+  tangtangRandomCaptureSampleAudit.summary.observedDamageFollowUpRowsFromBatch,
+  EXPECTED_DESCRIPTION_CAPTURE_OBSERVED_FOLLOW_UP_ROWS,
+  'random capture sample observed-damage follow-up count changed',
 );
 assert.equal(
   tangtangFirstPartyDescriptionSourceInventory.status,
@@ -787,12 +826,22 @@ assert.equal(
 );
 assert.equal(
   tangtangFirstPartyDescriptionSourceInventory.summary.matchedSioRows,
-  EXPECTED_DESCRIPTION_CAPTURE_ROWS,
+  EXPECTED_DESCRIPTION_CAPTURE_MATCHED_ROWS,
   'first-party source inventory must carry current SIO-matched capture rows',
 );
 assert.equal(
+  tangtangFirstPartyDescriptionSourceInventory.summary.descriptionSioDivergenceRows,
+  EXPECTED_DESCRIPTION_CAPTURE_DIVERGENCE_ROWS,
+  'first-party source inventory must carry current imported divergence rows',
+);
+assert.equal(
+  tangtangFirstPartyDescriptionSourceInventory.summary.observedDamageFollowUpRows,
+  EXPECTED_DESCRIPTION_CAPTURE_OBSERVED_FOLLOW_UP_ROWS,
+  'first-party source inventory must carry current imported observed-damage follow-up rows',
+);
+assert.equal(
   tangtangFirstPartyDescriptionSourceInventory.summary.formulaAtomRowsRemainingWithoutDirectCapture,
-  212,
+  EXPECTED_FORMULA_ATOM_ROWS_REMAINING_WITHOUT_DIRECT_CAPTURE,
   'first-party source inventory must show remaining atom rows',
 );
 assert.equal(
@@ -826,6 +875,16 @@ assert.equal(
   tangtangInGameDamageValidation.validationScope.descriptionDivergenceRows,
   0,
   'observed damage gate must carry description divergence row count',
+);
+assert.equal(
+  tangtangInGameDamageValidation.validationScope.importedDescriptionDivergenceRows,
+  EXPECTED_DESCRIPTION_CAPTURE_DIVERGENCE_ROWS,
+  'observed damage gate must carry imported description divergence rows',
+);
+assert.equal(
+  tangtangInGameDamageValidation.validationScope.importedObservedDamageFollowUpRows,
+  EXPECTED_DESCRIPTION_CAPTURE_OBSERVED_FOLLOW_UP_ROWS,
+  'observed damage gate must carry imported observed-damage follow-up rows',
 );
 assert.equal(tangtangInGameDamageValidation.validationScope.directObservedDamageTrialCount, 0, 'direct observed damage trials must start at zero');
 assert.equal(tangtangInGameDamageValidation.validationScope.currentInGameCorrectnessClaim, 'not-established', 'in-game correctness must not be over-claimed');
@@ -1033,6 +1092,8 @@ Confidence values:
   - \`frontend/artifacts/td11/tangtang_description_capture_inbox.json\`
   - \`frontend/artifacts/td11/tangtang_description_capture_import_matrix.json\`
   - \`frontend/artifacts/td11/tangtang_description_capture_import_protocol.md\`
+  - \`frontend/artifacts/td11/tangtang_random_capture_sample_audit.json\`
+  - \`frontend/artifacts/td11/tangtang_random_capture_sample_audit.md\`
   - \`frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json\`
   - \`frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md\`
   - \`frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json\`
@@ -1119,6 +1180,22 @@ ${renderCountTable(countBy('confidence'))}
 - Formula atom rows remaining without direct capture: ${tangtangDescriptionCaptureImport.firstPartyCaptureCoverage.formulaAtomRowsRemainingWithoutDirectCapture}
 - Can run observed damage follow-up: \`${tangtangDescriptionCaptureImport.decisionPolicy.canRunObservedDamageFollowUp}\`
 - Can apply Tangtang formula correction: \`${tangtangDescriptionCaptureImport.decisionPolicy.canApplyTangtangFormulaCorrection}\`
+- Formula/scoring/UI behavior did not change.
+
+## Random Capture Sample Audit
+
+- The latest 30-image direct capture sample is summarized in:
+  - \`frontend/artifacts/td11/tangtang_random_capture_sample_audit.json\`
+  - \`frontend/artifacts/td11/tangtang_random_capture_sample_audit.md\`
+- Audit status: \`${tangtangRandomCaptureSampleAudit.status}\`
+- Raw images submitted: ${tangtangRandomCaptureSampleAudit.summary.submittedRawImages}
+- Imported atom rows from sample: ${tangtangRandomCaptureSampleAudit.summary.importedAtomRowsFromBatch}
+- Matched SIO rows from sample: ${tangtangRandomCaptureSampleAudit.summary.matchedSioRowsFromBatch}
+- Description/SIO divergence rows from sample: ${tangtangRandomCaptureSampleAudit.summary.descriptionSioDivergenceRowsFromBatch}
+- Observed damage follow-up rows from sample: ${tangtangRandomCaptureSampleAudit.summary.observedDamageFollowUpRowsFromBatch}
+- Follow-up atom rows:
+${tangtangRandomCaptureSampleAudit.decision.directObservedDamageFollowUpOpenedFor.map((rowId) => `  - \`${rowId}\``).join('\n')}
+- Non-imported groups remain preserved as raw direct evidence, but are outside the current 221-row description atom ledger.
 - Formula/scoring/UI behavior did not change.
 
 ## First-Party Description Source Inventory

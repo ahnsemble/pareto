@@ -1064,6 +1064,74 @@ Do not change scoring formulas yet. The next safe step is a documentation/test g
 
 GitHub push/PR not performed.
 
+## Tangtang Random Direct Capture Sample Audit
+
+timestampKst: 2026-05-23 19:42:04 KST
+status: `[TANGTANG-RANDOM-CAPTURE-SAMPLE-GREEN-WITH-GENESIS-DIVERGENCE]`
+
+### Scope
+
+Imported and audited the user-submitted 30-image random direct capture sample. This pass keeps the sample as partial first-party description evidence, maps only rows that correspond to the current 221-row formula atom ledger, and documents the resulting SIO/Tangtang comparison. It does not change formula semantics, scoring core, Rust damage formulas, WASM scoring behavior, optimizer ranking, or user-facing UI.
+
+### Changes
+
+- Added 30 raw capture artifacts under `frontend/artifacts/td11/captures/2026-05-23-random-sample/`.
+- Added 3 direct first-party capture rows from the random sample to `tangtang_description_capture_inbox.json`.
+- Added `frontend/scripts/tangtang_random_capture_sample_audit_unit_test.mjs`.
+- Added `frontend/artifacts/td11/tangtang_random_capture_sample_audit.json`.
+- Added `frontend/artifacts/td11/tangtang_random_capture_sample_audit.md`.
+- Updated the capture import, first-party source inventory, formula spec, in-game validation gate, and provenance matrix to carry the new capture counts and divergence candidates.
+
+### Findings
+
+- Raw images submitted: `30`.
+- Imported atom rows from this sample: `3`.
+- Matched current SIO/Tangtang rows from this sample: `1`.
+- Description/SIO divergence rows from this sample: `2`.
+- Observed damage follow-up rows opened from this sample: `2`.
+- Cumulative direct first-party capture rows: `12`.
+- Cumulative matched SIO/Tangtang rows: `10`.
+- Cumulative description/SIO divergence rows: `2`.
+- Formula atom rows remaining without direct first-party description capture: `209`.
+- The two divergence candidates are Genesis set threshold-condition rows:
+  - `collectible-set:genesis:red:15:atkPercent`: screenshot shows `누적으로 19개의 빨간 별 획득`, while the current atom row is keyed as `red >= 15`.
+  - `collectible-set:genesis:gold:15:atkPercent`: screenshot shows `누적으로 19개의 금 별 획득`, while the current atom row is keyed as `gold >= 15`.
+
+### Caveats
+
+- These screenshots are a useful random sample, not full formula coverage.
+- The Genesis divergences are condition/threshold candidates only; no Tangtang formula correction is applied until follow-up confirmation and a correction spec exist.
+- The game version/build is not visible in the submitted screenshots.
+- Non-imported sample groups are preserved as raw direct evidence but remain outside the current 221-row atom ledger, including aggregate collectible stat screens, commander synchronization rows, SS equipment/divine forge rows, belt grade-skill text, and pet rows.
+- Public/user-facing product behavior is unchanged.
+
+### Verification Log
+
+- `node scripts/tangtang_random_capture_sample_audit_unit_test.mjs`: passed, 30 raw images and 3 imported rows.
+- `node scripts/tangtang_description_capture_import_unit_test.mjs`: passed, 12 capture rows.
+- `node scripts/tangtang_first_party_description_source_inventory_unit_test.mjs`: passed, 8 source candidates.
+- `node scripts/tangtang_description_formula_validation_unit_test.mjs`: passed, 8 groups and 0 description formula rows.
+- `node scripts/tangtang_in_game_damage_validation_unit_test.mjs`: passed, 9 trial groups and 0 direct trials.
+- `node scripts/tangtang_damage_formula_spec_unit_test.mjs`: passed, 25 stages.
+- `node scripts/sio_tools_formula_source_evidence_unit_test.mjs`: passed, 4,650 source leaves.
+- `node scripts/damage_formula_provenance_matrix_unit_test.mjs`: passed, 367 rows.
+- `node scripts/in_game_description_evidence_unit_test.mjs`: passed, 6 rows.
+- `node scripts/sio_tools_live_evidence_matrix_unit_test.mjs`: passed, 20 rows.
+- `node scripts/sio_tools_targeted_live_evidence_unit_test.mjs`: passed, 5 rows.
+- `node scripts/mount_damage_source_fixture_unit_test.mjs`: passed, 3 rows.
+- `node scripts/collectible_effect_mapping_matrix_unit_test.mjs`: passed, 160 rows.
+- `node scripts/generic_aggregate_non_authority_gate.mjs`: passed, 4 rows.
+- `npx tsc --noEmit`: passed.
+- `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs`: passed.
+  - `fullSioEquivalent=true`
+  - `currentScorer=scorer=sio_full_lm_equivalence`
+  - `liveCaptureCount=26`
+  - `workerParity.arbitraryGeneratedLiveExpected=26/26`
+  - `G0/G1/G2/G3/G6=true`
+- `git diff --check`: passed.
+
+GitHub push/PR not performed.
+
 ## Tangtang Doomsteed Direct Description Capture Import
 
 timestampKst: 2026-05-23 18:32:13 KST

@@ -51,7 +51,11 @@ const RECOMMENDED_CAPTURE_FIELDS = [
   'transcriptionNotes',
 ];
 
-const EXPECTED_CAPTURE_ROWS = 9;
+const EXPECTED_CAPTURE_ROWS = 12;
+const EXPECTED_MATCHED_SIO_ROWS = 10;
+const EXPECTED_DESCRIPTION_SIO_DIVERGENCE_ROWS = 2;
+const EXPECTED_OBSERVED_DAMAGE_FOLLOW_UP_ROWS = 2;
+const EXPECTED_FORMULA_ATOM_ROWS_REMAINING_WITHOUT_DIRECT_CAPTURE = 209;
 
 const OFFICIAL_PUBLIC_SOURCE_CANDIDATES = [
   {
@@ -549,10 +553,13 @@ assert.equal(inventory.summary.publicWebCorroboratedNotFirstPartyRows, 7);
 assert.equal(inventory.summary.captureInboxRows, EXPECTED_CAPTURE_ROWS);
 assert.equal(inventory.summary.directFirstPartyDescriptionCaptureRows, EXPECTED_CAPTURE_ROWS);
 assert.equal(inventory.summary.parsedDescriptionFormulaRows, EXPECTED_CAPTURE_ROWS);
-assert.equal(inventory.summary.matchedSioRows, EXPECTED_CAPTURE_ROWS);
-assert.equal(inventory.summary.descriptionSioDivergenceRows, 0);
-assert.equal(inventory.summary.observedDamageFollowUpRows, 0);
-assert.equal(inventory.summary.formulaAtomRowsRemainingWithoutDirectCapture, 212);
+assert.equal(inventory.summary.matchedSioRows, EXPECTED_MATCHED_SIO_ROWS);
+assert.equal(inventory.summary.descriptionSioDivergenceRows, EXPECTED_DESCRIPTION_SIO_DIVERGENCE_ROWS);
+assert.equal(inventory.summary.observedDamageFollowUpRows, EXPECTED_OBSERVED_DAMAGE_FOLLOW_UP_ROWS);
+assert.equal(
+  inventory.summary.formulaAtomRowsRemainingWithoutDirectCapture,
+  EXPECTED_FORMULA_ATOM_ROWS_REMAINING_WITHOUT_DIRECT_CAPTURE,
+);
 assert.equal(inventory.summary.canApplyTangtangFormulaCorrectionNow, false);
 assert.equal(inventory.summary.publicOfficialWebSufficientForFormulaValidation, false);
 assert.deepEqual(captureInbox.requiredFields, FIRST_PARTY_REQUIRED_FIELDS);
