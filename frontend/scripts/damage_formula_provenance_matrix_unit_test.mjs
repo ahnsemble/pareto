@@ -113,10 +113,10 @@ const DIRECT_HERO_CHANNELS = new Map([
   ['spongebob', 'critRate/critDamage -> en1 through survivor transform'],
 ]);
 
-const SOURCE_ONLY_SURVIVOR_IDS = new Set(['spongebob', 'squidward', 'yelena']);
+const TARGETED_SURVIVOR_IDS = new Set(['spongebob', 'squidward', 'yelena']);
+const ACTIVE_MOUNT_DAMAGE_LIVE_IDS = new Set(['electricScooter', 'techHoverboard']);
 const COLLECTIBLE_CATALOG_ONLY_ITEM_IDS = new Set(CATALOG_ONLY_COLLECTIBLE_ITEM_IDS);
 
-const MOUNT_DAMAGE_LIVE_FORMULA_FIXTURES = [];
 const mountDamageSourceFixturePath = path.join(root, 'artifacts/td11/mount_damage_source_fixture.json');
 const mountDamageSourceFixture = JSON.parse(await fs.readFile(mountDamageSourceFixturePath, 'utf8'));
 const collectibleEffectMappingPath = path.join(root, 'artifacts/td11/collectible_effect_mapping_matrix.json');
@@ -198,24 +198,24 @@ for (const item of WEAPON_SCHEMA_INDEX) {
 }
 
 for (const hero of HERO_SCHEMA_INDEX) {
-  const isSourceOnlySurvivor = SOURCE_ONLY_SURVIVOR_IDS.has(hero.id);
+  const isTargetedSurvivor = TARGETED_SURVIVOR_IDS.has(hero.id);
   addRow({
     key: `survivor:${hero.id}`,
     domain: 'survivor',
     name: hero.display_name_en,
-    sourceStatus: isSourceOnlySurvivor
-      ? 'present in current SIO runtime table and Rust compact survivor transform; product schema support restored'
+    sourceStatus: isTargetedSurvivor
+      ? 'present in current SIO runtime table and Rust compact survivor transform; targeted current-worker live fixture captured'
       : 'present in current SIO source/default roster',
     sioSourceKey: citationsOf(hero),
     tangtangSchemaKey: `HERO_SCHEMA_INDEX.${hero.id}`,
     rustStatChannel: DIRECT_HERO_CHANNELS.get(hero.id) ?? 'SIO compact survivor/passive/teamwork transform; generic aggregate empty',
     multiplierStage: DIRECT_HERO_CHANNELS.get(hero.id) ?? 'upstream stat transform before 31-stage damage vector',
-    liveEvidence: isSourceOnlySurvivor
-      ? 'sio_tools_live_evidence_matrix.targetSurvivorLiveRows=0; source-backed by extracted module37013 table and Rust compact transform; targeted live fixture not yet isolated'
+    liveEvidence: isTargetedSurvivor
+      ? 'sio_tools_live_evidence_matrix.targetSurvivorLiveRows=3; targeted mainHero/h-array live fixtures captured for Yelena/Squidward/SpongeBob'
       : 'sio_lm_equivalence_matrix.survivors-passives-harmony-teamwork=implemented-live-covered',
-    confidence: isSourceOnlySurvivor ? 'sio-source-only' : 'sio-live-equivalent',
-    nextAction: isSourceOnlySurvivor
-      ? 'add targeted live fixture plus in-game description row before claiming live-equivalent survivor coverage'
+    confidence: 'sio-live-equivalent',
+    nextAction: isTargetedSurvivor
+      ? 'add in-game description row before editing survivor scoring semantics'
       : 'add in-game description row for each star/awakening/passive effect',
   });
 }
@@ -276,18 +276,27 @@ for (const pet of PET_SCHEMA_INDEX) {
 }
 
 for (const mount of MOUNT_SCHEMA_INDEX) {
+  const hasActiveMountDamageLiveEvidence = ACTIVE_MOUNT_DAMAGE_LIVE_IDS.has(mount.id);
   addRow({
     key: `mount:${mount.id}`,
     domain: 'mount',
     name: mount.display_name_en,
-    sourceStatus: 'SIO mount catalog plus compact mount stat-line fold',
+    sourceStatus: hasActiveMountDamageLiveEvidence
+      ? 'SIO mount catalog plus active mountDamage live trace captured'
+      : 'SIO mount catalog plus compact mount stat-line fold; zero/non-active source row',
     sioSourceKey: citationsOf(mount),
     tangtangSchemaKey: `MOUNT_SCHEMA_INDEX.${mount.id}`,
-    rustStatChannel: 'compact mount stats; mountDamage currently not strongly live-proven',
+    rustStatChannel: hasActiveMountDamageLiveEvidence
+      ? 'compact mount stats + active mountDamage live trace'
+      : 'compact mount stats; non-zero mountDamage not applicable/proven for this row',
     multiplierStage: 'mount-derived stat channels when present',
-    liveEvidence: 'sio_tools_live_evidence_matrix.mountLineStatsLiveRows=1; nonZeroMountDamageLiveRows=0; mountActiveShortKey=bj',
-    confidence: 'sio-source-only',
-    nextAction: 'capture active-mount live fixture with bJ.bj and damage-bearing lines',
+    liveEvidence: hasActiveMountDamageLiveEvidence
+      ? 'sio_tools_live_evidence_matrix.activeMountLiveRows=2; nonZeroMountDamageLiveRows=2; mountActiveShortKey=bj'
+      : 'sio_tools_live_evidence_matrix.mountLineStatsLiveRows=1; zero/non-active mount row only; mountActiveShortKey=bj',
+    confidence: hasActiveMountDamageLiveEvidence ? 'sio-live-equivalent' : 'sio-source-only',
+    nextAction: hasActiveMountDamageLiveEvidence
+      ? 'add in-game description row before editing mount scoring semantics'
+      : 'keep zero-coefficient/source row unless source changes',
   });
 }
 
@@ -422,16 +431,34 @@ assertIncludes(cruckerRow, 'sourceStatus', 'Crucker');
 
 const mountRows = rows.filter((row) => row.domain === 'mount');
 assert.equal(mountRows.length, MOUNT_SCHEMA_INDEX.length, 'all mounts must be represented in the mount fixture gate slice');
-for (const row of mountRows) {
+const activeMountDamageLiveRows = mountRows.filter((row) => row.confidence === 'sio-live-equivalent');
+const sourceOnlyMountRows = mountRows.filter((row) => row.confidence === 'sio-source-only');
+assert.deepEqual(
+  activeMountDamageLiveRows.map((row) => row.key).sort(),
+  ['mount:electricScooter', 'mount:techHoverboard'],
+  'active non-zero mountDamage rows must be live captured for Electric Scooter and Tech Hoverboard',
+);
+assert.deepEqual(
+  sourceOnlyMountRows.map((row) => row.key),
+  ['mount:doomsteed'],
+  'Doomsteed remains source-only because its coefficient is zero/non-active in current fixture evidence',
+);
+for (const row of sourceOnlyMountRows) {
   assert.equal(row.confidence, 'sio-source-only', `${row.key}.confidence`);
-  assertIncludes(row, 'rustStatChannel', 'mountDamage currently not strongly live-proven');
+  assertIncludes(row, 'rustStatChannel', 'non-zero mountDamage not applicable/proven');
   assertIncludes(row, 'liveEvidence', 'mountActiveShortKey=bj');
-  assert.equal(row.nextAction, 'capture active-mount live fixture with bJ.bj and damage-bearing lines', `${row.key}.nextAction`);
+  assert.equal(row.nextAction, 'keep zero-coefficient/source row unless source changes', `${row.key}.nextAction`);
+}
+for (const row of activeMountDamageLiveRows) {
+  assertIncludes(row, 'rustStatChannel', 'active mountDamage live trace');
+  assertIncludes(row, 'liveEvidence', 'nonZeroMountDamageLiveRows=2');
+  assert.equal(row.nextAction, 'add in-game description row before editing mount scoring semantics', `${row.key}.nextAction`);
 }
 assert.equal(mountDamageSourceFixture.summary.totalRows, MOUNT_SCHEMA_INDEX.length, 'mount source fixture must cover all mounts');
-assert.equal(sioToolsLiveEvidence.summary.mountLiveRows, 2, 'live evidence matrix must preserve mount live capture rows');
+assert.equal(sioToolsLiveEvidence.summary.mountLiveRows, 4, 'live evidence matrix must include broad and active mount live capture rows');
 assert.equal(sioToolsLiveEvidence.summary.mountLineStatsLiveRows, 1, 'live evidence matrix must isolate non-empty mount stat-line capture');
-assert.equal(sioToolsLiveEvidence.summary.nonZeroMountDamageLiveRows, 0, 'live evidence matrix must not overstate mountDamage live coverage');
+assert.equal(sioToolsLiveEvidence.summary.activeMountLiveRows, 2, 'live evidence matrix must include active mount live rows');
+assert.equal(sioToolsLiveEvidence.summary.nonZeroMountDamageLiveRows, 2, 'live evidence matrix must capture non-zero mountDamage live coverage');
 assert.equal(sioToolsLiveEvidence.summary.mountActiveShortKey, 'bj', 'live evidence matrix must preserve SIO compact active-mount key evidence');
 assert.ok(
   mountDamageSourceFixture.rows.some((fixture) => typeof fixture.mountDamageLine === 'string' && fixture.mountDamageLine.trim() !== ''),
@@ -441,20 +468,18 @@ assert.ok(
   mountDamageSourceFixture.rows.every((fixture) => fixture.confidence === 'sio-source-only'),
   'mount source fixture cannot promote rows to live-equivalent by itself',
 );
-const hasMountDamageLiveFixture = MOUNT_DAMAGE_LIVE_FORMULA_FIXTURES.some((fixture) => typeof fixture.mountDamageLine === 'string' && fixture.mountDamageLine.trim() !== '');
 const mountFormulaCompleteRows = mountRows.filter((row) => row.confidence === 'sio-live-equivalent' || row.confidence === 'in-game-description-verified');
-assert.equal(mountFormulaCompleteRows.length, 0, 'mount formula-complete rows require non-empty live mountDamage fixture before confidence promotion');
-assert.equal(hasMountDamageLiveFixture, false, 'mountDamage live fixture list is intentionally empty until a non-empty live capture exists');
+assert.equal(mountFormulaCompleteRows.length, 2, 'active non-zero mountDamage live fixtures promote two mount rows');
 
 const unsupportedSurvivorRows = rows.filter((row) => row.domain === 'survivor-unsupported');
 assert.equal(unsupportedSurvivorRows.length, 0, 'SpongeBob/Squidward/Yelena are source-backed locally, not unsupported rows');
-const sourceOnlySurvivorRows = [...SOURCE_ONLY_SURVIVOR_IDS].map((id) => requireRow(`survivor:${id}`));
-for (const row of sourceOnlySurvivorRows) {
-  assert.equal(row.confidence, 'sio-source-only', `${row.key}.confidence`);
+const targetedSurvivorRows = [...TARGETED_SURVIVOR_IDS].map((id) => requireRow(`survivor:${id}`));
+for (const row of targetedSurvivorRows) {
+  assert.equal(row.confidence, 'sio-live-equivalent', `${row.key}.confidence`);
   assertIncludes(row, 'sourceStatus', 'Rust compact survivor transform');
   assertIncludes(row, 'sioSourceKey', 'module37013_f_default_config.json');
-  assertIncludes(row, 'liveEvidence', 'targetSurvivorLiveRows=0');
-  assert.equal(row.nextAction, 'add targeted live fixture plus in-game description row before claiming live-equivalent survivor coverage', `${row.key}.nextAction`);
+  assertIncludes(row, 'liveEvidence', 'targetSurvivorLiveRows=3');
+  assert.equal(row.nextAction, 'add in-game description row before editing survivor scoring semantics', `${row.key}.nextAction`);
 }
 
 assert.equal(collectibleEffectMapping.summary.totalRows, 160, 'collectible mapping artifact must cover all item, event, and set rows');
@@ -558,9 +583,9 @@ const followUpGateSlices = [
     gate: 'DF-P3',
     slice: 'Mount damage line',
     rowsGuarded: `${mountRows.length} mount rows`,
-    currentState: `source-only; live evidence matrix has ${sioToolsLiveEvidence.summary.mountLineStatsLiveRows} non-empty mount stat-line row, ${sioToolsLiveEvidence.summary.nonZeroMountDamageLiveRows} non-zero mountDamage live rows, and active compact key ${sioToolsLiveEvidence.summary.mountActiveShortKey}`,
-    blocker: 'needs active-mount live capture with damage-bearing lines',
-    nextGate: 'capture bJ.bj active-mount fixture before formula-completeness claims',
+    currentState: `source-backed; live evidence matrix has ${sioToolsLiveEvidence.summary.mountLineStatsLiveRows} non-empty mount stat-line row, ${sioToolsLiveEvidence.summary.nonZeroMountDamageLiveRows} non-zero mountDamage live rows, and active compact key ${sioToolsLiveEvidence.summary.mountActiveShortKey}`,
+    blocker: 'active live evidence exists for non-zero rows; in-game description capture is still missing',
+    nextGate: 'add mount description rows before editing mount scoring semantics',
   },
   {
     gate: 'DF-P4',
@@ -573,10 +598,10 @@ const followUpGateSlices = [
   {
     gate: 'DF-P5',
     slice: 'Collaboration survivor source reconciliation',
-    rowsGuarded: sourceOnlySurvivorRows.map((row) => row.key).join('; '),
-    currentState: `source-backed by runtime table and Rust compact transform; broad survivor live case exists, but targetSurvivorLiveRows=${sioToolsLiveEvidence.summary.targetSurvivorLiveRows}`,
-    blocker: 'SpongeBob/Squidward/Yelena still need targeted live and in-game description captures before live-equivalent claims',
-    nextGate: 'add targeted fixtures before changing survivor scoring semantics',
+    rowsGuarded: targetedSurvivorRows.map((row) => row.key).join('; '),
+    currentState: `source-backed by runtime table and Rust compact transform; broad survivor live case exists and targetSurvivorLiveRows=${sioToolsLiveEvidence.summary.targetSurvivorLiveRows}`,
+    blocker: 'targeted live evidence exists; in-game description capture is still missing',
+    nextGate: 'add in-game description rows before changing survivor scoring semantics',
   },
   {
     gate: 'DF-P6',
@@ -615,7 +640,7 @@ const generatedAt = '2026-05-23';
 const matrix = `# Tangtang Damage Formula Provenance Matrix
 
 generatedAtKst: ${generatedAt}
-status: [DAMAGE-FORMULA-PROVENANCE-MATRIX-V0]
+status: [DAMAGE-FORMULA-PROVENANCE-MATRIX-V1]
 
 ## Purpose
 
@@ -639,6 +664,7 @@ Confidence values:
   - \`/Users/woosung/Desktop/Dev/Woosdom_Brain/01_Domains/시오툴/sio_tools_formulas_and_defaults.md\`
 - Evidence artifacts:
   - \`frontend/artifacts/td11/sio_tools_live_evidence_matrix.json\`
+  - \`frontend/artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json\`
   - \`frontend/artifacts/td11/collectible_effect_mapping_matrix.json\`
   - \`frontend/artifacts/td11/mount_damage_source_fixture.json\`
 
@@ -653,8 +679,8 @@ ${renderCountTable(countBy('confidence'))}
 ## High-Risk Gaps
 
 - Non-SS weapons are present as catalog rows but not proven as complete formula rows.
-- SpongeBob, Squidward, and Yelena are source-backed by the current runtime table and Rust compact transform, but still need targeted live and in-game description fixtures before live-equivalent claims.
-- Mounts now have a non-empty source fixture and the active compact key \`bJ.bj\` is source-proven, but live captures still show \`nonZeroMountDamageLiveRows=0\`.
+- SpongeBob, Squidward, and Yelena now have targeted current-worker live fixtures; direct in-game description captures are still missing.
+- Mounts now have a non-empty source fixture, source-proven active compact key \`bJ.bj\`, and two non-zero active mountDamage live rows; direct in-game description captures are still missing.
 - Collectible item/set rows now have a source/Rust-channel mapping artifact with threshold-level rows plus 7 SIO Tools live source-table cases; 4 named Starlight rows and 42 event slots remain catalog-only until source effect rows exist.
 - Generic aggregate modules now have a dedicated non-authority gate; the current product scorer relies on the SIO LM compact path.
 

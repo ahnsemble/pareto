@@ -232,20 +232,31 @@ async function loadPatchedWorker(sourceDir, posted) {
   const context = createWorkerContext(sourceDir, posted);
   const sourcePath = path.join(sourceDir, 'worker-skills-8663.js');
   let code = fs.readFileSync(sourcePath, 'utf8');
-  const baseNeedle =
-    'let{ceDamage:o,passivePools:n}=E({evolvePassives:li,cooldownReduction:r,techs:e,skills:lh,collectibles:eO,upgradedCollectibles:e7,settings:e5,gameMode:eb,eeOmnipower:eA,eeSkills:eL,staticCache:e8,stableTechEntries:t?V:void 0},la);';
-  const baseReplacement =
-    'let __baseStatsBeforeTech={...la};let{ceDamage:o,passivePools:n}=E({evolvePassives:li,cooldownReduction:r,techs:e,skills:lh,collectibles:eO,upgradedCollectibles:e7,settings:e5,gameMode:eb,eeOmnipower:eA,eeSkills:eL,staticCache:e8,stableTechEntries:t?V:void 0},la);';
-  const needle = 'return(0,_.IE)(lv),(0,H.f)(la,lu,a,i,e5.calcMode,lh,n,eb)';
-  const replacement =
-    'return(()=>{(0,_.IE)(lv);let __score=(0,H.f)(la,lu,a,i,e5.calcMode,lh,n,eb);if(__score>((self.__bestLmTrace&&self.__bestLmTrace.score)||0))self.__bestLmTrace={score:__score,mask:l,calcMode:e5.calcMode,gameMode:eb,attackMeta:{...lu},damageFactor:a,ceDamage:i,baseStats:{...__baseStatsBeforeTech},stats:{...la},skills:{...lh},techs:JSON.parse(JSON.stringify(e)),passivePools:Array.from(n||[])};return __score})()';
-  if (!code.includes(baseNeedle)) {
+  const patchSets = [
+    {
+      baseNeedle:
+        'let{ceDamage:o,passivePools:n}=E({evolvePassives:li,cooldownReduction:r,techs:e,skills:lh,collectibles:eO,upgradedCollectibles:e7,settings:e5,gameMode:eb,eeOmnipower:eA,eeSkills:eL,staticCache:e8,stableTechEntries:t?V:void 0},la);',
+      baseReplacement:
+        'let __baseStatsBeforeTech={...la};let{ceDamage:o,passivePools:n}=E({evolvePassives:li,cooldownReduction:r,techs:e,skills:lh,collectibles:eO,upgradedCollectibles:e7,settings:e5,gameMode:eb,eeOmnipower:eA,eeSkills:eL,staticCache:e8,stableTechEntries:t?V:void 0},la);',
+      scoreNeedle: 'return(0,_.IE)(lv),(0,H.f)(la,lu,a,i,e5.calcMode,lh,n,eb)',
+      scoreReplacement:
+        'return(()=>{(0,_.IE)(lv);let __score=(0,H.f)(la,lu,a,i,e5.calcMode,lh,n,eb);if(__score>((self.__bestLmTrace&&self.__bestLmTrace.score)||0))self.__bestLmTrace={score:__score,mask:l,calcMode:e5.calcMode,gameMode:eb,attackMeta:{...lu},damageFactor:a,ceDamage:i,baseStats:{...__baseStatsBeforeTech},stats:{...la},skills:{...lh},techs:JSON.parse(JSON.stringify(e)),passivePools:Array.from(n||[])};return __score})()',
+    },
+    {
+      baseNeedle:
+        'let{ceDamage:o,passivePools:s}=k({evolvePassives:ro,cooldownReduction:l,techs:e,skills:ri,collectibles:eV,upgradedCollectibles:e4,settings:e1,gameMode:eN,eeOmnipower:eH,eeSkills:eX,staticCache:e5,stableTechEntries:t?ef:void 0},rl);',
+      baseReplacement:
+        'let __baseStatsBeforeTech={...rl};let{ceDamage:o,passivePools:s}=k({evolvePassives:ro,cooldownReduction:l,techs:e,skills:ri,collectibles:eV,upgradedCollectibles:e4,settings:e1,gameMode:eN,eeOmnipower:eH,eeSkills:eX,staticCache:e5,stableTechEntries:t?ef:void 0},rl);',
+      scoreNeedle: 'return(0,R.IE)(ra),(0,W.f)(rl,rn,c,a,e1.calcMode,ri,s,eN)',
+      scoreReplacement:
+        'return(()=>{(0,R.IE)(ra);let __score=(0,W.f)(rl,rn,c,a,e1.calcMode,ri,s,eN);if(__score>((self.__bestLmTrace&&self.__bestLmTrace.score)||0))self.__bestLmTrace={score:__score,mask:r,calcMode:e1.calcMode,gameMode:eN,attackMeta:{...rn},damageFactor:c,ceDamage:a,baseStats:{...__baseStatsBeforeTech},stats:{...rl},skills:{...ri},techs:JSON.parse(JSON.stringify(e)),passivePools:Array.from(s||[])};return __score})()',
+    },
+  ];
+  const patchSet = patchSets.find((item) => code.includes(item.baseNeedle) && code.includes(item.scoreNeedle));
+  if (!patchSet) {
     throw new Error('Unable to patch worker-skills lm() base stats expression');
   }
-  if (!code.includes(needle)) {
-    throw new Error('Unable to patch worker-skills lm() return expression');
-  }
-  code = code.replace(baseNeedle, baseReplacement).replace(needle, replacement);
+  code = code.replace(patchSet.baseNeedle, patchSet.baseReplacement).replace(patchSet.scoreNeedle, patchSet.scoreReplacement);
   code = code.replace('_N_E=t.x()', 'self.__webpack_require__=t;self.__webpack_ready__=t.x()');
   vm.runInContext(code, context, { filename: sourcePath });
   await context.__webpack_ready__;

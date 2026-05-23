@@ -1,31 +1,46 @@
 {
   "generatedAtKst": "2026-05-23",
-  "status": "SIO-TOOLS-LIVE-EVIDENCE-MATRIX-V0",
+  "status": "SIO-TOOLS-LIVE-EVIDENCE-MATRIX-V1",
   "sourceArtifacts": {
     "liveCapture": "artifacts/td11/arbitrary_compact_s59/live_capture_summary.json",
     "lmTrace": "artifacts/td11/arbitrary_compact_s59/lm_trace_summary.json",
     "compactManifest": "artifacts/td11/arbitrary_compact_s59/compact_fixture_manifest.json",
     "collectibleEffectMappingMatrix": "artifacts/td11/collectible_effect_mapping_matrix.json",
     "mountDamageSourceFixture": "artifacts/td11/mount_damage_source_fixture.json",
+    "targetedLiveEvidence": "artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json",
     "compactCodecAsset": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/9730c42f92d7-797-9e5ce5eee251b4e4.js"
   },
   "summary": {
     "liveCaptureCases": 26,
     "liveCapturedCases": 26,
     "lmTraceStageProductPassed": 26,
-    "evidenceRows": 15,
+    "targetedLiveCaptureCases": 5,
+    "targetedLiveCapturedCases": 5,
+    "targetedLmTraceStageProductPassed": 5,
+    "evidenceRows": 20,
     "collectibleLiveRows": 7,
     "collectibleThresholdRows": 170,
     "inGameDescriptionVerifiedRows": 0,
-    "mountLiveRows": 2,
+    "mountLiveRows": 4,
     "mountLineStatsLiveRows": 1,
     "mountEmptyComponentLiveRows": 1,
-    "nonZeroMountDamageLiveRows": 0,
+    "activeMountLiveRows": 2,
+    "nonZeroMountDamageLiveRows": 2,
     "nonZeroMountDamageSourceRows": 2,
     "targetSurvivorSourceRows": 3,
-    "targetSurvivorLiveRows": 0,
+    "targetSurvivorLiveRows": 3,
     "mountActiveShortKey": "bj",
-    "mountDataShortKey": "bM"
+    "mountDataShortKey": "bM",
+    "targetSurvivorMainHeroValues": {
+      "yelena": 7,
+      "squidward": 18,
+      "spongebob": 19
+    },
+    "targetSurvivorHeroArrayIndexes": {
+      "yelena": 6,
+      "squidward": 17,
+      "spongebob": 18
+    }
   },
   "rows": [
     {
@@ -526,8 +541,8 @@
           }
         }
       ],
-      "finding": "The active-mount compact key is now source-proven; a future live fixture can set bJ.bj to 1 or 2 to target non-zero mountDamage rows.",
-      "confidence": "sio-source-only"
+      "finding": "The active-mount compact key is source-proven and targeted live evidence now captures bJ.bj=1/2 with non-zero mountDamage rows.",
+      "confidence": "sio-source-plus-targeted-live-evidence"
     },
     {
       "key": "source:mounts:damage-fixture",
@@ -594,8 +609,153 @@
           }
         }
       ],
-      "finding": "Source tables provide non-zero mountDamage expectations for Electric Scooter and Tech Hoverboard; live active-mount capture is still pending.",
-      "confidence": "sio-source-only"
+      "finding": "Source tables provide non-zero mountDamage expectations for Electric Scooter and Tech Hoverboard; targeted live evidence now cross-checks both source rows.",
+      "confidence": "sio-source-plus-targeted-live-evidence"
+    },
+    {
+      "compactActiveIndex": 1,
+      "compactKeys": {
+        "active": "bj",
+        "data": "bM",
+        "mounts": "bJ"
+      },
+      "confidence": "sio-live-equivalent-for-current-worker-evidence-only",
+      "domain": "mounts",
+      "evidenceType": "current-public-worker-live-capture",
+      "finding": "Tech Hoverboard is live-captured with non-zero ceDamage.mount using bJ.bj=1.",
+      "key": "targeted:live:mounts:active:tech-hoverboard",
+      "live": {
+        "compactPayloadHash": "df5d5b550a8ddcb68699b65796eeab8cd24b5fb7cb92e7968f2e0456b946a2ab",
+        "damageFactor": 130944.71632696046,
+        "evidenceState": "live-captured",
+        "multiplier": 5143281402334390,
+        "stageProductRelativeError": 0,
+        "tracedMultiplier": 5143281402334390
+      },
+      "liveCaseId": "targeted_active_mount_tech_hoverboard",
+      "mountName": "Tech Hoverboard",
+      "sourceCrossCheck": {
+        "liveBaseMountDamage": 50000,
+        "liveCeDamageMount": 33333.33333333333,
+        "sourceMountDamage": 50000,
+        "stars": 8
+      },
+      "sourceArtifact": "artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json"
+    },
+    {
+      "compactActiveIndex": 2,
+      "compactKeys": {
+        "active": "bj",
+        "data": "bM",
+        "mounts": "bJ"
+      },
+      "confidence": "sio-live-equivalent-for-current-worker-evidence-only",
+      "domain": "mounts",
+      "evidenceType": "current-public-worker-live-capture",
+      "finding": "Electric Scooter is live-captured with non-zero ceDamage.mount using bJ.bj=2.",
+      "key": "targeted:live:mounts:active:electric-scooter",
+      "live": {
+        "compactPayloadHash": "e61ebfc089bae9c1da51d31fdee30669c440a3b239b60f8311e8bed5977ac25a",
+        "damageFactor": 109418.04966029381,
+        "evidenceState": "live-captured",
+        "multiplier": 4349867242297721.5,
+        "stageProductRelativeError": 0,
+        "tracedMultiplier": 4349867242297721.5
+      },
+      "liveCaseId": "targeted_active_mount_electric_scooter",
+      "mountName": "Electric Scooter",
+      "sourceCrossCheck": {
+        "liveBaseMountDamage": 17710,
+        "liveCeDamageMount": 11806.666666666666,
+        "sourceMountDamage": 17710,
+        "stars": 8
+      },
+      "sourceArtifact": "artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json"
+    },
+    {
+      "baseHeroStats": {
+        "atkHeroPercent": 5
+      },
+      "compactMapping": {
+        "heroArrayIndex": 6,
+        "mainHeroValue": 7
+      },
+      "confidence": "sio-live-equivalent-for-current-worker-evidence-only",
+      "displayName": "Yelena",
+      "domain": "survivors",
+      "evidenceType": "current-public-worker-live-capture",
+      "finding": "Yelena is live-captured as mainHero=Yelena with targeted h[6] survivor stats.",
+      "key": "targeted:live:survivors:target:yelena",
+      "live": {
+        "compactPayloadHash": "22bba4346863b2ea6a52e9ab3eeeca9872a30f6f5d90a488b6c8f45a45fadf0d",
+        "damageFactor": 90256.51099362713,
+        "evidenceState": "live-captured",
+        "multiplier": 772398602862798.4,
+        "stageProductRelativeError": 0,
+        "tracedMultiplier": 772398602862798.4
+      },
+      "liveCaseId": "targeted_survivor_yelena",
+      "sourceName": "Yelena",
+      "survivorId": "yelena",
+      "sourceArtifact": "artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json"
+    },
+    {
+      "baseHeroStats": {
+        "atkHeroPercent": 4,
+        "critDamage": 5,
+        "critRate": 5
+      },
+      "compactMapping": {
+        "heroArrayIndex": 17,
+        "mainHeroValue": 18
+      },
+      "confidence": "sio-live-equivalent-for-current-worker-evidence-only",
+      "displayName": "Squidward",
+      "domain": "survivors",
+      "evidenceType": "current-public-worker-live-capture",
+      "finding": "Squidward is live-captured as mainHero=Squidward with targeted h[17] survivor stats.",
+      "key": "targeted:live:survivors:target:squidward",
+      "live": {
+        "compactPayloadHash": "7e31e325af28b2775308723ed0835a279c591256fa93dfa9d5981783bd83c0d1",
+        "damageFactor": 90256.51099362713,
+        "evidenceState": "live-captured",
+        "multiplier": 776651917980889.6,
+        "stageProductRelativeError": 0,
+        "tracedMultiplier": 776651917980889.6
+      },
+      "liveCaseId": "targeted_survivor_squidward",
+      "sourceName": "Squidward",
+      "survivorId": "squidward",
+      "sourceArtifact": "artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json"
+    },
+    {
+      "baseHeroStats": {
+        "atkHeroPercent": 4,
+        "critDamage": 5,
+        "critRate": 5
+      },
+      "compactMapping": {
+        "heroArrayIndex": 18,
+        "mainHeroValue": 19
+      },
+      "confidence": "sio-live-equivalent-for-current-worker-evidence-only",
+      "displayName": "SpongeBob",
+      "domain": "survivors",
+      "evidenceType": "current-public-worker-live-capture",
+      "finding": "SpongeBob is live-captured as mainHero=Spongebob with targeted h[18] survivor stats.",
+      "key": "targeted:live:survivors:target:spongebob",
+      "live": {
+        "compactPayloadHash": "60d0b605ea0f6807a3065814f81eb38cf4b24ecabf14192aa114e194475eadec",
+        "damageFactor": 90256.51099362713,
+        "evidenceState": "live-captured",
+        "multiplier": 776651917980889.6,
+        "stageProductRelativeError": 0,
+        "tracedMultiplier": 776651917980889.6
+      },
+      "liveCaseId": "targeted_survivor_spongebob",
+      "sourceName": "Spongebob",
+      "survivorId": "spongebob",
+      "sourceArtifact": "artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json"
     },
     {
       "key": "live:survivors:passives-harmony-teamwork",
@@ -656,7 +816,7 @@
         "vulnerability": 90,
         "weakened": 286
       },
-      "finding": "SIO Tools live worker captures survivor passive/harmony/teamwork domain behavior, but not the three newly source-backed target survivors as dedicated cases.",
+      "finding": "SIO Tools live worker captures survivor passive/harmony/teamwork domain behavior; targeted current-worker rows separately cover Yelena, Squidward, and SpongeBob.",
       "confidence": "sio-live-equivalent-for-survivor-domain-not-targeted-heroes"
     },
     {
@@ -667,8 +827,8 @@
       "displayName": "Yelena",
       "sourceArtifact": "app/lib/pareto-store/schemas/index.ts",
       "schemaEvidence": "hero('yelena', 'Yelena', 'buffer', { tier: 'C+', source_citations: [runtimeTableCitation(169), rustCitation(2767), rustCitation(2961)] }),",
-      "liveEvidenceStatus": "source-backed-no-targeted-live-capture",
-      "finding": "Yelena is represented as source-cited schema data; a dedicated SIO Tools live fixture is still needed before marking this target as live-covered.",
+      "liveEvidenceStatus": "source-backed-targeted-live-captured-current-worker",
+      "finding": "Yelena is represented as source-cited schema data and now has a targeted current-worker live fixture; in-game description capture is still separate.",
       "confidence": "sio-source-only"
     },
     {
@@ -679,8 +839,8 @@
       "displayName": "Squidward",
       "sourceArtifact": "app/lib/pareto-store/schemas/index.ts",
       "schemaEvidence": "hero('squidward', 'Squidward', 'global_passive_holder', { tier: 'C+', source_citations: [runtimeTableCitation(590), rustCitation(2670), rustCitation(2815)] }),",
-      "liveEvidenceStatus": "source-backed-no-targeted-live-capture",
-      "finding": "Squidward is represented as source-cited schema data; a dedicated SIO Tools live fixture is still needed before marking this target as live-covered.",
+      "liveEvidenceStatus": "source-backed-targeted-live-captured-current-worker",
+      "finding": "Squidward is represented as source-cited schema data and now has a targeted current-worker live fixture; in-game description capture is still separate.",
       "confidence": "sio-source-only"
     },
     {
@@ -691,8 +851,8 @@
       "displayName": "SpongeBob",
       "sourceArtifact": "app/lib/pareto-store/schemas/index.ts",
       "schemaEvidence": "hero('spongebob', 'SpongeBob', 'global_passive_holder', { tier: 'C+', source_citations: [runtimeTableCitation(607), rustCitation(2670), rustCitation(2815)] }),",
-      "liveEvidenceStatus": "source-backed-no-targeted-live-capture",
-      "finding": "SpongeBob is represented as source-cited schema data; a dedicated SIO Tools live fixture is still needed before marking this target as live-covered.",
+      "liveEvidenceStatus": "source-backed-targeted-live-captured-current-worker",
+      "finding": "SpongeBob is represented as source-cited schema data and now has a targeted current-worker live fixture; in-game description capture is still separate.",
       "confidence": "sio-source-only"
     }
   ]

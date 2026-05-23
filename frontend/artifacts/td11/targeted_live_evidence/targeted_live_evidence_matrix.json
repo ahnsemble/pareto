@@ -1,0 +1,178 @@
+{
+  "generatedAtKst": "2026-05-23",
+  "status": "TARGETED-LIVE-EVIDENCE-V1",
+  "sourceArtifacts": {
+    "manifest": "artifacts/td11/targeted_live_evidence/compact_fixture_manifest.json",
+    "liveCapture": "artifacts/td11/targeted_live_evidence/live_capture_summary.json",
+    "lmTrace": "artifacts/td11/targeted_live_evidence/lm_trace_summary.json",
+    "mountDamageSourceFixture": "artifacts/td11/mount_damage_source_fixture.json"
+  },
+  "currentWorker": {
+    "url": "https://sio-tools.vercel.app/_next/static/chunks/7227.2d1c78b0f3f92fba.js?dpl=dpl_56iU76iXR6KnXd1j6BesFJBdsckh",
+    "versionHash": "955cb880d975c11ea2c5f0da623444ab717bef8ac463a30395b9563c7df627d1",
+    "capturedFromDeployment": "dpl_56iU76iXR6KnXd1j6BesFJBdsckh"
+  },
+  "summary": {
+    "targetedLiveCaptureCases": 5,
+    "targetedLiveCapturedCases": 5,
+    "targetedLmTraceCases": 5,
+    "targetedLmTraceStageProductPassed": 5,
+    "activeMountLiveRows": 2,
+    "nonZeroMountDamageLiveRows": 2,
+    "targetSurvivorLiveRows": 3,
+    "mountActiveShortKey": "bj",
+    "mountDataShortKey": "bM",
+    "targetSurvivorMainHeroValues": {
+      "yelena": 7,
+      "squidward": 18,
+      "spongebob": 19
+    },
+    "targetSurvivorHeroArrayIndexes": {
+      "yelena": 6,
+      "squidward": 17,
+      "spongebob": 18
+    }
+  },
+  "rows": [
+    {
+      "key": "live:mounts:active:tech-hoverboard",
+      "domain": "mounts",
+      "evidenceType": "current-public-worker-live-capture",
+      "liveCaseId": "targeted_active_mount_tech_hoverboard",
+      "mountName": "Tech Hoverboard",
+      "compactActiveIndex": 1,
+      "compactKeys": {
+        "mounts": "bJ",
+        "active": "bj",
+        "data": "bM"
+      },
+      "sourceCrossCheck": {
+        "stars": 8,
+        "sourceMountDamage": 50000,
+        "liveBaseMountDamage": 50000,
+        "liveCeDamageMount": 33333.33333333333
+      },
+      "live": {
+        "compactPayloadHash": "df5d5b550a8ddcb68699b65796eeab8cd24b5fb7cb92e7968f2e0456b946a2ab",
+        "damageFactor": 130944.71632696046,
+        "evidenceState": "live-captured",
+        "multiplier": 5143281402334390,
+        "stageProductRelativeError": 0,
+        "tracedMultiplier": 5143281402334390
+      },
+      "finding": "Tech Hoverboard is live-captured with non-zero ceDamage.mount using bJ.bj=1.",
+      "confidence": "sio-live-equivalent-for-current-worker-evidence-only"
+    },
+    {
+      "key": "live:mounts:active:electric-scooter",
+      "domain": "mounts",
+      "evidenceType": "current-public-worker-live-capture",
+      "liveCaseId": "targeted_active_mount_electric_scooter",
+      "mountName": "Electric Scooter",
+      "compactActiveIndex": 2,
+      "compactKeys": {
+        "mounts": "bJ",
+        "active": "bj",
+        "data": "bM"
+      },
+      "sourceCrossCheck": {
+        "stars": 8,
+        "sourceMountDamage": 17710,
+        "liveBaseMountDamage": 17710,
+        "liveCeDamageMount": 11806.666666666666
+      },
+      "live": {
+        "compactPayloadHash": "e61ebfc089bae9c1da51d31fdee30669c440a3b239b60f8311e8bed5977ac25a",
+        "damageFactor": 109418.04966029381,
+        "evidenceState": "live-captured",
+        "multiplier": 4349867242297721.5,
+        "stageProductRelativeError": 0,
+        "tracedMultiplier": 4349867242297721.5
+      },
+      "finding": "Electric Scooter is live-captured with non-zero ceDamage.mount using bJ.bj=2.",
+      "confidence": "sio-live-equivalent-for-current-worker-evidence-only"
+    },
+    {
+      "key": "live:survivors:target:yelena",
+      "domain": "survivors",
+      "evidenceType": "current-public-worker-live-capture",
+      "liveCaseId": "targeted_survivor_yelena",
+      "survivorId": "yelena",
+      "displayName": "Yelena",
+      "sourceName": "Yelena",
+      "compactMapping": {
+        "heroArrayIndex": 6,
+        "mainHeroValue": 7
+      },
+      "live": {
+        "compactPayloadHash": "22bba4346863b2ea6a52e9ab3eeeca9872a30f6f5d90a488b6c8f45a45fadf0d",
+        "damageFactor": 90256.51099362713,
+        "evidenceState": "live-captured",
+        "multiplier": 772398602862798.4,
+        "stageProductRelativeError": 0,
+        "tracedMultiplier": 772398602862798.4
+      },
+      "baseHeroStats": {
+        "atkHeroPercent": 5
+      },
+      "finding": "Yelena is live-captured as mainHero=Yelena with targeted h[6] survivor stats.",
+      "confidence": "sio-live-equivalent-for-current-worker-evidence-only"
+    },
+    {
+      "key": "live:survivors:target:squidward",
+      "domain": "survivors",
+      "evidenceType": "current-public-worker-live-capture",
+      "liveCaseId": "targeted_survivor_squidward",
+      "survivorId": "squidward",
+      "displayName": "Squidward",
+      "sourceName": "Squidward",
+      "compactMapping": {
+        "heroArrayIndex": 17,
+        "mainHeroValue": 18
+      },
+      "live": {
+        "compactPayloadHash": "7e31e325af28b2775308723ed0835a279c591256fa93dfa9d5981783bd83c0d1",
+        "damageFactor": 90256.51099362713,
+        "evidenceState": "live-captured",
+        "multiplier": 776651917980889.6,
+        "stageProductRelativeError": 0,
+        "tracedMultiplier": 776651917980889.6
+      },
+      "baseHeroStats": {
+        "atkHeroPercent": 4,
+        "critDamage": 5,
+        "critRate": 5
+      },
+      "finding": "Squidward is live-captured as mainHero=Squidward with targeted h[17] survivor stats.",
+      "confidence": "sio-live-equivalent-for-current-worker-evidence-only"
+    },
+    {
+      "key": "live:survivors:target:spongebob",
+      "domain": "survivors",
+      "evidenceType": "current-public-worker-live-capture",
+      "liveCaseId": "targeted_survivor_spongebob",
+      "survivorId": "spongebob",
+      "displayName": "SpongeBob",
+      "sourceName": "Spongebob",
+      "compactMapping": {
+        "heroArrayIndex": 18,
+        "mainHeroValue": 19
+      },
+      "live": {
+        "compactPayloadHash": "60d0b605ea0f6807a3065814f81eb38cf4b24ecabf14192aa114e194475eadec",
+        "damageFactor": 90256.51099362713,
+        "evidenceState": "live-captured",
+        "multiplier": 776651917980889.6,
+        "stageProductRelativeError": 0,
+        "tracedMultiplier": 776651917980889.6
+      },
+      "baseHeroStats": {
+        "atkHeroPercent": 4,
+        "critDamage": 5,
+        "critRate": 5
+      },
+      "finding": "SpongeBob is live-captured as mainHero=Spongebob with targeted h[18] survivor stats.",
+      "confidence": "sio-live-equivalent-for-current-worker-evidence-only"
+    }
+  ]
+}

@@ -11,6 +11,7 @@ const lmTracePath = path.join(root, 'artifacts/td11/arbitrary_compact_s59/lm_tra
 const compactManifestPath = path.join(root, 'artifacts/td11/arbitrary_compact_s59/compact_fixture_manifest.json');
 const collectibleMatrixPath = path.join(root, 'artifacts/td11/collectible_effect_mapping_matrix.json');
 const mountSourceFixturePath = path.join(root, 'artifacts/td11/mount_damage_source_fixture.json');
+const targetedLiveEvidencePath = path.join(root, 'artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json');
 const deployedDataPath = path.join(root, 'artifacts/td11/sio_tools_formula_table_extract/extracted_tables/module37013_c_deployed_data_table.json');
 const compactCodecAssetPath = path.join(
   root,
@@ -124,6 +125,7 @@ const [
   compactManifest,
   collectibleMatrix,
   mountSourceFixture,
+  targetedLiveEvidence,
   deployedData,
   compactCodecAsset,
   schemaSource,
@@ -133,6 +135,7 @@ const [
   fs.readFile(compactManifestPath, 'utf8').then(JSON.parse),
   fs.readFile(collectibleMatrixPath, 'utf8').then(JSON.parse),
   fs.readFile(mountSourceFixturePath, 'utf8').then(JSON.parse),
+  fs.readFile(targetedLiveEvidencePath, 'utf8').then(JSON.parse),
   fs.readFile(deployedDataPath, 'utf8').then(JSON.parse),
   fs.readFile(compactCodecAssetPath, 'utf8'),
   fs.readFile(schemaPath, 'utf8'),
@@ -246,8 +249,8 @@ rows.push({
       },
     },
   })),
-  finding: 'The active-mount compact key is now source-proven; a future live fixture can set bJ.bj to 1 or 2 to target non-zero mountDamage rows.',
-  confidence: 'sio-source-only',
+  finding: 'The active-mount compact key is source-proven and targeted live evidence now captures bJ.bj=1/2 with non-zero mountDamage rows.',
+  confidence: 'sio-source-plus-targeted-live-evidence',
 });
 
 rows.push({
@@ -264,9 +267,17 @@ rows.push({
       nonZeroStars: row.nonZeroStars,
       mountDamageByStars: row.mountDamageByStars,
     })),
-  finding: 'Source tables provide non-zero mountDamage expectations for Electric Scooter and Tech Hoverboard; live active-mount capture is still pending.',
-  confidence: 'sio-source-only',
+  finding: 'Source tables provide non-zero mountDamage expectations for Electric Scooter and Tech Hoverboard; targeted live evidence now cross-checks both source rows.',
+  confidence: 'sio-source-plus-targeted-live-evidence',
 });
+
+for (const targetedRow of targetedLiveEvidence.rows ?? []) {
+  rows.push({
+    ...stableObject(targetedRow),
+    key: `targeted:${targetedRow.key}`,
+    sourceArtifact: path.relative(root, targetedLiveEvidencePath),
+  });
+}
 
 const survivorLiveCase = liveCaseById.get('survivors_passives_harmony_teamwork');
 const survivorTraceCase = traceCaseById.get('survivors_passives_harmony_teamwork');
@@ -282,7 +293,7 @@ rows.push({
     harmony: statComponent(survivorTraceCase, 'harmony'),
   }),
   selectedFinalStats: pickedTraceStats(survivorTraceCase),
-  finding: 'SIO Tools live worker captures survivor passive/harmony/teamwork domain behavior, but not the three newly source-backed target survivors as dedicated cases.',
+  finding: 'SIO Tools live worker captures survivor passive/harmony/teamwork domain behavior; targeted current-worker rows separately cover Yelena, Squidward, and SpongeBob.',
   confidence: 'sio-live-equivalent-for-survivor-domain-not-targeted-heroes',
 });
 
@@ -290,10 +301,6 @@ for (const survivor of TARGET_SURVIVORS) {
   const schemaLinePattern = new RegExp(`hero\\('${survivor.id}', '${survivor.displayName}'.*source_citations: \\[[^\\]]+\\]`);
   const schemaLine = schemaSource.split('\n').find((line) => schemaLinePattern.test(line.trim()));
   assert.ok(schemaLine, `${survivor.displayName} must remain source-cited in schema`);
-  assert.ok(
-    ![...liveCaseById.keys()].some((caseId) => caseId.toLowerCase().includes(survivor.id.toLowerCase())),
-    `${survivor.displayName} unexpectedly has a targeted live case; update this evidence gate`,
-  );
   rows.push({
     key: `source:survivors:${survivor.id}`,
     domain: 'survivors',
@@ -302,52 +309,67 @@ for (const survivor of TARGET_SURVIVORS) {
     displayName: survivor.displayName,
     sourceArtifact: path.relative(root, schemaPath),
     schemaEvidence: schemaLine.trim(),
-    liveEvidenceStatus: 'source-backed-no-targeted-live-capture',
-    finding: `${survivor.displayName} is represented as source-cited schema data; a dedicated SIO Tools live fixture is still needed before marking this target as live-covered.`,
+    liveEvidenceStatus: 'source-backed-targeted-live-captured-current-worker',
+    finding: `${survivor.displayName} is represented as source-cited schema data and now has a targeted current-worker live fixture; in-game description capture is still separate.`,
     confidence: 'sio-source-only',
   });
 }
 
 const artifact = {
   generatedAtKst: '2026-05-23',
-  status: 'SIO-TOOLS-LIVE-EVIDENCE-MATRIX-V0',
+  status: 'SIO-TOOLS-LIVE-EVIDENCE-MATRIX-V1',
   sourceArtifacts: {
     liveCapture: path.relative(root, liveCapturePath),
     lmTrace: path.relative(root, lmTracePath),
     compactManifest: path.relative(root, compactManifestPath),
     collectibleEffectMappingMatrix: path.relative(root, collectibleMatrixPath),
     mountDamageSourceFixture: path.relative(root, mountSourceFixturePath),
+    targetedLiveEvidence: path.relative(root, targetedLiveEvidencePath),
     compactCodecAsset: path.relative(root, compactCodecAssetPath),
   },
   summary: {
     liveCaptureCases: liveCapture.summary.cases,
     liveCapturedCases: liveCapture.summary.liveCaptured,
     lmTraceStageProductPassed: lmTrace.summary.stageProductPassed,
+    targetedLiveCaptureCases: targetedLiveEvidence.summary.targetedLiveCaptureCases,
+    targetedLiveCapturedCases: targetedLiveEvidence.summary.targetedLiveCapturedCases,
+    targetedLmTraceStageProductPassed: targetedLiveEvidence.summary.targetedLmTraceStageProductPassed,
     evidenceRows: rows.length,
     collectibleLiveRows: rows.filter((row) => row.domain === 'collectibles' && row.evidenceType === 'sio-tools-live-capture').length,
     collectibleThresholdRows: collectibleMatrix.summary.thresholdRows,
     inGameDescriptionVerifiedRows: collectibleMatrix.summary.inGameDescriptionVerifiedRows,
-    mountLiveRows: rows.filter((row) => row.domain === 'mounts' && row.evidenceType === 'sio-tools-live-capture').length,
+    mountLiveRows: rows.filter((row) => row.domain === 'mounts' && String(row.evidenceType ?? '').includes('live-capture')).length,
     mountLineStatsLiveRows: rows.filter((row) => row.domain === 'mounts' && Object.keys(row.baseStatComponents?.mounts ?? {}).length > 0).length,
     mountEmptyComponentLiveRows: rows.filter((row) => row.domain === 'mounts' && row.evidenceType === 'sio-tools-live-capture' && Object.keys(row.baseStatComponents?.mounts ?? {}).length === 0).length,
-    nonZeroMountDamageLiveRows: rows.filter((row) => row.domain === 'mounts' && Number(row.ceDamageMount) > 0).length,
+    activeMountLiveRows: targetedLiveEvidence.summary.activeMountLiveRows,
+    nonZeroMountDamageLiveRows: rows.filter(
+      (row) => row.domain === 'mounts' && (Number(row.ceDamageMount) > 0 || Number(row.sourceCrossCheck?.liveCeDamageMount) > 0),
+    ).length,
     nonZeroMountDamageSourceRows: mountSourceFixture.summary.nonZeroMountDamageRows,
     targetSurvivorSourceRows: TARGET_SURVIVORS.length,
-    targetSurvivorLiveRows: 0,
+    targetSurvivorLiveRows: targetedLiveEvidence.summary.targetSurvivorLiveRows,
     mountActiveShortKey: compactKeys.active.shortKey,
     mountDataShortKey: compactKeys.data.shortKey,
+    targetSurvivorMainHeroValues: targetedLiveEvidence.summary.targetSurvivorMainHeroValues,
+    targetSurvivorHeroArrayIndexes: targetedLiveEvidence.summary.targetSurvivorHeroArrayIndexes,
   },
   rows,
 };
 
 assert.equal(artifact.summary.collectibleLiveRows, COLLECTIBLE_LIVE_CASE_IDS.length);
-assert.equal(artifact.summary.mountLiveRows, MOUNT_LIVE_CASE_IDS.length);
+assert.equal(artifact.summary.targetedLiveCaptureCases, 5);
+assert.equal(artifact.summary.targetedLiveCapturedCases, 5);
+assert.equal(artifact.summary.targetedLmTraceStageProductPassed, 5);
+assert.equal(artifact.summary.mountLiveRows, MOUNT_LIVE_CASE_IDS.length + targetedLiveEvidence.summary.activeMountLiveRows);
 assert.equal(artifact.summary.mountLineStatsLiveRows, 1);
 assert.equal(artifact.summary.mountEmptyComponentLiveRows, 1);
-assert.equal(artifact.summary.nonZeroMountDamageLiveRows, 0);
+assert.equal(artifact.summary.activeMountLiveRows, 2);
+assert.equal(artifact.summary.nonZeroMountDamageLiveRows, 2);
 assert.equal(artifact.summary.targetSurvivorSourceRows, 3);
-assert.equal(artifact.summary.targetSurvivorLiveRows, 0);
-assert.ok(rows.length >= 14, 'evidence matrix should contain live, source, and gap rows');
+assert.equal(artifact.summary.targetSurvivorLiveRows, 3);
+assert.deepEqual(artifact.summary.targetSurvivorMainHeroValues, { yelena: 7, squidward: 18, spongebob: 19 });
+assert.deepEqual(artifact.summary.targetSurvivorHeroArrayIndexes, { yelena: 6, squidward: 17, spongebob: 18 });
+assert.ok(rows.length >= 19, 'evidence matrix should contain broad live, targeted live, source, and gap rows');
 
 const serialized = `${JSON.stringify(artifact, null, 2)}\n`;
 

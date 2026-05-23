@@ -1,0 +1,4644 @@
+{
+  "generatedAt": "2026-05-23T05:22:43.678Z",
+  "summary": {
+    "workerSummaryPath": "artifacts/td11/targeted_live_evidence/live_capture_summary.json",
+    "outputPath": "artifacts/td11/targeted_live_evidence/lm_trace_summary.json",
+    "sourceDir": "/tmp/sio-tools-src.current",
+    "cases": 5,
+    "stageProductPassed": 5,
+    "replayedPassed": 5,
+    "calcModes": [
+      "damage"
+    ],
+    "gameModes": [
+      "lme1"
+    ],
+    "damageFactorRange": {
+      "min": 90256.51099362713,
+      "max": 130944.71632696046
+    }
+  },
+  "cases": [
+    {
+      "id": "targeted_active_mount_tech_hoverboard",
+      "expectedMultiplier": 5143281402334390,
+      "replayedTopMultiplier": 5143281402334390,
+      "tracedMultiplier": 5143281402334390,
+      "recomputedStageProduct": 5143281402334390,
+      "stageProductRelativeError": 0,
+      "mask": 198677,
+      "calcMode": "damage",
+      "gameMode": "lme1",
+      "expandedConfig": {
+        "meta": {
+          "synergy": true,
+          "synergyLevel": 10,
+          "mainHero": "Taloxa",
+          "harmonyL": "Metalia",
+          "harmonyR": "King",
+          "teamwork": [],
+          "atkBase": 6101.3499999999985,
+          "atkFinal": 100000,
+          "designs": 111376,
+          "maxGear": 230,
+          "gameMode": "lme1",
+          "lmeTestaments": 0,
+          "eeSkills": [
+            -1,
+            -1,
+            -1
+          ],
+          "eeOmnipower": null,
+          "clanLevel": 0
+        },
+        "settings": {
+          "calcMode": "damage",
+          "revives": [
+            40,
+            70,
+            90
+          ],
+          "numberFormat": "group",
+          "experimentalFeatures": ""
+        },
+        "skills": {
+          "Energy Cube": true,
+          "HP Bullet": true,
+          "Exo Bracer": true,
+          "Ammo Thruster": true,
+          "HE Fuel": true,
+          "Drone Mode": true,
+          "Drill Shot Mode": true,
+          "Durian Mode": true,
+          "Molotov": true,
+          "Rocket": true
+        },
+        "techsOptimizer": {
+          "strategy": 1,
+          "speedMode": 2,
+          "reservedLegends": 0,
+          "fodder": 1,
+          "skills": 4,
+          "chips": 40,
+          "overloadable": false,
+          "inputs": {
+            "Eternal": 0,
+            "Legend4": 0,
+            "Legend3": 0,
+            "Legend2": 0,
+            "Legend1": 0,
+            "Legend": 1,
+            "Epic3": 0,
+            "Epic2": 0,
+            "Epic1": 0,
+            "Epic": 6
+          },
+          "modes": [
+            "Drone Mode",
+            "Forcefield Mode",
+            "Drill Shot Mode",
+            "Rocket Mode",
+            "Soccer Mode",
+            "Durian Mode",
+            "Lightning Mode",
+            "Boomerang Mode",
+            "Guardian Mode",
+            "Laser Mode",
+            "Brick Mode",
+            "Molotov Mode"
+          ],
+          "limit": "basic",
+          "modeEntries": {
+            "Drone Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Forcefield Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Drill Shot Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Rocket Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Soccer Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Durian Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Lightning Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Boomerang Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Guardian Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Laser Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Brick Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Molotov Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            }
+          },
+          "skillsMap": {
+            "Drone Mode": "enabled",
+            "Forcefield Mode": "enabled",
+            "Drill Shot Mode": "enabled",
+            "Rocket Mode": "enabled",
+            "Soccer Mode": "enabled",
+            "Durian Mode": "enabled",
+            "Lightning Mode": "enabled",
+            "Boomerang Mode": "enabled",
+            "Guardian Mode": "disabled",
+            "Laser Mode": "enabled",
+            "Brick Mode": "enabled",
+            "Molotov Mode": "enabled",
+            "Molotov": "enabled",
+            "Rocket": "disabled",
+            "Drone": "enabled",
+            "Drill": "enabled"
+          },
+          "expanded": false
+        }
+      },
+      "exportedSkillOrder": [
+        "Energy Cube",
+        "HP Bullet",
+        "Exo Bracer",
+        "Ammo Thruster",
+        "HE Fuel",
+        "Drone Mode",
+        "Forcefield Mode",
+        "Drill Shot Mode",
+        "Rocket Mode",
+        "Soccer Mode",
+        "Durian Mode",
+        "Lightning Mode",
+        "Boomerang Mode",
+        "Guardian Mode",
+        "Laser Mode",
+        "Brick Mode",
+        "Molotov Mode",
+        "Molotov",
+        "Rocket",
+        "Drone",
+        "Drill"
+      ],
+      "enabledSkills": [
+        "Energy Cube",
+        "HP Bullet",
+        "Exo Bracer",
+        "Ammo Thruster",
+        "HE Fuel",
+        "Drone Mode",
+        "Drill Shot Mode",
+        "Soccer Mode",
+        "Molotov Mode"
+      ],
+      "activeResultSkills": [
+        "Energy Cube",
+        "HP Bullet",
+        "Exo Bracer",
+        "Ammo Thruster",
+        "HE Fuel",
+        "Drone Mode",
+        "Drill Shot Mode",
+        "Soccer Mode",
+        "Molotov Mode"
+      ],
+      "damageFactor": 130944.71632696046,
+      "attackMeta": {
+        "atkBase": 6101.3499999999985,
+        "atkFinal": 100000
+      },
+      "baseStats": {
+        "atkEquipPercent": 5,
+        "atkHero": 25615,
+        "atkHeroPercent": 125,
+        "atkPercent": 118,
+        "critDamage": 580,
+        "critRate": 310,
+        "hpBulletBoost": 50,
+        "laceration": 85,
+        "lacerationUptime": 1,
+        "mountDamage": 50000,
+        "poisoned": 10,
+        "shieldDamage": 55,
+        "shieldDamageUptime": 1,
+        "skillDamage": 110,
+        "taloxaBeam": 4.5,
+        "taloxaMaxSync": 400,
+        "taloxaOverload": 45,
+        "taloxaOverloadEff": 75,
+        "taloxaSyncLoss": 8,
+        "voidNeckBoostUptime": 1,
+        "weakened": 15
+      },
+      "baseStatComponents": [
+        {
+          "index": 0,
+          "label": "baseStats",
+          "stats": {
+            "critDamage": 200,
+            "shieldDamageUptime": 1,
+            "voidNeckBoostUptime": 1
+          }
+        },
+        {
+          "index": 1,
+          "label": "heroes",
+          "stats": {
+            "atkHero": 21615,
+            "atkHeroPercent": 125,
+            "critDamage": 80,
+            "critRate": 62,
+            "laceration": 80,
+            "lacerationUptime": 1,
+            "skillDamage": 30,
+            "taloxaBeam": 4.5,
+            "taloxaMaxSync": 400,
+            "taloxaOverload": 45,
+            "taloxaOverloadEff": 75,
+            "taloxaSyncLoss": 8
+          }
+        },
+        {
+          "index": 2,
+          "label": "synergy",
+          "stats": {
+            "atkHero": 4000,
+            "critDamage": 10,
+            "shieldDamage": 5,
+            "skillDamage": 10,
+            "weakened": 5
+          }
+        },
+        {
+          "index": 3,
+          "label": "harmony",
+          "stats": {
+            "critRate": 20
+          }
+        },
+        {
+          "index": 4,
+          "label": "collectibles",
+          "stats": {
+            "critDamage": 225,
+            "critRate": 215
+          }
+        },
+        {
+          "index": 5,
+          "label": "collectibleSets",
+          "stats": {
+            "atkPercent": 118,
+            "critDamage": 45,
+            "laceration": 5,
+            "poisoned": 10,
+            "shieldDamage": 50,
+            "skillDamage": 60,
+            "weakened": 10
+          }
+        },
+        {
+          "index": 6,
+          "label": "customSets",
+          "stats": {}
+        },
+        {
+          "index": 7,
+          "label": "evoTree",
+          "stats": {
+            "atkEquipPercent": 5,
+            "critRate": 8,
+            "skillDamage": 5
+          }
+        },
+        {
+          "index": 8,
+          "label": "turf",
+          "stats": {}
+        },
+        {
+          "index": 9,
+          "label": "pets",
+          "stats": {
+            "critDamage": 20,
+            "critRate": 5,
+            "skillDamage": 5
+          }
+        },
+        {
+          "index": 10,
+          "label": "mounts",
+          "stats": {
+            "mountDamage": 50000
+          }
+        },
+        {
+          "index": 11,
+          "label": "skills",
+          "stats": {
+            "hpBulletBoost": 50
+          }
+        },
+        {
+          "index": 12,
+          "label": "lmeTestaments",
+          "stats": {}
+        },
+        {
+          "index": 13,
+          "label": "eeSkills",
+          "stats": {}
+        }
+      ],
+      "statTraceSnapshots": [
+        {
+          "label": "beforeTech",
+          "stats": {
+            "atkPercent": 118,
+            "critDamage": 580,
+            "critRate": 310,
+            "poisoned": 10,
+            "shieldDamage": 55,
+            "skillDamage": 110
+          }
+        },
+        {
+          "label": "afterTech",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 710,
+            "critRate": 310,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 275,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterCooldown",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 710,
+            "critRate": 310,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 275,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterActiveSkillPostprocess",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 710,
+            "critRate": 310,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 275,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterEquipmentTransmute",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 764,
+            "critRate": 340,
+            "poisoned": 90,
+            "shieldDamage": 326,
+            "skillDamage": 515,
+            "ssMiscPath": 20,
+            "vulnerability": 80
+          }
+        },
+        {
+          "label": "afterEquipmentDynamicSpecials",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 824,
+            "critRate": 340,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 595,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          }
+        },
+        {
+          "label": "afterEvolvePassivesPostprocess",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 824,
+            "critRate": 340,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 595,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          }
+        }
+      ],
+      "statTraceDeltas": [
+        {
+          "label": "beforeTech",
+          "stats": {
+            "atkPercent": 118,
+            "critDamage": 580,
+            "critRate": 310,
+            "poisoned": 10,
+            "shieldDamage": 55,
+            "skillDamage": 110
+          },
+          "delta": {
+            "atkPercent": 118,
+            "critDamage": 580,
+            "critRate": 310,
+            "poisoned": 10,
+            "shieldDamage": 55,
+            "skillDamage": 110
+          }
+        },
+        {
+          "label": "afterTech",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 710,
+            "critRate": 310,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 275,
+            "vulnerability": 45
+          },
+          "delta": {
+            "chilled": 125,
+            "critDamage": 130,
+            "poisoned": 80,
+            "shieldDamage": 135,
+            "skillDamage": 165,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterCooldown",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 710,
+            "critRate": 310,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 275,
+            "vulnerability": 45
+          },
+          "delta": {}
+        },
+        {
+          "label": "afterActiveSkillPostprocess",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 710,
+            "critRate": 310,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 275,
+            "vulnerability": 45
+          },
+          "delta": {}
+        },
+        {
+          "label": "afterEquipmentTransmute",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 764,
+            "critRate": 340,
+            "poisoned": 90,
+            "shieldDamage": 326,
+            "skillDamage": 515,
+            "ssMiscPath": 20,
+            "vulnerability": 80
+          },
+          "delta": {
+            "atkPercent": 180,
+            "chilled": 85,
+            "critDamage": 54,
+            "critRate": 30,
+            "shieldDamage": 136,
+            "skillDamage": 240,
+            "ssMiscPath": 20,
+            "vulnerability": 35
+          }
+        },
+        {
+          "label": "afterEquipmentDynamicSpecials",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 824,
+            "critRate": 340,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 595,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          },
+          "delta": {
+            "critDamage": 60,
+            "shieldDamage": 50,
+            "skillDamage": 80,
+            "ssMiscPath": 140.56
+          }
+        },
+        {
+          "label": "afterEvolvePassivesPostprocess",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 824,
+            "critRate": 340,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 595,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          },
+          "delta": {}
+        }
+      ],
+      "techs": {
+        "Energy Guidance System": {
+          "parts": [
+            "None",
+            "None",
+            "None"
+          ],
+          "resonance": 0,
+          "chip": 0,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Energy Guidance System",
+          "deployed": true,
+          "mode": "Drone Mode",
+          "rarity": "Eternal",
+          "overload": 0
+        },
+        "Antimatter Maintainer": {
+          "parts": [
+            "None",
+            "None",
+            "None"
+          ],
+          "resonance": 0,
+          "chip": 0,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Antimatter Maintainer",
+          "deployed": true,
+          "mode": "Drill Shot Mode",
+          "rarity": "Eternal",
+          "overload": 0
+        },
+        "Quantum Nanobot": {
+          "parts": [
+            "Epic",
+            "Epic",
+            "Epic"
+          ],
+          "resonance": 300,
+          "chip": 9,
+          "target": 0,
+          "targetRich": 300,
+          "tech": "Quantum Nanobot",
+          "deployed": true,
+          "mode": "Soccer Mode",
+          "rarity": "Eternal",
+          "overload": 0
+        },
+        "Phase Driver": {
+          "parts": [
+            "Epic",
+            "None",
+            "None"
+          ],
+          "resonance": 60,
+          "chip": 1,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Phase Driver",
+          "deployed": true,
+          "mode": "Boomerang Mode",
+          "overload": 0
+        },
+        "Exo-radicator": {
+          "parts": [
+            "None",
+            "None",
+            "None"
+          ],
+          "resonance": 0,
+          "chip": 0,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Exo-radicator",
+          "deployed": true,
+          "mode": "Guardian Mode",
+          "overload": 0
+        },
+        "Hi-Gravity Pulser": {
+          "parts": [
+            "Legend",
+            "Epic",
+            "Epic"
+          ],
+          "resonance": 1200,
+          "chip": 30,
+          "target": 1200,
+          "targetRich": 1200,
+          "tech": "Hi-Gravity Pulser",
+          "deployed": true,
+          "mode": "Molotov Mode",
+          "overload": 0
+        }
+      },
+      "nonZeroStats": {
+        "atkEquip": 34538,
+        "atkEquipPercent": 5,
+        "atkHero": 25615,
+        "atkHeroPercent": 125,
+        "atkPercent": 298,
+        "chilled": 210,
+        "chilledUptime": 1,
+        "clarity": 30,
+        "cooldownReduction": 2.130833155763903,
+        "critDamage": 824,
+        "critRate": 340,
+        "eternalMultiplier": 55,
+        "glacialBloodline": 72,
+        "hpBulletBoost": 1.6,
+        "laceration": 110,
+        "lacerationUptime": 1,
+        "mountDamage": 50000,
+        "poisoned": 90,
+        "poisonedUptime": 1,
+        "resonanceMultiplier": 78040.51885725881,
+        "shieldDamage": 376,
+        "shieldDamageUptime": 1,
+        "skillDamage": 595,
+        "ssGlovesLaser": 50,
+        "ssMiscPath": 160.56,
+        "taloxaBeam": 4.5,
+        "taloxaMaxSync": 400,
+        "taloxaOverload": 45,
+        "taloxaOverloadEff": 75,
+        "taloxaSyncLoss": 8,
+        "voidNeckBoostUptime": 1,
+        "vulnerability": 80,
+        "weakened": 160,
+        "weakenedUptime": 1
+      },
+      "ceDamage": {
+        "Drone Mode": 22942.06338,
+        "Drill Shot Mode": 21956.981865,
+        "Soccer Mode": 22670.404760936977,
+        "Boomerang Mode": 0,
+        "Guardian Mode": 0,
+        "Molotov Mode": 10471.068851321837,
+        "ssWeapon": 12215.992136368319,
+        "taloxaOverload": 7354.871999999999,
+        "crimsonBat": 0,
+        "Taloxa": 0,
+        "Joey": 0,
+        "Metalia": 0,
+        "Master Yang": 0,
+        "King": 0,
+        "Common": 0,
+        "xeno": 0,
+        "mount": 33333.33333333333
+      },
+      "passivePools": [
+        0.985,
+        1.015,
+        1.018,
+        2.130833155763903,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1.11604,
+        1.06696,
+        1.012,
+        2.130833155763903,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1.2236122296826644,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "stageFactors": [
+        {
+          "key": "attack",
+          "value": 498000
+        },
+        {
+          "key": "crit",
+          "value": 8.24
+        },
+        {
+          "key": "skillDamage",
+          "value": 6.95
+        },
+        {
+          "key": "vulnerability",
+          "value": 1.8
+        },
+        {
+          "key": "shieldDamage",
+          "value": 4.76
+        },
+        {
+          "key": "statusDamage",
+          "value": 5.6000000000000005
+        },
+        {
+          "key": "clarity",
+          "value": 1.3
+        },
+        {
+          "key": "eternalMultiplier",
+          "value": 1.55
+        },
+        {
+          "key": "glacialBloodline",
+          "value": 1.72
+        },
+        {
+          "key": "lacerationDivineFire",
+          "value": 2.1
+        },
+        {
+          "key": "joeyWeakSpot",
+          "value": 1
+        },
+        {
+          "key": "ssGlovesLaser",
+          "value": 1.5
+        },
+        {
+          "key": "flashriftRip",
+          "value": 1
+        },
+        {
+          "key": "taloxaOverload",
+          "value": 1.45
+        },
+        {
+          "key": "eternalSuitBoost",
+          "value": 1
+        },
+        {
+          "key": "voidNeckBoost",
+          "value": 1
+        },
+        {
+          "key": "voidGlovesInstakill",
+          "value": 1
+        },
+        {
+          "key": "voidBootsBoost",
+          "value": 1
+        },
+        {
+          "key": "chaosBeltBoost",
+          "value": 1
+        },
+        {
+          "key": "hpBulletBoost",
+          "value": 1.6
+        },
+        {
+          "key": "damageDealt",
+          "value": 1
+        },
+        {
+          "key": "adrenaline",
+          "value": 1
+        },
+        {
+          "key": "damageTransmute",
+          "value": 1
+        },
+        {
+          "key": "damageBoss",
+          "value": 1
+        },
+        {
+          "key": "xenoResMultiplier",
+          "value": 1
+        },
+        {
+          "key": "lme1Damage",
+          "value": 1
+        },
+        {
+          "key": "damageFactor",
+          "value": 130944.71632696046
+        },
+        {
+          "key": "damageNormalization",
+          "value": 0.8294066225664021
+        },
+        {
+          "key": "exoBracerCorrection",
+          "value": 1.0186905890903037
+        },
+        {
+          "key": "ammoThrusterCorrection",
+          "value": 1.012992125475227
+        },
+        {
+          "key": "heFuelCorrection",
+          "value": 1.003756796985665
+        },
+        {
+          "key": "energyCubeCorrection",
+          "value": 1.3191587604440966
+        }
+      ]
+    },
+    {
+      "id": "targeted_active_mount_electric_scooter",
+      "expectedMultiplier": 4349867242297721.5,
+      "replayedTopMultiplier": 4349867242297721.5,
+      "tracedMultiplier": 4349867242297721.5,
+      "recomputedStageProduct": 4349867242297721.5,
+      "stageProductRelativeError": 0,
+      "mask": 198677,
+      "calcMode": "damage",
+      "gameMode": "lme1",
+      "expandedConfig": {
+        "meta": {
+          "synergy": true,
+          "synergyLevel": 10,
+          "mainHero": "Taloxa",
+          "harmonyL": "Metalia",
+          "harmonyR": "King",
+          "teamwork": [],
+          "atkBase": 6101.3499999999985,
+          "atkFinal": 100000,
+          "designs": 111376,
+          "maxGear": 230,
+          "gameMode": "lme1",
+          "lmeTestaments": 0,
+          "eeSkills": [
+            -1,
+            -1,
+            -1
+          ],
+          "eeOmnipower": null,
+          "clanLevel": 0
+        },
+        "settings": {
+          "calcMode": "damage",
+          "revives": [
+            40,
+            70,
+            90
+          ],
+          "numberFormat": "group",
+          "experimentalFeatures": ""
+        },
+        "skills": {
+          "Energy Cube": true,
+          "HP Bullet": true,
+          "Exo Bracer": true,
+          "Ammo Thruster": true,
+          "HE Fuel": true,
+          "Drone Mode": true,
+          "Drill Shot Mode": true,
+          "Durian Mode": true,
+          "Molotov": true,
+          "Rocket": true
+        },
+        "techsOptimizer": {
+          "strategy": 1,
+          "speedMode": 2,
+          "reservedLegends": 0,
+          "fodder": 1,
+          "skills": 4,
+          "chips": 40,
+          "overloadable": false,
+          "inputs": {
+            "Eternal": 0,
+            "Legend4": 0,
+            "Legend3": 0,
+            "Legend2": 0,
+            "Legend1": 0,
+            "Legend": 1,
+            "Epic3": 0,
+            "Epic2": 0,
+            "Epic1": 0,
+            "Epic": 6
+          },
+          "modes": [
+            "Drone Mode",
+            "Forcefield Mode",
+            "Drill Shot Mode",
+            "Rocket Mode",
+            "Soccer Mode",
+            "Durian Mode",
+            "Lightning Mode",
+            "Boomerang Mode",
+            "Guardian Mode",
+            "Laser Mode",
+            "Brick Mode",
+            "Molotov Mode"
+          ],
+          "limit": "basic",
+          "modeEntries": {
+            "Drone Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Forcefield Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Drill Shot Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Rocket Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Soccer Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Durian Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Lightning Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Boomerang Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Guardian Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Laser Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Brick Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Molotov Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            }
+          },
+          "skillsMap": {
+            "Drone Mode": "enabled",
+            "Forcefield Mode": "enabled",
+            "Drill Shot Mode": "enabled",
+            "Rocket Mode": "enabled",
+            "Soccer Mode": "enabled",
+            "Durian Mode": "enabled",
+            "Lightning Mode": "enabled",
+            "Boomerang Mode": "enabled",
+            "Guardian Mode": "disabled",
+            "Laser Mode": "enabled",
+            "Brick Mode": "enabled",
+            "Molotov Mode": "enabled",
+            "Molotov": "enabled",
+            "Rocket": "disabled",
+            "Drone": "enabled",
+            "Drill": "enabled"
+          },
+          "expanded": false
+        }
+      },
+      "exportedSkillOrder": [
+        "Energy Cube",
+        "HP Bullet",
+        "Exo Bracer",
+        "Ammo Thruster",
+        "HE Fuel",
+        "Drone Mode",
+        "Forcefield Mode",
+        "Drill Shot Mode",
+        "Rocket Mode",
+        "Soccer Mode",
+        "Durian Mode",
+        "Lightning Mode",
+        "Boomerang Mode",
+        "Guardian Mode",
+        "Laser Mode",
+        "Brick Mode",
+        "Molotov Mode",
+        "Molotov",
+        "Rocket",
+        "Drone",
+        "Drill"
+      ],
+      "enabledSkills": [
+        "Energy Cube",
+        "HP Bullet",
+        "Exo Bracer",
+        "Ammo Thruster",
+        "HE Fuel",
+        "Drone Mode",
+        "Drill Shot Mode",
+        "Soccer Mode",
+        "Molotov Mode"
+      ],
+      "activeResultSkills": [
+        "Energy Cube",
+        "HP Bullet",
+        "Exo Bracer",
+        "Ammo Thruster",
+        "HE Fuel",
+        "Drone Mode",
+        "Drill Shot Mode",
+        "Soccer Mode",
+        "Molotov Mode"
+      ],
+      "damageFactor": 109418.04966029381,
+      "attackMeta": {
+        "atkBase": 6101.3499999999985,
+        "atkFinal": 100000
+      },
+      "baseStats": {
+        "atkEquipPercent": 5,
+        "atkHero": 25615,
+        "atkHeroPercent": 125,
+        "atkPercent": 118,
+        "critDamage": 580,
+        "critRate": 310,
+        "hpBulletBoost": 50,
+        "laceration": 85,
+        "lacerationUptime": 1,
+        "mountDamage": 17710,
+        "poisoned": 10,
+        "shieldDamage": 55,
+        "shieldDamageUptime": 1,
+        "skillDamage": 110,
+        "taloxaBeam": 4.5,
+        "taloxaMaxSync": 400,
+        "taloxaOverload": 45,
+        "taloxaOverloadEff": 75,
+        "taloxaSyncLoss": 8,
+        "voidNeckBoostUptime": 1,
+        "weakened": 15
+      },
+      "baseStatComponents": [
+        {
+          "index": 0,
+          "label": "baseStats",
+          "stats": {
+            "critDamage": 200,
+            "shieldDamageUptime": 1,
+            "voidNeckBoostUptime": 1
+          }
+        },
+        {
+          "index": 1,
+          "label": "heroes",
+          "stats": {
+            "atkHero": 21615,
+            "atkHeroPercent": 125,
+            "critDamage": 80,
+            "critRate": 62,
+            "laceration": 80,
+            "lacerationUptime": 1,
+            "skillDamage": 30,
+            "taloxaBeam": 4.5,
+            "taloxaMaxSync": 400,
+            "taloxaOverload": 45,
+            "taloxaOverloadEff": 75,
+            "taloxaSyncLoss": 8
+          }
+        },
+        {
+          "index": 2,
+          "label": "synergy",
+          "stats": {
+            "atkHero": 4000,
+            "critDamage": 10,
+            "shieldDamage": 5,
+            "skillDamage": 10,
+            "weakened": 5
+          }
+        },
+        {
+          "index": 3,
+          "label": "harmony",
+          "stats": {
+            "critRate": 20
+          }
+        },
+        {
+          "index": 4,
+          "label": "collectibles",
+          "stats": {
+            "critDamage": 225,
+            "critRate": 215
+          }
+        },
+        {
+          "index": 5,
+          "label": "collectibleSets",
+          "stats": {
+            "atkPercent": 118,
+            "critDamage": 45,
+            "laceration": 5,
+            "poisoned": 10,
+            "shieldDamage": 50,
+            "skillDamage": 60,
+            "weakened": 10
+          }
+        },
+        {
+          "index": 6,
+          "label": "customSets",
+          "stats": {}
+        },
+        {
+          "index": 7,
+          "label": "evoTree",
+          "stats": {
+            "atkEquipPercent": 5,
+            "critRate": 8,
+            "skillDamage": 5
+          }
+        },
+        {
+          "index": 8,
+          "label": "turf",
+          "stats": {}
+        },
+        {
+          "index": 9,
+          "label": "pets",
+          "stats": {
+            "critDamage": 20,
+            "critRate": 5,
+            "skillDamage": 5
+          }
+        },
+        {
+          "index": 10,
+          "label": "mounts",
+          "stats": {
+            "mountDamage": 17710
+          }
+        },
+        {
+          "index": 11,
+          "label": "skills",
+          "stats": {
+            "hpBulletBoost": 50
+          }
+        },
+        {
+          "index": 12,
+          "label": "lmeTestaments",
+          "stats": {}
+        },
+        {
+          "index": 13,
+          "label": "eeSkills",
+          "stats": {}
+        }
+      ],
+      "statTraceSnapshots": [
+        {
+          "label": "beforeTech",
+          "stats": {
+            "atkPercent": 118,
+            "critDamage": 580,
+            "critRate": 310,
+            "poisoned": 10,
+            "shieldDamage": 55,
+            "skillDamage": 110
+          }
+        },
+        {
+          "label": "afterTech",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 710,
+            "critRate": 310,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 275,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterCooldown",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 710,
+            "critRate": 310,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 275,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterActiveSkillPostprocess",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 710,
+            "critRate": 310,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 275,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterEquipmentTransmute",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 764,
+            "critRate": 340,
+            "poisoned": 90,
+            "shieldDamage": 326,
+            "skillDamage": 515,
+            "ssMiscPath": 20,
+            "vulnerability": 80
+          }
+        },
+        {
+          "label": "afterEquipmentDynamicSpecials",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 824,
+            "critRate": 340,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 595,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          }
+        },
+        {
+          "label": "afterEvolvePassivesPostprocess",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 824,
+            "critRate": 340,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 595,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          }
+        }
+      ],
+      "statTraceDeltas": [
+        {
+          "label": "beforeTech",
+          "stats": {
+            "atkPercent": 118,
+            "critDamage": 580,
+            "critRate": 310,
+            "poisoned": 10,
+            "shieldDamage": 55,
+            "skillDamage": 110
+          },
+          "delta": {
+            "atkPercent": 118,
+            "critDamage": 580,
+            "critRate": 310,
+            "poisoned": 10,
+            "shieldDamage": 55,
+            "skillDamage": 110
+          }
+        },
+        {
+          "label": "afterTech",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 710,
+            "critRate": 310,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 275,
+            "vulnerability": 45
+          },
+          "delta": {
+            "chilled": 125,
+            "critDamage": 130,
+            "poisoned": 80,
+            "shieldDamage": 135,
+            "skillDamage": 165,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterCooldown",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 710,
+            "critRate": 310,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 275,
+            "vulnerability": 45
+          },
+          "delta": {}
+        },
+        {
+          "label": "afterActiveSkillPostprocess",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 710,
+            "critRate": 310,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 275,
+            "vulnerability": 45
+          },
+          "delta": {}
+        },
+        {
+          "label": "afterEquipmentTransmute",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 764,
+            "critRate": 340,
+            "poisoned": 90,
+            "shieldDamage": 326,
+            "skillDamage": 515,
+            "ssMiscPath": 20,
+            "vulnerability": 80
+          },
+          "delta": {
+            "atkPercent": 180,
+            "chilled": 85,
+            "critDamage": 54,
+            "critRate": 30,
+            "shieldDamage": 136,
+            "skillDamage": 240,
+            "ssMiscPath": 20,
+            "vulnerability": 35
+          }
+        },
+        {
+          "label": "afterEquipmentDynamicSpecials",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 824,
+            "critRate": 340,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 595,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          },
+          "delta": {
+            "critDamage": 60,
+            "shieldDamage": 50,
+            "skillDamage": 80,
+            "ssMiscPath": 140.56
+          }
+        },
+        {
+          "label": "afterEvolvePassivesPostprocess",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 824,
+            "critRate": 340,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 595,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          },
+          "delta": {}
+        }
+      ],
+      "techs": {
+        "Energy Guidance System": {
+          "parts": [
+            "None",
+            "None",
+            "None"
+          ],
+          "resonance": 0,
+          "chip": 0,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Energy Guidance System",
+          "deployed": true,
+          "mode": "Drone Mode",
+          "rarity": "Eternal",
+          "overload": 0
+        },
+        "Antimatter Maintainer": {
+          "parts": [
+            "None",
+            "None",
+            "None"
+          ],
+          "resonance": 0,
+          "chip": 0,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Antimatter Maintainer",
+          "deployed": true,
+          "mode": "Drill Shot Mode",
+          "rarity": "Eternal",
+          "overload": 0
+        },
+        "Quantum Nanobot": {
+          "parts": [
+            "Epic",
+            "Epic",
+            "Epic"
+          ],
+          "resonance": 300,
+          "chip": 9,
+          "target": 0,
+          "targetRich": 300,
+          "tech": "Quantum Nanobot",
+          "deployed": true,
+          "mode": "Soccer Mode",
+          "rarity": "Eternal",
+          "overload": 0
+        },
+        "Phase Driver": {
+          "parts": [
+            "Epic",
+            "None",
+            "None"
+          ],
+          "resonance": 60,
+          "chip": 1,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Phase Driver",
+          "deployed": true,
+          "mode": "Boomerang Mode",
+          "overload": 0
+        },
+        "Exo-radicator": {
+          "parts": [
+            "None",
+            "None",
+            "None"
+          ],
+          "resonance": 0,
+          "chip": 0,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Exo-radicator",
+          "deployed": true,
+          "mode": "Guardian Mode",
+          "overload": 0
+        },
+        "Hi-Gravity Pulser": {
+          "parts": [
+            "Legend",
+            "Epic",
+            "Epic"
+          ],
+          "resonance": 1200,
+          "chip": 30,
+          "target": 1200,
+          "targetRich": 1200,
+          "tech": "Hi-Gravity Pulser",
+          "deployed": true,
+          "mode": "Molotov Mode",
+          "overload": 0
+        }
+      },
+      "nonZeroStats": {
+        "atkEquip": 34538,
+        "atkEquipPercent": 5,
+        "atkHero": 25615,
+        "atkHeroPercent": 125,
+        "atkPercent": 298,
+        "chilled": 210,
+        "chilledUptime": 1,
+        "clarity": 30,
+        "cooldownReduction": 2.130833155763903,
+        "critDamage": 824,
+        "critRate": 340,
+        "eternalMultiplier": 55,
+        "glacialBloodline": 72,
+        "hpBulletBoost": 1.6,
+        "laceration": 110,
+        "lacerationUptime": 1,
+        "mountDamage": 17710,
+        "poisoned": 90,
+        "poisonedUptime": 1,
+        "resonanceMultiplier": 78040.51885725881,
+        "shieldDamage": 376,
+        "shieldDamageUptime": 1,
+        "skillDamage": 595,
+        "ssGlovesLaser": 50,
+        "ssMiscPath": 160.56,
+        "taloxaBeam": 4.5,
+        "taloxaMaxSync": 400,
+        "taloxaOverload": 45,
+        "taloxaOverloadEff": 75,
+        "taloxaSyncLoss": 8,
+        "voidNeckBoostUptime": 1,
+        "vulnerability": 80,
+        "weakened": 160,
+        "weakenedUptime": 1
+      },
+      "ceDamage": {
+        "Drone Mode": 22942.06338,
+        "Drill Shot Mode": 21956.981865,
+        "Soccer Mode": 22670.404760936977,
+        "Boomerang Mode": 0,
+        "Guardian Mode": 0,
+        "Molotov Mode": 10471.068851321837,
+        "ssWeapon": 12215.992136368319,
+        "taloxaOverload": 7354.871999999999,
+        "crimsonBat": 0,
+        "Taloxa": 0,
+        "Joey": 0,
+        "Metalia": 0,
+        "Master Yang": 0,
+        "King": 0,
+        "Common": 0,
+        "xeno": 0,
+        "mount": 11806.666666666666
+      },
+      "passivePools": [
+        0.985,
+        1.015,
+        1.018,
+        2.130833155763903,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1.11604,
+        1.06696,
+        1.012,
+        2.130833155763903,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1.2236122296826644,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "stageFactors": [
+        {
+          "key": "attack",
+          "value": 498000
+        },
+        {
+          "key": "crit",
+          "value": 8.24
+        },
+        {
+          "key": "skillDamage",
+          "value": 6.95
+        },
+        {
+          "key": "vulnerability",
+          "value": 1.8
+        },
+        {
+          "key": "shieldDamage",
+          "value": 4.76
+        },
+        {
+          "key": "statusDamage",
+          "value": 5.6000000000000005
+        },
+        {
+          "key": "clarity",
+          "value": 1.3
+        },
+        {
+          "key": "eternalMultiplier",
+          "value": 1.55
+        },
+        {
+          "key": "glacialBloodline",
+          "value": 1.72
+        },
+        {
+          "key": "lacerationDivineFire",
+          "value": 2.1
+        },
+        {
+          "key": "joeyWeakSpot",
+          "value": 1
+        },
+        {
+          "key": "ssGlovesLaser",
+          "value": 1.5
+        },
+        {
+          "key": "flashriftRip",
+          "value": 1
+        },
+        {
+          "key": "taloxaOverload",
+          "value": 1.45
+        },
+        {
+          "key": "eternalSuitBoost",
+          "value": 1
+        },
+        {
+          "key": "voidNeckBoost",
+          "value": 1
+        },
+        {
+          "key": "voidGlovesInstakill",
+          "value": 1
+        },
+        {
+          "key": "voidBootsBoost",
+          "value": 1
+        },
+        {
+          "key": "chaosBeltBoost",
+          "value": 1
+        },
+        {
+          "key": "hpBulletBoost",
+          "value": 1.6
+        },
+        {
+          "key": "damageDealt",
+          "value": 1
+        },
+        {
+          "key": "adrenaline",
+          "value": 1
+        },
+        {
+          "key": "damageTransmute",
+          "value": 1
+        },
+        {
+          "key": "damageBoss",
+          "value": 1
+        },
+        {
+          "key": "xenoResMultiplier",
+          "value": 1
+        },
+        {
+          "key": "lme1Damage",
+          "value": 1
+        },
+        {
+          "key": "damageFactor",
+          "value": 109418.04966029381
+        },
+        {
+          "key": "damageNormalization",
+          "value": 0.7958444563337266
+        },
+        {
+          "key": "exoBracerCorrection",
+          "value": 1.0223677345192321
+        },
+        {
+          "key": "ammoThrusterCorrection",
+          "value": 1.0155481676937184
+        },
+        {
+          "key": "heFuelCorrection",
+          "value": 1.0044959009698415
+        },
+        {
+          "key": "energyCubeCorrection",
+          "value": 1.3819493536886018
+        }
+      ]
+    },
+    {
+      "id": "targeted_survivor_yelena",
+      "expectedMultiplier": 772398602862798.4,
+      "replayedTopMultiplier": 772398602862798.4,
+      "tracedMultiplier": 772398602862798.4,
+      "recomputedStageProduct": 772398602862798.4,
+      "stageProductRelativeError": 0,
+      "mask": 198677,
+      "calcMode": "damage",
+      "gameMode": "lme1",
+      "expandedConfig": {
+        "meta": {
+          "synergy": true,
+          "synergyLevel": 10,
+          "mainHero": "Yelena",
+          "harmonyL": "Metalia",
+          "harmonyR": "King",
+          "teamwork": [],
+          "atkBase": 6101.3499999999985,
+          "atkFinal": 100000,
+          "designs": 111376,
+          "maxGear": 230,
+          "gameMode": "lme1",
+          "lmeTestaments": 0,
+          "eeSkills": [
+            -1,
+            -1,
+            -1
+          ],
+          "eeOmnipower": null,
+          "clanLevel": 0
+        },
+        "settings": {
+          "calcMode": "damage",
+          "revives": [
+            40,
+            70,
+            90
+          ],
+          "numberFormat": "group",
+          "experimentalFeatures": ""
+        },
+        "skills": {
+          "Energy Cube": true,
+          "HP Bullet": true,
+          "Exo Bracer": true,
+          "Ammo Thruster": true,
+          "HE Fuel": true,
+          "Drone Mode": true,
+          "Drill Shot Mode": true,
+          "Durian Mode": true,
+          "Molotov": true,
+          "Rocket": true
+        },
+        "techsOptimizer": {
+          "strategy": 1,
+          "speedMode": 2,
+          "reservedLegends": 0,
+          "fodder": 1,
+          "skills": 4,
+          "chips": 40,
+          "overloadable": false,
+          "inputs": {
+            "Eternal": 0,
+            "Legend4": 0,
+            "Legend3": 0,
+            "Legend2": 0,
+            "Legend1": 0,
+            "Legend": 1,
+            "Epic3": 0,
+            "Epic2": 0,
+            "Epic1": 0,
+            "Epic": 6
+          },
+          "modes": [
+            "Drone Mode",
+            "Forcefield Mode",
+            "Drill Shot Mode",
+            "Rocket Mode",
+            "Soccer Mode",
+            "Durian Mode",
+            "Lightning Mode",
+            "Boomerang Mode",
+            "Guardian Mode",
+            "Laser Mode",
+            "Brick Mode",
+            "Molotov Mode"
+          ],
+          "limit": "basic",
+          "modeEntries": {
+            "Drone Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Forcefield Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Drill Shot Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Rocket Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Soccer Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Durian Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Lightning Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Boomerang Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Guardian Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Laser Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Brick Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Molotov Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            }
+          },
+          "skillsMap": {
+            "Drone Mode": "enabled",
+            "Forcefield Mode": "enabled",
+            "Drill Shot Mode": "enabled",
+            "Rocket Mode": "enabled",
+            "Soccer Mode": "enabled",
+            "Durian Mode": "enabled",
+            "Lightning Mode": "enabled",
+            "Boomerang Mode": "enabled",
+            "Guardian Mode": "disabled",
+            "Laser Mode": "enabled",
+            "Brick Mode": "enabled",
+            "Molotov Mode": "enabled",
+            "Molotov": "enabled",
+            "Rocket": "disabled",
+            "Drone": "enabled",
+            "Drill": "enabled"
+          },
+          "expanded": false
+        }
+      },
+      "exportedSkillOrder": [
+        "Energy Cube",
+        "HP Bullet",
+        "Exo Bracer",
+        "Ammo Thruster",
+        "HE Fuel",
+        "Drone Mode",
+        "Forcefield Mode",
+        "Drill Shot Mode",
+        "Rocket Mode",
+        "Soccer Mode",
+        "Durian Mode",
+        "Lightning Mode",
+        "Boomerang Mode",
+        "Guardian Mode",
+        "Laser Mode",
+        "Brick Mode",
+        "Molotov Mode",
+        "Molotov",
+        "Rocket",
+        "Drone",
+        "Drill"
+      ],
+      "enabledSkills": [
+        "Energy Cube",
+        "HP Bullet",
+        "Exo Bracer",
+        "Ammo Thruster",
+        "HE Fuel",
+        "Drone Mode",
+        "Drill Shot Mode",
+        "Soccer Mode",
+        "Molotov Mode"
+      ],
+      "activeResultSkills": [
+        "Energy Cube",
+        "HP Bullet",
+        "Exo Bracer",
+        "Ammo Thruster",
+        "HE Fuel",
+        "Drone Mode",
+        "Drill Shot Mode",
+        "Soccer Mode",
+        "Molotov Mode"
+      ],
+      "damageFactor": 90256.51099362713,
+      "attackMeta": {
+        "atkBase": 6101.3499999999985,
+        "atkFinal": 100000
+      },
+      "baseStats": {
+        "atkEquipPercent": 5,
+        "atkHero": 4000,
+        "atkHeroPercent": 5,
+        "atkPercent": 118,
+        "critDamage": 500,
+        "critRate": 238,
+        "hpBulletBoost": 50,
+        "laceration": 5,
+        "poisoned": 10,
+        "shieldDamage": 55,
+        "shieldDamageUptime": 1,
+        "skillDamage": 80,
+        "voidNeckBoostUptime": 1,
+        "weakened": 15
+      },
+      "baseStatComponents": [
+        {
+          "index": 0,
+          "label": "baseStats",
+          "stats": {
+            "critDamage": 200,
+            "shieldDamageUptime": 1,
+            "voidNeckBoostUptime": 1
+          }
+        },
+        {
+          "index": 1,
+          "label": "heroes",
+          "stats": {
+            "atkHeroPercent": 5
+          }
+        },
+        {
+          "index": 2,
+          "label": "synergy",
+          "stats": {
+            "atkHero": 4000,
+            "critDamage": 10,
+            "shieldDamage": 5,
+            "skillDamage": 10,
+            "weakened": 5
+          }
+        },
+        {
+          "index": 3,
+          "label": "harmony",
+          "stats": {
+            "critRate": 10
+          }
+        },
+        {
+          "index": 4,
+          "label": "collectibles",
+          "stats": {
+            "critDamage": 225,
+            "critRate": 215
+          }
+        },
+        {
+          "index": 5,
+          "label": "collectibleSets",
+          "stats": {
+            "atkPercent": 118,
+            "critDamage": 45,
+            "laceration": 5,
+            "poisoned": 10,
+            "shieldDamage": 50,
+            "skillDamage": 60,
+            "weakened": 10
+          }
+        },
+        {
+          "index": 6,
+          "label": "customSets",
+          "stats": {}
+        },
+        {
+          "index": 7,
+          "label": "evoTree",
+          "stats": {
+            "atkEquipPercent": 5,
+            "critRate": 8,
+            "skillDamage": 5
+          }
+        },
+        {
+          "index": 8,
+          "label": "turf",
+          "stats": {}
+        },
+        {
+          "index": 9,
+          "label": "pets",
+          "stats": {
+            "critDamage": 20,
+            "critRate": 5,
+            "skillDamage": 5
+          }
+        },
+        {
+          "index": 10,
+          "label": "mounts",
+          "stats": {}
+        },
+        {
+          "index": 11,
+          "label": "skills",
+          "stats": {
+            "hpBulletBoost": 50
+          }
+        },
+        {
+          "index": 12,
+          "label": "lmeTestaments",
+          "stats": {}
+        },
+        {
+          "index": 13,
+          "label": "eeSkills",
+          "stats": {}
+        }
+      ],
+      "statTraceSnapshots": [
+        {
+          "label": "beforeTech",
+          "stats": {
+            "atkPercent": 118,
+            "critDamage": 500,
+            "critRate": 238,
+            "poisoned": 10,
+            "shieldDamage": 55,
+            "skillDamage": 80
+          }
+        },
+        {
+          "label": "afterTech",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 710,
+            "critRate": 238,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 245,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterCooldown",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 710,
+            "critRate": 238,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 245,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterActiveSkillPostprocess",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 710,
+            "critRate": 238,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 245,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterEquipmentTransmute",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 764,
+            "critRate": 268,
+            "poisoned": 90,
+            "shieldDamage": 326,
+            "skillDamage": 485,
+            "ssMiscPath": 20,
+            "vulnerability": 80
+          }
+        },
+        {
+          "label": "afterEquipmentDynamicSpecials",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 824,
+            "critRate": 268,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 565,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          }
+        },
+        {
+          "label": "afterEvolvePassivesPostprocess",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 824,
+            "critRate": 268,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 565,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          }
+        }
+      ],
+      "statTraceDeltas": [
+        {
+          "label": "beforeTech",
+          "stats": {
+            "atkPercent": 118,
+            "critDamage": 500,
+            "critRate": 238,
+            "poisoned": 10,
+            "shieldDamage": 55,
+            "skillDamage": 80
+          },
+          "delta": {
+            "atkPercent": 118,
+            "critDamage": 500,
+            "critRate": 238,
+            "poisoned": 10,
+            "shieldDamage": 55,
+            "skillDamage": 80
+          }
+        },
+        {
+          "label": "afterTech",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 710,
+            "critRate": 238,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 245,
+            "vulnerability": 45
+          },
+          "delta": {
+            "chilled": 125,
+            "critDamage": 210,
+            "poisoned": 80,
+            "shieldDamage": 135,
+            "skillDamage": 165,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterCooldown",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 710,
+            "critRate": 238,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 245,
+            "vulnerability": 45
+          },
+          "delta": {}
+        },
+        {
+          "label": "afterActiveSkillPostprocess",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 710,
+            "critRate": 238,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 245,
+            "vulnerability": 45
+          },
+          "delta": {}
+        },
+        {
+          "label": "afterEquipmentTransmute",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 764,
+            "critRate": 268,
+            "poisoned": 90,
+            "shieldDamage": 326,
+            "skillDamage": 485,
+            "ssMiscPath": 20,
+            "vulnerability": 80
+          },
+          "delta": {
+            "atkPercent": 180,
+            "chilled": 85,
+            "critDamage": 54,
+            "critRate": 30,
+            "shieldDamage": 136,
+            "skillDamage": 240,
+            "ssMiscPath": 20,
+            "vulnerability": 35
+          }
+        },
+        {
+          "label": "afterEquipmentDynamicSpecials",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 824,
+            "critRate": 268,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 565,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          },
+          "delta": {
+            "critDamage": 60,
+            "shieldDamage": 50,
+            "skillDamage": 80,
+            "ssMiscPath": 140.56
+          }
+        },
+        {
+          "label": "afterEvolvePassivesPostprocess",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 824,
+            "critRate": 268,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 565,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          },
+          "delta": {}
+        }
+      ],
+      "techs": {
+        "Energy Guidance System": {
+          "parts": [
+            "None",
+            "None",
+            "None"
+          ],
+          "resonance": 0,
+          "chip": 0,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Energy Guidance System",
+          "deployed": true,
+          "mode": "Drone Mode",
+          "rarity": "Eternal",
+          "overload": 0
+        },
+        "Antimatter Maintainer": {
+          "parts": [
+            "None",
+            "None",
+            "None"
+          ],
+          "resonance": 0,
+          "chip": 0,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Antimatter Maintainer",
+          "deployed": true,
+          "mode": "Drill Shot Mode",
+          "rarity": "Eternal",
+          "overload": 0
+        },
+        "Quantum Nanobot": {
+          "parts": [
+            "Epic",
+            "Epic",
+            "Epic"
+          ],
+          "resonance": 300,
+          "chip": 9,
+          "target": 0,
+          "targetRich": 300,
+          "tech": "Quantum Nanobot",
+          "deployed": true,
+          "mode": "Soccer Mode",
+          "rarity": "Eternal",
+          "overload": 0
+        },
+        "Phase Driver": {
+          "parts": [
+            "Epic",
+            "None",
+            "None"
+          ],
+          "resonance": 60,
+          "chip": 1,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Phase Driver",
+          "deployed": true,
+          "mode": "Lightning Mode",
+          "overload": 0
+        },
+        "Exo-radicator": {
+          "parts": [
+            "None",
+            "None",
+            "None"
+          ],
+          "resonance": 0,
+          "chip": 0,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Exo-radicator",
+          "deployed": true,
+          "mode": "Guardian Mode",
+          "overload": 0
+        },
+        "Hi-Gravity Pulser": {
+          "parts": [
+            "Legend",
+            "Epic",
+            "Epic"
+          ],
+          "resonance": 1200,
+          "chip": 30,
+          "target": 1200,
+          "targetRich": 1200,
+          "tech": "Hi-Gravity Pulser",
+          "deployed": true,
+          "mode": "Molotov Mode",
+          "overload": 0
+        }
+      },
+      "nonZeroStats": {
+        "atkEquip": 34538,
+        "atkEquipPercent": 5,
+        "atkHero": 4000,
+        "atkHeroPercent": 5,
+        "atkPercent": 298,
+        "chilled": 210,
+        "chilledUptime": 1,
+        "clarity": 30,
+        "cooldownReduction": 2.130833155763903,
+        "critDamage": 824,
+        "critRate": 268,
+        "eternalMultiplier": 55,
+        "glacialBloodline": 72,
+        "hpBulletBoost": 1.6,
+        "laceration": 30,
+        "lacerationUptime": 1,
+        "poisoned": 90,
+        "poisonedUptime": 1,
+        "resonanceMultiplier": 78040.51885725881,
+        "shieldDamage": 376,
+        "shieldDamageUptime": 1,
+        "skillDamage": 565,
+        "ssGlovesLaser": 50,
+        "ssMiscPath": 160.56,
+        "voidNeckBoostUptime": 1,
+        "vulnerability": 80,
+        "weakened": 110,
+        "weakenedUptime": 1
+      },
+      "ceDamage": {
+        "Drone Mode": 22942.06338,
+        "Drill Shot Mode": 21956.981865,
+        "Soccer Mode": 22670.404760936977,
+        "Lightning Mode": 0,
+        "Guardian Mode": 0,
+        "Molotov Mode": 10471.068851321837,
+        "ssWeapon": 12215.992136368319,
+        "taloxaOverload": 0,
+        "crimsonBat": 0,
+        "Taloxa": 0,
+        "Joey": 0,
+        "Metalia": 0,
+        "Master Yang": 0,
+        "King": 0,
+        "Common": 0,
+        "xeno": 0,
+        "mount": 0
+      },
+      "passivePools": [
+        0.985,
+        1.015,
+        1.018,
+        2.130833155763903,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1.11604,
+        1.06696,
+        1.012,
+        2.130833155763903,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1.2236122296826644,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "stageFactors": [
+        {
+          "key": "attack",
+          "value": 285333.675
+        },
+        {
+          "key": "crit",
+          "value": 8.24
+        },
+        {
+          "key": "skillDamage",
+          "value": 6.65
+        },
+        {
+          "key": "vulnerability",
+          "value": 1.8
+        },
+        {
+          "key": "shieldDamage",
+          "value": 4.76
+        },
+        {
+          "key": "statusDamage",
+          "value": 5.1000000000000005
+        },
+        {
+          "key": "clarity",
+          "value": 1.3
+        },
+        {
+          "key": "eternalMultiplier",
+          "value": 1.55
+        },
+        {
+          "key": "glacialBloodline",
+          "value": 1.72
+        },
+        {
+          "key": "lacerationDivineFire",
+          "value": 1.3
+        },
+        {
+          "key": "joeyWeakSpot",
+          "value": 1
+        },
+        {
+          "key": "ssGlovesLaser",
+          "value": 1.5
+        },
+        {
+          "key": "flashriftRip",
+          "value": 1
+        },
+        {
+          "key": "taloxaOverload",
+          "value": 1
+        },
+        {
+          "key": "eternalSuitBoost",
+          "value": 1
+        },
+        {
+          "key": "voidNeckBoost",
+          "value": 1
+        },
+        {
+          "key": "voidGlovesInstakill",
+          "value": 1
+        },
+        {
+          "key": "voidBootsBoost",
+          "value": 1
+        },
+        {
+          "key": "chaosBeltBoost",
+          "value": 1
+        },
+        {
+          "key": "hpBulletBoost",
+          "value": 1.6
+        },
+        {
+          "key": "damageDealt",
+          "value": 1
+        },
+        {
+          "key": "adrenaline",
+          "value": 1
+        },
+        {
+          "key": "damageTransmute",
+          "value": 1
+        },
+        {
+          "key": "damageBoss",
+          "value": 1
+        },
+        {
+          "key": "xenoResMultiplier",
+          "value": 1
+        },
+        {
+          "key": "lme1Damage",
+          "value": 1
+        },
+        {
+          "key": "damageFactor",
+          "value": 90256.51099362713
+        },
+        {
+          "key": "damageNormalization",
+          "value": 0.7525020503298886
+        },
+        {
+          "key": "exoBracerCorrection",
+          "value": 1.0271164247262605
+        },
+        {
+          "key": "ammoThrusterCorrection",
+          "value": 1.018849057714606
+        },
+        {
+          "key": "heFuelCorrection",
+          "value": 1.0054503847996141
+        },
+        {
+          "key": "energyCubeCorrection",
+          "value": 1.4630375458737535
+        }
+      ]
+    },
+    {
+      "id": "targeted_survivor_squidward",
+      "expectedMultiplier": 776651917980889.6,
+      "replayedTopMultiplier": 776651917980889.6,
+      "tracedMultiplier": 776651917980889.6,
+      "recomputedStageProduct": 776651917980889.6,
+      "stageProductRelativeError": 0,
+      "mask": 198677,
+      "calcMode": "damage",
+      "gameMode": "lme1",
+      "expandedConfig": {
+        "meta": {
+          "synergy": true,
+          "synergyLevel": 10,
+          "mainHero": "Squidward",
+          "harmonyL": "Metalia",
+          "harmonyR": "King",
+          "teamwork": [],
+          "atkBase": 6101.3499999999985,
+          "atkFinal": 100000,
+          "designs": 111376,
+          "maxGear": 230,
+          "gameMode": "lme1",
+          "lmeTestaments": 0,
+          "eeSkills": [
+            -1,
+            -1,
+            -1
+          ],
+          "eeOmnipower": null,
+          "clanLevel": 0
+        },
+        "settings": {
+          "calcMode": "damage",
+          "revives": [
+            40,
+            70,
+            90
+          ],
+          "numberFormat": "group",
+          "experimentalFeatures": ""
+        },
+        "skills": {
+          "Energy Cube": true,
+          "HP Bullet": true,
+          "Exo Bracer": true,
+          "Ammo Thruster": true,
+          "HE Fuel": true,
+          "Drone Mode": true,
+          "Drill Shot Mode": true,
+          "Durian Mode": true,
+          "Molotov": true,
+          "Rocket": true
+        },
+        "techsOptimizer": {
+          "strategy": 1,
+          "speedMode": 2,
+          "reservedLegends": 0,
+          "fodder": 1,
+          "skills": 4,
+          "chips": 40,
+          "overloadable": false,
+          "inputs": {
+            "Eternal": 0,
+            "Legend4": 0,
+            "Legend3": 0,
+            "Legend2": 0,
+            "Legend1": 0,
+            "Legend": 1,
+            "Epic3": 0,
+            "Epic2": 0,
+            "Epic1": 0,
+            "Epic": 6
+          },
+          "modes": [
+            "Drone Mode",
+            "Forcefield Mode",
+            "Drill Shot Mode",
+            "Rocket Mode",
+            "Soccer Mode",
+            "Durian Mode",
+            "Lightning Mode",
+            "Boomerang Mode",
+            "Guardian Mode",
+            "Laser Mode",
+            "Brick Mode",
+            "Molotov Mode"
+          ],
+          "limit": "basic",
+          "modeEntries": {
+            "Drone Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Forcefield Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Drill Shot Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Rocket Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Soccer Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Durian Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Lightning Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Boomerang Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Guardian Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Laser Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Brick Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Molotov Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            }
+          },
+          "skillsMap": {
+            "Drone Mode": "enabled",
+            "Forcefield Mode": "enabled",
+            "Drill Shot Mode": "enabled",
+            "Rocket Mode": "enabled",
+            "Soccer Mode": "enabled",
+            "Durian Mode": "enabled",
+            "Lightning Mode": "enabled",
+            "Boomerang Mode": "enabled",
+            "Guardian Mode": "disabled",
+            "Laser Mode": "enabled",
+            "Brick Mode": "enabled",
+            "Molotov Mode": "enabled",
+            "Molotov": "enabled",
+            "Rocket": "disabled",
+            "Drone": "enabled",
+            "Drill": "enabled"
+          },
+          "expanded": false
+        }
+      },
+      "exportedSkillOrder": [
+        "Energy Cube",
+        "HP Bullet",
+        "Exo Bracer",
+        "Ammo Thruster",
+        "HE Fuel",
+        "Drone Mode",
+        "Forcefield Mode",
+        "Drill Shot Mode",
+        "Rocket Mode",
+        "Soccer Mode",
+        "Durian Mode",
+        "Lightning Mode",
+        "Boomerang Mode",
+        "Guardian Mode",
+        "Laser Mode",
+        "Brick Mode",
+        "Molotov Mode",
+        "Molotov",
+        "Rocket",
+        "Drone",
+        "Drill"
+      ],
+      "enabledSkills": [
+        "Energy Cube",
+        "HP Bullet",
+        "Exo Bracer",
+        "Ammo Thruster",
+        "HE Fuel",
+        "Drone Mode",
+        "Drill Shot Mode",
+        "Soccer Mode",
+        "Molotov Mode"
+      ],
+      "activeResultSkills": [
+        "Energy Cube",
+        "HP Bullet",
+        "Exo Bracer",
+        "Ammo Thruster",
+        "HE Fuel",
+        "Drone Mode",
+        "Drill Shot Mode",
+        "Soccer Mode",
+        "Molotov Mode"
+      ],
+      "damageFactor": 90256.51099362713,
+      "attackMeta": {
+        "atkBase": 6101.3499999999985,
+        "atkFinal": 100000
+      },
+      "baseStats": {
+        "atkEquipPercent": 5,
+        "atkHero": 4000,
+        "atkHeroPercent": 4,
+        "atkPercent": 118,
+        "critDamage": 505,
+        "critRate": 243,
+        "hpBulletBoost": 50,
+        "laceration": 5,
+        "poisoned": 10,
+        "shieldDamage": 55,
+        "shieldDamageUptime": 1,
+        "skillDamage": 80,
+        "voidNeckBoostUptime": 1,
+        "weakened": 15
+      },
+      "baseStatComponents": [
+        {
+          "index": 0,
+          "label": "baseStats",
+          "stats": {
+            "critDamage": 200,
+            "shieldDamageUptime": 1,
+            "voidNeckBoostUptime": 1
+          }
+        },
+        {
+          "index": 1,
+          "label": "heroes",
+          "stats": {
+            "atkHeroPercent": 4,
+            "critDamage": 5,
+            "critRate": 5
+          }
+        },
+        {
+          "index": 2,
+          "label": "synergy",
+          "stats": {
+            "atkHero": 4000,
+            "critDamage": 10,
+            "shieldDamage": 5,
+            "skillDamage": 10,
+            "weakened": 5
+          }
+        },
+        {
+          "index": 3,
+          "label": "harmony",
+          "stats": {
+            "critRate": 10
+          }
+        },
+        {
+          "index": 4,
+          "label": "collectibles",
+          "stats": {
+            "critDamage": 225,
+            "critRate": 215
+          }
+        },
+        {
+          "index": 5,
+          "label": "collectibleSets",
+          "stats": {
+            "atkPercent": 118,
+            "critDamage": 45,
+            "laceration": 5,
+            "poisoned": 10,
+            "shieldDamage": 50,
+            "skillDamage": 60,
+            "weakened": 10
+          }
+        },
+        {
+          "index": 6,
+          "label": "customSets",
+          "stats": {}
+        },
+        {
+          "index": 7,
+          "label": "evoTree",
+          "stats": {
+            "atkEquipPercent": 5,
+            "critRate": 8,
+            "skillDamage": 5
+          }
+        },
+        {
+          "index": 8,
+          "label": "turf",
+          "stats": {}
+        },
+        {
+          "index": 9,
+          "label": "pets",
+          "stats": {
+            "critDamage": 20,
+            "critRate": 5,
+            "skillDamage": 5
+          }
+        },
+        {
+          "index": 10,
+          "label": "mounts",
+          "stats": {}
+        },
+        {
+          "index": 11,
+          "label": "skills",
+          "stats": {
+            "hpBulletBoost": 50
+          }
+        },
+        {
+          "index": 12,
+          "label": "lmeTestaments",
+          "stats": {}
+        },
+        {
+          "index": 13,
+          "label": "eeSkills",
+          "stats": {}
+        }
+      ],
+      "statTraceSnapshots": [
+        {
+          "label": "beforeTech",
+          "stats": {
+            "atkPercent": 118,
+            "critDamage": 505,
+            "critRate": 243,
+            "poisoned": 10,
+            "shieldDamage": 55,
+            "skillDamage": 80
+          }
+        },
+        {
+          "label": "afterTech",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 715,
+            "critRate": 243,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 245,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterCooldown",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 715,
+            "critRate": 243,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 245,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterActiveSkillPostprocess",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 715,
+            "critRate": 243,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 245,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterEquipmentTransmute",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 769,
+            "critRate": 273,
+            "poisoned": 90,
+            "shieldDamage": 326,
+            "skillDamage": 485,
+            "ssMiscPath": 20,
+            "vulnerability": 80
+          }
+        },
+        {
+          "label": "afterEquipmentDynamicSpecials",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 829,
+            "critRate": 273,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 565,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          }
+        },
+        {
+          "label": "afterEvolvePassivesPostprocess",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 829,
+            "critRate": 273,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 565,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          }
+        }
+      ],
+      "statTraceDeltas": [
+        {
+          "label": "beforeTech",
+          "stats": {
+            "atkPercent": 118,
+            "critDamage": 505,
+            "critRate": 243,
+            "poisoned": 10,
+            "shieldDamage": 55,
+            "skillDamage": 80
+          },
+          "delta": {
+            "atkPercent": 118,
+            "critDamage": 505,
+            "critRate": 243,
+            "poisoned": 10,
+            "shieldDamage": 55,
+            "skillDamage": 80
+          }
+        },
+        {
+          "label": "afterTech",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 715,
+            "critRate": 243,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 245,
+            "vulnerability": 45
+          },
+          "delta": {
+            "chilled": 125,
+            "critDamage": 210,
+            "poisoned": 80,
+            "shieldDamage": 135,
+            "skillDamage": 165,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterCooldown",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 715,
+            "critRate": 243,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 245,
+            "vulnerability": 45
+          },
+          "delta": {}
+        },
+        {
+          "label": "afterActiveSkillPostprocess",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 715,
+            "critRate": 243,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 245,
+            "vulnerability": 45
+          },
+          "delta": {}
+        },
+        {
+          "label": "afterEquipmentTransmute",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 769,
+            "critRate": 273,
+            "poisoned": 90,
+            "shieldDamage": 326,
+            "skillDamage": 485,
+            "ssMiscPath": 20,
+            "vulnerability": 80
+          },
+          "delta": {
+            "atkPercent": 180,
+            "chilled": 85,
+            "critDamage": 54,
+            "critRate": 30,
+            "shieldDamage": 136,
+            "skillDamage": 240,
+            "ssMiscPath": 20,
+            "vulnerability": 35
+          }
+        },
+        {
+          "label": "afterEquipmentDynamicSpecials",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 829,
+            "critRate": 273,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 565,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          },
+          "delta": {
+            "critDamage": 60,
+            "shieldDamage": 50,
+            "skillDamage": 80,
+            "ssMiscPath": 140.56
+          }
+        },
+        {
+          "label": "afterEvolvePassivesPostprocess",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 829,
+            "critRate": 273,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 565,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          },
+          "delta": {}
+        }
+      ],
+      "techs": {
+        "Energy Guidance System": {
+          "parts": [
+            "None",
+            "None",
+            "None"
+          ],
+          "resonance": 0,
+          "chip": 0,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Energy Guidance System",
+          "deployed": true,
+          "mode": "Drone Mode",
+          "rarity": "Eternal",
+          "overload": 0
+        },
+        "Antimatter Maintainer": {
+          "parts": [
+            "None",
+            "None",
+            "None"
+          ],
+          "resonance": 0,
+          "chip": 0,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Antimatter Maintainer",
+          "deployed": true,
+          "mode": "Drill Shot Mode",
+          "rarity": "Eternal",
+          "overload": 0
+        },
+        "Quantum Nanobot": {
+          "parts": [
+            "Epic",
+            "Epic",
+            "Epic"
+          ],
+          "resonance": 300,
+          "chip": 9,
+          "target": 0,
+          "targetRich": 300,
+          "tech": "Quantum Nanobot",
+          "deployed": true,
+          "mode": "Soccer Mode",
+          "rarity": "Eternal",
+          "overload": 0
+        },
+        "Phase Driver": {
+          "parts": [
+            "Epic",
+            "None",
+            "None"
+          ],
+          "resonance": 60,
+          "chip": 1,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Phase Driver",
+          "deployed": true,
+          "mode": "Lightning Mode",
+          "overload": 0
+        },
+        "Exo-radicator": {
+          "parts": [
+            "None",
+            "None",
+            "None"
+          ],
+          "resonance": 0,
+          "chip": 0,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Exo-radicator",
+          "deployed": true,
+          "mode": "Guardian Mode",
+          "overload": 0
+        },
+        "Hi-Gravity Pulser": {
+          "parts": [
+            "Legend",
+            "Epic",
+            "Epic"
+          ],
+          "resonance": 1200,
+          "chip": 30,
+          "target": 1200,
+          "targetRich": 1200,
+          "tech": "Hi-Gravity Pulser",
+          "deployed": true,
+          "mode": "Molotov Mode",
+          "overload": 0
+        }
+      },
+      "nonZeroStats": {
+        "atkEquip": 34538,
+        "atkEquipPercent": 5,
+        "atkHero": 4000,
+        "atkHeroPercent": 4,
+        "atkPercent": 298,
+        "chilled": 210,
+        "chilledUptime": 1,
+        "clarity": 30,
+        "cooldownReduction": 2.130833155763903,
+        "critDamage": 829,
+        "critRate": 273,
+        "eternalMultiplier": 55,
+        "glacialBloodline": 72,
+        "hpBulletBoost": 1.6,
+        "laceration": 30,
+        "lacerationUptime": 1,
+        "poisoned": 90,
+        "poisonedUptime": 1,
+        "resonanceMultiplier": 78040.51885725881,
+        "shieldDamage": 376,
+        "shieldDamageUptime": 1,
+        "skillDamage": 565,
+        "ssGlovesLaser": 50,
+        "ssMiscPath": 160.56,
+        "voidNeckBoostUptime": 1,
+        "vulnerability": 80,
+        "weakened": 110,
+        "weakenedUptime": 1
+      },
+      "ceDamage": {
+        "Drone Mode": 22942.06338,
+        "Drill Shot Mode": 21956.981865,
+        "Soccer Mode": 22670.404760936977,
+        "Lightning Mode": 0,
+        "Guardian Mode": 0,
+        "Molotov Mode": 10471.068851321837,
+        "ssWeapon": 12215.992136368319,
+        "taloxaOverload": 0,
+        "crimsonBat": 0,
+        "Taloxa": 0,
+        "Joey": 0,
+        "Metalia": 0,
+        "Master Yang": 0,
+        "King": 0,
+        "Common": 0,
+        "xeno": 0,
+        "mount": 0
+      },
+      "passivePools": [
+        0.985,
+        1.015,
+        1.018,
+        2.130833155763903,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1.11604,
+        1.06696,
+        1.012,
+        2.130833155763903,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1.2236122296826644,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "stageFactors": [
+        {
+          "key": "attack",
+          "value": 285174.475
+        },
+        {
+          "key": "crit",
+          "value": 8.29
+        },
+        {
+          "key": "skillDamage",
+          "value": 6.65
+        },
+        {
+          "key": "vulnerability",
+          "value": 1.8
+        },
+        {
+          "key": "shieldDamage",
+          "value": 4.76
+        },
+        {
+          "key": "statusDamage",
+          "value": 5.1000000000000005
+        },
+        {
+          "key": "clarity",
+          "value": 1.3
+        },
+        {
+          "key": "eternalMultiplier",
+          "value": 1.55
+        },
+        {
+          "key": "glacialBloodline",
+          "value": 1.72
+        },
+        {
+          "key": "lacerationDivineFire",
+          "value": 1.3
+        },
+        {
+          "key": "joeyWeakSpot",
+          "value": 1
+        },
+        {
+          "key": "ssGlovesLaser",
+          "value": 1.5
+        },
+        {
+          "key": "flashriftRip",
+          "value": 1
+        },
+        {
+          "key": "taloxaOverload",
+          "value": 1
+        },
+        {
+          "key": "eternalSuitBoost",
+          "value": 1
+        },
+        {
+          "key": "voidNeckBoost",
+          "value": 1
+        },
+        {
+          "key": "voidGlovesInstakill",
+          "value": 1
+        },
+        {
+          "key": "voidBootsBoost",
+          "value": 1
+        },
+        {
+          "key": "chaosBeltBoost",
+          "value": 1
+        },
+        {
+          "key": "hpBulletBoost",
+          "value": 1.6
+        },
+        {
+          "key": "damageDealt",
+          "value": 1
+        },
+        {
+          "key": "adrenaline",
+          "value": 1
+        },
+        {
+          "key": "damageTransmute",
+          "value": 1
+        },
+        {
+          "key": "damageBoss",
+          "value": 1
+        },
+        {
+          "key": "xenoResMultiplier",
+          "value": 1
+        },
+        {
+          "key": "lme1Damage",
+          "value": 1
+        },
+        {
+          "key": "damageFactor",
+          "value": 90256.51099362713
+        },
+        {
+          "key": "damageNormalization",
+          "value": 0.7525020503298886
+        },
+        {
+          "key": "exoBracerCorrection",
+          "value": 1.0271164247262605
+        },
+        {
+          "key": "ammoThrusterCorrection",
+          "value": 1.018849057714606
+        },
+        {
+          "key": "heFuelCorrection",
+          "value": 1.0054503847996141
+        },
+        {
+          "key": "energyCubeCorrection",
+          "value": 1.4630375458737535
+        }
+      ]
+    },
+    {
+      "id": "targeted_survivor_spongebob",
+      "expectedMultiplier": 776651917980889.6,
+      "replayedTopMultiplier": 776651917980889.6,
+      "tracedMultiplier": 776651917980889.6,
+      "recomputedStageProduct": 776651917980889.6,
+      "stageProductRelativeError": 0,
+      "mask": 198677,
+      "calcMode": "damage",
+      "gameMode": "lme1",
+      "expandedConfig": {
+        "meta": {
+          "synergy": true,
+          "synergyLevel": 10,
+          "mainHero": "Spongebob",
+          "harmonyL": "Metalia",
+          "harmonyR": "King",
+          "teamwork": [],
+          "atkBase": 6101.3499999999985,
+          "atkFinal": 100000,
+          "designs": 111376,
+          "maxGear": 230,
+          "gameMode": "lme1",
+          "lmeTestaments": 0,
+          "eeSkills": [
+            -1,
+            -1,
+            -1
+          ],
+          "eeOmnipower": null,
+          "clanLevel": 0
+        },
+        "settings": {
+          "calcMode": "damage",
+          "revives": [
+            40,
+            70,
+            90
+          ],
+          "numberFormat": "group",
+          "experimentalFeatures": ""
+        },
+        "skills": {
+          "Energy Cube": true,
+          "HP Bullet": true,
+          "Exo Bracer": true,
+          "Ammo Thruster": true,
+          "HE Fuel": true,
+          "Drone Mode": true,
+          "Drill Shot Mode": true,
+          "Durian Mode": true,
+          "Molotov": true,
+          "Rocket": true
+        },
+        "techsOptimizer": {
+          "strategy": 1,
+          "speedMode": 2,
+          "reservedLegends": 0,
+          "fodder": 1,
+          "skills": 4,
+          "chips": 40,
+          "overloadable": false,
+          "inputs": {
+            "Eternal": 0,
+            "Legend4": 0,
+            "Legend3": 0,
+            "Legend2": 0,
+            "Legend1": 0,
+            "Legend": 1,
+            "Epic3": 0,
+            "Epic2": 0,
+            "Epic1": 0,
+            "Epic": 6
+          },
+          "modes": [
+            "Drone Mode",
+            "Forcefield Mode",
+            "Drill Shot Mode",
+            "Rocket Mode",
+            "Soccer Mode",
+            "Durian Mode",
+            "Lightning Mode",
+            "Boomerang Mode",
+            "Guardian Mode",
+            "Laser Mode",
+            "Brick Mode",
+            "Molotov Mode"
+          ],
+          "limit": "basic",
+          "modeEntries": {
+            "Drone Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Forcefield Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Drill Shot Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Rocket Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Soccer Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Durian Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Lightning Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Boomerang Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Guardian Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Laser Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Brick Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            },
+            "Molotov Mode": {
+              "minResonance": 0,
+              "maxResonance": 15000,
+              "minOverload": 0,
+              "maxOverload": 18
+            }
+          },
+          "skillsMap": {
+            "Drone Mode": "enabled",
+            "Forcefield Mode": "enabled",
+            "Drill Shot Mode": "enabled",
+            "Rocket Mode": "enabled",
+            "Soccer Mode": "enabled",
+            "Durian Mode": "enabled",
+            "Lightning Mode": "enabled",
+            "Boomerang Mode": "enabled",
+            "Guardian Mode": "disabled",
+            "Laser Mode": "enabled",
+            "Brick Mode": "enabled",
+            "Molotov Mode": "enabled",
+            "Molotov": "enabled",
+            "Rocket": "disabled",
+            "Drone": "enabled",
+            "Drill": "enabled"
+          },
+          "expanded": false
+        }
+      },
+      "exportedSkillOrder": [
+        "Energy Cube",
+        "HP Bullet",
+        "Exo Bracer",
+        "Ammo Thruster",
+        "HE Fuel",
+        "Drone Mode",
+        "Forcefield Mode",
+        "Drill Shot Mode",
+        "Rocket Mode",
+        "Soccer Mode",
+        "Durian Mode",
+        "Lightning Mode",
+        "Boomerang Mode",
+        "Guardian Mode",
+        "Laser Mode",
+        "Brick Mode",
+        "Molotov Mode",
+        "Molotov",
+        "Rocket",
+        "Drone",
+        "Drill"
+      ],
+      "enabledSkills": [
+        "Energy Cube",
+        "HP Bullet",
+        "Exo Bracer",
+        "Ammo Thruster",
+        "HE Fuel",
+        "Drone Mode",
+        "Drill Shot Mode",
+        "Soccer Mode",
+        "Molotov Mode"
+      ],
+      "activeResultSkills": [
+        "Energy Cube",
+        "HP Bullet",
+        "Exo Bracer",
+        "Ammo Thruster",
+        "HE Fuel",
+        "Drone Mode",
+        "Drill Shot Mode",
+        "Soccer Mode",
+        "Molotov Mode"
+      ],
+      "damageFactor": 90256.51099362713,
+      "attackMeta": {
+        "atkBase": 6101.3499999999985,
+        "atkFinal": 100000
+      },
+      "baseStats": {
+        "atkEquipPercent": 5,
+        "atkHero": 4000,
+        "atkHeroPercent": 4,
+        "atkPercent": 118,
+        "critDamage": 505,
+        "critRate": 243,
+        "hpBulletBoost": 50,
+        "laceration": 5,
+        "poisoned": 10,
+        "shieldDamage": 55,
+        "shieldDamageUptime": 1,
+        "skillDamage": 80,
+        "voidNeckBoostUptime": 1,
+        "weakened": 15
+      },
+      "baseStatComponents": [
+        {
+          "index": 0,
+          "label": "baseStats",
+          "stats": {
+            "critDamage": 200,
+            "shieldDamageUptime": 1,
+            "voidNeckBoostUptime": 1
+          }
+        },
+        {
+          "index": 1,
+          "label": "heroes",
+          "stats": {
+            "atkHeroPercent": 4,
+            "critDamage": 5,
+            "critRate": 5
+          }
+        },
+        {
+          "index": 2,
+          "label": "synergy",
+          "stats": {
+            "atkHero": 4000,
+            "critDamage": 10,
+            "shieldDamage": 5,
+            "skillDamage": 10,
+            "weakened": 5
+          }
+        },
+        {
+          "index": 3,
+          "label": "harmony",
+          "stats": {
+            "critRate": 10
+          }
+        },
+        {
+          "index": 4,
+          "label": "collectibles",
+          "stats": {
+            "critDamage": 225,
+            "critRate": 215
+          }
+        },
+        {
+          "index": 5,
+          "label": "collectibleSets",
+          "stats": {
+            "atkPercent": 118,
+            "critDamage": 45,
+            "laceration": 5,
+            "poisoned": 10,
+            "shieldDamage": 50,
+            "skillDamage": 60,
+            "weakened": 10
+          }
+        },
+        {
+          "index": 6,
+          "label": "customSets",
+          "stats": {}
+        },
+        {
+          "index": 7,
+          "label": "evoTree",
+          "stats": {
+            "atkEquipPercent": 5,
+            "critRate": 8,
+            "skillDamage": 5
+          }
+        },
+        {
+          "index": 8,
+          "label": "turf",
+          "stats": {}
+        },
+        {
+          "index": 9,
+          "label": "pets",
+          "stats": {
+            "critDamage": 20,
+            "critRate": 5,
+            "skillDamage": 5
+          }
+        },
+        {
+          "index": 10,
+          "label": "mounts",
+          "stats": {}
+        },
+        {
+          "index": 11,
+          "label": "skills",
+          "stats": {
+            "hpBulletBoost": 50
+          }
+        },
+        {
+          "index": 12,
+          "label": "lmeTestaments",
+          "stats": {}
+        },
+        {
+          "index": 13,
+          "label": "eeSkills",
+          "stats": {}
+        }
+      ],
+      "statTraceSnapshots": [
+        {
+          "label": "beforeTech",
+          "stats": {
+            "atkPercent": 118,
+            "critDamage": 505,
+            "critRate": 243,
+            "poisoned": 10,
+            "shieldDamage": 55,
+            "skillDamage": 80
+          }
+        },
+        {
+          "label": "afterTech",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 715,
+            "critRate": 243,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 245,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterCooldown",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 715,
+            "critRate": 243,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 245,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterActiveSkillPostprocess",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 715,
+            "critRate": 243,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 245,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterEquipmentTransmute",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 769,
+            "critRate": 273,
+            "poisoned": 90,
+            "shieldDamage": 326,
+            "skillDamage": 485,
+            "ssMiscPath": 20,
+            "vulnerability": 80
+          }
+        },
+        {
+          "label": "afterEquipmentDynamicSpecials",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 829,
+            "critRate": 273,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 565,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          }
+        },
+        {
+          "label": "afterEvolvePassivesPostprocess",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 829,
+            "critRate": 273,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 565,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          }
+        }
+      ],
+      "statTraceDeltas": [
+        {
+          "label": "beforeTech",
+          "stats": {
+            "atkPercent": 118,
+            "critDamage": 505,
+            "critRate": 243,
+            "poisoned": 10,
+            "shieldDamage": 55,
+            "skillDamage": 80
+          },
+          "delta": {
+            "atkPercent": 118,
+            "critDamage": 505,
+            "critRate": 243,
+            "poisoned": 10,
+            "shieldDamage": 55,
+            "skillDamage": 80
+          }
+        },
+        {
+          "label": "afterTech",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 715,
+            "critRate": 243,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 245,
+            "vulnerability": 45
+          },
+          "delta": {
+            "chilled": 125,
+            "critDamage": 210,
+            "poisoned": 80,
+            "shieldDamage": 135,
+            "skillDamage": 165,
+            "vulnerability": 45
+          }
+        },
+        {
+          "label": "afterCooldown",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 715,
+            "critRate": 243,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 245,
+            "vulnerability": 45
+          },
+          "delta": {}
+        },
+        {
+          "label": "afterActiveSkillPostprocess",
+          "stats": {
+            "atkPercent": 118,
+            "chilled": 125,
+            "critDamage": 715,
+            "critRate": 243,
+            "poisoned": 90,
+            "shieldDamage": 190,
+            "skillDamage": 245,
+            "vulnerability": 45
+          },
+          "delta": {}
+        },
+        {
+          "label": "afterEquipmentTransmute",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 769,
+            "critRate": 273,
+            "poisoned": 90,
+            "shieldDamage": 326,
+            "skillDamage": 485,
+            "ssMiscPath": 20,
+            "vulnerability": 80
+          },
+          "delta": {
+            "atkPercent": 180,
+            "chilled": 85,
+            "critDamage": 54,
+            "critRate": 30,
+            "shieldDamage": 136,
+            "skillDamage": 240,
+            "ssMiscPath": 20,
+            "vulnerability": 35
+          }
+        },
+        {
+          "label": "afterEquipmentDynamicSpecials",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 829,
+            "critRate": 273,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 565,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          },
+          "delta": {
+            "critDamage": 60,
+            "shieldDamage": 50,
+            "skillDamage": 80,
+            "ssMiscPath": 140.56
+          }
+        },
+        {
+          "label": "afterEvolvePassivesPostprocess",
+          "stats": {
+            "atkPercent": 298,
+            "chilled": 210,
+            "critDamage": 829,
+            "critRate": 273,
+            "poisoned": 90,
+            "shieldDamage": 376,
+            "skillDamage": 565,
+            "ssMiscPath": 160.56,
+            "vulnerability": 80
+          },
+          "delta": {}
+        }
+      ],
+      "techs": {
+        "Energy Guidance System": {
+          "parts": [
+            "None",
+            "None",
+            "None"
+          ],
+          "resonance": 0,
+          "chip": 0,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Energy Guidance System",
+          "deployed": true,
+          "mode": "Drone Mode",
+          "rarity": "Eternal",
+          "overload": 0
+        },
+        "Antimatter Maintainer": {
+          "parts": [
+            "None",
+            "None",
+            "None"
+          ],
+          "resonance": 0,
+          "chip": 0,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Antimatter Maintainer",
+          "deployed": true,
+          "mode": "Drill Shot Mode",
+          "rarity": "Eternal",
+          "overload": 0
+        },
+        "Quantum Nanobot": {
+          "parts": [
+            "Epic",
+            "Epic",
+            "Epic"
+          ],
+          "resonance": 300,
+          "chip": 9,
+          "target": 0,
+          "targetRich": 300,
+          "tech": "Quantum Nanobot",
+          "deployed": true,
+          "mode": "Soccer Mode",
+          "rarity": "Eternal",
+          "overload": 0
+        },
+        "Phase Driver": {
+          "parts": [
+            "Epic",
+            "None",
+            "None"
+          ],
+          "resonance": 60,
+          "chip": 1,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Phase Driver",
+          "deployed": true,
+          "mode": "Lightning Mode",
+          "overload": 0
+        },
+        "Exo-radicator": {
+          "parts": [
+            "None",
+            "None",
+            "None"
+          ],
+          "resonance": 0,
+          "chip": 0,
+          "target": 0,
+          "targetRich": 0,
+          "tech": "Exo-radicator",
+          "deployed": true,
+          "mode": "Guardian Mode",
+          "overload": 0
+        },
+        "Hi-Gravity Pulser": {
+          "parts": [
+            "Legend",
+            "Epic",
+            "Epic"
+          ],
+          "resonance": 1200,
+          "chip": 30,
+          "target": 1200,
+          "targetRich": 1200,
+          "tech": "Hi-Gravity Pulser",
+          "deployed": true,
+          "mode": "Molotov Mode",
+          "overload": 0
+        }
+      },
+      "nonZeroStats": {
+        "atkEquip": 34538,
+        "atkEquipPercent": 5,
+        "atkHero": 4000,
+        "atkHeroPercent": 4,
+        "atkPercent": 298,
+        "chilled": 210,
+        "chilledUptime": 1,
+        "clarity": 30,
+        "cooldownReduction": 2.130833155763903,
+        "critDamage": 829,
+        "critRate": 273,
+        "eternalMultiplier": 55,
+        "glacialBloodline": 72,
+        "hpBulletBoost": 1.6,
+        "laceration": 30,
+        "lacerationUptime": 1,
+        "poisoned": 90,
+        "poisonedUptime": 1,
+        "resonanceMultiplier": 78040.51885725881,
+        "shieldDamage": 376,
+        "shieldDamageUptime": 1,
+        "skillDamage": 565,
+        "ssGlovesLaser": 50,
+        "ssMiscPath": 160.56,
+        "voidNeckBoostUptime": 1,
+        "vulnerability": 80,
+        "weakened": 110,
+        "weakenedUptime": 1
+      },
+      "ceDamage": {
+        "Drone Mode": 22942.06338,
+        "Drill Shot Mode": 21956.981865,
+        "Soccer Mode": 22670.404760936977,
+        "Lightning Mode": 0,
+        "Guardian Mode": 0,
+        "Molotov Mode": 10471.068851321837,
+        "ssWeapon": 12215.992136368319,
+        "taloxaOverload": 0,
+        "crimsonBat": 0,
+        "Taloxa": 0,
+        "Joey": 0,
+        "Metalia": 0,
+        "Master Yang": 0,
+        "King": 0,
+        "Common": 0,
+        "xeno": 0,
+        "mount": 0
+      },
+      "passivePools": [
+        0.985,
+        1.015,
+        1.018,
+        2.130833155763903,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1.11604,
+        1.06696,
+        1.012,
+        2.130833155763903,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1.2236122296826644,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "stageFactors": [
+        {
+          "key": "attack",
+          "value": 285174.475
+        },
+        {
+          "key": "crit",
+          "value": 8.29
+        },
+        {
+          "key": "skillDamage",
+          "value": 6.65
+        },
+        {
+          "key": "vulnerability",
+          "value": 1.8
+        },
+        {
+          "key": "shieldDamage",
+          "value": 4.76
+        },
+        {
+          "key": "statusDamage",
+          "value": 5.1000000000000005
+        },
+        {
+          "key": "clarity",
+          "value": 1.3
+        },
+        {
+          "key": "eternalMultiplier",
+          "value": 1.55
+        },
+        {
+          "key": "glacialBloodline",
+          "value": 1.72
+        },
+        {
+          "key": "lacerationDivineFire",
+          "value": 1.3
+        },
+        {
+          "key": "joeyWeakSpot",
+          "value": 1
+        },
+        {
+          "key": "ssGlovesLaser",
+          "value": 1.5
+        },
+        {
+          "key": "flashriftRip",
+          "value": 1
+        },
+        {
+          "key": "taloxaOverload",
+          "value": 1
+        },
+        {
+          "key": "eternalSuitBoost",
+          "value": 1
+        },
+        {
+          "key": "voidNeckBoost",
+          "value": 1
+        },
+        {
+          "key": "voidGlovesInstakill",
+          "value": 1
+        },
+        {
+          "key": "voidBootsBoost",
+          "value": 1
+        },
+        {
+          "key": "chaosBeltBoost",
+          "value": 1
+        },
+        {
+          "key": "hpBulletBoost",
+          "value": 1.6
+        },
+        {
+          "key": "damageDealt",
+          "value": 1
+        },
+        {
+          "key": "adrenaline",
+          "value": 1
+        },
+        {
+          "key": "damageTransmute",
+          "value": 1
+        },
+        {
+          "key": "damageBoss",
+          "value": 1
+        },
+        {
+          "key": "xenoResMultiplier",
+          "value": 1
+        },
+        {
+          "key": "lme1Damage",
+          "value": 1
+        },
+        {
+          "key": "damageFactor",
+          "value": 90256.51099362713
+        },
+        {
+          "key": "damageNormalization",
+          "value": 0.7525020503298886
+        },
+        {
+          "key": "exoBracerCorrection",
+          "value": 1.0271164247262605
+        },
+        {
+          "key": "ammoThrusterCorrection",
+          "value": 1.018849057714606
+        },
+        {
+          "key": "heFuelCorrection",
+          "value": 1.0054503847996141
+        },
+        {
+          "key": "energyCubeCorrection",
+          "value": 1.4630375458737535
+        }
+      ]
+    }
+  ]
+}

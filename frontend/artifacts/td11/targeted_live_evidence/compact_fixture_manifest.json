@@ -1,0 +1,231 @@
+{
+  "generatedAtKst": "2026-05-23",
+  "manifestVersion": "targeted-live-evidence-v1",
+  "source": "Targeted compact fixtures for current public worker evidence only; not part of production scoring.",
+  "capturePlan": {
+    "fetchWorker": "fetch current skills worker and dependency chunks into /tmp/sio-tools-src.current before running capture",
+    "liveCaptureCommand": "SIO_WORKER_SRC_DIR=/tmp/sio-tools-src.current MANIFEST_PATH=artifacts/td11/targeted_live_evidence/compact_fixture_manifest.json OUTPUT_PATH=artifacts/td11/targeted_live_evidence/live_capture_summary.json node scripts/sio_arbitrary_compact_live_capture.mjs",
+    "traceCommand": "TRACE_LM_BASE_COMPONENTS=1 TRACE_LM_STAT_ATTRIBUTION=1 SIO_WORKER_SRC_DIR=/tmp/sio-tools-src.current WORKER_SUMMARY_PATH=artifacts/td11/targeted_live_evidence/live_capture_summary.json OUTPUT_PATH=artifacts/td11/targeted_live_evidence/lm_trace_summary.json node scripts/sio_lm_trace_summary.mjs",
+    "matrixCommand": "node scripts/sio_tools_targeted_live_evidence_unit_test.mjs --write"
+  },
+  "currentWorker": {
+    "url": "https://sio-tools.vercel.app/_next/static/chunks/7227.2d1c78b0f3f92fba.js?dpl=dpl_56iU76iXR6KnXd1j6BesFJBdsckh",
+    "versionHash": "955cb880d975c11ea2c5f0da623444ab717bef8ac463a30395b9563c7df627d1",
+    "capturedFromDeployment": "dpl_56iU76iXR6KnXd1j6BesFJBdsckh"
+  },
+  "cases": [
+    {
+      "id": "targeted_active_mount_tech_hoverboard",
+      "domain": "mounts",
+      "purpose": "Capture active Tech Hoverboard live mountDamage contribution with current public worker.",
+      "compactConfig": {
+        "_V": 5,
+        "bJ": {
+          "bj": 1,
+          "bM": [
+            {
+              "s": 1,
+              "r": 10
+            },
+            {
+              "s": 1,
+              "r": 8
+            },
+            {
+              "s": 1,
+              "r": 8
+            }
+          ]
+        }
+      },
+      "expectedEvidence": {
+        "mountName": "Tech Hoverboard",
+        "activeMountIndex": 1,
+        "stars": 8,
+        "compactKeys": {
+          "mounts": "bJ",
+          "active": "bj",
+          "data": "bM"
+        }
+      }
+    },
+    {
+      "id": "targeted_active_mount_electric_scooter",
+      "domain": "mounts",
+      "purpose": "Capture active Electric Scooter live mountDamage contribution with current public worker.",
+      "compactConfig": {
+        "_V": 5,
+        "bJ": {
+          "bj": 2,
+          "bM": [
+            {
+              "s": 1,
+              "r": 10
+            },
+            {
+              "s": 1,
+              "r": 8
+            },
+            {
+              "s": 1,
+              "r": 8
+            }
+          ]
+        }
+      },
+      "expectedEvidence": {
+        "mountName": "Electric Scooter",
+        "activeMountIndex": 2,
+        "stars": 8,
+        "compactKeys": {
+          "mounts": "bJ",
+          "active": "bj",
+          "data": "bM"
+        }
+      }
+    },
+    {
+      "id": "targeted_survivor_yelena",
+      "domain": "survivors",
+      "purpose": "Capture Yelena as targeted mainHero/live survivor row with current public worker.",
+      "compactConfig": {
+        "_V": 5,
+        "a": {
+          "c": 7
+        },
+        "h": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "r": 6,
+            "q": 120
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "expectedEvidence": {
+        "survivorId": "yelena",
+        "displayName": "Yelena",
+        "sourceName": "Yelena",
+        "heroArrayIndex": 6,
+        "mainHeroValue": 7
+      }
+    },
+    {
+      "id": "targeted_survivor_squidward",
+      "domain": "survivors",
+      "purpose": "Capture Squidward as targeted mainHero/live survivor row with current public worker.",
+      "compactConfig": {
+        "_V": 5,
+        "a": {
+          "c": 18
+        },
+        "h": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "r": 6,
+            "q": 120
+          },
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "expectedEvidence": {
+        "survivorId": "squidward",
+        "displayName": "Squidward",
+        "sourceName": "Squidward",
+        "heroArrayIndex": 17,
+        "mainHeroValue": 18
+      }
+    },
+    {
+      "id": "targeted_survivor_spongebob",
+      "domain": "survivors",
+      "purpose": "Capture SpongeBob as targeted mainHero/live survivor row with current public worker.",
+      "compactConfig": {
+        "_V": 5,
+        "a": {
+          "c": 19
+        },
+        "h": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "r": 6,
+            "q": 120
+          },
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "expectedEvidence": {
+        "survivorId": "spongebob",
+        "displayName": "SpongeBob",
+        "sourceName": "Spongebob",
+        "heroArrayIndex": 18,
+        "mainHeroValue": 19
+      }
+    }
+  ],
+  "summary": {
+    "cases": 5,
+    "activeMountCases": 2,
+    "targetSurvivorCases": 3
+  }
+}

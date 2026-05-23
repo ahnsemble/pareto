@@ -1120,6 +1120,59 @@ Collected and structured evidence available from the local/public SIO Tools mirr
 
 GitHub push/PR not performed.
 
+## Targeted Live Evidence Collection Pass
+
+timestampKst: 2026-05-23T14:30:00+09:00
+status: `[TARGETED-LIVE-EVIDENCE-GREEN]`
+
+### Scope
+
+Collected current public worker evidence for the previously bounded active-mount and target-survivor gaps. This pass is evidence/provenance only: no scoring formula, SIO LM core, Rust formula, WASM semantics, optimizer ranking, or user-facing UI changed.
+
+### New Evidence Artifacts
+
+- `frontend/artifacts/td11/targeted_live_evidence/compact_fixture_manifest.json`
+- `frontend/artifacts/td11/targeted_live_evidence/live_capture_summary.json`
+- `frontend/artifacts/td11/targeted_live_evidence/lm_trace_summary.json`
+- `frontend/artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json`
+- Updated roll-up: `frontend/artifacts/td11/sio_tools_live_evidence_matrix.json`
+
+### Evidence Findings
+
+- Current public skills worker captured 5/5 targeted cases.
+  - Worker hash: `955cb880d975c11ea2c5f0da623444ab717bef8ac463a30395b9563c7df627d1`.
+  - Targeted LM trace stage-product checks: 5/5.
+- Active mount evidence is now live-captured:
+  - `bJ.bj=1` Tech Hoverboard: base `mountDamage=50000`, live `ceDamage.mount=33333.33333333333`.
+  - `bJ.bj=2` Electric Scooter: base `mountDamage=17710`, live `ceDamage.mount=11806.666666666666`.
+  - Roll-up now records `activeMountLiveRows=2` and `nonZeroMountDamageLiveRows=2`.
+- Target survivor evidence is now live-captured:
+  - Yelena: `h[6]`, `a.c=7`.
+  - Squidward: `h[17]`, `a.c=18`.
+  - SpongeBob/Spongebob: `h[18]`, `a.c=19`.
+  - Roll-up now records `targetSurvivorLiveRows=3`.
+- Remaining gap is narrowed to direct in-game description capture; formula/scoring semantics were not changed.
+
+### Matrix Update
+
+- `damage_formula_provenance_matrix.md` moved to `DAMAGE-FORMULA-PROVENANCE-MATRIX-V1`.
+- Confidence summary is now:
+  - `sio-live-equivalent`: 160.
+  - `sio-source-only`: 153.
+  - `catalog-only`: 54.
+- Follow-up gate slices now record:
+  - DF-P3: active mount live evidence exists for two non-zero rows; in-game description capture remains missing.
+  - DF-P5: target survivor live evidence exists for SpongeBob/Squidward/Yelena; in-game description capture remains missing.
+
+### Verification Log
+
+- `node scripts/sio_arbitrary_compact_live_capture_patch_unit_test.mjs`: passed.
+- `node scripts/sio_tools_targeted_live_evidence_unit_test.mjs`: passed, 5 rows.
+- `node scripts/sio_tools_live_evidence_matrix_unit_test.mjs`: passed, 20 rows.
+- `node scripts/damage_formula_provenance_matrix_unit_test.mjs`: passed, 367 rows.
+
+GitHub push/PR not performed.
+
 ## Damage Formula Provenance Follow-Up Gate Slices
 
 timestampKst: 2026-05-23T13:10:00+09:00
