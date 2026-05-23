@@ -1,16 +1,20 @@
 import assert from 'node:assert/strict';
 import { Buffer } from 'node:buffer';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
 import { dirname, resolve } from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import ts from 'typescript';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
 const tmpDir = resolve(tmpdir(), 'pareto-external-calculation-link-tests');
 const modulePath = resolve(__dirname, '../app/lib/pareto-store/external-calculation-link.ts');
 const profileModulePath = resolve(__dirname, '../app/lib/pareto-store/external-calculation-profile.ts');
 const recommendationModulePath = resolve(__dirname, '../app/lib/pareto-store/tech-upgrade-recommendations.ts');
+const collectionRecommendationModulePath = resolve(__dirname, '../app/lib/pareto-store/collectible-upgrade-recommendations.ts');
+const schemaModulePath = resolve(__dirname, '../app/lib/pareto-store/schemas/index.ts');
 const rawPath = resolve(__dirname, '../fixtures/external-calculation-links/4ZgaBw.raw.txt');
 const expectedPath = resolve(__dirname, '../fixtures/external-calculation-links/4ZgaBw.expected.json');
 
@@ -35,6 +39,29 @@ function loadTsModule(sourcePath, outputName) {
   const outputPath = resolve(tmpDir, `${outputName}-${Date.now()}-${Math.random().toString(16).slice(2)}.mjs`);
   writeFileSync(outputPath, outputText);
   return import(pathToFileURL(outputPath));
+}
+
+function writeCjsModule(sourcePath, outputPath) {
+  if (!existsSync(sourcePath)) {
+    throw new Error(`module missing: ${sourcePath}`);
+  }
+  mkdirSync(dirname(outputPath), { recursive: true });
+  const source = readFileSync(sourcePath, 'utf8');
+  const transpiled = ts.transpileModule(source, {
+    compilerOptions: {
+      module: ts.ModuleKind.CommonJS,
+      target: ts.ScriptTarget.ES2020,
+      strict: true,
+    },
+  });
+  writeFileSync(outputPath, transpiled.outputText);
+}
+
+function loadRecommendationModule() {
+  writeCjsModule(schemaModulePath, resolve(tmpDir, 'schemas/index.js'));
+  writeCjsModule(collectionRecommendationModulePath, resolve(tmpDir, 'collectible-upgrade-recommendations.js'));
+  writeCjsModule(recommendationModulePath, resolve(tmpDir, 'tech-upgrade-recommendations.js'));
+  return require(resolve(tmpDir, 'tech-upgrade-recommendations.js'));
 }
 
 const { decodeExternalCalculationRaw, parseExternalCalculationInput, resolveExternalCalculationCode } = await loadTsModule(
@@ -103,10 +130,7 @@ assert.ok(normalized.importedCollectibleSnapshot.items.length > 0);
 assert.match(normalized.summary, /Imported/);
 assert.equal(JSON.stringify(normalized).includes('sioLm'), false);
 
-const { buildTechUpgradeRecommendations } = await loadTsModule(
-  recommendationModulePath,
-  'tech-upgrade-recommendations',
-);
+const { buildTechUpgradeRecommendations } = loadRecommendationModule();
 const recommendations = buildTechUpgradeRecommendations({
   result: {
     builds: [{

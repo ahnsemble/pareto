@@ -6,7 +6,7 @@ import type {
   ProductProfileImportResult,
   ProductProfileTechImport,
   ProductProfileWalletImport,
-} from './profile-import';
+} from './profile-import-types';
 
 const SHORT_ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@£$%^&*()_+=';
 const SHORT_KEYS = [

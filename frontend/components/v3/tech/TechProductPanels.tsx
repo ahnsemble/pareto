@@ -5,7 +5,7 @@ import {
   type ResourceWalletId,
   type ResourceWalletValues,
 } from '../../../app/lib/pareto-store/resource-wallet';
-import type { ProductImportCoverage, ProductImportFieldSummary } from '../../../app/lib/pareto-store/profile-import';
+import type { ProductImportCoverage, ProductImportFieldSummary } from '../../../app/lib/pareto-store/profile-import-types';
 import { buttonClass, inputClass, labelClass, panelClass } from '../optimizerUi';
 import {
   getTechOptimizerCopy,

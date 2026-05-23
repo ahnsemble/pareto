@@ -1,28 +1,8 @@
-import type { ImportedCollectibleSnapshot, ImportedTechSnapshot } from './profile-import';
+import { buildCollectibleUpgradeRecommendation } from './collectible-upgrade-recommendations';
+import type { ImportedTechSnapshot } from './profile-import-types';
+import type { TechRecommendationInput, TechUpgradeRecommendation } from './tech-upgrade-recommendation-types';
 
-export type TechUpgradeRecommendation = {
-  id: string;
-  priority: number;
-  title: string;
-  action: string;
-  reason: string;
-  expectedGainLabel?: string;
-  confidence: 'high' | 'medium' | 'low';
-};
-
-type TechRecommendationInput = {
-  result: unknown;
-  importedTechSnapshot?: ImportedTechSnapshot | null;
-  importedCollectibleSnapshot?: ImportedCollectibleSnapshot | null;
-  accountContext?: {
-    collectionSets?: number;
-    collectionStars?: number;
-    customCollectionSets?: number;
-    targetCollectibleId?: string;
-  };
-  chipRemainder?: number;
-  locale?: string;
-};
+export type { TechUpgradeRecommendation } from './tech-upgrade-recommendation-types';
 
 const TECH_PART_LABELS: Record<string, string> = {
   energyGuidanceSystem: 'Energy Guidance System',
@@ -52,24 +32,6 @@ const TECH_MODE_LABELS: Record<string, string> = {
   brickMode: 'Brick Mode',
 };
 
-const COLLECTIBLE_ITEM_LABELS = [
-  'Atomic Mech', 'Time Essence Bottle', 'Life Hourglass', 'Dimension Foil', 'Super Circuit Board', 'Comms Conch',
-  'Memory Editor', 'Temporal Rewinder', 'Spatial Rewinder', 'Holodream Fluid', 'Dragon Tooth', 'Hyper Neuron',
-  'Cyber Totem', 'Dreamscape Puzzle', 'Gene Splicer', 'Instellar Transition Matrix Design', 'High-Lat Energy Cube',
-  'Mental Sync Helm', 'Dice of Destiny', 'Hydraulic Flipper', 'Klein Bottle', 'Wildfire Furnace', 'Wormhole Detector',
-  'Mini Dyson Sphere', 'Star-Rail Passenger Card', 'Shuttle Capsule', 'Neurochip', 'Anti-Gravity Device',
-  'Portable Mech Case', 'Dark Matter Construct', 'Timeline Cube', 'Omni-Symbiote', 'Plasma Sword', 'Geocore Orb',
-  'Aquacore Orb', 'Pyrocore Orb', 'Aerocore Orb', 'Nuclear Battery', 'Old Medical Book', "Savior's Memento",
-  'Tablet of Epics', 'Primordial War Drum', 'Flaming Plume', 'Astral Dewdrop', 'Antiparticle Gourd',
-  'Micro Artificial Sun', 'Nano-Mimetic Mask', 'Clone Mirror', 'Cosmic Compass', 'Infinity Score',
-  'Angelic Tear Crystal', 'Otherworld Key', 'Human Genome Mapping', 'Book of Ancient Wisdom', 'Starcore Diamond',
-  'Immortal Lucky Coin', "Unicorn's Horn", 'Void Bloom', 'Eye of True Vision', 'Mystical Halo', 'Lucky Charm',
-  "Prophet's Tarot", 'Golden Cutlery', 'Safehouse Map', "Scientific Luminary's Journal", 'Golden Horn',
-  'Elemental Ring', 'Superhuman Pill', 'Aquarius Starlight', 'Pisces Starlight', 'Aries Starlight',
-  'Taurus Starlight', 'Gemini Starlight', 'Cancer Starlight', 'Leo Starlight', 'Virgo Starlight',
-  'Libra Starlight', 'Scorpio Starlight', 'Sagittarius Starlight', 'Capricorn Starlight',
-] as const;
-
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
@@ -91,22 +53,6 @@ function partName(value: unknown): string {
 function modeName(value: unknown): string {
   const raw = String(value ?? '');
   return TECH_MODE_LABELS[raw] ?? toTitleCase(raw);
-}
-
-function idFromName(value: string): string {
-  const cleaned = value.replace(/[^a-zA-Z0-9]+/g, ' ').trim();
-  const words = cleaned.split(/\s+/).filter(Boolean);
-  return words
-    .map((word, index) => (index === 0 ? word.charAt(0).toLowerCase() + word.slice(1) : word.charAt(0).toUpperCase() + word.slice(1)))
-    .join('');
-}
-
-function collectibleName(itemIndex: number): string {
-  return COLLECTIBLE_ITEM_LABELS[itemIndex] ?? `Event ${itemIndex - COLLECTIBLE_ITEM_LABELS.length + 1}`;
-}
-
-function collectibleId(itemIndex: number): string {
-  return COLLECTIBLE_ITEM_LABELS[itemIndex] ? idFromName(COLLECTIBLE_ITEM_LABELS[itemIndex]) : `event${itemIndex - COLLECTIBLE_ITEM_LABELS.length + 1}`;
 }
 
 function readChip(row: Record<string, unknown>): number {
@@ -132,76 +78,6 @@ function topBuildLoadout(result: unknown): Array<Record<string, unknown>> {
 
 function findSnapshotPart(snapshot: ImportedTechSnapshot | null | undefined, part: string, mode: string) {
   return snapshot?.parts.find((item) => item.partName === part && (!item.modeName || item.modeName === mode));
-}
-
-function selectCollectibleCandidate(
-  snapshot: ImportedCollectibleSnapshot | null | undefined,
-  targetCollectibleId?: string,
-) {
-  const items = snapshot?.items ?? [];
-  if (items.length === 0) return undefined;
-  const target = targetCollectibleId
-    ? items.find((item) => collectibleId(item.itemIndex) === targetCollectibleId)
-    : undefined;
-  if (target) return target;
-
-  const scored = [...items].sort((left, right) => {
-    const leftCustom = left.customSetLevel ?? -1;
-    const rightCustom = right.customSetLevel ?? -1;
-    if (leftCustom !== rightCustom) return rightCustom - leftCustom;
-    const leftStars = left.stars ?? Number.POSITIVE_INFINITY;
-    const rightStars = right.stars ?? Number.POSITIVE_INFINITY;
-    if (leftStars !== rightStars) return leftStars - rightStars;
-    return left.itemIndex - right.itemIndex;
-  });
-  return scored[0];
-}
-
-function buildCollectionRecommendation({
-  accountContext,
-  importedCollectibleSnapshot,
-  locale,
-}: Pick<TechRecommendationInput, 'accountContext' | 'importedCollectibleSnapshot' | 'locale'>): TechUpgradeRecommendation | undefined {
-  const ko = locale === 'ko';
-  const candidate = selectCollectibleCandidate(importedCollectibleSnapshot, accountContext?.targetCollectibleId);
-  if (candidate) {
-    const name = collectibleName(candidate.itemIndex);
-    const stars = candidate.stars;
-    const fromCustomSet = (candidate.customSetLevel ?? 0) > 0;
-    return {
-      id: 'collection-item',
-      priority: fromCustomSet || accountContext?.targetCollectibleId ? 75 : 60,
-      title: ko ? `수집품 강화: ${name}` : `Upgrade ${name} collection`,
-      action: ko
-        ? `${name}${stars !== undefined ? ` ${stars}성` : ''}을 먼저 올리고, 활성 커스텀 수집품 세트 재료보다 낮은 우선순위로 분산하지 마세요.`
-        : `Raise ${name}${stars !== undefined ? ` from ${stars} stars` : ''} before spreading designs across lower-priority collection items.`,
-      reason: ko
-        ? fromCustomSet
-          ? '가져온 프로필의 활성 커스텀 수집품 세트에 들어간 항목 중 가장 낮은 별 구간입니다.'
-          : '가져온 프로필의 수집품 현황에서 다음으로 점검할 낮은 별 항목입니다.'
-        : fromCustomSet
-          ? 'This is the lowest-star item inside an active custom collection set from the imported profile.'
-          : 'The imported profile shows this as the next low-star collection item to review.',
-      expectedGainLabel: stars !== undefined ? (ko ? `현재 ${stars}성` : `${stars} stars`) : undefined,
-      confidence: fromCustomSet || accountContext?.targetCollectibleId ? 'high' : 'medium',
-    };
-  }
-
-  const collectionSets = accountContext?.collectionSets;
-  if (typeof collectionSets === 'number' && Number.isFinite(collectionSets) && collectionSets < 38) {
-    const remaining = Math.max(0, 38 - Math.trunc(collectionSets));
-    return {
-      id: 'collection-progress',
-      priority: 55,
-      title: ko ? '수집품 세트 완성' : 'Complete collection sets',
-      action: ko ? '별작 전에 아직 비어 있는 수집품 세트부터 채우세요.' : 'Fill missing collection sets before star-chasing individual items.',
-      reason: ko ? '세트 진행도는 계정 컨텍스트에 직접 반영되는 광역 성장값입니다.' : 'Set progress feeds the account context as a broad growth input.',
-      expectedGainLabel: ko ? `${remaining}세트 남음` : `${remaining} sets left`,
-      confidence: 'medium',
-    };
-  }
-
-  return undefined;
 }
 
 export function buildTechUpgradeRecommendations({
@@ -251,7 +127,7 @@ export function buildTechUpgradeRecommendations({
     });
   }
 
-  const collectionRecommendation = buildCollectionRecommendation({ accountContext, importedCollectibleSnapshot, locale });
+  const collectionRecommendation = buildCollectibleUpgradeRecommendation({ accountContext, importedCollectibleSnapshot, locale });
   if (collectionRecommendation) recommendations.push(collectionRecommendation);
 
   if (recommendations.length === 0) {

@@ -12,11 +12,13 @@ import {
 import {
   buildProductImportFieldSummary,
   importProductProfileInput,
-  type ImportedCollectibleSnapshot,
-  type ImportedTechSnapshot,
-  type ProductImportCoverage,
-  type ProductImportFieldSummary,
 } from '../../app/lib/pareto-store/profile-import';
+import type {
+  ImportedCollectibleSnapshot,
+  ImportedTechSnapshot,
+  ProductImportCoverage,
+  ProductImportFieldSummary,
+} from '../../app/lib/pareto-store/profile-import-types';
 import { buildTechUpgradeRecommendations } from '../../app/lib/pareto-store/tech-upgrade-recommendations';
 import { getWorker } from '../../app/lib/wasm-client';
 import {

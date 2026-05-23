@@ -29,6 +29,10 @@ await transpileModule(
   path.join(buildDir, 'schemas/index.js'),
 );
 await transpileModule(
+  path.join(root, 'app/lib/pareto-store/collectible-upgrade-recommendations.ts'),
+  path.join(buildDir, 'collectible-upgrade-recommendations.js'),
+);
+await transpileModule(
   path.join(root, 'app/lib/pareto-store/tech-upgrade-recommendations.ts'),
   path.join(buildDir, 'tech-upgrade-recommendations.js'),
 );

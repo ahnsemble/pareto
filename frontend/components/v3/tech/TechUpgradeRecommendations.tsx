@@ -1,4 +1,4 @@
-import type { TechUpgradeRecommendation } from '../../../app/lib/pareto-store/tech-upgrade-recommendations';
+import type { TechUpgradeRecommendation } from '../../../app/lib/pareto-store/tech-upgrade-recommendation-types';
 import { labelClass } from '../optimizerUi';
 import { getTechOptimizerCopy } from './techLocaleCopy';
 
