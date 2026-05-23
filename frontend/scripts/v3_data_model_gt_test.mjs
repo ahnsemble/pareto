@@ -74,7 +74,7 @@ await check('Pet registry mirrors the 9 sIO pets and i18n keys', () => {
   ]);
 });
 
-await check('Hero registry mirrors the 15 sIO default and collaboration heroes', () => {
+await check('Hero registry mirrors the 18 source-backed default and collaboration heroes', () => {
   assert.deepEqual(ids(schemas.HERO_SCHEMA_INDEX), [
     'common',
     'king',
@@ -90,10 +90,22 @@ await check('Hero registry mirrors the 15 sIO default and collaboration heroes',
     'donatello',
     'tsukuyomi',
     'wesson',
+    'yelena',
     'catnips',
+    'squidward',
+    'spongebob',
   ]);
   const worm = schemas.HERO_SCHEMA_INDEX.find((hero) => hero.id === 'worm');
   assert.equal(worm.note, 'passives activate only when fewer than 3 monsters are on the map');
+  assert.deepEqual(
+    names(schemas.HERO_SCHEMA_INDEX).filter((name) => ['Yelena', 'Squidward', 'SpongeBob'].includes(name)),
+    ['Yelena', 'Squidward', 'SpongeBob'],
+  );
+  for (const id of ['yelena', 'squidward', 'spongebob']) {
+    const hero = schemas.HERO_SCHEMA_INDEX.find((candidate) => candidate.id === id);
+    assert.ok(hero.source_citations.some((citation) => citation.includes('module37013_f_default_config.json')), id);
+    assert.ok(hero.source_citations.some((citation) => citation.includes('sio_config.rs')), id);
+  }
 });
 
 await check('SS equipment registry mirrors 11 sIO items and six occupied slots', () => {
@@ -171,9 +183,6 @@ await check('Forbidden legacy labels are absent from schema payloads', () => {
     'SS ' + 'Boots',
     'Star' + 'forged',
     'Meta' + 'llia',
-    'Sponge' + 'Bob',
-    'Squid' + 'ward',
-    'Yel' + 'ena',
     'King ' + 'Blizzblast',
   ];
   for (const label of blocked) {

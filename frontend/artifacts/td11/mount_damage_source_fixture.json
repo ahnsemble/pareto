@@ -1,0 +1,307 @@
+{
+  "generatedAtKst": "2026-05-23",
+  "status": "MOUNT-DAMAGE-SOURCE-FIXTURE-V0",
+  "summary": {
+    "totalRows": 3,
+    "sourceBackedRows": 3,
+    "nonZeroMountDamageRows": 2,
+    "liveVerifiedRows": 0
+  },
+  "rows": [
+    {
+      "key": "mount:doomsteed",
+      "mountName": "Doomsteed",
+      "rarity": "Legend",
+      "sourceKeys": {
+        "deployedData": "module37013_c_deployed_data_table.json.mounts",
+        "damageCoefficient": "module32085_mg_damage_coefficients.json"
+      },
+      "lineThresholds": [
+        {
+          "threshold": 1,
+          "stats": {
+            "poisoned": 20
+          }
+        },
+        {
+          "threshold": 3,
+          "stats": {
+            "poisoned": 60,
+            "skillDamage": 50
+          }
+        },
+        {
+          "threshold": 4,
+          "stats": {
+            "poisoned": 60,
+            "skillDamage": 200
+          }
+        },
+        {
+          "threshold": 6,
+          "stats": {
+            "laceration": 30,
+            "poisoned": 120,
+            "skillDamage": 200
+          }
+        },
+        {
+          "threshold": 7,
+          "stats": {
+            "damageBoss": 5,
+            "laceration": 30,
+            "poisoned": 200,
+            "skillDamage": 200
+          }
+        },
+        {
+          "threshold": 8,
+          "stats": {
+            "damageBoss": 30,
+            "laceration": 30,
+            "poisoned": 200,
+            "skillDamage": 200
+          }
+        }
+      ],
+      "baseDamageByStars": {
+        "0": 153,
+        "1": 180,
+        "2": 180,
+        "3": 200,
+        "4": 200,
+        "5": 200,
+        "6": 200,
+        "7": 260,
+        "8": 260
+      },
+      "mgCoefficient": 0,
+      "mountDamageLine": "Doomsteed: mountDamage = damageByStars[stars] * 0",
+      "mountDamageByStars": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0
+      },
+      "nonZeroStars": [],
+      "rustStatChannel": "mountDamage",
+      "multiplierStage": "CE damage contribution via ceDamage.mount after active mount source transform",
+      "liveEvidence": "not live-captured in current arbitrary compact mount fixtures",
+      "confidence": "sio-source-only",
+      "nextAction": "keep as zero-coefficient source row unless source changes"
+    },
+    {
+      "key": "mount:electricScooter",
+      "mountName": "Electric Scooter",
+      "rarity": "Better",
+      "sourceKeys": {
+        "deployedData": "module37013_c_deployed_data_table.json.mounts",
+        "damageCoefficient": "module32085_mg_damage_coefficients.json"
+      },
+      "lineThresholds": [
+        {
+          "threshold": 1,
+          "stats": {
+            "weakened": 10
+          }
+        },
+        {
+          "threshold": 3,
+          "stats": {
+            "critDamage": 20,
+            "weakened": 25
+          }
+        },
+        {
+          "threshold": 4,
+          "stats": {
+            "critDamage": 55,
+            "weakened": 25
+          }
+        },
+        {
+          "threshold": 5,
+          "stats": {
+            "critDamage": 55,
+            "laceration": 10,
+            "weakened": 25
+          }
+        },
+        {
+          "threshold": 6,
+          "stats": {
+            "critDamage": 110,
+            "laceration": 10,
+            "weakened": 45
+          }
+        },
+        {
+          "threshold": 7,
+          "stats": {
+            "critDamage": 200,
+            "laceration": 10,
+            "weakened": 80
+          }
+        },
+        {
+          "threshold": 8,
+          "stats": {
+            "critDamage": 200,
+            "laceration": 30,
+            "weakened": 80
+          }
+        }
+      ],
+      "baseDamageByStars": {
+        "0": 153,
+        "1": 160,
+        "2": 160,
+        "3": 180,
+        "4": 180,
+        "5": 200,
+        "6": 200,
+        "7": 230,
+        "8": 230
+      },
+      "mgCoefficient": 77,
+      "mountDamageLine": "Electric Scooter: mountDamage = damageByStars[stars] * 77",
+      "mountDamageByStars": {
+        "0": 11781,
+        "1": 12320,
+        "2": 12320,
+        "3": 13860,
+        "4": 13860,
+        "5": 15400,
+        "6": 15400,
+        "7": 17710,
+        "8": 17710
+      },
+      "nonZeroStars": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "rustStatChannel": "mountDamage",
+      "multiplierStage": "CE damage contribution via ceDamage.mount after active mount source transform",
+      "liveEvidence": "not live-captured in current arbitrary compact mount fixtures",
+      "confidence": "sio-source-only",
+      "nextAction": "capture active-mount live fixture and compare ceDamage.mount against this source fixture"
+    },
+    {
+      "key": "mount:techHoverboard",
+      "mountName": "Tech Hoverboard",
+      "rarity": "Excellent",
+      "sourceKeys": {
+        "deployedData": "module37013_c_deployed_data_table.json.mounts",
+        "damageCoefficient": "module32085_mg_damage_coefficients.json"
+      },
+      "lineThresholds": [
+        {
+          "threshold": 1,
+          "stats": {
+            "chilled": 15,
+            "skillDamage": 10
+          }
+        },
+        {
+          "threshold": 3,
+          "stats": {
+            "chilled": 40,
+            "skillDamage": 25
+          }
+        },
+        {
+          "threshold": 4,
+          "stats": {
+            "chilled": 40,
+            "shieldDamage": 40,
+            "skillDamage": 25
+          }
+        },
+        {
+          "threshold": 5,
+          "stats": {
+            "chilled": 100,
+            "shieldDamage": 40,
+            "skillDamage": 25
+          }
+        },
+        {
+          "threshold": 6,
+          "stats": {
+            "chilled": 140,
+            "shieldDamage": 40,
+            "skillDamage": 55
+          }
+        },
+        {
+          "threshold": 7,
+          "stats": {
+            "chilled": 200,
+            "shieldDamage": 40,
+            "skillDamage": 100
+          }
+        },
+        {
+          "threshold": 8,
+          "stats": {
+            "chilled": 200,
+            "shieldDamage": 100,
+            "skillDamage": 100
+          }
+        }
+      ],
+      "baseDamageByStars": {
+        "0": 193.6,
+        "1": 194.084,
+        "2": 199.496,
+        "3": 204.424,
+        "4": 204.424,
+        "5": 387,
+        "6": 387,
+        "7": 500,
+        "8": 500
+      },
+      "mgCoefficient": 100,
+      "mountDamageLine": "Tech Hoverboard: mountDamage = damageByStars[stars] * 100",
+      "mountDamageByStars": {
+        "0": 19360,
+        "1": 19408.4,
+        "2": 19949.6,
+        "3": 20442.4,
+        "4": 20442.4,
+        "5": 38700,
+        "6": 38700,
+        "7": 50000,
+        "8": 50000
+      },
+      "nonZeroStars": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "rustStatChannel": "mountDamage",
+      "multiplierStage": "CE damage contribution via ceDamage.mount after active mount source transform",
+      "liveEvidence": "not live-captured in current arbitrary compact mount fixtures",
+      "confidence": "sio-source-only",
+      "nextAction": "capture active-mount live fixture and compare ceDamage.mount against this source fixture"
+    }
+  ]
+}

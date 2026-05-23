@@ -19,6 +19,8 @@ import type {
 
 const citation = (line: number) => `sio_tools_gt_master.md:${line}`;
 const formulaCitation = (line: number) => `sio_tools_formulas_and_defaults.md:${line}`;
+const runtimeTableCitation = (line: number) => `sio_tools_formula_table_extract/extracted_tables/module37013_f_default_config.json:${line}`;
+const rustCitation = (line: number) => `tttg_forge_optimizer/src/tech/sio_config.rs:${line}`;
 
 const idFromName = (name: string): string =>
   name
@@ -89,7 +91,10 @@ export const HERO_SCHEMA_INDEX: HeroSchema[] = [
   hero('donatello', 'Donatello', 'buffer', { tier: 'B', source_citations: [formulaCitation(308)] }),
   hero('tsukuyomi', 'Tsukuyomi', 'main_dps', { tier: 'B', source_citations: [formulaCitation(309)] }),
   hero('wesson', 'Wesson', 'global_passive_holder', { tier: 'C+', source_citations: [formulaCitation(310)] }),
+  hero('yelena', 'Yelena', 'buffer', { tier: 'C+', source_citations: [runtimeTableCitation(169), rustCitation(2767), rustCitation(2961)] }),
   hero('catnips', 'Catnips', 'survival', { tier: 'C+', source_citations: [formulaCitation(311)] }),
+  hero('squidward', 'Squidward', 'global_passive_holder', { tier: 'C+', source_citations: [runtimeTableCitation(590), rustCitation(2670), rustCitation(2815)] }),
+  hero('spongebob', 'SpongeBob', 'global_passive_holder', { tier: 'C+', source_citations: [runtimeTableCitation(607), rustCitation(2670), rustCitation(2815)] }),
 ];
 
 export const SS_EQUIPMENT_SCHEMA_INDEX: SSEquipmentState[] = [

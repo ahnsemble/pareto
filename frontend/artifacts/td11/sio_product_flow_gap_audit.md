@@ -1099,6 +1099,62 @@ Split the v0 damage formula provenance matrix into smaller high-risk follow-up g
 
 GitHub push/PR not performed.
 
+## Damage Formula Provenance Source Mapping Pass
+
+timestampKst: 2026-05-23T13:35:00+09:00
+status: `[DAMAGE-FORMULA-SOURCE-MAPPING-GREEN-WITH-LIVE-GAPS]`
+
+### Scope
+
+Continued from the v0 provenance matrix into concrete improvement gates. This pass did not change SIO LM scoring core, Rust damage formulas, WASM semantics, optimizer ranking semantics, or raw/debug UI exposure.
+
+### Changes
+
+- Reclassified SpongeBob, Squidward, and Yelena from unsupported rows to source-backed survivor schema rows.
+  - Evidence is the extracted runtime table plus Rust compact survivor transform.
+  - Confidence remains `sio-source-only`, not `sio-live-equivalent`, until targeted live and in-game description fixtures exist.
+- Added a mount damage source fixture artifact:
+  - `Doomsteed`: coefficient `0`, source-derived mountDamage stays zero.
+  - `Electric Scooter`: coefficient `77`, star 8 source-derived mountDamage `17710`.
+  - `Tech Hoverboard`: coefficient `100`, star 8 source-derived mountDamage `50000`.
+  - This is still source-only; current live compact captures do not prove non-zero `ceDamage.mount`.
+- Added a collectible effect mapping artifact with source key, Tangtang schema key, Rust channel/stage, confidence, and in-game description status.
+  - Total rows: 160.
+  - Source-backed named collectible items: 76.
+  - Catalog-only named collectible items: 4 (`Libra Starlight`, `Scorpio Starlight`, `Sagittarius Starlight`, `Capricorn Starlight`).
+  - Event placeholder rows: 42 catalog-only.
+  - Collectible set rows: 38, with 35 having source thresholds.
+  - Rows with special Rust equipment/tech mappings: 14.
+- Updated the provenance matrix:
+  - Total rows stay 367.
+  - Confidence totals are now `sio-live-equivalent`: 155, `sio-source-only`: 158, `catalog-only`: 54.
+  - No `unsupported-by-current-sio-source` rows remain in this matrix snapshot.
+
+### Remaining Formula Gaps
+
+- Non-SS weapons remain catalog-only. Current local evidence does not support promoting Void Power, Sword of Disorder, Lightchaser, Kunai, Baseball Bat, Katana, Shotgun, or Revolver to formula-backed rows.
+- Mount `mountDamage` still needs a non-empty live capture before formula-completeness claims.
+- Collectible item/set rows still need in-game description captures; this pass maps source/Rust channels but does not independently verify game text.
+- Generic aggregate paths remain non-authoritative for product scoring.
+
+### Verification Log
+
+- `node scripts/mount_damage_source_fixture_unit_test.mjs`: passed, 3 rows.
+- `node scripts/collectible_effect_mapping_matrix_unit_test.mjs`: passed, 160 rows.
+- `node scripts/damage_formula_provenance_matrix_unit_test.mjs`: passed, 367 rows.
+- `node scripts/v3_data_model_gt_test.mjs`: passed, 10 checks.
+- `node scripts/v3_player_state_builder_test.mjs`: passed, 23 checks.
+- `npx tsc --noEmit`: passed.
+- `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs`: passed.
+  - `fullSioEquivalent=true`
+  - `currentScorer=scorer=sio_full_lm_equivalence`
+  - `liveCaptureCount=26`
+  - `workerParity.arbitraryGeneratedLiveExpected=26/26`
+  - `G0/G1/G2/G3/G6=true`
+- `git diff --check`: passed.
+
+GitHub push/PR not performed.
+
 ## Tangtang Damage Formula Provenance Matrix Gate
 
 timestampKst: 2026-05-23T12:20:00+09:00
