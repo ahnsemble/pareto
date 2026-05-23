@@ -107,6 +107,21 @@ Key source/live counts:
 - Can claim SIO formula description-correct: `false`
 - Can apply Tangtang formula correction: `false`
 
+## Description Capture Import Gate
+
+- Capture inbox: `frontend/artifacts/td11/tangtang_description_capture_inbox.json`
+- Import matrix: `frontend/artifacts/td11/tangtang_description_capture_import_matrix.json`
+- Import protocol: `frontend/artifacts/td11/tangtang_description_capture_import_protocol.md`
+- Status: `[TANGTANG-DESCRIPTION-CAPTURE-IMPORT-GATE-READY]`
+- Claim: `description-capture-import-gate`
+- Capture inbox rows: 0
+- Parsed description formula rows: 0
+- Matched SIO rows: 0
+- Description/SIO divergence rows: 0
+- Observed damage follow-up rows: 0
+- Can run observed damage follow-up: `false`
+- Can apply Tangtang formula correction: `false`
+
 ## In-Game Damage Validation Gate
 
 - Validation matrix: `frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json`
@@ -143,6 +158,9 @@ Key source/live counts:
 - `frontend/artifacts/td11/sio_lm_equivalence_matrix.json`
 - `frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json`
 - `frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md`
+- `frontend/artifacts/td11/tangtang_description_capture_inbox.json`
+- `frontend/artifacts/td11/tangtang_description_capture_import_matrix.json`
+- `frontend/artifacts/td11/tangtang_description_capture_import_protocol.md`
 - `frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json`
 - `frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md`
 - `frontend/app/lib/pareto-store/schemas/index.ts`
@@ -152,6 +170,7 @@ Key source/live counts:
 ## Verification Commands
 
 - `node scripts/tangtang_damage_formula_spec_unit_test.mjs`
+- `node scripts/tangtang_description_capture_import_unit_test.mjs`
 - `node scripts/tangtang_description_formula_validation_unit_test.mjs`
 - `node scripts/tangtang_in_game_damage_validation_unit_test.mjs`
 - `node scripts/sio_tools_formula_source_evidence_unit_test.mjs`

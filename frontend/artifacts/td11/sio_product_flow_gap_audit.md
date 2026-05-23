@@ -1178,6 +1178,66 @@ Added the primary validation gate for the user-corrected flow: capture item/effe
 
 GitHub push/PR not performed.
 
+## Tangtang Description Capture Import Gate
+
+timestampKst: 2026-05-23T17:30:07+09:00
+status: `[TANGTANG-DESCRIPTION-CAPTURE-IMPORT-GATE-READY]`
+
+### Scope
+
+Added the import gate that accepts direct first-party item/effect in-game description capture rows, maps them to the deterministic formula atom ledger, compares parsed formula fields against current SIO/Tangtang handling, and routes only description-vs-SIO divergences to observed-damage follow-up. This pass does not add any first-party captures, does not claim SIO's formula is description-correct, does not apply Tangtang formula corrections, and does not change formula semantics, scoring core, Rust damage formulas, WASM scoring behavior, optimizer ranking, or user-facing UI.
+
+### Changes
+
+- Added `frontend/artifacts/td11/tangtang_description_capture_inbox.json`.
+- Added `frontend/artifacts/td11/tangtang_description_capture_import_matrix.json`.
+- Added `frontend/artifacts/td11/tangtang_description_capture_import_protocol.md`.
+- Added `frontend/scripts/tangtang_description_capture_import_unit_test.mjs`.
+- Updated `tangtang_damage_formula_spec.json` / `.md` and `damage_formula_provenance_matrix.md` to reference the capture import gate.
+- Updated the observed-damage validation gate to carry imported description divergence/follow-up counts.
+
+### Current Decision
+
+- Capture inbox rows: `0`.
+- Parsed description formula rows: `0`.
+- Matched SIO rows: `0`.
+- Description/SIO divergence rows: `0`.
+- Observed damage follow-up rows: `0`.
+- Can run observed damage follow-up: `false`.
+- Can apply Tangtang formula correction now: `false`.
+
+### Caveats
+
+- Only rows with `captureEvidenceTier=direct-first-party-description` and `sourceKind=direct-first-party-in-game` are eligible for import.
+- Public-web, SIO source-derived, OCR-only-without-raw-artifact, translated-only-without-original, and manual-inference rows are rejected as first-party proof.
+- Parsed formula fields must still be provided before a capture row can become a description-derived formula comparison row.
+- Divergence only opens follow-up confirmation; it still does not directly change Tangtang scoring.
+
+### Verification Log
+
+- `node scripts/tangtang_description_capture_import_unit_test.mjs`: passed, 0 capture rows.
+- `node scripts/tangtang_description_formula_validation_unit_test.mjs`: passed, 8 groups and 0 description formula rows.
+- `node scripts/tangtang_in_game_damage_validation_unit_test.mjs`: passed, 9 trial groups and 0 direct trials.
+- `node scripts/tangtang_damage_formula_spec_unit_test.mjs`: passed, 25 stages.
+- `node scripts/sio_tools_formula_source_evidence_unit_test.mjs`: passed, 4,650 source leaves.
+- `node scripts/damage_formula_provenance_matrix_unit_test.mjs`: passed, 367 rows.
+- `node scripts/in_game_description_evidence_unit_test.mjs`: passed, 6 rows.
+- `node scripts/sio_tools_live_evidence_matrix_unit_test.mjs`: passed, 20 rows.
+- `node scripts/sio_tools_targeted_live_evidence_unit_test.mjs`: passed, 5 rows.
+- `node scripts/mount_damage_source_fixture_unit_test.mjs`: passed, 3 rows.
+- `node scripts/collectible_effect_mapping_matrix_unit_test.mjs`: passed, 160 rows.
+- `node scripts/generic_aggregate_non_authority_gate.mjs`: passed, 4 rows.
+- `npx tsc --noEmit`: passed.
+- `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs`: passed.
+  - `fullSioEquivalent=true`
+  - `currentScorer=scorer=sio_full_lm_equivalence`
+  - `liveCaptureCount=26`
+  - `workerParity.arbitraryGeneratedLiveExpected=26/26`
+  - `G0/G1/G2/G3/G6=true`
+- `git diff --check`: passed.
+
+GitHub push/PR not performed.
+
 ## Tangtang In-Game Damage Validation Gate
 
 timestampKst: 2026-05-23T15:46:29+09:00

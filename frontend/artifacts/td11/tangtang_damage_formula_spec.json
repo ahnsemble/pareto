@@ -1,6 +1,9 @@
 {
   "artifactPaths": {
     "audit": "frontend/artifacts/td11/sio_product_flow_gap_audit.md",
+    "descriptionCaptureImportMatrix": "frontend/artifacts/td11/tangtang_description_capture_import_matrix.json",
+    "descriptionCaptureImportProtocol": "frontend/artifacts/td11/tangtang_description_capture_import_protocol.md",
+    "descriptionCaptureInbox": "frontend/artifacts/td11/tangtang_description_capture_inbox.json",
     "descriptionFormulaValidationMatrix": "frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json",
     "descriptionFormulaValidationProtocol": "frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md",
     "inGameDamageValidationMatrix": "frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json",
@@ -23,6 +26,20 @@
   ],
   "claim": "sio-tools-equivalent",
   "currentScorer": "sio_full_lm_equivalence",
+  "descriptionCaptureImportGate": {
+    "canApplyTangtangFormulaCorrection": false,
+    "canRunObservedDamageFollowUp": false,
+    "captureInboxRows": 0,
+    "claim": "description-capture-import-gate",
+    "descriptionSioDivergenceRows": 0,
+    "inboxPath": "frontend/artifacts/td11/tangtang_description_capture_inbox.json",
+    "matchedSioRows": 0,
+    "matrixPath": "frontend/artifacts/td11/tangtang_description_capture_import_matrix.json",
+    "observedDamageFollowUpRows": 0,
+    "parsedDescriptionFormulaRows": 0,
+    "protocolPath": "frontend/artifacts/td11/tangtang_description_capture_import_protocol.md",
+    "status": "[TANGTANG-DESCRIPTION-CAPTURE-IMPORT-GATE-READY]"
+  },
   "descriptionFormulaValidationGate": {
     "canApplyTangtangFormulaCorrection": false,
     "canClaimSioFormulaDescriptionCorrect": false,
@@ -281,6 +298,9 @@
     "frontend/artifacts/td11/sio_lm_equivalence_matrix.json",
     "frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json",
     "frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md",
+    "frontend/artifacts/td11/tangtang_description_capture_inbox.json",
+    "frontend/artifacts/td11/tangtang_description_capture_import_matrix.json",
+    "frontend/artifacts/td11/tangtang_description_capture_import_protocol.md",
     "frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json",
     "frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md",
     "frontend/app/lib/pareto-store/schemas/index.ts",
@@ -1330,6 +1350,7 @@
   },
   "verificationCommands": [
     "node scripts/tangtang_damage_formula_spec_unit_test.mjs",
+    "node scripts/tangtang_description_capture_import_unit_test.mjs",
     "node scripts/tangtang_description_formula_validation_unit_test.mjs",
     "node scripts/tangtang_in_game_damage_validation_unit_test.mjs",
     "node scripts/sio_tools_formula_source_evidence_unit_test.mjs",

@@ -12,6 +12,8 @@ const SOURCE_INPUTS = [
   'frontend/artifacts/td11/tangtang_damage_formula_spec.md',
   'frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json',
   'frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md',
+  'frontend/artifacts/td11/tangtang_description_capture_import_matrix.json',
+  'frontend/artifacts/td11/tangtang_description_capture_import_protocol.md',
   'frontend/artifacts/td11/damage_formula_provenance_matrix.md',
   'frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json',
   'frontend/artifacts/td11/sio_tools_live_evidence_matrix.json',
@@ -158,6 +160,8 @@ const [
   formulaSpecMarkdown,
   descriptionFormulaValidation,
   descriptionFormulaValidationProtocol,
+  descriptionCaptureImport,
+  descriptionCaptureImportProtocol,
   provenanceMatrix,
   sourceEvidence,
   liveEvidence,
@@ -172,6 +176,8 @@ const [
   readText('frontend/artifacts/td11/tangtang_damage_formula_spec.md'),
   readJson('frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json'),
   readText('frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md'),
+  readJson('frontend/artifacts/td11/tangtang_description_capture_import_matrix.json'),
+  readText('frontend/artifacts/td11/tangtang_description_capture_import_protocol.md'),
   readText('frontend/artifacts/td11/damage_formula_provenance_matrix.md'),
   readJson('frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json'),
   readJson('frontend/artifacts/td11/sio_tools_live_evidence_matrix.json'),
@@ -209,6 +215,9 @@ function buildMatrix() {
       directFirstPartyDescriptionFormulaRows:
         descriptionFormulaValidation.validationScope.directFirstPartyDescriptionFormulaRows,
       descriptionDivergenceRows: descriptionFormulaValidation.divergenceRows.length,
+      importedDescriptionCaptureRows: descriptionCaptureImport.summary.importedCaptureRows,
+      importedDescriptionDivergenceRows: descriptionCaptureImport.summary.descriptionSioDivergenceRows,
+      importedObservedDamageFollowUpRows: descriptionCaptureImport.summary.observedDamageFollowUpRows,
       directObservedDamageTrialCount: directObservedDamageTrials.length,
       directFirstPartyDescriptionVerifiedRows: formulaSpec.summaryCounts.inGameDescriptionVerifiedRows,
       fullSioEquivalent: equivalenceMatrix.fullSioEquivalent,
@@ -280,6 +289,9 @@ function buildMatrix() {
       directFirstPartyDescriptionFormulaRows:
         descriptionFormulaValidation.validationScope.directFirstPartyDescriptionFormulaRows,
       descriptionDivergenceRows: descriptionFormulaValidation.divergenceRows.length,
+      importedDescriptionCaptureRows: descriptionCaptureImport.summary.importedCaptureRows,
+      importedDescriptionDivergenceRows: descriptionCaptureImport.summary.descriptionSioDivergenceRows,
+      importedObservedDamageFollowUpRows: descriptionCaptureImport.summary.observedDamageFollowUpRows,
       formulaSpecStatus: formulaSpec.status,
       formulaSpecClaim: formulaSpec.claim,
       formulaSpecBehaviorChange: formulaSpec.behaviorChange,
@@ -313,6 +325,7 @@ function buildMatrix() {
     ],
     verificationCommands: [
       'node scripts/tangtang_description_formula_validation_unit_test.mjs',
+      'node scripts/tangtang_description_capture_import_unit_test.mjs',
       'node scripts/tangtang_in_game_damage_validation_unit_test.mjs',
       'node scripts/tangtang_damage_formula_spec_unit_test.mjs',
       'node scripts/damage_formula_provenance_matrix_unit_test.mjs',
@@ -328,6 +341,8 @@ function buildMatrix() {
       descriptionFormulaValidationMatrix: 'frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json',
       descriptionFormulaValidationProtocol:
         'frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md',
+      descriptionCaptureImportMatrix: 'frontend/artifacts/td11/tangtang_description_capture_import_matrix.json',
+      descriptionCaptureImportProtocol: 'frontend/artifacts/td11/tangtang_description_capture_import_protocol.md',
       formulaSpecJson: 'frontend/artifacts/td11/tangtang_damage_formula_spec.json',
       formulaSpecMarkdown: 'frontend/artifacts/td11/tangtang_damage_formula_spec.md',
       provenanceMatrix: 'frontend/artifacts/td11/damage_formula_provenance_matrix.md',
@@ -370,6 +385,9 @@ Current decision:
 - Description formula validation status: \`${matrix.validationScope.descriptionFormulaValidationStatus}\`
 - Direct first-party description-derived formula rows: ${matrix.validationScope.directFirstPartyDescriptionFormulaRows}
 - Description/SIO divergence rows: ${matrix.validationScope.descriptionDivergenceRows}
+- Imported description capture rows: ${matrix.validationScope.importedDescriptionCaptureRows}
+- Imported description/SIO divergence rows: ${matrix.validationScope.importedDescriptionDivergenceRows}
+- Imported observed damage follow-up rows: ${matrix.validationScope.importedObservedDamageFollowUpRows}
 - SIO formula in-game correctness claim: \`${matrix.validationScope.currentInGameCorrectnessClaim}\`
 - Direct observed in-game damage trials: ${matrix.validationScope.directObservedDamageTrialCount}
 - Direct first-party description verified rows: ${matrix.validationScope.directFirstPartyDescriptionVerifiedRows}
@@ -407,6 +425,9 @@ ${renderTrialGroupTable(matrix.trialGroups)}
 - Description formula validation claim: \`${matrix.currentEvidenceSummary.descriptionFormulaValidationClaim}\`
 - Direct first-party description-derived formula rows: ${matrix.currentEvidenceSummary.directFirstPartyDescriptionFormulaRows}
 - Description/SIO divergence rows: ${matrix.currentEvidenceSummary.descriptionDivergenceRows}
+- Imported description capture rows: ${matrix.currentEvidenceSummary.importedDescriptionCaptureRows}
+- Imported description/SIO divergence rows: ${matrix.currentEvidenceSummary.importedDescriptionDivergenceRows}
+- Imported observed damage follow-up rows: ${matrix.currentEvidenceSummary.importedObservedDamageFollowUpRows}
 - Formula behavior change: \`${matrix.currentEvidenceSummary.formulaSpecBehaviorChange}\`
 - Raw source stat leaves: ${matrix.currentEvidenceSummary.rawSourceLeafRows}
 - Live capture count: ${matrix.currentEvidenceSummary.liveCaptureCount}
@@ -439,6 +460,8 @@ Description formula validation artifacts:
 
 - \`${matrix.artifactPaths.descriptionFormulaValidationMatrix}\`
 - \`${matrix.artifactPaths.descriptionFormulaValidationProtocol}\`
+- \`${matrix.artifactPaths.descriptionCaptureImportMatrix}\`
+- \`${matrix.artifactPaths.descriptionCaptureImportProtocol}\`
 
 ## Verification Commands
 
@@ -459,6 +482,9 @@ assert.equal(matrix.validationScope.primaryValidationLayer, 'description-derived
 assert.equal(matrix.validationScope.observedDamageValidationLayer, 'follow-up-divergence-check-only');
 assert.equal(matrix.validationScope.directFirstPartyDescriptionFormulaRows, 0);
 assert.equal(matrix.validationScope.descriptionDivergenceRows, 0);
+assert.equal(matrix.validationScope.importedDescriptionCaptureRows, 0);
+assert.equal(matrix.validationScope.importedDescriptionDivergenceRows, 0);
+assert.equal(matrix.validationScope.importedObservedDamageFollowUpRows, 0);
 assert.equal(matrix.validationScope.directObservedDamageTrialCount, 0);
 assert.equal(matrix.validationScope.directFirstPartyDescriptionVerifiedRows, 0);
 assert.equal(matrix.validationScope.fullSioEquivalent, true);
@@ -480,6 +506,9 @@ assert.equal(matrix.currentEvidenceSummary.nonZeroMountDamageLiveRows, 2);
 assert.equal(matrix.currentEvidenceSummary.collectibleThresholdRows, 170);
 assert.equal(matrix.currentEvidenceSummary.collectibleSpecialRustMappings, 14);
 assert.equal(matrix.currentEvidenceSummary.directInGameDescriptionVerifiedRows, 0);
+assert.equal(matrix.currentEvidenceSummary.importedDescriptionCaptureRows, 0);
+assert.equal(matrix.currentEvidenceSummary.importedDescriptionDivergenceRows, 0);
+assert.equal(matrix.currentEvidenceSummary.importedObservedDamageFollowUpRows, 0);
 assert.equal(matrix.directObservedDamageTrials.length, 0);
 assert.ok(matrix.trialGroups.length >= 8, 'high-risk in-game validation trial groups must stay explicit');
 assert.ok(matrix.trialGroups.some((group) => group.id === 'skill-damage-stage-order'));
@@ -490,6 +519,7 @@ assert.ok(provenanceMatrix.includes('Formula derivation is now available'));
 assert.ok(protocol.includes('Tangtang may improve beyond SIO in principle'));
 assert.ok(protocol.includes('Direct observed in-game damage trials: 0'));
 assert.ok(protocol.includes('observed damage trials are a follow-up divergence check'));
+assert.ok(descriptionCaptureImportProtocol.includes('Capture inbox rows: 0'));
 assert.ok(protocol.includes('SIO Tools-equivalent claim'));
 
 if (writeMode) {

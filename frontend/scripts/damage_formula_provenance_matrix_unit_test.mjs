@@ -147,6 +147,19 @@ const tangtangDescriptionFormulaValidationProtocol = await fs.readFile(
   tangtangDescriptionFormulaValidationProtocolPath,
   'utf8',
 );
+const tangtangDescriptionCaptureImportPath = path.join(
+  root,
+  'artifacts/td11/tangtang_description_capture_import_matrix.json',
+);
+const tangtangDescriptionCaptureImport = JSON.parse(await fs.readFile(tangtangDescriptionCaptureImportPath, 'utf8'));
+const tangtangDescriptionCaptureImportProtocolPath = path.join(
+  root,
+  'artifacts/td11/tangtang_description_capture_import_protocol.md',
+);
+const tangtangDescriptionCaptureImportProtocol = await fs.readFile(
+  tangtangDescriptionCaptureImportProtocolPath,
+  'utf8',
+);
 const tangtangInGameDamageValidationPath = path.join(root, 'artifacts/td11/tangtang_in_game_damage_validation_matrix.json');
 const tangtangInGameDamageValidation = JSON.parse(await fs.readFile(tangtangInGameDamageValidationPath, 'utf8'));
 
@@ -637,6 +650,51 @@ assert.ok(
   tangtangDescriptionFormulaValidationProtocol.includes('This is the primary next validation layer'),
   'description validation protocol must state it is the primary next validation layer',
 );
+assert.equal(
+  tangtangDescriptionCaptureImport.status,
+  '[TANGTANG-DESCRIPTION-CAPTURE-IMPORT-GATE-READY]',
+  'description capture import gate status changed',
+);
+assert.equal(
+  tangtangDescriptionCaptureImport.claim,
+  'description-capture-import-gate',
+  'description capture import gate claim changed',
+);
+assert.equal(tangtangDescriptionCaptureImport.summary.captureInboxRows, 0, 'capture inbox must start empty');
+assert.equal(
+  tangtangDescriptionCaptureImport.summary.parsedDescriptionFormulaRows,
+  0,
+  'description capture import must not create parsed rows without captures',
+);
+assert.equal(
+  tangtangDescriptionCaptureImport.summary.descriptionSioDivergenceRows,
+  0,
+  'description capture import divergence rows must start at zero',
+);
+assert.equal(
+  tangtangDescriptionCaptureImport.summary.observedDamageFollowUpRows,
+  0,
+  'description capture import must not open observed-damage follow-up without divergence',
+);
+assert.equal(
+  tangtangDescriptionCaptureImport.decisionPolicy.canApplyTangtangFormulaCorrection,
+  false,
+  'description capture import cannot apply Tangtang formula corrections',
+);
+assert.equal(
+  tangtangDescriptionCaptureImport.decisionPolicy.canRunObservedDamageFollowUp,
+  false,
+  'description capture import cannot run observed damage follow-up without imported divergence',
+);
+assert.equal(
+  tangtangDescriptionCaptureImport.atomLedgerContract.formulaAtomRows,
+  221,
+  'description capture import must use the current atom ledger',
+);
+assert.ok(
+  tangtangDescriptionCaptureImportProtocol.includes('Capture inbox rows: 0'),
+  'description capture import protocol must show the empty capture state',
+);
 assert.equal(tangtangInGameDamageValidation.status, '[TANGTANG-IN-GAME-DAMAGE-VALIDATION-PROTOCOL-READY]', 'in-game damage validation gate status changed');
 assert.equal(tangtangInGameDamageValidation.claim, 'in-game-validation-protocol', 'in-game damage validation gate claim changed');
 assert.equal(tangtangInGameDamageValidation.behaviorChange, false, 'in-game damage validation gate cannot imply behavior changes');
@@ -863,6 +921,9 @@ Confidence values:
   - \`frontend/artifacts/td11/tangtang_damage_formula_spec.md\`
   - \`frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json\`
   - \`frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md\`
+  - \`frontend/artifacts/td11/tangtang_description_capture_inbox.json\`
+  - \`frontend/artifacts/td11/tangtang_description_capture_import_matrix.json\`
+  - \`frontend/artifacts/td11/tangtang_description_capture_import_protocol.md\`
   - \`frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json\`
   - \`frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md\`
   - \`frontend/artifacts/td11/sio_tools_live_evidence_matrix.json\`
@@ -927,6 +988,23 @@ ${renderCountTable(countBy('confidence'))}
 - Can claim SIO formula description-correct: \`${tangtangDescriptionFormulaValidation.decisionPolicy.canClaimSioFormulaDescriptionCorrect}\`
 - Can apply Tangtang formula correction: \`${tangtangDescriptionFormulaValidation.decisionPolicy.canApplyTangtangFormulaCorrection}\`
 - Observed damage validation role: ${tangtangDescriptionFormulaValidation.decisionPolicy.observedDamageValidationRole}
+- Formula/scoring/UI behavior did not change.
+
+## Description Capture Import Gate
+
+- Direct first-party description capture import is now tracked separately from source/live atom construction:
+  - \`frontend/artifacts/td11/tangtang_description_capture_inbox.json\`
+  - \`frontend/artifacts/td11/tangtang_description_capture_import_matrix.json\`
+  - \`frontend/artifacts/td11/tangtang_description_capture_import_protocol.md\`
+- Gate status: \`${tangtangDescriptionCaptureImport.status}\`
+- Gate claim: \`${tangtangDescriptionCaptureImport.claim}\`
+- Capture inbox rows: ${tangtangDescriptionCaptureImport.summary.captureInboxRows}
+- Parsed description formula rows: ${tangtangDescriptionCaptureImport.summary.parsedDescriptionFormulaRows}
+- Matched SIO rows: ${tangtangDescriptionCaptureImport.summary.matchedSioRows}
+- Description/SIO divergence rows: ${tangtangDescriptionCaptureImport.summary.descriptionSioDivergenceRows}
+- Observed damage follow-up rows: ${tangtangDescriptionCaptureImport.summary.observedDamageFollowUpRows}
+- Can run observed damage follow-up: \`${tangtangDescriptionCaptureImport.decisionPolicy.canRunObservedDamageFollowUp}\`
+- Can apply Tangtang formula correction: \`${tangtangDescriptionCaptureImport.decisionPolicy.canApplyTangtangFormulaCorrection}\`
 - Formula/scoring/UI behavior did not change.
 
 ## In-Game Damage Validation Gate

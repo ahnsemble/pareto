@@ -16,6 +16,9 @@ Current decision:
 - Description formula validation status: `[TANGTANG-DESCRIPTION-FORMULA-VALIDATION-PROTOCOL-READY]`
 - Direct first-party description-derived formula rows: 0
 - Description/SIO divergence rows: 0
+- Imported description capture rows: 0
+- Imported description/SIO divergence rows: 0
+- Imported observed damage follow-up rows: 0
 - SIO formula in-game correctness claim: `not-established`
 - Direct observed in-game damage trials: 0
 - Direct first-party description verified rows: 0
@@ -82,6 +85,9 @@ Replication requirement: A prior description-vs-SIO divergence needs at least th
 - Description formula validation claim: `description-derived-formula-validation-protocol`
 - Direct first-party description-derived formula rows: 0
 - Description/SIO divergence rows: 0
+- Imported description capture rows: 0
+- Imported description/SIO divergence rows: 0
+- Imported observed damage follow-up rows: 0
 - Formula behavior change: `false`
 - Raw source stat leaves: 4650
 - Live capture count: 26
@@ -125,6 +131,8 @@ Current correction status: `blocked-description-derived-formula-validation-incom
 - `frontend/artifacts/td11/tangtang_damage_formula_spec.md`
 - `frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json`
 - `frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md`
+- `frontend/artifacts/td11/tangtang_description_capture_import_matrix.json`
+- `frontend/artifacts/td11/tangtang_description_capture_import_protocol.md`
 - `frontend/artifacts/td11/damage_formula_provenance_matrix.md`
 - `frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json`
 - `frontend/artifacts/td11/sio_tools_live_evidence_matrix.json`
@@ -139,10 +147,13 @@ Description formula validation artifacts:
 
 - `frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json`
 - `frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md`
+- `frontend/artifacts/td11/tangtang_description_capture_import_matrix.json`
+- `frontend/artifacts/td11/tangtang_description_capture_import_protocol.md`
 
 ## Verification Commands
 
 - `node scripts/tangtang_description_formula_validation_unit_test.mjs`
+- `node scripts/tangtang_description_capture_import_unit_test.mjs`
 - `node scripts/tangtang_in_game_damage_validation_unit_test.mjs`
 - `node scripts/tangtang_damage_formula_spec_unit_test.mjs`
 - `node scripts/damage_formula_provenance_matrix_unit_test.mjs`

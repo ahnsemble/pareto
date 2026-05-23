@@ -1,0 +1,105 @@
+{
+  "artifactPaths": {
+    "atomLedger": "frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json",
+    "inbox": "frontend/artifacts/td11/tangtang_description_capture_inbox.json",
+    "matrix": "frontend/artifacts/td11/tangtang_description_capture_import_matrix.json",
+    "protocol": "frontend/artifacts/td11/tangtang_description_capture_import_protocol.md",
+    "script": "frontend/scripts/tangtang_description_capture_import_unit_test.mjs"
+  },
+  "atomLedgerContract": {
+    "collectibleSpecialRustMappingAtomRows": 14,
+    "collectibleThresholdAtomRows": 170,
+    "formulaAtomRows": 221,
+    "graphMode": "deterministic-atom-ledger-not-graphrag",
+    "mountAtomRows": 26,
+    "stageBucketTaxonomyRows": 25,
+    "survivorAtomRows": 11
+  },
+  "behaviorChange": false,
+  "captureInput": {
+    "captureEvidenceTierRequired": "direct-first-party-description",
+    "path": "frontend/artifacts/td11/tangtang_description_capture_inbox.json",
+    "requiredFields": [
+      "captureId",
+      "atomRowId",
+      "captureDateKst",
+      "gameVersion",
+      "sourceKind",
+      "captureEvidenceTier",
+      "language",
+      "descriptionTextOriginal",
+      "rawCaptureArtifactPaths",
+      "parsedFormulaOperation",
+      "parsedFormulaValue",
+      "operationBucket",
+      "conditionOrThreshold",
+      "rustStatChannel",
+      "multiplierStage"
+    ],
+    "rows": [],
+    "sourceKindRequired": "direct-first-party-in-game"
+  },
+  "claim": "description-capture-import-gate",
+  "decisionPolicy": {
+    "canApplyTangtangFormulaCorrection": false,
+    "canClaimSioFormulaDescriptionCorrect": false,
+    "canRunObservedDamageFollowUp": false,
+    "currentDescriptionFormulaCorrectnessClaim": "not-established",
+    "userFacingClaimLimit": "No user-facing formula correctness claim may be made from capture imports until direct first-party rows are parsed and compared."
+  },
+  "equivalenceContract": {
+    "currentScorer": "sio_full_lm_equivalence",
+    "fullSioEquivalent": true,
+    "scorer": "sio_full_lm_equivalence"
+  },
+  "generatedAtKst": "2026-05-23",
+  "importedCaptureRows": [],
+  "importPolicy": {
+    "acceptedCaptureEvidenceTier": "direct-first-party-description",
+    "acceptedSourceKind": "direct-first-party-in-game",
+    "automaticScoringChangeAllowed": false,
+    "matchingMode": "explicit atomRowId only",
+    "observedDamageFollowUpAllowedOnlyFor": "description-sio-divergent-needs-confirmation",
+    "purpose": "Import first-party item/effect description captures into formula atom rows, compare parsed formula fields against current SIO/Tangtang handling, and route only divergences to observed-damage follow-up.",
+    "rejectedCaptureEvidenceTiers": [
+      "public-web-corroborated",
+      "sio-tools-current-source-derived",
+      "ocr-only-without-raw-artifact",
+      "translated-only-without-original"
+    ],
+    "rejectedSourceKinds": [
+      "public-web",
+      "sio-source-derived",
+      "manual-inference"
+    ]
+  },
+  "sourceInputs": [
+    "frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json",
+    "frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md",
+    "frontend/artifacts/td11/tangtang_damage_formula_spec.json",
+    "frontend/artifacts/td11/sio_lm_equivalence_matrix.json",
+    "frontend/artifacts/td11/tangtang_description_capture_inbox.json"
+  ],
+  "status": "[TANGTANG-DESCRIPTION-CAPTURE-IMPORT-GATE-READY]",
+  "summary": {
+    "acceptedCaptureRows": 0,
+    "ambiguousRows": 0,
+    "captureInboxRows": 0,
+    "correctionEligibleRows": 0,
+    "descriptionSioDivergenceRows": 0,
+    "importedCaptureRows": 0,
+    "matchedSioRows": 0,
+    "observedDamageFollowUpRows": 0,
+    "parsedDescriptionFormulaRows": 0,
+    "rejectedCaptureRows": 0
+  },
+  "title": "Tangtang Description Capture Import Gate",
+  "verificationCommands": [
+    "node scripts/tangtang_description_capture_import_unit_test.mjs",
+    "node scripts/tangtang_description_formula_validation_unit_test.mjs",
+    "node scripts/tangtang_damage_formula_spec_unit_test.mjs",
+    "node scripts/damage_formula_provenance_matrix_unit_test.mjs",
+    "SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs",
+    "git diff --check"
+  ]
+}

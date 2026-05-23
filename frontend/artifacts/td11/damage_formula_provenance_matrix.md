@@ -28,6 +28,9 @@ Confidence values:
   - `frontend/artifacts/td11/tangtang_damage_formula_spec.md`
   - `frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json`
   - `frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md`
+  - `frontend/artifacts/td11/tangtang_description_capture_inbox.json`
+  - `frontend/artifacts/td11/tangtang_description_capture_import_matrix.json`
+  - `frontend/artifacts/td11/tangtang_description_capture_import_protocol.md`
   - `frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json`
   - `frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md`
   - `frontend/artifacts/td11/sio_tools_live_evidence_matrix.json`
@@ -110,6 +113,23 @@ Confidence values:
 - Can claim SIO formula description-correct: `false`
 - Can apply Tangtang formula correction: `false`
 - Observed damage validation role: Observed damage validation is secondary confirmation for description-vs-SIO divergences, not the first validation layer.
+- Formula/scoring/UI behavior did not change.
+
+## Description Capture Import Gate
+
+- Direct first-party description capture import is now tracked separately from source/live atom construction:
+  - `frontend/artifacts/td11/tangtang_description_capture_inbox.json`
+  - `frontend/artifacts/td11/tangtang_description_capture_import_matrix.json`
+  - `frontend/artifacts/td11/tangtang_description_capture_import_protocol.md`
+- Gate status: `[TANGTANG-DESCRIPTION-CAPTURE-IMPORT-GATE-READY]`
+- Gate claim: `description-capture-import-gate`
+- Capture inbox rows: 0
+- Parsed description formula rows: 0
+- Matched SIO rows: 0
+- Description/SIO divergence rows: 0
+- Observed damage follow-up rows: 0
+- Can run observed damage follow-up: `false`
+- Can apply Tangtang formula correction: `false`
 - Formula/scoring/UI behavior did not change.
 
 ## In-Game Damage Validation Gate

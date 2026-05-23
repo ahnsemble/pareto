@@ -1,0 +1,29 @@
+{
+  "behaviorChange": false,
+  "generatedAtKst": "2026-05-23",
+  "notes": [
+    "Only direct first-party in-game UI screenshots, videos, or first-party data exports should be entered here.",
+    "Public-web text, SIO source rows, and inferred source descriptions must not be entered as direct first-party capture rows.",
+    "Adding rows here does not change Tangtang scoring; it only enables description-vs-SIO comparison."
+  ],
+  "purpose": "Manual inbox for direct first-party item/effect in-game description captures before importing them into the formula atom ledger.",
+  "requiredFields": [
+    "captureId",
+    "atomRowId",
+    "captureDateKst",
+    "gameVersion",
+    "sourceKind",
+    "language",
+    "descriptionTextOriginal",
+    "rawCaptureArtifactPaths",
+    "parsedFormulaOperation",
+    "parsedFormulaValue",
+    "operationBucket",
+    "conditionOrThreshold",
+    "rustStatChannel",
+    "multiplierStage"
+  ],
+  "rows": [],
+  "status": "[TANGTANG-DESCRIPTION-CAPTURE-INBOX-EMPTY]",
+  "title": "Tangtang Description Capture Inbox"
+}

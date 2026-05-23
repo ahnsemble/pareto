@@ -24,6 +24,9 @@ const REQUIRED_SOURCE_INPUTS = [
   'frontend/artifacts/td11/sio_lm_equivalence_matrix.json',
   'frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json',
   'frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md',
+  'frontend/artifacts/td11/tangtang_description_capture_inbox.json',
+  'frontend/artifacts/td11/tangtang_description_capture_import_matrix.json',
+  'frontend/artifacts/td11/tangtang_description_capture_import_protocol.md',
   'frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json',
   'frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md',
   'frontend/app/lib/pareto-store/schemas/index.ts',
@@ -248,6 +251,8 @@ const [
   equivalenceMatrix,
   descriptionFormulaValidationMatrix,
   descriptionFormulaValidationProtocol,
+  descriptionCaptureImportMatrix,
+  descriptionCaptureImportProtocol,
   inGameDamageValidationMatrix,
   inGameDamageValidationProtocol,
 ] = await Promise.all([
@@ -263,6 +268,8 @@ const [
   readJson('frontend/artifacts/td11/sio_lm_equivalence_matrix.json'),
   readJson('frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json'),
   readText('frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md'),
+  readJson('frontend/artifacts/td11/tangtang_description_capture_import_matrix.json'),
+  readText('frontend/artifacts/td11/tangtang_description_capture_import_protocol.md'),
   readJson('frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json'),
   readText('frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md'),
 ]);
@@ -556,6 +563,22 @@ function buildSpec() {
       canApplyTangtangFormulaCorrection:
         descriptionFormulaValidationMatrix.decisionPolicy.canApplyTangtangFormulaCorrection,
     },
+    descriptionCaptureImportGate: {
+      status: descriptionCaptureImportMatrix.status,
+      claim: descriptionCaptureImportMatrix.claim,
+      inboxPath: 'frontend/artifacts/td11/tangtang_description_capture_inbox.json',
+      matrixPath: 'frontend/artifacts/td11/tangtang_description_capture_import_matrix.json',
+      protocolPath: 'frontend/artifacts/td11/tangtang_description_capture_import_protocol.md',
+      captureInboxRows: descriptionCaptureImportMatrix.summary.captureInboxRows,
+      parsedDescriptionFormulaRows: descriptionCaptureImportMatrix.summary.parsedDescriptionFormulaRows,
+      matchedSioRows: descriptionCaptureImportMatrix.summary.matchedSioRows,
+      descriptionSioDivergenceRows: descriptionCaptureImportMatrix.summary.descriptionSioDivergenceRows,
+      observedDamageFollowUpRows: descriptionCaptureImportMatrix.summary.observedDamageFollowUpRows,
+      canRunObservedDamageFollowUp:
+        descriptionCaptureImportMatrix.decisionPolicy.canRunObservedDamageFollowUp,
+      canApplyTangtangFormulaCorrection:
+        descriptionCaptureImportMatrix.decisionPolicy.canApplyTangtangFormulaCorrection,
+    },
     inGameDamageValidationGate: {
       status: inGameDamageValidationMatrix.status,
       claim: inGameDamageValidationMatrix.claim,
@@ -604,6 +627,7 @@ function buildSpec() {
     caveats: CAVEATS,
     verificationCommands: [
       'node scripts/tangtang_damage_formula_spec_unit_test.mjs',
+      'node scripts/tangtang_description_capture_import_unit_test.mjs',
       'node scripts/tangtang_description_formula_validation_unit_test.mjs',
       'node scripts/tangtang_in_game_damage_validation_unit_test.mjs',
       'node scripts/sio_tools_formula_source_evidence_unit_test.mjs',
@@ -625,6 +649,9 @@ function buildSpec() {
       descriptionFormulaValidationMatrix: 'frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json',
       descriptionFormulaValidationProtocol:
         'frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md',
+      descriptionCaptureInbox: 'frontend/artifacts/td11/tangtang_description_capture_inbox.json',
+      descriptionCaptureImportMatrix: 'frontend/artifacts/td11/tangtang_description_capture_import_matrix.json',
+      descriptionCaptureImportProtocol: 'frontend/artifacts/td11/tangtang_description_capture_import_protocol.md',
       inGameDamageValidationMatrix: 'frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json',
       inGameDamageValidationProtocol: 'frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md',
       provenanceMatrix: 'frontend/artifacts/td11/damage_formula_provenance_matrix.md',
@@ -729,6 +756,21 @@ ${spec.caveats.map((item) => `- ${item}`).join('\n')}
 - Can claim SIO formula description-correct: \`${spec.descriptionFormulaValidationGate.canClaimSioFormulaDescriptionCorrect}\`
 - Can apply Tangtang formula correction: \`${spec.descriptionFormulaValidationGate.canApplyTangtangFormulaCorrection}\`
 
+## Description Capture Import Gate
+
+- Capture inbox: \`${spec.descriptionCaptureImportGate.inboxPath}\`
+- Import matrix: \`${spec.descriptionCaptureImportGate.matrixPath}\`
+- Import protocol: \`${spec.descriptionCaptureImportGate.protocolPath}\`
+- Status: \`${spec.descriptionCaptureImportGate.status}\`
+- Claim: \`${spec.descriptionCaptureImportGate.claim}\`
+- Capture inbox rows: ${spec.descriptionCaptureImportGate.captureInboxRows}
+- Parsed description formula rows: ${spec.descriptionCaptureImportGate.parsedDescriptionFormulaRows}
+- Matched SIO rows: ${spec.descriptionCaptureImportGate.matchedSioRows}
+- Description/SIO divergence rows: ${spec.descriptionCaptureImportGate.descriptionSioDivergenceRows}
+- Observed damage follow-up rows: ${spec.descriptionCaptureImportGate.observedDamageFollowUpRows}
+- Can run observed damage follow-up: \`${spec.descriptionCaptureImportGate.canRunObservedDamageFollowUp}\`
+- Can apply Tangtang formula correction: \`${spec.descriptionCaptureImportGate.canApplyTangtangFormulaCorrection}\`
+
 ## In-Game Damage Validation Gate
 
 - Validation matrix: \`${spec.inGameDamageValidationGate.matrixPath}\`
@@ -799,6 +841,16 @@ assert.equal(spec.descriptionFormulaValidationGate.canClaimSioFormulaDescription
 assert.equal(spec.descriptionFormulaValidationGate.canApplyTangtangFormulaCorrection, false);
 assert.ok(spec.descriptionFormulaValidationGate.observedDamageValidationRole.includes('secondary confirmation'));
 assert.ok(spec.descriptionFormulaValidationGate.observedDamageValidationRole.includes('not the first validation layer'));
+assert.equal(spec.descriptionCaptureImportGate.status, '[TANGTANG-DESCRIPTION-CAPTURE-IMPORT-GATE-READY]');
+assert.equal(spec.descriptionCaptureImportGate.claim, 'description-capture-import-gate');
+assert.equal(spec.descriptionCaptureImportGate.captureInboxRows, 0);
+assert.equal(spec.descriptionCaptureImportGate.parsedDescriptionFormulaRows, 0);
+assert.equal(spec.descriptionCaptureImportGate.matchedSioRows, 0);
+assert.equal(spec.descriptionCaptureImportGate.descriptionSioDivergenceRows, 0);
+assert.equal(spec.descriptionCaptureImportGate.observedDamageFollowUpRows, 0);
+assert.equal(spec.descriptionCaptureImportGate.canRunObservedDamageFollowUp, false);
+assert.equal(spec.descriptionCaptureImportGate.canApplyTangtangFormulaCorrection, false);
+assert.ok(descriptionCaptureImportProtocol.includes('Capture inbox rows: 0'));
 assert.equal(spec.inGameDamageValidationGate.status, '[TANGTANG-IN-GAME-DAMAGE-VALIDATION-PROTOCOL-READY]');
 assert.equal(spec.inGameDamageValidationGate.claim, 'in-game-validation-protocol');
 assert.equal(spec.inGameDamageValidationGate.primaryValidationLayer, 'description-derived-formula-validation');
@@ -827,6 +879,7 @@ assert.ok(mdSerialized.includes('This is not a claim that every in-game descript
 assert.ok(mdSerialized.includes('source/live SIO Tools-equivalent Tangtang damage formula derivation'));
 assert.ok(mdSerialized.includes('Description Formula Validation Gate'));
 assert.ok(mdSerialized.includes('Formula atom rows: 221'));
+assert.ok(mdSerialized.includes('Description Capture Import Gate'));
 assert.ok(mdSerialized.includes('Can run observed damage follow-up without description divergence: `false`'));
 
 if (writeMode) {
