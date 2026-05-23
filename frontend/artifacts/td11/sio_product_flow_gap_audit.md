@@ -1064,6 +1064,67 @@ Do not change scoring formulas yet. The next safe step is a documentation/test g
 
 GitHub push/PR not performed.
 
+## Tangtang First-Party Description Source Inventory
+
+timestampKst: 2026-05-23 18:11:25 KST
+status: `[TANGTANG-FIRST-PARTY-DESCRIPTION-SOURCE-INVENTORY-GREEN]`
+
+### Scope
+
+Investigated the three first-party acquisition routes for item/effect description text: official/public Habby or platform pages, lawful app-resource/localization candidates, and direct in-game UI captures. This pass documents the source acquisition result and capture template only. It does not claim that SIO's formula is description-correct, does not apply Tangtang formula corrections, and does not change formula semantics, scoring core, Rust damage formulas, WASM scoring behavior, optimizer ranking, or product UI.
+
+### Changes
+
+- Added `frontend/scripts/tangtang_first_party_description_source_inventory_unit_test.mjs`.
+- Added `frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json`.
+- Added `frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md`.
+- Updated `tangtang_description_capture_inbox.json` so `captureEvidenceTier` is a required field.
+- Updated `tangtang_damage_formula_spec.json` / `.md` and `damage_formula_provenance_matrix.md` to reference the first-party source inventory gate.
+
+### Findings
+
+- Official/public source candidates checked: 8.
+- Official/public sources with structured formula rows: 0.
+- Official/public rows promoted to direct capture: 0.
+- Local app resource artifacts found in the repo: 0.
+- Formula atom rows still requiring direct description capture: 221.
+- Direct first-party description-derived formula rows: 0.
+- Public official web is not sufficient for formula validation.
+- User one-by-one in-game captures remain the preferred direct first-party validation route unless lawful first-party app text resources are supplied.
+
+### Caveats
+
+- Official/public pages and announcements are release/existence provenance only unless they expose exact row-level original in-game description text.
+- Third-party guides, wiki pages, Reddit, public mirrors, and source-derived rows remain corroboration or triage only.
+- OCR is assistive only; raw screenshot/video/resource artifacts must be retained.
+- App-resource extraction is only a candidate route when a lawful first-party app artifact is available and no DRM, auth, encryption, or protection bypass is involved.
+
+### Verification Log
+
+- `node scripts/tangtang_first_party_description_source_inventory_unit_test.mjs`: passed, 8 source candidates.
+- `node scripts/tangtang_description_capture_import_unit_test.mjs`: passed, 0 capture rows.
+- `node scripts/tangtang_description_formula_validation_unit_test.mjs`: passed, 8 groups and 0 description formula rows.
+- `node scripts/tangtang_in_game_damage_validation_unit_test.mjs`: passed, 9 trial groups and 0 direct trials.
+- `node scripts/tangtang_damage_formula_spec_unit_test.mjs`: passed, 25 stages.
+- `node scripts/sio_tools_formula_source_evidence_unit_test.mjs`: passed, 4650 source leaves.
+- `node scripts/damage_formula_provenance_matrix_unit_test.mjs`: passed, 367 rows.
+- `node scripts/in_game_description_evidence_unit_test.mjs`: passed, 6 rows.
+- `node scripts/sio_tools_live_evidence_matrix_unit_test.mjs`: passed, 20 rows.
+- `node scripts/sio_tools_targeted_live_evidence_unit_test.mjs`: passed, 5 rows.
+- `node scripts/mount_damage_source_fixture_unit_test.mjs`: passed, 3 rows.
+- `node scripts/collectible_effect_mapping_matrix_unit_test.mjs`: passed, 160 rows.
+- `node scripts/generic_aggregate_non_authority_gate.mjs`: passed, 4 rows.
+- `npx tsc --noEmit`: passed.
+- `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs`: passed.
+  - `fullSioEquivalent=true`
+  - `currentScorer=scorer=sio_full_lm_equivalence`
+  - `liveCaptureCount=26`
+  - `workerParity.arbitraryGeneratedLiveExpected=26/26`
+  - `G0/G1/G2/G3/G6=true`
+- `git diff --check`: passed.
+
+GitHub push/PR not performed.
+
 ## Tangtang Damage Formula Derivation Spec
 
 timestampKst: 2026-05-23T15:15:51+09:00

@@ -6,6 +6,8 @@
     "descriptionCaptureInbox": "frontend/artifacts/td11/tangtang_description_capture_inbox.json",
     "descriptionFormulaValidationMatrix": "frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json",
     "descriptionFormulaValidationProtocol": "frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md",
+    "firstPartyDescriptionSourceInventory": "frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json",
+    "firstPartyDescriptionSourceInventoryProtocol": "frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md",
     "inGameDamageValidationMatrix": "frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json",
     "inGameDamageValidationProtocol": "frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md",
     "json": "frontend/artifacts/td11/tangtang_damage_formula_spec.json",
@@ -266,6 +268,20 @@
     "sourceDerivedEvidence": "Rows marked sio-tools-current-source-derived are current SIO Tools source/live evidence used for Tangtang equivalence.",
     "warning": "Do not state that this is an official formula independently captured from every in-game description line."
   },
+  "firstPartyDescriptionSourceInventoryGate": {
+    "claim": "first-party-description-source-inventory",
+    "directFirstPartyDescriptionFormulaRows": 0,
+    "localAppResourceArtifactsFound": 0,
+    "matrixPath": "frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json",
+    "officialPublicRowsPromotedToDirectCapture": 0,
+    "officialPublicSourceCandidates": 8,
+    "officialPublicSourcesWithStructuredFormulaRows": 0,
+    "protocolPath": "frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md",
+    "publicOfficialWebSufficientForFormulaValidation": false,
+    "rowsRequiringDirectDescriptionCapture": 221,
+    "status": "[TANGTANG-FIRST-PARTY-DESCRIPTION-SOURCE-INVENTORY-READY]",
+    "userOneByOneCaptureRequired": true
+  },
   "fullSioEquivalent": true,
   "generatedAtKst": "2026-05-23",
   "inGameDamageValidationGate": {
@@ -301,6 +317,8 @@
     "frontend/artifacts/td11/tangtang_description_capture_inbox.json",
     "frontend/artifacts/td11/tangtang_description_capture_import_matrix.json",
     "frontend/artifacts/td11/tangtang_description_capture_import_protocol.md",
+    "frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json",
+    "frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md",
     "frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json",
     "frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md",
     "frontend/app/lib/pareto-store/schemas/index.ts",
@@ -1350,6 +1368,7 @@
   },
   "verificationCommands": [
     "node scripts/tangtang_damage_formula_spec_unit_test.mjs",
+    "node scripts/tangtang_first_party_description_source_inventory_unit_test.mjs",
     "node scripts/tangtang_description_capture_import_unit_test.mjs",
     "node scripts/tangtang_description_formula_validation_unit_test.mjs",
     "node scripts/tangtang_in_game_damage_validation_unit_test.mjs",

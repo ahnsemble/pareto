@@ -27,6 +27,8 @@ const REQUIRED_SOURCE_INPUTS = [
   'frontend/artifacts/td11/tangtang_description_capture_inbox.json',
   'frontend/artifacts/td11/tangtang_description_capture_import_matrix.json',
   'frontend/artifacts/td11/tangtang_description_capture_import_protocol.md',
+  'frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json',
+  'frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md',
   'frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json',
   'frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md',
   'frontend/app/lib/pareto-store/schemas/index.ts',
@@ -253,6 +255,8 @@ const [
   descriptionFormulaValidationProtocol,
   descriptionCaptureImportMatrix,
   descriptionCaptureImportProtocol,
+  firstPartyDescriptionSourceInventory,
+  firstPartyDescriptionSourceInventoryMd,
   inGameDamageValidationMatrix,
   inGameDamageValidationProtocol,
 ] = await Promise.all([
@@ -270,6 +274,8 @@ const [
   readText('frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md'),
   readJson('frontend/artifacts/td11/tangtang_description_capture_import_matrix.json'),
   readText('frontend/artifacts/td11/tangtang_description_capture_import_protocol.md'),
+  readJson('frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json'),
+  readText('frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md'),
   readJson('frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json'),
   readText('frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md'),
 ]);
@@ -579,6 +585,28 @@ function buildSpec() {
       canApplyTangtangFormulaCorrection:
         descriptionCaptureImportMatrix.decisionPolicy.canApplyTangtangFormulaCorrection,
     },
+    firstPartyDescriptionSourceInventoryGate: {
+      status: firstPartyDescriptionSourceInventory.status,
+      claim: firstPartyDescriptionSourceInventory.claim,
+      matrixPath: 'frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json',
+      protocolPath: 'frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md',
+      officialPublicSourceCandidates:
+        firstPartyDescriptionSourceInventory.summary.officialPublicSourceCandidates,
+      officialPublicSourcesWithStructuredFormulaRows:
+        firstPartyDescriptionSourceInventory.summary.officialPublicSourcesWithStructuredFormulaRows,
+      officialPublicRowsPromotedToDirectCapture:
+        firstPartyDescriptionSourceInventory.summary.officialPublicRowsPromotedToDirectCapture,
+      localAppResourceArtifactsFound:
+        firstPartyDescriptionSourceInventory.summary.localAppResourceArtifactsFound,
+      rowsRequiringDirectDescriptionCapture:
+        firstPartyDescriptionSourceInventory.summary.rowsRequiringDirectDescriptionCapture,
+      directFirstPartyDescriptionFormulaRows:
+        firstPartyDescriptionSourceInventory.summary.directFirstPartyDescriptionFormulaRows,
+      userOneByOneCaptureRequired:
+        firstPartyDescriptionSourceInventory.summary.userOneByOneCaptureRequired,
+      publicOfficialWebSufficientForFormulaValidation:
+        firstPartyDescriptionSourceInventory.summary.publicOfficialWebSufficientForFormulaValidation,
+    },
     inGameDamageValidationGate: {
       status: inGameDamageValidationMatrix.status,
       claim: inGameDamageValidationMatrix.claim,
@@ -627,6 +655,7 @@ function buildSpec() {
     caveats: CAVEATS,
     verificationCommands: [
       'node scripts/tangtang_damage_formula_spec_unit_test.mjs',
+      'node scripts/tangtang_first_party_description_source_inventory_unit_test.mjs',
       'node scripts/tangtang_description_capture_import_unit_test.mjs',
       'node scripts/tangtang_description_formula_validation_unit_test.mjs',
       'node scripts/tangtang_in_game_damage_validation_unit_test.mjs',
@@ -652,6 +681,10 @@ function buildSpec() {
       descriptionCaptureInbox: 'frontend/artifacts/td11/tangtang_description_capture_inbox.json',
       descriptionCaptureImportMatrix: 'frontend/artifacts/td11/tangtang_description_capture_import_matrix.json',
       descriptionCaptureImportProtocol: 'frontend/artifacts/td11/tangtang_description_capture_import_protocol.md',
+      firstPartyDescriptionSourceInventory:
+        'frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json',
+      firstPartyDescriptionSourceInventoryProtocol:
+        'frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md',
       inGameDamageValidationMatrix: 'frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json',
       inGameDamageValidationProtocol: 'frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md',
       provenanceMatrix: 'frontend/artifacts/td11/damage_formula_provenance_matrix.md',
@@ -771,6 +804,21 @@ ${spec.caveats.map((item) => `- ${item}`).join('\n')}
 - Can run observed damage follow-up: \`${spec.descriptionCaptureImportGate.canRunObservedDamageFollowUp}\`
 - Can apply Tangtang formula correction: \`${spec.descriptionCaptureImportGate.canApplyTangtangFormulaCorrection}\`
 
+## First-Party Description Source Inventory
+
+- Source inventory: \`${spec.firstPartyDescriptionSourceInventoryGate.matrixPath}\`
+- Source inventory protocol: \`${spec.firstPartyDescriptionSourceInventoryGate.protocolPath}\`
+- Status: \`${spec.firstPartyDescriptionSourceInventoryGate.status}\`
+- Claim: \`${spec.firstPartyDescriptionSourceInventoryGate.claim}\`
+- Official/public source candidates checked: ${spec.firstPartyDescriptionSourceInventoryGate.officialPublicSourceCandidates}
+- Official/public sources with structured formula rows: ${spec.firstPartyDescriptionSourceInventoryGate.officialPublicSourcesWithStructuredFormulaRows}
+- Official/public rows promoted to direct capture: ${spec.firstPartyDescriptionSourceInventoryGate.officialPublicRowsPromotedToDirectCapture}
+- Local app resource artifacts found: ${spec.firstPartyDescriptionSourceInventoryGate.localAppResourceArtifactsFound}
+- Rows requiring direct description capture: ${spec.firstPartyDescriptionSourceInventoryGate.rowsRequiringDirectDescriptionCapture}
+- Direct first-party description-derived formula rows: ${spec.firstPartyDescriptionSourceInventoryGate.directFirstPartyDescriptionFormulaRows}
+- User one-by-one capture required: \`${spec.firstPartyDescriptionSourceInventoryGate.userOneByOneCaptureRequired}\`
+- Public official web sufficient for formula validation: \`${spec.firstPartyDescriptionSourceInventoryGate.publicOfficialWebSufficientForFormulaValidation}\`
+
 ## In-Game Damage Validation Gate
 
 - Validation matrix: \`${spec.inGameDamageValidationGate.matrixPath}\`
@@ -851,6 +899,20 @@ assert.equal(spec.descriptionCaptureImportGate.observedDamageFollowUpRows, 0);
 assert.equal(spec.descriptionCaptureImportGate.canRunObservedDamageFollowUp, false);
 assert.equal(spec.descriptionCaptureImportGate.canApplyTangtangFormulaCorrection, false);
 assert.ok(descriptionCaptureImportProtocol.includes('Capture inbox rows: 0'));
+assert.equal(
+  spec.firstPartyDescriptionSourceInventoryGate.status,
+  '[TANGTANG-FIRST-PARTY-DESCRIPTION-SOURCE-INVENTORY-READY]',
+);
+assert.equal(spec.firstPartyDescriptionSourceInventoryGate.claim, 'first-party-description-source-inventory');
+assert.equal(spec.firstPartyDescriptionSourceInventoryGate.officialPublicSourceCandidates, 8);
+assert.equal(spec.firstPartyDescriptionSourceInventoryGate.officialPublicSourcesWithStructuredFormulaRows, 0);
+assert.equal(spec.firstPartyDescriptionSourceInventoryGate.officialPublicRowsPromotedToDirectCapture, 0);
+assert.equal(spec.firstPartyDescriptionSourceInventoryGate.localAppResourceArtifactsFound, 0);
+assert.equal(spec.firstPartyDescriptionSourceInventoryGate.rowsRequiringDirectDescriptionCapture, 221);
+assert.equal(spec.firstPartyDescriptionSourceInventoryGate.directFirstPartyDescriptionFormulaRows, 0);
+assert.equal(spec.firstPartyDescriptionSourceInventoryGate.userOneByOneCaptureRequired, true);
+assert.equal(spec.firstPartyDescriptionSourceInventoryGate.publicOfficialWebSufficientForFormulaValidation, false);
+assert.ok(firstPartyDescriptionSourceInventoryMd.includes('Official/public sources with structured formula rows: 0'));
 assert.equal(spec.inGameDamageValidationGate.status, '[TANGTANG-IN-GAME-DAMAGE-VALIDATION-PROTOCOL-READY]');
 assert.equal(spec.inGameDamageValidationGate.claim, 'in-game-validation-protocol');
 assert.equal(spec.inGameDamageValidationGate.primaryValidationLayer, 'description-derived-formula-validation');
@@ -880,6 +942,8 @@ assert.ok(mdSerialized.includes('source/live SIO Tools-equivalent Tangtang damag
 assert.ok(mdSerialized.includes('Description Formula Validation Gate'));
 assert.ok(mdSerialized.includes('Formula atom rows: 221'));
 assert.ok(mdSerialized.includes('Description Capture Import Gate'));
+assert.ok(mdSerialized.includes('First-Party Description Source Inventory'));
+assert.ok(mdSerialized.includes('Public official web sufficient for formula validation: `false`'));
 assert.ok(mdSerialized.includes('Can run observed damage follow-up without description divergence: `false`'));
 
 if (writeMode) {

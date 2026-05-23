@@ -31,6 +31,8 @@ Confidence values:
   - `frontend/artifacts/td11/tangtang_description_capture_inbox.json`
   - `frontend/artifacts/td11/tangtang_description_capture_import_matrix.json`
   - `frontend/artifacts/td11/tangtang_description_capture_import_protocol.md`
+  - `frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json`
+  - `frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md`
   - `frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json`
   - `frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md`
   - `frontend/artifacts/td11/sio_tools_live_evidence_matrix.json`
@@ -130,6 +132,23 @@ Confidence values:
 - Observed damage follow-up rows: 0
 - Can run observed damage follow-up: `false`
 - Can apply Tangtang formula correction: `false`
+- Formula/scoring/UI behavior did not change.
+
+## First-Party Description Source Inventory
+
+- Official/public source acquisition is tracked separately from capture import:
+  - `frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json`
+  - `frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md`
+- Gate status: `[TANGTANG-FIRST-PARTY-DESCRIPTION-SOURCE-INVENTORY-READY]`
+- Gate claim: `first-party-description-source-inventory`
+- Official/public source candidates checked: 8
+- Official/public sources with structured formula rows: 0
+- Official/public rows promoted to direct capture: 0
+- Local app resource artifacts found: 0
+- Rows requiring direct description capture: 221
+- Direct first-party description-derived formula rows: 0
+- Public official web sufficient for formula validation: `false`
+- User one-by-one capture required: `true`
 - Formula/scoring/UI behavior did not change.
 
 ## In-Game Damage Validation Gate

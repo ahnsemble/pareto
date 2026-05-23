@@ -122,6 +122,21 @@ Key source/live counts:
 - Can run observed damage follow-up: `false`
 - Can apply Tangtang formula correction: `false`
 
+## First-Party Description Source Inventory
+
+- Source inventory: `frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json`
+- Source inventory protocol: `frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md`
+- Status: `[TANGTANG-FIRST-PARTY-DESCRIPTION-SOURCE-INVENTORY-READY]`
+- Claim: `first-party-description-source-inventory`
+- Official/public source candidates checked: 8
+- Official/public sources with structured formula rows: 0
+- Official/public rows promoted to direct capture: 0
+- Local app resource artifacts found: 0
+- Rows requiring direct description capture: 221
+- Direct first-party description-derived formula rows: 0
+- User one-by-one capture required: `true`
+- Public official web sufficient for formula validation: `false`
+
 ## In-Game Damage Validation Gate
 
 - Validation matrix: `frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json`
@@ -161,6 +176,8 @@ Key source/live counts:
 - `frontend/artifacts/td11/tangtang_description_capture_inbox.json`
 - `frontend/artifacts/td11/tangtang_description_capture_import_matrix.json`
 - `frontend/artifacts/td11/tangtang_description_capture_import_protocol.md`
+- `frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json`
+- `frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md`
 - `frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json`
 - `frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md`
 - `frontend/app/lib/pareto-store/schemas/index.ts`
@@ -170,6 +187,7 @@ Key source/live counts:
 ## Verification Commands
 
 - `node scripts/tangtang_damage_formula_spec_unit_test.mjs`
+- `node scripts/tangtang_first_party_description_source_inventory_unit_test.mjs`
 - `node scripts/tangtang_description_capture_import_unit_test.mjs`
 - `node scripts/tangtang_description_formula_validation_unit_test.mjs`
 - `node scripts/tangtang_in_game_damage_validation_unit_test.mjs`

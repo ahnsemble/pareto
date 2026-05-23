@@ -1,0 +1,271 @@
+{
+  "artifactPaths": {
+    "captureImportMatrix": "frontend/artifacts/td11/tangtang_description_capture_import_matrix.json",
+    "captureInbox": "frontend/artifacts/td11/tangtang_description_capture_inbox.json",
+    "formulaAtomLedger": "frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json",
+    "json": "frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json",
+    "markdown": "frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md",
+    "script": "frontend/scripts/tangtang_first_party_description_source_inventory_unit_test.mjs"
+  },
+  "behaviorChange": false,
+  "captureTemplate": {
+    "atomRowIdPolicy": "explicit formulaAtomRows[].rowId only; no fuzzy name matching",
+    "exampleRow": {
+      "atomRowId": "collectible-item:aerocoreOrb:stars:8:critRate",
+      "captureDateKst": "2026-05-23",
+      "captureEvidenceTier": "direct-first-party-description",
+      "captureId": "td11-capture-YYYYMMDD-001",
+      "conditionOrThreshold": "stars >= 8",
+      "descriptionTextEnglishTranslation": "optional; never replace original text",
+      "descriptionTextManualTranscription": "manual transcription if OCR is unreliable",
+      "descriptionTextOriginal": "exact original in-game text",
+      "devicePlatform": "ios|android|emulator|unknown",
+      "entityDisplayNameCaptured": "Aerocore Orb",
+      "gameVersion": "manual-from-title-screen-or-unknown",
+      "language": "ko-KR",
+      "multiplierStage": "derived_base_stats before 31-stage damage vector",
+      "ocrTextRaw": "optional raw OCR output",
+      "operationBucket": "crit-expectation",
+      "parsedFormulaOperation": "threshold_add_percent",
+      "parsedFormulaValue": 5,
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/td11-capture-YYYYMMDD-001.png"
+      ],
+      "rustStatChannel": "critRate",
+      "screenContext": "collectible detail / star threshold / effect list",
+      "sourceKind": "direct-first-party-in-game",
+      "transcriptionConfidence": "high|medium|low",
+      "transcriptionNotes": "optional ambiguity notes"
+    },
+    "rawArtifactPolicy": "OCR/manual transcription is assistive only; raw screenshot/video/resource artifact must be retained.",
+    "recommendedFields": [
+      "captureId",
+      "atomRowId",
+      "captureDateKst",
+      "gameVersion",
+      "sourceKind",
+      "captureEvidenceTier",
+      "language",
+      "descriptionTextOriginal",
+      "rawCaptureArtifactPaths",
+      "parsedFormulaOperation",
+      "parsedFormulaValue",
+      "operationBucket",
+      "conditionOrThreshold",
+      "rustStatChannel",
+      "multiplierStage",
+      "entityDisplayNameCaptured",
+      "screenContext",
+      "devicePlatform",
+      "ocrTextRaw",
+      "descriptionTextManualTranscription",
+      "descriptionTextEnglishTranslation",
+      "transcriptionConfidence",
+      "transcriptionNotes"
+    ],
+    "requiredFields": [
+      "captureId",
+      "atomRowId",
+      "captureDateKst",
+      "gameVersion",
+      "sourceKind",
+      "captureEvidenceTier",
+      "language",
+      "descriptionTextOriginal",
+      "rawCaptureArtifactPaths",
+      "parsedFormulaOperation",
+      "parsedFormulaValue",
+      "operationBucket",
+      "conditionOrThreshold",
+      "rustStatChannel",
+      "multiplierStage"
+    ]
+  },
+  "claim": "first-party-description-source-inventory",
+  "generatedAtKst": "2026-05-23",
+  "localAppResourceScan": {
+    "candidateBasenames": [
+      "Localizable.strings",
+      "strings.xml"
+    ],
+    "candidateExtensions": [
+      ".aab",
+      ".apk",
+      ".apks",
+      ".arb",
+      ".ipa",
+      ".strings",
+      ".stringsdict"
+    ],
+    "candidatePaths": [],
+    "policy": "Static app-resource text can count only when lawfully obtained first-party text is preserved with version and resource path.",
+    "scannedRoots": [
+      "frontend",
+      "docs"
+    ]
+  },
+  "officialPublicSourceCandidates": [
+    {
+      "canPopulateDirectFirstPartyCaptureRows": false,
+      "containsStructuredItemEffectDescriptions": false,
+      "eligibleUse": "release/existence provenance only",
+      "label": "Habby official game page",
+      "observedContent": "Generic Habby game-card listing and product copy; JavaScript-rendered public page does not expose row-level item/effect descriptions.",
+      "sourceId": "habby-official-game-page",
+      "sourceKind": "official-public-page",
+      "url": "https://www.habby.com/game"
+    },
+    {
+      "canPopulateDirectFirstPartyCaptureRows": false,
+      "containsStructuredItemEffectDescriptions": false,
+      "eligibleUse": "release/store provenance only",
+      "label": "Habby Store Survivor.io page",
+      "observedContent": "Official purchase/store page with packs, Dreamstars, gift-code flow, and download links; no structured formula rows.",
+      "sourceId": "habby-store-survivor-page",
+      "sourceKind": "official-public-store-page",
+      "url": "https://store.habby.com/game/3"
+    },
+    {
+      "canPopulateDirectFirstPartyCaptureRows": false,
+      "containsStructuredItemEffectDescriptions": false,
+      "eligibleUse": "version/release provenance only",
+      "label": "Apple App Store listing",
+      "observedContent": "Developer listing, general game copy, events, and version-history blurbs; no complete item/effect description table.",
+      "sourceId": "apple-app-store-survivor-page",
+      "sourceKind": "official-platform-listing",
+      "url": "https://apps.apple.com/us/app/survivor-io/id1528941310"
+    },
+    {
+      "canPopulateDirectFirstPartyCaptureRows": false,
+      "containsStructuredItemEffectDescriptions": false,
+      "eligibleUse": "version/release provenance only",
+      "label": "Google Play listing",
+      "observedContent": "Developer listing, general game copy, current update notes, and support contacts; no complete item/effect description table.",
+      "sourceId": "google-play-survivor-page",
+      "sourceKind": "official-platform-listing",
+      "url": "https://play.google.com/store/apps/details?id=com.dxx.firenow&hl=en-US"
+    },
+    {
+      "canPopulateDirectFirstPartyCaptureRows": false,
+      "containsStructuredItemEffectDescriptions": false,
+      "eligibleUse": "community provenance only; authenticated first-party channel captures would need a separate raw artifact",
+      "label": "Official Discord public landing",
+      "observedContent": "Public listing confirms an official community and mentions equipment/weapon tier-list channels, but public landing does not expose channel contents.",
+      "sourceId": "official-discord-public-landing",
+      "sourceKind": "official-community-public-landing",
+      "url": "https://discord.com/servers/survivor-io-1008984622941601882"
+    },
+    {
+      "canPopulateDirectFirstPartyCaptureRows": false,
+      "containsStructuredItemEffectDescriptions": false,
+      "eligibleUse": "announcement-level provenance only",
+      "label": "Official Facebook Energy Guidance System announcement",
+      "observedContent": "Search-indexed first-party announcement mentions feature launch, transform/evolve framing, and says detailed information should be checked in-game.",
+      "sourceId": "official-facebook-energy-guidance-forcefield",
+      "sourceKind": "official-social-announcement",
+      "url": "https://www.facebook.com/SurvivorHabby/posts/-greetings-survivorsthe-twinborn-parts-energy-guidance-system-forcefield-mode-is/692695606793477/"
+    },
+    {
+      "canPopulateDirectFirstPartyCaptureRows": false,
+      "containsStructuredItemEffectDescriptions": false,
+      "eligibleUse": "announcement-level provenance only",
+      "label": "Official Facebook Antimatter Maintainer announcement",
+      "observedContent": "Search-indexed first-party announcement appears effect-adjacent, but not a complete item/effect formula row source.",
+      "sourceId": "official-facebook-antimatter-maintainer",
+      "sourceKind": "official-social-announcement",
+      "url": "https://www.facebook.com/SurvivorHabby/posts/-greetings-survivorsthe-twinborn-part-antimatter-maintainer-launches-july-13-at-/734749099254794/"
+    },
+    {
+      "canPopulateDirectFirstPartyCaptureRows": false,
+      "containsStructuredItemEffectDescriptions": false,
+      "eligibleUse": "announcement provenance only if direct original posts are captured",
+      "label": "Official X account",
+      "observedContent": "Public direct fetch/search did not expose a reliable structured corpus of original item/effect descriptions.",
+      "sourceId": "official-x-account",
+      "sourceKind": "official-social-account",
+      "url": "https://x.com/Survivor_io"
+    }
+  ],
+  "sourceInputs": [
+    "frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json",
+    "frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md",
+    "frontend/artifacts/td11/tangtang_description_capture_inbox.json",
+    "frontend/artifacts/td11/tangtang_description_capture_import_matrix.json",
+    "frontend/artifacts/td11/tangtang_description_capture_import_protocol.md",
+    "frontend/artifacts/td11/tangtang_damage_formula_spec.json",
+    "frontend/artifacts/td11/in_game_description_evidence_matrix.json"
+  ],
+  "sourceRoutes": [
+    {
+      "currentRowsAvailable": 0,
+      "label": "Official public web/social announcements",
+      "policy": "Use as release or existence provenance only unless the official page itself exposes exact row-level original description text.",
+      "qualifiesForDirectFirstPartyDescriptionRowsNow": false,
+      "routeId": "official-public-web"
+    },
+    {
+      "currentRowsAvailable": 0,
+      "label": "Direct in-game UI screenshot/video capture",
+      "policy": "Preferred route for one-by-one validation: preserve raw screenshot/video plus exact original description text and map it to an atomRowId.",
+      "qualifiesForDirectFirstPartyDescriptionRowsNow": true,
+      "routeId": "direct-game-ui-capture"
+    },
+    {
+      "currentRowsAvailable": 0,
+      "label": "Lawful app resource/localization inspection",
+      "policy": "Potentially valid only for lawfully obtained first-party static text resources; do not bypass encryption, DRM, auth, or protections.",
+      "qualifiesForDirectFirstPartyDescriptionRowsNow": false,
+      "routeId": "lawful-app-resource-extraction"
+    },
+    {
+      "currentRowsAvailable": 0,
+      "label": "Third-party guides, wiki, Reddit, public mirrors",
+      "policy": "Corroboration and triage only; never promote to direct first-party description capture.",
+      "qualifiesForDirectFirstPartyDescriptionRowsNow": false,
+      "routeId": "third-party-guides-community"
+    }
+  ],
+  "status": "[TANGTANG-FIRST-PARTY-DESCRIPTION-SOURCE-INVENTORY-READY]",
+  "summary": {
+    "canApplyTangtangFormulaCorrectionNow": false,
+    "captureInboxRows": 0,
+    "descriptionSioDivergenceRows": 0,
+    "directFirstPartyDescriptionFormulaRows": 0,
+    "formulaAtomRows": 221,
+    "localAppResourceArtifactsFound": 0,
+    "observedDamageFollowUpRows": 0,
+    "officialPublicRowsPromotedToDirectCapture": 0,
+    "officialPublicSourceCandidates": 8,
+    "officialPublicSourcesWithStructuredFormulaRows": 0,
+    "parsedDescriptionFormulaRows": 0,
+    "publicOfficialWebSufficientForFormulaValidation": false,
+    "publicWebCorroboratedNotFirstPartyRows": 7,
+    "rowsRequiringDirectDescriptionCapture": 221,
+    "userOneByOneCaptureRequired": true
+  },
+  "title": "Tangtang First-Party Description Source Inventory",
+  "validationPolicy": {
+    "acceptedCaptureEvidenceTier": "direct-first-party-description",
+    "acceptedSourceKind": "direct-first-party-in-game",
+    "automaticFormulaOrScoringChangeAllowed": false,
+    "observedDamageFollowUpAllowedOnlyFor": "description-sio-divergent-needs-confirmation",
+    "officialAnnouncementPromotionAllowed": false,
+    "publicWebPromotionAllowed": false,
+    "rejectedEvidenceKinds": [
+      "public-web",
+      "sio-source-derived",
+      "manual-inference",
+      "ocr-only-without-raw-artifact",
+      "translated-only-without-original",
+      "third-party-corroboration-only"
+    ]
+  },
+  "verificationCommands": [
+    "node scripts/tangtang_first_party_description_source_inventory_unit_test.mjs",
+    "node scripts/tangtang_description_capture_import_unit_test.mjs",
+    "node scripts/tangtang_description_formula_validation_unit_test.mjs",
+    "node scripts/damage_formula_provenance_matrix_unit_test.mjs",
+    "SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs",
+    "git diff --check"
+  ]
+}

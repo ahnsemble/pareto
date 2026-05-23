@@ -160,6 +160,21 @@ const tangtangDescriptionCaptureImportProtocol = await fs.readFile(
   tangtangDescriptionCaptureImportProtocolPath,
   'utf8',
 );
+const tangtangFirstPartyDescriptionSourceInventoryPath = path.join(
+  root,
+  'artifacts/td11/tangtang_first_party_description_source_inventory.json',
+);
+const tangtangFirstPartyDescriptionSourceInventory = JSON.parse(
+  await fs.readFile(tangtangFirstPartyDescriptionSourceInventoryPath, 'utf8'),
+);
+const tangtangFirstPartyDescriptionSourceInventoryProtocolPath = path.join(
+  root,
+  'artifacts/td11/tangtang_first_party_description_source_inventory.md',
+);
+const tangtangFirstPartyDescriptionSourceInventoryProtocol = await fs.readFile(
+  tangtangFirstPartyDescriptionSourceInventoryProtocolPath,
+  'utf8',
+);
 const tangtangInGameDamageValidationPath = path.join(root, 'artifacts/td11/tangtang_in_game_damage_validation_matrix.json');
 const tangtangInGameDamageValidation = JSON.parse(await fs.readFile(tangtangInGameDamageValidationPath, 'utf8'));
 
@@ -695,6 +710,55 @@ assert.ok(
   tangtangDescriptionCaptureImportProtocol.includes('Capture inbox rows: 0'),
   'description capture import protocol must show the empty capture state',
 );
+assert.equal(
+  tangtangFirstPartyDescriptionSourceInventory.status,
+  '[TANGTANG-FIRST-PARTY-DESCRIPTION-SOURCE-INVENTORY-READY]',
+  'first-party source inventory status changed',
+);
+assert.equal(
+  tangtangFirstPartyDescriptionSourceInventory.claim,
+  'first-party-description-source-inventory',
+  'first-party source inventory claim changed',
+);
+assert.equal(
+  tangtangFirstPartyDescriptionSourceInventory.summary.officialPublicSourceCandidates,
+  8,
+  'official/public source candidate count changed',
+);
+assert.equal(
+  tangtangFirstPartyDescriptionSourceInventory.summary.officialPublicSourcesWithStructuredFormulaRows,
+  0,
+  'official public web must not claim structured formula rows',
+);
+assert.equal(
+  tangtangFirstPartyDescriptionSourceInventory.summary.officialPublicRowsPromotedToDirectCapture,
+  0,
+  'official public web must not be promoted to direct capture rows',
+);
+assert.equal(
+  tangtangFirstPartyDescriptionSourceInventory.summary.localAppResourceArtifactsFound,
+  0,
+  'local app-resource artifacts should remain absent until supplied deliberately',
+);
+assert.equal(
+  tangtangFirstPartyDescriptionSourceInventory.summary.rowsRequiringDirectDescriptionCapture,
+  221,
+  'first-party source inventory must cover the current formula atom ledger',
+);
+assert.equal(
+  tangtangFirstPartyDescriptionSourceInventory.summary.directFirstPartyDescriptionFormulaRows,
+  0,
+  'first-party source inventory must not create direct description rows',
+);
+assert.equal(
+  tangtangFirstPartyDescriptionSourceInventory.summary.publicOfficialWebSufficientForFormulaValidation,
+  false,
+  'public official web should not be sufficient for formula validation',
+);
+assert.ok(
+  tangtangFirstPartyDescriptionSourceInventoryProtocol.includes('Public official web sufficient for formula validation: `false`'),
+  'first-party source inventory protocol must preserve the official-web limitation',
+);
 assert.equal(tangtangInGameDamageValidation.status, '[TANGTANG-IN-GAME-DAMAGE-VALIDATION-PROTOCOL-READY]', 'in-game damage validation gate status changed');
 assert.equal(tangtangInGameDamageValidation.claim, 'in-game-validation-protocol', 'in-game damage validation gate claim changed');
 assert.equal(tangtangInGameDamageValidation.behaviorChange, false, 'in-game damage validation gate cannot imply behavior changes');
@@ -924,6 +988,8 @@ Confidence values:
   - \`frontend/artifacts/td11/tangtang_description_capture_inbox.json\`
   - \`frontend/artifacts/td11/tangtang_description_capture_import_matrix.json\`
   - \`frontend/artifacts/td11/tangtang_description_capture_import_protocol.md\`
+  - \`frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json\`
+  - \`frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md\`
   - \`frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json\`
   - \`frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md\`
   - \`frontend/artifacts/td11/sio_tools_live_evidence_matrix.json\`
@@ -1005,6 +1071,23 @@ ${renderCountTable(countBy('confidence'))}
 - Observed damage follow-up rows: ${tangtangDescriptionCaptureImport.summary.observedDamageFollowUpRows}
 - Can run observed damage follow-up: \`${tangtangDescriptionCaptureImport.decisionPolicy.canRunObservedDamageFollowUp}\`
 - Can apply Tangtang formula correction: \`${tangtangDescriptionCaptureImport.decisionPolicy.canApplyTangtangFormulaCorrection}\`
+- Formula/scoring/UI behavior did not change.
+
+## First-Party Description Source Inventory
+
+- Official/public source acquisition is tracked separately from capture import:
+  - \`frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json\`
+  - \`frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md\`
+- Gate status: \`${tangtangFirstPartyDescriptionSourceInventory.status}\`
+- Gate claim: \`${tangtangFirstPartyDescriptionSourceInventory.claim}\`
+- Official/public source candidates checked: ${tangtangFirstPartyDescriptionSourceInventory.summary.officialPublicSourceCandidates}
+- Official/public sources with structured formula rows: ${tangtangFirstPartyDescriptionSourceInventory.summary.officialPublicSourcesWithStructuredFormulaRows}
+- Official/public rows promoted to direct capture: ${tangtangFirstPartyDescriptionSourceInventory.summary.officialPublicRowsPromotedToDirectCapture}
+- Local app resource artifacts found: ${tangtangFirstPartyDescriptionSourceInventory.summary.localAppResourceArtifactsFound}
+- Rows requiring direct description capture: ${tangtangFirstPartyDescriptionSourceInventory.summary.rowsRequiringDirectDescriptionCapture}
+- Direct first-party description-derived formula rows: ${tangtangFirstPartyDescriptionSourceInventory.summary.directFirstPartyDescriptionFormulaRows}
+- Public official web sufficient for formula validation: \`${tangtangFirstPartyDescriptionSourceInventory.summary.publicOfficialWebSufficientForFormulaValidation}\`
+- User one-by-one capture required: \`${tangtangFirstPartyDescriptionSourceInventory.summary.userOneByOneCaptureRequired}\`
 - Formula/scoring/UI behavior did not change.
 
 ## In-Game Damage Validation Gate

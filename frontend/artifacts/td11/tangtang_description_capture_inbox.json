@@ -1,5 +1,6 @@
 {
   "behaviorChange": false,
+  "claim": "first-party-description-capture-input",
   "generatedAtKst": "2026-05-23",
   "notes": [
     "Only direct first-party in-game UI screenshots, videos, or first-party data exports should be entered here.",
@@ -13,6 +14,7 @@
     "captureDateKst",
     "gameVersion",
     "sourceKind",
+    "captureEvidenceTier",
     "language",
     "descriptionTextOriginal",
     "rawCaptureArtifactPaths",
@@ -24,6 +26,7 @@
     "multiplierStage"
   ],
   "rows": [],
+  "schemaVersion": 1,
   "status": "[TANGTANG-DESCRIPTION-CAPTURE-INBOX-EMPTY]",
   "title": "Tangtang Description Capture Inbox"
 }

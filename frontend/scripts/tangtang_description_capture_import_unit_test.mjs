@@ -95,7 +95,7 @@ const [
   descriptionFormulaValidationProtocol,
   formulaSpec,
   equivalenceMatrix,
-  captureInbox,
+  rawCaptureInbox,
 ] = await Promise.all([
   readJson('frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json'),
   readText('frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md'),
@@ -103,6 +103,18 @@ const [
   readJson('frontend/artifacts/td11/sio_lm_equivalence_matrix.json'),
   readInbox(),
 ]);
+
+function normalizeInbox(inbox) {
+  return stableObject({
+    ...EMPTY_INBOX,
+    ...inbox,
+    requiredFields: CAPTURE_REQUIRED_FIELDS,
+    rows: inbox.rows ?? [],
+    notes: inbox.notes ?? EMPTY_INBOX.notes,
+  });
+}
+
+const captureInbox = normalizeInbox(rawCaptureInbox);
 
 for (const input of SOURCE_INPUTS) {
   await fs.access(path.join(root, input.replace(/^frontend\//, '')));
@@ -370,6 +382,8 @@ assert.equal(matrix.behaviorChange, false);
 assert.equal(matrix.captureInput.sourceKindRequired, 'direct-first-party-in-game');
 assert.equal(matrix.captureInput.captureEvidenceTierRequired, 'direct-first-party-description');
 assert.equal(matrix.captureInput.requiredFields.length, CAPTURE_REQUIRED_FIELDS.length);
+assert.deepEqual(captureInbox.requiredFields, CAPTURE_REQUIRED_FIELDS);
+assert.equal(captureInbox.schemaVersion, 1);
 assert.equal(matrix.importPolicy.acceptedCaptureEvidenceTier, 'direct-first-party-description');
 assert.equal(matrix.importPolicy.automaticScoringChangeAllowed, false);
 assert.equal(matrix.atomLedgerContract.formulaAtomRows, 221);
