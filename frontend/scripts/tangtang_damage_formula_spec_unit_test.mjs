@@ -22,6 +22,8 @@ const REQUIRED_SOURCE_INPUTS = [
   'frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json',
   'frontend/artifacts/td11/sio_lm_input_summary_2026-05-20.json',
   'frontend/artifacts/td11/sio_lm_equivalence_matrix.json',
+  'frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json',
+  'frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md',
   'frontend/app/lib/pareto-store/schemas/index.ts',
   'frontend/scripts/sio_tools_formula_source_evidence_unit_test.mjs',
   'frontend/scripts/damage_formula_provenance_matrix_unit_test.mjs',
@@ -242,6 +244,8 @@ const [
   traceSummary,
   inputSummary,
   equivalenceMatrix,
+  inGameDamageValidationMatrix,
+  inGameDamageValidationProtocol,
 ] = await Promise.all([
   readJson('frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json'),
   readText('frontend/artifacts/td11/damage_formula_provenance_matrix.md'),
@@ -253,6 +257,8 @@ const [
   readJson('frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json'),
   readJson('frontend/artifacts/td11/sio_lm_input_summary_2026-05-20.json'),
   readJson('frontend/artifacts/td11/sio_lm_equivalence_matrix.json'),
+  readJson('frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json'),
+  readText('frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md'),
 ]);
 
 for (const input of REQUIRED_SOURCE_INPUTS) {
@@ -519,6 +525,17 @@ function buildSpec() {
       warning:
         'Do not state that this is an official formula independently captured from every in-game description line.',
     },
+    inGameDamageValidationGate: {
+      status: inGameDamageValidationMatrix.status,
+      claim: inGameDamageValidationMatrix.claim,
+      matrixPath: 'frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json',
+      protocolPath: 'frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md',
+      currentInGameCorrectnessClaim: inGameDamageValidationMatrix.validationScope.currentInGameCorrectnessClaim,
+      directObservedDamageTrialCount: inGameDamageValidationMatrix.validationScope.directObservedDamageTrialCount,
+      canClaimSioFormulaInGameCorrect: inGameDamageValidationMatrix.decisionPolicy.canClaimSioFormulaInGameCorrect,
+      canApplyTangtangFormulaCorrection: inGameDamageValidationMatrix.decisionPolicy.canApplyTangtangFormulaCorrection,
+      currentCorrectionStatus: inGameDamageValidationMatrix.correctionPolicy.currentCorrectionStatus,
+    },
     summaryCounts: {
       rawSourceLeafRows: sourceEvidence.summary.rawSourceLeafRows,
       rawSourceLeafRowsWithDirectMultiplierStage: sourceEvidence.summary.rawSourceLeafRowsWithDirectMultiplierStage,
@@ -549,6 +566,7 @@ function buildSpec() {
     caveats: CAVEATS,
     verificationCommands: [
       'node scripts/tangtang_damage_formula_spec_unit_test.mjs',
+      'node scripts/tangtang_in_game_damage_validation_unit_test.mjs',
       'node scripts/sio_tools_formula_source_evidence_unit_test.mjs',
       'node scripts/damage_formula_provenance_matrix_unit_test.mjs',
       'node scripts/in_game_description_evidence_unit_test.mjs',
@@ -565,6 +583,8 @@ function buildSpec() {
       json: 'frontend/artifacts/td11/tangtang_damage_formula_spec.json',
       markdown: 'frontend/artifacts/td11/tangtang_damage_formula_spec.md',
       script: 'frontend/scripts/tangtang_damage_formula_spec_unit_test.mjs',
+      inGameDamageValidationMatrix: 'frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json',
+      inGameDamageValidationProtocol: 'frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md',
       provenanceMatrix: 'frontend/artifacts/td11/damage_formula_provenance_matrix.md',
       audit: 'frontend/artifacts/td11/sio_product_flow_gap_audit.md',
     },
@@ -646,6 +666,18 @@ ${renderDomainTable(spec.domainCoverage)}
 
 ${spec.caveats.map((item) => `- ${item}`).join('\n')}
 
+## In-Game Damage Validation Gate
+
+- Validation matrix: \`${spec.inGameDamageValidationGate.matrixPath}\`
+- Validation protocol: \`${spec.inGameDamageValidationGate.protocolPath}\`
+- Status: \`${spec.inGameDamageValidationGate.status}\`
+- Claim: \`${spec.inGameDamageValidationGate.claim}\`
+- Current in-game correctness claim: \`${spec.inGameDamageValidationGate.currentInGameCorrectnessClaim}\`
+- Direct observed in-game damage trials: ${spec.inGameDamageValidationGate.directObservedDamageTrialCount}
+- Can claim SIO formula in-game correct: \`${spec.inGameDamageValidationGate.canClaimSioFormulaInGameCorrect}\`
+- Can apply Tangtang formula correction: \`${spec.inGameDamageValidationGate.canApplyTangtangFormulaCorrection}\`
+- Current correction status: \`${spec.inGameDamageValidationGate.currentCorrectionStatus}\`
+
 ## Unsupported Formula Inputs
 
 - non-SS weapons remain catalog-only and unsupported as formula inputs: ${spec.unsupportedFormulaInputs.nonSsWeapons.length} rows.
@@ -682,6 +714,13 @@ assert.equal(spec.summaryCounts.targetSurvivorNormalizedClaims, 11);
 assert.equal(spec.summaryCounts.collectibleThresholdRows, 170);
 assert.equal(spec.summaryCounts.collectibleSpecialRustMappings, 14);
 assert.equal(spec.summaryCounts.inGameDescriptionVerifiedRows, 0);
+assert.equal(spec.inGameDamageValidationGate.status, '[TANGTANG-IN-GAME-DAMAGE-VALIDATION-PROTOCOL-READY]');
+assert.equal(spec.inGameDamageValidationGate.claim, 'in-game-validation-protocol');
+assert.equal(spec.inGameDamageValidationGate.currentInGameCorrectnessClaim, 'not-established');
+assert.equal(spec.inGameDamageValidationGate.directObservedDamageTrialCount, 0);
+assert.equal(spec.inGameDamageValidationGate.canClaimSioFormulaInGameCorrect, false);
+assert.equal(spec.inGameDamageValidationGate.canApplyTangtangFormulaCorrection, false);
+assert.ok(inGameDamageValidationProtocol.includes('Tangtang may improve beyond SIO in principle'));
 assert.equal(inGameDescriptionEvidence.summary.mountRowsWithExactInGameDescriptions, 0);
 assert.equal(collectibleEffectMapping.summary.inGameDescriptionVerifiedRows, 0);
 assert.equal(mountDamageSourceFixture.summary.liveVerifiedRows, 0);

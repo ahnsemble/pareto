@@ -1,6 +1,8 @@
 {
   "artifactPaths": {
     "audit": "frontend/artifacts/td11/sio_product_flow_gap_audit.md",
+    "inGameDamageValidationMatrix": "frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json",
+    "inGameDamageValidationProtocol": "frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md",
     "json": "frontend/artifacts/td11/tangtang_damage_formula_spec.json",
     "markdown": "frontend/artifacts/td11/tangtang_damage_formula_spec.md",
     "provenanceMatrix": "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
@@ -227,6 +229,17 @@
   },
   "fullSioEquivalent": true,
   "generatedAtKst": "2026-05-23",
+  "inGameDamageValidationGate": {
+    "canApplyTangtangFormulaCorrection": false,
+    "canClaimSioFormulaInGameCorrect": false,
+    "claim": "in-game-validation-protocol",
+    "currentCorrectionStatus": "blocked-no-direct-observed-damage-trials",
+    "currentInGameCorrectnessClaim": "not-established",
+    "directObservedDamageTrialCount": 0,
+    "matrixPath": "frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json",
+    "protocolPath": "frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md",
+    "status": "[TANGTANG-IN-GAME-DAMAGE-VALIDATION-PROTOCOL-READY]"
+  },
   "scorer": "sio_full_lm_equivalence",
   "sourceInputs": [
     "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
@@ -239,6 +252,8 @@
     "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
     "frontend/artifacts/td11/sio_lm_input_summary_2026-05-20.json",
     "frontend/artifacts/td11/sio_lm_equivalence_matrix.json",
+    "frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json",
+    "frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md",
     "frontend/app/lib/pareto-store/schemas/index.ts",
     "frontend/scripts/sio_tools_formula_source_evidence_unit_test.mjs",
     "frontend/scripts/damage_formula_provenance_matrix_unit_test.mjs"
@@ -1286,6 +1301,7 @@
   },
   "verificationCommands": [
     "node scripts/tangtang_damage_formula_spec_unit_test.mjs",
+    "node scripts/tangtang_in_game_damage_validation_unit_test.mjs",
     "node scripts/sio_tools_formula_source_evidence_unit_test.mjs",
     "node scripts/damage_formula_provenance_matrix_unit_test.mjs",
     "node scripts/in_game_description_evidence_unit_test.mjs",

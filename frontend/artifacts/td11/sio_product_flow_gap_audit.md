@@ -1110,6 +1110,66 @@ Derived and documented a SIO Tools-equivalent Tangtang damage formula spec from 
 
 GitHub push/PR not performed.
 
+## Tangtang In-Game Damage Validation Gate
+
+timestampKst: 2026-05-23T15:46:29+09:00
+status: `[TANGTANG-IN-GAME-DAMAGE-VALIDATION-PROTOCOL-READY]`
+
+### Scope
+
+Added a separate protocol gate for validating whether the current SIO Tools-equivalent damage formula matches direct in-game observed damage. This pass does not claim SIO's formula is proven correct against the game, does not apply Tangtang formula corrections, and does not change formula semantics, scoring core, Rust damage formulas, WASM scoring behavior, optimizer ranking, or user-facing UI.
+
+### Changes
+
+- Added `frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json`.
+- Added `frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md`.
+- Added `frontend/scripts/tangtang_in_game_damage_validation_unit_test.mjs`.
+- Updated `tangtang_damage_formula_spec.json` / `.md` and its gate to link the in-game damage validation gate.
+- Updated `damage_formula_provenance_matrix.md` and its gate to keep direct observed damage validation separate from SIO Tools-equivalent derivation.
+
+### Current Decision
+
+- Direct observed in-game damage trials: `0`.
+- Current in-game correctness claim: `not-established`.
+- Can claim SIO formula in-game correct: `false`.
+- Can apply Tangtang formula correction now: `false`.
+- Tangtang may improve beyond SIO only after repeated controlled direct in-game observations establish a SIO divergence.
+
+### Trial Groups
+
+- baseline attack aggregate.
+- skillDamage stage/order.
+- vulnerability and status uptime.
+- boss damage.
+- LME phase damage.
+- mountDamage CE contribution.
+- collectible thresholds.
+- collaboration survivors.
+- non-SS weapons.
+
+### Verification Log
+
+- `node scripts/tangtang_in_game_damage_validation_unit_test.mjs`: passed, 9 trial groups and 0 direct trials.
+- `node scripts/tangtang_damage_formula_spec_unit_test.mjs`: passed, 25 stages.
+- `node scripts/sio_tools_formula_source_evidence_unit_test.mjs`: passed, 4,650 source leaves.
+- `node scripts/damage_formula_provenance_matrix_unit_test.mjs`: passed, 367 rows.
+- `node scripts/in_game_description_evidence_unit_test.mjs`: passed, 6 rows.
+- `node scripts/sio_tools_live_evidence_matrix_unit_test.mjs`: passed, 20 rows.
+- `node scripts/sio_tools_targeted_live_evidence_unit_test.mjs`: passed, 5 rows.
+- `node scripts/mount_damage_source_fixture_unit_test.mjs`: passed, 3 rows.
+- `node scripts/collectible_effect_mapping_matrix_unit_test.mjs`: passed, 160 rows.
+- `node scripts/generic_aggregate_non_authority_gate.mjs`: passed, 4 rows.
+- `npx tsc --noEmit`: passed.
+- `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs`: passed.
+  - `fullSioEquivalent=true`
+  - `currentScorer=scorer=sio_full_lm_equivalence`
+  - `liveCaptureCount=26`
+  - `workerParity.arbitraryGeneratedLiveExpected=26/26`
+  - `G0/G1/G2/G3/G6=true`
+- `git diff --check`: passed.
+
+GitHub push/PR not performed.
+
 ## Tangtang In-Game Description Evidence Pass
 
 timestampKst: 2026-05-23T14:45:00+09:00

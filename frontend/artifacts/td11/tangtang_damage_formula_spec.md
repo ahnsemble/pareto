@@ -86,6 +86,18 @@ Key source/live counts:
 - Catalog-only collectible rows remain isolated.
 - No formula semantics, scoring core, Rust damage formula, WASM scoring behavior, optimizer ranking, or product UI changed.
 
+## In-Game Damage Validation Gate
+
+- Validation matrix: `frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json`
+- Validation protocol: `frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md`
+- Status: `[TANGTANG-IN-GAME-DAMAGE-VALIDATION-PROTOCOL-READY]`
+- Claim: `in-game-validation-protocol`
+- Current in-game correctness claim: `not-established`
+- Direct observed in-game damage trials: 0
+- Can claim SIO formula in-game correct: `false`
+- Can apply Tangtang formula correction: `false`
+- Current correction status: `blocked-no-direct-observed-damage-trials`
+
 ## Unsupported Formula Inputs
 
 - non-SS weapons remain catalog-only and unsupported as formula inputs: 8 rows.
@@ -103,6 +115,8 @@ Key source/live counts:
 - `frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json`
 - `frontend/artifacts/td11/sio_lm_input_summary_2026-05-20.json`
 - `frontend/artifacts/td11/sio_lm_equivalence_matrix.json`
+- `frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json`
+- `frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md`
 - `frontend/app/lib/pareto-store/schemas/index.ts`
 - `frontend/scripts/sio_tools_formula_source_evidence_unit_test.mjs`
 - `frontend/scripts/damage_formula_provenance_matrix_unit_test.mjs`
@@ -110,6 +124,7 @@ Key source/live counts:
 ## Verification Commands
 
 - `node scripts/tangtang_damage_formula_spec_unit_test.mjs`
+- `node scripts/tangtang_in_game_damage_validation_unit_test.mjs`
 - `node scripts/sio_tools_formula_source_evidence_unit_test.mjs`
 - `node scripts/damage_formula_provenance_matrix_unit_test.mjs`
 - `node scripts/in_game_description_evidence_unit_test.mjs`

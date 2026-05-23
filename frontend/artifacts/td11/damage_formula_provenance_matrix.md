@@ -26,6 +26,8 @@ Confidence values:
 - Evidence artifacts:
   - `frontend/artifacts/td11/tangtang_damage_formula_spec.json`
   - `frontend/artifacts/td11/tangtang_damage_formula_spec.md`
+  - `frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json`
+  - `frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md`
   - `frontend/artifacts/td11/sio_tools_live_evidence_matrix.json`
   - `frontend/artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json`
   - `frontend/artifacts/td11/in_game_description_evidence_matrix.json`
@@ -85,6 +87,20 @@ Confidence values:
   - Direct in-game description verified rows: 0
 - Official/direct first-party in-game text verification remains incomplete.
 - Formula/scoring/UI behavior did not change.
+
+## In-Game Damage Validation Gate
+
+- Direct in-game observed-damage validation is now tracked separately from SIO Tools-equivalent formula derivation:
+  - `frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json`
+  - `frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md`
+- Gate status: `[TANGTANG-IN-GAME-DAMAGE-VALIDATION-PROTOCOL-READY]`
+- Gate claim: `in-game-validation-protocol`
+- Current in-game correctness claim: `not-established`
+- Direct observed in-game damage trials: 0
+- Can claim SIO formula in-game correct: `false`
+- Can apply Tangtang formula correction: `false`
+- Correction status: `blocked-no-direct-observed-damage-trials`
+- This gate allows future Tangtang improvements beyond SIO only after repeated controlled direct in-game observations establish a SIO divergence.
 
 ## Follow-Up Gate Slices
 

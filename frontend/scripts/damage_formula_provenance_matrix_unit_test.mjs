@@ -132,6 +132,8 @@ const sioToolsFormulaSourceEvidencePath = path.join(root, 'artifacts/td11/sio_to
 const sioToolsFormulaSourceEvidence = JSON.parse(await fs.readFile(sioToolsFormulaSourceEvidencePath, 'utf8'));
 const tangtangDamageFormulaSpecPath = path.join(root, 'artifacts/td11/tangtang_damage_formula_spec.json');
 const tangtangDamageFormulaSpec = JSON.parse(await fs.readFile(tangtangDamageFormulaSpecPath, 'utf8'));
+const tangtangInGameDamageValidationPath = path.join(root, 'artifacts/td11/tangtang_in_game_damage_validation_matrix.json');
+const tangtangInGameDamageValidation = JSON.parse(await fs.readFile(tangtangInGameDamageValidationPath, 'utf8'));
 
 function slug(value) {
   return String(value)
@@ -539,6 +541,14 @@ assert.equal(tangtangDamageFormulaSpec.summaryCounts.targetSurvivorNormalizedCla
 assert.equal(tangtangDamageFormulaSpec.summaryCounts.collectibleThresholdRows, 170, 'formula spec collectible threshold count mismatch');
 assert.equal(tangtangDamageFormulaSpec.summaryCounts.collectibleSpecialRustMappings, 14, 'formula spec collectible special Rust mapping count mismatch');
 assert.equal(tangtangDamageFormulaSpec.summaryCounts.inGameDescriptionVerifiedRows, 0, 'formula spec must not promote direct in-game verified rows');
+assert.equal(tangtangInGameDamageValidation.status, '[TANGTANG-IN-GAME-DAMAGE-VALIDATION-PROTOCOL-READY]', 'in-game damage validation gate status changed');
+assert.equal(tangtangInGameDamageValidation.claim, 'in-game-validation-protocol', 'in-game damage validation gate claim changed');
+assert.equal(tangtangInGameDamageValidation.behaviorChange, false, 'in-game damage validation gate cannot imply behavior changes');
+assert.equal(tangtangInGameDamageValidation.validationScope.directObservedDamageTrialCount, 0, 'direct observed damage trials must start at zero');
+assert.equal(tangtangInGameDamageValidation.validationScope.currentInGameCorrectnessClaim, 'not-established', 'in-game correctness must not be over-claimed');
+assert.equal(tangtangInGameDamageValidation.decisionPolicy.canClaimSioFormulaInGameCorrect, false, 'SIO formula in-game correctness cannot be claimed without observations');
+assert.equal(tangtangInGameDamageValidation.decisionPolicy.canApplyTangtangFormulaCorrection, false, 'Tangtang formula correction must be blocked without observations');
+assert.equal(tangtangInGameDamageValidation.correctionPolicy.currentCorrectionStatus, 'blocked-no-direct-observed-damage-trials', 'correction policy must remain blocked');
 assert.equal(requireRow('survivor:spongebob').nextAction, 'replace public-web corroboration with direct in-game capture before formula semantics change');
 assert.equal(requireRow('survivor:squidward').nextAction, 'replace public-web corroboration with direct in-game capture before formula semantics change');
 assert.equal(requireRow('survivor:yelena').nextAction, 'capture missing direct in-game description rows before formula semantics change');
@@ -726,6 +736,8 @@ Confidence values:
 - Evidence artifacts:
   - \`frontend/artifacts/td11/tangtang_damage_formula_spec.json\`
   - \`frontend/artifacts/td11/tangtang_damage_formula_spec.md\`
+  - \`frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json\`
+  - \`frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md\`
   - \`frontend/artifacts/td11/sio_tools_live_evidence_matrix.json\`
   - \`frontend/artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json\`
   - \`frontend/artifacts/td11/in_game_description_evidence_matrix.json\`
@@ -767,6 +779,20 @@ ${renderCountTable(countBy('confidence'))}
   - Direct in-game description verified rows: ${tangtangDamageFormulaSpec.summaryCounts.inGameDescriptionVerifiedRows}
 - Official/direct first-party in-game text verification remains incomplete.
 - Formula/scoring/UI behavior did not change.
+
+## In-Game Damage Validation Gate
+
+- Direct in-game observed-damage validation is now tracked separately from SIO Tools-equivalent formula derivation:
+  - \`frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json\`
+  - \`frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md\`
+- Gate status: \`${tangtangInGameDamageValidation.status}\`
+- Gate claim: \`${tangtangInGameDamageValidation.claim}\`
+- Current in-game correctness claim: \`${tangtangInGameDamageValidation.validationScope.currentInGameCorrectnessClaim}\`
+- Direct observed in-game damage trials: ${tangtangInGameDamageValidation.validationScope.directObservedDamageTrialCount}
+- Can claim SIO formula in-game correct: \`${tangtangInGameDamageValidation.decisionPolicy.canClaimSioFormulaInGameCorrect}\`
+- Can apply Tangtang formula correction: \`${tangtangInGameDamageValidation.decisionPolicy.canApplyTangtangFormulaCorrection}\`
+- Correction status: \`${tangtangInGameDamageValidation.correctionPolicy.currentCorrectionStatus}\`
+- This gate allows future Tangtang improvements beyond SIO only after repeated controlled direct in-game observations establish a SIO divergence.
 
 ## Follow-Up Gate Slices
 
