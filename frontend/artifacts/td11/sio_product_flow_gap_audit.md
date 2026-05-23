@@ -827,3 +827,44 @@ status: `[KOREAN-LOCALE-UI-GREEN-LOCAL]`
 - Commit:
   - Implementation commit: `9b8e8f2 feat: localize Tangtang Korean optimizer`.
   - GitHub push/PR not performed.
+
+## Tangtang Vercel Short Code Import Fix
+
+timestampKst: 2026-05-23T10:54:15+09:00
+status: `[VERCEL-SHORT-CODE-IMPORT-GREEN]`
+
+- Product behavior:
+  - `https://tanggall.vercel.app/ko/v3/optimizer/tech-parts` now imports `https://sio-tools.vercel.app?code=rm8mHx` successfully.
+  - The public UI still shows Tangtang Korean product copy and no user-facing SIO/debug/scorer copy was added.
+- Root cause:
+  - Production Vercel CSP had `connect-src 'self'`, so browser fetches to `https://is.gd/forward.php` were blocked before the short calculation code could expand.
+- RED/GREEN summary:
+  - RED repro: clean Playwright run on production showed summary `프로필을 가져오지 못했습니다...` and console CSP errors blocking `https://is.gd/forward.php?...`.
+  - RED unit: `node scripts/vercel_config_unit_test.mjs` failed because `vercel.json` did not allow `https://is.gd` in `connect-src`.
+  - GREEN implementation: `vercel.json` and `vercel.static.json` now keep `connect-src 'self'` and add `https://is.gd`.
+  - GREEN production check: clean Playwright run on `https://tanggall.vercel.app/ko/v3/optimizer/tech-parts` imported the provided short-code link and showed `계산 링크 가져옴 / 계정 컨텍스트 가져옴 / 테크 인벤토리 가져옴`.
+- Verification:
+  - `node scripts/vercel_config_unit_test.mjs`: passed.
+  - `node scripts/external_calculation_link_unit_test.mjs`: passed, `rawLength=1350`, `compactVersion=5`.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts --grep "mocked short calculation code"`: passed, 2/2.
+  - `curl -I https://tanggall.vercel.app/ko/v3/optimizer/tech-parts`: 200 with `connect-src 'self' https://is.gd`.
+  - `git diff --check`: passed.
+- Deployment:
+  - Production deployment: `https://tangtang-d7svolds2-aws0906-9092s-projects.vercel.app`.
+  - Public alias: `https://tanggall.vercel.app`.
+- Heavy verification:
+  - Omitted. This changed only Vercel CSP configuration and a config unit test; scoring bridge, Rust formula constants, and WASM scoring semantics were not touched.
+- Intentional constraints kept:
+  - Public UI remains Tangtang.
+  - Raw SIO LM JSON, scorer/debug/preselect/beam/exact node cap UI remain hidden.
+  - SIO LM/scoring core, Rust formula constants, and WASM scoring semantics were not changed.
+  - Internal `sio*` rename remains deferred to Post-Launch Gate 7.
+  - GitHub push/PR not performed.
+- Artifacts:
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/vercel.json`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/vercel.static.json`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/scripts/vercel_config_unit_test.mjs`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_product_flow_gap_audit.md`
+- Commit:
+  - Local commit pending at record time.
+  - GitHub push/PR not performed.
