@@ -1064,6 +1064,62 @@ Do not change scoring formulas yet. The next safe step is a documentation/test g
 
 GitHub push/PR not performed.
 
+## SIO Tools Live Evidence Collection Pass
+
+timestampKst: 2026-05-23T14:10:00+09:00
+status: `[SIO-TOOLS-LIVE-EVIDENCE-MATRIX-GREEN]`
+
+### Scope
+
+Collected and structured evidence available from the local/public SIO Tools mirror, existing live worker captures, and extracted source tables. This pass is evidence/provenance only: no scoring formula, SIO LM core, Rust formula, WASM semantics, optimizer ranking, or user-facing UI changed.
+
+### New Evidence Artifact
+
+- `frontend/artifacts/td11/sio_tools_live_evidence_matrix.json`
+  - Evidence rows: 15.
+  - Existing arbitrary compact live captures: 26/26.
+  - LM trace stage-product checks: 26/26.
+  - Collectible live source-table cases: 7.
+  - Collectible threshold rows linked: 170.
+  - Mount live cases: 2.
+  - Non-empty mount stat-line live rows: 1.
+  - Empty mount component live rows: 1.
+  - Non-zero `mountDamage` live rows: 0.
+  - Non-zero `mountDamage` source rows: 2.
+  - Target survivor source rows: 3.
+  - Target survivor live rows: 0.
+  - Source-proven compact mount active key: `bJ.bj`; mount data key: `bJ.bM`.
+
+### Evidence Findings
+
+- Collectibles now have stronger SIO Tools evidence:
+  - source/Rust threshold rows remain in `collectible_effect_mapping_matrix.json`;
+  - 7 existing SIO Tools live worker cases prove source-table/LM trace behavior for collectible/custom-set paths;
+  - in-game description text remains not independently captured.
+- Mounts are more precisely bounded:
+  - one live case captures non-empty mount stat-line folding;
+  - one live mount fixture traces an empty mount component;
+  - active-mount key evidence shows the next live fixture should set `bJ.bj`, but existing fixtures do not;
+  - non-zero `mountDamage` remains source-only, not live-equivalent.
+- SpongeBob/Squidward/Yelena remain source-backed only:
+  - broad survivor live coverage exists;
+  - targeted live rows for these three are still 0.
+
+### Matrix Update
+
+- Updated `damage_formula_provenance_matrix.md` to reference the new evidence artifact.
+- Follow-up gate slices now record:
+  - DF-P3: `mountLineStatsLiveRows=1`, `nonZeroMountDamageLiveRows=0`, active key `bj`.
+  - DF-P4: 170 collectible threshold rows plus 7 SIO Tools live source-table cases.
+  - DF-P5: broad survivor live evidence exists, but target survivor live rows are still 0.
+
+### Verification Log
+
+- `node scripts/sio_tools_live_evidence_matrix_unit_test.mjs`: passed, 15 rows.
+- `node scripts/damage_formula_provenance_matrix_unit_test.mjs`: passed, 367 rows.
+
+GitHub push/PR not performed.
+
 ## Damage Formula Provenance Follow-Up Gate Slices
 
 timestampKst: 2026-05-23T13:10:00+09:00

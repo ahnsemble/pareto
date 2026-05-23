@@ -123,6 +123,8 @@ const collectibleEffectMappingPath = path.join(root, 'artifacts/td11/collectible
 const collectibleEffectMapping = JSON.parse(await fs.readFile(collectibleEffectMappingPath, 'utf8'));
 const genericAggregateNonAuthorityPath = path.join(root, 'artifacts/td11/generic_aggregate_non_authority_gate.json');
 const genericAggregateNonAuthority = JSON.parse(await fs.readFile(genericAggregateNonAuthorityPath, 'utf8'));
+const sioToolsLiveEvidencePath = path.join(root, 'artifacts/td11/sio_tools_live_evidence_matrix.json');
+const sioToolsLiveEvidence = JSON.parse(await fs.readFile(sioToolsLiveEvidencePath, 'utf8'));
 
 function slug(value) {
   return String(value)
@@ -209,7 +211,7 @@ for (const hero of HERO_SCHEMA_INDEX) {
     rustStatChannel: DIRECT_HERO_CHANNELS.get(hero.id) ?? 'SIO compact survivor/passive/teamwork transform; generic aggregate empty',
     multiplierStage: DIRECT_HERO_CHANNELS.get(hero.id) ?? 'upstream stat transform before 31-stage damage vector',
     liveEvidence: isSourceOnlySurvivor
-      ? 'source-backed by extracted module37013 table and Rust compact transform; targeted live fixture not yet isolated'
+      ? 'sio_tools_live_evidence_matrix.targetSurvivorLiveRows=0; source-backed by extracted module37013 table and Rust compact transform; targeted live fixture not yet isolated'
       : 'sio_lm_equivalence_matrix.survivors-passives-harmony-teamwork=implemented-live-covered',
     confidence: isSourceOnlySurvivor ? 'sio-source-only' : 'sio-live-equivalent',
     nextAction: isSourceOnlySurvivor
@@ -283,9 +285,9 @@ for (const mount of MOUNT_SCHEMA_INDEX) {
     tangtangSchemaKey: `MOUNT_SCHEMA_INDEX.${mount.id}`,
     rustStatChannel: 'compact mount stats; mountDamage currently not strongly live-proven',
     multiplierStage: 'mount-derived stat channels when present',
-    liveEvidence: 'sio_lm_equivalence_matrix.mounts=implemented-live-covered, but prior audit notes incomplete mount damage formulas',
+    liveEvidence: 'sio_tools_live_evidence_matrix.mountLineStatsLiveRows=1; nonZeroMountDamageLiveRows=0; mountActiveShortKey=bj',
     confidence: 'sio-source-only',
-    nextAction: 'capture non-empty mount live fixture with damage-bearing lines',
+    nextAction: 'capture active-mount live fixture with bJ.bj and damage-bearing lines',
   });
 }
 
@@ -323,7 +325,7 @@ for (const item of COLLECTIBLE_ITEM_INDEX) {
     tangtangSchemaKey: `COLLECTIBLE_ITEM_INDEX.${item.id}`,
     rustStatChannel: eventSlot || catalogOnlyNamedItem ? 'none until source effect row is known' : 'equipment_transform item/set bonuses where explicitly wired',
     multiplierStage: eventSlot || catalogOnlyNamedItem ? 'none' : 'item/set-dependent upstream stat transform',
-    liveEvidence: eventSlot || catalogOnlyNamedItem ? 'none' : 'sio_lm_equivalence_matrix.collectibles-custom-sets=implemented-live-covered',
+    liveEvidence: eventSlot || catalogOnlyNamedItem ? 'none' : 'sio_tools_live_evidence_matrix.collectibleLiveRows=7; collectible_effect_mapping.thresholdRows=170',
     confidence: eventSlot || catalogOnlyNamedItem ? 'catalog-only' : 'sio-source-only',
     nextAction: eventSlot || catalogOnlyNamedItem ? 'replace or promote only when SIO exposes real item/effect row' : 'add item-level in-game description and stat/equipment effect mapping',
   });
@@ -339,7 +341,7 @@ for (const set of COLLECTIBLE_SET_INDEX) {
     tangtangSchemaKey: `COLLECTIBLE_SET_INDEX.${set.id}`,
     rustStatChannel: 'equipment_transform custom/set bonuses where explicitly wired; generic aggregate empty',
     multiplierStage: 'set-dependent upstream stat transform',
-    liveEvidence: 'sio_lm_equivalence_matrix.collectibles-custom-sets=implemented-live-covered',
+    liveEvidence: 'sio_tools_live_evidence_matrix.collectibleLiveRows=7; collectible_effect_mapping.thresholdRows=170',
     confidence: 'sio-source-only',
     nextAction: 'add per-set in-game description and stat channel mapping',
   });
@@ -423,9 +425,14 @@ assert.equal(mountRows.length, MOUNT_SCHEMA_INDEX.length, 'all mounts must be re
 for (const row of mountRows) {
   assert.equal(row.confidence, 'sio-source-only', `${row.key}.confidence`);
   assertIncludes(row, 'rustStatChannel', 'mountDamage currently not strongly live-proven');
-  assert.equal(row.nextAction, 'capture non-empty mount live fixture with damage-bearing lines', `${row.key}.nextAction`);
+  assertIncludes(row, 'liveEvidence', 'mountActiveShortKey=bj');
+  assert.equal(row.nextAction, 'capture active-mount live fixture with bJ.bj and damage-bearing lines', `${row.key}.nextAction`);
 }
 assert.equal(mountDamageSourceFixture.summary.totalRows, MOUNT_SCHEMA_INDEX.length, 'mount source fixture must cover all mounts');
+assert.equal(sioToolsLiveEvidence.summary.mountLiveRows, 2, 'live evidence matrix must preserve mount live capture rows');
+assert.equal(sioToolsLiveEvidence.summary.mountLineStatsLiveRows, 1, 'live evidence matrix must isolate non-empty mount stat-line capture');
+assert.equal(sioToolsLiveEvidence.summary.nonZeroMountDamageLiveRows, 0, 'live evidence matrix must not overstate mountDamage live coverage');
+assert.equal(sioToolsLiveEvidence.summary.mountActiveShortKey, 'bj', 'live evidence matrix must preserve SIO compact active-mount key evidence');
 assert.ok(
   mountDamageSourceFixture.rows.some((fixture) => typeof fixture.mountDamageLine === 'string' && fixture.mountDamageLine.trim() !== ''),
   'mount source fixture must include non-empty mountDamage formulas',
@@ -446,12 +453,15 @@ for (const row of sourceOnlySurvivorRows) {
   assert.equal(row.confidence, 'sio-source-only', `${row.key}.confidence`);
   assertIncludes(row, 'sourceStatus', 'Rust compact survivor transform');
   assertIncludes(row, 'sioSourceKey', 'module37013_f_default_config.json');
+  assertIncludes(row, 'liveEvidence', 'targetSurvivorLiveRows=0');
   assert.equal(row.nextAction, 'add targeted live fixture plus in-game description row before claiming live-equivalent survivor coverage', `${row.key}.nextAction`);
 }
 
 assert.equal(collectibleEffectMapping.summary.totalRows, 160, 'collectible mapping artifact must cover all item, event, and set rows');
 assert.equal(collectibleEffectMapping.summary.catalogOnlyNamedItemRows, COLLECTIBLE_CATALOG_ONLY_ITEM_IDS.size, 'collectible mapping artifact must isolate schema-only named items');
 assert.equal(collectibleEffectMapping.summary.thresholdRows, 170, 'collectible mapping artifact must include threshold-level source rows');
+assert.equal(sioToolsLiveEvidence.summary.collectibleLiveRows, 7, 'live evidence matrix must preserve collectible live capture rows');
+assert.equal(sioToolsLiveEvidence.summary.collectibleThresholdRows, 170, 'live evidence matrix must link collectible threshold rows');
 assert.ok(
   collectibleEffectMapping.thresholdRows.some((row) => row.key === 'collectible-item:luckyCharm:stars:8:critRate'),
   'collectible item threshold row must map source threshold to stat channel',
@@ -548,15 +558,15 @@ const followUpGateSlices = [
     gate: 'DF-P3',
     slice: 'Mount damage line',
     rowsGuarded: `${mountRows.length} mount rows`,
-    currentState: 'source-only; non-empty source fixture exists but mountDamage is not strongly live-proven',
-    blocker: 'needs non-empty mount live capture with damage-bearing lines',
-    nextGate: 'capture a live fixture before formula-completeness claims',
+    currentState: `source-only; live evidence matrix has ${sioToolsLiveEvidence.summary.mountLineStatsLiveRows} non-empty mount stat-line row, ${sioToolsLiveEvidence.summary.nonZeroMountDamageLiveRows} non-zero mountDamage live rows, and active compact key ${sioToolsLiveEvidence.summary.mountActiveShortKey}`,
+    blocker: 'needs active-mount live capture with damage-bearing lines',
+    nextGate: 'capture bJ.bj active-mount fixture before formula-completeness claims',
   },
   {
     gate: 'DF-P4',
     slice: 'Collectible item/set text mapping',
     rowsGuarded: `${collectibleTextMappingRows.length} source-backed rows plus ${collectibleCatalogOnlyRows.length} catalog-only rows`,
-    currentState: `source-only mapping artifact exists with ${collectibleEffectMapping.summary.thresholdRows} threshold rows; per-description mapping not independently captured`,
+    currentState: `source-only mapping artifact exists with ${collectibleEffectMapping.summary.thresholdRows} threshold rows and ${sioToolsLiveEvidence.summary.collectibleLiveRows} SIO Tools live source-table cases; per-description mapping not independently captured`,
     blocker: 'missing item/set in-game description to stat-channel mapping; 4 named Starlight rows and 42 event slots are catalog-only',
     nextGate: 'map description -> source key -> Tangtang schema key -> Rust stat channel -> multiplier stage',
   },
@@ -564,7 +574,7 @@ const followUpGateSlices = [
     gate: 'DF-P5',
     slice: 'Collaboration survivor source reconciliation',
     rowsGuarded: sourceOnlySurvivorRows.map((row) => row.key).join('; '),
-    currentState: 'source-backed by runtime table and Rust compact transform; no targeted live fixture yet',
+    currentState: `source-backed by runtime table and Rust compact transform; broad survivor live case exists, but targetSurvivorLiveRows=${sioToolsLiveEvidence.summary.targetSurvivorLiveRows}`,
     blocker: 'SpongeBob/Squidward/Yelena still need targeted live and in-game description captures before live-equivalent claims',
     nextGate: 'add targeted fixtures before changing survivor scoring semantics',
   },
@@ -627,6 +637,10 @@ Confidence values:
 - SIO source references:
   - \`/Users/woosung/Desktop/Dev/Woosdom_Brain/01_Domains/시오툴/sio_tools_gt_master.md\`
   - \`/Users/woosung/Desktop/Dev/Woosdom_Brain/01_Domains/시오툴/sio_tools_formulas_and_defaults.md\`
+- Evidence artifacts:
+  - \`frontend/artifacts/td11/sio_tools_live_evidence_matrix.json\`
+  - \`frontend/artifacts/td11/collectible_effect_mapping_matrix.json\`
+  - \`frontend/artifacts/td11/mount_damage_source_fixture.json\`
 
 ### Rows By Domain
 
@@ -640,8 +654,8 @@ ${renderCountTable(countBy('confidence'))}
 
 - Non-SS weapons are present as catalog rows but not proven as complete formula rows.
 - SpongeBob, Squidward, and Yelena are source-backed by the current runtime table and Rust compact transform, but still need targeted live and in-game description fixtures before live-equivalent claims.
-- Mounts now have a non-empty source fixture, but still need non-empty live captures with damage-bearing lines before claiming independent formula completeness.
-- Collectible item/set rows now have a source/Rust-channel mapping artifact with threshold-level rows; 4 named Starlight rows and 42 event slots remain catalog-only until source effect rows exist.
+- Mounts now have a non-empty source fixture and the active compact key \`bJ.bj\` is source-proven, but live captures still show \`nonZeroMountDamageLiveRows=0\`.
+- Collectible item/set rows now have a source/Rust-channel mapping artifact with threshold-level rows plus 7 SIO Tools live source-table cases; 4 named Starlight rows and 42 event slots remain catalog-only until source effect rows exist.
 - Generic aggregate modules now have a dedicated non-authority gate; the current product scorer relies on the SIO LM compact path.
 
 ## Follow-Up Gate Slices

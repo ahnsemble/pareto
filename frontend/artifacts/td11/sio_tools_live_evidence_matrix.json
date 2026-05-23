@@ -1,0 +1,699 @@
+{
+  "generatedAtKst": "2026-05-23",
+  "status": "SIO-TOOLS-LIVE-EVIDENCE-MATRIX-V0",
+  "sourceArtifacts": {
+    "liveCapture": "artifacts/td11/arbitrary_compact_s59/live_capture_summary.json",
+    "lmTrace": "artifacts/td11/arbitrary_compact_s59/lm_trace_summary.json",
+    "compactManifest": "artifacts/td11/arbitrary_compact_s59/compact_fixture_manifest.json",
+    "collectibleEffectMappingMatrix": "artifacts/td11/collectible_effect_mapping_matrix.json",
+    "mountDamageSourceFixture": "artifacts/td11/mount_damage_source_fixture.json",
+    "compactCodecAsset": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/9730c42f92d7-797-9e5ce5eee251b4e4.js"
+  },
+  "summary": {
+    "liveCaptureCases": 26,
+    "liveCapturedCases": 26,
+    "lmTraceStageProductPassed": 26,
+    "evidenceRows": 15,
+    "collectibleLiveRows": 7,
+    "collectibleThresholdRows": 170,
+    "inGameDescriptionVerifiedRows": 0,
+    "mountLiveRows": 2,
+    "mountLineStatsLiveRows": 1,
+    "mountEmptyComponentLiveRows": 1,
+    "nonZeroMountDamageLiveRows": 0,
+    "nonZeroMountDamageSourceRows": 2,
+    "targetSurvivorSourceRows": 3,
+    "targetSurvivorLiveRows": 0,
+    "mountActiveShortKey": "bj",
+    "mountDataShortKey": "bM"
+  },
+  "rows": [
+    {
+      "key": "live:collectibles:collectibles_custom_sets_legend_thresholds",
+      "domain": "collectibles",
+      "evidenceType": "sio-tools-live-capture",
+      "liveCaseId": "collectibles_custom_sets_legend_thresholds",
+      "purpose": "Exercise compact collectible stars and custom set levels without relying on captured endgame profile residuals.",
+      "live": {
+        "evidenceState": "live-captured",
+        "compactPayloadHash": "fb6753e45b8ff3bc97f852bf3ec5d8e92c1244031614549d416599110bf405a8",
+        "capturedAt": "2026-05-21T09:16:23.830Z",
+        "expectedMultiplier": 4777370979399835,
+        "tracedMultiplier": 4682449866747190,
+        "damageFactor": 97611.38299362714,
+        "stageProductRelativeError": 0
+      },
+      "baseStatComponents": {
+        "collectibles": {
+          "critDamage": 231.6,
+          "critRate": 221.6
+        },
+        "collectibleSets": {
+          "atkPercent": 118,
+          "critDamage": 45,
+          "laceration": 5,
+          "poisoned": 10,
+          "shieldDamage": 50,
+          "skillDamage": 60,
+          "weakened": 10
+        },
+        "customSets": {
+          "chilled": 15,
+          "critDamage": 45,
+          "poisoned": 15,
+          "skillDamage": 30,
+          "weakened": 15
+        }
+      },
+      "selectedFinalStats": {
+        "atkPercent": 298,
+        "chilled": 225,
+        "critDamage": 955.6,
+        "critRate": 346.6,
+        "laceration": 110,
+        "poisoned": 105,
+        "shieldDamage": 376,
+        "skillDamage": 625,
+        "ssMiscPath": 160.56,
+        "vulnerability": 80,
+        "weakened": 125
+      },
+      "sourceMatrixCoverage": {
+        "collectibleEntityRows": 160,
+        "collectibleThresholdRows": 170,
+        "inGameDescriptionVerifiedRows": 0
+      },
+      "finding": "SIO Tools live worker captured multiplier and LM trace attribution for collectible source tables; in-game description text is still not independently captured.",
+      "confidence": "sio-live-equivalent-for-source-table-path"
+    },
+    {
+      "key": "live:collectibles:collectibles_individual_star_tables",
+      "domain": "collectibles",
+      "evidenceType": "sio-tools-live-capture",
+      "liveCaseId": "collectibles_individual_star_tables",
+      "purpose": "Exercise isolated individual collectible star entries across low, mid, and capped star values.",
+      "live": {
+        "evidenceState": "live-captured",
+        "compactPayloadHash": "b33fc92a9d67c1372e57681e5b2c68e80be7bfe870e9c05946d27d977f8d8373",
+        "capturedAt": "2026-05-21T09:16:26.103Z",
+        "expectedMultiplier": 505634519565412.2,
+        "tracedMultiplier": 3034810009525474,
+        "damageFactor": 96108.56704500876,
+        "stageProductRelativeError": 0
+      },
+      "baseStatComponents": {
+        "collectibles": {
+          "critDamage": 205,
+          "critRate": 205
+        },
+        "collectibleSets": {
+          "atkPercent": 110,
+          "critDamage": 45,
+          "laceration": 5,
+          "poisoned": 10,
+          "shieldDamage": 50,
+          "skillDamage": 60,
+          "weakened": 10
+        },
+        "customSets": {}
+      },
+      "selectedFinalStats": {
+        "atkPercent": 290,
+        "chilled": 210,
+        "critDamage": 884,
+        "critRate": 330,
+        "laceration": 110,
+        "poisoned": 90,
+        "shieldDamage": 376,
+        "skillDamage": 575,
+        "ssMiscPath": 133.8,
+        "vulnerability": 65,
+        "weakened": 110
+      },
+      "sourceMatrixCoverage": {
+        "collectibleEntityRows": 160,
+        "collectibleThresholdRows": 170,
+        "inGameDescriptionVerifiedRows": 0
+      },
+      "finding": "SIO Tools live worker captured multiplier and LM trace attribution for collectible source tables; in-game description text is still not independently captured.",
+      "confidence": "sio-live-equivalent-for-source-table-path"
+    },
+    {
+      "key": "live:collectibles:collectibles_upgraded_multiplier_behavior",
+      "domain": "collectibles",
+      "evidenceType": "sio-tools-live-capture",
+      "liveCaseId": "collectibles_upgraded_multiplier_behavior",
+      "purpose": "Exercise compact upgraded collectible entries that feed multiplier-affecting collectible behavior.",
+      "live": {
+        "evidenceState": "live-captured",
+        "compactPayloadHash": "924300809312631d820f435edc01849c2e28246f028f81b389d4ee19c739ff38",
+        "capturedAt": "2026-05-21T09:16:26.216Z",
+        "expectedMultiplier": 665714953091593.8,
+        "tracedMultiplier": 4428307078971286,
+        "damageFactor": 97611.38299362714,
+        "stageProductRelativeError": 0
+      },
+      "baseStatComponents": {
+        "collectibles": {
+          "critDamage": 228.3,
+          "critRate": 218.3
+        },
+        "collectibleSets": {
+          "atkPercent": 118,
+          "critDamage": 45,
+          "laceration": 5,
+          "poisoned": 10,
+          "shieldDamage": 50,
+          "skillDamage": 60,
+          "weakened": 10
+        },
+        "customSets": {
+          "chilled": 5,
+          "critDamage": 45,
+          "poisoned": 5,
+          "skillDamage": 30,
+          "weakened": 5
+        }
+      },
+      "selectedFinalStats": {
+        "atkPercent": 298,
+        "chilled": 215,
+        "critDamage": 872.3,
+        "critRate": 343.3,
+        "laceration": 110,
+        "poisoned": 95,
+        "shieldDamage": 376,
+        "skillDamage": 625,
+        "ssMiscPath": 160.56,
+        "vulnerability": 80,
+        "weakened": 165
+      },
+      "sourceMatrixCoverage": {
+        "collectibleEntityRows": 160,
+        "collectibleThresholdRows": 170,
+        "inGameDescriptionVerifiedRows": 0
+      },
+      "finding": "SIO Tools live worker captured multiplier and LM trace attribution for collectible source tables; in-game description text is still not independently captured.",
+      "confidence": "sio-live-equivalent-for-source-table-path"
+    },
+    {
+      "key": "live:collectibles:collectibles_item_set_folding",
+      "domain": "collectibles",
+      "evidenceType": "sio-tools-live-capture",
+      "liveCaseId": "collectibles_item_set_folding",
+      "purpose": "Exercise item collectible-set folding with SS equipment and collectible stars present.",
+      "live": {
+        "evidenceState": "live-captured",
+        "compactPayloadHash": "3785675368aa02d4330a8656e181c3e8773cf39efd7cf07dd71b00e34bf87b81",
+        "capturedAt": "2026-05-21T09:16:26.334Z",
+        "expectedMultiplier": 118428750183613500,
+        "tracedMultiplier": 415287854634167230,
+        "damageFactor": 162585.50719059512,
+        "stageProductRelativeError": 0
+      },
+      "baseStatComponents": {
+        "collectibles": {
+          "critDamage": 225,
+          "critRate": 215
+        },
+        "collectibleSets": {
+          "atkPercent": 118,
+          "critDamage": 45,
+          "laceration": 5,
+          "poisoned": 10,
+          "shieldDamage": 50,
+          "skillDamage": 60,
+          "weakened": 10
+        },
+        "customSets": {}
+      },
+      "selectedFinalStats": {
+        "atkPercent": 323,
+        "chilled": 633.25,
+        "critDamage": 1614,
+        "critRate": 390,
+        "damageBoss": 52,
+        "damageTransmute": 26.85,
+        "laceration": 125,
+        "poisoned": 180,
+        "shieldDamage": 760,
+        "skillDamage": 1115,
+        "ssMiscPath": 2077.914,
+        "vulnerability": 160,
+        "weakened": 159
+      },
+      "sourceMatrixCoverage": {
+        "collectibleEntityRows": 160,
+        "collectibleThresholdRows": 170,
+        "inGameDescriptionVerifiedRows": 0
+      },
+      "finding": "SIO Tools live worker captured multiplier and LM trace attribution for collectible source tables; in-game description text is still not independently captured.",
+      "confidence": "sio-live-equivalent-for-source-table-path"
+    },
+    {
+      "key": "live:collectibles:collectibles_tech_set_folding",
+      "domain": "collectibles",
+      "evidenceType": "sio-tools-live-capture",
+      "liveCaseId": "collectibles_tech_set_folding",
+      "purpose": "Exercise tech collectible-set folding with compact tech skills and collectible stars present.",
+      "live": {
+        "evidenceState": "live-captured",
+        "compactPayloadHash": "33893fe4e0ee364422b7861b4e6e3d76256d421d51e3249fcdd90de8e40e57a3",
+        "capturedAt": "2026-05-21T09:16:26.446Z",
+        "expectedMultiplier": 514118320229261.44,
+        "tracedMultiplier": 3905404737608512,
+        "damageFactor": 97611.38299362714,
+        "stageProductRelativeError": 0
+      },
+      "baseStatComponents": {
+        "collectibles": {
+          "critDamage": 225,
+          "critRate": 215
+        },
+        "collectibleSets": {
+          "atkPercent": 118,
+          "critDamage": 45,
+          "laceration": 5,
+          "poisoned": 10,
+          "shieldDamage": 50,
+          "skillDamage": 60,
+          "weakened": 10
+        },
+        "customSets": {}
+      },
+      "selectedFinalStats": {
+        "atkPercent": 298,
+        "chilled": 210,
+        "critDamage": 824,
+        "critRate": 340,
+        "laceration": 110,
+        "poisoned": 90,
+        "shieldDamage": 376,
+        "skillDamage": 595,
+        "ssMiscPath": 160.56,
+        "vulnerability": 80,
+        "weakened": 160
+      },
+      "sourceMatrixCoverage": {
+        "collectibleEntityRows": 160,
+        "collectibleThresholdRows": 170,
+        "inGameDescriptionVerifiedRows": 0
+      },
+      "finding": "SIO Tools live worker captured multiplier and LM trace attribution for collectible source tables; in-game description text is still not independently captured.",
+      "confidence": "sio-live-equivalent-for-source-table-path"
+    },
+    {
+      "key": "live:collectibles:custom_sets_threshold_edges",
+      "domain": "collectibles",
+      "evidenceType": "sio-tools-live-capture",
+      "liveCaseId": "custom_sets_threshold_edges",
+      "purpose": "Exercise custom set low, boundary, and high threshold edges with explicit star sums.",
+      "live": {
+        "evidenceState": "live-captured",
+        "compactPayloadHash": "0fb5568c6df87ecd1170f324562dd1503ebdbc358cc8c8b35586c9d3601b2646",
+        "capturedAt": "2026-05-21T09:16:26.559Z",
+        "expectedMultiplier": 1525018970595766,
+        "tracedMultiplier": 6705805543796681,
+        "damageFactor": 97611.38299362714,
+        "stageProductRelativeError": 0
+      },
+      "baseStatComponents": {
+        "collectibles": {
+          "critDamage": 218.2,
+          "critRate": 208.2
+        },
+        "collectibleSets": {
+          "atkPercent": 118,
+          "critDamage": 45,
+          "laceration": 5,
+          "poisoned": 10,
+          "shieldDamage": 50,
+          "skillDamage": 60,
+          "weakened": 10
+        },
+        "customSets": {
+          "chilled": 50,
+          "critDamage": 200,
+          "poisoned": 50,
+          "skillDamage": 90,
+          "weakened": 50
+        }
+      },
+      "selectedFinalStats": {
+        "atkPercent": 298,
+        "chilled": 260,
+        "critDamage": 1079.2,
+        "critRate": 333.2,
+        "laceration": 110,
+        "poisoned": 140,
+        "shieldDamage": 376,
+        "skillDamage": 685,
+        "ssMiscPath": 160.56,
+        "vulnerability": 80,
+        "weakened": 150
+      },
+      "sourceMatrixCoverage": {
+        "collectibleEntityRows": 160,
+        "collectibleThresholdRows": 170,
+        "inGameDescriptionVerifiedRows": 0
+      },
+      "finding": "SIO Tools live worker captured multiplier and LM trace attribution for collectible source tables; in-game description text is still not independently captured.",
+      "confidence": "sio-live-equivalent-for-source-table-path"
+    },
+    {
+      "key": "live:collectibles:collectibles_broad_item_tech_set_endgame_fold",
+      "domain": "collectibles",
+      "evidenceType": "sio-tools-live-capture",
+      "liveCaseId": "collectibles_broad_item_tech_set_endgame_fold",
+      "purpose": "Exercise item and tech collectible set folding together under an endgame SS equipment surface.",
+      "live": {
+        "evidenceState": "live-captured",
+        "compactPayloadHash": "273ea212d9702279c575f1e66b520b4c93df4c4996a32123caf110124e6f3e0a",
+        "capturedAt": "2026-05-21T09:16:26.683Z",
+        "expectedMultiplier": 425399297563526400,
+        "tracedMultiplier": 425465061984430300,
+        "damageFactor": 147195.33145020387,
+        "stageProductRelativeError": 0
+      },
+      "baseStatComponents": {
+        "collectibles": {
+          "critDamage": 225,
+          "critRate": 215
+        },
+        "collectibleSets": {
+          "atkPercent": 124,
+          "critDamage": 45,
+          "laceration": 5,
+          "poisoned": 10,
+          "shieldDamage": 50,
+          "skillDamage": 60,
+          "weakened": 10
+        },
+        "customSets": {}
+      },
+      "selectedFinalStats": {
+        "atkPercent": 329,
+        "chilled": 643.25,
+        "critDamage": 1415,
+        "critRate": 470,
+        "damageBoss": 48,
+        "damageTransmute": 26.85,
+        "laceration": 125,
+        "poisoned": 190,
+        "shieldDamage": 680,
+        "skillDamage": 1035,
+        "ssMiscPath": 2013.6900000000003,
+        "vulnerability": 160,
+        "weakened": 170
+      },
+      "sourceMatrixCoverage": {
+        "collectibleEntityRows": 160,
+        "collectibleThresholdRows": 170,
+        "inGameDescriptionVerifiedRows": 0
+      },
+      "finding": "SIO Tools live worker captured multiplier and LM trace attribution for collectible source tables; in-game description text is still not independently captured.",
+      "confidence": "sio-live-equivalent-for-source-table-path"
+    },
+    {
+      "key": "live:mounts:mounts_enabled_lines",
+      "domain": "mounts",
+      "evidenceType": "sio-tools-live-capture",
+      "liveCaseId": "mounts_enabled_lines",
+      "purpose": "Exercise compact mount enabled lines and stat map extraction.",
+      "live": {
+        "evidenceState": "live-captured",
+        "compactPayloadHash": "7b08272244f6590444ffc9cc4bf34a4d10a5395bc2fe37f3710d8120209aaad8",
+        "capturedAt": "2026-05-21T09:16:24.286Z",
+        "expectedMultiplier": 6633064934134566,
+        "tracedMultiplier": 6501273221378696,
+        "damageFactor": 97611.38299362714,
+        "stageProductRelativeError": 0
+      },
+      "baseStatComponents": {
+        "mounts": {
+          "chilled": 8.28,
+          "critDamage": 7.92,
+          "damageBoss": 26.8,
+          "laceration": 26.400000000000002,
+          "shieldDamage": 15.479999999999999,
+          "skillDamage": 71.2
+        }
+      },
+      "hasMountLineStats": true,
+      "ceDamageMount": 0,
+      "finding": "SIO Tools live worker captured mount stat-line folding; current arbitrary compact fixtures omit mounts.active and therefore do not live-capture non-zero mountDamage.",
+      "confidence": "sio-live-equivalent-for-line-stats-only"
+    },
+    {
+      "key": "live:mounts:mounts_fallback_damage_formula_lines",
+      "domain": "mounts",
+      "evidenceType": "sio-tools-live-capture",
+      "liveCaseId": "mounts_fallback_damage_formula_lines",
+      "purpose": "Exercise mount line fallback formulas when compact mount stat payload is absent.",
+      "live": {
+        "evidenceState": "live-captured",
+        "compactPayloadHash": "49f2b94ae0a1eeb670cdd41faedc0d2223f3168a24974869835d222efa5dd864",
+        "capturedAt": "2026-05-21T09:16:24.399Z",
+        "expectedMultiplier": 3984573842158953.5,
+        "tracedMultiplier": 3905404737608512,
+        "damageFactor": 97611.38299362714,
+        "stageProductRelativeError": 0
+      },
+      "baseStatComponents": {
+        "mounts": {}
+      },
+      "hasMountLineStats": false,
+      "ceDamageMount": 0,
+      "finding": "SIO Tools live worker captured this mount fixture, but the traced mount stat component is empty and mounts.active is omitted.",
+      "confidence": "sio-live-captured-empty-mount-component"
+    },
+    {
+      "key": "source:compact-codec:mount-active-key",
+      "domain": "mounts",
+      "evidenceType": "sio-tools-public-mirrored-asset",
+      "sourceArtifact": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/9730c42f92d7-797-9e5ce5eee251b4e4.js",
+      "sourceMeaning": "module73755 export codec maps mounts.active string values to Object.keys(c.c.mounts) indexes and compresses long key active to bj.",
+      "compactKeys": {
+        "active": {
+          "index": 84,
+          "shortKey": "bj"
+        },
+        "data": {
+          "index": 113,
+          "shortKey": "bM"
+        },
+        "lines": {
+          "index": 112,
+          "shortKey": "bL"
+        },
+        "mounts": {
+          "index": 110,
+          "shortKey": "bJ"
+        },
+        "stats": {
+          "index": 111,
+          "shortKey": "bK"
+        }
+      },
+      "mountOrder": [
+        "Doomsteed",
+        "Tech Hoverboard",
+        "Electric Scooter"
+      ],
+      "candidateActivePayloads": [
+        {
+          "mountName": "Doomsteed",
+          "compactPayloadPatch": {
+            "bJ": {
+              "bj": 0
+            }
+          }
+        },
+        {
+          "mountName": "Tech Hoverboard",
+          "compactPayloadPatch": {
+            "bJ": {
+              "bj": 1
+            }
+          }
+        },
+        {
+          "mountName": "Electric Scooter",
+          "compactPayloadPatch": {
+            "bJ": {
+              "bj": 2
+            }
+          }
+        }
+      ],
+      "finding": "The active-mount compact key is now source-proven; a future live fixture can set bJ.bj to 1 or 2 to target non-zero mountDamage rows.",
+      "confidence": "sio-source-only"
+    },
+    {
+      "key": "source:mounts:damage-fixture",
+      "domain": "mounts",
+      "evidenceType": "sio-tools-source-table-fixture",
+      "sourceArtifact": "artifacts/td11/mount_damage_source_fixture.json",
+      "summary": {
+        "liveVerifiedRows": 0,
+        "nonZeroMountDamageRows": 2,
+        "sourceBackedRows": 3,
+        "totalRows": 3
+      },
+      "nonZeroMountDamageRows": [
+        {
+          "mountName": "Electric Scooter",
+          "mgCoefficient": 77,
+          "nonZeroStars": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "mountDamageByStars": {
+            "0": 11781,
+            "1": 12320,
+            "2": 12320,
+            "3": 13860,
+            "4": 13860,
+            "5": 15400,
+            "6": 15400,
+            "7": 17710,
+            "8": 17710
+          }
+        },
+        {
+          "mountName": "Tech Hoverboard",
+          "mgCoefficient": 100,
+          "nonZeroStars": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "mountDamageByStars": {
+            "0": 19360,
+            "1": 19408.4,
+            "2": 19949.6,
+            "3": 20442.4,
+            "4": 20442.4,
+            "5": 38700,
+            "6": 38700,
+            "7": 50000,
+            "8": 50000
+          }
+        }
+      ],
+      "finding": "Source tables provide non-zero mountDamage expectations for Electric Scooter and Tech Hoverboard; live active-mount capture is still pending.",
+      "confidence": "sio-source-only"
+    },
+    {
+      "key": "live:survivors:passives-harmony-teamwork",
+      "domain": "survivors",
+      "evidenceType": "sio-tools-live-capture",
+      "liveCaseId": "survivors_passives_harmony_teamwork",
+      "purpose": "Exercise survivor stars, harmony, Taloxa active-skill teamwork, and Donatello SP-teamwork.",
+      "live": {
+        "evidenceState": "live-captured",
+        "compactPayloadHash": "7a85c475576b2839c3c74fc8481c46fe5f4f9c98dae1c01fff2ab2a55193b605",
+        "capturedAt": "2026-05-21T09:16:24.171Z",
+        "expectedMultiplier": 39152848082816920,
+        "tracedMultiplier": 37350924448968420,
+        "damageFactor": 86809.44428317322,
+        "stageProductRelativeError": 0
+      },
+      "baseStatComponents": {
+        "harmony": {
+          "chilled": 50,
+          "chilledUptime": 1.1111111111111112,
+          "critRate": 30,
+          "harmonyMetalia": 107.03999999999999,
+          "harmonyTaloxa": 85.8,
+          "laceration": 20,
+          "poisoned": 25,
+          "poisonedUptime": 1.1111111111111112,
+          "weakened": 25,
+          "weakenedUptime": 1.1111111111111112
+        },
+        "heroes": {
+          "adrenaline": 60,
+          "atkHero": 21615,
+          "atkHeroPercent": 136,
+          "chilled": 6,
+          "crimsonBat": 2,
+          "critDamage": 146,
+          "critRate": 76,
+          "damageBoss": 110,
+          "laceration": 156,
+          "lacerationUptime": 0.25,
+          "poisoned": 6,
+          "shieldDamage": 6,
+          "skillDamage": 6,
+          "weakened": 6
+        }
+      },
+      "selectedFinalStats": {
+        "atkPercent": 298,
+        "chilled": 341,
+        "critDamage": 1145,
+        "critRate": 364,
+        "damageBoss": 130,
+        "laceration": 201,
+        "poisoned": 131,
+        "shieldDamage": 417,
+        "skillDamage": 831,
+        "ssMiscPath": 160.56,
+        "vulnerability": 90,
+        "weakened": 286
+      },
+      "finding": "SIO Tools live worker captures survivor passive/harmony/teamwork domain behavior, but not the three newly source-backed target survivors as dedicated cases.",
+      "confidence": "sio-live-equivalent-for-survivor-domain-not-targeted-heroes"
+    },
+    {
+      "key": "source:survivors:yelena",
+      "domain": "survivors",
+      "evidenceType": "tangtang-schema-source-citation",
+      "survivorId": "yelena",
+      "displayName": "Yelena",
+      "sourceArtifact": "app/lib/pareto-store/schemas/index.ts",
+      "schemaEvidence": "hero('yelena', 'Yelena', 'buffer', { tier: 'C+', source_citations: [runtimeTableCitation(169), rustCitation(2767), rustCitation(2961)] }),",
+      "liveEvidenceStatus": "source-backed-no-targeted-live-capture",
+      "finding": "Yelena is represented as source-cited schema data; a dedicated SIO Tools live fixture is still needed before marking this target as live-covered.",
+      "confidence": "sio-source-only"
+    },
+    {
+      "key": "source:survivors:squidward",
+      "domain": "survivors",
+      "evidenceType": "tangtang-schema-source-citation",
+      "survivorId": "squidward",
+      "displayName": "Squidward",
+      "sourceArtifact": "app/lib/pareto-store/schemas/index.ts",
+      "schemaEvidence": "hero('squidward', 'Squidward', 'global_passive_holder', { tier: 'C+', source_citations: [runtimeTableCitation(590), rustCitation(2670), rustCitation(2815)] }),",
+      "liveEvidenceStatus": "source-backed-no-targeted-live-capture",
+      "finding": "Squidward is represented as source-cited schema data; a dedicated SIO Tools live fixture is still needed before marking this target as live-covered.",
+      "confidence": "sio-source-only"
+    },
+    {
+      "key": "source:survivors:spongebob",
+      "domain": "survivors",
+      "evidenceType": "tangtang-schema-source-citation",
+      "survivorId": "spongebob",
+      "displayName": "SpongeBob",
+      "sourceArtifact": "app/lib/pareto-store/schemas/index.ts",
+      "schemaEvidence": "hero('spongebob', 'SpongeBob', 'global_passive_holder', { tier: 'C+', source_citations: [runtimeTableCitation(607), rustCitation(2670), rustCitation(2815)] }),",
+      "liveEvidenceStatus": "source-backed-no-targeted-live-capture",
+      "finding": "SpongeBob is represented as source-cited schema data; a dedicated SIO Tools live fixture is still needed before marking this target as live-covered.",
+      "confidence": "sio-source-only"
+    }
+  ]
+}
