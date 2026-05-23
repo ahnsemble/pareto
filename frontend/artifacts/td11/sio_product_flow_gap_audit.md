@@ -739,3 +739,45 @@ status: `[CHUNK-5-LME-TURF-PRESETS-GREEN]`
   - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_product_flow_gap_audit.md`
 - Commit:
   - Local commit created for this chunk; GitHub push/PR not performed.
+
+## Tangtang Low-Impact Product Depth - Final Verification
+
+timestampKst: 2026-05-23T09:16:22+09:00
+status: `[LOW-IMPACT-PRODUCT-DEPTH-FINAL-GREEN]`
+
+- Chunks completed:
+  - Chunk 1: Pet assist guardrails and xeno status.
+  - Chunk 2: Survivor teamwork/passive semantic labels.
+  - Chunk 3: Collectible per-item review editor.
+  - Chunk 4: Mount puzzle review summary.
+  - Chunk 5: LME turf compact presets.
+  - Chunk 6: Small refactor gate reviewed; no extra refactor needed.
+- RED/GREEN coverage:
+  - Each product behavior chunk added a RED focused e2e and watched it fail before implementation.
+  - Each chunk has related unit coverage in `tech_account_context_unit_test.mjs`.
+  - Focused e2e checks passed after each implementation.
+- Final verification:
+  - `node scripts/profile_import_unit_test.mjs`: passed.
+  - `node scripts/external_calculation_link_unit_test.mjs`: passed, `rawLength=1350`, `compactVersion=5`.
+  - `node scripts/tech_account_context_unit_test.mjs`: passed.
+  - `npx tsc --noEmit`: passed.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts`: passed, 87 passed / 1 skipped.
+  - `npm run build`: passed, 22 static pages generated. Existing static export middleware/API-route warning only.
+  - `git diff --check`: passed.
+  - `git status -sb`: branch ahead of origin by 21; only the two untracked plan files remain.
+- Heavy verification:
+  - Omitted. The sprint only added product/UI/helper behavior and did not change `buildSioLmContext`, `playerStateWithAccountContext`, optimizer request fields, Rust formula constants, or WASM scoring semantics.
+- Local commits:
+  - `ea14c02 feat: stabilize Tangtang pet assist controls`
+  - `e1f59fc feat: clarify Tangtang survivor controls`
+  - `59ec97d feat: add Tangtang collectible item review`
+  - `460bec3 feat: clarify Tangtang mount puzzle review`
+  - `ae9ad83 feat: add Tangtang LME turf presets`
+- Intentional constraints kept:
+  - Public UI remains Tangtang.
+  - No user-facing SIO copy was added.
+  - `fullSioEquivalent=true` and `currentScorer=scorer=sio_full_lm_equivalence` remain asserted by the existing e2e product gate.
+  - Raw SIO LM JSON, scorer/debug/preselect/beam/exact node cap UI remain hidden.
+  - SIO LM/scoring core, Rust formula constants, and WASM scoring semantics were not changed.
+  - Internal `sio*` rename remains deferred to Post-Launch Gate 7.
+  - GitHub push/PR not performed.
