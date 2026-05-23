@@ -14,6 +14,7 @@ import {
   collectibleItemReviewMarker,
   formatPassiveCritOptionLabel,
   formatTeamworkOptionLabel,
+  mountReviewSummary,
   normalizePetAssistContext,
   petXenoStatusLabel,
   survivorContextSummary,
@@ -494,6 +495,9 @@ export function AccountContextPanel({
                     {selectedMountName}
                   </span>
                 </label>
+                <p className="text-xs text-[color:var(--color-text-muted)]" data-testid="tech-mount-review-summary">
+                  {mountReviewSummary(account)}
+                </p>
                 {mountRows.map((mount, index) => (
                   <div
                     key={mount.id}

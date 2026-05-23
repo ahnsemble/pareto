@@ -618,6 +618,15 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-account-mount-cores')).toBeVisible();
   });
 
+  test('shows mount puzzle review depth without changing scoring semantics', async ({ page }) => {
+    await page.getByTestId('tech-mount-select').selectOption('techHoverboard');
+    await page.getByTestId('tech-account-mount-cores').fill('9');
+    await page.getByTestId('tech-account-mount-puzzle').fill('12');
+    await expect(page.getByTestId('tech-mount-review-summary')).toContainText('Puzzle slots 12');
+    await expect(page.getByTestId('tech-mount-review-summary')).toContainText('Mount cores 9');
+    await expect(page.getByTestId('tech-mount-puzzle-row').first()).toBeVisible();
+  });
+
   test('edits six-slot equipment forge, chaos, xeno, and otherworld context', async ({ page }) => {
     const account = page.getByTestId('tech-account-context');
     await expect(account.getByText('Six-slot equipment')).toBeVisible();

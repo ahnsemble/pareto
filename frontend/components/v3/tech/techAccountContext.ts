@@ -233,6 +233,12 @@ export function collectibleItemReviewMarker(isTarget: boolean): string {
   return isTarget ? 'Target' : 'Review';
 }
 
+export function mountReviewSummary(account: TechAccountContextInput): string {
+  const puzzleSlots = Math.max(0, Math.trunc(account.mountPuzzleSlots));
+  const mountCores = Math.max(0, Math.trunc(account.mountCores));
+  return `Puzzle slots ${puzzleSlots} / Mount cores ${mountCores} / Review-only puzzle rows`;
+}
+
 function clampInteger(value: number, min: number, max: number): number {
   if (!Number.isFinite(value)) return min;
   return Math.max(min, Math.min(max, Math.trunc(value)));

@@ -27,6 +27,7 @@ const {
   collectibleItemReviewMarker,
   formatPassiveCritOptionLabel,
   formatTeamworkOptionLabel,
+  mountReviewSummary,
   normalizePetAssistContext,
   petXenoStatusLabel,
   survivorContextSummary,
@@ -81,6 +82,11 @@ assert.match(
 
 assert.equal(collectibleItemReviewMarker(true), 'Target');
 assert.equal(collectibleItemReviewMarker(false), 'Review');
+
+assert.equal(
+  mountReviewSummary({ ...DEFAULT_TECH_ACCOUNT_CONTEXT, mountPuzzleSlots: 12, mountCores: 9 }),
+  'Puzzle slots 12 / Mount cores 9 / Review-only puzzle rows',
+);
 
 const context = buildSioLmContext({
   ...DEFAULT_TECH_ACCOUNT_CONTEXT,
