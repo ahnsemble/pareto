@@ -868,3 +868,55 @@ status: `[VERCEL-SHORT-CODE-IMPORT-GREEN]`
 - Commit:
   - Implementation commit: `b08d9ad chore: allow Tangtang short code imports`.
   - GitHub push/PR not performed.
+
+## Tangtang Collection Upgrade Recommendations
+
+timestampKst: 2026-05-23T11:17:38+09:00
+status: `[COLLECTION-UPGRADE-RECOMMENDATIONS-GREEN-DEPLOYED]`
+
+- Product behavior:
+  - External calculation links now preserve imported collectible item star/custom-set context for recommendation use.
+  - Running an imported profile now adds a collection upgrade card when collectible context is available.
+  - Production check with `https://sio-tools.vercel.app?code=rm8mHx` on the Korean route showed `수집품: 가져옴 (76)` and `수집품 강화: Shuttle Capsule`.
+  - Korean recommendation cards now localize both chip allocation and collection upgrade copy.
+- RED/GREEN summary:
+  - RED unit: `node scripts/tech_upgrade_recommendations_unit_test.mjs` failed because no `collection-item` recommendation existed.
+  - RED e2e: `npx playwright test e2e/v3_tech_optimizer.spec.ts --grep "recalculates imported profile quickly"` failed because the next-upgrades panel did not contain collection/collectible recommendation copy.
+  - GREEN unit: recommendation builder now emits a high-confidence collection item recommendation from imported custom-set/low-star context.
+  - GREEN e2e: focused import-and-run recommendation test passed on desktop and mobile.
+- Verification:
+  - `node scripts/profile_import_unit_test.mjs`: passed.
+  - `node scripts/external_calculation_link_unit_test.mjs`: passed, `rawLength=1350`, `compactVersion=5`.
+  - `node scripts/tech_account_context_unit_test.mjs`: passed.
+  - `node scripts/tech_upgrade_recommendations_unit_test.mjs`: passed.
+  - `node scripts/vercel_config_unit_test.mjs`: passed.
+  - `npx tsc --noEmit`: passed.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts`: passed, 89 passed / 1 skipped.
+  - `npm run build`: passed, 22 static pages generated. Existing static export middleware/API-route warning only.
+  - `git diff --check`: passed.
+  - Production Playwright check on `https://tanggall.vercel.app/ko/v3/optimizer/tech-parts`: import/run succeeded, `HAS_KO_CHIP=true`, `HAS_COLLECTION=true`, `HAS_SIO_VISIBLE=false`.
+- Deployment:
+  - Production deployment: `https://tangtang-2am964h9g-aws0906-9092s-projects.vercel.app`.
+  - Public alias: `https://tanggall.vercel.app`.
+- Heavy verification:
+  - Omitted. This changed profile import metadata, UI recommendation text, and tests only; scoring bridge, Rust formula constants, and WASM scoring semantics were not touched.
+- Intentional constraints kept:
+  - Public UI remains Tangtang.
+  - No user-facing SIO copy was added.
+  - Raw SIO LM JSON, scorer/debug/preselect/beam/exact node cap UI remain hidden.
+  - SIO LM/scoring core, Rust formula constants, and WASM scoring semantics were not changed.
+  - Internal `sio*` rename remains deferred to Post-Launch Gate 7.
+  - GitHub push/PR not performed.
+- Artifacts:
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/app/lib/pareto-store/profile-import.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/app/lib/pareto-store/external-calculation-profile.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/app/lib/pareto-store/tech-upgrade-recommendations.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/components/v3/optimizer.tsx`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/components/v3/tech/techLocaleCopy.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/e2e/v3_tech_optimizer.spec.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/scripts/external_calculation_link_unit_test.mjs`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/scripts/tech_upgrade_recommendations_unit_test.mjs`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_product_flow_gap_audit.md`
+- Commit:
+  - Implementation commit: `d5dd30d feat: recommend Tangtang collection upgrades`.
+  - GitHub push/PR not performed.
