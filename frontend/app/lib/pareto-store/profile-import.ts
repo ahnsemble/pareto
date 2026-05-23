@@ -30,6 +30,18 @@ export type ImportedTechSnapshot = {
   };
 };
 
+export type ImportedCollectibleSnapshot = {
+  items: Array<{
+    itemIndex: number;
+    stars?: number;
+    customSetLevel?: number;
+  }>;
+  customSets?: Array<{
+    level?: number;
+    itemIndices: number[];
+  }>;
+};
+
 export type ProductImportCoverage = {
   id: string;
   label: string;
@@ -134,6 +146,7 @@ export type ProductProfileImportResult =
       tech: ProductProfileTechImport;
       account: ProductProfileAccountImport;
       importedTechSnapshot?: ImportedTechSnapshot;
+      importedCollectibleSnapshot?: ImportedCollectibleSnapshot;
       coverage?: ProductImportCoverage[];
       summary: string;
     }

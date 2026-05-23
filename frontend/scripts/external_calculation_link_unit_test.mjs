@@ -99,6 +99,7 @@ assert.ok(normalized.tech.chips >= 0);
 assert.ok(normalized.account.finalAtk > 0);
 assert.ok(normalized.account.baseAtk > 0);
 assert.ok(normalized.importedTechSnapshot.parts.length >= 6);
+assert.ok(normalized.importedCollectibleSnapshot.items.length > 0);
 assert.match(normalized.summary, /Imported/);
 assert.equal(JSON.stringify(normalized).includes('sioLm'), false);
 

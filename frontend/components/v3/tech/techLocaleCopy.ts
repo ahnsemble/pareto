@@ -546,6 +546,7 @@ const IMPORT_SUMMARY_PHRASES: Record<string, Record<TechOptimizerLocale, string>
 const FIELD_LABELS: Record<string, Record<TechOptimizerLocale, string>> = {
   'Build stats': { en: 'Build stats', ko: '빌드 스탯' },
   'Tech inventory': { en: 'Tech inventory', ko: '테크 인벤토리' },
+  Collectibles: { en: 'Collectibles', ko: '수집품' },
   'Optimizer settings': { en: 'Optimizer settings', ko: '최적화 설정' },
   Equipment: { en: 'Equipment', ko: '장비' },
   'Account context': { en: 'Account context', ko: '계정 컨텍스트' },

@@ -232,6 +232,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
 
     await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
     await expect(page.getByTestId('tech-upgrade-recommendations')).toContainText('Next upgrades');
+    await expect(page.getByTestId('tech-upgrade-recommendations')).toContainText(/Collection|collection|collectible/);
     await expect(page.getByTestId('tech-upgrade-recommendations')).toContainText(/Confidence: (high|medium|low)/);
     await expect(page.getByTestId('tech-upgrade-recommendations')).not.toContainText(/energyGuidanceSystem|droneMode|sio/i);
 

@@ -1,4 +1,5 @@
 import type {
+  ImportedCollectibleSnapshot,
   ImportedTechSnapshot,
   ProductImportCoverage,
   ProductProfileAccountImport,
@@ -291,12 +292,59 @@ function normalizeAccount(expanded: Record<string, unknown>): ProductProfileAcco
   return account;
 }
 
-function buildCoverage(expanded: Record<string, unknown>, partsCount: number): ProductImportCoverage[] {
+function normalizeCollectibles(expanded: Record<string, unknown>): ImportedCollectibleSnapshot | undefined {
+  const collectibles = Array.isArray(expanded.collectibles) ? expanded.collectibles : [];
+  const customSetsRaw = Array.isArray(expanded.customSets) ? expanded.customSets : [];
+  if (collectibles.length === 0 && customSetsRaw.length === 0) return undefined;
+
+  const customSetLevelByItemIndex = new Map<number, number>();
+  const customSets: ImportedCollectibleSnapshot['customSets'] = [];
+  for (const rawSet of customSetsRaw) {
+    if (!isRecord(rawSet)) continue;
+    const itemIndices = Array.isArray(rawSet.collectibles)
+      ? rawSet.collectibles
+          .filter((value): value is number => typeof value === 'number' && Number.isFinite(value))
+          .map((value) => Math.max(0, Math.trunc(value)))
+      : [];
+    const level = readNumber(rawSet, 'level');
+    if (itemIndices.length > 0) {
+      customSets.push({
+        ...(level !== undefined ? { level } : {}),
+        itemIndices,
+      });
+    }
+    if (level !== undefined) {
+      for (const itemIndex of itemIndices) {
+        customSetLevelByItemIndex.set(itemIndex, Math.max(customSetLevelByItemIndex.get(itemIndex) ?? 0, level));
+      }
+    }
+  }
+
+  const items: ImportedCollectibleSnapshot['items'] = [];
+  for (const [itemIndex, rawItem] of collectibles.entries()) {
+    if (!isRecord(rawItem)) continue;
+    const stars = readNumber(rawItem, 'stars');
+    if (stars === undefined && !customSetLevelByItemIndex.has(itemIndex)) continue;
+    items.push({
+      itemIndex,
+      ...(stars !== undefined ? { stars } : {}),
+      ...(customSetLevelByItemIndex.has(itemIndex) ? { customSetLevel: customSetLevelByItemIndex.get(itemIndex) } : {}),
+    });
+  }
+
+  return {
+    items,
+    ...(customSets.length > 0 ? { customSets } : {}),
+  };
+}
+
+function buildCoverage(expanded: Record<string, unknown>, partsCount: number, collectibleCount: number): ProductImportCoverage[] {
   const meta = isRecord(expanded.meta) ? expanded.meta : {};
   const techs = Array.isArray(expanded.techs) ? expanded.techs : [];
   return [
     importedCoverage('buildStats', 'Build stats', readNumber(meta, 'atkBase') !== undefined || readNumber(meta, 'atkFinal') !== undefined),
     importedCoverage('techInventory', 'Tech inventory', partsCount > 0, partsCount),
+    importedCoverage('collectibles', 'Collectibles', collectibleCount > 0, collectibleCount),
     importedCoverage('optimizerSettings', 'Optimizer settings', isRecord(expanded.techsOptimizer)),
     importedCoverage('equipment', 'Equipment', Array.isArray(expanded.items), Array.isArray(expanded.items) ? expanded.items.length : undefined),
     importedCoverage('accountContext', 'Account context', isRecord(expanded.meta) || isRecord(expanded.pets) || isRecord(expanded.mounts)),
@@ -309,7 +357,8 @@ export function normalizeExternalCalculationProfile(compact: Record<string, unkn
     const expanded = expandExternalCalculationProfile(compact);
     const { wallet, tech, importedTechSnapshot } = normalizeTech(expanded);
     const account = normalizeAccount(expanded);
-    const coverage = buildCoverage(expanded, importedTechSnapshot.parts.length);
+    const importedCollectibleSnapshot = normalizeCollectibles(expanded);
+    const coverage = buildCoverage(expanded, importedTechSnapshot.parts.length, importedCollectibleSnapshot?.items.length ?? 0);
 
     return {
       ok: true,
@@ -317,6 +366,7 @@ export function normalizeExternalCalculationProfile(compact: Record<string, unkn
       tech,
       account,
       importedTechSnapshot,
+      importedCollectibleSnapshot,
       coverage,
       summary: 'Imported calculation link / Imported account context / Imported tech inventory',
     };

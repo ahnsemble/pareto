@@ -12,6 +12,7 @@ import {
 import {
   buildProductImportFieldSummary,
   importProductProfileInput,
+  type ImportedCollectibleSnapshot,
   type ImportedTechSnapshot,
   type ProductImportCoverage,
   type ProductImportFieldSummary,
@@ -474,6 +475,7 @@ export function TechPartsOptimizerSurface() {
   const [profileImportDetails, setProfileImportDetails] = useState<ProductImportFieldSummary[]>([]);
   const [profileImporting, setProfileImporting] = useState(false);
   const [importedTechSnapshot, setImportedTechSnapshot] = useState<ImportedTechSnapshot | null>(null);
+  const [importedCollectibleSnapshot, setImportedCollectibleSnapshot] = useState<ImportedCollectibleSnapshot | null>(null);
   const [resourceWallet, setResourceWallet] = useState<ResourceWalletValues>(DEFAULT_RESOURCE_WALLET_VALUES);
   const [rarityCounts, setRarityCounts] = useState(DEFAULT_RARITY_COUNTS);
   const [chips, setChips] = useState(40);
@@ -521,9 +523,12 @@ export function TechPartsOptimizerSurface() {
       buildTechUpgradeRecommendations({
         result,
         importedTechSnapshot,
+        importedCollectibleSnapshot,
+        accountContext,
         chipRemainder: buildChipRemainderValue(topBuild) ?? 0,
+        locale,
       }),
-    [importedTechSnapshot, result, topBuild],
+    [accountContext, importedCollectibleSnapshot, importedTechSnapshot, locale, result, topBuild],
   );
   const canRun = bootStatus === 'ok' && inventoryValidation.valid && !running;
   const validationText = inventoryValidation.valid
@@ -594,6 +599,7 @@ export function TechPartsOptimizerSurface() {
       }
       if (optimizerSettings?.overloadable !== undefined) setOverloadable(optimizerSettings.overloadable);
       setImportedTechSnapshot(imported.importedTechSnapshot ?? null);
+      setImportedCollectibleSnapshot(imported.importedCollectibleSnapshot ?? null);
       setProfileImportCoverage(imported.coverage ?? []);
       setProfileImportDetails(buildProductImportFieldSummary(imported));
       setProfileImportSummary(localizeProductImportSummary(imported.summary, locale));
@@ -606,6 +612,8 @@ export function TechPartsOptimizerSurface() {
     setProfileImportSummary('');
     setProfileImportCoverage([]);
     setProfileImportDetails([]);
+    setImportedTechSnapshot(null);
+    setImportedCollectibleSnapshot(null);
   };
 
   return (
