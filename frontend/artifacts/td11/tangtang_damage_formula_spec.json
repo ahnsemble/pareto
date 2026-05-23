@@ -1,6 +1,8 @@
 {
   "artifactPaths": {
     "audit": "frontend/artifacts/td11/sio_product_flow_gap_audit.md",
+    "descriptionFormulaValidationMatrix": "frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json",
+    "descriptionFormulaValidationProtocol": "frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md",
     "inGameDamageValidationMatrix": "frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json",
     "inGameDamageValidationProtocol": "frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md",
     "json": "frontend/artifacts/td11/tangtang_damage_formula_spec.json",
@@ -21,6 +23,19 @@
   ],
   "claim": "sio-tools-equivalent",
   "currentScorer": "sio_full_lm_equivalence",
+  "descriptionFormulaValidationGate": {
+    "canApplyTangtangFormulaCorrection": false,
+    "canClaimSioFormulaDescriptionCorrect": false,
+    "claim": "description-derived-formula-validation-protocol",
+    "currentDescriptionFormulaCorrectnessClaim": "not-established",
+    "descriptionDivergenceRows": 0,
+    "directFirstPartyDescriptionFormulaRows": 0,
+    "matrixPath": "frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json",
+    "observedDamageValidationRole": "Observed damage validation is secondary confirmation for description-vs-SIO divergences, not the first validation layer.",
+    "primaryValidationLayer": "description-derived-formula-validation",
+    "protocolPath": "frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md",
+    "status": "[TANGTANG-DESCRIPTION-FORMULA-VALIDATION-PROTOCOL-READY]"
+  },
   "domainCoverage": [
     {
       "caveat": "Base attack rows are source-derived and rely on compact input reconstruction.",
@@ -232,11 +247,16 @@
   "inGameDamageValidationGate": {
     "canApplyTangtangFormulaCorrection": false,
     "canClaimSioFormulaInGameCorrect": false,
+    "canRunObservedDamageFollowUpWithoutDescriptionDivergence": false,
     "claim": "in-game-validation-protocol",
-    "currentCorrectionStatus": "blocked-no-direct-observed-damage-trials",
+    "currentCorrectionStatus": "blocked-description-derived-formula-validation-incomplete",
     "currentInGameCorrectnessClaim": "not-established",
+    "descriptionDivergenceRows": 0,
+    "directFirstPartyDescriptionFormulaRows": 0,
     "directObservedDamageTrialCount": 0,
     "matrixPath": "frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json",
+    "observedDamageValidationLayer": "follow-up-divergence-check-only",
+    "primaryValidationLayer": "description-derived-formula-validation",
     "protocolPath": "frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md",
     "status": "[TANGTANG-IN-GAME-DAMAGE-VALIDATION-PROTOCOL-READY]"
   },
@@ -252,6 +272,8 @@
     "frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json",
     "frontend/artifacts/td11/sio_lm_input_summary_2026-05-20.json",
     "frontend/artifacts/td11/sio_lm_equivalence_matrix.json",
+    "frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json",
+    "frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md",
     "frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json",
     "frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md",
     "frontend/app/lib/pareto-store/schemas/index.ts",
@@ -1301,6 +1323,7 @@
   },
   "verificationCommands": [
     "node scripts/tangtang_damage_formula_spec_unit_test.mjs",
+    "node scripts/tangtang_description_formula_validation_unit_test.mjs",
     "node scripts/tangtang_in_game_damage_validation_unit_test.mjs",
     "node scripts/sio_tools_formula_source_evidence_unit_test.mjs",
     "node scripts/damage_formula_provenance_matrix_unit_test.mjs",

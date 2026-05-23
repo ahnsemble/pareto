@@ -86,17 +86,36 @@ Key source/live counts:
 - Catalog-only collectible rows remain isolated.
 - No formula semantics, scoring core, Rust damage formula, WASM scoring behavior, optimizer ranking, or product UI changed.
 
+## Description Formula Validation Gate
+
+- Validation matrix: `frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json`
+- Validation protocol: `frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md`
+- Status: `[TANGTANG-DESCRIPTION-FORMULA-VALIDATION-PROTOCOL-READY]`
+- Claim: `description-derived-formula-validation-protocol`
+- Primary validation layer: `description-derived-formula-validation`
+- Current description-derived formula correctness claim: `not-established`
+- Direct first-party description-derived formula rows: 0
+- Description/SIO divergence rows: 0
+- Observed damage validation role: Observed damage validation is secondary confirmation for description-vs-SIO divergences, not the first validation layer.
+- Can claim SIO formula description-correct: `false`
+- Can apply Tangtang formula correction: `false`
+
 ## In-Game Damage Validation Gate
 
 - Validation matrix: `frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json`
 - Validation protocol: `frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md`
 - Status: `[TANGTANG-IN-GAME-DAMAGE-VALIDATION-PROTOCOL-READY]`
 - Claim: `in-game-validation-protocol`
+- Primary validation layer: `description-derived-formula-validation`
+- Observed damage validation layer: `follow-up-divergence-check-only`
 - Current in-game correctness claim: `not-established`
+- Direct first-party description-derived formula rows: 0
+- Description/SIO divergence rows: 0
 - Direct observed in-game damage trials: 0
 - Can claim SIO formula in-game correct: `false`
 - Can apply Tangtang formula correction: `false`
-- Current correction status: `blocked-no-direct-observed-damage-trials`
+- Can run observed damage follow-up without description divergence: `false`
+- Current correction status: `blocked-description-derived-formula-validation-incomplete`
 
 ## Unsupported Formula Inputs
 
@@ -115,6 +134,8 @@ Key source/live counts:
 - `frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json`
 - `frontend/artifacts/td11/sio_lm_input_summary_2026-05-20.json`
 - `frontend/artifacts/td11/sio_lm_equivalence_matrix.json`
+- `frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json`
+- `frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md`
 - `frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json`
 - `frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md`
 - `frontend/app/lib/pareto-store/schemas/index.ts`
@@ -124,6 +145,7 @@ Key source/live counts:
 ## Verification Commands
 
 - `node scripts/tangtang_damage_formula_spec_unit_test.mjs`
+- `node scripts/tangtang_description_formula_validation_unit_test.mjs`
 - `node scripts/tangtang_in_game_damage_validation_unit_test.mjs`
 - `node scripts/sio_tools_formula_source_evidence_unit_test.mjs`
 - `node scripts/damage_formula_provenance_matrix_unit_test.mjs`

@@ -1110,6 +1110,66 @@ Derived and documented a SIO Tools-equivalent Tangtang damage formula spec from 
 
 GitHub push/PR not performed.
 
+## Tangtang Description Formula Validation Gate
+
+timestampKst: 2026-05-23T16:04:54+09:00
+status: `[TANGTANG-DESCRIPTION-FORMULA-VALIDATION-PROTOCOL-READY]`
+
+### Scope
+
+Added the primary validation gate for the user-corrected flow: capture item/effect in-game description text, derive formula operations from those descriptions, compare the derived formula against SIO Tools/Tangtang source-live behavior, and send only description-vs-SIO divergences to follow-up confirmation. This pass does not claim SIO's formula is description-correct, does not apply Tangtang formula corrections, and does not change formula semantics, scoring core, Rust damage formulas, WASM scoring behavior, optimizer ranking, or user-facing UI.
+
+### Changes
+
+- Added `frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json`.
+- Added `frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md`.
+- Added `frontend/scripts/tangtang_description_formula_validation_unit_test.mjs`.
+- Updated `tangtang_damage_formula_spec.json` / `.md` and its gate to link the description-derived formula validation gate.
+- Updated `damage_formula_provenance_matrix.md` and its gate to show description-derived validation as the primary next layer.
+- Updated the observed-damage validation gate so it is follow-up confirmation only after a description-vs-SIO divergence exists.
+
+### Current Decision
+
+- Direct first-party description-derived formula rows: `0`.
+- Description/SIO divergence rows: `0`.
+- Current description-derived formula correctness claim: `not-established`.
+- Can claim SIO formula description-correct: `false`.
+- Can apply Tangtang formula correction now: `false`.
+- Observed damage validation is secondary confirmation, not the first validation layer.
+
+### Caveats
+
+- Public-web rows and SIO/source rows are triage/corroboration only; they do not count as direct first-party description-derived formula rows.
+- non-SS weapons remain catalog-only and unsupported as formula inputs.
+- SpongeBob/Squidward/Yelena remain source/live backed but not direct first-party in-game description verified.
+- Mount exact per-line in-game text capture remains missing.
+- Collectible item/set direct description capture remains incomplete.
+- Catalog-only collectible rows remain isolated.
+
+### Verification Log
+
+- `node scripts/tangtang_description_formula_validation_unit_test.mjs`: passed, 8 groups and 0 description formula rows.
+- `node scripts/tangtang_in_game_damage_validation_unit_test.mjs`: passed, 9 trial groups and 0 direct trials.
+- `node scripts/tangtang_damage_formula_spec_unit_test.mjs`: passed, 25 stages.
+- `node scripts/sio_tools_formula_source_evidence_unit_test.mjs`: passed, 4,650 source leaves.
+- `node scripts/damage_formula_provenance_matrix_unit_test.mjs`: passed, 367 rows.
+- `node scripts/in_game_description_evidence_unit_test.mjs`: passed, 6 rows.
+- `node scripts/sio_tools_live_evidence_matrix_unit_test.mjs`: passed, 20 rows.
+- `node scripts/sio_tools_targeted_live_evidence_unit_test.mjs`: passed, 5 rows.
+- `node scripts/mount_damage_source_fixture_unit_test.mjs`: passed, 3 rows.
+- `node scripts/collectible_effect_mapping_matrix_unit_test.mjs`: passed, 160 rows.
+- `node scripts/generic_aggregate_non_authority_gate.mjs`: passed, 4 rows.
+- `npx tsc --noEmit`: passed.
+- `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs`: passed.
+  - `fullSioEquivalent=true`
+  - `currentScorer=scorer=sio_full_lm_equivalence`
+  - `liveCaptureCount=26`
+  - `workerParity.arbitraryGeneratedLiveExpected=26/26`
+  - `G0/G1/G2/G3/G6=true`
+- `git diff --check`: passed.
+
+GitHub push/PR not performed.
+
 ## Tangtang In-Game Damage Validation Gate
 
 timestampKst: 2026-05-23T15:46:29+09:00
@@ -1117,23 +1177,28 @@ status: `[TANGTANG-IN-GAME-DAMAGE-VALIDATION-PROTOCOL-READY]`
 
 ### Scope
 
-Added a separate protocol gate for validating whether the current SIO Tools-equivalent damage formula matches direct in-game observed damage. This pass does not claim SIO's formula is proven correct against the game, does not apply Tangtang formula corrections, and does not change formula semantics, scoring core, Rust damage formulas, WASM scoring behavior, optimizer ranking, or user-facing UI.
+Added a separate protocol gate for direct observed-damage trials as follow-up confirmation only after item/effect description-derived formula validation finds a SIO/Tangtang divergence. This pass does not claim SIO's formula is proven correct against the game, does not apply Tangtang formula corrections, and does not change formula semantics, scoring core, Rust damage formulas, WASM scoring behavior, optimizer ranking, or user-facing UI.
 
 ### Changes
 
 - Added `frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json`.
 - Added `frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md`.
 - Added `frontend/scripts/tangtang_in_game_damage_validation_unit_test.mjs`.
-- Updated `tangtang_damage_formula_spec.json` / `.md` and its gate to link the in-game damage validation gate.
-- Updated `damage_formula_provenance_matrix.md` and its gate to keep direct observed damage validation separate from SIO Tools-equivalent derivation.
+- Updated `tangtang_damage_formula_spec.json` / `.md` and its gate to link the observed-damage validation gate as follow-up only.
+- Updated `damage_formula_provenance_matrix.md` and its gate to keep direct observed damage validation secondary to description-derived formula comparison.
 
 ### Current Decision
 
+- Primary validation layer: `description-derived-formula-validation`.
+- Observed damage validation layer: `follow-up-divergence-check-only`.
+- Direct first-party description-derived formula rows: `0`.
+- Description/SIO divergence rows: `0`.
 - Direct observed in-game damage trials: `0`.
 - Current in-game correctness claim: `not-established`.
 - Can claim SIO formula in-game correct: `false`.
 - Can apply Tangtang formula correction now: `false`.
-- Tangtang may improve beyond SIO only after repeated controlled direct in-game observations establish a SIO divergence.
+- Can run observed damage follow-up without description divergence: `false`.
+- Tangtang may improve beyond SIO only when repeated controlled direct in-game observations confirm a prior description-vs-SIO divergence.
 
 ### Trial Groups
 
@@ -1149,6 +1214,7 @@ Added a separate protocol gate for validating whether the current SIO Tools-equi
 
 ### Verification Log
 
+- `node scripts/tangtang_description_formula_validation_unit_test.mjs`: passed, 8 groups and 0 description formula rows.
 - `node scripts/tangtang_in_game_damage_validation_unit_test.mjs`: passed, 9 trial groups and 0 direct trials.
 - `node scripts/tangtang_damage_formula_spec_unit_test.mjs`: passed, 25 stages.
 - `node scripts/sio_tools_formula_source_evidence_unit_test.mjs`: passed, 4,650 source leaves.

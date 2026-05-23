@@ -132,6 +132,21 @@ const sioToolsFormulaSourceEvidencePath = path.join(root, 'artifacts/td11/sio_to
 const sioToolsFormulaSourceEvidence = JSON.parse(await fs.readFile(sioToolsFormulaSourceEvidencePath, 'utf8'));
 const tangtangDamageFormulaSpecPath = path.join(root, 'artifacts/td11/tangtang_damage_formula_spec.json');
 const tangtangDamageFormulaSpec = JSON.parse(await fs.readFile(tangtangDamageFormulaSpecPath, 'utf8'));
+const tangtangDescriptionFormulaValidationPath = path.join(
+  root,
+  'artifacts/td11/tangtang_description_formula_validation_matrix.json',
+);
+const tangtangDescriptionFormulaValidation = JSON.parse(
+  await fs.readFile(tangtangDescriptionFormulaValidationPath, 'utf8'),
+);
+const tangtangDescriptionFormulaValidationProtocolPath = path.join(
+  root,
+  'artifacts/td11/tangtang_description_formula_validation_protocol.md',
+);
+const tangtangDescriptionFormulaValidationProtocol = await fs.readFile(
+  tangtangDescriptionFormulaValidationProtocolPath,
+  'utf8',
+);
 const tangtangInGameDamageValidationPath = path.join(root, 'artifacts/td11/tangtang_in_game_damage_validation_matrix.json');
 const tangtangInGameDamageValidation = JSON.parse(await fs.readFile(tangtangInGameDamageValidationPath, 'utf8'));
 
@@ -541,14 +556,89 @@ assert.equal(tangtangDamageFormulaSpec.summaryCounts.targetSurvivorNormalizedCla
 assert.equal(tangtangDamageFormulaSpec.summaryCounts.collectibleThresholdRows, 170, 'formula spec collectible threshold count mismatch');
 assert.equal(tangtangDamageFormulaSpec.summaryCounts.collectibleSpecialRustMappings, 14, 'formula spec collectible special Rust mapping count mismatch');
 assert.equal(tangtangDamageFormulaSpec.summaryCounts.inGameDescriptionVerifiedRows, 0, 'formula spec must not promote direct in-game verified rows');
+assert.equal(
+  tangtangDescriptionFormulaValidation.status,
+  '[TANGTANG-DESCRIPTION-FORMULA-VALIDATION-PROTOCOL-READY]',
+  'description formula validation gate status changed',
+);
+assert.equal(
+  tangtangDescriptionFormulaValidation.claim,
+  'description-derived-formula-validation-protocol',
+  'description formula validation gate claim changed',
+);
+assert.equal(
+  tangtangDescriptionFormulaValidation.validationScope.directFirstPartyDescriptionFormulaRows,
+  0,
+  'direct first-party description-derived formula rows must start at zero',
+);
+assert.equal(
+  tangtangDescriptionFormulaValidation.divergenceRows.length,
+  0,
+  'description/SIO divergence rows must start at zero',
+);
+assert.equal(
+  tangtangDescriptionFormulaValidation.decisionPolicy.canClaimSioFormulaDescriptionCorrect,
+  false,
+  'SIO formula description-correctness cannot be claimed without direct description-derived formula rows',
+);
+assert.equal(
+  tangtangDescriptionFormulaValidation.decisionPolicy.canApplyTangtangFormulaCorrection,
+  false,
+  'Tangtang formula correction must be blocked without description-derived divergences',
+);
+assert.ok(
+  tangtangDescriptionFormulaValidation.decisionPolicy.observedDamageValidationRole.includes('secondary confirmation'),
+  'observed damage must remain secondary confirmation',
+);
+assert.ok(
+  tangtangDescriptionFormulaValidation.decisionPolicy.observedDamageValidationRole.includes('not the first validation layer'),
+  'observed damage must not be the first validation layer',
+);
+assert.ok(
+  tangtangDescriptionFormulaValidation.derivationSchema.divergencePolicy.includes('description-derived divergence'),
+  'description gate must route only description-derived divergences to confirmation',
+);
+assert.ok(
+  tangtangDescriptionFormulaValidationProtocol.includes('This is the primary next validation layer'),
+  'description validation protocol must state it is the primary next validation layer',
+);
 assert.equal(tangtangInGameDamageValidation.status, '[TANGTANG-IN-GAME-DAMAGE-VALIDATION-PROTOCOL-READY]', 'in-game damage validation gate status changed');
 assert.equal(tangtangInGameDamageValidation.claim, 'in-game-validation-protocol', 'in-game damage validation gate claim changed');
 assert.equal(tangtangInGameDamageValidation.behaviorChange, false, 'in-game damage validation gate cannot imply behavior changes');
+assert.equal(
+  tangtangInGameDamageValidation.validationScope.primaryValidationLayer,
+  'description-derived-formula-validation',
+  'observed damage gate must point to description-derived formula validation first',
+);
+assert.equal(
+  tangtangInGameDamageValidation.validationScope.observedDamageValidationLayer,
+  'follow-up-divergence-check-only',
+  'observed damage gate must stay follow-up only',
+);
+assert.equal(
+  tangtangInGameDamageValidation.validationScope.directFirstPartyDescriptionFormulaRows,
+  0,
+  'observed damage gate must carry description formula row count',
+);
+assert.equal(
+  tangtangInGameDamageValidation.validationScope.descriptionDivergenceRows,
+  0,
+  'observed damage gate must carry description divergence row count',
+);
 assert.equal(tangtangInGameDamageValidation.validationScope.directObservedDamageTrialCount, 0, 'direct observed damage trials must start at zero');
 assert.equal(tangtangInGameDamageValidation.validationScope.currentInGameCorrectnessClaim, 'not-established', 'in-game correctness must not be over-claimed');
-assert.equal(tangtangInGameDamageValidation.decisionPolicy.canClaimSioFormulaInGameCorrect, false, 'SIO formula in-game correctness cannot be claimed without observations');
-assert.equal(tangtangInGameDamageValidation.decisionPolicy.canApplyTangtangFormulaCorrection, false, 'Tangtang formula correction must be blocked without observations');
-assert.equal(tangtangInGameDamageValidation.correctionPolicy.currentCorrectionStatus, 'blocked-no-direct-observed-damage-trials', 'correction policy must remain blocked');
+assert.equal(tangtangInGameDamageValidation.decisionPolicy.canClaimSioFormulaInGameCorrect, false, 'SIO formula in-game correctness cannot be claimed without description-derived validation and follow-up observations');
+assert.equal(tangtangInGameDamageValidation.decisionPolicy.canApplyTangtangFormulaCorrection, false, 'Tangtang formula correction must be blocked without description-derived divergences and follow-up confirmation');
+assert.equal(
+  tangtangInGameDamageValidation.decisionPolicy.canRunObservedDamageFollowUpWithoutDescriptionDivergence,
+  false,
+  'observed damage follow-up cannot run without a description-derived divergence',
+);
+assert.equal(
+  tangtangInGameDamageValidation.correctionPolicy.currentCorrectionStatus,
+  'blocked-description-derived-formula-validation-incomplete',
+  'correction policy must remain blocked by incomplete description formula validation',
+);
 assert.equal(requireRow('survivor:spongebob').nextAction, 'replace public-web corroboration with direct in-game capture before formula semantics change');
 assert.equal(requireRow('survivor:squidward').nextAction, 'replace public-web corroboration with direct in-game capture before formula semantics change');
 assert.equal(requireRow('survivor:yelena').nextAction, 'capture missing direct in-game description rows before formula semantics change');
@@ -736,6 +826,8 @@ Confidence values:
 - Evidence artifacts:
   - \`frontend/artifacts/td11/tangtang_damage_formula_spec.json\`
   - \`frontend/artifacts/td11/tangtang_damage_formula_spec.md\`
+  - \`frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json\`
+  - \`frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md\`
   - \`frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json\`
   - \`frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md\`
   - \`frontend/artifacts/td11/sio_tools_live_evidence_matrix.json\`
@@ -780,19 +872,39 @@ ${renderCountTable(countBy('confidence'))}
 - Official/direct first-party in-game text verification remains incomplete.
 - Formula/scoring/UI behavior did not change.
 
+## Description Formula Validation Gate
+
+- Description-derived formula validation is the primary next validation layer after SIO Tools-equivalent derivation:
+  - \`frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json\`
+  - \`frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md\`
+- Gate status: \`${tangtangDescriptionFormulaValidation.status}\`
+- Gate claim: \`${tangtangDescriptionFormulaValidation.claim}\`
+- Current description-derived formula correctness claim: \`${tangtangDescriptionFormulaValidation.validationScope.currentDescriptionFormulaCorrectnessClaim}\`
+- Direct first-party description-derived formula rows: ${tangtangDescriptionFormulaValidation.validationScope.directFirstPartyDescriptionFormulaRows}
+- Description/SIO divergence rows: ${tangtangDescriptionFormulaValidation.divergenceRows.length}
+- Can claim SIO formula description-correct: \`${tangtangDescriptionFormulaValidation.decisionPolicy.canClaimSioFormulaDescriptionCorrect}\`
+- Can apply Tangtang formula correction: \`${tangtangDescriptionFormulaValidation.decisionPolicy.canApplyTangtangFormulaCorrection}\`
+- Observed damage validation role: ${tangtangDescriptionFormulaValidation.decisionPolicy.observedDamageValidationRole}
+- Formula/scoring/UI behavior did not change.
+
 ## In-Game Damage Validation Gate
 
-- Direct in-game observed-damage validation is now tracked separately from SIO Tools-equivalent formula derivation:
+- Direct in-game observed-damage validation is tracked only as follow-up confirmation for description-vs-SIO divergences:
   - \`frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json\`
   - \`frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md\`
 - Gate status: \`${tangtangInGameDamageValidation.status}\`
 - Gate claim: \`${tangtangInGameDamageValidation.claim}\`
+- Primary validation layer: \`${tangtangInGameDamageValidation.validationScope.primaryValidationLayer}\`
+- Observed damage validation layer: \`${tangtangInGameDamageValidation.validationScope.observedDamageValidationLayer}\`
 - Current in-game correctness claim: \`${tangtangInGameDamageValidation.validationScope.currentInGameCorrectnessClaim}\`
+- Direct first-party description-derived formula rows: ${tangtangInGameDamageValidation.validationScope.directFirstPartyDescriptionFormulaRows}
+- Description/SIO divergence rows: ${tangtangInGameDamageValidation.validationScope.descriptionDivergenceRows}
 - Direct observed in-game damage trials: ${tangtangInGameDamageValidation.validationScope.directObservedDamageTrialCount}
 - Can claim SIO formula in-game correct: \`${tangtangInGameDamageValidation.decisionPolicy.canClaimSioFormulaInGameCorrect}\`
 - Can apply Tangtang formula correction: \`${tangtangInGameDamageValidation.decisionPolicy.canApplyTangtangFormulaCorrection}\`
+- Can run observed damage follow-up without description divergence: \`${tangtangInGameDamageValidation.decisionPolicy.canRunObservedDamageFollowUpWithoutDescriptionDivergence}\`
 - Correction status: \`${tangtangInGameDamageValidation.correctionPolicy.currentCorrectionStatus}\`
-- This gate allows future Tangtang improvements beyond SIO only after repeated controlled direct in-game observations establish a SIO divergence.
+- This gate allows future Tangtang improvements beyond SIO only when repeated controlled direct in-game observations confirm a prior description-vs-SIO divergence.
 
 ## Follow-Up Gate Slices
 

@@ -1,5 +1,7 @@
 {
   "artifactPaths": {
+    "descriptionFormulaValidationMatrix": "frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json",
+    "descriptionFormulaValidationProtocol": "frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md",
     "formulaSpecJson": "frontend/artifacts/td11/tangtang_damage_formula_spec.json",
     "formulaSpecMarkdown": "frontend/artifacts/td11/tangtang_damage_formula_spec.md",
     "matrix": "frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json",
@@ -9,7 +11,9 @@
   },
   "behaviorChange": false,
   "blockers": [
-    "No direct in-game observed damage trial pack exists yet.",
+    "No direct first-party item/effect description-derived formula rows exist yet.",
+    "No description-derived SIO/Tangtang divergence rows exist yet.",
+    "Direct observed damage trials remain secondary follow-up evidence only.",
     "Direct first-party in-game description verified rows remain 0.",
     "SIO Tools source/live equivalence is not the same as proving SIO formula correctness against game damage.",
     "non-SS weapons remain catalog-only unsupported as formula inputs.",
@@ -19,13 +23,15 @@
   "claim": "in-game-validation-protocol",
   "correctionPolicy": {
     "allowedOnlyWhen": [
+      "direct first-party item/effect descriptions are captured and parsed into description-derived formula rows",
+      "description-derived formula comparison identifies a SIO/Tangtang divergence for the affected variable",
       "direct observed in-game damage trials exist for the affected variable",
       "paired ratio-first observations isolate a single variable",
-      "at least three independent controlled trials reproduce a SIO divergence",
-      "a Tangtang correction spec documents the difference from SIO and the in-game evidence",
+      "at least three independent controlled trials confirm the prior description-vs-SIO divergence",
+      "a Tangtang correction spec documents the description-derived difference from SIO and the follow-up observed-damage evidence",
       "existing SIO-equivalence behavior is intentionally superseded behind an explicit gate"
     ],
-    "currentCorrectionStatus": "blocked-no-direct-observed-damage-trials",
+    "currentCorrectionStatus": "blocked-description-derived-formula-validation-incomplete",
     "tangtangMayImproveBeyondSio": true,
     "tangtangMayImproveBeyondSioNow": false
   },
@@ -33,6 +39,10 @@
     "catalogOnlyCollectibleRows": 46,
     "collectibleSpecialRustMappings": 14,
     "collectibleThresholdRows": 170,
+    "descriptionDivergenceRows": 0,
+    "descriptionFormulaValidationClaim": "description-derived-formula-validation-protocol",
+    "descriptionFormulaValidationStatus": "[TANGTANG-DESCRIPTION-FORMULA-VALIDATION-PROTOCOL-READY]",
+    "directFirstPartyDescriptionFormulaRows": 0,
     "directInGameDescriptionVerifiedRows": 0,
     "formulaSpecBehaviorChange": false,
     "formulaSpecClaim": "sio-tools-equivalent",
@@ -54,7 +64,8 @@
     "canApplyTangtangFormulaCorrection": false,
     "canClaimSioFormulaInGameCorrect": false,
     "canKeepCurrentTangtangFormula": true,
-    "initialDecision": "No direct in-game observed damage trials are present, so SIO formula correctness is not established by this gate.",
+    "canRunObservedDamageFollowUpWithoutDescriptionDivergence": false,
+    "initialDecision": "No description-derived formula rows or SIO/Tangtang divergence rows are present, so no direct observed damage follow-up should run yet.",
     "userFacingClaimLimit": "Tangtang may claim SIO Tools-equivalent source/live backing only; it must not claim official direct in-game formula verification."
   },
   "directObservedDamageTrials": [],
@@ -63,7 +74,7 @@
     "absoluteDamageValidation": "Allowed only after target defense, rounding, RNG, crit/non-crit split, skill tick identity, and buff uptime are isolated.",
     "defaultRatioTolerancePercent": 1,
     "ratioFirst": true,
-    "replicationRequirement": "A SIO-divergent finding needs at least three independent controlled trials for the same variable before Tangtang formula correction can be proposed.",
+    "replicationRequirement": "A prior description-vs-SIO divergence needs at least three independent controlled observed-damage confirmations for the same variable before Tangtang formula correction can be proposed.",
     "requiredFields": [
       "trialId",
       "captureDateKst",
@@ -85,14 +96,16 @@
     ],
     "verdicts": [
       "pending",
-      "matches-sio-within-tolerance",
-      "sio-divergent-needs-replication",
+      "confirms-description-derived-divergence-within-tolerance",
+      "does-not-confirm-description-derived-divergence",
       "invalid-uncontrolled-trial"
     ]
   },
   "sourceInputs": [
     "frontend/artifacts/td11/tangtang_damage_formula_spec.json",
     "frontend/artifacts/td11/tangtang_damage_formula_spec.md",
+    "frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json",
+    "frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md",
     "frontend/artifacts/td11/damage_formula_provenance_matrix.md",
     "frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json",
     "frontend/artifacts/td11/sio_tools_live_evidence_matrix.json",
@@ -108,7 +121,7 @@
   "trialGroups": [
     {
       "currentObservedTrials": 0,
-      "currentStatus": "needs-direct-in-game-damage-observations",
+      "currentStatus": "blocked-until-description-derived-divergence",
       "id": "baseline-attack-aggregate",
       "minimumIndependentTrials": 3,
       "observationMethod": "Hold all damage multipliers constant, change only attack/base inputs, compare observed damage ratio to predicted attack ratio.",
@@ -120,7 +133,7 @@
     },
     {
       "currentObservedTrials": 0,
-      "currentStatus": "needs-direct-in-game-damage-observations",
+      "currentStatus": "blocked-until-description-derived-divergence",
       "id": "skill-damage-stage-order",
       "minimumIndependentTrials": 5,
       "observationMethod": "Use one active skill and vary only skillDamage-producing inputs to determine whether in-game ordering matches SIO trace behavior.",
@@ -133,7 +146,7 @@
     },
     {
       "currentObservedTrials": 0,
-      "currentStatus": "needs-direct-in-game-damage-observations",
+      "currentStatus": "blocked-until-description-derived-divergence",
       "id": "vulnerability-and-status-uptime",
       "minimumIndependentTrials": 5,
       "observationMethod": "Capture paired trials with and without each status effect; use ratio validation before attempting absolute damage validation.",
@@ -148,7 +161,7 @@
     },
     {
       "currentObservedTrials": 0,
-      "currentStatus": "needs-direct-in-game-damage-observations",
+      "currentStatus": "blocked-until-description-derived-divergence",
       "id": "boss-damage",
       "minimumIndependentTrials": 3,
       "observationMethod": "Compare boss-target damage with controlled non-boss baseline where possible, isolating only boss damage changes.",
@@ -160,7 +173,7 @@
     },
     {
       "currentObservedTrials": 0,
-      "currentStatus": "needs-direct-in-game-damage-observations",
+      "currentStatus": "blocked-until-description-derived-divergence",
       "id": "lme-phase-damage",
       "minimumIndependentTrials": 3,
       "observationMethod": "Run LME phase-specific paired observations and compare LME damage ratios against non-LME baseline predictions.",
@@ -172,7 +185,7 @@
     },
     {
       "currentObservedTrials": 0,
-      "currentStatus": "needs-direct-in-game-damage-observations",
+      "currentStatus": "blocked-until-description-derived-divergence",
       "id": "mount-damage-ce-contribution",
       "minimumIndependentTrials": 3,
       "observationMethod": "Use active mount rows with non-zero mountDamage and compare isolated mount-on/mount-off observed ratios.",
@@ -185,7 +198,7 @@
     },
     {
       "currentObservedTrials": 0,
-      "currentStatus": "needs-direct-in-game-damage-observations",
+      "currentStatus": "blocked-until-description-derived-divergence",
       "id": "collectible-thresholds",
       "minimumIndependentTrials": 5,
       "observationMethod": "Cross threshold boundaries one at a time and compare observed ratios against the mapped source/Rust stat channel.",
@@ -198,7 +211,7 @@
     },
     {
       "currentObservedTrials": 0,
-      "currentStatus": "needs-direct-in-game-damage-observations",
+      "currentStatus": "blocked-until-description-derived-divergence",
       "id": "collaboration-survivors",
       "minimumIndependentTrials": 3,
       "observationMethod": "Capture direct first-party survivor description and paired damage observations for each source/live-backed survivor.",
@@ -215,7 +228,7 @@
       "currentStatus": "blocked-catalog-only",
       "id": "non-ss-weapons",
       "minimumIndependentTrials": 3,
-      "observationMethod": "Keep non-SS weapons catalog-only until direct source/description and observed damage fixtures establish formula inputs.",
+      "observationMethod": "Keep non-SS weapons catalog-only until direct descriptions and SIO/source formula paths exist; observed damage remains follow-up only for later divergences.",
       "priority": 3,
       "stageRefs": [
         "non-SS-weapons"
@@ -227,13 +240,19 @@
     "currentInGameCorrectnessClaim": "not-established",
     "currentScorer": "sio_full_lm_equivalence",
     "currentSioEquivalentClaim": "sio-tools-equivalent",
+    "descriptionDivergenceRows": 0,
+    "descriptionFormulaValidationStatus": "[TANGTANG-DESCRIPTION-FORMULA-VALIDATION-PROTOCOL-READY]",
+    "directFirstPartyDescriptionFormulaRows": 0,
     "directFirstPartyDescriptionVerifiedRows": 0,
     "directObservedDamageTrialCount": 0,
     "fullSioEquivalent": true,
-    "purpose": "Validate whether the current SIO Tools-equivalent damage formula matches direct in-game observed damage before allowing Tangtang-specific formula improvements.",
+    "observedDamageValidationLayer": "follow-up-divergence-check-only",
+    "primaryValidationLayer": "description-derived-formula-validation",
+    "purpose": "Use direct observed damage trials only as follow-up confirmation when description-derived formula validation finds a SIO/Tangtang divergence.",
     "scorer": "sio_full_lm_equivalence"
   },
   "verificationCommands": [
+    "node scripts/tangtang_description_formula_validation_unit_test.mjs",
     "node scripts/tangtang_in_game_damage_validation_unit_test.mjs",
     "node scripts/tangtang_damage_formula_spec_unit_test.mjs",
     "node scripts/damage_formula_provenance_matrix_unit_test.mjs",

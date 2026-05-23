@@ -10,6 +10,8 @@ const protocolPath = path.join(root, 'artifacts/td11/tangtang_in_game_damage_val
 const SOURCE_INPUTS = [
   'frontend/artifacts/td11/tangtang_damage_formula_spec.json',
   'frontend/artifacts/td11/tangtang_damage_formula_spec.md',
+  'frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json',
+  'frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md',
   'frontend/artifacts/td11/damage_formula_provenance_matrix.md',
   'frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json',
   'frontend/artifacts/td11/sio_tools_live_evidence_matrix.json',
@@ -31,7 +33,7 @@ const HIGH_RISK_TRIAL_GROUPS = [
       'Hold all damage multipliers constant, change only attack/base inputs, compare observed damage ratio to predicted attack ratio.',
     minimumIndependentTrials: 3,
     currentObservedTrials: 0,
-    currentStatus: 'needs-direct-in-game-damage-observations',
+    currentStatus: 'blocked-until-description-derived-divergence',
   },
   {
     id: 'skill-damage-stage-order',
@@ -42,7 +44,7 @@ const HIGH_RISK_TRIAL_GROUPS = [
       'Use one active skill and vary only skillDamage-producing inputs to determine whether in-game ordering matches SIO trace behavior.',
     minimumIndependentTrials: 5,
     currentObservedTrials: 0,
-    currentStatus: 'needs-direct-in-game-damage-observations',
+    currentStatus: 'blocked-until-description-derived-divergence',
   },
   {
     id: 'vulnerability-and-status-uptime',
@@ -53,7 +55,7 @@ const HIGH_RISK_TRIAL_GROUPS = [
       'Capture paired trials with and without each status effect; use ratio validation before attempting absolute damage validation.',
     minimumIndependentTrials: 5,
     currentObservedTrials: 0,
-    currentStatus: 'needs-direct-in-game-damage-observations',
+    currentStatus: 'blocked-until-description-derived-divergence',
   },
   {
     id: 'boss-damage',
@@ -64,7 +66,7 @@ const HIGH_RISK_TRIAL_GROUPS = [
       'Compare boss-target damage with controlled non-boss baseline where possible, isolating only boss damage changes.',
     minimumIndependentTrials: 3,
     currentObservedTrials: 0,
-    currentStatus: 'needs-direct-in-game-damage-observations',
+    currentStatus: 'blocked-until-description-derived-divergence',
   },
   {
     id: 'lme-phase-damage',
@@ -75,7 +77,7 @@ const HIGH_RISK_TRIAL_GROUPS = [
       'Run LME phase-specific paired observations and compare LME damage ratios against non-LME baseline predictions.',
     minimumIndependentTrials: 3,
     currentObservedTrials: 0,
-    currentStatus: 'needs-direct-in-game-damage-observations',
+    currentStatus: 'blocked-until-description-derived-divergence',
   },
   {
     id: 'mount-damage-ce-contribution',
@@ -86,7 +88,7 @@ const HIGH_RISK_TRIAL_GROUPS = [
       'Use active mount rows with non-zero mountDamage and compare isolated mount-on/mount-off observed ratios.',
     minimumIndependentTrials: 3,
     currentObservedTrials: 0,
-    currentStatus: 'needs-direct-in-game-damage-observations',
+    currentStatus: 'blocked-until-description-derived-divergence',
   },
   {
     id: 'collectible-thresholds',
@@ -97,7 +99,7 @@ const HIGH_RISK_TRIAL_GROUPS = [
       'Cross threshold boundaries one at a time and compare observed ratios against the mapped source/Rust stat channel.',
     minimumIndependentTrials: 5,
     currentObservedTrials: 0,
-    currentStatus: 'needs-direct-in-game-damage-observations',
+    currentStatus: 'blocked-until-description-derived-divergence',
   },
   {
     id: 'collaboration-survivors',
@@ -108,7 +110,7 @@ const HIGH_RISK_TRIAL_GROUPS = [
       'Capture direct first-party survivor description and paired damage observations for each source/live-backed survivor.',
     minimumIndependentTrials: 3,
     currentObservedTrials: 0,
-    currentStatus: 'needs-direct-in-game-damage-observations',
+    currentStatus: 'blocked-until-description-derived-divergence',
   },
   {
     id: 'non-ss-weapons',
@@ -116,7 +118,7 @@ const HIGH_RISK_TRIAL_GROUPS = [
     stageRefs: ['non-SS-weapons'],
     variableUnderTest: 'non-SS weapon formula contribution',
     observationMethod:
-      'Keep non-SS weapons catalog-only until direct source/description and observed damage fixtures establish formula inputs.',
+      'Keep non-SS weapons catalog-only until direct descriptions and SIO/source formula paths exist; observed damage remains follow-up only for later divergences.',
     minimumIndependentTrials: 3,
     currentObservedTrials: 0,
     currentStatus: 'blocked-catalog-only',
@@ -154,6 +156,8 @@ function cell(value) {
 const [
   formulaSpec,
   formulaSpecMarkdown,
+  descriptionFormulaValidation,
+  descriptionFormulaValidationProtocol,
   provenanceMatrix,
   sourceEvidence,
   liveEvidence,
@@ -166,6 +170,8 @@ const [
 ] = await Promise.all([
   readJson('frontend/artifacts/td11/tangtang_damage_formula_spec.json'),
   readText('frontend/artifacts/td11/tangtang_damage_formula_spec.md'),
+  readJson('frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json'),
+  readText('frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md'),
   readText('frontend/artifacts/td11/damage_formula_provenance_matrix.md'),
   readJson('frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json'),
   readJson('frontend/artifacts/td11/sio_tools_live_evidence_matrix.json'),
@@ -194,9 +200,15 @@ function buildMatrix() {
     sourceInputs: SOURCE_INPUTS,
     validationScope: {
       purpose:
-        'Validate whether the current SIO Tools-equivalent damage formula matches direct in-game observed damage before allowing Tangtang-specific formula improvements.',
+        'Use direct observed damage trials only as follow-up confirmation when description-derived formula validation finds a SIO/Tangtang divergence.',
+      primaryValidationLayer: 'description-derived-formula-validation',
+      observedDamageValidationLayer: 'follow-up-divergence-check-only',
       currentSioEquivalentClaim: formulaSpec.claim,
       currentInGameCorrectnessClaim: 'not-established',
+      descriptionFormulaValidationStatus: descriptionFormulaValidation.status,
+      directFirstPartyDescriptionFormulaRows:
+        descriptionFormulaValidation.validationScope.directFirstPartyDescriptionFormulaRows,
+      descriptionDivergenceRows: descriptionFormulaValidation.divergenceRows.length,
       directObservedDamageTrialCount: directObservedDamageTrials.length,
       directFirstPartyDescriptionVerifiedRows: formulaSpec.summaryCounts.inGameDescriptionVerifiedRows,
       fullSioEquivalent: equivalenceMatrix.fullSioEquivalent,
@@ -223,38 +235,51 @@ function buildMatrix() {
         'rawCaptureArtifactPaths',
         'verdict',
       ],
-      verdicts: ['pending', 'matches-sio-within-tolerance', 'sio-divergent-needs-replication', 'invalid-uncontrolled-trial'],
+      verdicts: [
+        'pending',
+        'confirms-description-derived-divergence-within-tolerance',
+        'does-not-confirm-description-derived-divergence',
+        'invalid-uncontrolled-trial',
+      ],
       ratioFirst: true,
       absoluteDamageValidation:
         'Allowed only after target defense, rounding, RNG, crit/non-crit split, skill tick identity, and buff uptime are isolated.',
       defaultRatioTolerancePercent: 1,
       replicationRequirement:
-        'A SIO-divergent finding needs at least three independent controlled trials for the same variable before Tangtang formula correction can be proposed.',
+        'A prior description-vs-SIO divergence needs at least three independent controlled observed-damage confirmations for the same variable before Tangtang formula correction can be proposed.',
     },
     trialGroups: HIGH_RISK_TRIAL_GROUPS,
     directObservedDamageTrials,
     decisionPolicy: {
       initialDecision:
-        'No direct in-game observed damage trials are present, so SIO formula correctness is not established by this gate.',
+        'No description-derived formula rows or SIO/Tangtang divergence rows are present, so no direct observed damage follow-up should run yet.',
       canClaimSioFormulaInGameCorrect: false,
       canApplyTangtangFormulaCorrection: false,
+      canRunObservedDamageFollowUpWithoutDescriptionDivergence: false,
       canKeepCurrentTangtangFormula: true,
       userFacingClaimLimit:
         'Tangtang may claim SIO Tools-equivalent source/live backing only; it must not claim official direct in-game formula verification.',
     },
     correctionPolicy: {
       allowedOnlyWhen: [
+        'direct first-party item/effect descriptions are captured and parsed into description-derived formula rows',
+        'description-derived formula comparison identifies a SIO/Tangtang divergence for the affected variable',
         'direct observed in-game damage trials exist for the affected variable',
         'paired ratio-first observations isolate a single variable',
-        'at least three independent controlled trials reproduce a SIO divergence',
-        'a Tangtang correction spec documents the difference from SIO and the in-game evidence',
+        'at least three independent controlled trials confirm the prior description-vs-SIO divergence',
+        'a Tangtang correction spec documents the description-derived difference from SIO and the follow-up observed-damage evidence',
         'existing SIO-equivalence behavior is intentionally superseded behind an explicit gate',
       ],
-      currentCorrectionStatus: 'blocked-no-direct-observed-damage-trials',
+      currentCorrectionStatus: 'blocked-description-derived-formula-validation-incomplete',
       tangtangMayImproveBeyondSio: true,
       tangtangMayImproveBeyondSioNow: false,
     },
     currentEvidenceSummary: {
+      descriptionFormulaValidationStatus: descriptionFormulaValidation.status,
+      descriptionFormulaValidationClaim: descriptionFormulaValidation.claim,
+      directFirstPartyDescriptionFormulaRows:
+        descriptionFormulaValidation.validationScope.directFirstPartyDescriptionFormulaRows,
+      descriptionDivergenceRows: descriptionFormulaValidation.divergenceRows.length,
       formulaSpecStatus: formulaSpec.status,
       formulaSpecClaim: formulaSpec.claim,
       formulaSpecBehaviorChange: formulaSpec.behaviorChange,
@@ -277,7 +302,9 @@ function buildMatrix() {
         'Live SIO trace factors include standalone skillDamage; local Tangtang/Rust provenance labels keep en2 as vulnerability and en24 as LME phase damage.',
     },
     blockers: [
-      'No direct in-game observed damage trial pack exists yet.',
+      'No direct first-party item/effect description-derived formula rows exist yet.',
+      'No description-derived SIO/Tangtang divergence rows exist yet.',
+      'Direct observed damage trials remain secondary follow-up evidence only.',
       'Direct first-party in-game description verified rows remain 0.',
       'SIO Tools source/live equivalence is not the same as proving SIO formula correctness against game damage.',
       'non-SS weapons remain catalog-only unsupported as formula inputs.',
@@ -285,6 +312,7 @@ function buildMatrix() {
       'Collectible item/set direct description capture remains incomplete.',
     ],
     verificationCommands: [
+      'node scripts/tangtang_description_formula_validation_unit_test.mjs',
       'node scripts/tangtang_in_game_damage_validation_unit_test.mjs',
       'node scripts/tangtang_damage_formula_spec_unit_test.mjs',
       'node scripts/damage_formula_provenance_matrix_unit_test.mjs',
@@ -297,6 +325,9 @@ function buildMatrix() {
       matrix: 'frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json',
       protocol: 'frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md',
       script: 'frontend/scripts/tangtang_in_game_damage_validation_unit_test.mjs',
+      descriptionFormulaValidationMatrix: 'frontend/artifacts/td11/tangtang_description_formula_validation_matrix.json',
+      descriptionFormulaValidationProtocol:
+        'frontend/artifacts/td11/tangtang_description_formula_validation_protocol.md',
       formulaSpecJson: 'frontend/artifacts/td11/tangtang_damage_formula_spec.json',
       formulaSpecMarkdown: 'frontend/artifacts/td11/tangtang_damage_formula_spec.md',
       provenanceMatrix: 'frontend/artifacts/td11/damage_formula_provenance_matrix.md',
@@ -330,21 +361,27 @@ behaviorChange: \`${matrix.behaviorChange}\`
 
 ## Purpose
 
-This gate is for validating whether the current SIO Tools-equivalent damage formula matches direct in-game observed damage. It is separate from the existing Tangtang=SIO equivalence gates.
+This gate is not the first validation layer. The primary validation layer is item/effect description-derived formula comparison against SIO Tools/Tangtang. Direct observed damage trials are a follow-up divergence check after that comparison finds a concrete mismatch.
 
 Current decision:
 
+- Primary validation layer: \`${matrix.validationScope.primaryValidationLayer}\`
+- Observed damage validation layer: \`${matrix.validationScope.observedDamageValidationLayer}\`
+- Description formula validation status: \`${matrix.validationScope.descriptionFormulaValidationStatus}\`
+- Direct first-party description-derived formula rows: ${matrix.validationScope.directFirstPartyDescriptionFormulaRows}
+- Description/SIO divergence rows: ${matrix.validationScope.descriptionDivergenceRows}
 - SIO formula in-game correctness claim: \`${matrix.validationScope.currentInGameCorrectnessClaim}\`
 - Direct observed in-game damage trials: ${matrix.validationScope.directObservedDamageTrialCount}
 - Direct first-party description verified rows: ${matrix.validationScope.directFirstPartyDescriptionVerifiedRows}
 - Tangtang formula correction allowed now: \`${matrix.correctionPolicy.tangtangMayImproveBeyondSioNow}\`
+- Observed damage follow-up without description divergence: \`${matrix.decisionPolicy.canRunObservedDamageFollowUpWithoutDescriptionDivergence}\`
 - Current Tangtang formula may remain: \`${matrix.decisionPolicy.canKeepCurrentTangtangFormula}\`
 
 ## Validation Method
 
-Use ratio-first validation. Each trial changes one controlled variable while holding the rest of the build, mode, target, crit/non-crit path, skill tick identity, and buff uptime constant. Absolute damage validation is allowed only after target defense, rounding, RNG, and hit identity are isolated.
+Use ratio-first validation only after description-derived formula comparison identifies a SIO/Tangtang divergence. Each trial changes one controlled variable while holding the rest of the build, mode, target, crit/non-crit path, skill tick identity, and buff uptime constant. Absolute damage validation is allowed only after target defense, rounding, RNG, and hit identity are isolated.
 
-If SIO and observed damage diverge, Tangtang can improve beyond SIO only after repeated controlled evidence exists and a correction spec documents the exact divergence. Until then, Tangtang remains limited to the SIO Tools-equivalent claim.
+If follow-up observed damage confirms a prior description-vs-SIO divergence, Tangtang can improve beyond SIO only after repeated controlled evidence exists and a correction spec documents the exact description-derived mismatch plus the follow-up confirmation. Until then, Tangtang remains limited to the SIO Tools-equivalent claim.
 
 ## Observation Schema
 
@@ -367,6 +404,9 @@ ${renderTrialGroupTable(matrix.trialGroups)}
 ## Current Evidence Summary
 
 - Formula spec claim: \`${matrix.currentEvidenceSummary.formulaSpecClaim}\`
+- Description formula validation claim: \`${matrix.currentEvidenceSummary.descriptionFormulaValidationClaim}\`
+- Direct first-party description-derived formula rows: ${matrix.currentEvidenceSummary.directFirstPartyDescriptionFormulaRows}
+- Description/SIO divergence rows: ${matrix.currentEvidenceSummary.descriptionDivergenceRows}
 - Formula behavior change: \`${matrix.currentEvidenceSummary.formulaSpecBehaviorChange}\`
 - Raw source stat leaves: ${matrix.currentEvidenceSummary.rawSourceLeafRows}
 - Live capture count: ${matrix.currentEvidenceSummary.liveCaptureCount}
@@ -395,6 +435,11 @@ Current correction status: \`${matrix.correctionPolicy.currentCorrectionStatus}\
 
 ${matrix.sourceInputs.map((input) => `- \`${input}\``).join('\n')}
 
+Description formula validation artifacts:
+
+- \`${matrix.artifactPaths.descriptionFormulaValidationMatrix}\`
+- \`${matrix.artifactPaths.descriptionFormulaValidationProtocol}\`
+
 ## Verification Commands
 
 ${matrix.verificationCommands.map((command) => `- \`${command}\``).join('\n')}
@@ -410,6 +455,10 @@ assert.equal(matrix.claim, 'in-game-validation-protocol');
 assert.equal(matrix.behaviorChange, false);
 assert.equal(matrix.validationScope.currentSioEquivalentClaim, 'sio-tools-equivalent');
 assert.equal(matrix.validationScope.currentInGameCorrectnessClaim, 'not-established');
+assert.equal(matrix.validationScope.primaryValidationLayer, 'description-derived-formula-validation');
+assert.equal(matrix.validationScope.observedDamageValidationLayer, 'follow-up-divergence-check-only');
+assert.equal(matrix.validationScope.directFirstPartyDescriptionFormulaRows, 0);
+assert.equal(matrix.validationScope.descriptionDivergenceRows, 0);
 assert.equal(matrix.validationScope.directObservedDamageTrialCount, 0);
 assert.equal(matrix.validationScope.directFirstPartyDescriptionVerifiedRows, 0);
 assert.equal(matrix.validationScope.fullSioEquivalent, true);
@@ -417,8 +466,9 @@ assert.equal(matrix.validationScope.currentScorer, 'sio_full_lm_equivalence');
 assert.equal(matrix.validationScope.scorer, 'sio_full_lm_equivalence');
 assert.equal(matrix.decisionPolicy.canClaimSioFormulaInGameCorrect, false);
 assert.equal(matrix.decisionPolicy.canApplyTangtangFormulaCorrection, false);
+assert.equal(matrix.decisionPolicy.canRunObservedDamageFollowUpWithoutDescriptionDivergence, false);
 assert.equal(matrix.decisionPolicy.canKeepCurrentTangtangFormula, true);
-assert.equal(matrix.correctionPolicy.currentCorrectionStatus, 'blocked-no-direct-observed-damage-trials');
+assert.equal(matrix.correctionPolicy.currentCorrectionStatus, 'blocked-description-derived-formula-validation-incomplete');
 assert.equal(matrix.correctionPolicy.tangtangMayImproveBeyondSio, true);
 assert.equal(matrix.correctionPolicy.tangtangMayImproveBeyondSioNow, false);
 assert.equal(matrix.currentEvidenceSummary.rawSourceLeafRows, 4650);
@@ -439,6 +489,7 @@ assert.ok(formulaSpecMarkdown.includes('behaviorChange: `false`'));
 assert.ok(provenanceMatrix.includes('Formula derivation is now available'));
 assert.ok(protocol.includes('Tangtang may improve beyond SIO in principle'));
 assert.ok(protocol.includes('Direct observed in-game damage trials: 0'));
+assert.ok(protocol.includes('observed damage trials are a follow-up divergence check'));
 assert.ok(protocol.includes('SIO Tools-equivalent claim'));
 
 if (writeMode) {
