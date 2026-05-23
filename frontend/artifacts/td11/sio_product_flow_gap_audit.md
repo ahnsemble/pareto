@@ -1064,6 +1064,65 @@ Do not change scoring formulas yet. The next safe step is a documentation/test g
 
 GitHub push/PR not performed.
 
+## Tangtang Doomsteed Direct Description Capture Import
+
+timestampKst: 2026-05-23 18:32:13 KST
+status: `[TANGTANG-DOOMSTEED-DIRECT-CAPTURE-GREEN]`
+
+### Scope
+
+Imported the user-submitted Doomsteed mount screenshots as partial direct first-party description capture evidence. This pass documents how the visible Korean in-game description rows map to current SIO Tools-equivalent Tangtang handling. It does not change formula semantics, scoring core, Rust damage formulas, WASM scoring behavior, optimizer ranking, or user-facing UI.
+
+### Changes
+
+- Added four raw screenshot artifacts under `frontend/artifacts/td11/captures/`.
+- Added 9 direct first-party Doomsteed description capture rows to `tangtang_description_capture_inbox.json`.
+- Regenerated the capture import, first-party source inventory, formula spec, provenance matrix, and in-game validation gate artifacts.
+- Kept the SpongeBob screenshot out of the imported formula rows because the visible tooltip does not correspond to the current SpongeBob formula atom rows.
+
+### Findings
+
+- Imported capture rows: 9.
+- Parsed description formula rows: 9.
+- Matched current SIO/Tangtang rows: 9.
+- SIO/Tangtang divergence rows: 0.
+- Observed damage follow-up rows opened: 0.
+- Formula atom rows remaining without direct first-party description capture: 212.
+
+### Caveats
+
+- These screenshots provide partial direct first-party description capture evidence for Doomsteed only, not complete formula coverage.
+- Game version/build is not visible in the submitted screenshots.
+- The imported rows match current SIO Tools-equivalent Tangtang handling, so no formula correction is applied in this pass.
+- SpongeBob/Squidward/Yelena still need direct first-party description captures for their current formula atom rows.
+- Mounts still need broader exact per-line capture coverage beyond these Doomsteed rows.
+
+### Verification Log
+
+- `node scripts/tangtang_description_capture_import_unit_test.mjs`: passed, 9 capture rows.
+- `node scripts/tangtang_first_party_description_source_inventory_unit_test.mjs`: passed, 8 source candidates.
+- `node scripts/tangtang_description_formula_validation_unit_test.mjs`: passed, 8 groups and 0 description formula rows.
+- `node scripts/tangtang_in_game_damage_validation_unit_test.mjs`: passed, 9 trial groups and 0 direct trials.
+- `node scripts/tangtang_damage_formula_spec_unit_test.mjs`: passed, 25 stages.
+- `node scripts/sio_tools_formula_source_evidence_unit_test.mjs`: passed, 4650 source leaves.
+- `node scripts/damage_formula_provenance_matrix_unit_test.mjs`: passed, 367 rows.
+- `node scripts/in_game_description_evidence_unit_test.mjs`: passed, 6 rows.
+- `node scripts/sio_tools_live_evidence_matrix_unit_test.mjs`: passed, 20 rows.
+- `node scripts/sio_tools_targeted_live_evidence_unit_test.mjs`: passed, 5 rows.
+- `node scripts/mount_damage_source_fixture_unit_test.mjs`: passed, 3 rows.
+- `node scripts/collectible_effect_mapping_matrix_unit_test.mjs`: passed, 160 rows.
+- `node scripts/generic_aggregate_non_authority_gate.mjs`: passed, 4 rows.
+- `npx tsc --noEmit`: passed.
+- `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs`: passed.
+  - `fullSioEquivalent=true`
+  - `currentScorer=scorer=sio_full_lm_equivalence`
+  - `liveCaptureCount=26`
+  - `workerParity.arbitraryGeneratedLiveExpected=26/26`
+  - `G0/G1/G2/G3/G6=true`
+- `git diff --check`: passed.
+
+GitHub push/PR not performed.
+
 ## Tangtang First-Party Description Source Inventory
 
 timestampKst: 2026-05-23 18:11:25 KST

@@ -51,6 +51,8 @@ const RECOMMENDED_CAPTURE_FIELDS = [
   'transcriptionNotes',
 ];
 
+const EXPECTED_CAPTURE_ROWS = 9;
+
 const OFFICIAL_PUBLIC_SOURCE_CANDIDATES = [
   {
     sourceId: 'habby-official-game-page',
@@ -157,7 +159,7 @@ const SOURCE_ROUTES = [
     routeId: 'direct-game-ui-capture',
     label: 'Direct in-game UI screenshot/video capture',
     qualifiesForDirectFirstPartyDescriptionRowsNow: true,
-    currentRowsAvailable: 0,
+    currentRowsAvailable: EXPECTED_CAPTURE_ROWS,
     policy:
       'Preferred route for one-by-one validation: preserve raw screenshot/video plus exact original description text and map it to an atomRowId.',
   },
@@ -378,9 +380,14 @@ function buildInventory() {
       publicWebCorroboratedNotFirstPartyRows:
         descriptionFormulaValidation.formulaAtomSummary.rowsByEvidenceTier['public-web-corroborated'] ?? 0,
       captureInboxRows: captureImport.summary.captureInboxRows,
+      directFirstPartyDescriptionCaptureRows:
+        captureImport.summary.directFirstPartyDescriptionCaptureRows ?? captureImport.summary.acceptedCaptureRows,
       parsedDescriptionFormulaRows: captureImport.summary.parsedDescriptionFormulaRows,
+      matchedSioRows: captureImport.summary.matchedSioRows,
       descriptionSioDivergenceRows: captureImport.summary.descriptionSioDivergenceRows,
       observedDamageFollowUpRows: captureImport.summary.observedDamageFollowUpRows,
+      formulaAtomRowsRemainingWithoutDirectCapture:
+        captureImport.firstPartyCaptureCoverage.formulaAtomRowsRemainingWithoutDirectCapture,
       canApplyTangtangFormulaCorrectionNow: captureImport.decisionPolicy.canApplyTangtangFormulaCorrection,
       userOneByOneCaptureRequired: true,
       publicOfficialWebSufficientForFormulaValidation: false,
@@ -455,11 +462,14 @@ No formula semantics, scoring core, Rust damage formulas, WASM scoring behavior,
 - Official/public rows promoted to direct capture: ${inventory.summary.officialPublicRowsPromotedToDirectCapture}
 - Local app resource artifacts found: ${inventory.summary.localAppResourceArtifactsFound}
 - Formula atom rows requiring direct description capture: ${inventory.summary.rowsRequiringDirectDescriptionCapture}
-- Direct first-party description-derived formula rows: ${inventory.summary.directFirstPartyDescriptionFormulaRows}
+- Direct first-party description-derived formula rows in formula-validation gate before capture import: ${inventory.summary.directFirstPartyDescriptionFormulaRows}
 - Capture inbox rows: ${inventory.summary.captureInboxRows}
+- Direct first-party description capture rows: ${inventory.summary.directFirstPartyDescriptionCaptureRows}
 - Parsed description formula rows: ${inventory.summary.parsedDescriptionFormulaRows}
+- Matched SIO rows: ${inventory.summary.matchedSioRows}
 - Description/SIO divergence rows: ${inventory.summary.descriptionSioDivergenceRows}
 - Observed damage follow-up rows: ${inventory.summary.observedDamageFollowUpRows}
+- Formula atom rows remaining without direct capture: ${inventory.summary.formulaAtomRowsRemainingWithoutDirectCapture}
 - Can apply Tangtang formula correction now: \`${inventory.summary.canApplyTangtangFormulaCorrectionNow}\`
 - Public official web sufficient for formula validation: \`${inventory.summary.publicOfficialWebSufficientForFormulaValidation}\`
 
@@ -536,10 +546,13 @@ assert.equal(inventory.summary.formulaAtomRows, 221);
 assert.equal(inventory.summary.rowsRequiringDirectDescriptionCapture, 221);
 assert.equal(inventory.summary.directFirstPartyDescriptionFormulaRows, 0);
 assert.equal(inventory.summary.publicWebCorroboratedNotFirstPartyRows, 7);
-assert.equal(inventory.summary.captureInboxRows, 0);
-assert.equal(inventory.summary.parsedDescriptionFormulaRows, 0);
+assert.equal(inventory.summary.captureInboxRows, EXPECTED_CAPTURE_ROWS);
+assert.equal(inventory.summary.directFirstPartyDescriptionCaptureRows, EXPECTED_CAPTURE_ROWS);
+assert.equal(inventory.summary.parsedDescriptionFormulaRows, EXPECTED_CAPTURE_ROWS);
+assert.equal(inventory.summary.matchedSioRows, EXPECTED_CAPTURE_ROWS);
 assert.equal(inventory.summary.descriptionSioDivergenceRows, 0);
 assert.equal(inventory.summary.observedDamageFollowUpRows, 0);
+assert.equal(inventory.summary.formulaAtomRowsRemainingWithoutDirectCapture, 212);
 assert.equal(inventory.summary.canApplyTangtangFormulaCorrectionNow, false);
 assert.equal(inventory.summary.publicOfficialWebSufficientForFormulaValidation, false);
 assert.deepEqual(captureInbox.requiredFields, FIRST_PARTY_REQUIRED_FIELDS);
@@ -552,6 +565,10 @@ assert.equal(
   inventory.sourceRoutes.find((route) => route.routeId === 'direct-game-ui-capture')
     .qualifiesForDirectFirstPartyDescriptionRowsNow,
   true,
+);
+assert.equal(
+  inventory.sourceRoutes.find((route) => route.routeId === 'direct-game-ui-capture').currentRowsAvailable,
+  EXPECTED_CAPTURE_ROWS,
 );
 assert.equal(
   inventory.sourceRoutes.find((route) => route.routeId === 'third-party-guides-community')

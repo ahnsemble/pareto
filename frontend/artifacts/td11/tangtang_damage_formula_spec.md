@@ -68,7 +68,7 @@ Key source/live counts:
 | survivor | implemented-live-covered | 440 | en0, en1, en2, en8, en12, en20 | frontend/artifacts/td11/in_game_description_evidence_matrix.json<br>frontend/artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json | SpongeBob/Squidward/Yelena remain source/live backed without direct first-party description capture. |
 | pet | implemented-live-covered | 56 | en23 | frontend/artifacts/td11/sio_lm_equivalence_matrix.json | Pet and xeno effects are covered through compact SIO LM equivalence, not a direct per-skill in-game text audit. |
 | tech | implemented-live-covered | 914 | en1, en2, en3, en4, en8, en19, en22 | frontend/artifacts/td11/sio_lm_equivalence_matrix.json<br>frontend/artifacts/td11/damage_formula_provenance_matrix.md | Tech modifier and active-skill behavior remains governed by SIO LM/source equivalence gates. |
-| mount | implemented-live-covered | 52 | en1, en3, en4, en8, en22 | frontend/artifacts/td11/mount_damage_source_fixture.json<br>frontend/artifacts/td11/sio_tools_live_evidence_matrix.json | mountDamage source/live evidence exists, but exact per-line in-game text capture is missing. |
+| mount | implemented-live-covered | 52 | en1, en3, en4, en8, en22 | frontend/artifacts/td11/mount_damage_source_fixture.json<br>frontend/artifacts/td11/sio_tools_live_evidence_matrix.json | mountDamage source/live evidence exists; 9 direct first-party Doomsteed line capture atom rows match current handling, while complete mount line capture coverage remains incomplete. |
 | collectible | implemented-live-covered | 170 | en1, en2, en3, en4, en8, en19, en22 | frontend/artifacts/td11/collectible_effect_mapping_matrix.json | Item/set mapping is source/Rust backed; item/set-level in-game description capture is incomplete and 46 catalog-only rows stay isolated. |
 | custom-set | implemented-live-covered | 215 | en0, en1, en2, en3, en4, en8, en19, en22 | frontend/artifacts/td11/sio_lm_equivalence_matrix.json | Custom-set rows are source/live equivalent through compact replay, not direct in-game text claims. |
 | LME | implemented-live-covered | 2074 | en24 | frontend/artifacts/td11/sio_lm_trace_summary_2026-05-20.json | LME phase damage is mode-dependent and remains a SIO Tools-equivalent derivation. |
@@ -81,7 +81,7 @@ Key source/live counts:
 - The requested Tangtang/Rust provenance en0-en24 labels are documented as the current local formula stage labels; live SIO trace factors include a standalone skillDamage factor, so trace indices must not be treated as direct official in-game stage labels.
 - non-SS weapons remain catalog-only and unsupported as formula inputs until fixture evidence exists.
 - SpongeBob/Squidward/Yelena are source/live backed but do not have direct first-party in-game description capture.
-- Mounts have source/live mountDamage evidence, but exact per-line in-game text capture is still missing.
+- Mounts have source/live mountDamage evidence and 9 direct first-party Doomsteed line capture atom rows, but complete exact per-line mount text coverage is still incomplete.
 - Collectible item/set mapping is source/Rust backed, but item/set-level in-game description capture is incomplete.
 - Catalog-only collectible rows remain isolated.
 - No formula semantics, scoring core, Rust damage formula, WASM scoring behavior, optimizer ranking, or product UI changed.
@@ -101,7 +101,7 @@ Key source/live counts:
 - Collectible threshold atom rows: 170
 - Collectible special Rust mapping atom rows: 14
 - Graph mode: `deterministic-atom-ledger-not-graphrag`
-- Direct first-party description-derived formula rows: 0
+- Direct first-party description-derived formula rows in formula-validation gate before capture import: 0
 - Description/SIO divergence rows: 0
 - Observed damage validation role: Observed damage validation is secondary confirmation for description-vs-SIO divergences, not the first validation layer.
 - Can claim SIO formula description-correct: `false`
@@ -114,11 +114,14 @@ Key source/live counts:
 - Import protocol: `frontend/artifacts/td11/tangtang_description_capture_import_protocol.md`
 - Status: `[TANGTANG-DESCRIPTION-CAPTURE-IMPORT-GATE-READY]`
 - Claim: `description-capture-import-gate`
-- Capture inbox rows: 0
-- Parsed description formula rows: 0
-- Matched SIO rows: 0
+- Capture inbox rows: 9
+- Direct first-party description capture rows: 9
+- Parsed description formula rows: 9
+- Matched SIO rows: 9
 - Description/SIO divergence rows: 0
 - Observed damage follow-up rows: 0
+- Captured atom rows: 9
+- Formula atom rows remaining without direct capture: 212
 - Can run observed damage follow-up: `false`
 - Can apply Tangtang formula correction: `false`
 
@@ -133,7 +136,11 @@ Key source/live counts:
 - Official/public rows promoted to direct capture: 0
 - Local app resource artifacts found: 0
 - Rows requiring direct description capture: 221
-- Direct first-party description-derived formula rows: 0
+- Direct first-party description-derived formula rows in formula-validation gate before capture import: 0
+- Direct first-party description capture rows: 9
+- Parsed description formula rows: 9
+- Matched SIO rows: 9
+- Formula atom rows remaining without direct capture: 212
 - User one-by-one capture required: `true`
 - Public official web sufficient for formula validation: `false`
 
@@ -146,7 +153,7 @@ Key source/live counts:
 - Primary validation layer: `description-derived-formula-validation`
 - Observed damage validation layer: `follow-up-divergence-check-only`
 - Current in-game correctness claim: `not-established`
-- Direct first-party description-derived formula rows: 0
+- Direct first-party description-derived formula rows in formula-validation gate before capture import: 0
 - Description/SIO divergence rows: 0
 - Direct observed in-game damage trials: 0
 - Can claim SIO formula in-game correct: `false`

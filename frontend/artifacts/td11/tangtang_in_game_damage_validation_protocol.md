@@ -14,9 +14,9 @@ Current decision:
 - Primary validation layer: `description-derived-formula-validation`
 - Observed damage validation layer: `follow-up-divergence-check-only`
 - Description formula validation status: `[TANGTANG-DESCRIPTION-FORMULA-VALIDATION-PROTOCOL-READY]`
-- Direct first-party description-derived formula rows: 0
+- Direct first-party description-derived formula rows in formula-validation gate before capture import: 0
 - Description/SIO divergence rows: 0
-- Imported description capture rows: 0
+- Imported description capture rows: 9
 - Imported description/SIO divergence rows: 0
 - Imported observed damage follow-up rows: 0
 - SIO formula in-game correctness claim: `not-established`
@@ -83,9 +83,9 @@ Replication requirement: A prior description-vs-SIO divergence needs at least th
 
 - Formula spec claim: `sio-tools-equivalent`
 - Description formula validation claim: `description-derived-formula-validation-protocol`
-- Direct first-party description-derived formula rows: 0
+- Direct first-party description-derived formula rows in formula-validation gate before capture import: 0
 - Description/SIO divergence rows: 0
-- Imported description capture rows: 0
+- Imported description capture rows: 9
 - Imported description/SIO divergence rows: 0
 - Imported observed damage follow-up rows: 0
 - Formula behavior change: `false`
@@ -102,13 +102,13 @@ Replication requirement: A prior description-vs-SIO divergence needs at least th
 
 ## Blockers
 
-- No direct first-party item/effect description-derived formula rows exist yet.
+- Direct first-party description capture coverage is still partial; full description-derived formula coverage does not exist yet.
 - No description-derived SIO/Tangtang divergence rows exist yet.
 - Direct observed damage trials remain secondary follow-up evidence only.
 - Direct first-party in-game description verified rows remain 0.
 - SIO Tools source/live equivalence is not the same as proving SIO formula correctness against game damage.
 - non-SS weapons remain catalog-only unsupported as formula inputs.
-- Mount exact per-line in-game text capture remains missing.
+- Mount direct description capture is partial: 9 Doomsteed atom rows are imported, but complete mount line coverage remains incomplete.
 - Collectible item/set direct description capture remains incomplete.
 
 ## Correction Policy

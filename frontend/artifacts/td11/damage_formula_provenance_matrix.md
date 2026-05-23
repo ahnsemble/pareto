@@ -73,7 +73,7 @@ Confidence values:
 - Non-SS weapons are present as catalog rows but not proven as complete formula rows.
 - SIO Tools formula source evidence now captures 4650 current source stat leaves across damage-relevant domains; these rows are source-derived evidence, not direct first-party in-game description captures.
 - SpongeBob and Squidward now have public-web corroboration for all current source stat claims, while Yelena is partial; direct first-party in-game captures are still missing.
-- Mounts now have public-web system/name evidence, a non-empty source fixture, source-proven active compact key `bJ.bj`, and two non-zero active mountDamage live rows; exact per-line in-game description text is still missing.
+- Mounts now have public-web system/name evidence, a non-empty source fixture, source-proven active compact key `bJ.bj`, two non-zero active mountDamage live rows, and 9 direct first-party Doomsteed capture atom rows; complete mount line text coverage remains incomplete.
 - Collectible item/set rows now have a source/Rust-channel mapping artifact with threshold-level rows plus 7 SIO Tools live source-table cases; 4 named Starlight rows and 42 event slots remain catalog-only until source effect rows exist.
 - Generic aggregate modules now have a dedicated non-authority gate; the current product scorer relies on the SIO LM compact path.
 
@@ -110,7 +110,7 @@ Confidence values:
 - Collectible threshold atom rows: 170
 - Collectible special Rust mapping atom rows: 14
 - Graph mode: `deterministic-atom-ledger-not-graphrag`
-- Direct first-party description-derived formula rows: 0
+- Direct first-party description-derived formula rows in formula-validation gate before capture import: 0
 - Description/SIO divergence rows: 0
 - Can claim SIO formula description-correct: `false`
 - Can apply Tangtang formula correction: `false`
@@ -125,11 +125,14 @@ Confidence values:
   - `frontend/artifacts/td11/tangtang_description_capture_import_protocol.md`
 - Gate status: `[TANGTANG-DESCRIPTION-CAPTURE-IMPORT-GATE-READY]`
 - Gate claim: `description-capture-import-gate`
-- Capture inbox rows: 0
-- Parsed description formula rows: 0
-- Matched SIO rows: 0
+- Capture inbox rows: 9
+- Direct first-party description capture rows: 9
+- Parsed description formula rows: 9
+- Matched SIO rows: 9
 - Description/SIO divergence rows: 0
 - Observed damage follow-up rows: 0
+- Captured atom rows: 9
+- Formula atom rows remaining without direct capture: 212
 - Can run observed damage follow-up: `false`
 - Can apply Tangtang formula correction: `false`
 - Formula/scoring/UI behavior did not change.
@@ -146,7 +149,11 @@ Confidence values:
 - Official/public rows promoted to direct capture: 0
 - Local app resource artifacts found: 0
 - Rows requiring direct description capture: 221
-- Direct first-party description-derived formula rows: 0
+- Direct first-party description-derived formula rows in formula-validation gate before capture import: 0
+- Direct first-party description capture rows: 9
+- Parsed description formula rows: 9
+- Matched SIO rows: 9
+- Formula atom rows remaining without direct capture: 212
 - Public official web sufficient for formula validation: `false`
 - User one-by-one capture required: `true`
 - Formula/scoring/UI behavior did not change.
@@ -161,7 +168,7 @@ Confidence values:
 - Primary validation layer: `description-derived-formula-validation`
 - Observed damage validation layer: `follow-up-divergence-check-only`
 - Current in-game correctness claim: `not-established`
-- Direct first-party description-derived formula rows: 0
+- Direct first-party description-derived formula rows in formula-validation gate before capture import: 0
 - Description/SIO divergence rows: 0
 - Direct observed in-game damage trials: 0
 - Can claim SIO formula in-game correct: `false`
@@ -178,7 +185,7 @@ These slices split the v0 matrix into smaller high-risk gates. They are guardrai
 |---|---|---|---|---|---|
 | DF-P1 | Pet alias regression | pet:blizzblast; pet:crucker | live-equivalent rows; product names stay Blizzblast/Clucker while source aliases include King Blizzblast/Crucker | alias drift can silently break compact profile mapping | add or keep alias regression before changing pet translator, schema, or compact import handling |
 | DF-P2 | Non-SS weapons | 8 weapon rows excluding Twin Lance | catalog-only; no proven Rust/stat channel or live fixture | no independent formula fixture for non-SS weapon damage contribution | unsupported for formula input until fixture evidence exists |
-| DF-P3 | Mount damage line | 3 mount rows | source-backed; SIO Tools source evidence has 26 normalized mount claims and 52 raw cumulative mount stat cells; public web confirms mount system/names; live evidence matrix has 1 non-empty mount stat-line row, 2 non-zero mountDamage live rows, and active compact key bj | exact per-line in-game description text still missing (0/3) | capture exact mount line descriptions before editing mount scoring semantics |
+| DF-P3 | Mount damage line | 3 mount rows | source-backed; SIO Tools source evidence has 26 normalized mount claims and 52 raw cumulative mount stat cells; public web confirms mount system/names; live evidence matrix has 1 non-empty mount stat-line row, 2 non-zero mountDamage live rows, and active compact key bj; direct first-party capture import covers 9 Doomsteed atom rows | complete mount line text coverage is still incomplete; public-web exact matrix remains 0/3, while direct capture import currently covers Doomsteed only | capture remaining mount line descriptions before editing mount scoring semantics |
 | DF-P4 | Collectible item/set text mapping | 114 source-backed rows plus 46 catalog-only rows | source-only mapping artifact exists with 170 threshold rows, 170 raw source threshold cells, 14 special Rust mappings, and 7 SIO Tools live source-table cases; per-description mapping not independently captured | missing item/set in-game description to stat-channel mapping; 4 named Starlight rows and 42 event slots are catalog-only | map description -> source key -> Tangtang schema key -> Rust stat channel -> multiplier stage |
 | DF-P5 | Collaboration survivor source reconciliation | survivor:spongebob; survivor:squidward; survivor:yelena | source-backed by runtime table and Rust compact transform; SIO Tools source evidence has 11 normalized target-survivor claims and 13 raw cumulative target-survivor stat cells; targetSurvivorLiveRows=3; public-web stat claim rows=3 | public web corroboration exists for SpongeBob/Squidward and partial Yelena, but direct first-party in-game capture is still missing | replace public-web corroboration with direct in-game capture before changing survivor scoring semantics |
 | DF-P6 | Negative tech modifier | tech-modifier:exoBracer->ssWeapon | live-equivalent debuff row with coefficient -0.025 | debuff can be lost if coefficients are normalized as only-positive multipliers | keep debuff regression visible in tests/docs before editing tech modifier reconstruction |
@@ -348,9 +355,9 @@ These slices split the v0 matrix into smaller high-risk gates. They are guardrai
 | collectible-set:uncontrollableSuperpower | collectible-set | Uncontrollable Superpower | SIO collectible set source-backed | not independently captured | COLLECTIBLE_SET_INDEX.uncontrollableSuperpower | equipment_transform custom/set bonuses where explicitly wired; generic aggregate empty | set-dependent upstream stat transform | sio_tools_live_evidence_matrix.collectibleLiveRows=7; collectible_effect_mapping.thresholdRows=170 | sio-source-only | add per-set in-game description and stat channel mapping |
 | collectible-set:whenCosmicStarsShine | collectible-set | When Cosmic Stars Shine | SIO collectible set source-backed | not independently captured | COLLECTIBLE_SET_INDEX.whenCosmicStarsShine | equipment_transform custom/set bonuses where explicitly wired; generic aggregate empty | set-dependent upstream stat transform | sio_tools_live_evidence_matrix.collectibleLiveRows=7; collectible_effect_mapping.thresholdRows=170 | sio-source-only | add per-set in-game description and stat channel mapping |
 | collectible-set:windTotem | collectible-set | Wind Totem | SIO collectible set source-backed | not independently captured | COLLECTIBLE_SET_INDEX.windTotem | equipment_transform custom/set bonuses where explicitly wired; generic aggregate empty | set-dependent upstream stat transform | sio_tools_live_evidence_matrix.collectibleLiveRows=7; collectible_effect_mapping.thresholdRows=170 | sio-source-only | add per-set in-game description and stat channel mapping |
-| mount:doomsteed | mount | Doomsteed | SIO mount catalog plus compact mount stat-line fold; zero/non-active source row | public web confirms mount system/names; exact per-line text status=not-found-public-web; 10 source-table claims retained | MOUNT_SCHEMA_INDEX.doomsteed | compact mount stats; non-zero mountDamage not applicable/proven for this row | mount-derived stat channels when present | sio_tools_live_evidence_matrix.mountLineStatsLiveRows=1; zero/non-active mount row only; mountActiveShortKey=bj; in_game_description_evidence.mountExact=0/3 | sio-source-only | keep zero-coefficient/source row unless source changes; capture exact mount line descriptions if source changes |
-| mount:electricScooter | mount | Electric Scooter | SIO mount catalog plus active mountDamage live trace captured | public web confirms mount system/names; exact per-line text status=not-found-public-web; 8 source-table claims retained | MOUNT_SCHEMA_INDEX.electricScooter | compact mount stats + active mountDamage live trace | mount-derived stat channels when present | sio_tools_live_evidence_matrix.activeMountLiveRows=2; nonZeroMountDamageLiveRows=2; mountActiveShortKey=bj; in_game_description_evidence.mountExact=0/3 | sio-live-equivalent | capture exact mount line descriptions before editing mount scoring semantics |
-| mount:techHoverboard | mount | Tech Hoverboard | SIO mount catalog plus active mountDamage live trace captured | public web confirms mount system/names; exact per-line text status=not-found-public-web; 8 source-table claims retained | MOUNT_SCHEMA_INDEX.techHoverboard | compact mount stats + active mountDamage live trace | mount-derived stat channels when present | sio_tools_live_evidence_matrix.activeMountLiveRows=2; nonZeroMountDamageLiveRows=2; mountActiveShortKey=bj; in_game_description_evidence.mountExact=0/3 | sio-live-equivalent | capture exact mount line descriptions before editing mount scoring semantics |
+| mount:doomsteed | mount | Doomsteed | SIO mount catalog plus compact mount stat-line fold; zero/non-active source row | public web confirms mount system/names; public-web exact per-line status=not-found-public-web; 10 source-table claims retained; direct first-party capture import covers 9 Doomsteed atom rows and all imported rows match current handling | MOUNT_SCHEMA_INDEX.doomsteed | compact mount stats; non-zero mountDamage not applicable/proven for this row | mount-derived stat channels when present | sio_tools_live_evidence_matrix.mountLineStatsLiveRows=1; zero/non-active mount row only; mountActiveShortKey=bj; public_web_mountExact=0/3; direct first-party capture import covers 9 Doomsteed atom rows and all imported rows match current handling | sio-source-only | keep zero-coefficient/source row unless source changes; capture remaining mount line descriptions before editing scoring semantics |
+| mount:electricScooter | mount | Electric Scooter | SIO mount catalog plus active mountDamage live trace captured | public web confirms mount system/names; public-web exact per-line status=not-found-public-web; 8 source-table claims retained; no direct first-party capture import rows for this mount | MOUNT_SCHEMA_INDEX.electricScooter | compact mount stats + active mountDamage live trace | mount-derived stat channels when present | sio_tools_live_evidence_matrix.activeMountLiveRows=2; nonZeroMountDamageLiveRows=2; mountActiveShortKey=bj; public_web_mountExact=0/3; no direct first-party capture import rows for this mount | sio-live-equivalent | capture exact mount line descriptions for this mount before editing mount scoring semantics |
+| mount:techHoverboard | mount | Tech Hoverboard | SIO mount catalog plus active mountDamage live trace captured | public web confirms mount system/names; public-web exact per-line status=not-found-public-web; 8 source-table claims retained; no direct first-party capture import rows for this mount | MOUNT_SCHEMA_INDEX.techHoverboard | compact mount stats + active mountDamage live trace | mount-derived stat channels when present | sio_tools_live_evidence_matrix.activeMountLiveRows=2; nonZeroMountDamageLiveRows=2; mountActiveShortKey=bj; public_web_mountExact=0/3; no direct first-party capture import rows for this mount | sio-live-equivalent | capture exact mount line descriptions for this mount before editing mount scoring semantics |
 | pet:blizzblast | pet-xeno | Blizzblast | SIO xeno pet source-backed. source/product alias risk: SIO compact uses King Blizzblast, product schema displays Blizzblast | not independently captured | PET_SCHEMA_INDEX.blizzblast | xenoDamage / xenoRes* / compact_xeno_pet_damage | xenoResMultiplier en23 plus xeno upstream stats | sio_lm_equivalence_matrix.pets-xeno-awakening=implemented-live-covered | sio-live-equivalent | add alias regression test |
 | pet:capy | pet-xeno | Capy | SIO xeno pet source-backed. | not independently captured | PET_SCHEMA_INDEX.capy | xenoDamage / xenoRes* / compact_xeno_pet_damage | xenoResMultiplier en23 plus xeno upstream stats | sio_lm_equivalence_matrix.pets-xeno-awakening=implemented-live-covered | sio-live-equivalent | add per-skill in-game description capture |
 | pet:croaky | pet-xeno | Croaky | SIO pet source-backed. | not independently captured | PET_SCHEMA_INDEX.croaky | pet skills / cooldown side channels when applicable | cooldownReduction or upstream passive stats | sio_lm_equivalence_matrix.pets-xeno-awakening=implemented-live-covered | sio-live-equivalent | add per-skill in-game description capture |

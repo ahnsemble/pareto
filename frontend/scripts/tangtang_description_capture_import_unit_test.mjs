@@ -33,6 +33,20 @@ const CAPTURE_REQUIRED_FIELDS = [
   'multiplierStage',
 ];
 
+const EXPECTED_CAPTURE_ROWS = 9;
+const EXPECTED_MATCHED_SIO_ROWS = 9;
+const EXPECTED_CAPTURED_ATOM_ROW_IDS = [
+  'mount:doomsteed:line:1:poisoned',
+  'mount:doomsteed:line:3:poisoned',
+  'mount:doomsteed:line:3:skillDamage',
+  'mount:doomsteed:line:4:skillDamage',
+  'mount:doomsteed:line:6:laceration',
+  'mount:doomsteed:line:6:poisoned',
+  'mount:doomsteed:line:7:damageBoss',
+  'mount:doomsteed:line:7:poisoned',
+  'mount:doomsteed:line:8:damageBoss',
+];
+
 const EMPTY_INBOX = {
   title: 'Tangtang Description Capture Inbox',
   schemaVersion: 1,
@@ -167,13 +181,13 @@ function normalizeCaptureRows(inbox, atomById) {
         missingRequiredFields,
       });
     }
-  if (
-    capture.sourceKind !== 'direct-first-party-in-game' ||
-    capture.captureEvidenceTier !== 'direct-first-party-description'
-  ) {
-    return stableObject({
-      ...capture,
-      atomSnapshot: atom,
+    if (
+      capture.sourceKind !== 'direct-first-party-in-game' ||
+      capture.captureEvidenceTier !== 'direct-first-party-description'
+    ) {
+      return stableObject({
+        ...capture,
+        atomSnapshotBeforeCaptureImport: atom,
         importStatus: 'rejected-not-first-party',
         comparisonVerdict: 'invalid-capture-row',
         correctionEligible: false,
@@ -184,7 +198,7 @@ function normalizeCaptureRows(inbox, atomById) {
     if (missingRequiredFields.length > 0) {
       return stableObject({
         ...capture,
-        atomSnapshot: atom,
+        atomSnapshotBeforeCaptureImport: atom,
         importStatus: 'accepted-needs-parse',
         comparisonVerdict: 'capture-needs-manual-parse',
         correctionEligible: false,
@@ -195,7 +209,13 @@ function normalizeCaptureRows(inbox, atomById) {
     const comparison = compareCaptureToAtom(capture, atom);
     return stableObject({
       ...capture,
-      atomSnapshot: atom,
+      atomSnapshotBeforeCaptureImport: atom,
+      directCaptureEvidence: {
+        captureEvidenceTier: capture.captureEvidenceTier,
+        sourceKind: capture.sourceKind,
+        rawCaptureArtifactPaths: capture.rawCaptureArtifactPaths,
+        captureId: capture.captureId,
+      },
       importStatus: 'accepted',
       comparisonVerdict: comparison.comparisonVerdict,
       correctionEligible: false,
@@ -221,6 +241,8 @@ function buildMatrix() {
     row.comparisonVerdict === 'description-sio-divergent-needs-confirmation'
   ));
   const observedDamageFollowUpRows = importedCaptureRows.filter((row) => row.requiresObservedDamageFollowUp);
+  const capturedAtomRowIds = [...new Set(acceptedRows.map((row) => row.atomRowId))].sort();
+  const matchedSioRows = importedCaptureRows.filter((row) => row.comparisonVerdict === 'matches-sio-description-derived');
   return stableObject({
     title: 'Tangtang Description Capture Import Gate',
     generatedAtKst: formulaSpec.generatedAtKst,
@@ -272,15 +294,33 @@ function buildMatrix() {
       importedCaptureRows: importedCaptureRows.length,
       acceptedCaptureRows: acceptedRows.length,
       rejectedCaptureRows: rejectedRows.length,
+      directFirstPartyDescriptionCaptureRows: acceptedRows.length,
       parsedDescriptionFormulaRows: parsedRows.length,
-      matchedSioRows: importedCaptureRows.filter((row) => row.comparisonVerdict === 'matches-sio-description-derived').length,
+      matchedSioRows: matchedSioRows.length,
       ambiguousRows: importedCaptureRows.filter((row) => row.comparisonVerdict === 'capture-needs-manual-parse').length,
       descriptionSioDivergenceRows: divergenceRows.length,
       observedDamageFollowUpRows: observedDamageFollowUpRows.length,
       correctionEligibleRows: importedCaptureRows.filter((row) => row.correctionEligible).length,
     },
+    firstPartyCaptureCoverage: {
+      capturedAtomRowIds,
+      capturedAtomRows: capturedAtomRowIds.length,
+      matchedSioAtomRows: matchedSioRows.length,
+      formulaAtomRowsRemainingWithoutDirectCapture:
+        descriptionFormulaValidation.formulaAtomSummary.totalRows - capturedAtomRowIds.length,
+      domain: 'mount:doomsteed',
+      importedRawArtifacts: [
+        ...new Set(
+          acceptedRows.flatMap((row) => Array.isArray(row.rawCaptureArtifactPaths) ? row.rawCaptureArtifactPaths : []),
+        ),
+      ].sort(),
+      importedEntityDisplayNames: [...new Set(acceptedRows.map((row) => row.entityDisplayNameCaptured))].sort(),
+    },
     decisionPolicy: {
-      currentDescriptionFormulaCorrectnessClaim: 'not-established',
+      currentDescriptionFormulaCorrectnessClaim:
+        parsedRows.length === 0
+          ? 'not-established'
+          : 'partial-direct-first-party-captures-match-current-handling',
       canClaimSioFormulaDescriptionCorrect: false,
       canApplyTangtangFormulaCorrection: false,
       canRunObservedDamageFollowUp: observedDamageFollowUpRows.length > 0,
@@ -320,7 +360,9 @@ This gate imports direct first-party item/effect in-game description captures in
 Current decision:
 
 - Capture inbox rows: ${matrix.summary.captureInboxRows}
+- Direct first-party description capture rows: ${matrix.summary.directFirstPartyDescriptionCaptureRows}
 - Parsed description formula rows: ${matrix.summary.parsedDescriptionFormulaRows}
+- Matched SIO rows: ${matrix.summary.matchedSioRows}
 - Description/SIO divergence rows: ${matrix.summary.descriptionSioDivergenceRows}
 - Observed damage follow-up rows: ${matrix.summary.observedDamageFollowUpRows}
 - Can claim SIO formula description-correct: \`${matrix.decisionPolicy.canClaimSioFormulaDescriptionCorrect}\`
@@ -347,6 +389,7 @@ Matching mode: ${matrix.importPolicy.matchingMode}
 - Collectible threshold atom rows: ${matrix.atomLedgerContract.collectibleThresholdAtomRows}
 - Collectible special Rust mapping atom rows: ${matrix.atomLedgerContract.collectibleSpecialRustMappingAtomRows}
 - Graph mode: \`${matrix.atomLedgerContract.graphMode}\`
+- Imported rows store \`atomSnapshotBeforeCaptureImport\` for the pre-import ledger state; direct screenshot evidence is stored separately on the imported row and does not mutate the source/live atom ledger.
 
 ## Import Outcomes
 
@@ -360,6 +403,15 @@ Matching mode: ${matrix.importPolicy.matchingMode}
 | description/SIO divergence rows | ${matrix.summary.descriptionSioDivergenceRows} |
 | observed damage follow-up rows | ${matrix.summary.observedDamageFollowUpRows} |
 | correction-eligible rows | ${matrix.summary.correctionEligibleRows} |
+
+## First-Party Capture Coverage
+
+- Captured atom rows: ${matrix.firstPartyCaptureCoverage.capturedAtomRows}
+- Matched SIO atom rows: ${matrix.firstPartyCaptureCoverage.matchedSioAtomRows}
+- Formula atom rows remaining without direct capture: ${matrix.firstPartyCaptureCoverage.formulaAtomRowsRemainingWithoutDirectCapture}
+- Imported entity display names: ${matrix.firstPartyCaptureCoverage.importedEntityDisplayNames.map((name) => `\`${name}\``).join(', ') || 'none'}
+- Imported raw artifacts:
+${matrix.firstPartyCaptureCoverage.importedRawArtifacts.map((artifact) => `  - \`${artifact}\``).join('\n') || '  - none'}
 
 ## Evidence Artifacts
 
@@ -396,14 +448,35 @@ assert.equal(matrix.atomLedgerContract.graphMode, 'deterministic-atom-ledger-not
 assert.equal(matrix.equivalenceContract.fullSioEquivalent, true);
 assert.equal(matrix.equivalenceContract.currentScorer, 'sio_full_lm_equivalence');
 assert.equal(matrix.equivalenceContract.scorer, 'sio_full_lm_equivalence');
-assert.equal(matrix.summary.captureInboxRows, 0);
-assert.equal(matrix.summary.importedCaptureRows, 0);
-assert.equal(matrix.summary.acceptedCaptureRows, 0);
+assert.equal(matrix.summary.captureInboxRows, EXPECTED_CAPTURE_ROWS);
+assert.equal(matrix.summary.importedCaptureRows, EXPECTED_CAPTURE_ROWS);
+assert.equal(matrix.summary.acceptedCaptureRows, EXPECTED_CAPTURE_ROWS);
 assert.equal(matrix.summary.rejectedCaptureRows, 0);
-assert.equal(matrix.summary.parsedDescriptionFormulaRows, 0);
+assert.equal(matrix.summary.directFirstPartyDescriptionCaptureRows, EXPECTED_CAPTURE_ROWS);
+assert.equal(matrix.summary.parsedDescriptionFormulaRows, EXPECTED_CAPTURE_ROWS);
+assert.equal(matrix.summary.matchedSioRows, EXPECTED_MATCHED_SIO_ROWS);
+assert.ok(
+  matrix.importedCaptureRows.every((row) => row.atomSnapshotBeforeCaptureImport),
+  'accepted/reviewable capture rows must retain the pre-import atom snapshot under an explicit name',
+);
+assert.ok(
+  matrix.importedCaptureRows.every((row) => !Object.hasOwn(row, 'atomSnapshot')),
+  'capture import rows must not expose a generic atomSnapshot field that can be mistaken for post-import direct evidence',
+);
+assert.ok(
+  matrix.importedCaptureRows.every((row) => row.importStatus !== 'accepted' || row.directCaptureEvidence?.rawCaptureArtifactPaths?.length > 0),
+  'accepted capture rows must carry direct raw capture evidence separately from the pre-import atom snapshot',
+);
 assert.equal(matrix.summary.descriptionSioDivergenceRows, 0);
 assert.equal(matrix.summary.observedDamageFollowUpRows, 0);
 assert.equal(matrix.summary.correctionEligibleRows, 0);
+assert.deepEqual(matrix.firstPartyCaptureCoverage.capturedAtomRowIds, EXPECTED_CAPTURED_ATOM_ROW_IDS);
+assert.equal(matrix.firstPartyCaptureCoverage.capturedAtomRows, EXPECTED_CAPTURE_ROWS);
+assert.equal(matrix.firstPartyCaptureCoverage.formulaAtomRowsRemainingWithoutDirectCapture, 212);
+assert.deepEqual(matrix.firstPartyCaptureCoverage.importedEntityDisplayNames, ['종말의 전투마']);
+await Promise.all(
+  matrix.firstPartyCaptureCoverage.importedRawArtifacts.map((artifact) => fs.access(path.join(root, artifact.replace(/^frontend\//, '')))),
+);
 assert.equal(matrix.decisionPolicy.canClaimSioFormulaDescriptionCorrect, false);
 assert.equal(matrix.decisionPolicy.canApplyTangtangFormulaCorrection, false);
 assert.equal(matrix.decisionPolicy.canRunObservedDamageFollowUp, false);

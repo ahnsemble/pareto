@@ -21,7 +21,7 @@
     "The requested Tangtang/Rust provenance en0-en24 labels are documented as the current local formula stage labels; live SIO trace factors include a standalone skillDamage factor, so trace indices must not be treated as direct official in-game stage labels.",
     "non-SS weapons remain catalog-only and unsupported as formula inputs until fixture evidence exists.",
     "SpongeBob/Squidward/Yelena are source/live backed but do not have direct first-party in-game description capture.",
-    "Mounts have source/live mountDamage evidence, but exact per-line in-game text capture is still missing.",
+    "Mounts have source/live mountDamage evidence and 9 direct first-party Doomsteed line capture atom rows, but complete exact per-line mount text coverage is still incomplete.",
     "Collectible item/set mapping is source/Rust backed, but item/set-level in-game description capture is incomplete.",
     "Catalog-only collectible rows remain isolated.",
     "No formula semantics, scoring core, Rust damage formula, WASM scoring behavior, optimizer ranking, or product UI changed."
@@ -31,14 +31,17 @@
   "descriptionCaptureImportGate": {
     "canApplyTangtangFormulaCorrection": false,
     "canRunObservedDamageFollowUp": false,
-    "captureInboxRows": 0,
+    "capturedAtomRows": 9,
+    "captureInboxRows": 9,
     "claim": "description-capture-import-gate",
     "descriptionSioDivergenceRows": 0,
+    "directFirstPartyDescriptionCaptureRows": 9,
+    "formulaAtomRowsRemainingWithoutDirectCapture": 212,
     "inboxPath": "frontend/artifacts/td11/tangtang_description_capture_inbox.json",
-    "matchedSioRows": 0,
+    "matchedSioRows": 9,
     "matrixPath": "frontend/artifacts/td11/tangtang_description_capture_import_matrix.json",
     "observedDamageFollowUpRows": 0,
-    "parsedDescriptionFormulaRows": 0,
+    "parsedDescriptionFormulaRows": 9,
     "protocolPath": "frontend/artifacts/td11/tangtang_description_capture_import_protocol.md",
     "status": "[TANGTANG-DESCRIPTION-CAPTURE-IMPORT-GATE-READY]"
   },
@@ -150,7 +153,7 @@
       "status": "implemented-live-covered"
     },
     {
-      "caveat": "mountDamage source/live evidence exists, but exact per-line in-game text capture is missing.",
+      "caveat": "mountDamage source/live evidence exists; 9 direct first-party Doomsteed line capture atom rows match current handling, while complete mount line capture coverage remains incomplete.",
       "domain": "mount",
       "evidenceArtifacts": [
         "frontend/artifacts/td11/mount_damage_source_fixture.json",
@@ -270,12 +273,16 @@
   },
   "firstPartyDescriptionSourceInventoryGate": {
     "claim": "first-party-description-source-inventory",
+    "directFirstPartyDescriptionCaptureRows": 9,
     "directFirstPartyDescriptionFormulaRows": 0,
+    "formulaAtomRowsRemainingWithoutDirectCapture": 212,
     "localAppResourceArtifactsFound": 0,
+    "matchedSioRows": 9,
     "matrixPath": "frontend/artifacts/td11/tangtang_first_party_description_source_inventory.json",
     "officialPublicRowsPromotedToDirectCapture": 0,
     "officialPublicSourceCandidates": 8,
     "officialPublicSourcesWithStructuredFormulaRows": 0,
+    "parsedDescriptionFormulaRows": 9,
     "protocolPath": "frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md",
     "publicOfficialWebSufficientForFormulaValidation": false,
     "rowsRequiringDirectDescriptionCapture": 221,

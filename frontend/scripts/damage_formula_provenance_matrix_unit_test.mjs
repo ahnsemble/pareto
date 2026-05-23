@@ -9,6 +9,7 @@ const root = process.cwd();
 const buildDir = path.join(tmpdir(), 'pareto-damage-formula-provenance');
 const matrixPath = path.join(root, 'artifacts/td11/damage_formula_provenance_matrix.md');
 const writeMode = process.argv.includes('--write');
+const EXPECTED_DESCRIPTION_CAPTURE_ROWS = 9;
 
 const CONFIDENCE = new Set([
   'sio-live-equivalent',
@@ -177,6 +178,10 @@ const tangtangFirstPartyDescriptionSourceInventoryProtocol = await fs.readFile(
 );
 const tangtangInGameDamageValidationPath = path.join(root, 'artifacts/td11/tangtang_in_game_damage_validation_matrix.json');
 const tangtangInGameDamageValidation = JSON.parse(await fs.readFile(tangtangInGameDamageValidationPath, 'utf8'));
+const doomsteedDirectCaptureAtomRows =
+  tangtangDescriptionCaptureImport.firstPartyCaptureCoverage.domain === 'mount:doomsteed'
+    ? tangtangDescriptionCaptureImport.firstPartyCaptureCoverage.capturedAtomRows
+    : 0;
 
 function slug(value) {
   return String(value)
@@ -342,6 +347,10 @@ for (const pet of PET_SCHEMA_INDEX) {
 for (const mount of MOUNT_SCHEMA_INDEX) {
   const hasActiveMountDamageLiveEvidence = ACTIVE_MOUNT_DAMAGE_LIVE_IDS.has(mount.id);
   const descriptionEvidence = inGameDescriptionEvidenceByKey.get(`mount:${mount.id}`);
+  const directCaptureImportNote =
+    mount.id === 'doomsteed' && doomsteedDirectCaptureAtomRows > 0
+      ? `; direct first-party capture import covers ${doomsteedDirectCaptureAtomRows} Doomsteed atom rows and all imported rows match current handling`
+      : '; no direct first-party capture import rows for this mount';
   addRow({
     key: `mount:${mount.id}`,
     domain: 'mount',
@@ -356,15 +365,15 @@ for (const mount of MOUNT_SCHEMA_INDEX) {
       : 'compact mount stats; non-zero mountDamage not applicable/proven for this row',
     multiplierStage: 'mount-derived stat channels when present',
     inGameDescription: descriptionEvidence
-      ? `public web confirms mount system/names; exact per-line text status=${descriptionEvidence.exactInGameDescriptionStatus}; ${descriptionEvidence.sourceClaimCount} source-table claims retained`
+      ? `public web confirms mount system/names; public-web exact per-line status=${descriptionEvidence.exactInGameDescriptionStatus}; ${descriptionEvidence.sourceClaimCount} source-table claims retained${directCaptureImportNote}`
       : 'not independently captured',
     liveEvidence: hasActiveMountDamageLiveEvidence
-      ? `sio_tools_live_evidence_matrix.activeMountLiveRows=2; nonZeroMountDamageLiveRows=2; mountActiveShortKey=bj; in_game_description_evidence.mountExact=${inGameDescriptionEvidence.summary.mountRowsWithExactInGameDescriptions}/${inGameDescriptionEvidence.summary.mountRows}`
-      : `sio_tools_live_evidence_matrix.mountLineStatsLiveRows=1; zero/non-active mount row only; mountActiveShortKey=bj; in_game_description_evidence.mountExact=${inGameDescriptionEvidence.summary.mountRowsWithExactInGameDescriptions}/${inGameDescriptionEvidence.summary.mountRows}`,
+      ? `sio_tools_live_evidence_matrix.activeMountLiveRows=2; nonZeroMountDamageLiveRows=2; mountActiveShortKey=bj; public_web_mountExact=${inGameDescriptionEvidence.summary.mountRowsWithExactInGameDescriptions}/${inGameDescriptionEvidence.summary.mountRows}${directCaptureImportNote}`
+      : `sio_tools_live_evidence_matrix.mountLineStatsLiveRows=1; zero/non-active mount row only; mountActiveShortKey=bj; public_web_mountExact=${inGameDescriptionEvidence.summary.mountRowsWithExactInGameDescriptions}/${inGameDescriptionEvidence.summary.mountRows}${directCaptureImportNote}`,
     confidence: hasActiveMountDamageLiveEvidence ? 'sio-live-equivalent' : 'sio-source-only',
     nextAction: hasActiveMountDamageLiveEvidence
-      ? 'capture exact mount line descriptions before editing mount scoring semantics'
-      : 'keep zero-coefficient/source row unless source changes; capture exact mount line descriptions if source changes',
+      ? 'capture exact mount line descriptions for this mount before editing mount scoring semantics'
+      : 'keep zero-coefficient/source row unless source changes; capture remaining mount line descriptions before editing scoring semantics',
   });
 }
 
@@ -516,22 +525,24 @@ for (const row of sourceOnlyMountRows) {
   assert.equal(row.confidence, 'sio-source-only', `${row.key}.confidence`);
   assertIncludes(row, 'rustStatChannel', 'non-zero mountDamage not applicable/proven');
   assertIncludes(row, 'liveEvidence', 'mountActiveShortKey=bj');
-  assertIncludes(row, 'liveEvidence', 'in_game_description_evidence.mountExact=0/3');
-  assertIncludes(row, 'inGameDescription', 'exact per-line text status=not-found-public-web');
+  assertIncludes(row, 'liveEvidence', 'public_web_mountExact=0/3');
+  assertIncludes(row, 'liveEvidence', 'direct first-party capture import covers 9 Doomsteed atom rows');
+  assertIncludes(row, 'inGameDescription', 'public-web exact per-line status=not-found-public-web');
+  assertIncludes(row, 'inGameDescription', 'all imported rows match current handling');
   assert.equal(
     row.nextAction,
-    'keep zero-coefficient/source row unless source changes; capture exact mount line descriptions if source changes',
+    'keep zero-coefficient/source row unless source changes; capture remaining mount line descriptions before editing scoring semantics',
     `${row.key}.nextAction`,
   );
 }
 for (const row of activeMountDamageLiveRows) {
   assertIncludes(row, 'rustStatChannel', 'active mountDamage live trace');
   assertIncludes(row, 'liveEvidence', 'nonZeroMountDamageLiveRows=2');
-  assertIncludes(row, 'liveEvidence', 'in_game_description_evidence.mountExact=0/3');
-  assertIncludes(row, 'inGameDescription', 'exact per-line text status=not-found-public-web');
+  assertIncludes(row, 'liveEvidence', 'public_web_mountExact=0/3');
+  assertIncludes(row, 'inGameDescription', 'public-web exact per-line status=not-found-public-web');
   assert.equal(
     row.nextAction,
-    'capture exact mount line descriptions before editing mount scoring semantics',
+    'capture exact mount line descriptions for this mount before editing mount scoring semantics',
     `${row.key}.nextAction`,
   );
 }
@@ -675,11 +686,25 @@ assert.equal(
   'description-capture-import-gate',
   'description capture import gate claim changed',
 );
-assert.equal(tangtangDescriptionCaptureImport.summary.captureInboxRows, 0, 'capture inbox must start empty');
+assert.equal(
+  tangtangDescriptionCaptureImport.summary.captureInboxRows,
+  EXPECTED_DESCRIPTION_CAPTURE_ROWS,
+  'capture inbox should contain the current direct first-party Doomsteed rows',
+);
+assert.equal(
+  tangtangDescriptionCaptureImport.summary.directFirstPartyDescriptionCaptureRows,
+  EXPECTED_DESCRIPTION_CAPTURE_ROWS,
+  'description capture import should count current direct first-party rows',
+);
 assert.equal(
   tangtangDescriptionCaptureImport.summary.parsedDescriptionFormulaRows,
-  0,
-  'description capture import must not create parsed rows without captures',
+  EXPECTED_DESCRIPTION_CAPTURE_ROWS,
+  'description capture import should parse the current direct first-party rows',
+);
+assert.equal(
+  tangtangDescriptionCaptureImport.summary.matchedSioRows,
+  EXPECTED_DESCRIPTION_CAPTURE_ROWS,
+  'current Doomsteed capture rows should match SIO/Tangtang handling',
 );
 assert.equal(
   tangtangDescriptionCaptureImport.summary.descriptionSioDivergenceRows,
@@ -707,8 +732,8 @@ assert.equal(
   'description capture import must use the current atom ledger',
 );
 assert.ok(
-  tangtangDescriptionCaptureImportProtocol.includes('Capture inbox rows: 0'),
-  'description capture import protocol must show the empty capture state',
+  tangtangDescriptionCaptureImportProtocol.includes('Capture inbox rows: 9'),
+  'description capture import protocol must show the current capture state',
 );
 assert.equal(
   tangtangFirstPartyDescriptionSourceInventory.status,
@@ -748,7 +773,27 @@ assert.equal(
 assert.equal(
   tangtangFirstPartyDescriptionSourceInventory.summary.directFirstPartyDescriptionFormulaRows,
   0,
-  'first-party source inventory must not create direct description rows',
+  'first-party source inventory must not claim full description-derived formula coverage',
+);
+assert.equal(
+  tangtangFirstPartyDescriptionSourceInventory.summary.directFirstPartyDescriptionCaptureRows,
+  EXPECTED_DESCRIPTION_CAPTURE_ROWS,
+  'first-party source inventory must carry current direct capture rows',
+);
+assert.equal(
+  tangtangFirstPartyDescriptionSourceInventory.summary.parsedDescriptionFormulaRows,
+  EXPECTED_DESCRIPTION_CAPTURE_ROWS,
+  'first-party source inventory must carry current parsed capture rows',
+);
+assert.equal(
+  tangtangFirstPartyDescriptionSourceInventory.summary.matchedSioRows,
+  EXPECTED_DESCRIPTION_CAPTURE_ROWS,
+  'first-party source inventory must carry current SIO-matched capture rows',
+);
+assert.equal(
+  tangtangFirstPartyDescriptionSourceInventory.summary.formulaAtomRowsRemainingWithoutDirectCapture,
+  212,
+  'first-party source inventory must show remaining atom rows',
 );
 assert.equal(
   tangtangFirstPartyDescriptionSourceInventory.summary.publicOfficialWebSufficientForFormulaValidation,
@@ -901,9 +946,9 @@ const followUpGateSlices = [
     gate: 'DF-P3',
     slice: 'Mount damage line',
     rowsGuarded: `${mountRows.length} mount rows`,
-    currentState: `source-backed; SIO Tools source evidence has ${sioToolsFormulaSourceEvidence.summary.mountNormalizedClaims} normalized mount claims and ${sioToolsFormulaSourceEvidence.summary.mountRawCumulativeLeafRows} raw cumulative mount stat cells; public web confirms mount system/names; live evidence matrix has ${sioToolsLiveEvidence.summary.mountLineStatsLiveRows} non-empty mount stat-line row, ${sioToolsLiveEvidence.summary.nonZeroMountDamageLiveRows} non-zero mountDamage live rows, and active compact key ${sioToolsLiveEvidence.summary.mountActiveShortKey}`,
-    blocker: `exact per-line in-game description text still missing (${inGameDescriptionEvidence.summary.mountRowsWithExactInGameDescriptions}/${inGameDescriptionEvidence.summary.mountRows})`,
-    nextGate: 'capture exact mount line descriptions before editing mount scoring semantics',
+    currentState: `source-backed; SIO Tools source evidence has ${sioToolsFormulaSourceEvidence.summary.mountNormalizedClaims} normalized mount claims and ${sioToolsFormulaSourceEvidence.summary.mountRawCumulativeLeafRows} raw cumulative mount stat cells; public web confirms mount system/names; live evidence matrix has ${sioToolsLiveEvidence.summary.mountLineStatsLiveRows} non-empty mount stat-line row, ${sioToolsLiveEvidence.summary.nonZeroMountDamageLiveRows} non-zero mountDamage live rows, and active compact key ${sioToolsLiveEvidence.summary.mountActiveShortKey}; direct first-party capture import covers ${doomsteedDirectCaptureAtomRows} Doomsteed atom rows`,
+    blocker: `complete mount line text coverage is still incomplete; public-web exact matrix remains ${inGameDescriptionEvidence.summary.mountRowsWithExactInGameDescriptions}/${inGameDescriptionEvidence.summary.mountRows}, while direct capture import currently covers Doomsteed only`,
+    nextGate: 'capture remaining mount line descriptions before editing mount scoring semantics',
   },
   {
     gate: 'DF-P4',
@@ -1012,7 +1057,7 @@ ${renderCountTable(countBy('confidence'))}
 - Non-SS weapons are present as catalog rows but not proven as complete formula rows.
 - SIO Tools formula source evidence now captures ${sioToolsFormulaSourceEvidence.summary.rawSourceLeafRows} current source stat leaves across damage-relevant domains; these rows are source-derived evidence, not direct first-party in-game description captures.
 - SpongeBob and Squidward now have public-web corroboration for all current source stat claims, while Yelena is partial; direct first-party in-game captures are still missing.
-- Mounts now have public-web system/name evidence, a non-empty source fixture, source-proven active compact key \`bJ.bj\`, and two non-zero active mountDamage live rows; exact per-line in-game description text is still missing.
+- Mounts now have public-web system/name evidence, a non-empty source fixture, source-proven active compact key \`bJ.bj\`, two non-zero active mountDamage live rows, and ${doomsteedDirectCaptureAtomRows} direct first-party Doomsteed capture atom rows; complete mount line text coverage remains incomplete.
 - Collectible item/set rows now have a source/Rust-channel mapping artifact with threshold-level rows plus 7 SIO Tools live source-table cases; 4 named Starlight rows and 42 event slots remain catalog-only until source effect rows exist.
 - Generic aggregate modules now have a dedicated non-authority gate; the current product scorer relies on the SIO LM compact path.
 
@@ -1049,7 +1094,7 @@ ${renderCountTable(countBy('confidence'))}
 - Collectible threshold atom rows: ${tangtangDescriptionFormulaValidation.formulaAtomSummary.collectibleThresholdAtomRows}
 - Collectible special Rust mapping atom rows: ${tangtangDescriptionFormulaValidation.formulaAtomSummary.collectibleSpecialRustMappingAtomRows}
 - Graph mode: \`${tangtangDescriptionFormulaValidation.formulaAtomGraph.graphMode}\`
-- Direct first-party description-derived formula rows: ${tangtangDescriptionFormulaValidation.validationScope.directFirstPartyDescriptionFormulaRows}
+- Direct first-party description-derived formula rows in formula-validation gate before capture import: ${tangtangDescriptionFormulaValidation.validationScope.directFirstPartyDescriptionFormulaRows}
 - Description/SIO divergence rows: ${tangtangDescriptionFormulaValidation.divergenceRows.length}
 - Can claim SIO formula description-correct: \`${tangtangDescriptionFormulaValidation.decisionPolicy.canClaimSioFormulaDescriptionCorrect}\`
 - Can apply Tangtang formula correction: \`${tangtangDescriptionFormulaValidation.decisionPolicy.canApplyTangtangFormulaCorrection}\`
@@ -1065,10 +1110,13 @@ ${renderCountTable(countBy('confidence'))}
 - Gate status: \`${tangtangDescriptionCaptureImport.status}\`
 - Gate claim: \`${tangtangDescriptionCaptureImport.claim}\`
 - Capture inbox rows: ${tangtangDescriptionCaptureImport.summary.captureInboxRows}
+- Direct first-party description capture rows: ${tangtangDescriptionCaptureImport.summary.directFirstPartyDescriptionCaptureRows}
 - Parsed description formula rows: ${tangtangDescriptionCaptureImport.summary.parsedDescriptionFormulaRows}
 - Matched SIO rows: ${tangtangDescriptionCaptureImport.summary.matchedSioRows}
 - Description/SIO divergence rows: ${tangtangDescriptionCaptureImport.summary.descriptionSioDivergenceRows}
 - Observed damage follow-up rows: ${tangtangDescriptionCaptureImport.summary.observedDamageFollowUpRows}
+- Captured atom rows: ${tangtangDescriptionCaptureImport.firstPartyCaptureCoverage.capturedAtomRows}
+- Formula atom rows remaining without direct capture: ${tangtangDescriptionCaptureImport.firstPartyCaptureCoverage.formulaAtomRowsRemainingWithoutDirectCapture}
 - Can run observed damage follow-up: \`${tangtangDescriptionCaptureImport.decisionPolicy.canRunObservedDamageFollowUp}\`
 - Can apply Tangtang formula correction: \`${tangtangDescriptionCaptureImport.decisionPolicy.canApplyTangtangFormulaCorrection}\`
 - Formula/scoring/UI behavior did not change.
@@ -1085,7 +1133,11 @@ ${renderCountTable(countBy('confidence'))}
 - Official/public rows promoted to direct capture: ${tangtangFirstPartyDescriptionSourceInventory.summary.officialPublicRowsPromotedToDirectCapture}
 - Local app resource artifacts found: ${tangtangFirstPartyDescriptionSourceInventory.summary.localAppResourceArtifactsFound}
 - Rows requiring direct description capture: ${tangtangFirstPartyDescriptionSourceInventory.summary.rowsRequiringDirectDescriptionCapture}
-- Direct first-party description-derived formula rows: ${tangtangFirstPartyDescriptionSourceInventory.summary.directFirstPartyDescriptionFormulaRows}
+- Direct first-party description-derived formula rows in formula-validation gate before capture import: ${tangtangFirstPartyDescriptionSourceInventory.summary.directFirstPartyDescriptionFormulaRows}
+- Direct first-party description capture rows: ${tangtangFirstPartyDescriptionSourceInventory.summary.directFirstPartyDescriptionCaptureRows}
+- Parsed description formula rows: ${tangtangFirstPartyDescriptionSourceInventory.summary.parsedDescriptionFormulaRows}
+- Matched SIO rows: ${tangtangFirstPartyDescriptionSourceInventory.summary.matchedSioRows}
+- Formula atom rows remaining without direct capture: ${tangtangFirstPartyDescriptionSourceInventory.summary.formulaAtomRowsRemainingWithoutDirectCapture}
 - Public official web sufficient for formula validation: \`${tangtangFirstPartyDescriptionSourceInventory.summary.publicOfficialWebSufficientForFormulaValidation}\`
 - User one-by-one capture required: \`${tangtangFirstPartyDescriptionSourceInventory.summary.userOneByOneCaptureRequired}\`
 - Formula/scoring/UI behavior did not change.
@@ -1100,7 +1152,7 @@ ${renderCountTable(countBy('confidence'))}
 - Primary validation layer: \`${tangtangInGameDamageValidation.validationScope.primaryValidationLayer}\`
 - Observed damage validation layer: \`${tangtangInGameDamageValidation.validationScope.observedDamageValidationLayer}\`
 - Current in-game correctness claim: \`${tangtangInGameDamageValidation.validationScope.currentInGameCorrectnessClaim}\`
-- Direct first-party description-derived formula rows: ${tangtangInGameDamageValidation.validationScope.directFirstPartyDescriptionFormulaRows}
+- Direct first-party description-derived formula rows in formula-validation gate before capture import: ${tangtangInGameDamageValidation.validationScope.directFirstPartyDescriptionFormulaRows}
 - Description/SIO divergence rows: ${tangtangInGameDamageValidation.validationScope.descriptionDivergenceRows}
 - Direct observed in-game damage trials: ${tangtangInGameDamageValidation.validationScope.directObservedDamageTrialCount}
 - Can claim SIO formula in-game correct: \`${tangtangInGameDamageValidation.decisionPolicy.canClaimSioFormulaInGameCorrect}\`

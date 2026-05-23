@@ -6,6 +6,7 @@ const root = process.cwd();
 const writeMode = process.argv.includes('--write');
 const matrixPath = path.join(root, 'artifacts/td11/tangtang_in_game_damage_validation_matrix.json');
 const protocolPath = path.join(root, 'artifacts/td11/tangtang_in_game_damage_validation_protocol.md');
+const EXPECTED_IMPORTED_DESCRIPTION_CAPTURE_ROWS = 9;
 
 const SOURCE_INPUTS = [
   'frontend/artifacts/td11/tangtang_damage_formula_spec.json',
@@ -261,7 +262,7 @@ function buildMatrix() {
     directObservedDamageTrials,
     decisionPolicy: {
       initialDecision:
-        'No description-derived formula rows or SIO/Tangtang divergence rows are present, so no direct observed damage follow-up should run yet.',
+        'Partial direct first-party description capture rows exist and match current SIO/Tangtang handling; no SIO/Tangtang divergence rows are present, so no direct observed damage follow-up should run yet.',
       canClaimSioFormulaInGameCorrect: false,
       canApplyTangtangFormulaCorrection: false,
       canRunObservedDamageFollowUpWithoutDescriptionDivergence: false,
@@ -314,13 +315,13 @@ function buildMatrix() {
         'Live SIO trace factors include standalone skillDamage; local Tangtang/Rust provenance labels keep en2 as vulnerability and en24 as LME phase damage.',
     },
     blockers: [
-      'No direct first-party item/effect description-derived formula rows exist yet.',
+      'Direct first-party description capture coverage is still partial; full description-derived formula coverage does not exist yet.',
       'No description-derived SIO/Tangtang divergence rows exist yet.',
       'Direct observed damage trials remain secondary follow-up evidence only.',
       'Direct first-party in-game description verified rows remain 0.',
       'SIO Tools source/live equivalence is not the same as proving SIO formula correctness against game damage.',
       'non-SS weapons remain catalog-only unsupported as formula inputs.',
-      'Mount exact per-line in-game text capture remains missing.',
+      'Mount direct description capture is partial: 9 Doomsteed atom rows are imported, but complete mount line coverage remains incomplete.',
       'Collectible item/set direct description capture remains incomplete.',
     ],
     verificationCommands: [
@@ -383,7 +384,7 @@ Current decision:
 - Primary validation layer: \`${matrix.validationScope.primaryValidationLayer}\`
 - Observed damage validation layer: \`${matrix.validationScope.observedDamageValidationLayer}\`
 - Description formula validation status: \`${matrix.validationScope.descriptionFormulaValidationStatus}\`
-- Direct first-party description-derived formula rows: ${matrix.validationScope.directFirstPartyDescriptionFormulaRows}
+- Direct first-party description-derived formula rows in formula-validation gate before capture import: ${matrix.validationScope.directFirstPartyDescriptionFormulaRows}
 - Description/SIO divergence rows: ${matrix.validationScope.descriptionDivergenceRows}
 - Imported description capture rows: ${matrix.validationScope.importedDescriptionCaptureRows}
 - Imported description/SIO divergence rows: ${matrix.validationScope.importedDescriptionDivergenceRows}
@@ -423,7 +424,7 @@ ${renderTrialGroupTable(matrix.trialGroups)}
 
 - Formula spec claim: \`${matrix.currentEvidenceSummary.formulaSpecClaim}\`
 - Description formula validation claim: \`${matrix.currentEvidenceSummary.descriptionFormulaValidationClaim}\`
-- Direct first-party description-derived formula rows: ${matrix.currentEvidenceSummary.directFirstPartyDescriptionFormulaRows}
+- Direct first-party description-derived formula rows in formula-validation gate before capture import: ${matrix.currentEvidenceSummary.directFirstPartyDescriptionFormulaRows}
 - Description/SIO divergence rows: ${matrix.currentEvidenceSummary.descriptionDivergenceRows}
 - Imported description capture rows: ${matrix.currentEvidenceSummary.importedDescriptionCaptureRows}
 - Imported description/SIO divergence rows: ${matrix.currentEvidenceSummary.importedDescriptionDivergenceRows}
@@ -482,7 +483,10 @@ assert.equal(matrix.validationScope.primaryValidationLayer, 'description-derived
 assert.equal(matrix.validationScope.observedDamageValidationLayer, 'follow-up-divergence-check-only');
 assert.equal(matrix.validationScope.directFirstPartyDescriptionFormulaRows, 0);
 assert.equal(matrix.validationScope.descriptionDivergenceRows, 0);
-assert.equal(matrix.validationScope.importedDescriptionCaptureRows, 0);
+assert.equal(
+  matrix.validationScope.importedDescriptionCaptureRows,
+  EXPECTED_IMPORTED_DESCRIPTION_CAPTURE_ROWS,
+);
 assert.equal(matrix.validationScope.importedDescriptionDivergenceRows, 0);
 assert.equal(matrix.validationScope.importedObservedDamageFollowUpRows, 0);
 assert.equal(matrix.validationScope.directObservedDamageTrialCount, 0);
@@ -498,6 +502,10 @@ assert.equal(matrix.correctionPolicy.currentCorrectionStatus, 'blocked-descripti
 assert.equal(matrix.correctionPolicy.tangtangMayImproveBeyondSio, true);
 assert.equal(matrix.correctionPolicy.tangtangMayImproveBeyondSioNow, false);
 assert.equal(matrix.currentEvidenceSummary.rawSourceLeafRows, 4650);
+assert.equal(
+  matrix.currentEvidenceSummary.importedDescriptionCaptureRows,
+  EXPECTED_IMPORTED_DESCRIPTION_CAPTURE_ROWS,
+);
 assert.equal(matrix.currentEvidenceSummary.liveCaptureCount, 26);
 assert.equal(matrix.currentEvidenceSummary.workerParityArbitraryGeneratedLiveExpected, '26/26');
 assert.equal(matrix.currentEvidenceSummary.targetSurvivorLiveRows, 3);
@@ -506,7 +514,10 @@ assert.equal(matrix.currentEvidenceSummary.nonZeroMountDamageLiveRows, 2);
 assert.equal(matrix.currentEvidenceSummary.collectibleThresholdRows, 170);
 assert.equal(matrix.currentEvidenceSummary.collectibleSpecialRustMappings, 14);
 assert.equal(matrix.currentEvidenceSummary.directInGameDescriptionVerifiedRows, 0);
-assert.equal(matrix.currentEvidenceSummary.importedDescriptionCaptureRows, 0);
+assert.equal(
+  matrix.currentEvidenceSummary.importedDescriptionCaptureRows,
+  EXPECTED_IMPORTED_DESCRIPTION_CAPTURE_ROWS,
+);
 assert.equal(matrix.currentEvidenceSummary.importedDescriptionDivergenceRows, 0);
 assert.equal(matrix.currentEvidenceSummary.importedObservedDamageFollowUpRows, 0);
 assert.equal(matrix.directObservedDamageTrials.length, 0);
@@ -519,7 +530,9 @@ assert.ok(provenanceMatrix.includes('Formula derivation is now available'));
 assert.ok(protocol.includes('Tangtang may improve beyond SIO in principle'));
 assert.ok(protocol.includes('Direct observed in-game damage trials: 0'));
 assert.ok(protocol.includes('observed damage trials are a follow-up divergence check'));
-assert.ok(descriptionCaptureImportProtocol.includes('Capture inbox rows: 0'));
+assert.ok(
+  descriptionCaptureImportProtocol.includes(`Capture inbox rows: ${EXPECTED_IMPORTED_DESCRIPTION_CAPTURE_ROWS}`),
+);
 assert.ok(protocol.includes('SIO Tools-equivalent claim'));
 
 if (writeMode) {

@@ -10,6 +10,7 @@ const writeMode = process.argv.includes('--write');
 const buildDir = path.join(tmpdir(), 'pareto-tangtang-damage-formula-spec');
 const jsonPath = path.join(root, 'artifacts/td11/tangtang_damage_formula_spec.json');
 const mdPath = path.join(root, 'artifacts/td11/tangtang_damage_formula_spec.md');
+const EXPECTED_DESCRIPTION_CAPTURE_ROWS = 9;
 
 const REQUIRED_SOURCE_INPUTS = [
   'frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json',
@@ -200,7 +201,7 @@ const CAVEATS = [
   'The requested Tangtang/Rust provenance en0-en24 labels are documented as the current local formula stage labels; live SIO trace factors include a standalone skillDamage factor, so trace indices must not be treated as direct official in-game stage labels.',
   'non-SS weapons remain catalog-only and unsupported as formula inputs until fixture evidence exists.',
   'SpongeBob/Squidward/Yelena are source/live backed but do not have direct first-party in-game description capture.',
-  'Mounts have source/live mountDamage evidence, but exact per-line in-game text capture is still missing.',
+  'Mounts have source/live mountDamage evidence and 9 direct first-party Doomsteed line capture atom rows, but complete exact per-line mount text coverage is still incomplete.',
   'Collectible item/set mapping is source/Rust backed, but item/set-level in-game description capture is incomplete.',
   'Catalog-only collectible rows remain isolated.',
   'No formula semantics, scoring core, Rust damage formula, WASM scoring behavior, optimizer ranking, or product UI changed.',
@@ -445,7 +446,8 @@ function buildDomainCoverage() {
         'frontend/artifacts/td11/mount_damage_source_fixture.json',
         'frontend/artifacts/td11/sio_tools_live_evidence_matrix.json',
       ],
-      caveat: 'mountDamage source/live evidence exists, but exact per-line in-game text capture is missing.',
+      caveat:
+        'mountDamage source/live evidence exists; 9 direct first-party Doomsteed line capture atom rows match current handling, while complete mount line capture coverage remains incomplete.',
     },
     {
       domain: 'collectible',
@@ -576,10 +578,15 @@ function buildSpec() {
       matrixPath: 'frontend/artifacts/td11/tangtang_description_capture_import_matrix.json',
       protocolPath: 'frontend/artifacts/td11/tangtang_description_capture_import_protocol.md',
       captureInboxRows: descriptionCaptureImportMatrix.summary.captureInboxRows,
+      directFirstPartyDescriptionCaptureRows:
+        descriptionCaptureImportMatrix.summary.directFirstPartyDescriptionCaptureRows,
       parsedDescriptionFormulaRows: descriptionCaptureImportMatrix.summary.parsedDescriptionFormulaRows,
       matchedSioRows: descriptionCaptureImportMatrix.summary.matchedSioRows,
       descriptionSioDivergenceRows: descriptionCaptureImportMatrix.summary.descriptionSioDivergenceRows,
       observedDamageFollowUpRows: descriptionCaptureImportMatrix.summary.observedDamageFollowUpRows,
+      formulaAtomRowsRemainingWithoutDirectCapture:
+        descriptionCaptureImportMatrix.firstPartyCaptureCoverage.formulaAtomRowsRemainingWithoutDirectCapture,
+      capturedAtomRows: descriptionCaptureImportMatrix.firstPartyCaptureCoverage.capturedAtomRows,
       canRunObservedDamageFollowUp:
         descriptionCaptureImportMatrix.decisionPolicy.canRunObservedDamageFollowUp,
       canApplyTangtangFormulaCorrection:
@@ -602,6 +609,14 @@ function buildSpec() {
         firstPartyDescriptionSourceInventory.summary.rowsRequiringDirectDescriptionCapture,
       directFirstPartyDescriptionFormulaRows:
         firstPartyDescriptionSourceInventory.summary.directFirstPartyDescriptionFormulaRows,
+      directFirstPartyDescriptionCaptureRows:
+        firstPartyDescriptionSourceInventory.summary.directFirstPartyDescriptionCaptureRows,
+      parsedDescriptionFormulaRows:
+        firstPartyDescriptionSourceInventory.summary.parsedDescriptionFormulaRows,
+      matchedSioRows:
+        firstPartyDescriptionSourceInventory.summary.matchedSioRows,
+      formulaAtomRowsRemainingWithoutDirectCapture:
+        firstPartyDescriptionSourceInventory.summary.formulaAtomRowsRemainingWithoutDirectCapture,
       userOneByOneCaptureRequired:
         firstPartyDescriptionSourceInventory.summary.userOneByOneCaptureRequired,
       publicOfficialWebSufficientForFormulaValidation:
@@ -783,7 +798,7 @@ ${spec.caveats.map((item) => `- ${item}`).join('\n')}
 - Collectible threshold atom rows: ${spec.descriptionFormulaValidationGate.collectibleThresholdAtomRows}
 - Collectible special Rust mapping atom rows: ${spec.descriptionFormulaValidationGate.collectibleSpecialRustMappingAtomRows}
 - Graph mode: \`${spec.descriptionFormulaValidationGate.graphMode}\`
-- Direct first-party description-derived formula rows: ${spec.descriptionFormulaValidationGate.directFirstPartyDescriptionFormulaRows}
+- Direct first-party description-derived formula rows in formula-validation gate before capture import: ${spec.descriptionFormulaValidationGate.directFirstPartyDescriptionFormulaRows}
 - Description/SIO divergence rows: ${spec.descriptionFormulaValidationGate.descriptionDivergenceRows}
 - Observed damage validation role: ${spec.descriptionFormulaValidationGate.observedDamageValidationRole}
 - Can claim SIO formula description-correct: \`${spec.descriptionFormulaValidationGate.canClaimSioFormulaDescriptionCorrect}\`
@@ -797,10 +812,13 @@ ${spec.caveats.map((item) => `- ${item}`).join('\n')}
 - Status: \`${spec.descriptionCaptureImportGate.status}\`
 - Claim: \`${spec.descriptionCaptureImportGate.claim}\`
 - Capture inbox rows: ${spec.descriptionCaptureImportGate.captureInboxRows}
+- Direct first-party description capture rows: ${spec.descriptionCaptureImportGate.directFirstPartyDescriptionCaptureRows}
 - Parsed description formula rows: ${spec.descriptionCaptureImportGate.parsedDescriptionFormulaRows}
 - Matched SIO rows: ${spec.descriptionCaptureImportGate.matchedSioRows}
 - Description/SIO divergence rows: ${spec.descriptionCaptureImportGate.descriptionSioDivergenceRows}
 - Observed damage follow-up rows: ${spec.descriptionCaptureImportGate.observedDamageFollowUpRows}
+- Captured atom rows: ${spec.descriptionCaptureImportGate.capturedAtomRows}
+- Formula atom rows remaining without direct capture: ${spec.descriptionCaptureImportGate.formulaAtomRowsRemainingWithoutDirectCapture}
 - Can run observed damage follow-up: \`${spec.descriptionCaptureImportGate.canRunObservedDamageFollowUp}\`
 - Can apply Tangtang formula correction: \`${spec.descriptionCaptureImportGate.canApplyTangtangFormulaCorrection}\`
 
@@ -815,7 +833,11 @@ ${spec.caveats.map((item) => `- ${item}`).join('\n')}
 - Official/public rows promoted to direct capture: ${spec.firstPartyDescriptionSourceInventoryGate.officialPublicRowsPromotedToDirectCapture}
 - Local app resource artifacts found: ${spec.firstPartyDescriptionSourceInventoryGate.localAppResourceArtifactsFound}
 - Rows requiring direct description capture: ${spec.firstPartyDescriptionSourceInventoryGate.rowsRequiringDirectDescriptionCapture}
-- Direct first-party description-derived formula rows: ${spec.firstPartyDescriptionSourceInventoryGate.directFirstPartyDescriptionFormulaRows}
+- Direct first-party description-derived formula rows in formula-validation gate before capture import: ${spec.firstPartyDescriptionSourceInventoryGate.directFirstPartyDescriptionFormulaRows}
+- Direct first-party description capture rows: ${spec.firstPartyDescriptionSourceInventoryGate.directFirstPartyDescriptionCaptureRows}
+- Parsed description formula rows: ${spec.firstPartyDescriptionSourceInventoryGate.parsedDescriptionFormulaRows}
+- Matched SIO rows: ${spec.firstPartyDescriptionSourceInventoryGate.matchedSioRows}
+- Formula atom rows remaining without direct capture: ${spec.firstPartyDescriptionSourceInventoryGate.formulaAtomRowsRemainingWithoutDirectCapture}
 - User one-by-one capture required: \`${spec.firstPartyDescriptionSourceInventoryGate.userOneByOneCaptureRequired}\`
 - Public official web sufficient for formula validation: \`${spec.firstPartyDescriptionSourceInventoryGate.publicOfficialWebSufficientForFormulaValidation}\`
 
@@ -828,7 +850,7 @@ ${spec.caveats.map((item) => `- ${item}`).join('\n')}
 - Primary validation layer: \`${spec.inGameDamageValidationGate.primaryValidationLayer}\`
 - Observed damage validation layer: \`${spec.inGameDamageValidationGate.observedDamageValidationLayer}\`
 - Current in-game correctness claim: \`${spec.inGameDamageValidationGate.currentInGameCorrectnessClaim}\`
-- Direct first-party description-derived formula rows: ${spec.inGameDamageValidationGate.directFirstPartyDescriptionFormulaRows}
+- Direct first-party description-derived formula rows in formula-validation gate before capture import: ${spec.inGameDamageValidationGate.directFirstPartyDescriptionFormulaRows}
 - Description/SIO divergence rows: ${spec.inGameDamageValidationGate.descriptionDivergenceRows}
 - Direct observed in-game damage trials: ${spec.inGameDamageValidationGate.directObservedDamageTrialCount}
 - Can claim SIO formula in-game correct: \`${spec.inGameDamageValidationGate.canClaimSioFormulaInGameCorrect}\`
@@ -891,14 +913,20 @@ assert.ok(spec.descriptionFormulaValidationGate.observedDamageValidationRole.inc
 assert.ok(spec.descriptionFormulaValidationGate.observedDamageValidationRole.includes('not the first validation layer'));
 assert.equal(spec.descriptionCaptureImportGate.status, '[TANGTANG-DESCRIPTION-CAPTURE-IMPORT-GATE-READY]');
 assert.equal(spec.descriptionCaptureImportGate.claim, 'description-capture-import-gate');
-assert.equal(spec.descriptionCaptureImportGate.captureInboxRows, 0);
-assert.equal(spec.descriptionCaptureImportGate.parsedDescriptionFormulaRows, 0);
-assert.equal(spec.descriptionCaptureImportGate.matchedSioRows, 0);
+assert.equal(spec.descriptionCaptureImportGate.captureInboxRows, EXPECTED_DESCRIPTION_CAPTURE_ROWS);
+assert.equal(
+  spec.descriptionCaptureImportGate.directFirstPartyDescriptionCaptureRows,
+  EXPECTED_DESCRIPTION_CAPTURE_ROWS,
+);
+assert.equal(spec.descriptionCaptureImportGate.parsedDescriptionFormulaRows, EXPECTED_DESCRIPTION_CAPTURE_ROWS);
+assert.equal(spec.descriptionCaptureImportGate.matchedSioRows, EXPECTED_DESCRIPTION_CAPTURE_ROWS);
 assert.equal(spec.descriptionCaptureImportGate.descriptionSioDivergenceRows, 0);
 assert.equal(spec.descriptionCaptureImportGate.observedDamageFollowUpRows, 0);
+assert.equal(spec.descriptionCaptureImportGate.capturedAtomRows, EXPECTED_DESCRIPTION_CAPTURE_ROWS);
+assert.equal(spec.descriptionCaptureImportGate.formulaAtomRowsRemainingWithoutDirectCapture, 212);
 assert.equal(spec.descriptionCaptureImportGate.canRunObservedDamageFollowUp, false);
 assert.equal(spec.descriptionCaptureImportGate.canApplyTangtangFormulaCorrection, false);
-assert.ok(descriptionCaptureImportProtocol.includes('Capture inbox rows: 0'));
+assert.ok(descriptionCaptureImportProtocol.includes('Capture inbox rows: 9'));
 assert.equal(
   spec.firstPartyDescriptionSourceInventoryGate.status,
   '[TANGTANG-FIRST-PARTY-DESCRIPTION-SOURCE-INVENTORY-READY]',
@@ -910,6 +938,16 @@ assert.equal(spec.firstPartyDescriptionSourceInventoryGate.officialPublicRowsPro
 assert.equal(spec.firstPartyDescriptionSourceInventoryGate.localAppResourceArtifactsFound, 0);
 assert.equal(spec.firstPartyDescriptionSourceInventoryGate.rowsRequiringDirectDescriptionCapture, 221);
 assert.equal(spec.firstPartyDescriptionSourceInventoryGate.directFirstPartyDescriptionFormulaRows, 0);
+assert.equal(
+  spec.firstPartyDescriptionSourceInventoryGate.directFirstPartyDescriptionCaptureRows,
+  EXPECTED_DESCRIPTION_CAPTURE_ROWS,
+);
+assert.equal(
+  spec.firstPartyDescriptionSourceInventoryGate.parsedDescriptionFormulaRows,
+  EXPECTED_DESCRIPTION_CAPTURE_ROWS,
+);
+assert.equal(spec.firstPartyDescriptionSourceInventoryGate.matchedSioRows, EXPECTED_DESCRIPTION_CAPTURE_ROWS);
+assert.equal(spec.firstPartyDescriptionSourceInventoryGate.formulaAtomRowsRemainingWithoutDirectCapture, 212);
 assert.equal(spec.firstPartyDescriptionSourceInventoryGate.userOneByOneCaptureRequired, true);
 assert.equal(spec.firstPartyDescriptionSourceInventoryGate.publicOfficialWebSufficientForFormulaValidation, false);
 assert.ok(firstPartyDescriptionSourceInventoryMd.includes('Official/public sources with structured formula rows: 0'));

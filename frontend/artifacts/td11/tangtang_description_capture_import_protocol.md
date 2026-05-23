@@ -11,8 +11,10 @@ This gate imports direct first-party item/effect in-game description captures in
 
 Current decision:
 
-- Capture inbox rows: 0
-- Parsed description formula rows: 0
+- Capture inbox rows: 9
+- Direct first-party description capture rows: 9
+- Parsed description formula rows: 9
+- Matched SIO rows: 9
 - Description/SIO divergence rows: 0
 - Observed damage follow-up rows: 0
 - Can claim SIO formula description-correct: `false`
@@ -53,19 +55,30 @@ Matching mode: explicit atomRowId only
 - Collectible threshold atom rows: 170
 - Collectible special Rust mapping atom rows: 14
 - Graph mode: `deterministic-atom-ledger-not-graphrag`
+- Imported rows store `atomSnapshotBeforeCaptureImport` for the pre-import ledger state; direct screenshot evidence is stored separately on the imported row and does not mutate the source/live atom ledger.
 
 ## Import Outcomes
 
 | Outcome | Count |
 |---|---:|
-| imported capture rows | 0 |
-| accepted capture rows | 0 |
+| imported capture rows | 9 |
+| accepted capture rows | 9 |
 | rejected capture rows | 0 |
-| matched SIO rows | 0 |
+| matched SIO rows | 9 |
 | ambiguous rows | 0 |
 | description/SIO divergence rows | 0 |
 | observed damage follow-up rows | 0 |
 | correction-eligible rows | 0 |
+
+## First-Party Capture Coverage
+
+- Captured atom rows: 9
+- Matched SIO atom rows: 9
+- Formula atom rows remaining without direct capture: 212
+- Imported entity display names: `종말의 전투마`
+- Imported raw artifacts:
+  - `frontend/artifacts/td11/captures/2026-05-23-doomsteed-lines-1-4.jpg`
+  - `frontend/artifacts/td11/captures/2026-05-23-doomsteed-lines-5-8.jpg`
 
 ## Evidence Artifacts
 
