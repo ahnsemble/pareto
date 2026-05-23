@@ -627,3 +627,41 @@ status: `[CHUNK-2-SURVIVOR-MEANING-GREEN]`
   - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_product_flow_gap_audit.md`
 - Commit:
   - Local commit created for this chunk; GitHub push/PR not performed.
+
+## Tangtang Low-Impact Product Depth - Chunk 3
+
+timestampKst: 2026-05-23T09:03:23+09:00
+status: `[CHUNK-3-COLLECTIBLE-ITEM-REVIEW-GREEN]`
+
+- Product behavior:
+  - Collections section now includes a compact per-item review editor.
+  - First 12 collectible items are shown as review rows.
+  - Clicking a row updates the existing target collectible field.
+  - Rows are explicitly review/target markers only; no new scoring semantics were introduced.
+- RED/GREEN summary:
+  - RED e2e: `npx playwright test e2e/v3_tech_optimizer.spec.ts --grep "per-item collectible editor"` failed on desktop/mobile because `tech-collection-item-editor` did not exist.
+  - RED unit: `node scripts/tech_account_context_unit_test.mjs` failed because `collectibleItemReviewMarker` was not a function.
+  - GREEN unit: collectible review marker assertions passed.
+  - GREEN e2e: focused collectible item editor test passed on desktop/mobile, 2/2.
+- Verification:
+  - `node scripts/tech_account_context_unit_test.mjs`: passed.
+  - `npx tsc --noEmit`: passed.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts --grep "per-item collectible editor"`: passed, 2/2.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts`: passed, 83 passed / 1 skipped.
+  - `npm run build`: passed, 22 static pages generated. Existing static export middleware/API-route warning only.
+  - `git diff --check`: passed.
+- Heavy verification:
+  - Omitted. This chunk did not change `buildSioLmContext`, `playerStateWithAccountContext`, optimizer request fields, Rust formula constants, or WASM scoring semantics.
+- Intentional constraints kept:
+  - Public UI remains Tangtang.
+  - No user-facing SIO copy was added.
+  - Raw SIO LM JSON, scorer/debug/preselect/beam/exact node cap UI remain hidden.
+  - Internal `sio*` rename remains deferred to Post-Launch Gate 7.
+- Artifacts:
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/components/v3/tech/TechAccountContextPanel.tsx`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/components/v3/tech/techAccountContext.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/scripts/tech_account_context_unit_test.mjs`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/e2e/v3_tech_optimizer.spec.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_product_flow_gap_audit.md`
+- Commit:
+  - Local commit created for this chunk; GitHub push/PR not performed.

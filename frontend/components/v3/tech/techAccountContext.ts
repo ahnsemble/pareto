@@ -229,6 +229,10 @@ export function survivorContextSummary(account: TechAccountContextInput): string
   return `${formatTeamworkOptionLabel(account.survivorTeamwork)} / ${formatPassiveCritOptionLabel(account.survivorPassiveCrit)}`;
 }
 
+export function collectibleItemReviewMarker(isTarget: boolean): string {
+  return isTarget ? 'Target' : 'Review';
+}
+
 function clampInteger(value: number, min: number, max: number): number {
   if (!Number.isFinite(value)) return min;
   return Math.max(min, Math.min(max, Math.trunc(value)));

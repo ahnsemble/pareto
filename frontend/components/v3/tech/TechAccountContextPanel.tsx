@@ -11,6 +11,7 @@ import {
 import type { PlayerState } from '../../../app/lib/pareto-store/types';
 import { formatNumber, inputClass, labelClass, panelClass, selectClass } from '../optimizerUi';
 import {
+  collectibleItemReviewMarker,
   formatPassiveCritOptionLabel,
   formatTeamworkOptionLabel,
   normalizePetAssistContext,
@@ -320,6 +321,22 @@ export function AccountContextPanel({
                     <span className="font-mono text-[color:var(--color-text-muted)]">Set {set.collectible_count}</span>
                   </div>
                 ))}
+                <div className="grid gap-2" data-testid="tech-collection-item-editor">
+                  {COLLECTIBLE_ITEM_INDEX.slice(0, 12).map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      className="grid grid-cols-[minmax(0,1fr)_auto] gap-2 rounded-md border border-[color:var(--color-border)]/60 p-2 text-left text-xs"
+                      data-testid="tech-collection-item-row"
+                      onClick={() => onNamedChange('targetCollectibleId', item.id)}
+                    >
+                      <span className="truncate text-[color:var(--color-text)]">{item.display_name_en}</span>
+                      <span className="font-mono text-[color:var(--color-text-muted)]">
+                        {collectibleItemReviewMarker(account.targetCollectibleId === item.id)}
+                      </span>
+                    </button>
+                  ))}
+                </div>
               </div>
             ) : null}
             {section.title === 'Survivors' ? (

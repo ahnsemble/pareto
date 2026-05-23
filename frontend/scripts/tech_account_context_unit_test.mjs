@@ -24,6 +24,7 @@ const moduleUrl = `data:text/javascript;base64,${Buffer.from(transpiled.outputTe
 const {
   DEFAULT_TECH_ACCOUNT_CONTEXT,
   buildSioLmContext,
+  collectibleItemReviewMarker,
   formatPassiveCritOptionLabel,
   formatTeamworkOptionLabel,
   normalizePetAssistContext,
@@ -77,6 +78,9 @@ assert.match(
   survivorContextSummary({ ...DEFAULT_TECH_ACCOUNT_CONTEXT, selectedHeroId: 'king', survivorTeamwork: 4, survivorPassiveCrit: 24 }),
   /Crit \+24%/,
 );
+
+assert.equal(collectibleItemReviewMarker(true), 'Target');
+assert.equal(collectibleItemReviewMarker(false), 'Review');
 
 const context = buildSioLmContext({
   ...DEFAULT_TECH_ACCOUNT_CONTEXT,

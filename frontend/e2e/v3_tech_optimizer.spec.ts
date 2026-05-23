@@ -676,6 +676,14 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-account-collection-custom-sets')).toBeVisible();
   });
 
+  test('shows a compact per-item collectible editor', async ({ page }) => {
+    await expect(page.getByTestId('tech-collection-item-editor')).toBeVisible();
+    await expect(page.getByTestId('tech-collection-item-row').first()).toBeVisible();
+    await page.getByTestId('tech-collection-target-select').selectOption('atomicMech');
+    await expect(page.getByTestId('tech-collection-item-editor')).toContainText('Atomic Mech');
+    await expect(page.getByTestId('tech-collection-selected-target')).toContainText('Atomic Mech');
+  });
+
   test('keeps default search usable without exposing diagnostic controls', async ({ page }) => {
     await expect(page.getByTestId('tech-optimizer-node-cap')).toHaveCount(0);
     await expect(page.getByTestId('tech-optimizer-beam-width')).toHaveCount(0);
