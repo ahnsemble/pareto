@@ -239,6 +239,10 @@ export function mountReviewSummary(account: TechAccountContextInput): string {
   return `Puzzle slots ${puzzleSlots} / Mount cores ${mountCores} / Review-only puzzle rows`;
 }
 
+export function lmeTurfPresetLabel(value: number): string {
+  return `${Math.max(0, Math.trunc(value))} nodes`;
+}
+
 function clampInteger(value: number, min: number, max: number): number {
   if (!Number.isFinite(value)) return min;
   return Math.max(min, Math.min(max, Math.trunc(value)));

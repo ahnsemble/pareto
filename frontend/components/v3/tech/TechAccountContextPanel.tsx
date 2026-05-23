@@ -14,6 +14,7 @@ import {
   collectibleItemReviewMarker,
   formatPassiveCritOptionLabel,
   formatTeamworkOptionLabel,
+  lmeTurfPresetLabel,
   mountReviewSummary,
   normalizePetAssistContext,
   petXenoStatusLabel,
@@ -507,6 +508,20 @@ export function AccountContextPanel({
                     <span className="truncate text-[color:var(--color-text)]">{mount.display_name_en}</span>
                     <span className="font-mono text-[color:var(--color-text-muted)]">Puzzle {index + 1}</span>
                   </div>
+                ))}
+              </div>
+            ) : null}
+            {section.title === 'Lunar Mine' ? (
+              <div className="mt-2 grid grid-cols-5 gap-2" data-testid="tech-lme-turf-presets">
+                {[0, 3, 6, 9, 12].map((value) => (
+                  <button
+                    key={value}
+                    type="button"
+                    className="rounded-md border border-[color:var(--color-border)]/60 px-2 py-1 text-xs"
+                    onClick={() => onChange('lmeTurf', value)}
+                  >
+                    {lmeTurfPresetLabel(value)}
+                  </button>
                 ))}
               </div>
             ) : null}

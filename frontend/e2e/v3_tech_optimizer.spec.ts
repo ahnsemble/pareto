@@ -704,6 +704,13 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-optimizer-results')).not.toContainText('full SIO equivalent');
   });
 
+  test('sets LME turf nodes from compact presets', async ({ page }) => {
+    const presets = page.getByTestId('tech-lme-turf-presets');
+    await expect(presets).toBeVisible();
+    await presets.getByRole('button', { name: '12 nodes' }).click();
+    await expect(page.getByTestId('tech-account-lme-turf')).toHaveValue('12');
+  });
+
   test('presents result part rows with display names instead of internal ids', async ({ page }) => {
     await page.getByTestId('tech-optimizer-run').click();
 

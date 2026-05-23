@@ -27,6 +27,7 @@ const {
   collectibleItemReviewMarker,
   formatPassiveCritOptionLabel,
   formatTeamworkOptionLabel,
+  lmeTurfPresetLabel,
   mountReviewSummary,
   normalizePetAssistContext,
   petXenoStatusLabel,
@@ -87,6 +88,9 @@ assert.equal(
   mountReviewSummary({ ...DEFAULT_TECH_ACCOUNT_CONTEXT, mountPuzzleSlots: 12, mountCores: 9 }),
   'Puzzle slots 12 / Mount cores 9 / Review-only puzzle rows',
 );
+
+assert.equal(lmeTurfPresetLabel(0), '0 nodes');
+assert.equal(lmeTurfPresetLabel(12), '12 nodes');
 
 const context = buildSioLmContext({
   ...DEFAULT_TECH_ACCOUNT_CONTEXT,
