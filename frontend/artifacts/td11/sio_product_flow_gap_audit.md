@@ -781,3 +781,49 @@ status: `[LOW-IMPACT-PRODUCT-DEPTH-FINAL-GREEN]`
   - SIO LM/scoring core, Rust formula constants, and WASM scoring semantics were not changed.
   - Internal `sio*` rename remains deferred to Post-Launch Gate 7.
   - GitHub push/PR not performed.
+
+## Tangtang Korean Locale UI Fix
+
+timestampKst: 2026-05-23T09:49:47+09:00
+status: `[KOREAN-LOCALE-UI-GREEN-LOCAL]`
+
+- Product behavior:
+  - `/ko/v3/optimizer/tech-parts` now renders the primary Tangtang tech optimizer surface in Korean.
+  - Profile import, resource wallet, owned tech materials, account context, search, result, recommendation, and related review labels are locale-aware.
+  - `/en/v3/optimizer/tech-parts` keeps the existing English copy and product tests.
+  - The in-app browser was refreshed at `http://localhost:3032/ko/v3/optimizer/tech-parts`; visible checks found the Korean heading, profile import, wallet, inventory, and account context copy.
+- RED/GREEN summary:
+  - RED unit: `node scripts/tech_account_context_unit_test.mjs` failed because `techLocaleCopy.ts` did not exist.
+  - RED e2e: `npx playwright test e2e/v3_tech_optimizer.spec.ts --grep "renders Korean product copy"` failed on desktop/mobile because `Tangtang / 테크 파츠` was not rendered.
+  - GREEN unit: locale copy, resource wallet copy, and inventory validation copy assertions passed.
+  - GREEN e2e: focused Korean route test passed on desktop/mobile, 2/2.
+- Verification:
+  - `node scripts/tech_account_context_unit_test.mjs`: passed.
+  - `npx tsc --noEmit`: passed.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts --grep "renders Korean product copy"`: passed, 2/2.
+  - `npx playwright test e2e/v3_tech_optimizer.spec.ts`: passed, 89 passed / 1 skipped.
+  - `npm run build`: passed, 22 static pages generated. Existing static export middleware/API-route warning only.
+  - `git diff --check`: passed.
+- Heavy verification:
+  - Omitted. This fix changed locale/UI copy only and did not change `buildSioLmContext`, `playerStateWithAccountContext`, optimizer request fields, Rust formula constants, or WASM scoring semantics.
+- Intentional constraints kept:
+  - Public UI remains Tangtang.
+  - No user-facing SIO copy was added.
+  - `fullSioEquivalent=true` and `currentScorer=scorer=sio_full_lm_equivalence` remain asserted by the existing e2e product gate.
+  - Raw SIO LM JSON, scorer/debug/preselect/beam/exact node cap UI remain hidden.
+  - SIO LM/scoring core, Rust formula constants, and WASM scoring semantics were not changed.
+  - Internal `sio*` rename remains deferred to Post-Launch Gate 7.
+  - GitHub push/PR not performed.
+- Artifacts:
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/components/v3/tech/techLocaleCopy.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/components/v3/optimizer.tsx`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/components/v3/tech/TechProductPanels.tsx`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/components/v3/tech/TechAccountContextPanel.tsx`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/components/v3/tech/TechUpgradeRecommendations.tsx`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/components/v3/tech/techAccountContext.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/scripts/tech_account_context_unit_test.mjs`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/e2e/v3_tech_optimizer.spec.ts`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_product_flow_gap_audit.md`
+- Commit:
+  - Implementation commit: `9b8e8f2 feat: localize Tangtang Korean optimizer`.
+  - GitHub push/PR not performed.
