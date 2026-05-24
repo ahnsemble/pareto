@@ -202,6 +202,21 @@ const tangtangFormulaCorrectionCandidatesMarkdown = await fs.readFile(
   tangtangFormulaCorrectionCandidatesMarkdownPath,
   'utf8',
 );
+const tangtangCollectibleThresholdCorrectionSpecPath = path.join(
+  root,
+  'artifacts/td11/tangtang_collectible_threshold_correction_spec.json',
+);
+const tangtangCollectibleThresholdCorrectionSpec = JSON.parse(
+  await fs.readFile(tangtangCollectibleThresholdCorrectionSpecPath, 'utf8'),
+);
+const tangtangCollectibleThresholdCorrectionSpecMarkdownPath = path.join(
+  root,
+  'artifacts/td11/tangtang_collectible_threshold_correction_spec.md',
+);
+const tangtangCollectibleThresholdCorrectionSpecMarkdown = await fs.readFile(
+  tangtangCollectibleThresholdCorrectionSpecMarkdownPath,
+  'utf8',
+);
 const tangtangFirstPartyDescriptionSourceInventoryPath = path.join(
   root,
   'artifacts/td11/tangtang_first_party_description_source_inventory.json',
@@ -1418,6 +1433,32 @@ ${tangtangAdditionalSetThresholdCaptureAudit.decision.importedAsDamageFormulaCan
 ${tangtangFormulaCorrectionCandidates.candidateRows.map((row) => `  - \`${row.atomRowId}\`: ${row.currentSioConditionOrThreshold} -> ${row.directDescriptionConditionOrThreshold}, ${row.rustStatChannel} +${row.directDescriptionParsedFormulaValue}`).join('\n')}
 - Formula/scoring/UI behavior did not change.
 
+## Collectible Threshold Correction Spec
+
+- The collectible threshold correction policy is now specified separately from the SIO-equivalent derivation:
+  - \`frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.json\`
+  - \`frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.md\`
+- Gate status: \`${tangtangCollectibleThresholdCorrectionSpec.status}\`
+- Gate claim: \`${tangtangCollectibleThresholdCorrectionSpec.claim}\`
+- Decision status: \`${tangtangCollectibleThresholdCorrectionSpec.decision.status}\`
+- Scoring changed: \`${tangtangCollectibleThresholdCorrectionSpec.decision.scoringChanged}\`
+- Corrected mode implemented: \`${tangtangCollectibleThresholdCorrectionSpec.decision.correctedModeImplemented}\`
+- Direct confirmed correction rows: ${tangtangCollectibleThresholdCorrectionSpec.summary.directConfirmedCorrectionRows}
+- Threshold-only mismatch rows: ${tangtangCollectibleThresholdCorrectionSpec.summary.thresholdOnlyMismatchRows}
+- Source threshold 15 rows: ${tangtangCollectibleThresholdCorrectionSpec.summary.sourceThreshold15Rows}
+- Direct threshold 19 rows: ${tangtangCollectibleThresholdCorrectionSpec.summary.directThreshold19Rows}
+- Inferred-family pending rows: ${tangtangCollectibleThresholdCorrectionSpec.summary.inferredFamilyPendingRows}
+- Direct observed damage trials: ${tangtangCollectibleThresholdCorrectionSpec.summary.directObservedDamageTrialCount}
+- Proposed corrected scorer, if later unblocked: \`${tangtangCollectibleThresholdCorrectionSpec.correctedContract.proposedScorer}\`
+- Corrected contract status: \`${tangtangCollectibleThresholdCorrectionSpec.correctedContract.status}\`
+- Full SIO-equivalent contract preserved: \`${tangtangCollectibleThresholdCorrectionSpec.equivalenceContract.preserved}\`
+- Default SIO behavior changed: \`${tangtangCollectibleThresholdCorrectionSpec.equivalenceContract.defaultBehaviorChanged}\`
+- Raw SIO LM JSON exposed: \`${tangtangCollectibleThresholdCorrectionSpec.uiExposureGuard.rawSioLmJsonExposed}\`
+- UI changed: \`${tangtangCollectibleThresholdCorrectionSpec.uiExposureGuard.uiChanged}\`
+- Direct rows:
+${tangtangCollectibleThresholdCorrectionSpec.directConfirmedRows.map((row) => `  - \`${row.atomRowId}\`: ${row.sourceConditionOrThreshold} -> ${row.directConditionOrThreshold}, ${row.directStatChannel} +${row.directParsedFormulaValue}`).join('\n')}
+- Formula/scoring/UI behavior did not change.
+
 ## First-Party Description Source Inventory
 
 - Official/public source acquisition is tracked separately from capture import:
@@ -1470,6 +1511,16 @@ ${renderRows()}
 `;
 
 assert.match(matrix, /unsupported for formula input until fixture evidence exists/, 'non-SS weapon unsupported formula-input gate must stay visible');
+assert.match(matrix, /Collectible Threshold Correction Spec/, 'collectible threshold correction spec gate must stay visible');
+assert.equal(tangtangCollectibleThresholdCorrectionSpec.claim, 'tangtang-description-corrected-candidate');
+assert.equal(tangtangCollectibleThresholdCorrectionSpec.decision.status, 'candidate-only-not-applied');
+assert.equal(tangtangCollectibleThresholdCorrectionSpec.decision.scoringChanged, false);
+assert.equal(tangtangCollectibleThresholdCorrectionSpec.summary.directConfirmedCorrectionRows, 4);
+assert.equal(tangtangCollectibleThresholdCorrectionSpec.summary.inferredFamilyPendingRows, 30);
+assert.equal(tangtangCollectibleThresholdCorrectionSpec.summary.directObservedDamageTrialCount, 0);
+assert.equal(tangtangCollectibleThresholdCorrectionSpec.equivalenceContract.defaultBehaviorChanged, false);
+assert.equal(tangtangCollectibleThresholdCorrectionSpec.uiExposureGuard.rawSioLmJsonExposed, false);
+assert.ok(tangtangCollectibleThresholdCorrectionSpecMarkdown.includes('candidate-only-not-applied'));
 
 if (writeMode) {
   await fs.mkdir(path.dirname(matrixPath), { recursive: true });

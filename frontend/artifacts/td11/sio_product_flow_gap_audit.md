@@ -2039,6 +2039,58 @@ Imported the latest four direct in-game screenshots as a targeted set-threshold 
 
 GitHub push/PR not performed.
 
+## Tangtang Collectible Threshold Correction Spec
+
+timestampKst: 2026-05-24T09:23:27+09:00
+status: `[TANGTANG-COLLECTIBLE-THRESHOLD-CORRECTION-SPEC-GREEN]`
+
+### Scope
+
+Promoted the four direct first-party 15-to-19 collectible set threshold mismatches from candidate records into a dedicated Tangtang correction policy spec. This pass is evidence/policy wiring only: no formula semantics, scoring core, Rust damage formulas, WASM scoring behavior, optimizer ranking, or product UI changed.
+
+### Decision
+
+- Exact decision: `candidate-only-not-applied`.
+- Scoring changed: `false`.
+- Corrected mode implemented: `false`.
+- Required future scorer/gate if unblocked: `tangtang_description_corrected_thresholds`, separated from `sio_full_lm_equivalence`.
+- `fullSioEquivalent=true` and `currentScorer=scorer=sio_full_lm_equivalence` remain unchanged.
+- Raw SIO LM JSON/debug/preselect/beam/exact node cap UI remains unexposed.
+
+### Direct Confirmed Rows
+
+- `collectible-set:genesis:gold:15:atkPercent`: current source/Rust `gold >= 15`, direct Tangtang capture `gold >= 19`, value `atkPercent +4`.
+- `collectible-set:genesis:red:15:atkPercent`: current source/Rust `red >= 15`, direct Tangtang capture `red >= 19`, value `atkPercent +6`.
+- `collectible-set:dreamOrReality:gold:15:atkPercent`: current source/Rust `gold >= 15`, direct Tangtang capture `gold >= 19`, value `atkPercent +4`.
+- `collectible-set:dreamOrReality:red:15:atkPercent`: current source/Rust `red >= 15`, direct Tangtang capture `red >= 19`, value `atkPercent +6`.
+
+### Inferred Family Rows
+
+- The 3-item collectible set gold/red ATK% threshold universe contains 34 rows.
+- The 4 direct rows above are the only direct-confirmed rows.
+- The remaining 30 family rows are documented as `inferred-family-pending` and are not applied without exact direct first-party threshold captures.
+- Direct observed damage trials remain `0`, so the current policy blocks scoring correction.
+
+### Artifacts
+
+- `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/scripts/tangtang_collectible_threshold_correction_spec_unit_test.mjs`
+- `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.json`
+- `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.md`
+- `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/tangtang_damage_formula_spec.json`
+- `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/tangtang_damage_formula_spec.md`
+- `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/damage_formula_provenance_matrix.md`
+
+### Verification Log
+
+- `node scripts/tangtang_collectible_threshold_correction_spec_unit_test.mjs --write`: wrote JSON/MD spec.
+- `node scripts/tangtang_collectible_threshold_correction_spec_unit_test.mjs`: passed, 4 direct rows and 30 inferred pending rows.
+- `node scripts/tangtang_damage_formula_spec_unit_test.mjs --write`: wired the correction spec gate into the formula spec.
+- `node scripts/tangtang_damage_formula_spec_unit_test.mjs`: passed, 25 stages.
+- `node scripts/damage_formula_provenance_matrix_unit_test.mjs --write`: wired the correction spec into the provenance matrix.
+- `node scripts/damage_formula_provenance_matrix_unit_test.mjs`: passed, 367 rows.
+
+GitHub push/PR not performed.
+
 ## Tangtang Damage Formula Provenance Matrix Gate
 
 timestampKst: 2026-05-23T12:20:00+09:00

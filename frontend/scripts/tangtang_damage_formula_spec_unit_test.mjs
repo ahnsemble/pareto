@@ -36,6 +36,8 @@ const REQUIRED_SOURCE_INPUTS = [
   'frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md',
   'frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json',
   'frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md',
+  'frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.json',
+  'frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.md',
   'frontend/app/lib/pareto-store/schemas/index.ts',
   'frontend/scripts/sio_tools_formula_source_evidence_unit_test.mjs',
   'frontend/scripts/damage_formula_provenance_matrix_unit_test.mjs',
@@ -207,6 +209,7 @@ const CAVEATS = [
   'SpongeBob/Squidward/Yelena are source/live backed but do not have direct first-party in-game description capture.',
   'Mounts have source/live mountDamage evidence and 9 direct first-party Doomsteed line capture atom rows, but complete exact per-line mount text coverage is still incomplete.',
   'Collectible item/set mapping is source/Rust backed, but item/set-level in-game description capture is incomplete.',
+  'Four collectible set threshold rows have direct first-party 15-to-19 description correction evidence, but remain candidate-only because there are zero observed damage trials.',
   'Catalog-only collectible rows remain isolated.',
   'No formula semantics, scoring core, Rust damage formula, WASM scoring behavior, optimizer ranking, or product UI changed.',
 ];
@@ -264,6 +267,8 @@ const [
   firstPartyDescriptionSourceInventoryMd,
   inGameDamageValidationMatrix,
   inGameDamageValidationProtocol,
+  collectibleThresholdCorrectionSpec,
+  collectibleThresholdCorrectionSpecMd,
 ] = await Promise.all([
   readJson('frontend/artifacts/td11/sio_tools_formula_source_evidence_matrix.json'),
   readText('frontend/artifacts/td11/damage_formula_provenance_matrix.md'),
@@ -283,6 +288,8 @@ const [
   readText('frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md'),
   readJson('frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json'),
   readText('frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md'),
+  readJson('frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.json'),
+  readText('frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.md'),
 ]);
 
 for (const input of REQUIRED_SOURCE_INPUTS) {
@@ -644,6 +651,29 @@ function buildSpec() {
         inGameDamageValidationMatrix.decisionPolicy.canRunObservedDamageFollowUpWithoutDescriptionDivergence,
       currentCorrectionStatus: inGameDamageValidationMatrix.correctionPolicy.currentCorrectionStatus,
     },
+    collectibleThresholdCorrectionSpecGate: {
+      status: collectibleThresholdCorrectionSpec.status,
+      claim: collectibleThresholdCorrectionSpec.claim,
+      matrixPath: 'frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.json',
+      protocolPath: 'frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.md',
+      decisionStatus: collectibleThresholdCorrectionSpec.decision.status,
+      behaviorChange: collectibleThresholdCorrectionSpec.behaviorChange,
+      scoringChanged: collectibleThresholdCorrectionSpec.decision.scoringChanged,
+      correctedModeImplemented: collectibleThresholdCorrectionSpec.decision.correctedModeImplemented,
+      correctionEligibleNow: collectibleThresholdCorrectionSpec.decision.correctionEligibleNow,
+      directConfirmedCorrectionRows: collectibleThresholdCorrectionSpec.summary.directConfirmedCorrectionRows,
+      thresholdOnlyMismatchRows: collectibleThresholdCorrectionSpec.summary.thresholdOnlyMismatchRows,
+      sourceThreshold15Rows: collectibleThresholdCorrectionSpec.summary.sourceThreshold15Rows,
+      directThreshold19Rows: collectibleThresholdCorrectionSpec.summary.directThreshold19Rows,
+      inferredFamilyPendingRows: collectibleThresholdCorrectionSpec.summary.inferredFamilyPendingRows,
+      directObservedDamageTrialCount: collectibleThresholdCorrectionSpec.summary.directObservedDamageTrialCount,
+      proposedCorrectedScorer: collectibleThresholdCorrectionSpec.correctedContract.proposedScorer,
+      correctedContractStatus: collectibleThresholdCorrectionSpec.correctedContract.status,
+      fullSioEquivalentPreserved: collectibleThresholdCorrectionSpec.equivalenceContract.preserved,
+      defaultSioBehaviorChanged: collectibleThresholdCorrectionSpec.equivalenceContract.defaultBehaviorChanged,
+      uiChanged: collectibleThresholdCorrectionSpec.uiExposureGuard.uiChanged,
+      rawSioLmJsonExposed: collectibleThresholdCorrectionSpec.uiExposureGuard.rawSioLmJsonExposed,
+    },
     summaryCounts: {
       rawSourceLeafRows: sourceEvidence.summary.rawSourceLeafRows,
       rawSourceLeafRowsWithDirectMultiplierStage: sourceEvidence.summary.rawSourceLeafRowsWithDirectMultiplierStage,
@@ -656,6 +686,10 @@ function buildSpec() {
       collectibleRawThresholdLeafRows: sourceEvidence.summary.collectibleRawThresholdLeafRows,
       collectibleSpecialRustMappings: sourceEvidence.summary.collectibleSpecialRustMappings,
       collectibleCatalogOnlyRows: sourceEvidence.summary.collectibleCatalogOnlyRows,
+      directConfirmedThresholdCorrectionRows:
+        collectibleThresholdCorrectionSpec.summary.directConfirmedCorrectionRows,
+      inferredFamilyThresholdCorrectionPendingRows:
+        collectibleThresholdCorrectionSpec.summary.inferredFamilyPendingRows,
       inGameDescriptionVerifiedRows: sourceEvidence.summary.inGameDescriptionVerifiedRows,
       liveCaptureCount: liveEvidence.summary.liveCaptureCases,
       workerParityArbitraryGeneratedLiveExpected: `${liveEvidence.summary.liveCapturedCases}/${liveEvidence.summary.liveCaptureCases}`,
@@ -678,6 +712,7 @@ function buildSpec() {
       'node scripts/tangtang_description_capture_import_unit_test.mjs',
       'node scripts/tangtang_description_formula_validation_unit_test.mjs',
       'node scripts/tangtang_in_game_damage_validation_unit_test.mjs',
+      'node scripts/tangtang_collectible_threshold_correction_spec_unit_test.mjs',
       'node scripts/sio_tools_formula_source_evidence_unit_test.mjs',
       'node scripts/damage_formula_provenance_matrix_unit_test.mjs',
       'node scripts/in_game_description_evidence_unit_test.mjs',
@@ -706,6 +741,10 @@ function buildSpec() {
         'frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md',
       inGameDamageValidationMatrix: 'frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json',
       inGameDamageValidationProtocol: 'frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md',
+      collectibleThresholdCorrectionSpec:
+        'frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.json',
+      collectibleThresholdCorrectionSpecProtocol:
+        'frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.md',
       provenanceMatrix: 'frontend/artifacts/td11/damage_formula_provenance_matrix.md',
       audit: 'frontend/artifacts/td11/sio_product_flow_gap_audit.md',
     },
@@ -862,6 +901,30 @@ ${spec.caveats.map((item) => `- ${item}`).join('\n')}
 - Can run observed damage follow-up without description divergence: \`${spec.inGameDamageValidationGate.canRunObservedDamageFollowUpWithoutDescriptionDivergence}\`
 - Current correction status: \`${spec.inGameDamageValidationGate.currentCorrectionStatus}\`
 
+## Collectible Threshold Correction Spec Gate
+
+- Correction spec: \`${spec.collectibleThresholdCorrectionSpecGate.matrixPath}\`
+- Correction spec protocol: \`${spec.collectibleThresholdCorrectionSpecGate.protocolPath}\`
+- Status: \`${spec.collectibleThresholdCorrectionSpecGate.status}\`
+- Claim: \`${spec.collectibleThresholdCorrectionSpecGate.claim}\`
+- Decision status: \`${spec.collectibleThresholdCorrectionSpecGate.decisionStatus}\`
+- Behavior change: \`${spec.collectibleThresholdCorrectionSpecGate.behaviorChange}\`
+- Scoring changed: \`${spec.collectibleThresholdCorrectionSpecGate.scoringChanged}\`
+- Corrected mode implemented: \`${spec.collectibleThresholdCorrectionSpecGate.correctedModeImplemented}\`
+- Correction eligible now: \`${spec.collectibleThresholdCorrectionSpecGate.correctionEligibleNow}\`
+- Direct confirmed correction rows: ${spec.collectibleThresholdCorrectionSpecGate.directConfirmedCorrectionRows}
+- Threshold-only mismatch rows: ${spec.collectibleThresholdCorrectionSpecGate.thresholdOnlyMismatchRows}
+- Source threshold 15 rows: ${spec.collectibleThresholdCorrectionSpecGate.sourceThreshold15Rows}
+- Direct threshold 19 rows: ${spec.collectibleThresholdCorrectionSpecGate.directThreshold19Rows}
+- Inferred-family pending rows: ${spec.collectibleThresholdCorrectionSpecGate.inferredFamilyPendingRows}
+- Direct observed damage trials: ${spec.collectibleThresholdCorrectionSpecGate.directObservedDamageTrialCount}
+- Proposed corrected scorer: \`${spec.collectibleThresholdCorrectionSpecGate.proposedCorrectedScorer}\`
+- Corrected contract status: \`${spec.collectibleThresholdCorrectionSpecGate.correctedContractStatus}\`
+- Full SIO-equivalent contract preserved: \`${spec.collectibleThresholdCorrectionSpecGate.fullSioEquivalentPreserved}\`
+- Default SIO behavior changed: \`${spec.collectibleThresholdCorrectionSpecGate.defaultSioBehaviorChanged}\`
+- UI changed: \`${spec.collectibleThresholdCorrectionSpecGate.uiChanged}\`
+- Raw SIO LM JSON exposed: \`${spec.collectibleThresholdCorrectionSpecGate.rawSioLmJsonExposed}\`
+
 ## Unsupported Formula Inputs
 
 - non-SS weapons remain catalog-only and unsupported as formula inputs: ${spec.unsupportedFormulaInputs.nonSsWeapons.length} rows.
@@ -897,6 +960,8 @@ assert.equal(spec.summaryCounts.mountNormalizedClaims, 26);
 assert.equal(spec.summaryCounts.targetSurvivorNormalizedClaims, 11);
 assert.equal(spec.summaryCounts.collectibleThresholdRows, 170);
 assert.equal(spec.summaryCounts.collectibleSpecialRustMappings, 14);
+assert.equal(spec.summaryCounts.directConfirmedThresholdCorrectionRows, 4);
+assert.equal(spec.summaryCounts.inferredFamilyThresholdCorrectionPendingRows, 30);
 assert.equal(spec.summaryCounts.inGameDescriptionVerifiedRows, 0);
 assert.equal(spec.descriptionFormulaValidationGate.status, '[TANGTANG-DESCRIPTION-FORMULA-VALIDATION-PROTOCOL-READY]');
 assert.equal(spec.descriptionFormulaValidationGate.claim, 'description-derived-formula-validation-protocol');
@@ -978,8 +1043,34 @@ assert.equal(spec.inGameDamageValidationGate.directObservedDamageTrialCount, 0);
 assert.equal(spec.inGameDamageValidationGate.canClaimSioFormulaInGameCorrect, false);
 assert.equal(spec.inGameDamageValidationGate.canApplyTangtangFormulaCorrection, false);
 assert.equal(spec.inGameDamageValidationGate.canRunObservedDamageFollowUpWithoutDescriptionDivergence, false);
+assert.equal(
+  spec.collectibleThresholdCorrectionSpecGate.status,
+  '[TANGTANG-COLLECTIBLE-THRESHOLD-CORRECTION-SPEC-GREEN]',
+);
+assert.equal(spec.collectibleThresholdCorrectionSpecGate.claim, 'tangtang-description-corrected-candidate');
+assert.equal(spec.collectibleThresholdCorrectionSpecGate.decisionStatus, 'candidate-only-not-applied');
+assert.equal(spec.collectibleThresholdCorrectionSpecGate.behaviorChange, false);
+assert.equal(spec.collectibleThresholdCorrectionSpecGate.scoringChanged, false);
+assert.equal(spec.collectibleThresholdCorrectionSpecGate.correctedModeImplemented, false);
+assert.equal(spec.collectibleThresholdCorrectionSpecGate.correctionEligibleNow, false);
+assert.equal(spec.collectibleThresholdCorrectionSpecGate.directConfirmedCorrectionRows, 4);
+assert.equal(spec.collectibleThresholdCorrectionSpecGate.thresholdOnlyMismatchRows, 4);
+assert.equal(spec.collectibleThresholdCorrectionSpecGate.sourceThreshold15Rows, 4);
+assert.equal(spec.collectibleThresholdCorrectionSpecGate.directThreshold19Rows, 4);
+assert.equal(spec.collectibleThresholdCorrectionSpecGate.inferredFamilyPendingRows, 30);
+assert.equal(spec.collectibleThresholdCorrectionSpecGate.directObservedDamageTrialCount, 0);
+assert.equal(spec.collectibleThresholdCorrectionSpecGate.proposedCorrectedScorer, 'tangtang_description_corrected_thresholds');
+assert.equal(
+  spec.collectibleThresholdCorrectionSpecGate.correctedContractStatus,
+  'not-implemented-blocked-by-evidence-policy',
+);
+assert.equal(spec.collectibleThresholdCorrectionSpecGate.fullSioEquivalentPreserved, true);
+assert.equal(spec.collectibleThresholdCorrectionSpecGate.defaultSioBehaviorChanged, false);
+assert.equal(spec.collectibleThresholdCorrectionSpecGate.uiChanged, false);
+assert.equal(spec.collectibleThresholdCorrectionSpecGate.rawSioLmJsonExposed, false);
 assert.ok(descriptionFormulaValidationProtocol.includes('This is the primary next validation layer'));
 assert.ok(inGameDamageValidationProtocol.includes('observed damage trials are a follow-up divergence check'));
+assert.ok(collectibleThresholdCorrectionSpecMd.includes('Inferred-Family Pending Rows'));
 assert.equal(inGameDescriptionEvidence.summary.mountRowsWithExactInGameDescriptions, 0);
 assert.equal(collectibleEffectMapping.summary.inGameDescriptionVerifiedRows, 0);
 assert.equal(mountDamageSourceFixture.summary.liveVerifiedRows, 0);
@@ -997,6 +1088,8 @@ assert.ok(mdSerialized.includes('Description Formula Validation Gate'));
 assert.ok(mdSerialized.includes('Formula atom rows: 221'));
 assert.ok(mdSerialized.includes('Description Capture Import Gate'));
 assert.ok(mdSerialized.includes('First-Party Description Source Inventory'));
+assert.ok(mdSerialized.includes('Collectible Threshold Correction Spec Gate'));
+assert.ok(mdSerialized.includes('candidate-only-not-applied'));
 assert.ok(mdSerialized.includes('Public official web sufficient for formula validation: `false`'));
 assert.ok(mdSerialized.includes('Can run observed damage follow-up without description divergence: `false`'));
 

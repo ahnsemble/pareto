@@ -83,6 +83,7 @@ Key source/live counts:
 - SpongeBob/Squidward/Yelena are source/live backed but do not have direct first-party in-game description capture.
 - Mounts have source/live mountDamage evidence and 9 direct first-party Doomsteed line capture atom rows, but complete exact per-line mount text coverage is still incomplete.
 - Collectible item/set mapping is source/Rust backed, but item/set-level in-game description capture is incomplete.
+- Four collectible set threshold rows have direct first-party 15-to-19 description correction evidence, but remain candidate-only because there are zero observed damage trials.
 - Catalog-only collectible rows remain isolated.
 - No formula semantics, scoring core, Rust damage formula, WASM scoring behavior, optimizer ranking, or product UI changed.
 
@@ -161,6 +162,30 @@ Key source/live counts:
 - Can run observed damage follow-up without description divergence: `false`
 - Current correction status: `blocked-description-derived-formula-validation-incomplete`
 
+## Collectible Threshold Correction Spec Gate
+
+- Correction spec: `frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.json`
+- Correction spec protocol: `frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.md`
+- Status: `[TANGTANG-COLLECTIBLE-THRESHOLD-CORRECTION-SPEC-GREEN]`
+- Claim: `tangtang-description-corrected-candidate`
+- Decision status: `candidate-only-not-applied`
+- Behavior change: `false`
+- Scoring changed: `false`
+- Corrected mode implemented: `false`
+- Correction eligible now: `false`
+- Direct confirmed correction rows: 4
+- Threshold-only mismatch rows: 4
+- Source threshold 15 rows: 4
+- Direct threshold 19 rows: 4
+- Inferred-family pending rows: 30
+- Direct observed damage trials: 0
+- Proposed corrected scorer: `tangtang_description_corrected_thresholds`
+- Corrected contract status: `not-implemented-blocked-by-evidence-policy`
+- Full SIO-equivalent contract preserved: `true`
+- Default SIO behavior changed: `false`
+- UI changed: `false`
+- Raw SIO LM JSON exposed: `false`
+
 ## Unsupported Formula Inputs
 
 - non-SS weapons remain catalog-only and unsupported as formula inputs: 8 rows.
@@ -187,6 +212,8 @@ Key source/live counts:
 - `frontend/artifacts/td11/tangtang_first_party_description_source_inventory.md`
 - `frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json`
 - `frontend/artifacts/td11/tangtang_in_game_damage_validation_protocol.md`
+- `frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.json`
+- `frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.md`
 - `frontend/app/lib/pareto-store/schemas/index.ts`
 - `frontend/scripts/sio_tools_formula_source_evidence_unit_test.mjs`
 - `frontend/scripts/damage_formula_provenance_matrix_unit_test.mjs`
@@ -198,6 +225,7 @@ Key source/live counts:
 - `node scripts/tangtang_description_capture_import_unit_test.mjs`
 - `node scripts/tangtang_description_formula_validation_unit_test.mjs`
 - `node scripts/tangtang_in_game_damage_validation_unit_test.mjs`
+- `node scripts/tangtang_collectible_threshold_correction_spec_unit_test.mjs`
 - `node scripts/sio_tools_formula_source_evidence_unit_test.mjs`
 - `node scripts/damage_formula_provenance_matrix_unit_test.mjs`
 - `node scripts/in_game_description_evidence_unit_test.mjs`

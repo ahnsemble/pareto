@@ -1,0 +1,1079 @@
+{
+  "artifactPaths": {
+    "json": "frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.json",
+    "markdown": "frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.md",
+    "script": "frontend/scripts/tangtang_collectible_threshold_correction_spec_unit_test.mjs"
+  },
+  "behaviorChange": false,
+  "caveats": [
+    "No direct observed damage trials exist yet for the 15-18 threshold band.",
+    "Description evidence is strong enough to preserve a corrected candidate spec, but not enough under the current policy to change scoring.",
+    "Inferred-family rows are explicitly pending and must not be applied without exact direct capture evidence.",
+    "The SIO-equivalent scorer remains the active/default contract."
+  ],
+  "claim": "tangtang-description-corrected-candidate",
+  "correctedContract": {
+    "mayChangeOnlyDirectConfirmedRows": true,
+    "mustNotMutateSioEquivalentMode": true,
+    "proposedScorer": "tangtang_description_corrected_thresholds",
+    "separationRequired": true,
+    "status": "not-implemented-blocked-by-evidence-policy"
+  },
+  "decision": {
+    "correctedModeImplemented": false,
+    "correctionEligibleNow": false,
+    "rationale": "Direct first-party descriptions repeatedly show four 15-to-19 collectible set threshold mismatches, but there are zero controlled observed damage trials and no approved description-only correction policy.",
+    "requiredBeforeApplication": [
+      "observed damage evidence for the affected threshold band or explicit user-approved description-only correction policy",
+      "a dedicated corrected scorer/gate name separate from sio_full_lm_equivalence",
+      "RED/GREEN behavior tests proving 15-18 no longer applies only in corrected mode",
+      "SIO-equivalent mode remains current source/Rust behavior"
+    ],
+    "scoringChanged": false,
+    "status": "candidate-only-not-applied"
+  },
+  "directConfirmedRows": [
+    {
+      "atomRowId": "collectible-set:dreamOrReality:gold:15:atkPercent",
+      "candidateId": "tangtang-correction:collectible-set:dreamOrReality:gold:15:atkPercent:condition:15-to-19",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "directConditionOrThreshold": "gold >= 19",
+      "directParsedFormulaValue": 4,
+      "directStatChannel": "atkPercent",
+      "directThreshold": {
+        "metric": "gold",
+        "threshold": 19
+      },
+      "entityKey": "collectible-set:dreamOrReality",
+      "evidenceClass": "direct-confirmed-description-threshold-mismatch",
+      "mismatchFields": [
+        "conditionOrThreshold"
+      ],
+      "mismatchType": "threshold-condition-only",
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "multiplierStageUnchanged": true,
+      "proposedCorrectedConditionOrThreshold": "gold >= 19",
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/2.jpg"
+      ],
+      "rawCaptureEvidenceBuckets": [
+        "additional-set-thresholds"
+      ],
+      "requiredEvidenceBeforeApplication": [
+        "controlled direct observed damage trial at 15-18 stars showing the current source threshold over-applies, or explicit user-approved description-only correction policy",
+        "dedicated corrected scorer/gate that does not mutate sio_full_lm_equivalence semantics"
+      ],
+      "sourceConditionOrThreshold": "gold >= 15",
+      "sourceEntityDisplayName": "Dream or Reality?",
+      "sourceParsedFormulaValue": 4,
+      "sourceStatChannel": "atkPercent",
+      "sourceThreshold": {
+        "metric": "gold",
+        "threshold": 15
+      },
+      "statChannelUnchanged": true,
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.dreamOrReality",
+      "valueUnchanged": true
+    },
+    {
+      "atomRowId": "collectible-set:dreamOrReality:red:15:atkPercent",
+      "candidateId": "tangtang-correction:collectible-set:dreamOrReality:red:15:atkPercent:condition:15-to-19",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "directConditionOrThreshold": "red >= 19",
+      "directParsedFormulaValue": 6,
+      "directStatChannel": "atkPercent",
+      "directThreshold": {
+        "metric": "red",
+        "threshold": 19
+      },
+      "entityKey": "collectible-set:dreamOrReality",
+      "evidenceClass": "direct-confirmed-description-threshold-mismatch",
+      "mismatchFields": [
+        "conditionOrThreshold"
+      ],
+      "mismatchType": "threshold-condition-only",
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "multiplierStageUnchanged": true,
+      "proposedCorrectedConditionOrThreshold": "red >= 19",
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-additional-set-thresholds/1.jpg"
+      ],
+      "rawCaptureEvidenceBuckets": [
+        "additional-set-thresholds"
+      ],
+      "requiredEvidenceBeforeApplication": [
+        "controlled direct observed damage trial at 15-18 stars showing the current source threshold over-applies, or explicit user-approved description-only correction policy",
+        "dedicated corrected scorer/gate that does not mutate sio_full_lm_equivalence semantics"
+      ],
+      "sourceConditionOrThreshold": "red >= 15",
+      "sourceEntityDisplayName": "Dream or Reality?",
+      "sourceParsedFormulaValue": 6,
+      "sourceStatChannel": "atkPercent",
+      "sourceThreshold": {
+        "metric": "red",
+        "threshold": 15
+      },
+      "statChannelUnchanged": true,
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.dreamOrReality",
+      "valueUnchanged": true
+    },
+    {
+      "atomRowId": "collectible-set:genesis:gold:15:atkPercent",
+      "candidateId": "tangtang-correction:collectible-set:genesis:gold:15:atkPercent:condition:15-to-19",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "directConditionOrThreshold": "gold >= 19",
+      "directParsedFormulaValue": 4,
+      "directStatChannel": "atkPercent",
+      "directThreshold": {
+        "metric": "gold",
+        "threshold": 19
+      },
+      "entityKey": "collectible-set:genesis",
+      "evidenceClass": "direct-confirmed-description-threshold-mismatch",
+      "mismatchFields": [
+        "conditionOrThreshold"
+      ],
+      "mismatchType": "threshold-condition-only",
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "multiplierStageUnchanged": true,
+      "proposedCorrectedConditionOrThreshold": "gold >= 19",
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-random-sample/2.jpg",
+        "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/2.jpg"
+      ],
+      "rawCaptureEvidenceBuckets": [
+        "random-sample",
+        "targeted-followup"
+      ],
+      "requiredEvidenceBeforeApplication": [
+        "controlled direct observed damage trial at 15-18 stars showing the current source threshold over-applies, or explicit user-approved description-only correction policy",
+        "dedicated corrected scorer/gate that does not mutate sio_full_lm_equivalence semantics"
+      ],
+      "sourceConditionOrThreshold": "gold >= 15",
+      "sourceEntityDisplayName": "Genesis",
+      "sourceParsedFormulaValue": 4,
+      "sourceStatChannel": "atkPercent",
+      "sourceThreshold": {
+        "metric": "gold",
+        "threshold": 15
+      },
+      "statChannelUnchanged": true,
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.genesis",
+      "valueUnchanged": true
+    },
+    {
+      "atomRowId": "collectible-set:genesis:red:15:atkPercent",
+      "candidateId": "tangtang-correction:collectible-set:genesis:red:15:atkPercent:condition:15-to-19",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "directConditionOrThreshold": "red >= 19",
+      "directParsedFormulaValue": 6,
+      "directStatChannel": "atkPercent",
+      "directThreshold": {
+        "metric": "red",
+        "threshold": 19
+      },
+      "entityKey": "collectible-set:genesis",
+      "evidenceClass": "direct-confirmed-description-threshold-mismatch",
+      "mismatchFields": [
+        "conditionOrThreshold"
+      ],
+      "mismatchType": "threshold-condition-only",
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "multiplierStageUnchanged": true,
+      "proposedCorrectedConditionOrThreshold": "red >= 19",
+      "rawCaptureArtifactPaths": [
+        "frontend/artifacts/td11/captures/2026-05-23-random-sample/1.jpg",
+        "frontend/artifacts/td11/captures/2026-05-23-targeted-followup/1.jpg"
+      ],
+      "rawCaptureEvidenceBuckets": [
+        "random-sample",
+        "targeted-followup"
+      ],
+      "requiredEvidenceBeforeApplication": [
+        "controlled direct observed damage trial at 15-18 stars showing the current source threshold over-applies, or explicit user-approved description-only correction policy",
+        "dedicated corrected scorer/gate that does not mutate sio_full_lm_equivalence semantics"
+      ],
+      "sourceConditionOrThreshold": "red >= 15",
+      "sourceEntityDisplayName": "Genesis",
+      "sourceParsedFormulaValue": 6,
+      "sourceStatChannel": "atkPercent",
+      "sourceThreshold": {
+        "metric": "red",
+        "threshold": 15
+      },
+      "statChannelUnchanged": true,
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.genesis",
+      "valueUnchanged": true
+    }
+  ],
+  "equivalenceContract": {
+    "currentScorer": "sio_full_lm_equivalence",
+    "defaultBehaviorChanged": false,
+    "fullSioEquivalent": true,
+    "preserved": true,
+    "scorer": "sio_full_lm_equivalence"
+  },
+  "generatedAtKst": "2026-05-23",
+  "inferredFamilyRows": [
+    {
+      "atomRowId": "collectible-set:cornerOfTheUniverseI:gold:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:cornerOfTheUniverseI",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "gold >= 19",
+      "inferredDirectThreshold": {
+        "metric": "gold",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "gold >= 15",
+      "sourceEntityDisplayName": "Corner of the Universe I",
+      "sourceParsedFormulaValue": 4,
+      "sourceThreshold": {
+        "metric": "gold",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.cornerOfTheUniverseI"
+    },
+    {
+      "atomRowId": "collectible-set:cornerOfTheUniverseI:red:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:cornerOfTheUniverseI",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "red >= 19",
+      "inferredDirectThreshold": {
+        "metric": "red",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "red >= 15",
+      "sourceEntityDisplayName": "Corner of the Universe I",
+      "sourceParsedFormulaValue": 6,
+      "sourceThreshold": {
+        "metric": "red",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.cornerOfTheUniverseI"
+    },
+    {
+      "atomRowId": "collectible-set:cornerOfTheUniverseIII:gold:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:cornerOfTheUniverseIII",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "gold >= 19",
+      "inferredDirectThreshold": {
+        "metric": "gold",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "gold >= 15",
+      "sourceEntityDisplayName": "Corner of the Universe III",
+      "sourceParsedFormulaValue": 4,
+      "sourceThreshold": {
+        "metric": "gold",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.cornerOfTheUniverseIII"
+    },
+    {
+      "atomRowId": "collectible-set:cornerOfTheUniverseIII:red:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:cornerOfTheUniverseIII",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "red >= 19",
+      "inferredDirectThreshold": {
+        "metric": "red",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "red >= 15",
+      "sourceEntityDisplayName": "Corner of the Universe III",
+      "sourceParsedFormulaValue": 6,
+      "sourceThreshold": {
+        "metric": "red",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.cornerOfTheUniverseIII"
+    },
+    {
+      "atomRowId": "collectible-set:deletedMemories:gold:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:deletedMemories",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "gold >= 19",
+      "inferredDirectThreshold": {
+        "metric": "gold",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "gold >= 15",
+      "sourceEntityDisplayName": "Deleted Memories",
+      "sourceParsedFormulaValue": 4,
+      "sourceThreshold": {
+        "metric": "gold",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.deletedMemories"
+    },
+    {
+      "atomRowId": "collectible-set:deletedMemories:red:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:deletedMemories",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "red >= 19",
+      "inferredDirectThreshold": {
+        "metric": "red",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "red >= 15",
+      "sourceEntityDisplayName": "Deleted Memories",
+      "sourceParsedFormulaValue": 6,
+      "sourceThreshold": {
+        "metric": "red",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.deletedMemories"
+    },
+    {
+      "atomRowId": "collectible-set:dreamseekerVoyage:gold:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:dreamseekerVoyage",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "gold >= 19",
+      "inferredDirectThreshold": {
+        "metric": "gold",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "gold >= 15",
+      "sourceEntityDisplayName": "Dreamseeker Voyage",
+      "sourceParsedFormulaValue": 4,
+      "sourceThreshold": {
+        "metric": "gold",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.dreamseekerVoyage"
+    },
+    {
+      "atomRowId": "collectible-set:dreamseekerVoyage:red:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:dreamseekerVoyage",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "red >= 19",
+      "inferredDirectThreshold": {
+        "metric": "red",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "red >= 15",
+      "sourceEntityDisplayName": "Dreamseeker Voyage",
+      "sourceParsedFormulaValue": 6,
+      "sourceThreshold": {
+        "metric": "red",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.dreamseekerVoyage"
+    },
+    {
+      "atomRowId": "collectible-set:dronesAreSafest:gold:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:dronesAreSafest",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "gold >= 19",
+      "inferredDirectThreshold": {
+        "metric": "gold",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "gold >= 15",
+      "sourceEntityDisplayName": "Drones are Safest",
+      "sourceParsedFormulaValue": 4,
+      "sourceThreshold": {
+        "metric": "gold",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.dronesAreSafest"
+    },
+    {
+      "atomRowId": "collectible-set:dronesAreSafest:red:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:dronesAreSafest",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "red >= 19",
+      "inferredDirectThreshold": {
+        "metric": "red",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "red >= 15",
+      "sourceEntityDisplayName": "Drones are Safest",
+      "sourceParsedFormulaValue": 6,
+      "sourceThreshold": {
+        "metric": "red",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.dronesAreSafest"
+    },
+    {
+      "atomRowId": "collectible-set:extraterrestrialRitual:gold:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:extraterrestrialRitual",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "gold >= 19",
+      "inferredDirectThreshold": {
+        "metric": "gold",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "gold >= 15",
+      "sourceEntityDisplayName": "Extraterrestrial Ritual",
+      "sourceParsedFormulaValue": 4,
+      "sourceThreshold": {
+        "metric": "gold",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.extraterrestrialRitual"
+    },
+    {
+      "atomRowId": "collectible-set:extraterrestrialRitual:red:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:extraterrestrialRitual",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "red >= 19",
+      "inferredDirectThreshold": {
+        "metric": "red",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "red >= 15",
+      "sourceEntityDisplayName": "Extraterrestrial Ritual",
+      "sourceParsedFormulaValue": 6,
+      "sourceThreshold": {
+        "metric": "red",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.extraterrestrialRitual"
+    },
+    {
+      "atomRowId": "collectible-set:firstMyth:gold:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:firstMyth",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "gold >= 19",
+      "inferredDirectThreshold": {
+        "metric": "gold",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "gold >= 15",
+      "sourceEntityDisplayName": "First Myth",
+      "sourceParsedFormulaValue": 4,
+      "sourceThreshold": {
+        "metric": "gold",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.firstMyth"
+    },
+    {
+      "atomRowId": "collectible-set:firstMyth:red:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:firstMyth",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "red >= 19",
+      "inferredDirectThreshold": {
+        "metric": "red",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "red >= 15",
+      "sourceEntityDisplayName": "First Myth",
+      "sourceParsedFormulaValue": 6,
+      "sourceThreshold": {
+        "metric": "red",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.firstMyth"
+    },
+    {
+      "atomRowId": "collectible-set:inescapable:gold:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:inescapable",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "gold >= 19",
+      "inferredDirectThreshold": {
+        "metric": "gold",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "gold >= 15",
+      "sourceEntityDisplayName": "Inescapable",
+      "sourceParsedFormulaValue": 4,
+      "sourceThreshold": {
+        "metric": "gold",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.inescapable"
+    },
+    {
+      "atomRowId": "collectible-set:inescapable:red:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:inescapable",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "red >= 19",
+      "inferredDirectThreshold": {
+        "metric": "red",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "red >= 15",
+      "sourceEntityDisplayName": "Inescapable",
+      "sourceParsedFormulaValue": 6,
+      "sourceThreshold": {
+        "metric": "red",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.inescapable"
+    },
+    {
+      "atomRowId": "collectible-set:justEnoughToIgnoreTheFog:gold:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:justEnoughToIgnoreTheFog",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "gold >= 19",
+      "inferredDirectThreshold": {
+        "metric": "gold",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "gold >= 15",
+      "sourceEntityDisplayName": "Just Enough to Ignore the Fog",
+      "sourceParsedFormulaValue": 4,
+      "sourceThreshold": {
+        "metric": "gold",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.justEnoughToIgnoreTheFog"
+    },
+    {
+      "atomRowId": "collectible-set:justEnoughToIgnoreTheFog:red:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:justEnoughToIgnoreTheFog",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "red >= 19",
+      "inferredDirectThreshold": {
+        "metric": "red",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "red >= 15",
+      "sourceEntityDisplayName": "Just Enough to Ignore the Fog",
+      "sourceParsedFormulaValue": 6,
+      "sourceThreshold": {
+        "metric": "red",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.justEnoughToIgnoreTheFog"
+    },
+    {
+      "atomRowId": "collectible-set:lifeRebootDevice:gold:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:lifeRebootDevice",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "gold >= 19",
+      "inferredDirectThreshold": {
+        "metric": "gold",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "gold >= 15",
+      "sourceEntityDisplayName": "Life Reboot Device",
+      "sourceParsedFormulaValue": 4,
+      "sourceThreshold": {
+        "metric": "gold",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.lifeRebootDevice"
+    },
+    {
+      "atomRowId": "collectible-set:lifeRebootDevice:red:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:lifeRebootDevice",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "red >= 19",
+      "inferredDirectThreshold": {
+        "metric": "red",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "red >= 15",
+      "sourceEntityDisplayName": "Life Reboot Device",
+      "sourceParsedFormulaValue": 6,
+      "sourceThreshold": {
+        "metric": "red",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.lifeRebootDevice"
+    },
+    {
+      "atomRowId": "collectible-set:luckThroughTheRoof:gold:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:luckThroughTheRoof",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "gold >= 19",
+      "inferredDirectThreshold": {
+        "metric": "gold",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "gold >= 15",
+      "sourceEntityDisplayName": "Luck Through the Roof",
+      "sourceParsedFormulaValue": 4,
+      "sourceThreshold": {
+        "metric": "gold",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.luckThroughTheRoof"
+    },
+    {
+      "atomRowId": "collectible-set:luckThroughTheRoof:red:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:luckThroughTheRoof",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "red >= 19",
+      "inferredDirectThreshold": {
+        "metric": "red",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "red >= 15",
+      "sourceEntityDisplayName": "Luck Through the Roof",
+      "sourceParsedFormulaValue": 6,
+      "sourceThreshold": {
+        "metric": "red",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.luckThroughTheRoof"
+    },
+    {
+      "atomRowId": "collectible-set:merfolkDisguiseAttempt:gold:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:merfolkDisguiseAttempt",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "gold >= 19",
+      "inferredDirectThreshold": {
+        "metric": "gold",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "gold >= 15",
+      "sourceEntityDisplayName": "Merfolk Disguise Attempt",
+      "sourceParsedFormulaValue": 4,
+      "sourceThreshold": {
+        "metric": "gold",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.merfolkDisguiseAttempt"
+    },
+    {
+      "atomRowId": "collectible-set:merfolkDisguiseAttempt:red:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:merfolkDisguiseAttempt",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "red >= 19",
+      "inferredDirectThreshold": {
+        "metric": "red",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "red >= 15",
+      "sourceEntityDisplayName": "Merfolk Disguise Attempt",
+      "sourceParsedFormulaValue": 6,
+      "sourceThreshold": {
+        "metric": "red",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.merfolkDisguiseAttempt"
+    },
+    {
+      "atomRowId": "collectible-set:parallelDimension:gold:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:parallelDimension",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "gold >= 19",
+      "inferredDirectThreshold": {
+        "metric": "gold",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "gold >= 15",
+      "sourceEntityDisplayName": "Parallel Dimension",
+      "sourceParsedFormulaValue": 4,
+      "sourceThreshold": {
+        "metric": "gold",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.parallelDimension"
+    },
+    {
+      "atomRowId": "collectible-set:parallelDimension:red:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:parallelDimension",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "red >= 19",
+      "inferredDirectThreshold": {
+        "metric": "red",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "red >= 15",
+      "sourceEntityDisplayName": "Parallel Dimension",
+      "sourceParsedFormulaValue": 6,
+      "sourceThreshold": {
+        "metric": "red",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.parallelDimension"
+    },
+    {
+      "atomRowId": "collectible-set:unbreakable:gold:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:unbreakable",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "gold >= 19",
+      "inferredDirectThreshold": {
+        "metric": "gold",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "gold >= 15",
+      "sourceEntityDisplayName": "Unbreakable",
+      "sourceParsedFormulaValue": 4,
+      "sourceThreshold": {
+        "metric": "gold",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.unbreakable"
+    },
+    {
+      "atomRowId": "collectible-set:unbreakable:red:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:unbreakable",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "red >= 19",
+      "inferredDirectThreshold": {
+        "metric": "red",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "red >= 15",
+      "sourceEntityDisplayName": "Unbreakable",
+      "sourceParsedFormulaValue": 6,
+      "sourceThreshold": {
+        "metric": "red",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.unbreakable"
+    },
+    {
+      "atomRowId": "collectible-set:uncontrollableSuperpower:gold:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:uncontrollableSuperpower",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "gold >= 19",
+      "inferredDirectThreshold": {
+        "metric": "gold",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "gold >= 15",
+      "sourceEntityDisplayName": "Uncontrollable Superpower",
+      "sourceParsedFormulaValue": 4,
+      "sourceThreshold": {
+        "metric": "gold",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.uncontrollableSuperpower"
+    },
+    {
+      "atomRowId": "collectible-set:uncontrollableSuperpower:red:15:atkPercent",
+      "correctionAppliedNow": false,
+      "correctionEligibleNow": false,
+      "entityKey": "collectible-set:uncontrollableSuperpower",
+      "evidenceClass": "inferred-family-pending",
+      "inferredDirectConditionOrThreshold": "red >= 19",
+      "inferredDirectThreshold": {
+        "metric": "red",
+        "threshold": 19
+      },
+      "multiplierStage": "derived_base_set_stats before 31-stage damage vector",
+      "reasonNotApplied": "This three-item set shares the same source-table gold/red >= 15 ATK% family, but it has no direct first-party threshold capture yet.",
+      "requiredEvidenceBeforeApplication": [
+        "direct first-party set detail capture for this exact set and color threshold",
+        "then the same corrected-mode isolation policy used for direct-confirmed rows"
+      ],
+      "rustStatChannel": "atkPercent",
+      "sourceConditionOrThreshold": "red >= 15",
+      "sourceEntityDisplayName": "Uncontrollable Superpower",
+      "sourceParsedFormulaValue": 6,
+      "sourceThreshold": {
+        "metric": "red",
+        "threshold": 15
+      },
+      "tangtangSchemaKey": "COLLECTIBLE_SET_INDEX.uncontrollableSuperpower"
+    }
+  ],
+  "sourceInputs": [
+    "frontend/artifacts/td11/tangtang_formula_correction_candidates.json",
+    "frontend/artifacts/td11/tangtang_formula_correction_candidates.md",
+    "frontend/artifacts/td11/tangtang_additional_set_threshold_capture_audit.json",
+    "frontend/artifacts/td11/tangtang_additional_set_threshold_capture_audit.md",
+    "frontend/artifacts/td11/tangtang_description_capture_import_matrix.json",
+    "frontend/artifacts/td11/tangtang_description_capture_inbox.json",
+    "frontend/artifacts/td11/tangtang_in_game_damage_validation_matrix.json",
+    "frontend/artifacts/td11/tangtang_damage_formula_spec.json",
+    "frontend/artifacts/td11/collectible_effect_mapping_matrix.json",
+    "frontend/artifacts/td11/sio_lm_equivalence_matrix.json"
+  ],
+  "status": "[TANGTANG-COLLECTIBLE-THRESHOLD-CORRECTION-SPEC-GREEN]",
+  "summary": {
+    "captureInboxRows": 14,
+    "correctionEligibleRows": 0,
+    "directConfirmedCorrectionRows": 4,
+    "directObservedDamageTrialCount": 0,
+    "directThreshold19Rows": 4,
+    "importedDescriptionCaptureRows": 14,
+    "inferredFamilyPendingRows": 30,
+    "multiplierStageUnchangedRows": 4,
+    "sourceThreshold15Rows": 4,
+    "statChannelUnchangedRows": 4,
+    "threeItemGoldRedAtkPercentUniverseRows": 34,
+    "thresholdOnlyMismatchRows": 4,
+    "valueUnchangedRows": 4
+  },
+  "title": "Tangtang Collectible Threshold Correction Spec",
+  "uiExposureGuard": {
+    "beamUiExposed": false,
+    "debugUiExposed": false,
+    "exactNodeCapUiExposed": false,
+    "preselectUiExposed": false,
+    "rawSioLmJsonExposed": false,
+    "uiChanged": false,
+    "userFacingProductName": "Tangtang",
+    "userFacingSioTermExposed": false
+  },
+  "verificationCommands": [
+    "node scripts/tangtang_collectible_threshold_correction_spec_unit_test.mjs",
+    "node scripts/tangtang_formula_correction_candidates_unit_test.mjs",
+    "node scripts/tangtang_in_game_damage_validation_unit_test.mjs",
+    "SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs",
+    "git diff --check"
+  ]
+}

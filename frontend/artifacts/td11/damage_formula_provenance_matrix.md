@@ -220,6 +220,35 @@ Confidence values:
   - `collectible-set:genesis:red:15:atkPercent`: red >= 15 -> red >= 19, atkPercent +6
 - Formula/scoring/UI behavior did not change.
 
+## Collectible Threshold Correction Spec
+
+- The collectible threshold correction policy is now specified separately from the SIO-equivalent derivation:
+  - `frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.json`
+  - `frontend/artifacts/td11/tangtang_collectible_threshold_correction_spec.md`
+- Gate status: `[TANGTANG-COLLECTIBLE-THRESHOLD-CORRECTION-SPEC-GREEN]`
+- Gate claim: `tangtang-description-corrected-candidate`
+- Decision status: `candidate-only-not-applied`
+- Scoring changed: `false`
+- Corrected mode implemented: `false`
+- Direct confirmed correction rows: 4
+- Threshold-only mismatch rows: 4
+- Source threshold 15 rows: 4
+- Direct threshold 19 rows: 4
+- Inferred-family pending rows: 30
+- Direct observed damage trials: 0
+- Proposed corrected scorer, if later unblocked: `tangtang_description_corrected_thresholds`
+- Corrected contract status: `not-implemented-blocked-by-evidence-policy`
+- Full SIO-equivalent contract preserved: `true`
+- Default SIO behavior changed: `false`
+- Raw SIO LM JSON exposed: `false`
+- UI changed: `false`
+- Direct rows:
+  - `collectible-set:dreamOrReality:gold:15:atkPercent`: gold >= 15 -> gold >= 19, atkPercent +4
+  - `collectible-set:dreamOrReality:red:15:atkPercent`: red >= 15 -> red >= 19, atkPercent +6
+  - `collectible-set:genesis:gold:15:atkPercent`: gold >= 15 -> gold >= 19, atkPercent +4
+  - `collectible-set:genesis:red:15:atkPercent`: red >= 15 -> red >= 19, atkPercent +6
+- Formula/scoring/UI behavior did not change.
+
 ## First-Party Description Source Inventory
 
 - Official/public source acquisition is tracked separately from capture import:
