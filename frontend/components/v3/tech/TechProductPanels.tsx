@@ -5,6 +5,7 @@ import {
   type ResourceWalletId,
   type ResourceWalletValues,
 } from '../../../app/lib/pareto-store/resource-wallet';
+import type { TechDataConfidenceSummary } from '../../../app/lib/pareto-store/tech-data-confidence';
 import type { ProductImportCoverage, ProductImportFieldSummary } from '../../../app/lib/pareto-store/profile-import-types';
 import type { TechProfileSaveSlotId } from '../../../app/lib/pareto-store/tech-profile-storage';
 import { buttonClass, inputClass, labelClass, panelClass } from '../optimizerUi';
@@ -62,6 +63,13 @@ export function ProfileSavePanel({
   onSave,
   onLoad,
   onDelete,
+  onPreset,
+  onShare,
+  onBackup,
+  shareUrl,
+  shareStatus,
+  backupText,
+  backupStatus,
   locale,
 }: {
   slots: Array<{ id: TechProfileSaveSlotId; label: string; savedAt: string | null }>;
@@ -69,6 +77,13 @@ export function ProfileSavePanel({
   onSave: (slotId: TechProfileSaveSlotId) => void;
   onLoad: (slotId: TechProfileSaveSlotId) => void;
   onDelete: (slotId: TechProfileSaveSlotId) => void;
+  onPreset?: (slotId: TechProfileSaveSlotId) => void;
+  onShare?: () => void | Promise<void>;
+  onBackup?: () => void | Promise<void>;
+  shareUrl?: string;
+  shareStatus?: string;
+  backupText?: string;
+  backupStatus?: string;
   locale?: string;
 }) {
   const copy = getTechOptimizerCopy(locale);
@@ -84,6 +99,66 @@ export function ProfileSavePanel({
           {status}
         </p>
       </div>
+      {onShare || onBackup ? (
+        <div className="mt-3 grid gap-2 sm:grid-cols-2">
+          {onShare ? (
+            <button
+              type="button"
+              className={buttonClass}
+              data-testid="tech-profile-share-link"
+              onClick={onShare}
+            >
+              {copy.profileSave.copyShareLink}
+            </button>
+          ) : null}
+          {onBackup ? (
+            <button
+              type="button"
+              className={buttonClass}
+              data-testid="tech-profile-backup-copy"
+              onClick={onBackup}
+            >
+              {copy.profileSave.copyBackup}
+            </button>
+          ) : null}
+        </div>
+      ) : null}
+      {shareUrl ? (
+        <div className="mt-3 rounded-md border border-[color:var(--color-border)]/60 p-3">
+          <label className="block text-xs uppercase text-[color:var(--color-text-muted)]" htmlFor="tech-profile-share-url-output">
+            {copy.profileSave.shareUrl}
+          </label>
+          <input
+            id="tech-profile-share-url-output"
+            className={inputClass + ' mt-2 font-mono text-xs'}
+            data-testid="tech-profile-share-url-output"
+            readOnly
+            value={shareUrl}
+            onFocus={(event) => event.currentTarget.select()}
+          />
+          <p className="mt-2 text-xs text-[color:var(--color-text-muted)]" data-testid="tech-profile-share-status">
+            {shareStatus}
+          </p>
+        </div>
+      ) : null}
+      {backupText ? (
+        <div className="mt-3 rounded-md border border-[color:var(--color-border)]/60 p-3">
+          <label className="block text-xs uppercase text-[color:var(--color-text-muted)]" htmlFor="tech-profile-backup-output">
+            {copy.profileSave.backup}
+          </label>
+          <textarea
+            id="tech-profile-backup-output"
+            className={inputClass + ' mt-2 min-h-20 font-mono text-xs'}
+            data-testid="tech-profile-backup-output"
+            readOnly
+            value={backupText}
+            onFocus={(event) => event.currentTarget.select()}
+          />
+          <p className="mt-2 text-xs text-[color:var(--color-text-muted)]" data-testid="tech-profile-backup-status">
+            {backupStatus}
+          </p>
+        </div>
+      ) : null}
       <div className="mt-3 grid gap-2 md:grid-cols-2">
         {slots.map((slot) => (
           <div
@@ -99,7 +174,7 @@ export function ProfileSavePanel({
                 </p>
               </div>
             </div>
-            <div className="mt-3 grid grid-cols-3 gap-2">
+            <div className={`mt-3 grid gap-2 ${onPreset ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-3'}`}>
               <button
                 type="button"
                 className={buttonClass}
@@ -126,6 +201,16 @@ export function ProfileSavePanel({
               >
                 {copy.profileSave.delete}
               </button>
+              {onPreset ? (
+                <button
+                  type="button"
+                  className={buttonClass}
+                  data-testid={`tech-profile-save-${slot.id}-preset`}
+                  onClick={() => onPreset(slot.id)}
+                >
+                  {copy.profileSave.preset}
+                </button>
+              ) : null}
             </div>
           </div>
         ))}
@@ -249,6 +334,34 @@ export function ProfileImportPanel({
           </div>
         </>
       ) : null}
+    </div>
+  );
+}
+
+export function DataConfidencePanel({
+  summary,
+  locale,
+}: {
+  summary: TechDataConfidenceSummary;
+  locale?: string;
+}) {
+  const copy = getTechOptimizerCopy(locale);
+  return (
+    <div className={panelClass} data-testid="tech-data-confidence">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h2 className={labelClass}>{copy.dataConfidence.title}</h2>
+        <span
+          className="rounded-sm border border-[color:var(--color-border)] px-2 py-1 font-mono text-[11px] uppercase text-[color:var(--color-text-muted)]"
+          data-testid="tech-data-confidence-level"
+        >
+          {copy.dataConfidence.levels[summary.level]}
+        </span>
+      </div>
+      <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-[color:var(--color-text-muted)]">
+        {summary.details.map((detail) => (
+          <li key={detail}>{detail}</li>
+        ))}
+      </ul>
     </div>
   );
 }

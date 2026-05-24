@@ -70,8 +70,17 @@ const collectionRecommendation = recommendations.find((item) => item.id === 'col
 assert.ok(collectionRecommendation, 'expected a collectible item recommendation');
 assert.match(collectionRecommendation.title, /Shuttle Capsule/);
 assert.match(collectionRecommendation.action, /5 stars/);
+assert.ok(Array.isArray(collectionRecommendation.reasonDetails), 'expected collectible recommendation details');
+assert.ok(collectionRecommendation.reasonDetails.length >= 2, 'expected collectible recommendation to explain its evidence');
+assert.match(collectionRecommendation.reasonDetails.join('\n'), /active custom collection set|imported profile/i);
 assert.equal(collectionRecommendation.confidence, 'high');
 assert.equal(JSON.stringify(recommendations).includes('sio'), false);
+
+const chipRecommendation = recommendations.find((item) => item.id === 'chip-allocation');
+assert.ok(chipRecommendation, 'expected a chip recommendation');
+assert.ok(Array.isArray(chipRecommendation.reasonDetails), 'expected chip recommendation details');
+assert.match(chipRecommendation.reasonDetails.join('\n'), /Top build assigns 12 chips/);
+assert.match(chipRecommendation.reasonDetails.join('\n'), /6 chips available/);
 
 const koRecommendations = buildTechUpgradeRecommendations({
   result,
@@ -91,6 +100,9 @@ const koChipRecommendation = koRecommendations.find((item) => item.id === 'chip-
 assert.ok(koChipRecommendation, 'expected a Korean chip recommendation');
 assert.match(koChipRecommendation.title, /칩 배분/);
 assert.doesNotMatch(koChipRecommendation.title, /Allocate chips/);
+assert.ok(Array.isArray(koChipRecommendation.reasonDetails), 'expected Korean chip recommendation details');
+assert.match(koChipRecommendation.reasonDetails.join('\n'), /최상위 빌드는 .*12칩/);
+assert.match(koChipRecommendation.reasonDetails.join('\n'), /6칩 사용 가능/);
 
 const catalogOnlyRecommendations = buildTechUpgradeRecommendations({
   result,

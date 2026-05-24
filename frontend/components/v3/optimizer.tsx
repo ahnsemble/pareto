@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocale } from 'next-intl';
 import { Link } from '../../i18n/navigation';
 import { bootParetoStore, useParetoStore } from '../../app/lib/pareto-store/store';
@@ -13,6 +13,7 @@ import {
   buildProductImportFieldSummary,
   importProductProfileInput,
 } from '../../app/lib/pareto-store/profile-import';
+import { buildTechDataConfidenceSummary } from '../../app/lib/pareto-store/tech-data-confidence';
 import {
   TECH_PROFILE_SAVE_SLOTS,
   labelForTechProfileSaveSlot,
@@ -23,6 +24,15 @@ import {
   type TechProfileSaveState,
 } from '../../app/lib/pareto-store/tech-profile-storage';
 import {
+  TECH_PROFILE_SHARE_PARAM,
+  buildTechProfileBackupText,
+  buildTechProfileShareUrl,
+  decodeTechProfileShareState,
+} from '../../app/lib/pareto-store/tech-profile-share';
+import { getTechModePreset } from '../../app/lib/pareto-store/tech-mode-presets';
+import {
+  buildCalculationComparisonExplanation,
+  buildCalculationComparisonInputChangeSummary,
   buildCalculationComparisonSummary,
   topBuildDamageFactor,
   type CalculationComparisonSummary,
@@ -61,7 +71,7 @@ import {
   shellClass,
 } from './optimizerUi';
 import { AccountContextPanel } from './tech/TechAccountContextPanel';
-import { ProfileImportPanel, ProfileSavePanel, ResourceWalletPanel } from './tech/TechProductPanels';
+import { DataConfidencePanel, ProfileImportPanel, ProfileSavePanel, ResourceWalletPanel } from './tech/TechProductPanels';
 import { TechUpgradeRecommendations } from './tech/TechUpgradeRecommendations';
 import {
   getTechOptimizerCopy,
@@ -594,8 +604,13 @@ export function TechPartsOptimizerSurface() {
   const [calculationComparison, setCalculationComparison] = useState<CalculationComparisonSummary | null>(null);
   const [savedProfileSlots, setSavedProfileSlots] = useState<Record<TechProfileSaveSlotId, string | null>>(EMPTY_PROFILE_SAVE_SLOTS);
   const [profileSaveStatus, setProfileSaveStatus] = useState('');
+  const [profileShareUrl, setProfileShareUrl] = useState('');
+  const [profileShareStatus, setProfileShareStatus] = useState('');
+  const [profileBackupText, setProfileBackupText] = useState('');
+  const [profileBackupStatus, setProfileBackupStatus] = useState('');
   const [runError, setRunError] = useState<string | null>(null);
   const [running, setRunning] = useState(false);
+  const profileShareLoadHandled = useRef(false);
   const inventory = useMemo<SioTechInventoryInput>(
     () =>
       buildTechInventoryInput({
@@ -630,6 +645,29 @@ export function TechPartsOptimizerSurface() {
       }),
     [accountContext, importedCollectibleSnapshot, importedTechSnapshot, locale, result, topBuild],
   );
+  const dataConfidenceSummary = useMemo(
+    () =>
+      buildTechDataConfidenceSummary({
+        coverage: profileImportCoverage,
+        hasImportedRunSnapshot: Boolean(importedRunSnapshot),
+        hasTechSnapshot: Boolean(importedTechSnapshot),
+        hasCollectibleSnapshot: Boolean(importedCollectibleSnapshot),
+        locale,
+      }),
+    [importedCollectibleSnapshot, importedRunSnapshot, importedTechSnapshot, locale, profileImportCoverage],
+  );
+  const calculationComparisonExplanation = useMemo(() => {
+    if (!calculationComparison) return null;
+    const inputChanges = importedRunSnapshot
+      ? buildCalculationComparisonInputChangeSummary({
+          importedAccountContext: importedRunSnapshot.accountContext as unknown as Record<string, unknown>,
+          currentAccountContext: accountContext as unknown as Record<string, unknown>,
+          importedInventory: importedRunSnapshot.inventory as unknown as Record<string, unknown>,
+          currentInventory: inventory as unknown as Record<string, unknown>,
+        })
+      : undefined;
+    return buildCalculationComparisonExplanation({ summary: calculationComparison, inputChanges, locale });
+  }, [accountContext, calculationComparison, importedRunSnapshot, inventory, locale]);
   const canRun = bootStatus === 'ok' && inventoryValidation.valid && !running;
   const validationText = inventoryValidation.valid
     ? inventoryValidation.warnings.length > 0
@@ -732,6 +770,62 @@ export function TechPartsOptimizerSurface() {
     setCalculationComparison(null);
     setRunError(null);
   }, []);
+  useEffect(() => {
+    if (profileShareLoadHandled.current || typeof window === 'undefined') return;
+    profileShareLoadHandled.current = true;
+    const encoded = new URLSearchParams(window.location.search).get(TECH_PROFILE_SHARE_PARAM);
+    if (!encoded) return;
+    const decoded = decodeTechProfileShareState(encoded);
+    if (!decoded.ok) {
+      setProfileSaveStatus(copy.profileSave.shareInvalid);
+      return;
+    }
+    applyProfileSaveState(decoded.document.state);
+    setProfileSaveStatus(copy.profileSave.shareLoaded);
+  }, [applyProfileSaveState, copy.profileSave.shareInvalid, copy.profileSave.shareLoaded]);
+  const copyProfileText = useCallback(async (value: string, setStatus: (status: string) => void) => {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(value);
+        setStatus(copy.profileSave.copied);
+        return;
+      }
+    } catch {
+      // Keep the visible field available when clipboard access is denied.
+    }
+    setStatus(copy.profileSave.copyManually);
+  }, [copy.profileSave.copied, copy.profileSave.copyManually]);
+  const handleProfileShare = useCallback(async () => {
+    if (typeof window === 'undefined') return;
+    const nextShareUrl = buildTechProfileShareUrl({
+      baseUrl: window.location.href,
+      state: buildCurrentProfileSaveState(),
+    });
+    setProfileShareUrl(nextShareUrl);
+    await copyProfileText(nextShareUrl, setProfileShareStatus);
+  }, [buildCurrentProfileSaveState, copyProfileText]);
+  const handleProfileBackup = useCallback(async () => {
+    const nextBackupText = buildTechProfileBackupText(buildCurrentProfileSaveState());
+    setProfileBackupText(nextBackupText);
+    await copyProfileText(nextBackupText, setProfileBackupStatus);
+  }, [buildCurrentProfileSaveState, copyProfileText]);
+  const handleProfilePreset = useCallback((slotId: TechProfileSaveSlotId) => {
+    const preset = getTechModePreset(slotId);
+    const slotLabel = labelForTechProfileSaveSlot(slotId, locale);
+    setSkillSlots(preset.skillSlots);
+    setOverloadable(preset.overloadable);
+    setMaxOverload(preset.maxOverload);
+    setSpeedMode(preset.speedMode);
+    setLimit(preset.limit);
+    setSkillStatus((current) => ({
+      ...current,
+      ...preset.skillStatusOverrides,
+    }) as Record<SioModeId, SkillStatus>);
+    setResult(null);
+    setCalculationComparison(null);
+    setRunError(null);
+    setProfileSaveStatus(copy.profileSave.presetApplied(slotLabel));
+  }, [copy.profileSave, locale]);
   const handleProfileSave = useCallback((slotId: TechProfileSaveSlotId) => {
     const slotLabel = labelForTechProfileSaveSlot(slotId, locale);
     const storage = getBrowserProfileStorage();
@@ -932,12 +1026,21 @@ export function TechPartsOptimizerSurface() {
           locale={locale}
         />
 
+        <DataConfidencePanel summary={dataConfidenceSummary} locale={locale} />
+
         <ProfileSavePanel
           slots={profileSaveSlots}
           status={profileSaveStatus}
           onSave={handleProfileSave}
           onLoad={handleProfileLoad}
           onDelete={handleProfileDelete}
+          onPreset={handleProfilePreset}
+          onShare={handleProfileShare}
+          onBackup={handleProfileBackup}
+          shareUrl={profileShareUrl}
+          shareStatus={profileShareStatus}
+          backupText={profileBackupText}
+          backupStatus={profileBackupStatus}
           locale={locale}
         />
 
@@ -1013,7 +1116,12 @@ export function TechPartsOptimizerSurface() {
               </label>
               <label className="block text-sm text-[color:var(--color-text)]">
                 <span className="text-xs text-[color:var(--color-text-muted)]">{copy.inventory.labels.searchDepth}</span>
-                <select className={selectClass + ' mt-1'} value={speedMode} onChange={(event) => setSpeedMode(event.target.value)}>
+                <select
+                  className={selectClass + ' mt-1'}
+                  data-testid="tech-inventory-speed-mode"
+                  value={speedMode}
+                  onChange={(event) => setSpeedMode(event.target.value)}
+                >
                   {SPEED_MODE_OPTIONS.map((item) => (
                     <option key={item} value={item}>
                       {item}
@@ -1023,7 +1131,12 @@ export function TechPartsOptimizerSurface() {
               </label>
               <label className="block text-sm text-[color:var(--color-text)]">
                 <span className="text-xs text-[color:var(--color-text-muted)]">{copy.inventory.labels.inputMode}</span>
-                <select className={selectClass + ' mt-1'} value={limit} onChange={(event) => setLimit(event.target.value)}>
+                <select
+                  className={selectClass + ' mt-1'}
+                  data-testid="tech-inventory-input-mode"
+                  value={limit}
+                  onChange={(event) => setLimit(event.target.value)}
+                >
                   {LIMIT_OPTIONS.map((item) => (
                     <option key={item} value={item}>
                       {item}
@@ -1034,6 +1147,7 @@ export function TechPartsOptimizerSurface() {
               <label className="flex min-h-[44px] items-center gap-3 text-sm text-[color:var(--color-text)]">
                 <input
                   className={checkboxClass}
+                  data-testid="tech-inventory-overloadable"
                   type="checkbox"
                   checked={overloadable}
                   onChange={(event) => setOverloadable(event.target.checked)}
@@ -1222,6 +1336,20 @@ export function TechPartsOptimizerSurface() {
                         : copy.results.comparison.unchanged}
                     </p>
                   </div>
+                  {calculationComparisonExplanation ? (
+                    <div
+                      className="rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-3 sm:col-span-3"
+                      data-testid="tech-calculation-comparison-explanation"
+                    >
+                      <p className={labelClass}>{copy.results.comparison.explanation}</p>
+                      <p className="mt-2 text-sm font-semibold text-[color:var(--color-text)]">{calculationComparisonExplanation.headline}</p>
+                      <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-[color:var(--color-text-muted)]">
+                        {calculationComparisonExplanation.details.map((detail) => (
+                          <li key={detail}>{detail}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
                 </div>
               ) : (
                 <p className="mt-2 text-xs text-[color:var(--color-text-muted)]">{copy.results.comparison.unavailable}</p>

@@ -25,6 +25,18 @@ export function TechUpgradeRecommendations({
               <p className="text-sm font-semibold text-[color:var(--color-text)]">{item.title}</p>
               <p className="mt-1 text-xs text-[color:var(--color-text-muted)]">{item.action}</p>
               <p className="mt-1 text-xs text-[color:var(--color-text-muted)]">{item.reason}</p>
+              {item.reasonDetails && item.reasonDetails.length > 0 ? (
+                <div className="mt-2 rounded-sm bg-[color:var(--color-surface)] p-2" data-testid="tech-upgrade-recommendation-details">
+                  <p className="text-[11px] font-semibold uppercase text-[color:var(--color-text-muted)]">
+                    {copy.recommendations.why}
+                  </p>
+                  <ul className="mt-1 list-disc space-y-1 pl-4 text-xs text-[color:var(--color-text-muted)]">
+                    {item.reasonDetails.map((detail) => (
+                      <li key={detail}>{detail}</li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
               <p className="mt-2 font-mono text-[11px] uppercase text-[color:var(--color-text-muted)]">
                 {copy.recommendations.confidence}: {copy.recommendations.confidenceLevels[item.confidence]}
                 {item.expectedGainLabel ? ` / ${item.expectedGainLabel}` : ''}

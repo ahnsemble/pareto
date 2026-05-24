@@ -19,6 +19,7 @@ test.describe('TD-11 — Tech optimizer Korean route', () => {
     await expect(page.getByTestId('tech-profile-import')).toContainText('프로필 JSON, 계산 링크 또는 스크린샷 텍스트');
     await expect(page.getByRole('button', { name: '프로필 가져오기' })).toBeVisible();
     await expect(page.getByTestId('tech-profile-save')).toContainText('저장 프로필');
+    await expect(page.getByTestId('tech-data-confidence')).toContainText('데이터 신뢰도');
     await expect(page.getByTestId('tech-profile-save')).toContainText('종말의 메아리');
     await expect(page.getByTestId('tech-profile-save')).toContainText('길드원정');
     await expect(page.getByTestId('tech-resource-wallet')).toContainText('리소스 지갑');
@@ -113,8 +114,58 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByText(/SIO/)).toHaveCount(0);
   });
 
+  test('copies a restorable profile share link and encoded backup', async ({ page, context, baseURL }) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+
+    await page.getByTestId('tech-account-final-atk').fill('333333');
+    await page.getByTestId('tech-account-skill-damage').fill('477');
+    await page.getByTestId('tech-inventory-chips').fill('22');
+
+    await page.getByTestId('tech-profile-share-link').click();
+    await expect(page.getByTestId('tech-profile-share-url-output')).toHaveValue(/\/en\/v3\/optimizer\/tech-parts\?.*ttProfile=/);
+    await expect(page.getByTestId('tech-profile-share-status')).toContainText('Copied');
+    await expect(page.getByTestId('tech-profile-share-url-output')).not.toHaveValue(/sio|beam|preselect|exact|\{|\}/i);
+
+    const shareUrl = await page.getByTestId('tech-profile-share-url-output').inputValue();
+    const restored = await context.newPage();
+    await restored.goto(shareUrl);
+    await expect(restored.getByTestId('v3-optimizer-boot-status')).toContainText('Boot OK');
+    await expect(restored.getByTestId('tech-profile-save-status')).toContainText('Share link loaded');
+    await expect(restored.getByTestId('tech-account-final-atk')).toHaveValue('333333');
+    await expect(restored.getByTestId('tech-account-skill-damage')).toHaveValue('477');
+    await expect(restored.getByTestId('tech-inventory-chips')).toHaveValue('22');
+    await expect(restored.getByText(/SIO/)).toHaveCount(0);
+
+    await page.goto(`${baseURL ?? 'http://localhost:3032'}${OPTIMIZER_URL}`);
+    await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Boot OK');
+    await page.getByTestId('tech-profile-backup-copy').click();
+    await expect(page.getByTestId('tech-profile-backup-output')).toHaveValue(/tangtang-tech-profile-backup/);
+    await expect(page.getByTestId('tech-profile-backup-status')).toContainText('Copied');
+    await expect(page.getByTestId('tech-profile-backup-output')).not.toHaveValue(/sio|beam|preselect|exact/i);
+  });
+
+  test('applies mode presets without exposing internals', async ({ page }) => {
+    await page.getByTestId('tech-profile-save-guildExpedition-preset').click();
+    await expect(page.getByTestId('tech-profile-save-status')).toContainText('Guild Expedition preset applied');
+    await expect(page.getByTestId('tech-inventory-skill-slots')).toHaveValue('6');
+    await expect(page.getByTestId('tech-inventory-speed-mode')).toHaveValue('precise');
+    await expect(page.getByTestId('tech-inventory-input-mode')).toHaveValue('advanced');
+    await expect(page.getByTestId('tech-inventory-overloadable')).toBeChecked();
+    await expect(page.getByTestId('tech-inventory-max-overload')).toHaveValue('18');
+
+    await page.getByTestId('tech-profile-save-endersEcho-preset').click();
+    await expect(page.getByTestId('tech-profile-save-status')).toContainText("Ender's Echo preset applied");
+    await expect(page.getByTestId('tech-inventory-skill-slots')).toHaveValue('4');
+    await expect(page.getByTestId('tech-inventory-speed-mode')).toHaveValue('normal');
+    await expect(page.getByTestId('tech-inventory-input-mode')).toHaveValue('basic');
+    await expect(page.getByTestId('tech-inventory-overloadable')).not.toBeChecked();
+    await expect(page.getByText(/SIO/)).toHaveCount(0);
+  });
+
   test('shows profile import without exposing raw SIO LM JSON', async ({ page }) => {
     await expect(page.getByTestId('tech-profile-import')).toBeVisible();
+    await expect(page.getByTestId('tech-data-confidence')).toContainText('Data confidence');
+    await expect(page.getByTestId('tech-data-confidence-level')).toContainText('low');
     await expect(page.getByRole('button', { name: 'Import profile' })).toBeVisible();
     await expect(page.getByTestId('tech-profile-import-input')).toBeVisible();
     await expect(page.getByTestId('tech-profile-import')).toContainText('screenshot text');
@@ -252,6 +303,9 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-profile-import-field-review')).toContainText('165');
     await expect(page.getByTestId('tech-profile-import-field-review')).toContainText('Otherworld pet sync');
     await expect(page.getByTestId('tech-profile-import-field-review')).toContainText('42.5');
+    await expect(page.getByTestId('tech-data-confidence')).toContainText('Data confidence');
+    await expect(page.getByTestId('tech-data-confidence')).toContainText(/confirmed|review|missing/i);
+    await expect(page.getByTestId('tech-data-confidence')).not.toContainText(/sio|beam|preselect|exact/i);
     await expect(page.getByTestId('tech-account-summary')).toContainText('Final ATK');
     await expect(page.getByTestId('tech-account-summary')).toContainText('550,220');
     await expect(page.getByTestId('tech-account-summary')).toContainText('Crit');
@@ -302,9 +356,13 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-calculation-comparison')).toContainText('Imported calculation');
     await expect(page.getByTestId('tech-calculation-comparison')).toContainText('Tangtang calculation');
     await expect(page.getByTestId('tech-calculation-comparison')).toContainText('Difference');
+    await expect(page.getByTestId('tech-calculation-comparison')).toContainText('Why the numbers differ');
+    await expect(page.getByTestId('tech-calculation-comparison')).toContainText(/imported baseline|current editable inputs/i);
     await expect(page.getByTestId('tech-calculation-comparison')).not.toContainText(/sio|beam|preselect|exact/i);
     await expect(page.getByTestId('tech-upgrade-recommendations')).toContainText('Next upgrades');
     await expect(page.getByTestId('tech-upgrade-recommendations')).toContainText(/Collection|collection|collectible/);
+    await expect(page.getByTestId('tech-upgrade-recommendations')).toContainText('Why this recommendation');
+    await expect(page.getByTestId('tech-upgrade-recommendations')).toContainText(/Top build assigns|chips available|imported profile/i);
     await expect(page.getByTestId('tech-upgrade-recommendations')).toContainText(/Confidence: (high|medium|low)/);
     await expect(page.getByTestId('tech-upgrade-recommendations')).not.toContainText(/energyGuidanceSystem|droneMode|sio/i);
 

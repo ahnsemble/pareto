@@ -27,11 +27,15 @@ const outputPath = resolve(tmpDir, `calculation-comparison-${Date.now()}-${Math.
 writeFileSync(outputPath, transpiled.outputText);
 
 const {
+  buildCalculationComparisonExplanation,
   buildCalculationComparisonSummary,
+  buildCalculationComparisonInputChangeSummary,
   topBuildDamageFactor,
 } = await import(pathToFileURL(outputPath));
 
+assert.equal(typeof buildCalculationComparisonExplanation, 'function');
 assert.equal(typeof buildCalculationComparisonSummary, 'function');
+assert.equal(typeof buildCalculationComparisonInputChangeSummary, 'function');
 assert.equal(typeof topBuildDamageFactor, 'function');
 
 assert.equal(
@@ -62,6 +66,36 @@ assert.equal(improvedSummary.status, 'ready');
 assert.equal(improvedSummary.delta, 125);
 assert.equal(improvedSummary.deltaPct, 12.5);
 assert.equal(improvedSummary.changed, true);
+
+const inputChangeSummary = buildCalculationComparisonInputChangeSummary({
+  importedAccountContext: { finalAtk: 1000, critRate: 10, movementSpeed: 5 },
+  currentAccountContext: { finalAtk: 1200, critRate: 10, movementSpeed: 8 },
+  importedInventory: { chips: 10, skillSlots: 4 },
+  currentInventory: { chips: 6, skillSlots: 4 },
+});
+assert.deepEqual(inputChangeSummary, {
+  accountContextChanges: 2,
+  inventoryChanges: 1,
+  changed: true,
+});
+
+const improvedExplanation = buildCalculationComparisonExplanation({
+  summary: improvedSummary,
+  inputChanges: inputChangeSummary,
+  locale: 'en',
+});
+assert.match(improvedExplanation.headline, /Tangtang calculation is higher/);
+assert.match(improvedExplanation.details.join('\n'), /current editable inputs/);
+assert.match(improvedExplanation.details.join('\n'), /Account context changed in 2 fields/);
+assert.match(improvedExplanation.details.join('\n'), /Tech inputs changed in 1 field/);
+
+const koExplanation = buildCalculationComparisonExplanation({
+  summary: improvedSummary,
+  inputChanges: inputChangeSummary,
+  locale: 'ko',
+});
+assert.match(koExplanation.headline, /Tangtang 계산이 더 높습니다/);
+assert.match(koExplanation.details.join('\n'), /현재 화면 입력값/);
 
 assert.deepEqual(
   buildCalculationComparisonSummary({

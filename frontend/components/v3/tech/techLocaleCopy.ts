@@ -43,6 +43,16 @@ export type TechOptimizerCopy = {
     save: string;
     load: string;
     delete: string;
+    preset: string;
+    copyShareLink: string;
+    copyBackup: string;
+    shareUrl: string;
+    backup: string;
+    copied: string;
+    copyManually: string;
+    shareLoaded: string;
+    shareInvalid: string;
+    presetApplied: (slot: string) => string;
     saved: (slot: string) => string;
     loaded: (slot: string) => string;
     deleted: (slot: string) => string;
@@ -51,6 +61,10 @@ export type TechOptimizerCopy = {
   };
   resourceWallet: {
     title: string;
+  };
+  dataConfidence: {
+    title: string;
+    levels: Record<'high' | 'medium' | 'low', string>;
   };
   inventory: {
     title: string;
@@ -107,6 +121,7 @@ export type TechOptimizerCopy = {
       imported: string;
       tangtang: string;
       delta: string;
+      explanation: string;
       unchanged: string;
       unavailable: string;
     };
@@ -124,6 +139,7 @@ export type TechOptimizerCopy = {
   recommendations: {
     title: string;
     empty: string;
+    why: string;
     confidence: string;
     confidenceLevels: Record<'high' | 'medium' | 'low', string>;
   };
@@ -159,6 +175,16 @@ const EN_COPY: TechOptimizerCopy = {
     save: 'Save',
     load: 'Load',
     delete: 'Delete',
+    preset: 'Preset',
+    copyShareLink: 'Copy share link',
+    copyBackup: 'Copy backup',
+    shareUrl: 'Share URL',
+    backup: 'Backup',
+    copied: 'Copied to clipboard.',
+    copyManually: 'Copy manually.',
+    shareLoaded: 'Share link loaded.',
+    shareInvalid: 'Share link is invalid.',
+    presetApplied: (slot) => `${slot} preset applied.`,
     saved: (slot) => `${slot} saved.`,
     loaded: (slot) => `${slot} loaded. Run again for fresh results.`,
     deleted: (slot) => `${slot} deleted.`,
@@ -167,6 +193,14 @@ const EN_COPY: TechOptimizerCopy = {
   },
   resourceWallet: {
     title: 'Resource wallet',
+  },
+  dataConfidence: {
+    title: 'Data confidence',
+    levels: {
+      high: 'high',
+      medium: 'medium',
+      low: 'low',
+    },
   },
   inventory: {
     title: 'Owned tech materials',
@@ -303,6 +337,7 @@ const EN_COPY: TechOptimizerCopy = {
       imported: 'Imported calculation',
       tangtang: 'Tangtang calculation',
       delta: 'Difference',
+      explanation: 'Why the numbers differ',
       unchanged: 'No change',
       unavailable: 'Run an imported profile to compare calculations.',
     },
@@ -321,6 +356,7 @@ const EN_COPY: TechOptimizerCopy = {
   recommendations: {
     title: 'Next upgrades',
     empty: 'Run the optimizer to see upgrade recommendations.',
+    why: 'Why this recommendation',
     confidence: 'Confidence',
     confidenceLevels: {
       high: 'high',
@@ -360,6 +396,16 @@ const KO_COPY: TechOptimizerCopy = {
     save: '저장',
     load: '불러오기',
     delete: '삭제',
+    preset: '프리셋',
+    copyShareLink: '공유 링크 복사',
+    copyBackup: '백업 복사',
+    shareUrl: '공유 URL',
+    backup: '백업',
+    copied: '클립보드에 복사됨.',
+    copyManually: '직접 복사하세요.',
+    shareLoaded: '공유 링크 불러옴.',
+    shareInvalid: '공유 링크가 올바르지 않습니다.',
+    presetApplied: (slot) => `${slot} 프리셋 적용 완료.`,
     saved: (slot) => `${slot} 저장 완료.`,
     loaded: (slot) => `${slot} 불러옴. 최신 결과는 다시 계산하세요.`,
     deleted: (slot) => `${slot} 삭제 완료.`,
@@ -368,6 +414,14 @@ const KO_COPY: TechOptimizerCopy = {
   },
   resourceWallet: {
     title: '리소스 지갑',
+  },
+  dataConfidence: {
+    title: '데이터 신뢰도',
+    levels: {
+      high: '높음',
+      medium: '중간',
+      low: '낮음',
+    },
   },
   inventory: {
     title: '보유 테크 재료',
@@ -504,6 +558,7 @@ const KO_COPY: TechOptimizerCopy = {
       imported: '가져온 계산',
       tangtang: 'Tangtang 계산',
       delta: '차이',
+      explanation: '차이가 나는 이유',
       unchanged: '변화 없음',
       unavailable: '가져온 프로필을 계산하면 비교가 표시됩니다.',
     },
@@ -522,6 +577,7 @@ const KO_COPY: TechOptimizerCopy = {
   recommendations: {
     title: '다음 업그레이드',
     empty: '최적화를 실행하면 업그레이드 추천을 볼 수 있습니다.',
+    why: '추천 이유',
     confidence: '신뢰도',
     confidenceLevels: {
       high: '높음',

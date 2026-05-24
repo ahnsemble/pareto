@@ -42,6 +42,43 @@ function selectCollectibleCandidate(
   return scored[0];
 }
 
+function buildCollectibleCandidateReasonDetails({
+  accountContext,
+  candidate,
+  fromCustomSet,
+  ko,
+  name,
+}: {
+  accountContext: Pick<NonNullable<TechRecommendationInput['accountContext']>, 'targetCollectibleId'> | undefined;
+  candidate: NonNullable<ReturnType<typeof selectCollectibleCandidate>>;
+  fromCustomSet: boolean;
+  ko: boolean;
+  name: string;
+}): string[] {
+  const stars = candidate.stars;
+  if (ko) {
+    return [
+      fromCustomSet
+        ? `${name}은 가져온 프로필의 활성 커스텀 수집품 세트에 포함되어 있습니다.`
+        : `${name}은 가져온 프로필에서 다음으로 점검할 낮은 별 수집품입니다.`,
+      stars !== undefined ? `현재 별: ${stars}성.` : '가져온 프로필에서 현재 별 수가 확인되지 않았습니다.',
+      accountContext?.targetCollectibleId
+        ? '계정 컨텍스트에서 선택한 목표 수집품과 일치합니다.'
+        : '가져온 수집품 목록 안에서 바로 행동 가능한 항목을 우선했습니다.',
+    ];
+  }
+
+  return [
+    fromCustomSet
+      ? `${name} is part of an active custom collection set in the imported profile.`
+      : `${name} is the next low-star collection item to review from the imported profile.`,
+    stars !== undefined ? `Current stars: ${stars}.` : 'The imported profile did not include a current star count.',
+    accountContext?.targetCollectibleId
+      ? 'It matches the target collectible selected in account context.'
+      : 'The recommendation prioritizes an immediately actionable collection item from the import.',
+  ];
+}
+
 export function buildCollectibleUpgradeRecommendation({
   accountContext,
   importedCollectibleSnapshot,
@@ -67,6 +104,7 @@ export function buildCollectibleUpgradeRecommendation({
         : fromCustomSet
           ? 'This is the lowest-star item inside an active custom collection set from the imported profile.'
           : 'The imported profile shows this as the next low-star collection item to review.',
+      reasonDetails: buildCollectibleCandidateReasonDetails({ accountContext, candidate, fromCustomSet, ko, name }),
       expectedGainLabel: stars !== undefined ? (ko ? `현재 ${stars}성` : `${stars} stars`) : undefined,
       confidence: fromCustomSet || accountContext?.targetCollectibleId ? 'high' : 'medium',
     };
@@ -81,6 +119,9 @@ export function buildCollectibleUpgradeRecommendation({
       title: ko ? '수집품 세트 완성' : 'Complete collection sets',
       action: ko ? '별작 전에 아직 비어 있는 수집품 세트부터 채우세요.' : 'Fill missing collection sets before star-chasing individual items.',
       reason: ko ? '세트 진행도는 계정 컨텍스트에 직접 반영되는 광역 성장값입니다.' : 'Set progress feeds the account context as a broad growth input.',
+      reasonDetails: ko
+        ? [`현재 세트 진행도: ${Math.trunc(collectionSets)}/38.`, `${remaining}세트가 남아 있어 개별 별작보다 세트 완성이 먼저입니다.`]
+        : [`Current set progress: ${Math.trunc(collectionSets)}/38.`, `${remaining} sets remain, so set completion comes before individual star chasing.`],
       expectedGainLabel: ko ? `${remaining}세트 남음` : `${remaining} sets left`,
       confidence: 'medium',
     };

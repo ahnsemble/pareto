@@ -6,6 +6,7 @@ export type TechUpgradeRecommendation = {
   title: string;
   action: string;
   reason: string;
+  reasonDetails?: string[];
   expectedGainLabel?: string;
   confidence: 'high' | 'medium' | 'low';
 };
