@@ -46,6 +46,30 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-sio-lm-context')).toHaveCount(0);
   });
 
+  test('uses a horizontal account context layout on desktop', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'chromium-desktop', 'desktop layout geometry');
+
+    const account = page.getByTestId('tech-account-context');
+    const inventory = page.getByTestId('tech-inventory-contract');
+    const buildStats = account.locator('section').filter({ hasText: 'Build stats' }).first();
+    const damageConditions = account.locator('section').filter({ hasText: 'Damage conditions' }).first();
+
+    const [accountBox, inventoryBox, buildStatsBox, damageBox] = await Promise.all([
+      account.boundingBox(),
+      inventory.boundingBox(),
+      buildStats.boundingBox(),
+      damageConditions.boundingBox(),
+    ]);
+
+    if (!accountBox || !inventoryBox || !buildStatsBox || !damageBox) {
+      throw new Error('Missing account context layout boxes');
+    }
+
+    expect(accountBox.width).toBeGreaterThan(inventoryBox.width * 1.5);
+    expect(Math.abs(buildStatsBox.y - damageBox.y)).toBeLessThan(24);
+    expect(damageBox.x).toBeGreaterThan(buildStatsBox.x + buildStatsBox.width * 0.75);
+  });
+
   test('shows profile import without exposing raw SIO LM JSON', async ({ page }) => {
     await expect(page.getByTestId('tech-profile-import')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Import profile' })).toBeVisible();

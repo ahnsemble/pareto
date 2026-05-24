@@ -277,6 +277,7 @@ export function AccountContextPanel({
       ],
     },
   ];
+  const wideSectionTitles = new Set([labels.collections, labels.equipmentForging]);
 
   return (
     <div className={panelClass} data-testid="tech-account-context">
@@ -289,9 +290,12 @@ export function AccountContextPanel({
           </div>
         ))}
       </div>
-      <div className="mt-2 grid gap-1 text-xs text-[color:var(--color-text-muted)]">
+      <div className="mt-3 grid items-start gap-3 text-xs text-[color:var(--color-text-muted)] md:grid-cols-2 xl:grid-cols-4" data-testid="tech-account-section-grid">
         {sections.map((section) => (
-          <section key={section.title} className="border-t border-[color:var(--color-border)]/50 py-3">
+          <section
+            key={section.title}
+            className={`min-w-0 rounded-md border border-[color:var(--color-border)]/60 p-3 ${wideSectionTitles.has(section.title) ? 'xl:col-span-2' : ''}`}
+          >
             <h3 className="text-xs font-semibold uppercase text-[color:var(--color-text)]">{section.title}</h3>
             {section.detailLabel ? <p className="mt-1 text-xs text-[color:var(--color-text-muted)]">{section.detailLabel}</p> : null}
             {section.title === labels.collections ? (
@@ -328,7 +332,7 @@ export function AccountContextPanel({
                     <span className="font-mono text-[color:var(--color-text-muted)]">{labels.set} {set.collectible_count}</span>
                   </div>
                 ))}
-                <div className="grid gap-2" data-testid="tech-collection-item-editor">
+                <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3" data-testid="tech-collection-item-editor">
                   {COLLECTIBLE_ITEM_INDEX.slice(0, 12).map((item) => (
                     <button
                       key={item.id}
@@ -548,7 +552,7 @@ export function AccountContextPanel({
               ))}
             </div>
             {section.title === labels.equipmentForging ? (
-              <div className="mt-3 grid gap-3">
+              <div className="mt-3 grid gap-3 sm:grid-cols-2">
                 {equipmentSlotSections.map((slot) => (
                   <div
                     key={slot.id}

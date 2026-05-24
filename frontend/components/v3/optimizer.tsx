@@ -743,34 +743,53 @@ export function TechPartsOptimizerSurface() {
         </div>
       </header>
 
-      <section className="grid min-w-0 gap-4 lg:grid-cols-[minmax(280px,0.95fr)_minmax(0,1.55fr)]">
-        <div className="min-w-0 space-y-4">
-          <ProfileImportPanel
-            value={profileImportText}
-            onChange={setProfileImportText}
-            onImport={handleProfileImport}
-            onClear={handleClearProfileImport}
-            onRun={handleTechRun}
-            canRun={canRun}
-            summary={profileImportSummary}
-            coverage={profileImportCoverage}
-            details={profileImportDetails}
-            importing={profileImporting}
-            running={running}
-            locale={locale}
-          />
+      <section className="grid min-w-0 gap-4">
+        <ProfileImportPanel
+          value={profileImportText}
+          onChange={setProfileImportText}
+          onImport={handleProfileImport}
+          onClear={handleClearProfileImport}
+          onRun={handleTechRun}
+          canRun={canRun}
+          summary={profileImportSummary}
+          coverage={profileImportCoverage}
+          details={profileImportDetails}
+          importing={profileImporting}
+          running={running}
+          locale={locale}
+        />
 
-          <ResourceWalletPanel
-            values={{ ...resourceWallet, techResonanceChips: chips }}
-            onChange={(id, value) => {
-              if (id === 'techResonanceChips') {
-                setChips(value);
-                return;
-              }
-              setResourceWallet((current) => ({ ...current, [id]: value }));
-            }}
-            locale={locale}
-          />
+        <AccountContextPanel
+          playerState={playerStateForRun}
+          account={accountContext}
+          onChange={(field, value) =>
+            setAccountContext((current) => ({
+              ...current,
+              [field]: Number.isFinite(value) ? value : 0,
+            }))
+          }
+          onNamedChange={(field, value) =>
+            setAccountContext((current) => ({
+              ...current,
+              [field]: value,
+            }))
+          }
+          locale={locale}
+        />
+
+        <div className="grid min-w-0 gap-4 lg:grid-cols-[minmax(280px,0.95fr)_minmax(0,1.55fr)]">
+          <div className="min-w-0 space-y-4">
+            <ResourceWalletPanel
+              values={{ ...resourceWallet, techResonanceChips: chips }}
+              onChange={(id, value) => {
+                if (id === 'techResonanceChips') {
+                  setChips(value);
+                  return;
+                }
+                setResourceWallet((current) => ({ ...current, [id]: value }));
+              }}
+              locale={locale}
+            />
 
           <div className={panelClass} data-testid="tech-inventory-contract">
             <div className="flex flex-wrap items-center justify-between gap-2">
@@ -903,24 +922,6 @@ export function TechPartsOptimizerSurface() {
               ))}
             </div>
           </div>
-
-          <AccountContextPanel
-            playerState={playerStateForRun}
-            account={accountContext}
-            onChange={(field, value) =>
-              setAccountContext((current) => ({
-                ...current,
-                [field]: Number.isFinite(value) ? value : 0,
-              }))
-            }
-            onNamedChange={(field, value) =>
-              setAccountContext((current) => ({
-                ...current,
-                [field]: value,
-              }))
-            }
-            locale={locale}
-          />
 
           <div className={panelClass}>
             <h2 className={labelClass}>{copy.search.title}</h2>
@@ -1094,6 +1095,7 @@ export function TechPartsOptimizerSurface() {
                 </div>
               );
             })}
+          </div>
           </div>
         </div>
       </section>
