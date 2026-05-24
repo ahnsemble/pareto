@@ -2091,6 +2091,64 @@ Promoted the four direct first-party 15-to-19 collectible set threshold mismatch
 
 GitHub push/PR not performed.
 
+## Tangtang Imported Calculation Comparison Update
+
+timestampKst: 2026-05-24T17:35:00+09:00
+status: `[TANGTANG-IMPORTED-CALCULATION-COMPARISON-GREEN]`
+
+### Product Decision
+
+- Added a user-facing comparison surface for imported calculation links.
+- Public labels are product-facing:
+  - `Imported calculation`
+  - `Tangtang calculation`
+  - `Difference`
+  - Korean: `가져온 계산`, `Tangtang 계산`, `차이`
+- The comparison stores the imported run inputs at import time and evaluates that baseline beside the current edited Tangtang inputs when the optimizer runs.
+- This is product-layer comparison only:
+  - scoring core changed: `false`
+  - corrected collectible threshold mode implemented: `false`
+  - full-equivalence scorer changed: `false`
+
+### User Photo Evidence Intake
+
+- Imported the 7 user-supplied collectible set screenshots into evidence artifacts:
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/tangtang_user_set_threshold_photo_evidence.json`
+  - `/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/tangtang_user_set_threshold_photo_evidence.md`
+- Parsed photo rows:
+  - photo count: 7
+  - parsed rows: 28
+  - threshold 19 rows: 4
+  - threshold 18 rows: 3
+  - HP percent rows: 4
+  - final ATK/HP rows: 24
+- These photos corroborate mixed set threshold patterns, but they are evidence-only:
+  - direct observed damage trials: `0`
+  - scoring changed: `false`
+  - application status: `evidence-only-not-applied`
+
+### Guardrails
+
+- Visible UI still avoids source-specific wording and raw scorer/debug/preselect/beam/exact-node controls.
+- `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs` stayed green with:
+  - `fullSioEquivalent=true`
+  - `currentScorer=sio_full_lm_equivalence`
+  - `scorer=sio_full_lm_equivalence`
+  - `workerParity.arbitraryGeneratedLiveExpected=26/26`
+
+### Verification Log
+
+- `node scripts/tangtang_calculation_comparison_unit_test.mjs`: passed.
+- `node scripts/tangtang_user_set_threshold_photo_evidence_unit_test.mjs`: passed.
+- `node scripts/tech_account_context_unit_test.mjs`: passed.
+- `node scripts/external_calculation_link_unit_test.mjs`: passed.
+- `npx playwright test e2e/v3_tech_optimizer.spec.ts --project=chromium-desktop --grep "recalculates imported profile quickly"`: passed.
+- `npx playwright test e2e/v3_tech_optimizer.spec.ts --project=chromium-desktop`: passed, 44 passed / 1 skipped.
+- `npx tsc --noEmit`: passed.
+- `SIO_FULL_EQUIVALENCE_REQUIRED=1 node scripts/sio_full_equivalence_gate.mjs`: passed.
+
+GitHub push/PR not performed.
+
 ## Tangtang Damage Formula Provenance Matrix Gate
 
 timestampKst: 2026-05-23T12:20:00+09:00

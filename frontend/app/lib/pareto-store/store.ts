@@ -55,7 +55,7 @@ export interface CountCheckResult {
 export function runCountCheckInvariants(state: ParetoStore): CountCheckResult[] {
   return [
     { invariant_id: 'ss_equipment_count', expected: 11, actual: state.ss_equipment.length, passed: state.ss_equipment.length === 11 },
-    { invariant_id: 'heroes_count', expected: 15, actual: state.heroes.length, passed: state.heroes.length === 15 },
+    { invariant_id: 'heroes_count', expected: 18, actual: state.heroes.length, passed: state.heroes.length === 18 },
     { invariant_id: 'weapons_count', expected: 9, actual: state.weapons.length, passed: state.weapons.length === 9 },
     { invariant_id: 'tech_parts_count', expected: 40, actual: state.tech_parts.length, passed: state.tech_parts.length === 40 },
     { invariant_id: 'pets_count', expected: 9, actual: state.pets.length, passed: state.pets.length === 9 },

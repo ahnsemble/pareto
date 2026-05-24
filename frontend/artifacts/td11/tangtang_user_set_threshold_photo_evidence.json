@@ -1,0 +1,295 @@
+{
+  "generatedAtKst": "2026-05-24",
+  "status": "[TANGTANG-USER-SET-THRESHOLD-PHOTO-EVIDENCE-GREEN]",
+  "claim": "user-supplied-set-threshold-photo-evidence",
+  "behaviorChange": false,
+  "scoringChanged": false,
+  "directObservedDamageTrials": 0,
+  "photos": [
+    {
+      "id": "user-photo-2026-05-24-good-drinks-reading-page-1",
+      "sourcePath": "/Users/woosung/Pictures/Photos Library.photoslibrary/resources/derivatives/masters/3/3176C127-B854-4DD8-9B34-554C132FA0B8_4_5005_c.jpeg",
+      "setDisplayNameKo": "좋은 음료와 독서",
+      "setType": "collectible-set",
+      "visibleMaxFinalAtk": 1200,
+      "visibleMaxFinalHp": 4800,
+      "parsedRows": [
+        {
+          "condition": "4개의 각성색 획득",
+          "statText": "최종 공격 +200, 최종 HP +800",
+          "active": true
+        },
+        {
+          "condition": "각 컬렉션 당 3개의 금 별 획득",
+          "statText": "최종 공격 +300, 최종 HP +1200",
+          "active": false
+        },
+        {
+          "condition": "누적으로 19개의 금 별 획득",
+          "statText": "HP +4%",
+          "active": false
+        },
+        {
+          "condition": "각 컬렉션 당 3개의 빨간 별 획득",
+          "statText": "최종 공격 +500, 최종 HP +2000",
+          "active": false
+        }
+      ]
+    },
+    {
+      "id": "user-photo-2026-05-24-good-drinks-reading-page-2",
+      "sourcePath": "/Users/woosung/Pictures/Photos Library.photoslibrary/resources/derivatives/masters/0/03987048-9886-4192-811C-7FB70C610091_4_5005_c.jpeg",
+      "setDisplayNameKo": "좋은 음료와 독서",
+      "setType": "collectible-set",
+      "visibleMaxFinalAtk": 1200,
+      "visibleMaxFinalHp": 4800,
+      "parsedRows": [
+        {
+          "condition": "누적으로 19개의 빨간 별 획득",
+          "statText": "HP +6%",
+          "active": false
+        },
+        {
+          "condition": "8개의 별 획득",
+          "statText": "최종 공격 +200, 최종 HP +800",
+          "active": true
+        },
+        {
+          "condition": "16개의 별 획득",
+          "statText": "최종 공격 +300, 최종 HP +1200",
+          "active": true
+        },
+        {
+          "condition": "24개의 별 획득",
+          "statText": "최종 공격 +500, 최종 HP +2000",
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "user-photo-2026-05-24-sparkling-crush-page-1",
+      "sourcePath": "/Users/woosung/Pictures/Photos Library.photoslibrary/resources/derivatives/masters/A/A2E99317-B174-444D-B29D-E0BCF718E325_4_5005_c.jpeg",
+      "setDisplayNameKo": "반짝이는 분쇄물",
+      "setType": "collectible-set",
+      "visibleMaxFinalAtk": 1000,
+      "visibleMaxFinalHp": 4000,
+      "parsedRows": [
+        {
+          "condition": "4개의 각성색 획득",
+          "statText": "최종 공격 +50, 최종 HP +200",
+          "active": true
+        },
+        {
+          "condition": "각 컬렉션 당 3개의 금 별 획득",
+          "statText": "최종 공격 +100, 최종 HP +400",
+          "active": true
+        },
+        {
+          "condition": "누적으로 18개의 금 별 획득",
+          "statText": "최종 공격 +150, 최종 HP +600",
+          "active": true
+        },
+        {
+          "condition": "각 컬렉션 당 3개의 빨간 별 획득",
+          "statText": "최종 공격 +150, 최종 HP +600",
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "user-photo-2026-05-24-sparkling-crush-page-2",
+      "sourcePath": "/Users/woosung/Pictures/Photos Library.photoslibrary/resources/derivatives/masters/9/9C04C12C-5A0E-4BF4-89B3-8AD7135FEB1C_4_5005_c.jpeg",
+      "setDisplayNameKo": "반짝이는 분쇄물",
+      "setType": "collectible-set",
+      "visibleMaxFinalAtk": 1000,
+      "visibleMaxFinalHp": 4000,
+      "parsedRows": [
+        {
+          "condition": "각 컬렉션 당 3개의 빨간 별 획득",
+          "statText": "최종 공격 +150, 최종 HP +600",
+          "active": true
+        },
+        {
+          "condition": "누적으로 18개의 빨간 별 획득",
+          "statText": "최종 공격 +250, 최종 HP +1000",
+          "active": true
+        },
+        {
+          "condition": "8개의 별 획득",
+          "statText": "최종 공격 +50, 최종 HP +200",
+          "active": true
+        },
+        {
+          "condition": "16개의 별 획득",
+          "statText": "최종 공격 +100, 최종 HP +400",
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "user-photo-2026-05-24-sparkling-crush-page-3",
+      "sourcePath": "/Users/woosung/Pictures/Photos Library.photoslibrary/resources/derivatives/masters/8/8EC1E405-D199-479E-9988-ECAD1E5139BC_4_5005_c.jpeg",
+      "setDisplayNameKo": "반짝이는 분쇄물",
+      "setType": "collectible-set",
+      "visibleMaxFinalAtk": 1000,
+      "visibleMaxFinalHp": 4000,
+      "parsedRows": [
+        {
+          "condition": "누적으로 18개의 빨간 별 획득",
+          "statText": "최종 공격 +250, 최종 HP +1000",
+          "active": true
+        },
+        {
+          "condition": "8개의 별 획득",
+          "statText": "최종 공격 +50, 최종 HP +200",
+          "active": true
+        },
+        {
+          "condition": "16개의 별 획득",
+          "statText": "최종 공격 +100, 최종 HP +400",
+          "active": true
+        },
+        {
+          "condition": "24개의 별 획득",
+          "statText": "최종 공격 +150, 최종 HP +600",
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "user-photo-2026-05-24-hidden-mystery-page-1",
+      "sourcePath": "/Users/woosung/Pictures/Photos Library.photoslibrary/resources/derivatives/masters/B/BF890176-729B-47B6-A9F7-9843EC788A92_4_5005_c.jpeg",
+      "setDisplayNameKo": "감춰진 신비",
+      "setType": "collectible-set",
+      "visibleMaxFinalAtk": 1200,
+      "visibleMaxFinalHp": 4800,
+      "parsedRows": [
+        {
+          "condition": "4개의 각성색 획득",
+          "statText": "최종 공격 +200, 최종 HP +800",
+          "active": true
+        },
+        {
+          "condition": "각 컬렉션 당 3개의 금 별 획득",
+          "statText": "최종 공격 +300, 최종 HP +1200",
+          "active": false
+        },
+        {
+          "condition": "누적으로 19개의 금 별 획득",
+          "statText": "HP +4%",
+          "active": false
+        },
+        {
+          "condition": "각 컬렉션 당 3개의 빨간 별 획득",
+          "statText": "최종 공격 +500, 최종 HP +2000",
+          "active": false
+        }
+      ]
+    },
+    {
+      "id": "user-photo-2026-05-24-hidden-mystery-page-2",
+      "sourcePath": "/Users/woosung/Pictures/Photos Library.photoslibrary/resources/derivatives/masters/8/8223C545-50EB-436F-B8E8-23C144FE356B_4_5005_c.jpeg",
+      "setDisplayNameKo": "감춰진 신비",
+      "setType": "collectible-set",
+      "visibleMaxFinalAtk": 1200,
+      "visibleMaxFinalHp": 4800,
+      "parsedRows": [
+        {
+          "condition": "누적으로 19개의 빨간 별 획득",
+          "statText": "HP +6%",
+          "active": false
+        },
+        {
+          "condition": "8개의 별 획득",
+          "statText": "최종 공격 +200, 최종 HP +800",
+          "active": true
+        },
+        {
+          "condition": "16개의 별 획득",
+          "statText": "최종 공격 +300, 최종 HP +1200",
+          "active": true
+        },
+        {
+          "condition": "24개의 별 획득",
+          "statText": "최종 공격 +500, 최종 HP +2000",
+          "active": true
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "photoCount": 7,
+    "parsedRows": 28,
+    "sets": [
+      "좋은 음료와 독서",
+      "반짝이는 분쇄물",
+      "감춰진 신비"
+    ],
+    "threshold18Rows": 3,
+    "threshold19Rows": 4,
+    "hpPercentRows": 4,
+    "finalAtkHpRows": 24
+  },
+  "threshold18Rows": [
+    {
+      "photoId": "user-photo-2026-05-24-sparkling-crush-page-1",
+      "setDisplayNameKo": "반짝이는 분쇄물",
+      "condition": "누적으로 18개의 금 별 획득",
+      "statText": "최종 공격 +150, 최종 HP +600",
+      "active": true
+    },
+    {
+      "photoId": "user-photo-2026-05-24-sparkling-crush-page-2",
+      "setDisplayNameKo": "반짝이는 분쇄물",
+      "condition": "누적으로 18개의 빨간 별 획득",
+      "statText": "최종 공격 +250, 최종 HP +1000",
+      "active": true
+    },
+    {
+      "photoId": "user-photo-2026-05-24-sparkling-crush-page-3",
+      "setDisplayNameKo": "반짝이는 분쇄물",
+      "condition": "누적으로 18개의 빨간 별 획득",
+      "statText": "최종 공격 +250, 최종 HP +1000",
+      "active": true
+    }
+  ],
+  "threshold19Rows": [
+    {
+      "photoId": "user-photo-2026-05-24-good-drinks-reading-page-1",
+      "setDisplayNameKo": "좋은 음료와 독서",
+      "condition": "누적으로 19개의 금 별 획득",
+      "statText": "HP +4%",
+      "active": false
+    },
+    {
+      "photoId": "user-photo-2026-05-24-good-drinks-reading-page-2",
+      "setDisplayNameKo": "좋은 음료와 독서",
+      "condition": "누적으로 19개의 빨간 별 획득",
+      "statText": "HP +6%",
+      "active": false
+    },
+    {
+      "photoId": "user-photo-2026-05-24-hidden-mystery-page-1",
+      "setDisplayNameKo": "감춰진 신비",
+      "condition": "누적으로 19개의 금 별 획득",
+      "statText": "HP +4%",
+      "active": false
+    },
+    {
+      "photoId": "user-photo-2026-05-24-hidden-mystery-page-2",
+      "setDisplayNameKo": "감춰진 신비",
+      "condition": "누적으로 19개의 빨간 별 획득",
+      "statText": "HP +6%",
+      "active": false
+    }
+  ],
+  "decision": {
+    "status": "evidence-only-not-applied",
+    "rationale": "User-supplied photos corroborate mixed 18/19 collectible set threshold patterns, but they are not controlled observed damage trials and include HP/final ATK/HP rows outside the current 15-to-19 atkPercent correction contract.",
+    "requiredBeforeApplication": [
+      "map each photo row to an exact collectible set id and source atom row",
+      "separate HP/final ATK/HP rows from atkPercent damage formula correction rows",
+      "add controlled observed damage evidence or an approved description-only correction policy before scoring changes"
+    ]
+  }
+}

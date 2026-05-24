@@ -13,6 +13,11 @@ import {
   buildProductImportFieldSummary,
   importProductProfileInput,
 } from '../../app/lib/pareto-store/profile-import';
+import {
+  buildCalculationComparisonSummary,
+  topBuildDamageFactor,
+  type CalculationComparisonSummary,
+} from '../../app/lib/pareto-store/calculation-comparison';
 import type {
   ImportedCollectibleSnapshot,
   ImportedTechSnapshot,
@@ -114,6 +119,11 @@ const SIO_MODE_CHOICES = [
 ] as const;
 type SioModeId = (typeof SIO_MODE_CHOICES)[number][0];
 type SkillStatus = 'auto' | 'locked' | 'disabled';
+type RarityCounts = Record<(typeof SIO_RARITY_FIELDS)[number], number>;
+type TechRunSnapshot = {
+  accountContext: TechAccountContextInput;
+  inventory: SioTechInventoryInput;
+};
 const DEFAULT_SKILL_STATUS = SIO_MODE_CHOICES.reduce(
   (status, [mode]) => {
     status[mode] = mode === 'rocketMode' || mode === 'guardianMode' ? 'disabled' : 'auto';
@@ -174,6 +184,48 @@ function skillLabelsByStatus(statuses: Record<SioModeId, SkillStatus>, target: S
   return SIO_MODE_CHOICES.filter(([mode]) => statuses[mode] === target).map(([, label]) => label);
 }
 
+function buildTechInventoryInput({
+  rarityCounts,
+  chips,
+  skillSlots,
+  overloadable,
+  maxOverload,
+  skillStatus,
+  speedMode,
+  limit,
+  candidatePreselectTopK,
+}: {
+  rarityCounts: RarityCounts;
+  chips: number;
+  skillSlots: number;
+  overloadable: boolean;
+  maxOverload: number;
+  skillStatus: Record<SioModeId, SkillStatus>;
+  speedMode: string;
+  limit: string;
+  candidatePreselectTopK: number;
+}): SioTechInventoryInput {
+  return {
+    rarityCounts: Object.fromEntries(
+      SIO_RARITY_FIELDS.flatMap((rarity) => {
+        const count = Math.max(0, Math.trunc(rarityCounts[rarity] ?? 0));
+        return count > 0 ? [[rarity, count] as const] : [];
+      }),
+    ),
+    chips: Math.max(0, Math.trunc(chips)),
+    skillSlots: Math.max(0, Math.trunc(skillSlots)),
+    overloadable,
+    ...(overloadable ? { maxOverload: Math.max(0, Math.trunc(maxOverload)) } : {}),
+    modes: SIO_MODE_CHOICES.map(([mode]) => mode),
+    forcedSkills: skillLabelsByStatus(skillStatus, 'locked'),
+    preferredSkills: [],
+    disabledSkills: skillLabelsByStatus(skillStatus, 'disabled'),
+    speedMode,
+    limit,
+    candidatePreselectTopK: Math.max(1, Math.trunc(candidatePreselectTopK)),
+  };
+}
+
 function safeValidation(status: BootState, inventory: SioTechInventoryInput): SioInventoryValidation {
   if (status !== 'ok') return { valid: false, errors: ['wasm_pending'], warnings: [] };
   try {
@@ -205,6 +257,24 @@ function buildChipRemainderValue(build: TechOptimizerResult['builds'][number] | 
   const candidate = build?.config?.sioCandidate as Record<string, unknown> | undefined;
   const value = candidate?.chipRemainder;
   return typeof value === 'number' ? value : undefined;
+}
+
+function formatSignedCompact(value: number): string {
+  if (!Number.isFinite(value)) return 'n/a';
+  if (value === 0) return '0';
+  const sign = value > 0 ? '+' : '-';
+  return `${sign}${formatNumber(Math.abs(value), 0)}`;
+}
+
+function formatSignedPercent(value: number): string {
+  if (!Number.isFinite(value)) return 'n/a';
+  if (value === 0) return '0%';
+  const sign = value > 0 ? '+' : '-';
+  return `${sign}${formatNumber(Math.abs(value), 3)}%`;
+}
+
+function formatComparisonDamage(value: number): string {
+  return Number.isFinite(value) ? formatNumber(value, 0) : 'n/a';
 }
 
 function buildChipUsed(build: TechOptimizerResult['builds'][number] | undefined): string {
@@ -489,28 +559,23 @@ export function TechPartsOptimizerSurface() {
   const candidatePreselectTopK = DEFAULT_CANDIDATE_PRESELECT_TOP_K;
   const [skillStatus, setSkillStatus] = useState(DEFAULT_SKILL_STATUS);
   const [result, setResult] = useState<TechOptimizerResult | null>(null);
+  const [importedRunSnapshot, setImportedRunSnapshot] = useState<TechRunSnapshot | null>(null);
+  const [calculationComparison, setCalculationComparison] = useState<CalculationComparisonSummary | null>(null);
   const [runError, setRunError] = useState<string | null>(null);
   const [running, setRunning] = useState(false);
   const inventory = useMemo<SioTechInventoryInput>(
-    () => ({
-      rarityCounts: Object.fromEntries(
-        SIO_RARITY_FIELDS.flatMap((rarity) => {
-          const count = Math.max(0, Math.trunc(rarityCounts[rarity] ?? 0));
-          return count > 0 ? [[rarity, count] as const] : [];
-        }),
-      ),
-      chips: Math.max(0, Math.trunc(chips)),
-      skillSlots: Math.max(0, Math.trunc(skillSlots)),
-      overloadable,
-      ...(overloadable ? { maxOverload: Math.max(0, Math.trunc(maxOverload)) } : {}),
-      modes: SIO_MODE_CHOICES.map(([mode]) => mode),
-      forcedSkills: skillLabelsByStatus(skillStatus, 'locked'),
-      preferredSkills: [],
-      disabledSkills: skillLabelsByStatus(skillStatus, 'disabled'),
-      speedMode,
-      limit,
-      candidatePreselectTopK: Math.max(1, Math.trunc(candidatePreselectTopK)),
-    }),
+    () =>
+      buildTechInventoryInput({
+        rarityCounts,
+        chips,
+        skillSlots,
+        overloadable,
+        maxOverload,
+        skillStatus,
+        speedMode,
+        limit,
+        candidatePreselectTopK,
+      }),
     [candidatePreselectTopK, chips, limit, maxOverload, overloadable, rarityCounts, skillSlots, skillStatus, speedMode],
   );
   const inventoryValidation = useMemo(() => safeValidation(bootStatus, inventory), [bootStatus, inventory]);
@@ -554,6 +619,22 @@ export function TechPartsOptimizerSurface() {
         sioLm: sioLmContextForRun,
       });
       setResult(workerResult);
+      if (importedRunSnapshot) {
+        const importedResult = await worker.optimizeTech({
+          playerState: playerStateWithAccountContext(playerState, importedRunSnapshot.accountContext),
+          topK,
+          beamWidth,
+          maxExactNodes,
+          sioTechInventory: importedRunSnapshot.inventory,
+          sioLm: buildSioLmContext(importedRunSnapshot.accountContext),
+        });
+        setCalculationComparison(buildCalculationComparisonSummary({
+          importedDamage: topBuildDamageFactor(importedResult),
+          tangtangDamage: topBuildDamageFactor(workerResult),
+        }));
+      } else {
+        setCalculationComparison(null);
+      }
     } catch (error) {
       setRunError(error instanceof Error ? error.message : String(error));
     } finally {
@@ -567,41 +648,66 @@ export function TechPartsOptimizerSurface() {
       if (!imported.ok) {
         setProfileImportCoverage([]);
         setProfileImportDetails([]);
+        setImportedRunSnapshot(null);
+        setCalculationComparison(null);
         setProfileImportSummary(localizeProductImportSummary('Profile import failed. Check the link or JSON and try again.', locale));
         return;
       }
 
-      if (imported.wallet.techResonanceChips !== undefined) setChips(imported.wallet.techResonanceChips);
-      else if (imported.tech.chips !== undefined) setChips(imported.tech.chips);
-      if (imported.tech.skillSlots !== undefined) setSkillSlots(imported.tech.skillSlots);
-      if (imported.tech.rarityCounts) {
-        setRarityCounts((current) => ({
-          ...current,
-          ...imported.tech.rarityCounts,
-        }));
-      }
-      setAccountContext((current) => ({
-        ...current,
+      const optimizerSettings = imported.importedTechSnapshot?.optimizerSettings;
+      const nextChips = imported.wallet.techResonanceChips ?? imported.tech.chips ?? chips;
+      const nextSkillSlots = imported.tech.skillSlots ?? skillSlots;
+      const nextRarityCounts = {
+        ...rarityCounts,
+        ...(imported.tech.rarityCounts ?? {}),
+      } as RarityCounts;
+      const nextAccountContext = {
+        ...accountContext,
         ...Object.fromEntries(
           Object.entries(imported.account).filter(([, value]) => value !== undefined),
         ) as Partial<TechAccountContextInput>,
-      }));
-      setResourceWallet((current) => ({
-        ...current,
+      };
+      const nextResourceWallet = {
+        ...resourceWallet,
         ...Object.fromEntries(
           Object.entries(imported.wallet).filter(([, value]) => value !== undefined),
         ) as Partial<ResourceWalletValues>,
-      }));
-      const optimizerSettings = imported.importedTechSnapshot?.optimizerSettings;
-      if (optimizerSettings?.speedMode && (SPEED_MODE_OPTIONS as readonly string[]).includes(optimizerSettings.speedMode)) {
-        setSpeedMode(optimizerSettings.speedMode);
-      }
-      if (optimizerSettings?.limit && (LIMIT_OPTIONS as readonly string[]).includes(optimizerSettings.limit)) {
-        setLimit(optimizerSettings.limit);
-      }
-      if (optimizerSettings?.overloadable !== undefined) setOverloadable(optimizerSettings.overloadable);
+      };
+      const nextSpeedMode =
+        optimizerSettings?.speedMode && (SPEED_MODE_OPTIONS as readonly string[]).includes(optimizerSettings.speedMode)
+          ? optimizerSettings.speedMode
+          : speedMode;
+      const nextLimit =
+        optimizerSettings?.limit && (LIMIT_OPTIONS as readonly string[]).includes(optimizerSettings.limit)
+          ? optimizerSettings.limit
+          : limit;
+      const nextOverloadable = optimizerSettings?.overloadable ?? overloadable;
+
+      setChips(nextChips);
+      setSkillSlots(nextSkillSlots);
+      setRarityCounts(nextRarityCounts);
+      setAccountContext(nextAccountContext);
+      setResourceWallet(nextResourceWallet);
+      setSpeedMode(nextSpeedMode);
+      setLimit(nextLimit);
+      setOverloadable(nextOverloadable);
       setImportedTechSnapshot(imported.importedTechSnapshot ?? null);
       setImportedCollectibleSnapshot(imported.importedCollectibleSnapshot ?? null);
+      setImportedRunSnapshot({
+        accountContext: nextAccountContext,
+        inventory: buildTechInventoryInput({
+          rarityCounts: nextRarityCounts,
+          chips: nextChips,
+          skillSlots: nextSkillSlots,
+          overloadable: nextOverloadable,
+          maxOverload,
+          skillStatus,
+          speedMode: nextSpeedMode,
+          limit: nextLimit,
+          candidatePreselectTopK,
+        }),
+      });
+      setCalculationComparison(null);
       setProfileImportCoverage(imported.coverage ?? []);
       setProfileImportDetails(buildProductImportFieldSummary(imported));
       setProfileImportSummary(localizeProductImportSummary(imported.summary, locale));
@@ -616,6 +722,8 @@ export function TechPartsOptimizerSurface() {
     setProfileImportDetails([]);
     setImportedTechSnapshot(null);
     setImportedCollectibleSnapshot(null);
+    setImportedRunSnapshot(null);
+    setCalculationComparison(null);
   };
 
   return (
@@ -906,6 +1014,37 @@ export function TechPartsOptimizerSurface() {
               {result ? activeSkills : copy.common.none}
             </p>
           </div>
+          {calculationComparison ? (
+            <div className="mt-3 rounded-md border border-[color:var(--color-border)] p-3" data-testid="tech-calculation-comparison">
+              <p className={labelClass}>{copy.results.comparison.title}</p>
+              {calculationComparison.status === 'ready' ? (
+                <div className="mt-3 grid gap-2 sm:grid-cols-3">
+                  <div className="rounded-md border border-[color:var(--color-border)] p-3">
+                    <p className={labelClass}>{copy.results.comparison.imported}</p>
+                    <p className="mt-2 break-all font-mono text-xs text-[color:var(--color-text)]" data-testid="tech-calculation-comparison-imported">
+                      {formatComparisonDamage(calculationComparison.importedDamage)}
+                    </p>
+                  </div>
+                  <div className="rounded-md border border-[color:var(--color-border)] p-3">
+                    <p className={labelClass}>{copy.results.comparison.tangtang}</p>
+                    <p className="mt-2 break-all font-mono text-xs text-[color:var(--color-accent)]" data-testid="tech-calculation-comparison-tangtang">
+                      {formatComparisonDamage(calculationComparison.tangtangDamage)}
+                    </p>
+                  </div>
+                  <div className="rounded-md border border-[color:var(--color-border)] p-3">
+                    <p className={labelClass}>{copy.results.comparison.delta}</p>
+                    <p className="mt-2 font-mono text-sm text-[color:var(--color-text)]" data-testid="tech-calculation-comparison-delta">
+                      {calculationComparison.changed
+                        ? `${formatSignedCompact(calculationComparison.delta)} / ${formatSignedPercent(calculationComparison.deltaPct)}`
+                        : copy.results.comparison.unchanged}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <p className="mt-2 text-xs text-[color:var(--color-text-muted)]">{copy.results.comparison.unavailable}</p>
+              )}
+            </div>
+          ) : null}
           <TechUpgradeRecommendations recommendations={result ? upgradeRecommendations : []} locale={locale} />
           <div className="mt-4 overflow-x-auto">
             <table className="w-full min-w-[640px] font-mono text-xs">

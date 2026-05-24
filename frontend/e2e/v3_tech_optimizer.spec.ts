@@ -231,6 +231,11 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await page.getByRole('button', { name: 'Run imported profile' }).click();
 
     await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
+    await expect(page.getByTestId('tech-calculation-comparison')).toBeVisible();
+    await expect(page.getByTestId('tech-calculation-comparison')).toContainText('Imported calculation');
+    await expect(page.getByTestId('tech-calculation-comparison')).toContainText('Tangtang calculation');
+    await expect(page.getByTestId('tech-calculation-comparison')).toContainText('Difference');
+    await expect(page.getByTestId('tech-calculation-comparison')).not.toContainText(/sio|beam|preselect|exact/i);
     await expect(page.getByTestId('tech-upgrade-recommendations')).toContainText('Next upgrades');
     await expect(page.getByTestId('tech-upgrade-recommendations')).toContainText(/Collection|collection|collectible/);
     await expect(page.getByTestId('tech-upgrade-recommendations')).toContainText(/Confidence: (high|medium|low)/);

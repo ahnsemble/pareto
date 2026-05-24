@@ -66,6 +66,13 @@ assert.equal(koCopy.profileImport.action, '프로필 가져오기');
 assert.equal(koCopy.resourceWallet.title, '리소스 지갑');
 assert.equal(koCopy.inventory.title, '보유 테크 재료');
 assert.equal(koCopy.results.title, '랭킹 테크 빌드');
+assert.equal(koCopy.results.comparison.title, '계산 비교');
+assert.equal(koCopy.results.comparison.imported, '가져온 계산');
+assert.equal(koCopy.results.comparison.tangtang, 'Tangtang 계산');
+assert.equal(koCopy.results.comparison.delta, '차이');
+assert.equal(koCopy.results.comparison.unchanged, '변화 없음');
+assert.equal(getTechOptimizerCopy('en').results.comparison.imported, 'Imported calculation');
+assert.equal(getTechOptimizerCopy('en').results.comparison.tangtang, 'Tangtang calculation');
 assert.equal(localizeTechInventoryMessage('chips.gt_999', 'ko'), '기술 공명 칩은 999 이하여야 합니다');
 assert.equal(localizeTechInventoryMessage('chips.gt_999', 'en'), 'Tech resonance chips must be 999 or lower');
 

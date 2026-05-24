@@ -88,6 +88,14 @@ export type TechOptimizerCopy = {
     chipsUsed: string;
     chipsLeft: string;
     activeSkills: string;
+    comparison: {
+      title: string;
+      imported: string;
+      tangtang: string;
+      delta: string;
+      unchanged: string;
+      unavailable: string;
+    };
     table: {
       build: string;
       score: string;
@@ -262,6 +270,14 @@ const EN_COPY: TechOptimizerCopy = {
     chipsUsed: 'Chips used',
     chipsLeft: 'Chips left',
     activeSkills: 'Active skills',
+    comparison: {
+      title: 'Calculation comparison',
+      imported: 'Imported calculation',
+      tangtang: 'Tangtang calculation',
+      delta: 'Difference',
+      unchanged: 'No change',
+      unavailable: 'Run an imported profile to compare calculations.',
+    },
     table: {
       build: 'Build',
       score: 'Score',
@@ -441,6 +457,14 @@ const KO_COPY: TechOptimizerCopy = {
     chipsUsed: '사용 칩',
     chipsLeft: '남은 칩',
     activeSkills: '활성 스킬',
+    comparison: {
+      title: '계산 비교',
+      imported: '가져온 계산',
+      tangtang: 'Tangtang 계산',
+      delta: '차이',
+      unchanged: '변화 없음',
+      unavailable: '가져온 프로필을 계산하면 비교가 표시됩니다.',
+    },
     table: {
       build: '빌드',
       score: '점수',
