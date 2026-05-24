@@ -6,6 +6,7 @@ import {
   type ResourceWalletValues,
 } from '../../../app/lib/pareto-store/resource-wallet';
 import type { ProductImportCoverage, ProductImportFieldSummary } from '../../../app/lib/pareto-store/profile-import-types';
+import type { TechProfileSaveSlotId } from '../../../app/lib/pareto-store/tech-profile-storage';
 import { buttonClass, inputClass, labelClass, panelClass } from '../optimizerUi';
 import {
   getTechOptimizerCopy,
@@ -50,6 +51,84 @@ export function ResourceWalletPanel({
             </label>
           );
         })}
+      </div>
+    </div>
+  );
+}
+
+export function ProfileSavePanel({
+  slots,
+  status,
+  onSave,
+  onLoad,
+  onDelete,
+  locale,
+}: {
+  slots: Array<{ id: TechProfileSaveSlotId; label: string; savedAt: string | null }>;
+  status: string;
+  onSave: (slotId: TechProfileSaveSlotId) => void;
+  onLoad: (slotId: TechProfileSaveSlotId) => void;
+  onDelete: (slotId: TechProfileSaveSlotId) => void;
+  locale?: string;
+}) {
+  const copy = getTechOptimizerCopy(locale);
+
+  return (
+    <div className={panelClass} data-testid="tech-profile-save">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h2 className={labelClass}>{copy.profileSave.title}</h2>
+          <p className="mt-1 text-xs text-[color:var(--color-text-muted)]">{copy.profileSave.description}</p>
+        </div>
+        <p className="min-h-5 text-xs text-[color:var(--color-text-muted)]" data-testid="tech-profile-save-status">
+          {status}
+        </p>
+      </div>
+      <div className="mt-3 grid gap-2 md:grid-cols-2">
+        {slots.map((slot) => (
+          <div
+            key={slot.id}
+            className="rounded-md border border-[color:var(--color-border)]/60 p-3"
+            data-testid={`tech-profile-save-${slot.id}`}
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="truncate text-sm font-semibold text-[color:var(--color-text)]">{slot.label}</p>
+                <p className="mt-1 text-xs text-[color:var(--color-text-muted)]">
+                  {slot.savedAt ? copy.profileSave.savedAt(slot.savedAt) : copy.profileSave.empty}
+                </p>
+              </div>
+            </div>
+            <div className="mt-3 grid grid-cols-3 gap-2">
+              <button
+                type="button"
+                className={buttonClass}
+                data-testid={`tech-profile-save-${slot.id}-save`}
+                onClick={() => onSave(slot.id)}
+              >
+                {copy.profileSave.save}
+              </button>
+              <button
+                type="button"
+                className={buttonClass}
+                data-testid={`tech-profile-save-${slot.id}-load`}
+                disabled={!slot.savedAt}
+                onClick={() => onLoad(slot.id)}
+              >
+                {copy.profileSave.load}
+              </button>
+              <button
+                type="button"
+                className={buttonClass}
+                data-testid={`tech-profile-save-${slot.id}-delete`}
+                disabled={!slot.savedAt}
+                onClick={() => onDelete(slot.id)}
+              >
+                {copy.profileSave.delete}
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

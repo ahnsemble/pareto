@@ -35,6 +35,20 @@ export type TechOptimizerCopy = {
     missing: string;
     editableReview: string;
   };
+  profileSave: {
+    title: string;
+    description: string;
+    empty: string;
+    savedAt: (value: string) => string;
+    save: string;
+    load: string;
+    delete: string;
+    saved: (slot: string) => string;
+    loaded: (slot: string) => string;
+    deleted: (slot: string) => string;
+    unavailable: string;
+    missing: (slot: string) => string;
+  };
   resourceWallet: {
     title: string;
   };
@@ -136,6 +150,20 @@ const EN_COPY: TechOptimizerCopy = {
     review: 'Review',
     missing: 'Missing',
     editableReview: 'Editable after import. Review marked fields before running.',
+  },
+  profileSave: {
+    title: 'Saved profiles',
+    description: 'Keep separate inputs for each game mode on this browser.',
+    empty: 'Not saved',
+    savedAt: (value) => `Saved ${value}`,
+    save: 'Save',
+    load: 'Load',
+    delete: 'Delete',
+    saved: (slot) => `${slot} saved.`,
+    loaded: (slot) => `${slot} loaded. Run again for fresh results.`,
+    deleted: (slot) => `${slot} deleted.`,
+    unavailable: 'Browser storage is unavailable.',
+    missing: (slot) => `${slot} has no saved profile yet.`,
   },
   resourceWallet: {
     title: 'Resource wallet',
@@ -323,6 +351,20 @@ const KO_COPY: TechOptimizerCopy = {
     review: '검토',
     missing: '누락',
     editableReview: '가져온 뒤에도 수정할 수 있습니다. 표시된 항목은 계산 전에 확인하세요.',
+  },
+  profileSave: {
+    title: '저장 프로필',
+    description: '이 브라우저에 모드별 입력값을 따로 보관합니다.',
+    empty: '저장 없음',
+    savedAt: (value) => `저장됨 ${value}`,
+    save: '저장',
+    load: '불러오기',
+    delete: '삭제',
+    saved: (slot) => `${slot} 저장 완료.`,
+    loaded: (slot) => `${slot} 불러옴. 최신 결과는 다시 계산하세요.`,
+    deleted: (slot) => `${slot} 삭제 완료.`,
+    unavailable: '브라우저 저장소를 사용할 수 없습니다.',
+    missing: (slot) => `${slot} 저장값이 없습니다.`,
   },
   resourceWallet: {
     title: '리소스 지갑',

@@ -18,6 +18,9 @@ test.describe('TD-11 — Tech optimizer Korean route', () => {
     await expect(page.getByTestId('tech-profile-import')).toContainText('Tangtang 프로필 가져오기');
     await expect(page.getByTestId('tech-profile-import')).toContainText('프로필 JSON, 계산 링크 또는 스크린샷 텍스트');
     await expect(page.getByRole('button', { name: '프로필 가져오기' })).toBeVisible();
+    await expect(page.getByTestId('tech-profile-save')).toContainText('저장 프로필');
+    await expect(page.getByTestId('tech-profile-save')).toContainText('종말의 메아리');
+    await expect(page.getByTestId('tech-profile-save')).toContainText('길드원정');
     await expect(page.getByTestId('tech-resource-wallet')).toContainText('리소스 지갑');
     await expect(page.getByTestId('tech-resource-wallet')).toContainText('기술 공명 칩');
     await expect(page.getByTestId('tech-resource-wallet')).toContainText('계정 컨텍스트');
@@ -68,6 +71,46 @@ test.describe('TD-11 — Tech optimizer route', () => {
     expect(accountBox.width).toBeGreaterThan(inventoryBox.width * 1.5);
     expect(Math.abs(buildStatsBox.y - damageBox.y)).toBeLessThan(24);
     expect(damageBox.x).toBeGreaterThan(buildStatsBox.x + buildStatsBox.width * 0.75);
+  });
+
+  test('saves Enders Echo and Guild Expedition profiles separately', async ({ page }) => {
+    await expect(page.getByTestId('tech-profile-save')).toContainText("Ender's Echo");
+    await expect(page.getByTestId('tech-profile-save')).toContainText('Guild Expedition');
+
+    await page.getByTestId('tech-account-final-atk').fill('111111');
+    await page.getByTestId('tech-account-skill-damage').fill('410');
+    await page.getByTestId('tech-inventory-chips').fill('21');
+    await page.getByTestId('tech-inventory-skill-slots').fill('4');
+    await page.getByTestId('tech-profile-save-endersEcho-save').click();
+    await expect(page.getByTestId('tech-profile-save-status')).toContainText("Ender's Echo");
+
+    await page.getByTestId('tech-account-final-atk').fill('222222');
+    await page.getByTestId('tech-account-skill-damage').fill('520');
+    await page.getByTestId('tech-inventory-chips').fill('33');
+    await page.getByTestId('tech-inventory-skill-slots').fill('6');
+    await page.getByTestId('tech-profile-save-guildExpedition-save').click();
+    await expect(page.getByTestId('tech-profile-save-status')).toContainText('Guild Expedition');
+
+    await page.getByTestId('tech-account-final-atk').fill('1');
+    await page.getByTestId('tech-account-skill-damage').fill('2');
+    await page.getByTestId('tech-inventory-chips').fill('3');
+    await page.getByTestId('tech-inventory-skill-slots').fill('1');
+
+    await page.getByTestId('tech-profile-save-endersEcho-load').click();
+    await expect(page.getByTestId('tech-account-final-atk')).toHaveValue('111111');
+    await expect(page.getByTestId('tech-account-skill-damage')).toHaveValue('410');
+    await expect(page.getByTestId('tech-inventory-chips')).toHaveValue('21');
+    await expect(page.getByTestId('tech-inventory-skill-slots')).toHaveValue('4');
+
+    await page.getByTestId('tech-profile-save-guildExpedition-load').click();
+    await expect(page.getByTestId('tech-account-final-atk')).toHaveValue('222222');
+    await expect(page.getByTestId('tech-account-skill-damage')).toHaveValue('520');
+    await expect(page.getByTestId('tech-inventory-chips')).toHaveValue('33');
+    await expect(page.getByTestId('tech-inventory-skill-slots')).toHaveValue('6');
+
+    await page.getByTestId('tech-profile-save-endersEcho-delete').click();
+    await expect(page.getByTestId('tech-profile-save-endersEcho-load')).toBeDisabled();
+    await expect(page.getByText(/SIO/)).toHaveCount(0);
   });
 
   test('shows profile import without exposing raw SIO LM JSON', async ({ page }) => {

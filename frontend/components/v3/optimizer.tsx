@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocale } from 'next-intl';
 import { Link } from '../../i18n/navigation';
 import { bootParetoStore, useParetoStore } from '../../app/lib/pareto-store/store';
@@ -13,6 +13,15 @@ import {
   buildProductImportFieldSummary,
   importProductProfileInput,
 } from '../../app/lib/pareto-store/profile-import';
+import {
+  TECH_PROFILE_SAVE_SLOTS,
+  labelForTechProfileSaveSlot,
+  loadTechProfileSlot,
+  removeTechProfileSlot,
+  saveTechProfileSlot,
+  type TechProfileSaveSlotId,
+  type TechProfileSaveState,
+} from '../../app/lib/pareto-store/tech-profile-storage';
 import {
   buildCalculationComparisonSummary,
   topBuildDamageFactor,
@@ -52,7 +61,7 @@ import {
   shellClass,
 } from './optimizerUi';
 import { AccountContextPanel } from './tech/TechAccountContextPanel';
-import { ProfileImportPanel, ResourceWalletPanel } from './tech/TechProductPanels';
+import { ProfileImportPanel, ProfileSavePanel, ResourceWalletPanel } from './tech/TechProductPanels';
 import { TechUpgradeRecommendations } from './tech/TechUpgradeRecommendations';
 import {
   getTechOptimizerCopy,
@@ -134,6 +143,10 @@ const DEFAULT_SKILL_STATUS = SIO_MODE_CHOICES.reduce(
 const DEFAULT_CANDIDATE_PRESELECT_TOP_K = 16;
 const SPEED_MODE_OPTIONS = ['fast', 'normal', 'precise', 'precise+', 'full'] as const;
 const LIMIT_OPTIONS = ['basic', 'advanced'] as const;
+const EMPTY_PROFILE_SAVE_SLOTS: Record<TechProfileSaveSlotId, string | null> = {
+  endersEcho: null,
+  guildExpedition: null,
+};
 
 function useV3OptimizerBoot(): BootState {
   const [bootStatus, setBootStatus] = useState<BootState>('pending');
@@ -275,6 +288,15 @@ function formatSignedPercent(value: number): string {
 
 function formatComparisonDamage(value: number): string {
   return Number.isFinite(value) ? formatNumber(value, 0) : 'n/a';
+}
+
+function formatProfileSavedAt(value: string, locale: string): string {
+  const date = new Date(value);
+  if (!Number.isFinite(date.getTime())) return value;
+  return new Intl.DateTimeFormat(locale === 'ko' ? 'ko-KR' : 'en-US', {
+    dateStyle: 'short',
+    timeStyle: 'short',
+  }).format(date);
 }
 
 function buildChipUsed(build: TechOptimizerResult['builds'][number] | undefined): string {
@@ -561,6 +583,8 @@ export function TechPartsOptimizerSurface() {
   const [result, setResult] = useState<TechOptimizerResult | null>(null);
   const [importedRunSnapshot, setImportedRunSnapshot] = useState<TechRunSnapshot | null>(null);
   const [calculationComparison, setCalculationComparison] = useState<CalculationComparisonSummary | null>(null);
+  const [savedProfileSlots, setSavedProfileSlots] = useState<Record<TechProfileSaveSlotId, string | null>>(EMPTY_PROFILE_SAVE_SLOTS);
+  const [profileSaveStatus, setProfileSaveStatus] = useState('');
   const [runError, setRunError] = useState<string | null>(null);
   const [running, setRunning] = useState(false);
   const inventory = useMemo<SioTechInventoryInput>(
@@ -605,6 +629,139 @@ export function TechPartsOptimizerSurface() {
     : copy.inventory.blocked(inventoryValidation.errors.map((message) => inventoryMessage(message, locale)).join(', '));
   const playerStateForRun = useMemo(() => playerStateWithAccountContext(playerState, accountContext), [accountContext, playerState]);
   const sioLmContextForRun = useMemo(() => buildSioLmContext(accountContext), [accountContext]);
+  const refreshProfileSaveSlots = useCallback(() => {
+    if (typeof window === 'undefined') return;
+    const next: Record<TechProfileSaveSlotId, string | null> = { ...EMPTY_PROFILE_SAVE_SLOTS };
+    for (const slot of TECH_PROFILE_SAVE_SLOTS) {
+      const loaded = loadTechProfileSlot(window.localStorage, slot.id);
+      next[slot.id] = loaded.ok ? loaded.document.savedAt : null;
+    }
+    setSavedProfileSlots(next);
+  }, []);
+  useEffect(() => {
+    refreshProfileSaveSlots();
+  }, [refreshProfileSaveSlots]);
+  const profileSaveSlots = useMemo(
+    () =>
+      TECH_PROFILE_SAVE_SLOTS.map((slot) => ({
+        id: slot.id,
+        label: labelForTechProfileSaveSlot(slot.id, locale),
+        savedAt: savedProfileSlots[slot.id] ? formatProfileSavedAt(savedProfileSlots[slot.id]!, locale) : null,
+      })),
+    [locale, savedProfileSlots],
+  );
+  const buildCurrentProfileSaveState = useCallback((): TechProfileSaveState => ({
+    accountContext: accountContext as unknown as Record<string, unknown>,
+    resourceWallet: resourceWallet as unknown as Record<string, unknown>,
+    rarityCounts: rarityCounts as unknown as Record<string, unknown>,
+    chips,
+    skillSlots,
+    overloadable,
+    maxOverload,
+    speedMode,
+    limit,
+    skillStatus: skillStatus as unknown as Record<string, unknown>,
+    profileImportText,
+    importedTechSnapshot,
+    importedCollectibleSnapshot,
+    importedRunSnapshot: importedRunSnapshot
+      ? {
+          accountContext: importedRunSnapshot.accountContext as unknown as Record<string, unknown>,
+          inventory: importedRunSnapshot.inventory as unknown as Record<string, unknown>,
+        }
+      : null,
+    profileImportSummary,
+    profileImportCoverage,
+    profileImportDetails,
+  }), [
+    accountContext,
+    chips,
+    importedCollectibleSnapshot,
+    importedRunSnapshot,
+    importedTechSnapshot,
+    limit,
+    maxOverload,
+    overloadable,
+    profileImportCoverage,
+    profileImportDetails,
+    profileImportSummary,
+    profileImportText,
+    rarityCounts,
+    resourceWallet,
+    skillSlots,
+    skillStatus,
+    speedMode,
+  ]);
+  const applyProfileSaveState = useCallback((state: TechProfileSaveState) => {
+    setAccountContext({ ...DEFAULT_TECH_ACCOUNT_CONTEXT, ...state.accountContext } as TechAccountContextInput);
+    setResourceWallet({ ...DEFAULT_RESOURCE_WALLET_VALUES, ...state.resourceWallet } as ResourceWalletValues);
+    setRarityCounts({ ...DEFAULT_RARITY_COUNTS, ...state.rarityCounts } as RarityCounts);
+    setChips(Math.max(0, Number(state.chips) || 0));
+    setSkillSlots(Math.max(1, Number(state.skillSlots) || 1));
+    setOverloadable(Boolean(state.overloadable));
+    setMaxOverload(Math.max(0, Number(state.maxOverload) || 0));
+    setSpeedMode((SPEED_MODE_OPTIONS as readonly string[]).includes(state.speedMode) ? state.speedMode : 'normal');
+    setLimit((LIMIT_OPTIONS as readonly string[]).includes(state.limit) ? state.limit : 'basic');
+    setSkillStatus({ ...DEFAULT_SKILL_STATUS, ...state.skillStatus } as Record<SioModeId, SkillStatus>);
+    setProfileImportText(state.profileImportText ?? '');
+    setImportedTechSnapshot(state.importedTechSnapshot ?? null);
+    setImportedCollectibleSnapshot(state.importedCollectibleSnapshot ?? null);
+    setImportedRunSnapshot(state.importedRunSnapshot
+      ? {
+          accountContext: { ...DEFAULT_TECH_ACCOUNT_CONTEXT, ...state.importedRunSnapshot.accountContext } as TechAccountContextInput,
+          inventory: state.importedRunSnapshot.inventory as unknown as SioTechInventoryInput,
+        }
+      : null);
+    setProfileImportSummary(state.profileImportSummary ?? '');
+    setProfileImportCoverage(state.profileImportCoverage ?? []);
+    setProfileImportDetails(state.profileImportDetails ?? []);
+    setResult(null);
+    setCalculationComparison(null);
+    setRunError(null);
+  }, []);
+  const handleProfileSave = useCallback((slotId: TechProfileSaveSlotId) => {
+    const slotLabel = labelForTechProfileSaveSlot(slotId, locale);
+    if (typeof window === 'undefined') {
+      setProfileSaveStatus(copy.profileSave.unavailable);
+      return;
+    }
+    const saved = saveTechProfileSlot(window.localStorage, slotId, buildCurrentProfileSaveState());
+    if (!saved.ok) {
+      setProfileSaveStatus(copy.profileSave.unavailable);
+      return;
+    }
+    refreshProfileSaveSlots();
+    setProfileSaveStatus(copy.profileSave.saved(slotLabel));
+  }, [buildCurrentProfileSaveState, copy.profileSave, locale, refreshProfileSaveSlots]);
+  const handleProfileLoad = useCallback((slotId: TechProfileSaveSlotId) => {
+    const slotLabel = labelForTechProfileSaveSlot(slotId, locale);
+    if (typeof window === 'undefined') {
+      setProfileSaveStatus(copy.profileSave.unavailable);
+      return;
+    }
+    const loaded = loadTechProfileSlot(window.localStorage, slotId);
+    if (!loaded.ok) {
+      setProfileSaveStatus(loaded.reason === 'empty' ? copy.profileSave.missing(slotLabel) : copy.profileSave.unavailable);
+      return;
+    }
+    applyProfileSaveState(loaded.document.state);
+    refreshProfileSaveSlots();
+    setProfileSaveStatus(copy.profileSave.loaded(slotLabel));
+  }, [applyProfileSaveState, copy.profileSave, locale, refreshProfileSaveSlots]);
+  const handleProfileDelete = useCallback((slotId: TechProfileSaveSlotId) => {
+    const slotLabel = labelForTechProfileSaveSlot(slotId, locale);
+    if (typeof window === 'undefined') {
+      setProfileSaveStatus(copy.profileSave.unavailable);
+      return;
+    }
+    const removed = removeTechProfileSlot(window.localStorage, slotId);
+    if (!removed.ok) {
+      setProfileSaveStatus(copy.profileSave.unavailable);
+      return;
+    }
+    refreshProfileSaveSlots();
+    setProfileSaveStatus(copy.profileSave.deleted(slotLabel));
+  }, [copy.profileSave, locale, refreshProfileSaveSlots]);
   const handleTechRun = async () => {
     setRunning(true);
     setRunError(null);
@@ -756,6 +913,15 @@ export function TechPartsOptimizerSurface() {
           details={profileImportDetails}
           importing={profileImporting}
           running={running}
+          locale={locale}
+        />
+
+        <ProfileSavePanel
+          slots={profileSaveSlots}
+          status={profileSaveStatus}
+          onSave={handleProfileSave}
+          onLoad={handleProfileLoad}
+          onDelete={handleProfileDelete}
           locale={locale}
         />
 
