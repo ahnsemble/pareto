@@ -828,3 +828,26 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-optimizer-run')).toBeEnabled();
   });
 });
+
+test.describe('TD-11 — Tech optimizer storage hardening', () => {
+  test('renders and keeps calculation usable when browser storage is blocked', async ({ page, baseURL }) => {
+    await page.addInitScript(() => {
+      Object.defineProperty(window, 'localStorage', {
+        configurable: true,
+        get() {
+          throw new DOMException('localStorage blocked', 'SecurityError');
+        },
+      });
+    });
+
+    await page.goto(`${baseURL ?? 'http://localhost:3032'}${OPTIMIZER_URL}`);
+    await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Boot OK');
+    await expect(page.getByTestId('tech-profile-save')).toContainText('Saved profiles');
+
+    await page.getByTestId('tech-profile-save-endersEcho-save').click();
+    await expect(page.getByTestId('tech-profile-save-status')).toContainText('Browser storage is unavailable.');
+    await page.getByTestId('tech-optimizer-run').click();
+    await expect(page.getByTestId('tech-optimizer-result-summary')).toBeVisible();
+    await expect(page.getByText(/SIO/)).toHaveCount(0);
+  });
+});

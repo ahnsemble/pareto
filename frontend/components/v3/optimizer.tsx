@@ -299,6 +299,15 @@ function formatProfileSavedAt(value: string, locale: string): string {
   }).format(date);
 }
 
+function getBrowserProfileStorage(): Storage | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    return window.localStorage;
+  } catch {
+    return null;
+  }
+}
+
 function buildChipUsed(build: TechOptimizerResult['builds'][number] | undefined): string {
   const loadout = buildLoadoutRows(build);
   if (loadout.length === 0) return 'n/a';
@@ -630,10 +639,14 @@ export function TechPartsOptimizerSurface() {
   const playerStateForRun = useMemo(() => playerStateWithAccountContext(playerState, accountContext), [accountContext, playerState]);
   const sioLmContextForRun = useMemo(() => buildSioLmContext(accountContext), [accountContext]);
   const refreshProfileSaveSlots = useCallback(() => {
-    if (typeof window === 'undefined') return;
+    const storage = getBrowserProfileStorage();
+    if (!storage) {
+      setSavedProfileSlots({ ...EMPTY_PROFILE_SAVE_SLOTS });
+      return;
+    }
     const next: Record<TechProfileSaveSlotId, string | null> = { ...EMPTY_PROFILE_SAVE_SLOTS };
     for (const slot of TECH_PROFILE_SAVE_SLOTS) {
-      const loaded = loadTechProfileSlot(window.localStorage, slot.id);
+      const loaded = loadTechProfileSlot(storage, slot.id);
       next[slot.id] = loaded.ok ? loaded.document.savedAt : null;
     }
     setSavedProfileSlots(next);
@@ -721,11 +734,12 @@ export function TechPartsOptimizerSurface() {
   }, []);
   const handleProfileSave = useCallback((slotId: TechProfileSaveSlotId) => {
     const slotLabel = labelForTechProfileSaveSlot(slotId, locale);
-    if (typeof window === 'undefined') {
+    const storage = getBrowserProfileStorage();
+    if (!storage) {
       setProfileSaveStatus(copy.profileSave.unavailable);
       return;
     }
-    const saved = saveTechProfileSlot(window.localStorage, slotId, buildCurrentProfileSaveState());
+    const saved = saveTechProfileSlot(storage, slotId, buildCurrentProfileSaveState());
     if (!saved.ok) {
       setProfileSaveStatus(copy.profileSave.unavailable);
       return;
@@ -735,11 +749,12 @@ export function TechPartsOptimizerSurface() {
   }, [buildCurrentProfileSaveState, copy.profileSave, locale, refreshProfileSaveSlots]);
   const handleProfileLoad = useCallback((slotId: TechProfileSaveSlotId) => {
     const slotLabel = labelForTechProfileSaveSlot(slotId, locale);
-    if (typeof window === 'undefined') {
+    const storage = getBrowserProfileStorage();
+    if (!storage) {
       setProfileSaveStatus(copy.profileSave.unavailable);
       return;
     }
-    const loaded = loadTechProfileSlot(window.localStorage, slotId);
+    const loaded = loadTechProfileSlot(storage, slotId);
     if (!loaded.ok) {
       setProfileSaveStatus(loaded.reason === 'empty' ? copy.profileSave.missing(slotLabel) : copy.profileSave.unavailable);
       return;
@@ -750,11 +765,12 @@ export function TechPartsOptimizerSurface() {
   }, [applyProfileSaveState, copy.profileSave, locale, refreshProfileSaveSlots]);
   const handleProfileDelete = useCallback((slotId: TechProfileSaveSlotId) => {
     const slotLabel = labelForTechProfileSaveSlot(slotId, locale);
-    if (typeof window === 'undefined') {
+    const storage = getBrowserProfileStorage();
+    if (!storage) {
       setProfileSaveStatus(copy.profileSave.unavailable);
       return;
     }
-    const removed = removeTechProfileSlot(window.localStorage, slotId);
+    const removed = removeTechProfileSlot(storage, slotId);
     if (!removed.ok) {
       setProfileSaveStatus(copy.profileSave.unavailable);
       return;
