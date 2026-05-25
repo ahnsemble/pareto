@@ -1,5 +1,5 @@
-import { SIO_INPUT_FIELD_SPECS } from './constants';
-import { DEFAULT_SIO_PLAYER_STATE } from './defaults';
+import { PLAYER_INPUT_FIELD_SPECS } from './constants';
+import { DEFAULT_PLAYER_STATE } from './defaults';
 import type { DeepPartial, PlayerState } from '../types';
 
 function isPlainRecord(value: unknown): value is Record<string, unknown> {
@@ -30,9 +30,9 @@ function mergeDeep<T>(base: T, patch: DeepPartial<T> | undefined): T {
 }
 
 export function createPlayerState(partial: DeepPartial<PlayerState> = {}): PlayerState {
-  return mergeDeep(DEFAULT_SIO_PLAYER_STATE, partial);
+  return mergeDeep(DEFAULT_PLAYER_STATE, partial);
 }
 
-export function countSioInputFields(_state: PlayerState): number {
-  return SIO_INPUT_FIELD_SPECS.length;
+export function countPlayerInputFields(_state: PlayerState): number {
+  return PLAYER_INPUT_FIELD_SPECS.length;
 }

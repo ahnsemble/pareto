@@ -92,8 +92,8 @@ await transpileModule(
 const require = createRequire(import.meta.url);
 const schemas = require(path.join(buildDir, 'schemas/index.js'));
 
-const { SIO_STATS_FIXED_ORDER } = schemas;
-const statByKey = new Map(SIO_STATS_FIXED_ORDER.map((stat) => [stat.key, stat]));
+const { TECH_STATS_FIXED_ORDER } = schemas;
+const statByKey = new Map(TECH_STATS_FIXED_ORDER.map((stat) => [stat.key, stat]));
 const deployedData = JSON.parse(await fs.readFile(deployedDataPath, 'utf8'));
 const inGameDescriptionEvidence = JSON.parse(await fs.readFile(inGameDescriptionEvidencePath, 'utf8'));
 const collectibleEffectMapping = JSON.parse(await fs.readFile(collectibleEffectMappingPath, 'utf8'));

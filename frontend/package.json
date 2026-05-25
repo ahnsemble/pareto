@@ -6,7 +6,9 @@
     "node": ">=22.0.0"
   },
   "scripts": {
+    "predev": "node scripts/build_public_wasm_surface.mjs",
     "dev": "next dev --turbopack",
+    "prebuild": "node scripts/build_public_wasm_surface.mjs",
     "build": "next build",
     "start": "next start"
   },

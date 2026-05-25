@@ -27,7 +27,7 @@ const transpiled = ts.transpileModule(source, {
 const moduleUrl = `data:text/javascript;base64,${Buffer.from(transpiled.outputText).toString('base64')}`;
 const {
   DEFAULT_TECH_ACCOUNT_CONTEXT,
-  buildSioLmContext,
+  buildTechCalculationContext,
   collectibleItemReviewMarker,
   formatPassiveCritOptionLabel,
   formatTeamworkOptionLabel,
@@ -142,7 +142,7 @@ assert.equal(
 assert.equal(lmeTurfPresetLabel(0), '0 nodes');
 assert.equal(lmeTurfPresetLabel(12), '12 nodes');
 
-const context = buildSioLmContext({
+const context = buildTechCalculationContext({
   ...DEFAULT_TECH_ACCOUNT_CONTEXT,
   shieldDamage: 165,
   poisonedDamage: 45,

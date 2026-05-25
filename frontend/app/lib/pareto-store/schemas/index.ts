@@ -10,17 +10,17 @@ import type {
   MountSchema,
   PetSchema,
   SSEquipmentState,
-  SioStatSchema,
+  StatSchema,
   TechModifierMatrix,
   TechPartSchema,
   WeaponSchema,
   XenoTriggerMatrix,
 } from '../types';
 
-const citation = (line: number) => `sio_tools_gt_master.md:${line}`;
-const formulaCitation = (line: number) => `sio_tools_formulas_and_defaults.md:${line}`;
-const runtimeTableCitation = (line: number) => `sio_tools_formula_table_extract/extracted_tables/module37013_f_default_config.json:${line}`;
-const rustCitation = (line: number) => `tttg_forge_optimizer/src/tech/sio_config.rs:${line}`;
+const citation = (line: number) => `reference_catalog.md:${line}`;
+const formulaCitation = (line: number) => `reference_formulas.md:${line}`;
+const runtimeTableCitation = (line: number) => `reference_table_extract/extracted_tables/module37013_f_default_config.json:${line}`;
+const rustCitation = (line: number) => `optimizer_src/tech/config.rs:${line}`;
 
 const idFromName = (name: string): string =>
   name
@@ -336,12 +336,12 @@ const statKeys = [
   'xenoSkillDamage', 'lme1Damage', 'adrenaline', 'crimsonBat', 'mountDamage', 'divineFire', 'divineFireUptime',
 ];
 
-export const SIO_UPTIME_STAT_KEYS = ['vulnerability', 'chilledUptime', 'weakenedUptime', 'poisonedUptime', 'lacerationUptime', 'divineFireUptime'] as const;
+export const TECH_UPTIME_STAT_KEYS = ['vulnerability', 'chilledUptime', 'weakenedUptime', 'poisonedUptime', 'lacerationUptime', 'divineFireUptime'] as const;
 
-export const SIO_STATS_FIXED_ORDER: SioStatSchema[] = statKeys.map((key, index) => ({
+export const TECH_STATS_FIXED_ORDER: StatSchema[] = statKeys.map((key, index) => ({
   index,
   key,
-  uptime_based: (SIO_UPTIME_STAT_KEYS as readonly string[]).includes(key),
+  uptime_based: (TECH_UPTIME_STAT_KEYS as readonly string[]).includes(key),
 }));
 
 export const XENO_TRIGGER_MATRIX: XenoTriggerMatrix = {

@@ -27,7 +27,7 @@ const defaultEquipmentSlot = (
   designs_owned: 0,
 });
 
-export const DEFAULT_SIO_PLAYER_STATE: PlayerState = {
+export const DEFAULT_PLAYER_STATE: PlayerState = {
   base_attack: 1000,
   selected_hero: HERO_SCHEMA_INDEX[0],
   ss_equipment: INITIAL_SS_EQUIPMENT,

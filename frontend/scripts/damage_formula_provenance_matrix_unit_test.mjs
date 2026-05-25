@@ -57,7 +57,7 @@ const {
   HERO_SCHEMA_INDEX,
   MOUNT_SCHEMA_INDEX,
   PET_SCHEMA_INDEX,
-  SIO_STATS_FIXED_ORDER,
+  TECH_STATS_FIXED_ORDER,
   SS_EQUIPMENT_SCHEMA_INDEX,
   TECH_MODIFIER_MATRIX,
   TECH_PART_SCHEMA_INDEX,
@@ -489,7 +489,7 @@ for (const set of COLLECTIBLE_SET_INDEX) {
   });
 }
 
-for (const stat of SIO_STATS_FIXED_ORDER) {
+for (const stat of TECH_STATS_FIXED_ORDER) {
   const stage = DIRECT_STAT_STAGE.get(stat.key);
   addRow({
     key: `stat:${stat.key}`,
@@ -497,7 +497,7 @@ for (const stat of SIO_STATS_FIXED_ORDER) {
     name: stat.key,
     sourceStatus: 'SIO fixed stat order source-backed',
     sioSourceKey: 'sio_tools_formulas_and_defaults.md:601-632',
-    tangtangSchemaKey: `SIO_STATS_FIXED_ORDER[${stat.index}]`,
+    tangtangSchemaKey: `TECH_STATS_FIXED_ORDER[${stat.index}]`,
     rustStatChannel: stat.key,
     multiplierStage: stage ?? 'upstream/support stat; no direct 31-stage multiplier slot',
     liveEvidence: 'sio_lm_equivalence_matrix.compact-meta=implemented-live-covered',

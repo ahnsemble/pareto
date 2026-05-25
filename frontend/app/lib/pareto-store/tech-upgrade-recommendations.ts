@@ -56,13 +56,15 @@ function modeName(value: unknown): string {
 }
 
 function readChip(row: Record<string, unknown>): number {
-  const detail = isRecord(row.sio) ? row.sio : {};
+  const rawDetail = row.app;
+  const detail = isRecord(rawDetail) ? rawDetail : {};
   const chip = detail.chip ?? row.chip;
   return typeof chip === 'number' && Number.isFinite(chip) ? chip : 0;
 }
 
 function readOverload(row: Record<string, unknown>): number {
-  const detail = isRecord(row.sio) ? row.sio : {};
+  const rawDetail = row.app;
+  const detail = isRecord(rawDetail) ? rawDetail : {};
   const overload = detail.overload ?? row.overload;
   return typeof overload === 'number' && Number.isFinite(overload) ? overload : 0;
 }

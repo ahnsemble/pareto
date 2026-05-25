@@ -228,7 +228,7 @@ export interface CollectibleCatalogSchema {
   event_slots: CollectibleItemSchema[];
 }
 
-export interface SioStatSchema {
+export interface StatSchema {
   index: number;
   key: string;
   uptime_based: boolean;
@@ -263,17 +263,17 @@ export interface LmeTurfMatrix {
 
 // ───────────────────────────── P2 04 Formula contract (lines 22-38) ─────────────────────────────
 export type CalculatorMode = 'lme' | 'ee' | 'generic_calculator';
-export type SioInputCategory = 'damage' | 'build' | 'hero' | 'equipment' | 'tech' | 'pet' | 'collectible' | 'lme' | 'ecosystem';
-export type SioInputType = 'number' | 'select' | 'checkbox' | 'text' | 'radio';
-export type SioFieldDefaultValue = string | number | boolean | null;
+export type PlayerInputCategory = 'damage' | 'build' | 'hero' | 'equipment' | 'tech' | 'pet' | 'collectible' | 'lme' | 'ecosystem';
+export type PlayerInputType = 'number' | 'select' | 'checkbox' | 'text' | 'radio';
+export type PlayerFieldDefaultValue = string | number | boolean | null;
 
-export interface SioInputFieldSpec {
-  category: SioInputCategory;
+export interface PlayerInputFieldSpec {
+  category: PlayerInputCategory;
   key: string;
   label: string;
-  input_type: SioInputType;
+  input_type: PlayerInputType;
   range: readonly [number, number] | null;
-  default_value: SioFieldDefaultValue;
+  default_value: PlayerFieldDefaultValue;
   source_citation: string;
 }
 
@@ -286,15 +286,15 @@ export type DeepPartial<T> =
         ? { [K in keyof T]?: DeepPartial<T[K]> }
         : T;
 
-export type SioCombatMode = CalculatorMode;
-export type SioEnemyType = 'normal' | 'elite' | 'boss';
-export type SioBattlePhase = 'phase_1' | 'phase_2' | 'battle' | 'expedition';
-export type SioEquipmentRarity = 'none' | 'excellent' | 'epic' | 'legend' | 'eternal' | 'chaos' | 'ss';
-export type SioLocale = 'en' | 'ko';
+export type PlayerCombatMode = CalculatorMode;
+export type PlayerEnemyType = 'normal' | 'elite' | 'boss';
+export type PlayerBattlePhase = 'phase_1' | 'phase_2' | 'battle' | 'expedition';
+export type PlayerEquipmentRarity = 'none' | 'excellent' | 'epic' | 'legend' | 'eternal' | 'chaos' | 'ss';
+export type PlayerLocale = 'en' | 'ko';
 
 export interface DamageInputState {
-  combat_mode: SioCombatMode;
-  enemy_type: SioEnemyType;
+  combat_mode: PlayerCombatMode;
+  enemy_type: PlayerEnemyType;
   base_attack: number;
   final_attack: number;
   crit_rate_percent: number;
@@ -342,7 +342,7 @@ export interface HeroInputState {
 
 export interface EquipmentSlotInputState {
   item_id: string;
-  rarity: SioEquipmentRarity;
+  rarity: PlayerEquipmentRarity;
   item_level: number;
   enhancement_level: number;
   astral_forge_eaf_level: AstralForgeLevel;
@@ -374,7 +374,7 @@ export interface TechPartsInputState {
   forcefield_chip_percent: number;
   soccer_chip_percent: number;
   durian_chip_percent: number;
-  auto_assign_mode: SioCombatMode;
+  auto_assign_mode: PlayerCombatMode;
 }
 
 export interface PetInputState {
@@ -401,7 +401,7 @@ export interface CollectibleInputState {
 }
 
 export interface LmeInputState {
-  battle_phase: SioBattlePhase;
+  battle_phase: PlayerBattlePhase;
   player_medals: number;
   opponent_medals: number;
   medal_delta_buff_enabled: boolean;
@@ -415,7 +415,7 @@ export interface LmeInputState {
 export interface EcosystemInputState {
   share_code: string;
   import_url: string;
-  locale: SioLocale;
+  locale: PlayerLocale;
   autosave_enabled: boolean;
   source_build_name: string;
 }
@@ -460,11 +460,11 @@ export interface PlayerState {
   ecosystem: EcosystemInputState;
 }
 
-export interface SioLiveFixtureCase {
+export interface ReferenceLiveFixtureCase {
   id: string;
   label: string;
   state: DeepPartial<PlayerState>;
-  expected_categories: readonly SioInputCategory[];
+  expected_categories: readonly PlayerInputCategory[];
 }
 
 export interface DamageResult {

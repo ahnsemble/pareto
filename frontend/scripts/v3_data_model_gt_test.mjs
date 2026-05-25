@@ -104,7 +104,7 @@ await check('Hero registry mirrors the 18 source-backed default and collaboratio
   for (const id of ['yelena', 'squidward', 'spongebob']) {
     const hero = schemas.HERO_SCHEMA_INDEX.find((candidate) => candidate.id === id);
     assert.ok(hero.source_citations.some((citation) => citation.includes('module37013_f_default_config.json')), id);
-    assert.ok(hero.source_citations.some((citation) => citation.includes('sio_config.rs')), id);
+    assert.ok(hero.source_citations.some((citation) => citation.includes('optimizer_src/tech/config.rs')), id);
   }
 });
 
@@ -154,8 +154,8 @@ await check('Collectible model exposes item index, 38 sets, and 42 event slots',
 });
 
 await check('Stats fixed-order array mirrors 71 keys with uptime map', () => {
-  assert.equal(schemas.SIO_STATS_FIXED_ORDER.length, 71);
-  assert.deepEqual(schemas.SIO_UPTIME_STAT_KEYS, [
+  assert.equal(schemas.TECH_STATS_FIXED_ORDER.length, 71);
+  assert.deepEqual(schemas.TECH_UPTIME_STAT_KEYS, [
     'vulnerability',
     'chilledUptime',
     'weakenedUptime',

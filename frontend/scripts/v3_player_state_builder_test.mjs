@@ -45,39 +45,39 @@ async function loadPlayerStateModule() {
   await transpileModule(path.join(sourceRoot, 'constants.ts'), path.join(buildDir, 'playerState/constants.js'));
   await transpileModule(path.join(sourceRoot, 'defaults.ts'), path.join(buildDir, 'playerState/defaults.js'));
   await transpileModule(path.join(sourceRoot, 'builder.ts'), path.join(buildDir, 'playerState/builder.js'));
-  await transpileModule(path.join(sourceRoot, 'sioTranslator.ts'), path.join(buildDir, 'playerState/sioTranslator.js'));
+  await transpileModule(path.join(sourceRoot, 'profileTranslator.ts'), path.join(buildDir, 'playerState/profileTranslator.js'));
   await transpileModule(path.join(sourceRoot, 'fixtures.ts'), path.join(buildDir, 'playerState/fixtures.js'));
   const require = createRequire(import.meta.url);
   return {
     constants: require(path.join(buildDir, 'playerState/constants.js')),
     defaults: require(path.join(buildDir, 'playerState/defaults.js')),
     builder: require(path.join(buildDir, 'playerState/builder.js')),
-    sioTranslator: require(path.join(buildDir, 'playerState/sioTranslator.js')),
+    profileTranslator: require(path.join(buildDir, 'playerState/profileTranslator.js')),
     fixtures: require(path.join(buildDir, 'playerState/fixtures.js')),
   };
 }
 
-const { constants, defaults, builder, sioTranslator, fixtures } = await loadPlayerStateModule();
-const { SIO_INPUT_CATEGORIES, SIO_INPUT_FIELD_SPECS } = constants;
-const { DEFAULT_SIO_PLAYER_STATE } = defaults;
-const { createPlayerState, countSioInputFields } = builder;
-const { createPlayerStateFromSioExport: translateSioExport } = sioTranslator;
+const { constants, defaults, builder, profileTranslator, fixtures } = await loadPlayerStateModule();
+const { PLAYER_INPUT_CATEGORIES, PLAYER_INPUT_FIELD_SPECS } = constants;
+const { DEFAULT_PLAYER_STATE } = defaults;
+const { createPlayerState, countPlayerInputFields } = builder;
+const { createPlayerStateFromExternalProfile: translateExternalProfile } = profileTranslator;
 
 await check('sIO category registry covers exactly nine categories', () => {
-  assert.deepEqual(SIO_INPUT_CATEGORIES, ['damage', 'build', 'hero', 'equipment', 'tech', 'pet', 'collectible', 'lme', 'ecosystem']);
+  assert.deepEqual(PLAYER_INPUT_CATEGORIES, ['damage', 'build', 'hero', 'equipment', 'tech', 'pet', 'collectible', 'lme', 'ecosystem']);
 });
 await check('sIO field spec exposes at least fifty fields', () => {
-  assert.ok(SIO_INPUT_FIELD_SPECS.length >= 50);
+  assert.ok(PLAYER_INPUT_FIELD_SPECS.length >= 50);
 });
 await check('sIO field spec preserves Sprint Y exact 95-field contract', () => {
-  assert.equal(SIO_INPUT_FIELD_SPECS.length, 95);
+  assert.equal(PLAYER_INPUT_FIELD_SPECS.length, 95);
 });
 await check('field counter returns same field total as specs', () => {
-  assert.equal(countSioInputFields(DEFAULT_SIO_PLAYER_STATE), SIO_INPUT_FIELD_SPECS.length);
+  assert.equal(countPlayerInputFields(DEFAULT_PLAYER_STATE), PLAYER_INPUT_FIELD_SPECS.length);
 });
 await check('default state contains all nine category objects', () => {
-  for (const category of SIO_INPUT_CATEGORIES) {
-    assert.equal(typeof DEFAULT_SIO_PLAYER_STATE[category], 'object');
+  for (const category of PLAYER_INPUT_CATEGORIES) {
+    assert.equal(typeof DEFAULT_PLAYER_STATE[category], 'object');
   }
 });
 await check('builder preserves provided top-level base attack', () => {
@@ -143,7 +143,7 @@ await check('builder keeps legacy pets array available', () => {
   assert.ok(Array.isArray(createPlayerState().pets));
 });
 await check('sIO export translator maps flat live profile aliases into PlayerState', () => {
-  const state = translateSioExport({
+  const state = translateExternalProfile({
     calc_mode: 'ee',
     base_atk: 2316228,
     final_atk: 3456789,
@@ -182,7 +182,7 @@ await check('sIO export translator maps flat live profile aliases into PlayerSta
   assert.equal(state.pet.deployed_is_xeno, true);
   assert.equal(state.lme.player_medals, 18);
   assert.equal(state.ecosystem.share_code, '4Rgh7d');
-  assert.equal(countSioInputFields(state), SIO_INPUT_FIELD_SPECS.length);
+  assert.equal(countPlayerInputFields(state), PLAYER_INPUT_FIELD_SPECS.length);
 });
 await check('sIO export translator keeps pet source aliases mapped to product pet ids', () => {
   const cases = [
@@ -193,15 +193,15 @@ await check('sIO export translator keeps pet source aliases mapped to product pe
   ];
 
   for (const [sourceName, productId] of cases) {
-    const state = translateSioExport({ pet: sourceName });
+    const state = translateExternalProfile({ pet: sourceName });
     assert.equal(state.pet.deployed_pet_id, productId, sourceName);
   }
 });
 await check('fixture registry defines ten live parity cases', () => {
-  assert.equal(fixtures.SIO_LIVE_FIXTURE_CASES.length, 10);
+  assert.equal(fixtures.REFERENCE_LIVE_FIXTURE_CASES.length, 10);
 });
 await check('fixture ids match Sprint Y required case set', () => {
-  assert.deepEqual(fixtures.SIO_LIVE_FIXTURE_CASES.map((item) => item.id), [
+  assert.deepEqual(fixtures.REFERENCE_LIVE_FIXTURE_CASES.map((item) => item.id), [
     'default',
     'king',
     'taloxa',

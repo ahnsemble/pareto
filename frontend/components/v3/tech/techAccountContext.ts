@@ -152,7 +152,7 @@ export const DEFAULT_TECH_ACCOUNT_CONTEXT: TechAccountContextInput = {
   lmeTurf: 0,
 };
 
-const DEFAULT_SIO_LM_CONTEXT: Record<string, unknown> = {
+const DEFAULT_TECH_CALCULATION_CONTEXT: Record<string, unknown> = {
   baseStats: {
     atkPercent: 118,
     atkEquipPercent: 5,
@@ -267,10 +267,10 @@ function clampInteger(value: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, Math.trunc(value)));
 }
 
-export function buildSioLmContext(account: TechAccountContextInput): Record<string, unknown> {
-  const baseStats = DEFAULT_SIO_LM_CONTEXT.baseStats as Record<string, unknown>;
+export function buildTechCalculationContext(account: TechAccountContextInput): Record<string, unknown> {
+  const baseStats = DEFAULT_TECH_CALCULATION_CONTEXT.baseStats as Record<string, unknown>;
   return {
-    ...DEFAULT_SIO_LM_CONTEXT,
+    ...DEFAULT_TECH_CALCULATION_CONTEXT,
     baseStats: {
       ...baseStats,
       atkPercent: account.atkPercent + account.mountAtk + account.mountStatInputs,

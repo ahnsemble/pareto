@@ -79,6 +79,11 @@ assert.equal(decoded.document.savedAt, fixedDate.toISOString());
 assert.equal(decoded.document.state.accountContext.finalAtk, 333333);
 assert.equal(decoded.document.state.chips, 22);
 assert.equal(decoded.document.state.skillStatus.droneMode, 'locked');
+assert.equal(decoded.document.state.profileImportText ?? '', '');
+assert.equal(decoded.document.state.profileImportSummary ?? '', '');
+assert.deepEqual(decoded.document.state.profileImportCoverage ?? [], []);
+assert.deepEqual(decoded.document.state.profileImportDetails ?? [], []);
+assert.equal(/sio-tools|profileImportText|Imported calculation link/i.test(JSON.stringify(decoded.document.state)), false);
 
 const shareUrl = buildTechProfileShareUrl({
   baseUrl: 'https://example.com/en/v3/optimizer/tech-parts?old=1&ttProfile=stale#debug',
@@ -100,6 +105,11 @@ assert.equal(/sio-tools|profileImportText|beam|preselect|exact/i.test(backupText
 const backupDecoded = decodeTechProfileBackupText(backupText);
 assert.equal(backupDecoded.ok, true);
 assert.equal(backupDecoded.document.state.accountContext.skillDamage, 477);
+assert.equal(backupDecoded.document.state.profileImportText ?? '', '');
+assert.equal(backupDecoded.document.state.profileImportSummary ?? '', '');
+assert.deepEqual(backupDecoded.document.state.profileImportCoverage ?? [], []);
+assert.deepEqual(backupDecoded.document.state.profileImportDetails ?? [], []);
+assert.equal(/sio-tools|profileImportText|Imported calculation link/i.test(JSON.stringify(backupDecoded.document.state)), false);
 assert.equal(decodeTechProfileShareState('not valid').ok, false);
 assert.equal(decodeTechProfileShareState(`${encoded.slice(0, -1)}g`).ok, false);
 assert.equal(decodeTechProfileShareState(`${encoded}0`).ok, false);

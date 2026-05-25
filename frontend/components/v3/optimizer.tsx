@@ -48,11 +48,12 @@ import { getWorker } from '../../app/lib/wasm-client';
 import {
   initWasm,
   relicCoreOptimize,
+  resultUsesReferenceContract,
   twinbornAutoAssign,
-  validateSioTechInventory,
+  validateTechInventory,
   type RelicCoreOptimizerResult,
-  type SioInventoryValidation,
-  type SioTechInventoryInput,
+  type TechInventoryValidation,
+  type TechInventoryInput,
   type TechOptimizerResult,
   type TwinbornAutoAssignResult,
 } from '../../app/lib/wasm';
@@ -81,7 +82,7 @@ import {
 } from './tech/techLocaleCopy';
 import {
   DEFAULT_TECH_ACCOUNT_CONTEXT,
-  buildSioLmContext,
+  buildTechCalculationContext,
   playerStateWithAccountContext,
   type TechAccountContextInput,
 } from './tech/techAccountContext';
@@ -97,8 +98,8 @@ const RESOURCE_FIELDS: Array<{ id: ResourceId; label: string; value: number; ste
   { id: 'gold', label: 'Gold', value: 600000, step: 50000 },
 ];
 
-const SIO_RARITY_FIELDS = ['Eternal', 'Legend4', 'Legend3', 'Legend2', 'Legend1', 'Legend', 'Epic3', 'Epic2', 'Epic1', 'Epic'] as const;
-const SIO_RARITY_INPUTS: Array<{ id: (typeof SIO_RARITY_FIELDS)[number]; label: string }> = [
+const TECH_RARITY_FIELDS = ['Eternal', 'Legend4', 'Legend3', 'Legend2', 'Legend1', 'Legend', 'Epic3', 'Epic2', 'Epic1', 'Epic'] as const;
+const TECH_RARITY_INPUTS: Array<{ id: (typeof TECH_RARITY_FIELDS)[number]; label: string }> = [
   { id: 'Eternal', label: 'Eternal' },
   { id: 'Legend4', label: 'Legend +4' },
   { id: 'Legend3', label: 'Legend +3' },
@@ -110,7 +111,7 @@ const SIO_RARITY_INPUTS: Array<{ id: (typeof SIO_RARITY_FIELDS)[number]; label: 
   { id: 'Epic1', label: 'Epic +1' },
   { id: 'Epic', label: 'Epic' },
 ];
-const DEFAULT_RARITY_COUNTS: Record<(typeof SIO_RARITY_FIELDS)[number], number> = {
+const DEFAULT_RARITY_COUNTS: Record<(typeof TECH_RARITY_FIELDS)[number], number> = {
   Eternal: 0,
   Legend4: 0,
   Legend3: 0,
@@ -122,7 +123,7 @@ const DEFAULT_RARITY_COUNTS: Record<(typeof SIO_RARITY_FIELDS)[number], number> 
   Epic1: 0,
   Epic: 6,
 };
-const SIO_MODE_CHOICES = [
+const TECH_MODE_CHOICES = [
   ['droneMode', 'Drone'],
   ['drillShotMode', 'Drill Shot'],
   ['soccerMode', 'Soccer'],
@@ -136,19 +137,19 @@ const SIO_MODE_CHOICES = [
   ['brickMode', 'Brick'],
   ['forcefieldMode', 'Forcefield'],
 ] as const;
-type SioModeId = (typeof SIO_MODE_CHOICES)[number][0];
+type TechModeId = (typeof TECH_MODE_CHOICES)[number][0];
 type SkillStatus = 'auto' | 'locked' | 'disabled';
-type RarityCounts = Record<(typeof SIO_RARITY_FIELDS)[number], number>;
+type RarityCounts = Record<(typeof TECH_RARITY_FIELDS)[number], number>;
 type TechRunSnapshot = {
   accountContext: TechAccountContextInput;
-  inventory: SioTechInventoryInput;
+  inventory: TechInventoryInput;
 };
-const DEFAULT_SKILL_STATUS = SIO_MODE_CHOICES.reduce(
+const DEFAULT_SKILL_STATUS = TECH_MODE_CHOICES.reduce(
   (status, [mode]) => {
     status[mode] = mode === 'rocketMode' || mode === 'guardianMode' ? 'disabled' : 'auto';
     return status;
   },
-  {} as Record<SioModeId, SkillStatus>,
+  {} as Record<TechModeId, SkillStatus>,
 );
 const DEFAULT_CANDIDATE_PRESELECT_TOP_K = 16;
 const SPEED_MODE_OPTIONS = ['fast', 'normal', 'precise', 'precise+', 'full'] as const;
@@ -203,8 +204,8 @@ function nextSkillStatus(status: SkillStatus): SkillStatus {
   return 'auto';
 }
 
-function skillLabelsByStatus(statuses: Record<SioModeId, SkillStatus>, target: SkillStatus): string[] {
-  return SIO_MODE_CHOICES.filter(([mode]) => statuses[mode] === target).map(([, label]) => label);
+function skillLabelsByStatus(statuses: Record<TechModeId, SkillStatus>, target: SkillStatus): string[] {
+  return TECH_MODE_CHOICES.filter(([mode]) => statuses[mode] === target).map(([, label]) => label);
 }
 
 function buildTechInventoryInput({
@@ -223,14 +224,14 @@ function buildTechInventoryInput({
   skillSlots: number;
   overloadable: boolean;
   maxOverload: number;
-  skillStatus: Record<SioModeId, SkillStatus>;
+  skillStatus: Record<TechModeId, SkillStatus>;
   speedMode: string;
   limit: string;
   candidatePreselectTopK: number;
-}): SioTechInventoryInput {
+}): TechInventoryInput {
   return {
     rarityCounts: Object.fromEntries(
-      SIO_RARITY_FIELDS.flatMap((rarity) => {
+      TECH_RARITY_FIELDS.flatMap((rarity) => {
         const count = Math.max(0, Math.trunc(rarityCounts[rarity] ?? 0));
         return count > 0 ? [[rarity, count] as const] : [];
       }),
@@ -239,7 +240,7 @@ function buildTechInventoryInput({
     skillSlots: Math.max(0, Math.trunc(skillSlots)),
     overloadable,
     ...(overloadable ? { maxOverload: Math.max(0, Math.trunc(maxOverload)) } : {}),
-    modes: SIO_MODE_CHOICES.map(([mode]) => mode),
+    modes: TECH_MODE_CHOICES.map(([mode]) => mode),
     forcedSkills: skillLabelsByStatus(skillStatus, 'locked'),
     preferredSkills: [],
     disabledSkills: skillLabelsByStatus(skillStatus, 'disabled'),
@@ -249,10 +250,10 @@ function buildTechInventoryInput({
   };
 }
 
-function safeValidation(status: BootState, inventory: SioTechInventoryInput): SioInventoryValidation {
+function safeValidation(status: BootState, inventory: TechInventoryInput): TechInventoryValidation {
   if (status !== 'ok') return { valid: false, errors: ['wasm_pending'], warnings: [] };
   try {
-    return validateSioTechInventory(inventory);
+    return validateTechInventory(inventory);
   } catch (error) {
     return {
       valid: false,
@@ -277,7 +278,7 @@ function buildChipRemainder(build: TechOptimizerResult['builds'][number] | undef
 }
 
 function buildChipRemainderValue(build: TechOptimizerResult['builds'][number] | undefined): number | undefined {
-  const candidate = build?.config?.sioCandidate as Record<string, unknown> | undefined;
+  const candidate = build?.config?.appCandidate as Record<string, unknown> | undefined;
   const value = candidate?.chipRemainder;
   return typeof value === 'number' ? value : undefined;
 }
@@ -324,7 +325,7 @@ function buildChipUsed(build: TechOptimizerResult['builds'][number] | undefined)
 
   let used = 0;
   for (const row of loadout) {
-    const detail = row.sio as Record<string, unknown> | undefined;
+    const detail = row.app as Record<string, unknown> | undefined;
     const chip = detail?.chip;
     if (typeof chip !== 'number' || !Number.isFinite(chip)) return 'n/a';
     used += chip;
@@ -333,7 +334,7 @@ function buildChipUsed(build: TechOptimizerResult['builds'][number] | undefined)
 }
 
 function buildActiveSkills(build: TechOptimizerResult['builds'][number] | undefined, emptyLabel = 'none'): string {
-  const candidate = build?.config?.sioCandidate as Record<string, unknown> | undefined;
+  const candidate = build?.config?.appCandidate as Record<string, unknown> | undefined;
   const skills = candidate?.activeSkills;
   if (!Array.isArray(skills) || skills.length === 0) return emptyLabel;
   return skills.map((skill) => presentTechSkillName(String(skill))).join(', ');
@@ -611,7 +612,7 @@ export function TechPartsOptimizerSurface() {
   const [runError, setRunError] = useState<string | null>(null);
   const [running, setRunning] = useState(false);
   const profileShareLoadHandled = useRef(false);
-  const inventory = useMemo<SioTechInventoryInput>(
+  const inventory = useMemo<TechInventoryInput>(
     () =>
       buildTechInventoryInput({
         rarityCounts,
@@ -675,7 +676,7 @@ export function TechPartsOptimizerSurface() {
       : copy.inventory.valid
     : copy.inventory.blocked(inventoryValidation.errors.map((message) => inventoryMessage(message, locale)).join(', '));
   const playerStateForRun = useMemo(() => playerStateWithAccountContext(playerState, accountContext), [accountContext, playerState]);
-  const sioLmContextForRun = useMemo(() => buildSioLmContext(accountContext), [accountContext]);
+  const calculationContextForRun = useMemo(() => buildTechCalculationContext(accountContext), [accountContext]);
   const refreshProfileSaveSlots = useCallback(() => {
     const storage = getBrowserProfileStorage();
     if (!storage) {
@@ -753,14 +754,14 @@ export function TechPartsOptimizerSurface() {
     setMaxOverload(Math.max(0, Number(state.maxOverload) || 0));
     setSpeedMode((SPEED_MODE_OPTIONS as readonly string[]).includes(state.speedMode) ? state.speedMode : 'normal');
     setLimit((LIMIT_OPTIONS as readonly string[]).includes(state.limit) ? state.limit : 'basic');
-    setSkillStatus({ ...DEFAULT_SKILL_STATUS, ...state.skillStatus } as Record<SioModeId, SkillStatus>);
+    setSkillStatus({ ...DEFAULT_SKILL_STATUS, ...state.skillStatus } as Record<TechModeId, SkillStatus>);
     setProfileImportText(state.profileImportText ?? '');
     setImportedTechSnapshot(state.importedTechSnapshot ?? null);
     setImportedCollectibleSnapshot(state.importedCollectibleSnapshot ?? null);
     setImportedRunSnapshot(state.importedRunSnapshot
       ? {
           accountContext: { ...DEFAULT_TECH_ACCOUNT_CONTEXT, ...state.importedRunSnapshot.accountContext } as TechAccountContextInput,
-          inventory: state.importedRunSnapshot.inventory as unknown as SioTechInventoryInput,
+          inventory: state.importedRunSnapshot.inventory as unknown as TechInventoryInput,
         }
       : null);
     setProfileImportSummary(state.profileImportSummary ?? '');
@@ -820,7 +821,7 @@ export function TechPartsOptimizerSurface() {
     setSkillStatus((current) => ({
       ...current,
       ...preset.skillStatusOverrides,
-    }) as Record<SioModeId, SkillStatus>);
+    }) as Record<TechModeId, SkillStatus>);
     setResult(null);
     setCalculationComparison(null);
     setRunError(null);
@@ -882,8 +883,8 @@ export function TechPartsOptimizerSurface() {
         topK,
         beamWidth,
         maxExactNodes,
-        sioTechInventory: inventory,
-        sioLm: sioLmContextForRun,
+        techInventory: inventory,
+        calculationContext: calculationContextForRun,
       });
       setResult(workerResult);
       if (importedRunSnapshot) {
@@ -892,8 +893,8 @@ export function TechPartsOptimizerSurface() {
           topK,
           beamWidth,
           maxExactNodes,
-          sioTechInventory: importedRunSnapshot.inventory,
-          sioLm: buildSioLmContext(importedRunSnapshot.accountContext),
+          techInventory: importedRunSnapshot.inventory,
+          calculationContext: buildTechCalculationContext(importedRunSnapshot.accountContext),
         });
         setCalculationComparison(buildCalculationComparisonSummary({
           importedDamage: topBuildDamageFactor(importedResult),
@@ -1169,7 +1170,7 @@ export function TechPartsOptimizerSurface() {
               </label>
             </div>
             <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-5">
-              {SIO_RARITY_INPUTS.map((rarity) => (
+              {TECH_RARITY_INPUTS.map((rarity) => (
                 <label key={rarity.id} className="block text-sm text-[color:var(--color-text)]">
                   <span className="text-xs text-[color:var(--color-text-muted)]">{rarity.label}</span>
                   <input
@@ -1192,7 +1193,7 @@ export function TechPartsOptimizerSurface() {
           <div className={panelClass}>
             <h2 className={labelClass}>{copy.skill.title}</h2>
             <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
-              {SIO_MODE_CHOICES.map(([mode, label]) => (
+              {TECH_MODE_CHOICES.map(([mode, label]) => (
                 <button
                   key={mode}
                   type="button"
@@ -1255,9 +1256,8 @@ export function TechPartsOptimizerSurface() {
         <div
           className={panelClass}
           data-testid="tech-optimizer-results"
-          data-mode-used={result?.metrics.mode_used ?? 'idle'}
-          data-scoring-model={result?.scope?.scoring_model ?? 'idle'}
-          data-full-sio-equivalent={result?.scope?.full_sio_equivalent ? 'true' : 'false'}
+          data-run-state={result ? 'ready' : 'idle'}
+          data-calculation-contract={resultUsesReferenceContract(result) ? 'reference-equivalent' : 'standard'}
         >
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 className={labelClass}>{copy.results.title}</h2>

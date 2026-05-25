@@ -455,8 +455,8 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await page.getByTestId('tech-optimizer-run').click();
 
     await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
-    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-scoring-model', 'sio_full_lm_equivalence');
-    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-full-sio-equivalent', 'true');
+    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-calculation-contract', 'reference-equivalent');
+    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-calculation-contract', 'reference-equivalent');
     await expect(page.getByTestId('tech-inventory-chips')).toHaveValue('66');
     await expect(page.getByTestId('tech-account-base-atk')).toHaveValue('8100');
     await expect(page.getByTestId('tech-account-final-atk')).toHaveValue('130000');
@@ -518,7 +518,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-profile-import-summary')).toContainText('Profile import failed');
   });
 
-  test('runs inventory-backed WASM tech optimizer with full SIO scorer', async ({ page }) => {
+  test('runs inventory-backed WASM tech optimizer with reference scorer', async ({ page }) => {
     await expect(page.getByTestId('tech-inventory-contract')).toBeVisible();
     await expect(page.getByTestId('tech-inventory-validation')).toContainText('Inventory valid');
     await expect(page.getByText('SIO LM context')).toHaveCount(0);
@@ -530,9 +530,9 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await page.getByTestId('tech-optimizer-run').click();
 
     await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
-    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-mode-used', 'sio_candidate_generation');
-    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-scoring-model', 'sio_full_lm_equivalence');
-    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-full-sio-equivalent', 'true');
+    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-run-state', 'ready');
+    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-calculation-contract', 'reference-equivalent');
+    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-calculation-contract', 'reference-equivalent');
     await expect(page.getByTestId('tech-optimizer-results')).not.toContainText('sio_candidate_generation');
     await expect(page.getByTestId('tech-optimizer-results')).not.toContainText('sio_full_lm_equivalence');
     await expect(page.getByTestId('tech-optimizer-chip-used')).not.toContainText('n/a');
@@ -544,7 +544,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
     expect(latencyMs).toBeLessThan(3000);
   });
 
-  test('uses SIO product vocabulary and exposes account context axes', async ({ page }) => {
+  test('uses product vocabulary and exposes account context axes', async ({ page }) => {
     const inventory = page.getByTestId('tech-inventory-contract');
     await expect(page.getByRole('heading', { name: 'Owned tech materials' })).toBeVisible();
     await expect(inventory.getByText('Sub-parts excluding equipped main parts')).toBeVisible();
@@ -611,8 +611,8 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await page.getByTestId('tech-optimizer-run').click();
 
     await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
-    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-scoring-model', 'sio_full_lm_equivalence');
-    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-full-sio-equivalent', 'true');
+    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-calculation-contract', 'reference-equivalent');
+    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-calculation-contract', 'reference-equivalent');
   });
 
   test('edits collection set, star, and custom set account context', async ({ page }) => {
@@ -628,7 +628,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await page.getByTestId('tech-optimizer-run').click();
 
     await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
-    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-scoring-model', 'sio_full_lm_equivalence');
+    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-calculation-contract', 'reference-equivalent');
   });
 
   test('shows a collection named editor alongside collection numeric fields', async ({ page }) => {
@@ -655,7 +655,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await page.getByTestId('tech-optimizer-run').click();
 
     await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
-    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-full-sio-equivalent', 'true');
+    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-calculation-contract', 'reference-equivalent');
   });
 
   test('shows a survivor selector while preserving survivor detail fields', async ({ page }) => {
@@ -677,7 +677,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
 
     await page.getByTestId('tech-optimizer-run').click();
     await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
-    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-full-sio-equivalent', 'true');
+    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-calculation-contract', 'reference-equivalent');
   });
 
   test('shows teamwork and passive pickers alongside numeric survivor controls', async ({ page }) => {
@@ -717,7 +717,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await page.getByTestId('tech-optimizer-run').click();
 
     await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
-    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-scoring-model', 'sio_full_lm_equivalence');
+    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-calculation-contract', 'reference-equivalent');
   });
 
   test('shows deployed and assist pet named controls', async ({ page }) => {
@@ -740,7 +740,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
 
     await page.getByTestId('tech-optimizer-run').click();
     await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
-    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-scoring-model', 'sio_full_lm_equivalence');
+    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-calculation-contract', 'reference-equivalent');
   });
 
   test('keeps pet assist selections valid and explains xeno state', async ({ page }) => {
@@ -780,7 +780,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await page.getByTestId('tech-optimizer-run').click();
 
     await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
-    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-full-sio-equivalent', 'true');
+    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-calculation-contract', 'reference-equivalent');
   });
 
   test('shows a compact mount puzzle editor alongside mount account fields', async ({ page }) => {
@@ -832,7 +832,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await page.getByTestId('tech-optimizer-run').click();
 
     await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
-    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-scoring-model', 'sio_full_lm_equivalence');
+    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-calculation-contract', 'reference-equivalent');
   });
 
   test('shows equipment item selectors for all six slots', async ({ page }) => {
@@ -855,7 +855,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
 
     await page.getByTestId('tech-optimizer-run').click();
     await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
-    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-full-sio-equivalent', 'true');
+    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-calculation-contract', 'reference-equivalent');
   });
 
   test('changes collectible target from named collection controls', async ({ page }) => {
@@ -880,7 +880,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await page.getByTestId('tech-optimizer-run').click();
 
     await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
-    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-mode-used', 'sio_candidate_generation');
+    await expect(page.getByTestId('tech-optimizer-results')).toHaveAttribute('data-run-state', 'ready');
     await expect(page.getByTestId('tech-optimizer-results')).not.toContainText('gap');
     await expect(page.getByTestId('tech-optimizer-results')).not.toContainText('full SIO equivalent');
   });

@@ -2,9 +2,9 @@ import { expect, test } from '@playwright/test';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {
-  SIO_INPUT_CATEGORIES,
-  SIO_INPUT_FIELD_SPECS,
-  SIO_LIVE_FIXTURE_CASES,
+  PLAYER_INPUT_CATEGORIES,
+  PLAYER_INPUT_FIELD_SPECS,
+  REFERENCE_LIVE_FIXTURE_CASES,
 } from '../app/lib/pareto-store/playerState';
 
 const V3_URL = '/en/v3';
@@ -35,7 +35,7 @@ const fixtureResults: FixtureResult[] = [];
 async function openV3(page: import('@playwright/test').Page, baseURL: string | undefined) {
   await page.goto(`${baseURL ?? 'http://localhost:3032'}${V3_URL}`);
   await page.waitForSelector('[data-testid="v3-boot-status"]');
-  await expect(page.locator('[data-testid="v3-sio-coverage-panel"]')).toBeVisible();
+  await expect(page.locator('[data-testid="v3-profile-coverage-panel"]')).toBeVisible();
 }
 
 async function applyFixtureCase(page: import('@playwright/test').Page, id: string) {
@@ -137,8 +137,8 @@ test.afterAll(async () => {
       generated_at: new Date().toISOString(),
       sio_url: SIO_URL,
       local_url: V3_URL,
-      covered_category_count: SIO_INPUT_CATEGORIES.length,
-      covered_field_count: SIO_INPUT_FIELD_SPECS.length,
+      covered_category_count: PLAYER_INPUT_CATEGORIES.length,
+      covered_field_count: PLAYER_INPUT_FIELD_SPECS.length,
       cases: fixtureResults,
     }, null, 2) + '\n',
   );
@@ -146,12 +146,12 @@ test.afterAll(async () => {
 
 test('sIO input coverage panel exposes 9 categories and at least 50 fields', async ({ page, baseURL }) => {
   await openV3(page, baseURL);
-  await expect(page.locator('[data-testid="v3-sio-category"]')).toHaveCount(9);
-  await expect(page.locator('[data-testid="v3-sio-field-count"]')).toContainText(String(SIO_INPUT_FIELD_SPECS.length));
-  expect(SIO_INPUT_FIELD_SPECS.length).toBeGreaterThanOrEqual(50);
+  await expect(page.locator('[data-testid="v3-profile-category"]')).toHaveCount(9);
+  await expect(page.locator('[data-testid="v3-profile-field-count"]')).toContainText(String(PLAYER_INPUT_FIELD_SPECS.length));
+  expect(PLAYER_INPUT_FIELD_SPECS.length).toBeGreaterThanOrEqual(50);
 });
 
-for (const fixtureCase of SIO_LIVE_FIXTURE_CASES) {
+for (const fixtureCase of REFERENCE_LIVE_FIXTURE_CASES) {
   test(`captures sIO live fixture: ${fixtureCase.id}`, async ({ page, context, baseURL }) => {
     await openV3(page, baseURL);
     await applyFixtureCase(page, fixtureCase.id);
@@ -179,8 +179,8 @@ for (const fixtureCase of SIO_LIVE_FIXTURE_CASES) {
       sio_status: response?.status() ?? 0,
       sio_body_text_length: sioBodyText.length,
       sio_input_count: sioInputCount,
-      covered_category_count: SIO_INPUT_CATEGORIES.length,
-      covered_field_count: SIO_INPUT_FIELD_SPECS.length,
+      covered_category_count: PLAYER_INPUT_CATEGORIES.length,
+      covered_field_count: PLAYER_INPUT_FIELD_SPECS.length,
     });
 
     expect(localValueText.length).toBeGreaterThan(0);

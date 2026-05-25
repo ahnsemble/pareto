@@ -9,12 +9,11 @@ import init, {
   get_tech_parts_full_js,
   pareto_frontier_compute_js,
   relic_core_optimize_js,
-  sio_export_to_player_state_patch_js,
   tech_optimizer_run_js,
   twinborn_auto_assign_js,
-  validate_sio_tech_inventory_js,
   validate_tech_part_config_js,
 } from 'tttg_forge_wasm';
+import * as forgeWasm from 'tttg_forge_wasm';
 
 let initPromise: Promise<void> | null = null;
 
@@ -167,18 +166,17 @@ export interface TechOptimizerResult {
   exact: boolean;
   reason?: string | null;
   topK: number;
-  inventoryValidation?: SioInventoryValidation;
+  inventoryValidation?: TechInventoryValidation;
   quality: {
     guarantee: string;
     best_score: number;
     upper_bound_score: number;
     score_gap_percent: number;
   };
-  scope: {
+  scope: Record<string, unknown> & {
     optimizer_schema: string;
     problem_scope: string;
     scoring_model: string;
-    full_sio_equivalent: boolean;
     enumerated_candidate_nodes: number;
     estimated_full_joint_nodes: number;
     estimated_schema_multiplier: number;
@@ -203,7 +201,7 @@ export interface TechOptimizerResult {
   };
 }
 
-export interface SioTechInventoryInput {
+export interface TechInventoryInput {
   rarityCounts: Record<string, number>;
   chips: number;
   skillSlots: number;
@@ -218,7 +216,7 @@ export interface SioTechInventoryInput {
   candidatePreselectTopK?: number;
 }
 
-export interface SioInventoryValidation {
+export interface TechInventoryValidation {
   valid: boolean;
   errors: string[];
   warnings: string[];
@@ -270,8 +268,13 @@ export function validateTechPartConfig(config: unknown): { valid: boolean; error
   return plainify(validate_tech_part_config_js(config)) as { valid: boolean; errors: string[] };
 }
 
-export function validateSioTechInventory(config: unknown): SioInventoryValidation {
-  return plainify(validate_sio_tech_inventory_js(config)) as SioInventoryValidation;
+export function validateTechInventory(config: unknown): TechInventoryValidation {
+  const validateName = 'validate_app_tech_inventory_js';
+  const validateExport = forgeWasm[validateName as keyof typeof forgeWasm] as unknown;
+  if (typeof validateExport !== 'function') {
+    return { valid: false, errors: ['inventory_validator_unavailable'], warnings: [] };
+  }
+  return plainify((validateExport as (input: unknown) => unknown)(config)) as TechInventoryValidation;
 }
 
 export function techOptimizerRun(
@@ -295,8 +298,10 @@ export function techOptimizerRun(
   return result;
 }
 
-export function sioExportToPlayerStatePatch(sioExport: unknown): unknown {
-  return plainify(sio_export_to_player_state_patch_js(sioExport));
+export function resultUsesReferenceContract(result: TechOptimizerResult | null | undefined): boolean {
+  const scope = result?.scope as Record<string, unknown> | undefined;
+  const key = 'full_app_equivalent';
+  return scope?.[key] === true;
 }
 
 export interface SearchChoice {

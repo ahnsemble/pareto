@@ -62,7 +62,7 @@ export function displayTechModeName(id: string): string {
 
 export function presentTechLoadoutRows(rows: Array<Record<string, unknown>>): PresentedTechPartRow[] {
   return rows.map((row) => {
-    const sio = readRecord(row.sio);
+    const detail = readRecord(row.app);
     const rawPartId = String(row.id ?? '');
     const rawModeId = String(row.mode ?? '');
     return {
@@ -70,7 +70,7 @@ export function presentTechLoadoutRows(rows: Array<Record<string, unknown>>): Pr
       partName: displayTechPartName(rawPartId),
       rawModeId,
       modeName: displayTechModeName(rawModeId),
-      chipAllocation: readNumber(sio.chip ?? row.chip),
+      chipAllocation: readNumber(detail.chip ?? row.chip),
       overload: readNumber(row.overload),
     };
   });

@@ -139,7 +139,7 @@ function setString(
   if (value !== undefined) setPath(patch, path, normalize(value));
 }
 
-export function translateSioExportToPlayerStatePatch(source: unknown): DeepPartial<PlayerState> {
+export function translateExternalProfileToPlayerStatePatch(source: unknown): DeepPartial<PlayerState> {
   const patch: PatchRecord = {};
 
   for (const category of CATEGORY_ROOTS) {
@@ -196,6 +196,6 @@ export function translateSioExportToPlayerStatePatch(source: unknown): DeepParti
   return patch as DeepPartial<PlayerState>;
 }
 
-export function createPlayerStateFromSioExport(source: unknown): PlayerState {
-  return createPlayerState(translateSioExportToPlayerStatePatch(source));
+export function createPlayerStateFromExternalProfile(source: unknown): PlayerState {
+  return createPlayerState(translateExternalProfileToPlayerStatePatch(source));
 }

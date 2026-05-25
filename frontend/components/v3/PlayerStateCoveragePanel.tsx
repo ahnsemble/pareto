@@ -3,8 +3,8 @@
 import { useMemo } from 'react';
 import { useParetoStore } from '../../app/lib/pareto-store/store';
 import {
-  SIO_INPUT_CATEGORIES,
-  SIO_INPUT_FIELD_SPECS,
+  PLAYER_INPUT_CATEGORIES,
+  PLAYER_INPUT_FIELD_SPECS,
 } from '../../app/lib/pareto-store/playerState';
 
 const cardClass = 'rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface-elev)] p-4';
@@ -12,28 +12,28 @@ const sectionTitleClass = 'mb-2 text-xs uppercase tracking-wider text-[color:var
 
 export function PlayerStateCoveragePanel() {
   const combatMode = useParetoStore((state) => state.mode);
-  const fieldCount = SIO_INPUT_FIELD_SPECS.length;
+  const fieldCount = PLAYER_INPUT_FIELD_SPECS.length;
   const categoryRows = useMemo(
-    () => SIO_INPUT_CATEGORIES.map((category) => ({
+    () => PLAYER_INPUT_CATEGORIES.map((category) => ({
       category,
-      fields: SIO_INPUT_FIELD_SPECS.filter((field) => field.category === category),
+      fields: PLAYER_INPUT_FIELD_SPECS.filter((field) => field.category === category),
     })),
     [],
   );
 
   return (
-    <section className={cardClass} data-testid="v3-sio-coverage-panel">
+    <section className={cardClass} data-testid="v3-profile-coverage-panel">
       <h3 className={sectionTitleClass}>Profile input coverage</h3>
       <div className="grid gap-2 text-xs sm:grid-cols-3">
         <p>
           Categories:{' '}
-          <span className="font-mono text-[color:var(--color-accent)]" data-testid="v3-sio-category-count">
-            {SIO_INPUT_CATEGORIES.length}
+          <span className="font-mono text-[color:var(--color-accent)]" data-testid="v3-profile-category-count">
+            {PLAYER_INPUT_CATEGORIES.length}
           </span>
         </p>
         <p>
           Fields:{' '}
-          <span className="font-mono text-[color:var(--color-accent)]" data-testid="v3-sio-field-count">
+          <span className="font-mono text-[color:var(--color-accent)]" data-testid="v3-profile-field-count">
             {fieldCount}
           </span>
         </p>
@@ -49,7 +49,7 @@ export function PlayerStateCoveragePanel() {
           <div
             key={category}
             className="rounded-md border border-[color:var(--color-border)] p-2"
-            data-testid="v3-sio-category"
+            data-testid="v3-profile-category"
           >
             <p className="font-mono text-xs text-[color:var(--color-primary)]">
               {category} · {fields.length}

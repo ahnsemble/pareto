@@ -9,7 +9,7 @@ import {
   SearchChoice,
   SearchSlot,
   SearchSpace,
-  type SioTechInventoryInput,
+  type TechInventoryInput,
   type TechOptimizerResult,
 } from './wasm';
 
@@ -46,8 +46,8 @@ export interface TechOptimizeInput {
   topK: number;
   beamWidth?: number;
   maxExactNodes?: number;
-  sioTechInventory?: SioTechInventoryInput;
-  sioLm?: unknown;
+  techInventory?: TechInventoryInput;
+  calculationContext?: unknown;
 }
 
 const MAX_COMBOS = 50_000;
@@ -198,15 +198,17 @@ const workerApi = {
 
   async optimizeTech(input: TechOptimizeInput): Promise<TechOptimizerResult> {
     await initWasm();
+    const contextKey = 'appLm';
+    const inventoryKey = 'appTechInventory';
     const playerState =
-      input.sioLm && input.playerState && typeof input.playerState === 'object' && !Array.isArray(input.playerState)
-        ? { ...(input.playerState as Record<string, unknown>), sioLm: input.sioLm }
+      input.calculationContext && input.playerState && typeof input.playerState === 'object' && !Array.isArray(input.playerState)
+        ? { ...(input.playerState as Record<string, unknown>), [contextKey]: input.calculationContext }
         : input.playerState;
     return techOptimizerRun(playerState, {
       topK: Math.max(1, input.topK),
       beamWidth: Math.max(1, input.beamWidth ?? 64),
       maxExactNodes: Math.max(1, input.maxExactNodes ?? 250000),
-      ...(input.sioTechInventory ? { sioTechInventory: input.sioTechInventory } : {}),
+      ...(input.techInventory ? { [inventoryKey]: input.techInventory } : {}),
     });
   },
 };

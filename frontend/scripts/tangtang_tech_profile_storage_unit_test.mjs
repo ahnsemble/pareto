@@ -98,9 +98,13 @@ assert.equal(document.savedAt, fixedDate.toISOString());
 assert.equal(document.state.accountContext.finalAtk, 123456);
 assert.equal(document.state.chips, 91);
 assert.equal(document.state.importedRunSnapshot.inventory.chips, 91);
+assert.equal(document.state.profileImportText ?? '', '');
+assert.equal(document.state.profileImportSummary ?? '', '');
+assert.deepEqual(document.state.profileImportCoverage ?? [], []);
+assert.deepEqual(document.state.profileImportDetails ?? [], []);
 assert.equal('result' in document.state, false);
 assert.equal('calculationComparison' in document.state, false);
-assert.equal(/SIO/.test(JSON.stringify(document)), false);
+assert.equal(/sio-tools|profileImportText|Imported calculation link|\bSIO\b/i.test(JSON.stringify(document)), false);
 
 const memory = new Map();
 const storage = {
@@ -134,6 +138,10 @@ const loadedEnders = loadTechProfileSlot(storage, 'endersEcho');
 assert.equal(loadedEnders.ok, true);
 assert.equal(loadedEnders.document.state.accountContext.finalAtk, 123456);
 assert.equal(loadedEnders.document.state.chips, 91);
+assert.equal(loadedEnders.document.state.profileImportText ?? '', '');
+assert.equal(loadedEnders.document.state.profileImportSummary ?? '', '');
+assert.deepEqual(loadedEnders.document.state.profileImportCoverage ?? [], []);
+assert.deepEqual(loadedEnders.document.state.profileImportDetails ?? [], []);
 
 const loadedGuild = loadTechProfileSlot(storage, 'guildExpedition');
 assert.equal(loadedGuild.ok, true);

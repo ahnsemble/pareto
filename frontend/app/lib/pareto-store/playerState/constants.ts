@@ -1,6 +1,6 @@
-import type { SioInputCategory, SioInputFieldSpec } from '../types';
+import type { PlayerInputCategory, PlayerInputFieldSpec } from '../types';
 
-export const SIO_INPUT_CATEGORIES = [
+export const PLAYER_INPUT_CATEGORIES = [
   'damage',
   'build',
   'hero',
@@ -10,9 +10,9 @@ export const SIO_INPUT_CATEGORIES = [
   'collectible',
   'lme',
   'ecosystem',
-] as const satisfies readonly SioInputCategory[];
+] as const satisfies readonly PlayerInputCategory[];
 
-export const SIO_INPUT_FIELD_SPECS = [
+export const PLAYER_INPUT_FIELD_SPECS = [
   { category: 'damage', key: 'damage.combat_mode', label: 'Mode', input_type: 'select', range: null, default_value: 'lme', source_citation: 'from_dr.md:2.1' },
   { category: 'damage', key: 'damage.enemy_type', label: 'Enemy type', input_type: 'select', range: null, default_value: 'normal', source_citation: 'from_dr.md:2.1' },
   { category: 'damage', key: 'damage.base_attack', label: 'Base attack', input_type: 'number', range: [0, 100000000], default_value: 1000, source_citation: 'from_codex.md:Sprint-B' },
@@ -55,15 +55,15 @@ export const SIO_INPUT_FIELD_SPECS = [
   { category: 'hero', key: 'hero.awakening_cores_spent', label: 'Awakening cores spent', input_type: 'number', range: [0, 99999], default_value: 0, source_citation: 'from_dr.md:2.3' },
   { category: 'hero', key: 'hero.passive_crit_rate_percent', label: 'Passive crit rate', input_type: 'number', range: [0, 500], default_value: 0, source_citation: 'from_dr.md:2.3' },
 
-  { category: 'equipment', key: 'equipment.weapon.item_id', label: 'Weapon item', input_type: 'select', range: null, default_value: 'twinLance', source_citation: 'sio_tools_gt_master.md:76' },
+  { category: 'equipment', key: 'equipment.weapon.item_id', label: 'Weapon item', input_type: 'select', range: null, default_value: 'twinLance', source_citation: 'reference_catalog.md:76' },
   { category: 'equipment', key: 'equipment.weapon.item_level', label: 'Weapon level', input_type: 'number', range: [0, 200], default_value: 1, source_citation: 'from_dr.md:2.4' },
   { category: 'equipment', key: 'equipment.weapon.astral_forge_eaf_level', label: 'Weapon EAF', input_type: 'number', range: [0, 5], default_value: 1, source_citation: 'from_dr.md:2.4' },
   { category: 'equipment', key: 'equipment.weapon.astral_forge_vaf_level', label: 'Weapon VAF', input_type: 'number', range: [0, 5], default_value: 1, source_citation: 'from_dr.md:2.4' },
-  { category: 'equipment', key: 'equipment.armor.item_id', label: 'Armor item', input_type: 'select', range: null, default_value: 'evervoidArmor', source_citation: 'sio_tools_gt_master.md:71' },
-  { category: 'equipment', key: 'equipment.necklace.item_id', label: 'Necklace item', input_type: 'select', range: null, default_value: 'judgmentNecklace', source_citation: 'sio_tools_gt_master.md:73' },
-  { category: 'equipment', key: 'equipment.belt.item_id', label: 'Belt item', input_type: 'select', range: null, default_value: 'stardustSash', source_citation: 'sio_tools_gt_master.md:75' },
-  { category: 'equipment', key: 'equipment.gloves.item_id', label: 'Gloves item', input_type: 'select', range: null, default_value: 'moonscarBracer', source_citation: 'sio_tools_gt_master.md:74' },
-  { category: 'equipment', key: 'equipment.boots.item_id', label: 'Boots item', input_type: 'select', range: null, default_value: 'glacialWarboots', source_citation: 'sio_tools_gt_master.md:72' },
+  { category: 'equipment', key: 'equipment.armor.item_id', label: 'Armor item', input_type: 'select', range: null, default_value: 'evervoidArmor', source_citation: 'reference_catalog.md:71' },
+  { category: 'equipment', key: 'equipment.necklace.item_id', label: 'Necklace item', input_type: 'select', range: null, default_value: 'judgmentNecklace', source_citation: 'reference_catalog.md:73' },
+  { category: 'equipment', key: 'equipment.belt.item_id', label: 'Belt item', input_type: 'select', range: null, default_value: 'stardustSash', source_citation: 'reference_catalog.md:75' },
+  { category: 'equipment', key: 'equipment.gloves.item_id', label: 'Gloves item', input_type: 'select', range: null, default_value: 'moonscarBracer', source_citation: 'reference_catalog.md:74' },
+  { category: 'equipment', key: 'equipment.boots.item_id', label: 'Boots item', input_type: 'select', range: null, default_value: 'glacialWarboots', source_citation: 'reference_catalog.md:72' },
   { category: 'equipment', key: 'equipment.necklace.chaos_fusion_level', label: 'Necklace chaos fusion', input_type: 'number', range: [0, 10], default_value: 0, source_citation: 'from_dr.md:2.4' },
   { category: 'equipment', key: 'equipment.weapon.xeno_transmute_level', label: 'Weapon xeno transmute', input_type: 'number', range: [0, 13], default_value: 0, source_citation: 'from_dr.md:2.4' },
   { category: 'equipment', key: 'equipment.weapon.designs_owned', label: 'Weapon designs owned', input_type: 'number', range: [0, 999999], default_value: 0, source_citation: 'from_dr.md:2.4' },
@@ -82,7 +82,7 @@ export const SIO_INPUT_FIELD_SPECS = [
   { category: 'tech', key: 'tech.durian_chip_percent', label: 'Durian chip percent', input_type: 'number', range: [0, 100], default_value: 0, source_citation: 'from_dr.md:2.5' },
   { category: 'tech', key: 'tech.auto_assign_mode', label: 'Auto assign mode', input_type: 'select', range: null, default_value: 'lme', source_citation: 'from_dr.md:2.5' },
 
-  { category: 'pet', key: 'pet.deployed_pet_id', label: 'Deployed pet', input_type: 'select', range: null, default_value: 'rex', source_citation: 'sio_tools_gt_master.md:24' },
+  { category: 'pet', key: 'pet.deployed_pet_id', label: 'Deployed pet', input_type: 'select', range: null, default_value: 'rex', source_citation: 'reference_catalog.md:24' },
   { category: 'pet', key: 'pet.deployed_is_xeno', label: 'Deployed pet is Xeno', input_type: 'checkbox', range: null, default_value: false, source_citation: 'from_dr.md:2.6' },
   { category: 'pet', key: 'pet.awakening_level', label: 'Pet awakening', input_type: 'number', range: [0, 8], default_value: 0, source_citation: 'from_dr.md:2.6' },
   { category: 'pet', key: 'pet.resonance_chance', label: 'Pet resonance chance', input_type: 'number', range: [0, 100], default_value: 0, source_citation: 'from_dr.md:2.6' },
@@ -92,7 +92,7 @@ export const SIO_INPUT_FIELD_SPECS = [
   { category: 'pet', key: 'pet.assist_skill_filter_enabled', label: 'Assist filter enabled', input_type: 'checkbox', range: null, default_value: true, source_citation: 'from_dr.md:2.6' },
   { category: 'pet', key: 'pet.xeno_preview_enabled', label: 'Xeno preview enabled', input_type: 'checkbox', range: null, default_value: false, source_citation: 'from_dr.md:2.6' },
 
-  { category: 'collectible', key: 'collectible.edition_progress', label: 'Set progress', input_type: 'number', range: [0, 38], default_value: 38, source_citation: 'sio_tools_gt_master.md:334' },
+  { category: 'collectible', key: 'collectible.edition_progress', label: 'Set progress', input_type: 'number', range: [0, 38], default_value: 38, source_citation: 'reference_catalog.md:334' },
   { category: 'collectible', key: 'collectible.red_star_total', label: 'Red star total', input_type: 'number', range: [0, 999], default_value: 0, source_citation: 'from_dr.md:2.7' },
   { category: 'collectible', key: 'collectible.yellow_star_total', label: 'Yellow star total', input_type: 'number', range: [0, 999], default_value: 0, source_citation: 'from_dr.md:2.7' },
   { category: 'collectible', key: 'collectible.custom_collection_slots', label: 'Custom collection slots', input_type: 'number', range: [0, 99], default_value: 2, source_citation: 'from_dr.md:2.7' },
@@ -116,4 +116,4 @@ export const SIO_INPUT_FIELD_SPECS = [
   { category: 'ecosystem', key: 'ecosystem.locale', label: 'Locale', input_type: 'select', range: null, default_value: 'en', source_citation: 'from_dr.md:2.9' },
   { category: 'ecosystem', key: 'ecosystem.autosave_enabled', label: 'Autosave enabled', input_type: 'checkbox', range: null, default_value: true, source_citation: 'from_dr.md:2.9' },
   { category: 'ecosystem', key: 'ecosystem.source_build_name', label: 'Source build name', input_type: 'text', range: null, default_value: '', source_citation: 'from_dr.md:2.9' },
-] as const satisfies readonly SioInputFieldSpec[];
+] as const satisfies readonly PlayerInputFieldSpec[];

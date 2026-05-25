@@ -78,14 +78,6 @@ function cloneRecord(value: unknown): Record<string, unknown> {
   return isRecord(value) ? { ...value } : {};
 }
 
-function cloneArray<T>(value: unknown): T[] {
-  return Array.isArray(value) ? [...value] as T[] : [];
-}
-
-function optionalString(value: unknown): string | undefined {
-  return typeof value === 'string' ? value : undefined;
-}
-
 function optionalSnapshot<T>(value: unknown): T | null | undefined {
   return value === null || isRecord(value) ? value as T | null : undefined;
 }
@@ -111,13 +103,9 @@ function normalizeSaveState(input: TechProfileSaveState | Record<string, unknown
     speedMode: typeof input.speedMode === 'string' ? input.speedMode : 'normal',
     limit: typeof input.limit === 'string' ? input.limit : 'basic',
     skillStatus: cloneRecord(input.skillStatus),
-    profileImportText: optionalString(input.profileImportText),
     importedTechSnapshot: optionalSnapshot<ImportedTechSnapshot>(input.importedTechSnapshot),
     importedCollectibleSnapshot: optionalSnapshot<ImportedCollectibleSnapshot>(input.importedCollectibleSnapshot),
     importedRunSnapshot,
-    profileImportSummary: optionalString(input.profileImportSummary),
-    profileImportCoverage: cloneArray<ProductImportCoverage>(input.profileImportCoverage),
-    profileImportDetails: cloneArray<ProductImportFieldSummary>(input.profileImportDetails),
   };
 }
 

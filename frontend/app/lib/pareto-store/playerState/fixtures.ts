@@ -1,8 +1,8 @@
-import type { SioLiveFixtureCase } from '../types';
+import type { ReferenceLiveFixtureCase } from '../types';
 
 const ALL_CATEGORIES = ['damage', 'build', 'hero', 'equipment', 'tech', 'pet', 'collectible', 'lme', 'ecosystem'] as const;
 
-export const SIO_LIVE_FIXTURE_CASES = [
+export const REFERENCE_LIVE_FIXTURE_CASES = [
   {
     id: 'default',
     label: 'Default LME baseline',
@@ -116,4 +116,4 @@ export const SIO_LIVE_FIXTURE_CASES = [
     },
     expected_categories: ALL_CATEGORIES,
   },
-] as const satisfies readonly SioLiveFixtureCase[];
+] as const satisfies readonly ReferenceLiveFixtureCase[];

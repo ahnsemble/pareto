@@ -237,8 +237,8 @@ await transpileModule(
 
 const require = createRequire(import.meta.url);
 const schemas = require(path.join(buildDir, 'schemas/index.js'));
-const { SIO_STATS_FIXED_ORDER, WEAPON_SCHEMA_INDEX } = schemas;
-const statByKey = new Map(SIO_STATS_FIXED_ORDER.map((stat) => [stat.key, stat]));
+const { TECH_STATS_FIXED_ORDER, WEAPON_SCHEMA_INDEX } = schemas;
+const statByKey = new Map(TECH_STATS_FIXED_ORDER.map((stat) => [stat.key, stat]));
 
 async function readJson(relativePath) {
   return JSON.parse(await fs.readFile(path.join(root, relativePath.replace(/^frontend\//, '')), 'utf8'));
@@ -345,7 +345,7 @@ function stageCaveats(stage, rows) {
   const caveats = [...COMMON_STAGE_CAVEATS];
   const formulaOnlyChannels = stage.statChannels.filter((key) => !statByKey.has(key));
   if (formulaOnlyChannels.length > 0) {
-    caveats.push(`Formula input channel(s) outside SIO_STATS_FIXED_ORDER: ${formulaOnlyChannels.join(', ')}.`);
+    caveats.push(`Formula input channel(s) outside TECH_STATS_FIXED_ORDER: ${formulaOnlyChannels.join(', ')}.`);
   }
   if (rows.length === 0) {
     caveats.push('No raw current source stat leaf was present for this stage in the captured source evidence matrix.');
