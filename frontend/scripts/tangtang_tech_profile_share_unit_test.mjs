@@ -70,7 +70,7 @@ const sampleState = {
 
 const fixedDate = new Date('2026-05-24T12:00:00.000Z');
 const encoded = encodeTechProfileShareState(sampleState, fixedDate);
-assert.match(encoded, /^[A-Za-z0-9_-]+$/);
+assert.match(encoded, /^[0-9a-f]+$/);
 assert.equal(/sio-tools|profileImportText|\{|\}/i.test(encoded), false);
 
 const decoded = decodeTechProfileShareState(encoded);
@@ -81,23 +81,29 @@ assert.equal(decoded.document.state.chips, 22);
 assert.equal(decoded.document.state.skillStatus.droneMode, 'locked');
 
 const shareUrl = buildTechProfileShareUrl({
-  baseUrl: 'https://example.com/en/v3/optimizer/tech-parts?old=1#debug',
+  baseUrl: 'https://example.com/en/v3/optimizer/tech-parts?old=1&ttProfile=stale#debug',
   state: sampleState,
   now: fixedDate,
 });
 assert.match(shareUrl, /^https:\/\/example\.com\/en\/v3\/optimizer\/tech-parts\?old=1&ttProfile=/);
 assert.equal(shareUrl.includes('#'), false);
 assert.equal(/sio-tools|\{|\}/i.test(shareUrl), false);
+const parsedShareUrl = new URL(shareUrl);
+assert.equal(parsedShareUrl.searchParams.get('old'), '1');
+assert.equal(parsedShareUrl.searchParams.getAll('ttProfile').length, 1);
 
 const backupText = buildTechProfileBackupText(sampleState, fixedDate);
 assert.match(backupText, /"kind": "tangtang-tech-profile-backup"/);
 assert.match(backupText, /"payload": "/);
-assert.equal(/sio-tools|profileImportText/i.test(backupText), false);
+assert.equal(/sio-tools|profileImportText|beam|preselect|exact/i.test(backupText), false);
 
 const backupDecoded = decodeTechProfileBackupText(backupText);
 assert.equal(backupDecoded.ok, true);
 assert.equal(backupDecoded.document.state.accountContext.skillDamage, 477);
 assert.equal(decodeTechProfileShareState('not valid').ok, false);
+assert.equal(decodeTechProfileShareState(`${encoded.slice(0, -1)}g`).ok, false);
+assert.equal(decodeTechProfileShareState(`${encoded}0`).ok, false);
 assert.equal(decodeTechProfileBackupText('{ bad json').ok, false);
+assert.equal(decodeTechProfileBackupText(JSON.stringify({ kind: 'tangtang-tech-profile-backup', version: 1, payload: encoded })).ok, false);
 
 console.log('tangtang_tech_profile_share_unit_test: passed');

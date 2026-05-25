@@ -144,6 +144,33 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-profile-backup-output')).not.toHaveValue(/sio|beam|preselect|exact/i);
   });
 
+  test('keeps profile sharing usable when clipboard is unavailable', async ({ page }) => {
+    await page.addInitScript(() => {
+      Object.defineProperty(navigator, 'clipboard', {
+        configurable: true,
+        value: undefined,
+      });
+    });
+    await page.reload();
+    await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Boot OK');
+
+    await page.getByTestId('tech-account-final-atk').fill('444444');
+    await page.getByTestId('tech-profile-share-link').click();
+
+    await expect(page.getByTestId('tech-profile-share-url-output')).toHaveValue(/\/en\/v3\/optimizer\/tech-parts\?.*ttProfile=/);
+    await expect(page.getByTestId('tech-profile-share-status')).toContainText('Copy manually');
+    await expect(page.getByTestId('tech-profile-share-url-output')).not.toHaveValue(/sio|beam|preselect|exact|\{|\}/i);
+  });
+
+  test('handles invalid profile share links without exposing internals', async ({ page, baseURL }) => {
+    await page.goto(`${baseURL ?? 'http://localhost:3032'}${OPTIMIZER_URL}?ttProfile=not-valid`);
+    await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Boot OK');
+
+    await expect(page.getByTestId('tech-profile-save-status')).toContainText('Share link is invalid');
+    await expect(page.getByTestId('tech-account-final-atk')).not.toHaveValue('0');
+    await expect(page.getByText(/\bsio\b|beam|preselect|exact|SyntaxError|stack/i)).toHaveCount(0);
+  });
+
   test('applies mode presets without exposing internals', async ({ page }) => {
     await page.getByTestId('tech-profile-save-guildExpedition-preset').click();
     await expect(page.getByTestId('tech-profile-save-status')).toContainText('Guild Expedition preset applied');
