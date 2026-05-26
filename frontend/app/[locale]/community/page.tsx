@@ -293,10 +293,10 @@ function CommunityComingSoon() {
       </p>
       <div className="flex flex-wrap gap-3 pt-2">
         <Link
-          href="/optimize"
+          href="/v3/optimizer/tech-parts"
           className="min-h-[44px] rounded-md border border-[color:var(--color-border)] px-4 py-2 font-mono text-sm hover:border-[color:var(--color-primary)]"
         >
-          → /optimize
+          → /v3/optimizer/tech-parts
         </Link>
         <Link
           href="/twodeck"
@@ -338,7 +338,7 @@ function CommunityKorean() {
           </p>
           <div className="flex flex-wrap gap-3 pt-2">
             <Link
-              href="/optimize"
+              href="/v3/optimizer/tech-parts"
               data-testid="cta-primary"
               className="inline-flex min-h-[48px] items-center justify-center rounded-md bg-[color:var(--color-primary)] px-6 py-3 font-semibold text-[color:var(--color-bg)] shadow-[var(--shadow-glow-primary)] transition hover:bg-[color:var(--color-primary-strong)]"
             >
@@ -462,7 +462,7 @@ function CommunityKorean() {
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           <Link
-            href="/optimize"
+            href="/v3/optimizer/tech-parts"
             className="inline-flex min-h-[48px] items-center justify-center rounded-md bg-[color:var(--color-primary)] px-6 py-3 font-semibold text-[color:var(--color-bg)] shadow-[var(--shadow-glow-primary)] transition hover:bg-[color:var(--color-primary-strong)]"
           >
             지금 최적화 시작

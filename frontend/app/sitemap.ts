@@ -3,8 +3,8 @@ import { routing } from '../i18n/routing';
 
 export const dynamic = 'force-static';
 
-const SITE_URL = 'https://pareto.app';
-const ROUTES = ['', '/optimize', '/twodeck', '/community'] as const;
+const SITE_URL = 'https://tanggall.vercel.app';
+const ROUTES = ['', '/v3/optimizer/tech-parts', '/twodeck', '/community'] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
