@@ -43,6 +43,7 @@ import type {
   ProductImportCoverage,
   ProductImportFieldSummary,
 } from '../../app/lib/pareto-store/profile-import-types';
+import { buildTechUpgradeImpactRows } from '../../app/lib/pareto-store/tech-upgrade-impact';
 import { buildTechUpgradeRecommendations } from '../../app/lib/pareto-store/tech-upgrade-recommendations';
 import { getWorker } from '../../app/lib/wasm-client';
 import {
@@ -72,6 +73,7 @@ import {
   shellClass,
 } from './optimizerUi';
 import { AccountContextPanel } from './tech/TechAccountContextPanel';
+import { TechBeforeAfterImpactTable } from './tech/TechBeforeAfterImpactTable';
 import { DataConfidencePanel, ProfileImportPanel, ProfileSavePanel, ResourceWalletPanel } from './tech/TechProductPanels';
 import { TechUpgradeRecommendations } from './tech/TechUpgradeRecommendations';
 import {
@@ -645,6 +647,15 @@ export function TechPartsOptimizerSurface() {
         locale,
       }),
     [accountContext, importedCollectibleSnapshot, importedTechSnapshot, locale, result, topBuild],
+  );
+  const upgradeImpactRows = useMemo(
+    () =>
+      buildTechUpgradeImpactRows({
+        recommendations: upgradeRecommendations,
+        comparison: calculationComparison,
+        locale,
+      }),
+    [calculationComparison, locale, upgradeRecommendations],
   );
   const dataConfidenceSummary = useMemo(
     () =>
@@ -1356,6 +1367,7 @@ export function TechPartsOptimizerSurface() {
               )}
             </div>
           ) : null}
+          <TechBeforeAfterImpactTable rows={result ? upgradeImpactRows : []} locale={locale} />
           <TechUpgradeRecommendations recommendations={result ? upgradeRecommendations : []} locale={locale} />
           <div className="mt-4 overflow-x-auto">
             <table className="w-full min-w-[640px] font-mono text-xs">

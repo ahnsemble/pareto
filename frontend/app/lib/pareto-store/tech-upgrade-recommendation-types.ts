@@ -8,6 +8,10 @@ export type TechUpgradeRecommendation = {
   reason: string;
   reasonDetails?: string[];
   expectedGainLabel?: string;
+  beforeAfter?: {
+    current: string;
+    recommended: string;
+  };
   confidence: 'high' | 'medium' | 'low';
 };
 

@@ -204,6 +204,10 @@ export function buildTechUpgradeRecommendations({
         : `Raise ${topModeName} overload from ${currentOverload} toward ${topOverload}.`,
       reason: ko ? '가장 빠른 빌드가 이 슬롯에 가장 큰 강화 압력을 쓰고 있습니다.' : 'The fastest build is spending its strongest upgrade pressure there.',
       reasonDetails: buildOverloadReasonDetails({ currentOverload, ko, topChip, topModeName, topOverload }),
+      beforeAfter: {
+        current: ko ? `${topModeName} 오버로드 ${currentOverload}` : `${topModeName} overload ${currentOverload}`,
+        recommended: ko ? `${topModeName} 오버로드 ${topOverload}` : `${topModeName} overload ${topOverload}`,
+      },
       confidence: 'high',
     });
   }
@@ -219,6 +223,10 @@ export function buildTechUpgradeRecommendations({
       reason: ko ? `상위 빌드는 이 슬롯에 ${topChip}칩을 배정합니다.` : `The top build assigns ${topChip} chips to this slot.`,
       reasonDetails: buildChipReasonDetails({ chipRemainder, ko, snapshotMatched: Boolean(snapshotPart), topChip, topModeName, topPartName }),
       expectedGainLabel: ko ? `${chipRemainder}칩 사용 가능` : `${chipRemainder} chips available`,
+      beforeAfter: {
+        current: ko ? `${chipRemainder}칩 사용 가능` : `${chipRemainder} chips available`,
+        recommended: ko ? `${topModeName} 목표 ${topChip}칩` : `${topModeName} chip target ${topChip}`,
+      },
       confidence: snapshotPart ? 'high' : 'medium',
     });
   }
@@ -234,6 +242,10 @@ export function buildTechUpgradeRecommendations({
       action: ko ? `상위 빌드 기준으로 ${topModeName} 공명과 오버로드를 확인하세요.` : `Review ${topModeName} resonance and overload against the top build.`,
       reason: ko ? '최적화 결과가 이 파츠를 최고 빌드에서 반복적으로 선택하고 있습니다.' : 'The optimizer is repeatedly selecting this part in the best build.',
       reasonDetails: buildReviewReasonDetails({ ko, snapshotMatched: Boolean(snapshotPart), topChip, topModeName, topPartName }),
+      beforeAfter: {
+        current: ko ? `${topPartName} 현재 세팅` : `${topPartName} current setup`,
+        recommended: ko ? `${topModeName} 최상위 빌드 세팅` : `${topModeName} top-build setup`,
+      },
       confidence: snapshotPart ? 'high' : 'medium',
     });
   }

@@ -106,6 +106,10 @@ export function buildCollectibleUpgradeRecommendation({
           : 'The imported profile shows this as the next low-star collection item to review.',
       reasonDetails: buildCollectibleCandidateReasonDetails({ accountContext, candidate, fromCustomSet, ko, name }),
       expectedGainLabel: stars !== undefined ? (ko ? `현재 ${stars}성` : `${stars} stars`) : undefined,
+      beforeAfter: {
+        current: stars !== undefined ? (ko ? `${name} ${stars}성` : `${name} ${stars} stars`) : name,
+        recommended: ko ? `${name} 우선 강화` : `${name} priority upgrade`,
+      },
       confidence: fromCustomSet || accountContext?.targetCollectibleId ? 'high' : 'medium',
     };
   }
@@ -123,6 +127,10 @@ export function buildCollectibleUpgradeRecommendation({
         ? [`현재 세트 진행도: ${Math.trunc(collectionSets)}/38.`, `${remaining}세트가 남아 있어 개별 별작보다 세트 완성이 먼저입니다.`]
         : [`Current set progress: ${Math.trunc(collectionSets)}/38.`, `${remaining} sets remain, so set completion comes before individual star chasing.`],
       expectedGainLabel: ko ? `${remaining}세트 남음` : `${remaining} sets left`,
+      beforeAfter: {
+        current: ko ? `${Math.trunc(collectionSets)}/38 세트` : `${Math.trunc(collectionSets)}/38 sets`,
+        recommended: ko ? '비어 있는 세트 우선 완성' : 'Complete missing sets first',
+      },
       confidence: 'medium',
     };
   }

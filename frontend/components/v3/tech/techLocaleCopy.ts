@@ -143,6 +143,16 @@ export type TechOptimizerCopy = {
     confidence: string;
     confidenceLevels: Record<'high' | 'medium' | 'low', string>;
   };
+  impact: {
+    title: string;
+    item: string;
+    current: string;
+    recommended: string;
+    beforeDamage: string;
+    afterDamage: string;
+    expectedGain: string;
+    basis: string;
+  };
 };
 
 const EN_COPY: TechOptimizerCopy = {
@@ -364,6 +374,16 @@ const EN_COPY: TechOptimizerCopy = {
       low: 'low',
     },
   },
+  impact: {
+    title: 'Before / After impact',
+    item: 'Change',
+    current: 'Current',
+    recommended: 'Recommended',
+    beforeDamage: 'Before damage',
+    afterDamage: 'After damage',
+    expectedGain: 'Expected gain',
+    basis: 'Basis',
+  },
 };
 
 const KO_COPY: TechOptimizerCopy = {
@@ -584,6 +604,16 @@ const KO_COPY: TechOptimizerCopy = {
       medium: '중간',
       low: '낮음',
     },
+  },
+  impact: {
+    title: '비포 / 애프터 영향',
+    item: '변경 항목',
+    current: '현재',
+    recommended: '추천',
+    beforeDamage: '기존 피해',
+    afterDamage: '추천 후 피해',
+    expectedGain: '예상 상승량',
+    basis: '기준',
   },
 };
 

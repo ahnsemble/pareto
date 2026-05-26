@@ -386,6 +386,12 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-calculation-comparison')).toContainText('Why the numbers differ');
     await expect(page.getByTestId('tech-calculation-comparison')).toContainText(/imported baseline|current editable inputs/i);
     await expect(page.getByTestId('tech-calculation-comparison')).not.toContainText(/sio|beam|preselect|exact/i);
+    await expect(page.getByTestId('tech-before-after-impact')).toContainText('Before / After impact');
+    await expect(page.getByTestId('tech-before-after-impact')).toContainText('Current');
+    await expect(page.getByTestId('tech-before-after-impact')).toContainText('Recommended');
+    await expect(page.getByTestId('tech-before-after-impact')).toContainText('Expected gain');
+    await expect(page.getByTestId('tech-before-after-impact')).toContainText(/Top recommendation plan|Upgrade|Allocate|Complete|Tune/);
+    await expect(page.getByTestId('tech-before-after-impact')).not.toContainText(/sio|beam|preselect|exact/i);
     await expect(page.getByTestId('tech-upgrade-recommendations')).toContainText('Next upgrades');
     await expect(page.getByTestId('tech-upgrade-recommendations')).toContainText(/Collection|collection|collectible/);
     await expect(page.getByTestId('tech-upgrade-recommendations')).toContainText('Why this recommendation');

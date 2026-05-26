@@ -13,6 +13,8 @@ const clientSurfaceFiles = [
   'app/lib/wasm-worker.ts',
   'app/lib/pareto-store/tech-profile-share.ts',
   'app/lib/pareto-store/tech-profile-storage.ts',
+  'app/lib/pareto-store/collectible-upgrade-recommendations.ts',
+  'app/lib/pareto-store/tech-upgrade-impact.ts',
   'app/lib/pareto-store/tech-upgrade-recommendations.ts',
   'app/lib/pareto-store/schemas/index.ts',
   'app/lib/pareto-store/playerState/constants.ts',
@@ -22,6 +24,7 @@ const clientSurfaceFiles = [
   'app/lib/pareto-store/playerState/index.ts',
   'app/lib/pareto-store/playerState/profileTranslator.ts',
   'app/lib/pareto-store/types/index.ts',
+  'components/v3/tech/TechBeforeAfterImpactTable.tsx',
 ];
 
 const disallowedPatterns = [

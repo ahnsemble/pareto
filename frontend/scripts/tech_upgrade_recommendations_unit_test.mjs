@@ -45,7 +45,7 @@ const result = {
     {
       config: {
         loadout: [
-          { part: 'energyGuidanceSystem', mode: 'droneMode', sio: { chip: 12, overload: 3 } },
+          { part: 'energyGuidanceSystem', mode: 'droneMode', app: { chip: 12, overload: 3 } },
         ],
       },
     },
