@@ -86,6 +86,7 @@ const HERO_IDS = [
   'sandy',
   'patrick',
   'venato',
+  'nezha',
 ] as const;
 const ITEM_IDS_BY_EXTERNAL_INDEX: Record<number, string> = {
   1: 'twinLance',

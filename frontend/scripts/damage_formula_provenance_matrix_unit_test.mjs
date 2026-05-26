@@ -508,7 +508,7 @@ for (const stat of TECH_STATS_FIXED_ORDER) {
 
 const keys = rows.map((row) => row.key);
 assert.equal(new Set(keys).size, rows.length, 'provenance row keys must be unique');
-assert.equal(rows.length, 367, 'provenance matrix row count changed unexpectedly');
+assert.equal(rows.length, 372, 'provenance matrix row count changed unexpectedly');
 
 const rowByKey = new Map(rows.map((row) => [row.key, row]));
 
@@ -562,6 +562,16 @@ assertRow(cruckerRow, {
   nextAction: 'add alias regression test',
 });
 assertIncludes(cruckerRow, 'sourceStatus', 'Crucker');
+
+for (const heroId of ['leonardo', 'michelangelo', 'sandy', 'patrick', 'nezha']) {
+  const row = requireRow(`survivor:${heroId}`);
+  assertRow(row, {
+    confidence: 'sio-live-equivalent',
+    liveEvidence: 'sio_lm_equivalence_matrix.survivors-passives-harmony-teamwork=implemented-live-covered',
+    nextAction: 'add in-game description row for each star/awakening/passive effect',
+  });
+  assertIncludes(row, 'sourceStatus', 'current SIO source/default roster');
+}
 
 const mountRows = rows.filter((row) => row.domain === 'mount');
 assert.equal(mountRows.length, MOUNT_SCHEMA_INDEX.length, 'all mounts must be represented in the mount fixture gate slice');

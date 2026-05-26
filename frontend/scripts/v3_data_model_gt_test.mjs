@@ -72,9 +72,10 @@ await check('Pet registry mirrors the 9 sIO pets and i18n keys', () => {
     'Nutjob',
     'Gourmeow',
   ]);
+  assert.equal(schemas.PET_SCHEMA_INDEX.find((pet) => pet.id === 'gourmeow').is_xeno, true);
 });
 
-await check('Hero registry mirrors the 18 source-backed default and collaboration heroes', () => {
+await check('Hero registry mirrors the 23 source-backed default and collaboration heroes', () => {
   assert.deepEqual(ids(schemas.HERO_SCHEMA_INDEX), [
     'common',
     'king',
@@ -88,22 +89,30 @@ await check('Hero registry mirrors the 18 source-backed default and collaboratio
     'splinter',
     'raphael',
     'donatello',
+    'leonardo',
+    'michelangelo',
     'tsukuyomi',
     'wesson',
     'yelena',
     'catnips',
     'squidward',
     'spongebob',
+    'sandy',
+    'patrick',
+    'nezha',
   ]);
   const worm = schemas.HERO_SCHEMA_INDEX.find((hero) => hero.id === 'worm');
   assert.equal(worm.note, 'passives activate only when fewer than 3 monsters are on the map');
   assert.deepEqual(
-    names(schemas.HERO_SCHEMA_INDEX).filter((name) => ['Yelena', 'Squidward', 'SpongeBob'].includes(name)),
-    ['Yelena', 'Squidward', 'SpongeBob'],
+    names(schemas.HERO_SCHEMA_INDEX).filter((name) => ['Yelena', 'Squidward', 'SpongeBob', 'Leonardo', 'Michelangelo', 'Sandy', 'Patrick', 'Nezha'].includes(name)),
+    ['Leonardo', 'Michelangelo', 'Yelena', 'Squidward', 'SpongeBob', 'Sandy', 'Patrick', 'Nezha'],
   );
-  for (const id of ['yelena', 'squidward', 'spongebob']) {
+  for (const id of ['yelena', 'squidward', 'spongebob', 'leonardo', 'michelangelo', 'sandy', 'patrick', 'nezha']) {
     const hero = schemas.HERO_SCHEMA_INDEX.find((candidate) => candidate.id === id);
     assert.ok(hero.source_citations.some((citation) => citation.includes('module37013_f_default_config.json')), id);
+  }
+  for (const id of ['yelena', 'squidward', 'spongebob']) {
+    const hero = schemas.HERO_SCHEMA_INDEX.find((candidate) => candidate.id === id);
     assert.ok(hero.source_citations.some((citation) => citation.includes('optimizer_src/tech/config.rs')), id);
   }
 });

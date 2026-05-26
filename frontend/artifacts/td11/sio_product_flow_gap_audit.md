@@ -211,6 +211,27 @@ Existing comparison evidence used first:
   - `wasm-pack build tttg_forge_wasm --target web --release -- --features compat-exports`: passed.
   - `git diff --check`: passed.
 
+## Taxonomy Gap Audit Update
+
+- Added a source-vs-Tangtang taxonomy audit for collections, collection sets, SS items, pets, survivors, and twinborn tech names/effect source coverage:
+  - `frontend/artifacts/td11/tangtang_sio_taxonomy_gap_audit.json`
+  - `frontend/artifacts/td11/tangtang_sio_taxonomy_gap_audit.md`
+- Applied direct source-backed product schema gaps only:
+  - added survivor catalog rows for Leonardo, Michelangelo, Sandy, Patrick, and Nezha;
+  - corrected Gourmeow to xeno pet type;
+  - added Nezha to calculation-link survivor index mapping.
+- Collection status after audit:
+  - all 118 internal source collectible keys are covered by Tangtang rows;
+  - all 38 collectible set keys are covered;
+  - 4 catalog-only zodiac rows remain explicitly pending because the internal source table still has no effect rows for them;
+  - 42 event slots remain catalog slots.
+- Product/source aliases intentionally preserved:
+  - Clucker -> Crucker,
+  - Blizzblast -> King Blizzblast,
+  - SpongeBob -> Spongebob.
+- Formula/scoring behavior did not change; `sio_full_lm_equivalence` remains the scorer contract.
+- User-facing UI wording did not expose internal source/debug vocabulary.
+
 ## Planned Gate: Tangtang Calculation Link Import
 
 - Plan path:

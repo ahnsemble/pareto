@@ -1,0 +1,109 @@
+{
+  "decision": {
+    "notes": [
+      "This audit compares Tangtang product taxonomy rows against the internal deployed formula table.",
+      "It fills source-backed schema gaps only; it does not expose internal source wording in user-facing UI.",
+      "Formula effects remain covered by the existing scorer/source-table path; in-game copy text remains evidence-gated."
+    ],
+    "preserveFullSioEquivalentContract": true,
+    "scoringChanged": false,
+    "uiChanged": false
+  },
+  "generatedAtKst": "2026-05-26",
+  "rows": {
+    "collectionCatalogOnlyRows": [
+      {
+        "domain": "collectibles",
+        "productId": "libraStarlight",
+        "productName": "Libra Starlight",
+        "status": "catalog-only-pending-source-row"
+      },
+      {
+        "domain": "collectibles",
+        "productId": "scorpioStarlight",
+        "productName": "Scorpio Starlight",
+        "status": "catalog-only-pending-source-row"
+      },
+      {
+        "domain": "collectibles",
+        "productId": "sagittariusStarlight",
+        "productName": "Sagittarius Starlight",
+        "status": "catalog-only-pending-source-row"
+      },
+      {
+        "domain": "collectibles",
+        "productId": "capricornStarlight",
+        "productName": "Capricorn Starlight",
+        "status": "catalog-only-pending-source-row"
+      }
+    ],
+    "directGapRows": [],
+    "petSkillOnlyRows": [
+      {
+        "domain": "pets",
+        "productId": "gary",
+        "productName": "Gary",
+        "sourceKey": "petSkills.Default.Gary",
+        "status": "covered-as-default-pet-skill"
+      }
+    ],
+    "productAliasRows": [
+      {
+        "domain": "heroes",
+        "productId": "spongebob",
+        "productName": "SpongeBob",
+        "sourceKey": "Spongebob"
+      },
+      {
+        "domain": "pets",
+        "productId": "blizzblast",
+        "productName": "Blizzblast",
+        "sourceKey": "King Blizzblast"
+      },
+      {
+        "domain": "pets",
+        "productId": "crucker",
+        "productName": "Clucker",
+        "sourceKey": "Crucker"
+      }
+    ]
+  },
+  "sourceEffectLeafCounts": {
+    "collectibles": 270,
+    "heroes": 623,
+    "items": 528,
+    "pets": 147,
+    "sets": 94,
+    "techs": 1211
+  },
+  "status": "TANGTANG-SIO-TAXONOMY-GAP-AUDIT-V0",
+  "summary": {
+    "collectionCatalogOnlyRows": 4,
+    "collectionEventSlotRows": 42,
+    "collectionSourceMissingRows": 0,
+    "directGapRows": 0,
+    "heroSourceMissingRows": 0,
+    "itemSourceMissingRows": 0,
+    "noRawDebugExposure": true,
+    "noScoringChange": true,
+    "noUiSioWordingChange": true,
+    "petSkillOnlyRows": 1,
+    "petSourceMissingRows": 0,
+    "petXenoTypeMismatchRows": 0,
+    "productAliasRows": 3,
+    "setSourceMissingRows": 0,
+    "sourceCollectibleRows": 118,
+    "sourceHeroRows": 23,
+    "sourceItemRows": 11,
+    "sourcePetRows": 8,
+    "sourceSetRows": 38,
+    "sourceTechRows": 10,
+    "tangtangCollectibleRows": 122,
+    "tangtangHeroRows": 23,
+    "tangtangItemRows": 11,
+    "tangtangPetRows": 9,
+    "tangtangSetRows": 38,
+    "tangtangTechRows": 10,
+    "techSourceMissingRows": 0
+  }
+}

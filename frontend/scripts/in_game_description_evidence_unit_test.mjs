@@ -36,6 +36,16 @@ const schemas = require(path.join(buildDir, 'schemas/index.js'));
 
 const { HERO_SCHEMA_INDEX, MOUNT_SCHEMA_INDEX } = schemas;
 
+function schemaCitation(schemaItem) {
+  return Array.isArray(schemaItem.source_citations)
+    ? schemaItem.source_citations.map((citation) => citation
+      .replace(/^reference_catalog\.md:/, 'sio_tools_gt_master.md:')
+      .replace(/^reference_formulas\.md:/, 'sio_tools_formulas_and_defaults.md:')
+      .replace(/^reference_table_extract\/extracted_tables\//, 'sio_tools_formula_table_extract/extracted_tables/')
+      .replace(/^optimizer_src\/tech\/config\.rs:/, 'tttg_forge_optimizer/src/tech/sio_config.rs:'))
+    : [];
+}
+
 const generatedAtKst = '2026-05-23';
 const sourceTablePath = 'frontend/artifacts/td11/sio_tools_formula_table_extract/extracted_tables/module37013_c_deployed_data_table.json';
 const mountSourceFixturePath = 'frontend/artifacts/td11/mount_damage_source_fixture.json';
@@ -373,7 +383,7 @@ function buildSurvivorRow(id) {
     domain: 'survivor',
     displayName: schemaItem.display_name_en,
     sourceName: source.sourceName,
-    schemaCitation: schemaItem.source_citations,
+    schemaCitation: schemaCitation(schemaItem),
     evidenceState:
       publicClaimCount === fullClaimCount
         ? 'public-web-corroborated-for-current-source-claims'
@@ -412,7 +422,7 @@ function buildMountRow(id) {
     domain: 'mount',
     displayName: schemaItem.display_name_en,
     sourceName: source.sourceName,
-    schemaCitation: schemaItem.source_citations,
+    schemaCitation: schemaCitation(schemaItem),
     evidenceState: source.mountDamage.activeLiveEvidence
       ? 'public-web-system-evidence-plus-current-source-and-live-mountDamage'
       : 'public-web-system-evidence-plus-current-source-only',

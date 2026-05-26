@@ -233,7 +233,13 @@ const SET_SPECIAL_MAPPINGS = {
 };
 
 function schemaCitation(item) {
-  return Array.isArray(item.source_citations) ? item.source_citations : [];
+  return Array.isArray(item.source_citations)
+    ? item.source_citations.map((citation) => citation
+      .replace(/^reference_catalog\.md:/, 'sio_tools_gt_master.md:')
+      .replace(/^reference_formulas\.md:/, 'sio_tools_formulas_and_defaults.md:')
+      .replace(/^reference_table_extract\/extracted_tables\//, 'sio_tools_formula_table_extract/extracted_tables/')
+      .replace(/^optimizer_src\/tech\/config\.rs:/, 'tttg_forge_optimizer/src/tech/sio_config.rs:'))
+    : [];
 }
 
 function mappingStatChannels(mappings) {

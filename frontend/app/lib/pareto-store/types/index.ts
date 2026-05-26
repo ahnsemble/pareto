@@ -72,8 +72,9 @@ export type SSGradeEquipmentState = SSEquipmentState;
 // ───────────────────────────── P2 02 Heroes (lines 22-50) ─────────────────────────────
 export type HeroId =
   | 'common' | 'king' | 'masterYang' | 'metalia' | 'joey' | 'taloxa' | 'venato' | 'worm'
-  | 'april' | 'splinter' | 'raphael' | 'donatello' | 'tsukuyomi' | 'wesson' | 'yelena'
-  | 'catnips' | 'squidward' | 'spongebob';
+  | 'april' | 'splinter' | 'raphael' | 'donatello' | 'leonardo' | 'michelangelo'
+  | 'tsukuyomi' | 'wesson' | 'yelena' | 'catnips' | 'squidward' | 'spongebob'
+  | 'sandy' | 'patrick' | 'nezha';
 
 export type ModifierCondition =
   | 'hp_missing_ratio' | 'target_lacerated' | 'kill_count' | 'target_is_boss_or_elite'

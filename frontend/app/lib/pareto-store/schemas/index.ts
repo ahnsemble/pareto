@@ -47,7 +47,7 @@ export const PET_SCHEMA_INDEX: PetSchema[] = [
   { id: 'puffo', display_name_en: 'Puffo', display_name_ko: 'Puffo', slot: null, is_xeno: true, resonance_chance: 0, resonance_atk: 0, assist_filter: [], source_citations: [citation(29)] },
   { id: 'blizzblast', display_name_en: 'Blizzblast', display_name_ko: 'Blizzblast', slot: null, is_xeno: true, resonance_chance: 0, resonance_atk: 0, assist_filter: [], source_citations: [citation(30)] },
   { id: 'nutjob', display_name_en: 'Nutjob', display_name_ko: 'Nutjob', slot: null, is_xeno: true, resonance_chance: 0, resonance_atk: 0, assist_filter: [], source_citations: [citation(31)] },
-  { id: 'gourmeow', display_name_en: 'Gourmeow', display_name_ko: 'Gourmeow', slot: null, is_xeno: false, resonance_chance: 0, resonance_atk: 0, assist_filter: [], source_citations: [citation(32)] },
+  { id: 'gourmeow', display_name_en: 'Gourmeow', display_name_ko: 'Gourmeow', slot: null, is_xeno: true, resonance_chance: 0, resonance_atk: 0, assist_filter: [], source_citations: [citation(32), runtimeTableCitation(5504)] },
 ];
 
 const hero = (id: HeroSchema['id'], display: string, role: HeroSchema['role'], extra: Partial<HeroSchema> = {}): HeroSchema => ({
@@ -89,12 +89,17 @@ export const HERO_SCHEMA_INDEX: HeroSchema[] = [
   hero('splinter', 'Splinter', 'global_passive_holder', { tier: 'B', source_citations: [formulaCitation(306)] }),
   hero('raphael', 'Raphael', 'main_dps', { tier: 'B', source_citations: [formulaCitation(307)] }),
   hero('donatello', 'Donatello', 'buffer', { tier: 'B', source_citations: [formulaCitation(308)] }),
+  hero('leonardo', 'Leonardo', 'buffer', { tier: 'B', source_citations: [runtimeTableCitation(539), formulaCitation(307)] }),
+  hero('michelangelo', 'Michelangelo', 'buffer', { tier: 'B', source_citations: [runtimeTableCitation(565), formulaCitation(308)] }),
   hero('tsukuyomi', 'Tsukuyomi', 'main_dps', { tier: 'B', source_citations: [formulaCitation(309)] }),
   hero('wesson', 'Wesson', 'global_passive_holder', { tier: 'C+', source_citations: [formulaCitation(310)] }),
   hero('yelena', 'Yelena', 'buffer', { tier: 'C+', source_citations: [runtimeTableCitation(169), rustCitation(2767), rustCitation(2961)] }),
   hero('catnips', 'Catnips', 'survival', { tier: 'C+', source_citations: [formulaCitation(311)] }),
   hero('squidward', 'Squidward', 'global_passive_holder', { tier: 'C+', source_citations: [runtimeTableCitation(590), rustCitation(2670), rustCitation(2815)] }),
   hero('spongebob', 'SpongeBob', 'global_passive_holder', { tier: 'C+', source_citations: [runtimeTableCitation(607), rustCitation(2670), rustCitation(2815)] }),
+  hero('sandy', 'Sandy', 'global_passive_holder', { tier: 'C+', source_citations: [runtimeTableCitation(624)] }),
+  hero('patrick', 'Patrick', 'global_passive_holder', { tier: 'C+', source_citations: [runtimeTableCitation(636)] }),
+  hero('nezha', 'Nezha', 'main_dps', { tier: 'S', source_citations: [runtimeTableCitation(713)] }),
 ];
 
 export const SS_EQUIPMENT_SCHEMA_INDEX: SSEquipmentState[] = [
