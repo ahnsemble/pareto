@@ -6,9 +6,12 @@ const root = process.cwd();
 const legacyOptimizePage = readFileSync(resolve(root, 'app/[locale]/optimize/page.tsx'), 'utf8');
 const homePage = readFileSync(resolve(root, 'app/[locale]/page.tsx'), 'utf8');
 const communityPage = readFileSync(resolve(root, 'app/[locale]/community/page.tsx'), 'utf8');
+const localeLayout = readFileSync(resolve(root, 'app/[locale]/layout.tsx'), 'utf8');
 const sitemap = readFileSync(resolve(root, 'app/sitemap.ts'), 'utf8');
+const robots = readFileSync(resolve(root, 'app/robots.ts'), 'utf8');
 
 const currentOptimizerPath = '/v3/optimizer/tech-parts';
+const publicSiteUrl = 'https://tanggall.vercel.app';
 const oldOptimizerImports = [
   'OptimizeInputForm',
   'OptimizeResultGrid',
@@ -66,5 +69,14 @@ assert.ok(
   sitemap.includes(`'${currentOptimizerPath}'`),
   `sitemap must advertise ${currentOptimizerPath}`,
 );
+for (const [label, source] of [
+  ['locale layout metadata', localeLayout],
+  ['sitemap', sitemap],
+  ['robots', robots],
+]) {
+  assert.ok(source.includes(publicSiteUrl), `${label} must use ${publicSiteUrl}`);
+  assert.equal(source.includes('https://pareto.app'), false, `${label} must not use pareto.app`);
+  assert.equal(source.includes('https://tangtang-two.vercel.app'), false, `${label} must not use tangtang-two`);
+}
 
 console.log('tangtang_legacy_optimize_redirect_unit_test: passed');

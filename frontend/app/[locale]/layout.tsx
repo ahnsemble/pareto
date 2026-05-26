@@ -12,7 +12,7 @@ const geistSans = Geist({
   display: 'swap',
 });
 
-const SITE_URL = 'https://pareto.app';
+const SITE_URL = 'https://tanggall.vercel.app';
 
 export const viewport: Viewport = {
   width: 'device-width',

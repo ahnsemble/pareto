@@ -203,7 +203,7 @@ const HTML = `<!doctype html>
     </div>
   </div>
   <div class="zone-c">
-    <div class="url">pareto.app/ko/community</div>
+    <div class="url">tanggall.vercel.app/ko/community</div>
     <div class="badge">무료 웹 도구</div>
   </div>
 </body>

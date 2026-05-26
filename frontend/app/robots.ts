@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 
 export const dynamic = 'force-static';
 
-const SITE_URL = 'https://pareto.app';
+const SITE_URL = 'https://tanggall.vercel.app';
 
 export default function robots(): MetadataRoute.Robots {
   return {
