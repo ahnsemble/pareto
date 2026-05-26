@@ -10,11 +10,15 @@ export function TechBeforeAfterImpactTable({
   locale?: string;
 }) {
   const copy = getTechOptimizerCopy(locale);
-  if (rows.length === 0) return null;
 
   return (
-    <div className="mt-4 rounded-md border border-[color:var(--color-border)] p-3" data-testid="tech-before-after-impact">
+    <div className="min-w-0 rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface-elev)] p-4" data-testid="tech-before-after-impact">
       <p className={labelClass}>{copy.impact.title}</p>
+      {rows.length === 0 ? (
+        <p className="mt-3 rounded-md border border-dashed border-[color:var(--color-border)] p-3 text-xs text-[color:var(--color-text-muted)]">
+          {copy.impact.empty}
+        </p>
+      ) : (
       <div className="mt-3 overflow-x-auto">
         <table className="w-full min-w-[760px] text-left text-xs">
           <thead className="text-[color:var(--color-text-muted)]">
@@ -43,6 +47,7 @@ export function TechBeforeAfterImpactTable({
           </tbody>
         </table>
       </div>
+      )}
     </div>
   );
 }

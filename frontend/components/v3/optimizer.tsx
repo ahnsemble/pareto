@@ -1056,6 +1056,52 @@ export function TechPartsOptimizerSurface() {
           locale={locale}
         />
 
+        <div
+          className="grid min-w-0 gap-4 xl:grid-cols-[minmax(280px,0.72fr)_minmax(0,1.28fr)]"
+          data-testid="tech-action-strip"
+        >
+          <div className={panelClass} data-testid="tech-search-card">
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <h2 className={labelClass}>{copy.search.title}</h2>
+                <p className="mt-1 text-xs text-[color:var(--color-text-muted)]">
+                  {validationText}
+                </p>
+              </div>
+              {runError ? (
+                <p className="font-mono text-xs text-[color:var(--color-danger)]" data-testid="tech-optimizer-error">
+                  {copy.search.failed}
+                </p>
+              ) : null}
+            </div>
+            <div className="mt-3 grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+              <label className="block text-sm text-[color:var(--color-text)]">
+                <span className="text-xs text-[color:var(--color-text-muted)]">{copy.search.topBuilds}</span>
+                <input
+                  className={inputClass + ' mt-1'}
+                  data-testid="tech-optimizer-top-k"
+                  min={1}
+                  max={50}
+                  type="number"
+                  value={topK}
+                  onChange={(event) => setTopK(Math.max(1, Math.min(50, Number(event.target.value))))}
+                />
+              </label>
+              <button
+                type="button"
+                className={buttonClass + ' min-w-[9rem]'}
+                data-testid="tech-optimizer-run"
+                disabled={!canRun}
+                onClick={handleTechRun}
+              >
+                {running ? copy.search.running : copy.search.run}
+              </button>
+            </div>
+          </div>
+
+          <TechBeforeAfterImpactTable rows={upgradeImpactRows} locale={locale} />
+        </div>
+
         <AccountContextPanel
           playerState={playerStateForRun}
           account={accountContext}
@@ -1230,38 +1276,6 @@ export function TechPartsOptimizerSurface() {
               ))}
             </div>
           </div>
-
-          <div className={panelClass}>
-            <h2 className={labelClass}>{copy.search.title}</h2>
-            <div className="mt-3 grid gap-3">
-              <label className="block text-sm text-[color:var(--color-text)]">
-                <span className="text-xs text-[color:var(--color-text-muted)]">{copy.search.topBuilds}</span>
-                <input
-                  className={inputClass + ' mt-1'}
-                  data-testid="tech-optimizer-top-k"
-                  min={1}
-                  max={50}
-                  type="number"
-                  value={topK}
-                  onChange={(event) => setTopK(Math.max(1, Math.min(50, Number(event.target.value))))}
-                />
-              </label>
-            </div>
-            <button
-              type="button"
-              className={buttonClass + ' mt-4 w-full'}
-              data-testid="tech-optimizer-run"
-              disabled={!canRun}
-              onClick={handleTechRun}
-            >
-              {running ? copy.search.running : copy.search.run}
-            </button>
-            {runError ? (
-              <p className="mt-2 font-mono text-xs text-[color:var(--color-danger)]" data-testid="tech-optimizer-error">
-                {copy.search.failed}
-              </p>
-            ) : null}
-          </div>
         </div>
 
         <div
@@ -1367,7 +1381,6 @@ export function TechPartsOptimizerSurface() {
               )}
             </div>
           ) : null}
-          <TechBeforeAfterImpactTable rows={result ? upgradeImpactRows : []} locale={locale} />
           <TechUpgradeRecommendations recommendations={result ? upgradeRecommendations : []} locale={locale} />
           <div className="mt-4 overflow-x-auto">
             <table className="w-full min-w-[640px] font-mono text-xs">

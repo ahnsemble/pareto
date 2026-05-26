@@ -145,6 +145,7 @@ export type TechOptimizerCopy = {
   };
   impact: {
     title: string;
+    empty: string;
     item: string;
     current: string;
     recommended: string;
@@ -376,6 +377,7 @@ const EN_COPY: TechOptimizerCopy = {
   },
   impact: {
     title: 'Before / After impact',
+    empty: 'Run an imported profile to see the before/after upgrade impact here.',
     item: 'Change',
     current: 'Current',
     recommended: 'Recommended',
@@ -607,6 +609,7 @@ const KO_COPY: TechOptimizerCopy = {
   },
   impact: {
     title: '비포 / 애프터 영향',
+    empty: '가져온 프로필을 계산하면 비포/애프터 업그레이드 영향이 여기에 표시됩니다.',
     item: '변경 항목',
     current: '현재',
     recommended: '추천',
