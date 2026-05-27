@@ -48,7 +48,7 @@ export function buildTechDataConfidenceSummary({
   }
 
   const details = ko
-    ? [`${importedCount}개 확인, ${reviewCount}개 검토 필요, ${missingCount}개 누락.`]
+    ? [`${importedCount}개 확인, ${reviewCount}개 확인 필요, ${missingCount}개 누락.`]
     : [`${importedCount} confirmed, ${reviewCount} need review, ${missingCount} missing.`];
 
   if (hasImportedRunSnapshot) {
@@ -58,7 +58,7 @@ export function buildTechDataConfidenceSummary({
     details.push(ko ? '테크 또는 수집품 스냅샷이 추천 근거에 연결됩니다.' : 'Tech or collection snapshots are linked to recommendation evidence.');
   }
   if (reviewCount > 0 || missingCount > 0) {
-    details.push(ko ? '검토 표시된 항목은 계산 전에 확인하세요.' : 'Review marked fields before trusting the recommendation order.');
+    details.push(ko ? '확인 필요 표시된 항목은 계산 전에 직접 확인하세요.' : 'Review marked fields before trusting the recommendation order.');
   }
 
   return { level, importedCount, reviewCount, missingCount, details };

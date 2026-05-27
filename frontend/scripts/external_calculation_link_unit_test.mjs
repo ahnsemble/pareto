@@ -130,6 +130,16 @@ assert.ok(normalized.importedCollectibleSnapshot.items.length > 0);
 assert.match(normalized.summary, /Imported/);
 assert.equal(JSON.stringify(normalized).includes('sioLm'), false);
 
+const guildNormalized = normalizeExternalCalculationProfile({
+  _V: 5,
+  a: {
+    I: 'lme2',
+    J: 600,
+  },
+});
+assert.equal(guildNormalized.ok, true);
+assert.equal(guildNormalized.account.guildExpeditionTestaments, 600);
+
 const { buildTechUpgradeRecommendations } = loadRecommendationModule();
 const recommendations = buildTechUpgradeRecommendations({
   result: {

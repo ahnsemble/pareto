@@ -43,6 +43,7 @@ assert.equal(enders.speedMode, 'normal');
 assert.equal(enders.limit, 'basic');
 assert.equal(enders.skillStatusOverrides.rocketMode, 'disabled');
 assert.equal(enders.skillStatusOverrides.guardianMode, 'disabled');
+assert.equal(enders.accountContextOverrides.guildExpeditionTestaments, 0);
 
 const guild = getTechModePreset('guildExpedition');
 assert.equal(guild.skillSlots, 6);
@@ -52,6 +53,7 @@ assert.equal(guild.speedMode, 'precise');
 assert.equal(guild.limit, 'advanced');
 assert.equal(guild.skillStatusOverrides.rocketMode, 'auto');
 assert.equal(guild.skillStatusOverrides.guardianMode, 'auto');
+assert.equal(guild.accountContextOverrides.guildExpeditionTestaments, 600);
 
 assert.notDeepEqual(enders, guild);
 assert.equal(/sio/i.test(JSON.stringify(TECH_MODE_PRESETS)), false);

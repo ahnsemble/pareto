@@ -8,6 +8,7 @@ export type TechModePreset = {
   speedMode: 'fast' | 'normal' | 'precise' | 'precise+' | 'full';
   limit: 'basic' | 'advanced';
   skillStatusOverrides: Record<string, 'auto' | 'locked' | 'disabled'>;
+  accountContextOverrides: Record<string, number>;
 };
 
 export const TECH_MODE_PRESETS: TechModePreset[] = [
@@ -22,6 +23,9 @@ export const TECH_MODE_PRESETS: TechModePreset[] = [
       rocketMode: 'disabled',
       guardianMode: 'disabled',
     },
+    accountContextOverrides: {
+      guildExpeditionTestaments: 0,
+    },
   },
   {
     id: 'guildExpedition',
@@ -33,6 +37,9 @@ export const TECH_MODE_PRESETS: TechModePreset[] = [
     skillStatusOverrides: {
       rocketMode: 'auto',
       guardianMode: 'auto',
+    },
+    accountContextOverrides: {
+      guildExpeditionTestaments: 600,
     },
   },
 ];

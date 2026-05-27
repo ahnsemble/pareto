@@ -95,6 +95,7 @@ const ACCOUNT_NUMBER_FIELDS: Array<[ProductProfileAccountNumberField, readonly s
   ['bootsChaos', ['bootsChaos', 'boots_chaos', 'equipment.boots.chaos_fusion_level']],
   ['bootsXeno', ['bootsXeno', 'boots_xeno', 'equipment.boots.xeno_transmute_level']],
   ['lmeTurf', ['lmeTurf', 'lme_turf', 'lme.turf_nodes_enabled']],
+  ['guildExpeditionTestaments', ['guildExpeditionTestaments', 'guild_expedition_testaments', 'lmeTestaments', 'lme_testaments', 'lme.testaments']],
 ];
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -235,6 +236,7 @@ export function buildProductImportFieldSummary(
     ['mountSkillDamage', 'Mount skill %'],
     ['equipmentOtherworldCores', 'Equipment otherworld cores'],
     ['lmeTurf', 'Lunar Mine turf nodes'],
+    ['guildExpeditionTestaments', 'Guild Expedition testaments'],
   ];
   for (const [field, label, needsReview] of accountFields) {
     add('Account', String(field), label, imported.account[field] as string | number | undefined, needsReview);
@@ -306,6 +308,9 @@ function parseScreenshotTextImport(text: string): ProductProfileImportResult | n
 
   const otherworldPetSyncRate = readScreenshotNumber(text, ['이세계 펫 동조율', 'Otherworld pet sync rate', 'Pet sync rate']);
   if (otherworldPetSyncRate !== undefined) account.otherworldPetSyncRate = otherworldPetSyncRate;
+
+  const guildExpeditionTestaments = readScreenshotNumber(text, ['길드원정 증표', '길드 원정 증표', 'Guild Expedition testaments', 'LME testaments']);
+  if (guildExpeditionTestaments !== undefined) account.guildExpeditionTestaments = guildExpeditionTestaments;
 
   const techResonanceChips = readScreenshotNumber(text, ['공진 칩', 'Tech resonance chips', 'Resonance chips']);
   if (techResonanceChips !== undefined) {

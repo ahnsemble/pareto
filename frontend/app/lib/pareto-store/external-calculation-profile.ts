@@ -238,6 +238,7 @@ function normalizeAccount(expanded: Record<string, unknown>): ProductProfileAcco
   const synergyLevel = readNumber(meta, 'synergyLevel');
   const designs = readNumber(meta, 'designs');
   const maxGear = readNumber(meta, 'maxGear');
+  const lmeTestaments = readNumber(meta, 'lmeTestaments');
 
   if (baseAtk !== undefined) account.baseAtk = baseAtk;
   if (finalAtk !== undefined) account.finalAtk = finalAtk;
@@ -245,6 +246,7 @@ function normalizeAccount(expanded: Record<string, unknown>): ProductProfileAcco
   if (synergyLevel !== undefined) account.survivorTeamwork = Math.max(0, Math.min(4, Math.floor(synergyLevel / 20)));
   if (designs !== undefined) account.collectionStars = designs;
   if (maxGear !== undefined) account.mountPuzzleSlots = maxGear;
+  if (lmeTestaments !== undefined) account.guildExpeditionTestaments = lmeTestaments;
 
   const directStatFields = [
     ['skillDamage', 'skillDamage'],

@@ -52,6 +52,7 @@ const sampleState = {
     finalAtk: 123456,
     skillDamage: 477,
     lmeTurf: 12,
+    guildExpeditionTestaments: 600,
   },
   resourceWallet: {
     techResonanceChips: 91,
@@ -96,6 +97,7 @@ assert.equal(document.version, 1);
 assert.equal(document.slotId, 'endersEcho');
 assert.equal(document.savedAt, fixedDate.toISOString());
 assert.equal(document.state.accountContext.finalAtk, 123456);
+assert.equal(document.state.accountContext.guildExpeditionTestaments, 600);
 assert.equal(document.state.chips, 91);
 assert.equal(document.state.importedRunSnapshot.inventory.chips, 91);
 assert.equal(document.state.profileImportText ?? '', '');
@@ -137,6 +139,7 @@ assert.equal(saveGuild.ok, true);
 const loadedEnders = loadTechProfileSlot(storage, 'endersEcho');
 assert.equal(loadedEnders.ok, true);
 assert.equal(loadedEnders.document.state.accountContext.finalAtk, 123456);
+assert.equal(loadedEnders.document.state.accountContext.guildExpeditionTestaments, 600);
 assert.equal(loadedEnders.document.state.chips, 91);
 assert.equal(loadedEnders.document.state.profileImportText ?? '', '');
 assert.equal(loadedEnders.document.state.profileImportSummary ?? '', '');
@@ -146,6 +149,7 @@ assert.deepEqual(loadedEnders.document.state.profileImportDetails ?? [], []);
 const loadedGuild = loadTechProfileSlot(storage, 'guildExpedition');
 assert.equal(loadedGuild.ok, true);
 assert.equal(loadedGuild.document.state.accountContext.finalAtk, 777777);
+assert.equal(loadedGuild.document.state.accountContext.guildExpeditionTestaments, 600);
 assert.equal(loadedGuild.document.state.chips, 12);
 assert.equal(loadedGuild.document.state.skillSlots, 3);
 

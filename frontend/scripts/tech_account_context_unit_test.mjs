@@ -49,6 +49,7 @@ const localeCopyTranspiled = ts.transpileModule(localeCopySource, {
 const localeCopyModuleUrl = `data:text/javascript;base64,${Buffer.from(localeCopyTranspiled.outputText).toString('base64')}`;
 const {
   getTechOptimizerCopy,
+  localizeTechEntityName,
   localizeTechInventoryMessage,
   localizeTechResourceWalletFields,
 } = await import(localeCopyModuleUrl);
@@ -56,6 +57,7 @@ const {
 assert.equal(typeof normalizePetAssistContext, 'function');
 assert.equal(typeof petXenoStatusLabel, 'function');
 assert.equal(typeof getTechOptimizerCopy, 'function');
+assert.equal(typeof localizeTechEntityName, 'function');
 assert.equal(typeof localizeTechResourceWalletFields, 'function');
 assert.equal(typeof localizeTechInventoryMessage, 'function');
 
@@ -63,6 +65,7 @@ const koCopy = getTechOptimizerCopy('ko');
 assert.equal(koCopy.titleSuffix, '테크 파츠');
 assert.equal(koCopy.profileImport.title, 'Tangtang 프로필 가져오기');
 assert.equal(koCopy.profileImport.action, '프로필 가져오기');
+assert.equal(koCopy.profileImport.review, '확인 필요');
 assert.equal(koCopy.profileSave.title, '저장 프로필');
 assert.equal(koCopy.profileSave.save, '저장');
 assert.equal(koCopy.profileSave.load, '불러오기');
@@ -81,6 +84,12 @@ assert.equal(getTechOptimizerCopy('en').profileSave.title, 'Saved profiles');
 assert.equal(getTechOptimizerCopy('en').profileSave.load, 'Load');
 assert.equal(localizeTechInventoryMessage('chips.gt_999', 'ko'), '기술 공명 칩은 999 이하여야 합니다');
 assert.equal(localizeTechInventoryMessage('chips.gt_999', 'en'), 'Tech resonance chips must be 999 or lower');
+
+assert.equal(localizeTechEntityName('collectibleItem', 'Dimension Foil', 'ko'), '차원 포일');
+assert.equal(localizeTechEntityName('collectibleSet', 'Impression Idols', 'ko'), '인상 아이돌');
+assert.equal(localizeTechEntityName('collectibleSet', 'Open Void Gate', 'ko'), '열린 공허의 문');
+assert.equal(localizeTechEntityName('collectibleSet', 'Close to Creation', 'ko'), '창조에 가까운');
+assert.equal(localizeTechEntityName('collectibleItem', 'Dimension Foil', 'en'), 'Dimension Foil');
 
 const koWalletFields = localizeTechResourceWalletFields('ko');
 assert.equal(koWalletFields[0].label, '기술 공명 칩');
@@ -132,11 +141,12 @@ assert.match(
 );
 
 assert.equal(collectibleItemReviewMarker(true), 'Target');
-assert.equal(collectibleItemReviewMarker(false), 'Review');
+assert.equal(collectibleItemReviewMarker(false), 'Needs review');
+assert.equal(collectibleItemReviewMarker(false, 'ko'), '확인 필요');
 
 assert.equal(
   mountReviewSummary({ ...DEFAULT_TECH_ACCOUNT_CONTEXT, mountPuzzleSlots: 12, mountCores: 9 }),
-  'Puzzle slots 12 / Mount cores 9 / Review-only puzzle rows',
+  'Puzzle slots 12 / Mount cores 9 / Confirm puzzle rows',
 );
 
 assert.equal(lmeTurfPresetLabel(0), '0 nodes');
@@ -161,5 +171,24 @@ assert.equal(baseStats.laceration, 85);
 assert.equal(baseStats.xenoSyncRate, 42.5);
 assert.equal(baseStats.shieldDamageUptime, 1);
 assert.equal(baseStats.lacerationUptime, 1);
+
+const guildContext = buildTechCalculationContext({
+  ...DEFAULT_TECH_ACCOUNT_CONTEXT,
+  guildExpeditionTestaments: 600,
+}, 'guildExpedition');
+assert.equal(guildContext.gameMode, 'lme2');
+assert.equal(guildContext.baseStats.critRate, DEFAULT_TECH_ACCOUNT_CONTEXT.critRate - 10);
+assert.equal(guildContext.baseStats.skillDamage, DEFAULT_TECH_ACCOUNT_CONTEXT.skillDamage - 30);
+assert.equal(guildContext.baseStats.critDamage, DEFAULT_TECH_ACCOUNT_CONTEXT.critDamage - 30);
+assert.equal(guildContext.baseStats.shieldDamage, DEFAULT_TECH_ACCOUNT_CONTEXT.shieldDamage - 5);
+assert.equal(guildContext.baseStats.damageDealt, -5);
+
+const endersContext = buildTechCalculationContext({
+  ...DEFAULT_TECH_ACCOUNT_CONTEXT,
+  guildExpeditionTestaments: 600,
+}, 'endersEcho');
+assert.equal(endersContext.gameMode, 'lme1');
+assert.equal(endersContext.baseStats.critRate, DEFAULT_TECH_ACCOUNT_CONTEXT.critRate);
+assert.equal(endersContext.baseStats.damageDealt, undefined);
 
 console.log('tech_account_context_unit_test: passed');

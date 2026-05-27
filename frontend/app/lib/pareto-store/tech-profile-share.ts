@@ -1,5 +1,6 @@
 import {
   buildTechProfileSaveDocument,
+  type TechProfileSaveSlotId,
   type TechProfileSaveDocument,
   type TechProfileSaveState,
 } from './tech-profile-storage';
@@ -33,11 +34,19 @@ function decodeUrlPayload(value: string): string {
   return new TextDecoder().decode(bytes);
 }
 
+function validSlotId(value: unknown): TechProfileSaveSlotId | undefined {
+  return value === 'endersEcho' || value === 'guildExpedition' ? value : undefined;
+}
+
+function slotIdForShareState(state: TechProfileSaveState | Record<string, unknown>): TechProfileSaveSlotId {
+  return validSlotId(state.activeProfileSlot) ?? 'endersEcho';
+}
+
 function shareDocument(state: TechProfileSaveState | Record<string, unknown>, now: Date) {
   return {
     kind: TECH_PROFILE_SHARE_KIND,
     version: TECH_PROFILE_SHARE_VERSION,
-    document: buildTechProfileSaveDocument('endersEcho', state, now),
+    document: buildTechProfileSaveDocument(slotIdForShareState(state), state, now),
   };
 }
 
@@ -53,7 +62,7 @@ function normalizeDecodedDocument(value: unknown): TechProfileShareDecodeResult 
   }
   return {
     ok: true,
-    document: buildTechProfileSaveDocument('endersEcho', rawDocument.state, savedAt),
+    document: buildTechProfileSaveDocument(validSlotId(rawDocument.slotId) ?? slotIdForShareState(rawDocument.state), rawDocument.state, savedAt),
   };
 }
 

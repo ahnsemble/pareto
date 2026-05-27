@@ -72,7 +72,10 @@ export type TechAccountContextInput = {
   bootsChaos: number;
   bootsXeno: number;
   lmeTurf: number;
+  guildExpeditionTestaments: number;
 };
+
+export type TechProfileModeId = 'endersEcho' | 'guildExpedition';
 
 export type TechAccountContextNamedField = {
   [K in keyof TechAccountContextInput]: TechAccountContextInput[K] extends string ? K : never;
@@ -150,6 +153,7 @@ export const DEFAULT_TECH_ACCOUNT_CONTEXT: TechAccountContextInput = {
   bootsChaos: 0,
   bootsXeno: 0,
   lmeTurf: 0,
+  guildExpeditionTestaments: 0,
 };
 
 const DEFAULT_TECH_CALCULATION_CONTEXT: Record<string, unknown> = {
@@ -181,6 +185,279 @@ const DEFAULT_TECH_CALCULATION_CONTEXT: Record<string, unknown> = {
   },
   enabledSkills: ['Energy Cube', 'HP Bullet', 'Exo Bracer', 'Ammo Thruster', 'HE Fuel', 'Drone Mode', 'Drill Shot Mode', 'Soccer Mode', 'Molotov Mode'],
 };
+
+const GUILD_EXPEDITION_DEBUFF_DELTAS: Array<[number, string, number]> = [
+  [80, 'critRate', -10],
+  [120, 'skillDamage', -10],
+  [160, 'critDamage', -10],
+  [200, 'shieldDamage', -5],
+  [280, 'vulnerability', -5],
+  [320, 'critDamage', -10],
+  [360, 'skillDamage', -10],
+  [400, 'weakened', -10],
+  [500, 'critDamage', -10],
+  [550, 'skillDamage', -10],
+  [600, 'damageDealt', -5],
+  [650, 'poisoned', -10],
+  [750, 'skillDamage', -10],
+  [800, 'shieldDamage', -5],
+  [850, 'critDamage', -10],
+  [900, 'chilled', -10],
+  [1000, 'critRate', -10],
+  [1050, 'skillDamage', -10],
+  [1100, 'critDamage', -10],
+  [1150, 'vulnerability', -5],
+  [1260, 'skillDamage', -10],
+  [1320, 'shieldDamage', -5],
+  [1380, 'vulnerability', -5],
+  [1440, 'damageDealt', -5],
+  [1640, 'skillDamage', -10],
+  [1710, 'weakened', -10],
+  [1780, 'critDamage', -10],
+  [1850, 'vulnerability', -5],
+  [1990, 'skillDamage', -10],
+  [2060, 'poisoned', -10],
+  [2130, 'critDamage', -10],
+  [2200, 'damageDealt', -5],
+  [2340, 'shieldDamage', -5],
+  [2410, 'chilled', -10],
+  [2480, 'critRate', -10],
+  [2550, 'critDamage', -10],
+  [2690, 'damageDealt', -5],
+  [2760, 'skillDamage', -10],
+  [2840, 'critDamage', -10],
+  [2920, 'shieldDamage', -5],
+  [3160, 'critRate', -10],
+  [3240, 'skillDamage', -10],
+  [3400, 'vulnerability', -5],
+  [3480, 'critDamage', -10],
+  [3640, 'shieldDamage', -5],
+  [3800, 'vulnerability', -5],
+  [3880, 'critDamage', -15],
+  [4040, 'skillDamage', -15],
+  [4130, 'weakened', -10],
+  [4130, 'poisoned', -10],
+  [4130, 'chilled', -10],
+  [4310, 'shieldDamage', -5],
+  [4400, 'damageDealt', -5],
+  [4700, 'shieldDamage', -5],
+  [4800, 'critRate', -10],
+  [4900, 'skillDamage', -15],
+  [5100, 'shieldDamage', -5],
+  [5200, 'critDamage', -15],
+  [5300, 'skillDamage', -15],
+  [5400, 'critRate', -10],
+  [5600, 'shieldDamage', -5],
+  [5700, 'critDamage', -15],
+  [5800, 'damageDealt', -5],
+  [5900, 'skillDamage', -15],
+  [6200, 'shieldDamage', -10],
+  [6300, 'weakened', -20],
+  [6300, 'poisoned', -20],
+  [6300, 'chilled', -20],
+  [6400, 'critDamage', -20],
+  [6600, 'vulnerability', -10],
+  [6700, 'critDamage', -20],
+  [6800, 'skillDamage', -20],
+  [6900, 'shieldDamage', -10],
+  [7100, 'critRate', -10],
+  [7200, 'skillDamage', -20],
+  [7300, 'shieldDamage', -15],
+  [7400, 'damageDealt', -5],
+  [7700, 'critRate', -15],
+  [7800, 'skillDamage', -25],
+  [7900, 'vulnerability', -15],
+  [8000, 'critDamage', -25],
+  [8200, 'skillDamage', -25],
+  [8300, 'critDamage', -25],
+  [8400, 'shieldDamage', -15],
+  [8500, 'weakened', -20],
+  [8500, 'poisoned', -20],
+  [8500, 'chilled', -20],
+  [8700, 'critDamage', -25],
+  [8800, 'skillDamage', -25],
+  [8900, 'damageDealt', -5],
+  [9200, 'critRate', -15],
+  [9300, 'skillDamage', -25],
+  [9400, 'shieldDamage', -15],
+  [9500, 'critDamage', -25],
+  [9700, 'vulnerability', -15],
+  [9800, 'skillDamage', -25],
+  [9900, 'critDamage', -25],
+  [10000, 'shieldDamage', -15],
+  [10200, 'skillDamage', -25],
+  [10300, 'critDamage', -25],
+  [10400, 'weakened', -20],
+  [10400, 'poisoned', -20],
+  [10400, 'chilled', -20],
+  [10700, 'vulnerability', -20],
+  [10800, 'critDamage', -30],
+  [10900, 'skillDamage', -30],
+  [11000, 'shieldDamage', -20],
+  [11200, 'critRate', -20],
+  [11300, 'shieldDamage', -20],
+  [11400, 'damageDealt', -5],
+  [11500, 'skillDamage', -30],
+  [11700, 'weakened', -20],
+  [11700, 'poisoned', -20],
+  [11700, 'chilled', -20],
+  [11800, 'critDamage', -30],
+  [11900, 'skillDamage', -30],
+  [12200, 'critDamage', -40],
+  [12300, 'skillDamage', -40],
+  [12400, 'weakened', -30],
+  [12400, 'poisoned', -30],
+  [12400, 'chilled', -30],
+  [12500, 'vulnerability', -20],
+  [12700, 'shieldDamage', -30],
+  [12800, 'critDamage', -50],
+  [12900, 'skillDamage', -50],
+  [13000, 'critRate', -40],
+  [13000, 'damageDealt', -5],
+  [13200, 'weakened', -30],
+  [13200, 'poisoned', -30],
+  [13200, 'chilled', -30],
+  [13300, 'vulnerability', -20],
+  [13400, 'shieldDamage', -30],
+  [14100, 'skillDamage', -60],
+  [14400, 'weakened', -40],
+  [14400, 'poisoned', -40],
+  [14400, 'chilled', -40],
+  [14700, 'critDamage', -60],
+  [15000, 'shieldDamage', -40],
+  [15600, 'vulnerability', -20],
+  [15900, 'damageDealt', -5],
+  [16200, 'skillDamage', -60],
+  [16500, 'shieldDamage', -40],
+  [17100, 'weakened', -40],
+  [17100, 'poisoned', -40],
+  [17100, 'chilled', -40],
+  [17400, 'vulnerability', -20],
+  [17700, 'critDamage', -60],
+  [19000, 'skillDamage', -60],
+  [19500, 'critDamage', -60],
+  [20000, 'shieldDamage', -40],
+  [20500, 'vulnerability', -20],
+  [21500, 'skillDamage', -60],
+  [22000, 'critRate', -20],
+  [22000, 'critDamage', -60],
+  [22500, 'weakened', -40],
+  [22500, 'poisoned', -40],
+  [22500, 'chilled', -40],
+  [23000, 'critDamage', -60],
+  [23500, 'skillDamage', -60],
+  [24500, 'damageDealt', -5],
+  [25000, 'vulnerability', -20],
+  [25500, 'critRate', -20],
+  [25500, 'critDamage', -60],
+  [26000, 'shieldDamage', -40],
+  [26500, 'weakened', -40],
+  [26500, 'poisoned', -40],
+  [26500, 'chilled', -40],
+  [29000, 'critDamage', -60],
+  [30000, 'shieldDamage', -40],
+  [31000, 'vulnerability', -20],
+  [32000, 'skillDamage', -60],
+  [34000, 'critRate', -20],
+  [34000, 'critDamage', -60],
+  [35000, 'weakened', -40],
+  [35000, 'poisoned', -40],
+  [35000, 'chilled', -40],
+  [36000, 'skillDamage', -60],
+  [37000, 'critDamage', -60],
+  [38000, 'damageDealt', -5],
+  [40000, 'skillDamage', -60],
+  [41000, 'vulnerability', -20],
+  [42000, 'critRate', -20],
+  [42000, 'critDamage', -60],
+  [43000, 'skillDamage', -60],
+  [44000, 'shieldDamage', -40],
+  [46000, 'vulnerability', -20],
+  [46500, 'critDamage', -60],
+  [47000, 'skillDamage', -60],
+  [47500, 'weakened', -40],
+  [47500, 'poisoned', -40],
+  [47500, 'chilled', -40],
+  [48000, 'vulnerability', -20],
+  [48500, 'shieldDamage', -40],
+  [49500, 'skillDamage', -60],
+  [50000, 'vulnerability', -20],
+  [50500, 'critRate', -20],
+  [50500, 'critDamage', -60],
+  [51000, 'shieldDamage', -40],
+  [51500, 'laceration', -10],
+  [52500, 'vulnerability', -20],
+  [53000, 'weakened', -40],
+  [53000, 'poisoned', -40],
+  [53000, 'chilled', -40],
+  [53500, 'shieldDamage', -40],
+  [54000, 'critDamage', -60],
+  [54500, 'vulnerability', -20],
+  [55000, 'laceration', -20],
+  [56500, 'shieldDamage', -40],
+  [57000, 'weakened', -50],
+  [57000, 'poisoned', -50],
+  [57000, 'chilled', -50],
+  [57500, 'vulnerability', -30],
+  [58000, 'skillDamage', -75],
+  [58500, 'critRate', -30],
+  [58500, 'critDamage', -75],
+  [59000, 'shieldDamage', -40],
+  [60000, 'laceration', -20],
+  [60500, 'damageDealt', -5],
+  [61000, 'skillDamage', -100],
+  [61500, 'vulnerability', -30],
+  [62000, 'critDamage', -100],
+  [63000, 'weakened', -50],
+  [63000, 'poisoned', -50],
+  [63000, 'chilled', -50],
+  [63500, 'skillDamage', -100],
+  [64000, 'shieldDamage', -40],
+  [64500, 'vulnerability', -30],
+  [65000, 'critDamage', -100],
+  [65500, 'laceration', -20],
+  [67000, 'skillDamage', -100],
+  [67500, 'vulnerability', -30],
+  [68000, 'critDamage', -100],
+  [68500, 'shieldDamage', -40],
+  [69000, 'laceration', -30],
+  [69500, 'xenoResDamage', -20],
+  [70500, 'weakened', -50],
+  [70500, 'poisoned', -50],
+  [70500, 'chilled', -50],
+  [71000, 'vulnerability', -30],
+  [71500, 'skillDamage', -100],
+  [72000, 'damageDealt', -5],
+  [72500, 'damageBoss', -10],
+  [73500, 'vulnerability', -40],
+  [74000, 'laceration', -30],
+  [74500, 'shieldDamage', -40],
+  [75000, 'critRate', -30],
+  [75000, 'critDamage', -100],
+  [75500, 'xenoResDamage', -20],
+  [76000, 'damageBoss', -20],
+  [77500, 'weakened', -60],
+  [77500, 'poisoned', -60],
+  [77500, 'chilled', -60],
+  [78000, 'shieldDamage', -40],
+  [78500, 'critRate', -40],
+  [78500, 'critDamage', -100],
+  [79000, 'vulnerability', -40],
+  [79500, 'skillDamage', -100],
+  [80000, 'laceration', -30],
+  [81000, 'critDamage', -100],
+  [81500, 'skillDamage', -100],
+  [82000, 'shieldDamage', -40],
+  [82500, 'damageDealt', -5],
+  [83000, 'xenoResDamage', -20],
+  [84000, 'skillDamage', -100],
+  [84500, 'shieldDamage', -40],
+  [85000, 'critRate', -40],
+  [85000, 'critDamage', -100],
+  [85500, 'vulnerability', -40],
+  [86000, 'laceration', -30],
+  [86500, 'damageBoss', -20],
+];
 
 export function normalizePetAssistContext(account: TechAccountContextInput): TechAccountContextInput {
   let assistPet1Id = account.assistPet1Id;
@@ -246,15 +523,15 @@ export function survivorContextSummary(account: TechAccountContextInput, locale:
 }
 
 export function collectibleItemReviewMarker(isTarget: boolean, locale: string = 'en'): string {
-  if (locale === 'ko') return isTarget ? '목표' : '검토';
-  return isTarget ? 'Target' : 'Review';
+  if (locale === 'ko') return isTarget ? '목표' : '확인 필요';
+  return isTarget ? 'Target' : 'Needs review';
 }
 
 export function mountReviewSummary(account: TechAccountContextInput, locale: string = 'en'): string {
   const puzzleSlots = Math.max(0, Math.trunc(account.mountPuzzleSlots));
   const mountCores = Math.max(0, Math.trunc(account.mountCores));
-  if (locale === 'ko') return `퍼즐 슬롯 ${puzzleSlots} / 탈것 코어 ${mountCores} / 검토용 퍼즐 행`;
-  return `Puzzle slots ${puzzleSlots} / Mount cores ${mountCores} / Review-only puzzle rows`;
+  if (locale === 'ko') return `퍼즐 슬롯 ${puzzleSlots} / 탈것 코어 ${mountCores} / 확인 필요 퍼즐 행`;
+  return `Puzzle slots ${puzzleSlots} / Mount cores ${mountCores} / Confirm puzzle rows`;
 }
 
 export function lmeTurfPresetLabel(value: number, locale: string = 'en'): string {
@@ -262,28 +539,69 @@ export function lmeTurfPresetLabel(value: number, locale: string = 'en'): string
   return `${Math.max(0, Math.trunc(value))} nodes`;
 }
 
+export function buildGuildExpeditionDebuffStats(testaments: number): Record<string, number> {
+  const normalized = Number.isFinite(testaments) ? Math.max(0, Math.trunc(testaments)) : 0;
+  const stats: Record<string, number> = {};
+  for (const [threshold, stat, delta] of GUILD_EXPEDITION_DEBUFF_DELTAS) {
+    if (normalized < threshold) continue;
+    stats[stat] = (stats[stat] ?? 0) + delta;
+  }
+  return stats;
+}
+
+export function guildExpeditionDebuffSummary(account: TechAccountContextInput, locale: string = 'en'): string {
+  const testaments = Math.max(0, Math.trunc(account.guildExpeditionTestaments));
+  const stats = buildGuildExpeditionDebuffStats(testaments);
+  const entries = Object.entries(stats).filter(([, value]) => value !== 0);
+  if (entries.length === 0) {
+    return locale === 'ko' ? `${testaments} 증표 / 디버프 없음` : `${testaments} testaments / no debuff`;
+  }
+  const preview = entries
+    .slice(0, 3)
+    .map(([key, value]) => `${key} ${value > 0 ? '+' : ''}${value}`)
+    .join(', ');
+  const suffix = entries.length > 3 ? (locale === 'ko' ? ` 외 ${entries.length - 3}개` : ` +${entries.length - 3} more`) : '';
+  return locale === 'ko' ? `${testaments} 증표 / ${preview}${suffix}` : `${testaments} testaments / ${preview}${suffix}`;
+}
+
 function clampInteger(value: number, min: number, max: number): number {
   if (!Number.isFinite(value)) return min;
   return Math.max(min, Math.min(max, Math.trunc(value)));
 }
 
-export function buildTechCalculationContext(account: TechAccountContextInput): Record<string, unknown> {
+function applyStatDeltas(baseStats: Record<string, unknown>, deltas: Record<string, number>) {
+  for (const [key, delta] of Object.entries(deltas)) {
+    const current = baseStats[key];
+    baseStats[key] = (typeof current === 'number' && Number.isFinite(current) ? current : 0) + delta;
+  }
+}
+
+export function buildTechCalculationContext(
+  account: TechAccountContextInput,
+  profileMode: TechProfileModeId = 'endersEcho',
+): Record<string, unknown> {
   const baseStats = DEFAULT_TECH_CALCULATION_CONTEXT.baseStats as Record<string, unknown>;
+  const nextBaseStats: Record<string, unknown> = {
+    ...baseStats,
+    atkPercent: account.atkPercent + account.mountAtk + account.mountStatInputs,
+    critRate: account.critRate,
+    critDamage: account.critDamage,
+    skillDamage: account.skillDamage + account.mountSkillDamage,
+    shieldDamage: account.shieldDamage,
+    poisoned: account.poisonedDamage,
+    weakened: account.weakenedDamage,
+    chilled: account.chilledDamage,
+    laceration: account.lacerationDamage,
+    xenoSyncRate: account.otherworldPetSyncRate,
+  };
+  if (profileMode === 'guildExpedition') {
+    applyStatDeltas(nextBaseStats, buildGuildExpeditionDebuffStats(account.guildExpeditionTestaments));
+  }
+
   return {
     ...DEFAULT_TECH_CALCULATION_CONTEXT,
-    baseStats: {
-      ...baseStats,
-      atkPercent: account.atkPercent + account.mountAtk + account.mountStatInputs,
-      critRate: account.critRate,
-      critDamage: account.critDamage,
-      skillDamage: account.skillDamage + account.mountSkillDamage,
-      shieldDamage: account.shieldDamage,
-      poisoned: account.poisonedDamage,
-      weakened: account.weakenedDamage,
-      chilled: account.chilledDamage,
-      laceration: account.lacerationDamage,
-      xenoSyncRate: account.otherworldPetSyncRate,
-    },
+    gameMode: profileMode === 'guildExpedition' ? 'lme2' : 'lme1',
+    baseStats: nextBaseStats,
     attackMeta: {
       atkBase: account.baseAtk,
       atkFinal: account.finalAtk,

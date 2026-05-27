@@ -129,6 +129,7 @@ type ProductProfileAccountImportShape = {
   bootsChaos: number;
   bootsXeno: number;
   lmeTurf: number;
+  guildExpeditionTestaments: number;
 };
 
 export type ProductProfileAccountImport = Partial<ProductProfileAccountImportShape>;

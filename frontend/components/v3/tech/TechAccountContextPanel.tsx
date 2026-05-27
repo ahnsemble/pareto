@@ -14,6 +14,7 @@ import {
   collectibleItemReviewMarker,
   formatPassiveCritOptionLabel,
   formatTeamworkOptionLabel,
+  guildExpeditionDebuffSummary,
   lmeTurfPresetLabel,
   mountReviewSummary,
   normalizePetAssistContext,
@@ -21,8 +22,9 @@ import {
   survivorContextSummary,
   type TechAccountContextInput,
   type TechAccountContextNamedField,
+  type TechProfileModeId,
 } from './techAccountContext';
-import { getTechOptimizerCopy } from './techLocaleCopy';
+import { getTechOptimizerCopy, localizeTechEntityName, type TechEntityNameKind } from './techLocaleCopy';
 
 function contextNumber(value: number | null | undefined, digits = 0): string {
   return typeof value === 'number' && Number.isFinite(value) ? formatNumber(value, digits) : '0';
@@ -32,13 +34,36 @@ function contextLabel(value: string | null | undefined, emptyLabel = 'none'): st
   return value && value.trim().length > 0 ? value : emptyLabel;
 }
 
-function displayNameById<T extends { id: string; display_name_en: string }>(
+function displayNameById<T extends { id: string; display_name_en: string; display_name_ko?: string }>(
+  kind: TechEntityNameKind,
   rows: readonly T[],
   id: string | null | undefined,
+  locale: string | undefined,
   fallback = 'Unknown',
 ): string {
-  return rows.find((row) => row.id === id)?.display_name_en ?? fallback;
+  const row = rows.find((candidate) => candidate.id === id);
+  if (!row) return fallback;
+  if (locale === 'ko' && row.display_name_ko && row.display_name_ko !== row.display_name_en) {
+    return row.display_name_ko;
+  }
+  return localizeTechEntityName(kind, row.display_name_en, locale);
 }
+
+type AccountContextField = {
+  id: keyof TechAccountContextInput;
+  label: string;
+  testId: string;
+  min: number;
+  max?: number;
+  step?: number;
+};
+
+type AccountContextSection = {
+  title: string;
+  detailLabel?: string;
+  fields: AccountContextField[];
+  summary?: Array<[string, string]>;
+};
 
 export function AccountContextPanel({
   playerState,
@@ -46,20 +71,22 @@ export function AccountContextPanel({
   onChange,
   onNamedChange,
   locale,
+  profileSlotId = 'endersEcho',
 }: {
   playerState: PlayerState;
   account: TechAccountContextInput;
   onChange: (field: keyof TechAccountContextInput, value: number) => void;
   onNamedChange: (field: TechAccountContextNamedField, value: string) => void;
   locale?: string;
+  profileSlotId?: TechProfileModeId;
 }) {
   const copy = getTechOptimizerCopy(locale);
   const labels = copy.account.labels;
   const equipment = playerState.equipment;
-  const selectedHeroName = displayNameById(HERO_SCHEMA_INDEX, playerState.hero.selected_hero_id, copy.account.selectedSurvivorFallback);
-  const deployedPetName = displayNameById(PET_SCHEMA_INDEX, playerState.pet.deployed_pet_id, copy.account.petFallback);
-  const selectedCollectibleName = displayNameById(COLLECTIBLE_ITEM_INDEX, playerState.collectible.target_collectible_id, copy.account.selectedCollectibleFallback);
-  const selectedMountName = displayNameById(MOUNT_SCHEMA_INDEX, account.selectedMountId, copy.account.selectedMountFallback);
+  const selectedHeroName = displayNameById('hero', HERO_SCHEMA_INDEX, playerState.hero.selected_hero_id, locale, copy.account.selectedSurvivorFallback);
+  const deployedPetName = displayNameById('pet', PET_SCHEMA_INDEX, playerState.pet.deployed_pet_id, locale, copy.account.petFallback);
+  const selectedCollectibleName = displayNameById('collectibleItem', COLLECTIBLE_ITEM_INDEX, playerState.collectible.target_collectible_id, locale, copy.account.selectedCollectibleFallback);
+  const selectedMountName = displayNameById('mount', MOUNT_SCHEMA_INDEX, account.selectedMountId, locale, copy.account.selectedMountFallback);
   const collectionRows = COLLECTIBLE_SET_INDEX.slice(0, 3);
   const petRows = PET_SCHEMA_INDEX.slice(0, 5);
   const mountRows = MOUNT_SCHEMA_INDEX.slice(0, 3);
@@ -163,12 +190,25 @@ export function AccountContextPanel({
       ],
     },
   ];
-  const sections: Array<{
-    title: string;
-    detailLabel?: string;
-    fields: Array<{ id: keyof TechAccountContextInput; label: string; testId: string; min: number; max?: number; step?: number }>;
-    summary?: Array<[string, string]>;
-  }> = [
+  const guildExpeditionSections: AccountContextSection[] = profileSlotId === 'guildExpedition'
+    ? [
+        {
+          title: labels.guildExpedition,
+          detailLabel: labels.guildExpeditionDetail,
+          fields: [
+            {
+              id: 'guildExpeditionTestaments',
+              label: labels.guildExpeditionTestaments,
+              testId: 'tech-account-guild-expedition-testaments',
+              min: 0,
+              max: 100000,
+            },
+          ],
+          summary: [[labels.guildExpeditionDebuff, guildExpeditionDebuffSummary(account, locale)]],
+        },
+      ]
+    : [];
+  const sections: AccountContextSection[] = [
     {
       title: labels.buildStats,
       fields: [
@@ -191,6 +231,7 @@ export function AccountContextPanel({
         { id: 'lacerationDamage', label: labels.laceratedTarget, testId: 'tech-account-laceration-damage', min: 0, max: 5000, step: 0.5 },
       ],
     },
+    ...guildExpeditionSections,
     {
       title: labels.collections,
       detailLabel: labels.collectionDetail,
@@ -311,7 +352,7 @@ export function AccountContextPanel({
                     <option value="">{copy.common.none}</option>
                     {COLLECTIBLE_ITEM_INDEX.slice(0, 20).map((item) => (
                       <option key={item.id} value={item.id}>
-                        {item.display_name_en}
+                        {localizeTechEntityName('collectibleItem', item.display_name_en, locale)}
                       </option>
                     ))}
                   </select>
@@ -328,7 +369,7 @@ export function AccountContextPanel({
                     className="grid grid-cols-[minmax(0,1fr)_auto] gap-2 rounded-md border border-[color:var(--color-border)]/60 p-2 text-xs"
                     data-testid="tech-collection-named-row"
                   >
-                    <span className="truncate text-[color:var(--color-text)]">{set.display_name_en}</span>
+                    <span className="truncate text-[color:var(--color-text)]">{localizeTechEntityName('collectibleSet', set.display_name_en, locale)}</span>
                     <span className="font-mono text-[color:var(--color-text-muted)]">{labels.set} {set.collectible_count}</span>
                   </div>
                 ))}
@@ -341,7 +382,7 @@ export function AccountContextPanel({
                       data-testid="tech-collection-item-row"
                       onClick={() => onNamedChange('targetCollectibleId', item.id)}
                     >
-                      <span className="truncate text-[color:var(--color-text)]">{item.display_name_en}</span>
+                      <span className="truncate text-[color:var(--color-text)]">{localizeTechEntityName('collectibleItem', item.display_name_en, locale)}</span>
                       <span className="font-mono text-[color:var(--color-text-muted)]">
                         {collectibleItemReviewMarker(account.targetCollectibleId === item.id, locale)}
                       </span>
@@ -366,7 +407,7 @@ export function AccountContextPanel({
                     >
                       {HERO_SCHEMA_INDEX.map((hero) => (
                         <option key={hero.id} value={hero.id}>
-                          {hero.display_name_en}
+                          {localizeTechEntityName('hero', hero.display_name_en, locale)}
                         </option>
                       ))}
                     </select>
@@ -432,7 +473,7 @@ export function AccountContextPanel({
                     >
                       {PET_SCHEMA_INDEX.map((pet) => (
                         <option key={pet.id} value={pet.id}>
-                          {pet.display_name_en}
+                          {localizeTechEntityName('pet', pet.display_name_en, locale)}
                         </option>
                       ))}
                     </select>
@@ -452,7 +493,7 @@ export function AccountContextPanel({
                         <option value="">{copy.common.none}</option>
                         {assistPet1Rows.map((pet) => (
                           <option key={pet.id} value={pet.id}>
-                            {pet.display_name_en}
+                            {localizeTechEntityName('pet', pet.display_name_en, locale)}
                           </option>
                         ))}
                       </select>
@@ -470,7 +511,7 @@ export function AccountContextPanel({
                         <option value="">{copy.common.none}</option>
                         {assistPet2Rows.map((pet) => (
                           <option key={pet.id} value={pet.id}>
-                            {pet.display_name_en}
+                            {localizeTechEntityName('pet', pet.display_name_en, locale)}
                           </option>
                         ))}
                       </select>
@@ -494,7 +535,7 @@ export function AccountContextPanel({
                   >
                     {MOUNT_SCHEMA_INDEX.map((mount) => (
                       <option key={mount.id} value={mount.id}>
-                        {mount.display_name_en}
+                        {localizeTechEntityName('mount', mount.display_name_en, locale)}
                       </option>
                     ))}
                   </select>
@@ -514,7 +555,7 @@ export function AccountContextPanel({
                     className="grid grid-cols-[minmax(0,1fr)_auto] gap-2 rounded-md border border-[color:var(--color-border)]/60 p-2 text-xs"
                     data-testid="tech-mount-puzzle-row"
                   >
-                    <span className="truncate text-[color:var(--color-text)]">{mount.display_name_en}</span>
+                    <span className="truncate text-[color:var(--color-text)]">{localizeTechEntityName('mount', mount.display_name_en, locale)}</span>
                     <span className="font-mono text-[color:var(--color-text-muted)]">{labels.puzzle} {index + 1}</span>
                   </div>
                 ))}
@@ -570,7 +611,7 @@ export function AccountContextPanel({
                       >
                         {SS_EQUIPMENT_SCHEMA_INDEX.filter((item) => item.slot === slot.id).map((item) => (
                           <option key={item.id} value={item.id}>
-                            {item.display_name_en}
+                            {localizeTechEntityName('equipment', item.display_name_en, locale)}
                           </option>
                         ))}
                       </select>

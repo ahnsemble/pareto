@@ -73,6 +73,9 @@ const aliasResult = parseProductProfileImport(JSON.stringify({
         astral_forge_eaf_level: 4,
       },
     },
+    lme: {
+      testaments: 600,
+    },
   },
 }));
 
@@ -81,6 +84,7 @@ assert.equal(aliasResult.account.baseAtk, 8100);
 assert.equal(aliasResult.account.finalAtk, 130000);
 assert.equal(aliasResult.tech.chips, 66);
 assert.equal(aliasResult.account.weaponEaf, 4);
+assert.equal(aliasResult.account.guildExpeditionTestaments, 600);
 
 const flatAliasResult = parseProductProfileImport(JSON.stringify({
   base_atk: 8200,

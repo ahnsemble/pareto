@@ -4,6 +4,7 @@ import { resolve } from 'node:path';
 
 const root = process.cwd();
 const optimizer = readFileSync(resolve(root, 'components/v3/optimizer.tsx'), 'utf8');
+const accountPanel = readFileSync(resolve(root, 'components/v3/tech/TechAccountContextPanel.tsx'), 'utf8');
 const impactTable = readFileSync(resolve(root, 'components/v3/tech/TechBeforeAfterImpactTable.tsx'), 'utf8');
 const copy = readFileSync(resolve(root, 'components/v3/tech/techLocaleCopy.ts'), 'utf8');
 
@@ -36,5 +37,9 @@ assert.doesNotMatch(
 assert.match(impactTable, /copy\.impact\.empty/, 'impact panel must have an empty state before comparison rows exist');
 assert.match(copy, /empty: 'Run an imported profile/, 'English impact copy must explain the empty state');
 assert.match(copy, /empty: '가져온 프로필을 계산하면/, 'Korean impact copy must explain the empty state');
+assert.match(accountPanel, /tech-account-guild-expedition-testaments/, 'guild expedition context must expose a dedicated debuff input');
+assert.match(accountPanel, /localizeTechEntityName/, 'account panel must localize named collection and account entities');
+assert.doesNotMatch(accountPanel, /\{item\.display_name_en\}/, 'collectible item rows must not render English names directly');
+assert.doesNotMatch(accountPanel, /\{set\.display_name_en\}/, 'collectible set rows must not render English names directly');
 
 console.log('tangtang_tech_action_layout_unit_test: passed');

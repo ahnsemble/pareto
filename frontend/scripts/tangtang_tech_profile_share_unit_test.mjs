@@ -54,7 +54,8 @@ assert.equal(typeof buildTechProfileBackupText, 'function');
 assert.equal(typeof decodeTechProfileBackupText, 'function');
 
 const sampleState = {
-  accountContext: { finalAtk: 333333, skillDamage: 477 },
+  activeProfileSlot: 'guildExpedition',
+  accountContext: { finalAtk: 333333, skillDamage: 477, guildExpeditionTestaments: 600 },
   resourceWallet: { techResonanceChips: 22 },
   rarityCounts: { Legend: 1, Epic: 4 },
   chips: 22,
@@ -77,6 +78,8 @@ const decoded = decodeTechProfileShareState(encoded);
 assert.equal(decoded.ok, true);
 assert.equal(decoded.document.savedAt, fixedDate.toISOString());
 assert.equal(decoded.document.state.accountContext.finalAtk, 333333);
+assert.equal(decoded.document.state.activeProfileSlot, 'guildExpedition');
+assert.equal(decoded.document.state.accountContext.guildExpeditionTestaments, 600);
 assert.equal(decoded.document.state.chips, 22);
 assert.equal(decoded.document.state.skillStatus.droneMode, 'locked');
 assert.equal(decoded.document.state.profileImportText ?? '', '');
@@ -105,6 +108,8 @@ assert.equal(/sio-tools|profileImportText|beam|preselect|exact/i.test(backupText
 const backupDecoded = decodeTechProfileBackupText(backupText);
 assert.equal(backupDecoded.ok, true);
 assert.equal(backupDecoded.document.state.accountContext.skillDamage, 477);
+assert.equal(backupDecoded.document.state.activeProfileSlot, 'guildExpedition');
+assert.equal(backupDecoded.document.state.accountContext.guildExpeditionTestaments, 600);
 assert.equal(backupDecoded.document.state.profileImportText ?? '', '');
 assert.equal(backupDecoded.document.state.profileImportSummary ?? '', '');
 assert.deepEqual(backupDecoded.document.state.profileImportCoverage ?? [], []);

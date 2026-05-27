@@ -25,6 +25,7 @@ export type TechProfileSaveSlotId = (typeof TECH_PROFILE_SAVE_SLOTS)[number]['id
 type StorageLike = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
 
 export type TechProfileSaveState = {
+  activeProfileSlot?: TechProfileSaveSlotId;
   accountContext: Record<string, unknown>;
   resourceWallet: Record<string, unknown>;
   rarityCounts: Record<string, unknown>;
@@ -39,6 +40,7 @@ export type TechProfileSaveState = {
   importedTechSnapshot?: ImportedTechSnapshot | null;
   importedCollectibleSnapshot?: ImportedCollectibleSnapshot | null;
   importedRunSnapshot?: {
+    activeProfileSlot?: TechProfileSaveSlotId;
     accountContext: Record<string, unknown>;
     inventory: Record<string, unknown>;
   } | null;
@@ -82,9 +84,14 @@ function optionalSnapshot<T>(value: unknown): T | null | undefined {
   return value === null || isRecord(value) ? value as T | null : undefined;
 }
 
+function validSlotId(value: unknown): TechProfileSaveSlotId | undefined {
+  return value === 'endersEcho' || value === 'guildExpedition' ? value : undefined;
+}
+
 function normalizeSaveState(input: TechProfileSaveState | Record<string, unknown>): TechProfileSaveState {
   const importedRunSnapshot = isRecord(input.importedRunSnapshot)
     ? {
+        ...(validSlotId(input.importedRunSnapshot.activeProfileSlot) ? { activeProfileSlot: validSlotId(input.importedRunSnapshot.activeProfileSlot) } : {}),
         accountContext: cloneRecord(input.importedRunSnapshot.accountContext),
         inventory: cloneRecord(input.importedRunSnapshot.inventory),
       }
@@ -93,6 +100,7 @@ function normalizeSaveState(input: TechProfileSaveState | Record<string, unknown
       : undefined;
 
   return {
+    ...(validSlotId(input.activeProfileSlot) ? { activeProfileSlot: validSlotId(input.activeProfileSlot) } : {}),
     accountContext: cloneRecord(input.accountContext),
     resourceWallet: cloneRecord(input.resourceWallet),
     rarityCounts: cloneRecord(input.rarityCounts),

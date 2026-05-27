@@ -143,6 +143,7 @@ type TechModeId = (typeof TECH_MODE_CHOICES)[number][0];
 type SkillStatus = 'auto' | 'locked' | 'disabled';
 type RarityCounts = Record<(typeof TECH_RARITY_FIELDS)[number], number>;
 type TechRunSnapshot = {
+  activeProfileSlot: TechProfileSaveSlotId;
   accountContext: TechAccountContextInput;
   inventory: TechInventoryInput;
 };
@@ -160,6 +161,10 @@ const EMPTY_PROFILE_SAVE_SLOTS: Record<TechProfileSaveSlotId, string | null> = {
   endersEcho: null,
   guildExpedition: null,
 };
+
+function normalizeProfileSlotId(value: unknown): TechProfileSaveSlotId {
+  return value === 'guildExpedition' ? 'guildExpedition' : 'endersEcho';
+}
 
 function useV3OptimizerBoot(): BootState {
   const [bootStatus, setBootStatus] = useState<BootState>('pending');
@@ -584,6 +589,7 @@ export function TechPartsOptimizerSurface() {
   const [topK, setTopK] = useState(10);
   const beamWidth = 64;
   const maxExactNodes = 250000;
+  const [activeProfileSlot, setActiveProfileSlot] = useState<TechProfileSaveSlotId>('endersEcho');
   const [accountContext, setAccountContext] = useState(DEFAULT_TECH_ACCOUNT_CONTEXT);
   const [profileImportText, setProfileImportText] = useState('');
   const [profileImportSummary, setProfileImportSummary] = useState('');
@@ -687,7 +693,7 @@ export function TechPartsOptimizerSurface() {
       : copy.inventory.valid
     : copy.inventory.blocked(inventoryValidation.errors.map((message) => inventoryMessage(message, locale)).join(', '));
   const playerStateForRun = useMemo(() => playerStateWithAccountContext(playerState, accountContext), [accountContext, playerState]);
-  const calculationContextForRun = useMemo(() => buildTechCalculationContext(accountContext), [accountContext]);
+  const calculationContextForRun = useMemo(() => buildTechCalculationContext(accountContext, activeProfileSlot), [accountContext, activeProfileSlot]);
   const refreshProfileSaveSlots = useCallback(() => {
     const storage = getBrowserProfileStorage();
     if (!storage) {
@@ -714,6 +720,7 @@ export function TechPartsOptimizerSurface() {
     [locale, savedProfileSlots],
   );
   const buildCurrentProfileSaveState = useCallback((): TechProfileSaveState => ({
+    activeProfileSlot,
     accountContext: accountContext as unknown as Record<string, unknown>,
     resourceWallet: resourceWallet as unknown as Record<string, unknown>,
     rarityCounts: rarityCounts as unknown as Record<string, unknown>,
@@ -729,6 +736,7 @@ export function TechPartsOptimizerSurface() {
     importedCollectibleSnapshot,
     importedRunSnapshot: importedRunSnapshot
       ? {
+          activeProfileSlot: importedRunSnapshot.activeProfileSlot,
           accountContext: importedRunSnapshot.accountContext as unknown as Record<string, unknown>,
           inventory: importedRunSnapshot.inventory as unknown as Record<string, unknown>,
         }
@@ -737,6 +745,7 @@ export function TechPartsOptimizerSurface() {
     profileImportCoverage,
     profileImportDetails,
   }), [
+    activeProfileSlot,
     accountContext,
     chips,
     importedCollectibleSnapshot,
@@ -756,6 +765,8 @@ export function TechPartsOptimizerSurface() {
     speedMode,
   ]);
   const applyProfileSaveState = useCallback((state: TechProfileSaveState) => {
+    const nextActiveProfileSlot = normalizeProfileSlotId(state.activeProfileSlot);
+    setActiveProfileSlot(nextActiveProfileSlot);
     setAccountContext({ ...DEFAULT_TECH_ACCOUNT_CONTEXT, ...state.accountContext } as TechAccountContextInput);
     setResourceWallet({ ...DEFAULT_RESOURCE_WALLET_VALUES, ...state.resourceWallet } as ResourceWalletValues);
     setRarityCounts({ ...DEFAULT_RARITY_COUNTS, ...state.rarityCounts } as RarityCounts);
@@ -771,6 +782,7 @@ export function TechPartsOptimizerSurface() {
     setImportedCollectibleSnapshot(state.importedCollectibleSnapshot ?? null);
     setImportedRunSnapshot(state.importedRunSnapshot
       ? {
+          activeProfileSlot: normalizeProfileSlotId(state.importedRunSnapshot.activeProfileSlot ?? nextActiveProfileSlot),
           accountContext: { ...DEFAULT_TECH_ACCOUNT_CONTEXT, ...state.importedRunSnapshot.accountContext } as TechAccountContextInput,
           inventory: state.importedRunSnapshot.inventory as unknown as TechInventoryInput,
         }
@@ -792,7 +804,10 @@ export function TechPartsOptimizerSurface() {
       setProfileSaveStatus(copy.profileSave.shareInvalid);
       return;
     }
-    applyProfileSaveState(decoded.document.state);
+    applyProfileSaveState({
+      ...decoded.document.state,
+      activeProfileSlot: decoded.document.state.activeProfileSlot ?? decoded.document.slotId,
+    });
     setProfileSaveStatus(copy.profileSave.shareLoaded);
   }, [applyProfileSaveState, copy.profileSave.shareInvalid, copy.profileSave.shareLoaded]);
   const copyProfileText = useCallback(async (value: string, setStatus: (status: string) => void) => {
@@ -824,6 +839,11 @@ export function TechPartsOptimizerSurface() {
   const handleProfilePreset = useCallback((slotId: TechProfileSaveSlotId) => {
     const preset = getTechModePreset(slotId);
     const slotLabel = labelForTechProfileSaveSlot(slotId, locale);
+    setActiveProfileSlot(slotId);
+    setAccountContext((current) => ({
+      ...current,
+      ...preset.accountContextOverrides,
+    }) as TechAccountContextInput);
     setSkillSlots(preset.skillSlots);
     setOverloadable(preset.overloadable);
     setMaxOverload(preset.maxOverload);
@@ -840,12 +860,13 @@ export function TechPartsOptimizerSurface() {
   }, [copy.profileSave, locale]);
   const handleProfileSave = useCallback((slotId: TechProfileSaveSlotId) => {
     const slotLabel = labelForTechProfileSaveSlot(slotId, locale);
+    setActiveProfileSlot(slotId);
     const storage = getBrowserProfileStorage();
     if (!storage) {
       setProfileSaveStatus(copy.profileSave.unavailable);
       return;
     }
-    const saved = saveTechProfileSlot(storage, slotId, buildCurrentProfileSaveState());
+    const saved = saveTechProfileSlot(storage, slotId, { ...buildCurrentProfileSaveState(), activeProfileSlot: slotId });
     if (!saved.ok) {
       setProfileSaveStatus(copy.profileSave.unavailable);
       return;
@@ -855,6 +876,7 @@ export function TechPartsOptimizerSurface() {
   }, [buildCurrentProfileSaveState, copy.profileSave, locale, refreshProfileSaveSlots]);
   const handleProfileLoad = useCallback((slotId: TechProfileSaveSlotId) => {
     const slotLabel = labelForTechProfileSaveSlot(slotId, locale);
+    setActiveProfileSlot(slotId);
     const storage = getBrowserProfileStorage();
     if (!storage) {
       setProfileSaveStatus(copy.profileSave.unavailable);
@@ -865,7 +887,10 @@ export function TechPartsOptimizerSurface() {
       setProfileSaveStatus(loaded.reason === 'empty' ? copy.profileSave.missing(slotLabel) : copy.profileSave.unavailable);
       return;
     }
-    applyProfileSaveState(loaded.document.state);
+    applyProfileSaveState({
+      ...loaded.document.state,
+      activeProfileSlot: loaded.document.state.activeProfileSlot ?? slotId,
+    });
     refreshProfileSaveSlots();
     setProfileSaveStatus(copy.profileSave.loaded(slotLabel));
   }, [applyProfileSaveState, copy.profileSave, locale, refreshProfileSaveSlots]);
@@ -905,7 +930,7 @@ export function TechPartsOptimizerSurface() {
           beamWidth,
           maxExactNodes,
           techInventory: importedRunSnapshot.inventory,
-          calculationContext: buildTechCalculationContext(importedRunSnapshot.accountContext),
+          calculationContext: buildTechCalculationContext(importedRunSnapshot.accountContext, importedRunSnapshot.activeProfileSlot),
         });
         setCalculationComparison(buildCalculationComparisonSummary({
           importedDamage: topBuildDamageFactor(importedResult),
@@ -946,6 +971,7 @@ export function TechPartsOptimizerSurface() {
           Object.entries(imported.account).filter(([, value]) => value !== undefined),
         ) as Partial<TechAccountContextInput>,
       };
+      const nextActiveProfileSlot = imported.account.guildExpeditionTestaments !== undefined ? 'guildExpedition' : activeProfileSlot;
       const nextResourceWallet = {
         ...resourceWallet,
         ...Object.fromEntries(
@@ -966,6 +992,7 @@ export function TechPartsOptimizerSurface() {
       setSkillSlots(nextSkillSlots);
       setRarityCounts(nextRarityCounts);
       setAccountContext(nextAccountContext);
+      setActiveProfileSlot(nextActiveProfileSlot);
       setResourceWallet(nextResourceWallet);
       setSpeedMode(nextSpeedMode);
       setLimit(nextLimit);
@@ -973,6 +1000,7 @@ export function TechPartsOptimizerSurface() {
       setImportedTechSnapshot(imported.importedTechSnapshot ?? null);
       setImportedCollectibleSnapshot(imported.importedCollectibleSnapshot ?? null);
       setImportedRunSnapshot({
+        activeProfileSlot: nextActiveProfileSlot,
         accountContext: nextAccountContext,
         inventory: buildTechInventoryInput({
           rarityCounts: nextRarityCounts,
@@ -1118,6 +1146,7 @@ export function TechPartsOptimizerSurface() {
             }))
           }
           locale={locale}
+          profileSlotId={activeProfileSlot}
         />
 
         <div className="grid min-w-0 gap-4 lg:grid-cols-[minmax(280px,0.95fr)_minmax(0,1.55fr)]">
