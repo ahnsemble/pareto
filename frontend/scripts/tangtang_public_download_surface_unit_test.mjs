@@ -5,7 +5,9 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 
 const clientSurfaceFiles = [
+  'app/[locale]/v3/page.tsx',
   'components/v3/optimizer.tsx',
+  'components/v3/index.tsx',
   'components/v3/tech/techAccountContext.ts',
   'components/v3/tech/techResultPresenter.ts',
   'components/v3/PlayerStateCoveragePanel.tsx',
@@ -41,6 +43,24 @@ const disallowedPatterns = [
   /\bsio_full_lm_equivalence\b/,
   /data-full-sio-equivalent/,
   /data-scoring-model/,
+  /\bdebug\b/i,
+  /data-raw-label/,
+  /\braw source\b/i,
+  /\bpreselect\b/i,
+  /\bbeam\b/i,
+  /exact node/i,
+  /node cap/i,
+  /iteration cap/i,
+  /__useParetoStore/,
+  /\d+\s+slice/i,
+  /\d+\s+selector/i,
+  /\d+\s+component/i,
+  /invariants? passed/i,
+  /field\.key/,
+  /debounced 300ms/i,
+  /\bNodes:/,
+  /No turf nodes registered/i,
+  /matrix awaits/i,
 ];
 
 const allowedLinePatterns = [
@@ -50,6 +70,9 @@ const allowedLinePatterns = [
   /Impression Idols/,
   /version/,
   /Provision/,
+  /const debugStoreKey/,
+  /decodeExternalCalculationRaw/,
+  /Component Props/,
 ];
 
 const findings = [];

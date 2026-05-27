@@ -19,6 +19,21 @@ const disallowedPatterns = [
   /sio_export/,
   /data-full-sio-equivalent/,
   /data-scoring-model/,
+  /data-raw-label/,
+  /Iteration cap/i,
+  /__useParetoStore/,
+  /11 slice/i,
+  /13 selector/i,
+  /15 component/i,
+  /invariants passed/i,
+  /debounced 300ms/i,
+  /\bNodes:/,
+  /No turf nodes registered/i,
+  /matrix awaits/i,
+  /\braw source\b/i,
+  /\bpreselect\b/i,
+  /exact node/i,
+  /node cap/i,
 ];
 
 function extensionOf(filePath) {

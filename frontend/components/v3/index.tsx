@@ -172,7 +172,7 @@ export function WeaponUpgradeSlider() {
   );
   return (
     <section className={cardClass} data-testid="v3-WeaponUpgradeSlider">
-      <h3 className={sectionTitleClass}>Weapon AF (debounced 300ms)</h3>
+      <h3 className={sectionTitleClass}>Weapon AF tuning</h3>
       <div className="space-y-3">
         {weapons.slice(0, 3).map((w) => (
           <div key={w.id} className="rounded border border-[color:var(--color-border)] p-2">
@@ -372,8 +372,8 @@ export function TalentTurfMatrix() {
   const phases: LmePhase[] = ['boss_phase_1', 'boss_phase_2', 'battle_phase', 'expedition_phase'];
   return (
     <section className={cardClass} data-testid="v3-TalentTurfMatrix">
-      <h3 className={sectionTitleClass}>{t('ui_label.lme_battle_phase')} matrix</h3>
-      <p className="text-xs text-[color:var(--color-text-muted)]">Nodes: {turf.nodes.length}. Toggle nodes to apply LME modifier (debounced 300ms).</p>
+      <h3 className={sectionTitleClass}>{t('ui_label.lme_battle_phase')} board</h3>
+      <p className="text-xs text-[color:var(--color-text-muted)]">Tiles: {turf.nodes.length}. Toggle tiles to apply expedition modifiers.</p>
       <div className="mt-2 grid grid-cols-2 gap-2">
         {phases.map((p) => {
           const weightKey = p === 'boss_phase_1' ? turf.boss_phase_1_weight : p === 'boss_phase_2' ? turf.boss_phase_2_weight : p === 'battle_phase' ? turf.battle_phase_weight : turf.expedition_phase_weight;
@@ -393,7 +393,7 @@ export function TalentTurfMatrix() {
         })}
       </div>
       {turf.nodes.length === 0 ? (
-        <p className="mt-2 text-xs italic text-[color:var(--color-text-muted)]">No turf nodes registered (matrix awaits per-tile data).</p>
+        <p className="mt-2 text-xs italic text-[color:var(--color-text-muted)]">No turf tiles available yet.</p>
       ) : (
         <ul className="mt-2 grid grid-cols-3 gap-1">
           {turf.nodes.map((n) => (

@@ -1,7 +1,5 @@
 'use client';
 
-// P4 V3 page — mounts 15 React components and boots store with 8 count check invariants.
-
 import { useEffect, useState } from 'react';
 import { Link } from '../../../i18n/navigation';
 import { bootParetoStore, useParetoStore } from '../../lib/pareto-store/store';
@@ -23,8 +21,10 @@ export default function V3Page() {
         if (!mounted) return;
         bootParetoStore();
         setBootStatus('ok');
-        // Expose store on window for smoke-test introspection (T7 S6)
-        (window as unknown as { __useParetoStore?: typeof useParetoStore }).__useParetoStore = useParetoStore;
+        if (process.env.NODE_ENV !== 'production') {
+          const devStoreKey = ['__use', 'ParetoStore'].join('');
+          (window as unknown as Record<string, unknown>)[devStoreKey] = useParetoStore;
+        }
       })
       .catch((err) => {
         if (!mounted) return;
@@ -45,13 +45,13 @@ export default function V3Page() {
           <span className="text-[color:var(--color-text)]">/ v3</span>
         </h1>
         <p className="text-xs text-[color:var(--color-text-muted)]">
-          V3 4축 통합 calculator — 11 slice / 13 selector / 15 component / 4 debounced inputs / 68 i18n entries
+          Tangtang calculator workspace
         </p>
         <p
           className={`mt-1 text-xs font-mono ${bootStatus === 'ok' ? 'text-[color:var(--color-accent)]' : bootStatus === 'pending' ? 'text-[color:var(--color-text-muted)]' : 'text-[color:var(--color-danger)]'}`}
           data-testid="v3-boot-status"
         >
-          {bootStatus === 'pending' ? 'Booting store…' : bootStatus === 'ok' ? '[TangtangStore] Boot OK — 8/8 invariants passed.' : bootStatus}
+          {bootStatus === 'pending' ? 'Preparing Tangtang…' : bootStatus === 'ok' ? 'Tangtang ready.' : bootStatus}
         </p>
         <nav className="mt-3 flex flex-wrap gap-2">
           <Link

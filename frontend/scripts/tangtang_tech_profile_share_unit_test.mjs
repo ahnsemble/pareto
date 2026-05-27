@@ -89,15 +89,17 @@ assert.deepEqual(decoded.document.state.profileImportDetails ?? [], []);
 assert.equal(/sio-tools|profileImportText|Imported calculation link/i.test(JSON.stringify(decoded.document.state)), false);
 
 const shareUrl = buildTechProfileShareUrl({
-  baseUrl: 'https://example.com/en/v3/optimizer/tech-parts?old=1&ttProfile=stale#debug',
+  baseUrl: 'https://example.com/en/v3/optimizer/tech-parts?old=1&debug=1&raw=abc&beam=9&exact=1&ttProfile=stale#debug',
   state: sampleState,
   now: fixedDate,
 });
-assert.match(shareUrl, /^https:\/\/example\.com\/en\/v3\/optimizer\/tech-parts\?old=1&ttProfile=/);
+assert.match(shareUrl, /^https:\/\/example\.com\/en\/v3\/optimizer\/tech-parts\?ttProfile=/);
 assert.equal(shareUrl.includes('#'), false);
 assert.equal(/sio-tools|\{|\}/i.test(shareUrl), false);
 const parsedShareUrl = new URL(shareUrl);
-assert.equal(parsedShareUrl.searchParams.get('old'), '1');
+for (const key of ['old', 'debug', 'raw', 'beam', 'exact']) {
+  assert.equal(parsedShareUrl.searchParams.has(key), false, `share URL must drop ${key}`);
+}
 assert.equal(parsedShareUrl.searchParams.getAll('ttProfile').length, 1);
 
 const backupText = buildTechProfileBackupText(sampleState, fixedDate);

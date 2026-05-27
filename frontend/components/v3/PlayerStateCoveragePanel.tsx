@@ -56,8 +56,8 @@ export function PlayerStateCoveragePanel() {
             </p>
             <ul className="mt-1 max-h-28 overflow-y-auto text-[11px] leading-5 text-[color:var(--color-text-muted)]">
               {fields.map((field) => (
-                <li key={field.key}>
-                  <span className="font-mono">{field.key}</span>
+                <li key={`${field.category}-${field.label}`}>
+                  <span>{field.label}</span>
                 </li>
               ))}
             </ul>

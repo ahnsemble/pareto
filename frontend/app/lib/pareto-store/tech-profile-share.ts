@@ -91,6 +91,7 @@ export function buildTechProfileShareUrl({
   now?: Date;
 }): string {
   const url = new URL(baseUrl);
+  url.search = '';
   url.searchParams.set(TECH_PROFILE_SHARE_PARAM, encodeTechProfileShareState(state, now));
   url.hash = '';
   return url.toString();

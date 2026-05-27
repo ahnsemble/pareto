@@ -501,10 +501,10 @@ export function TwinbornAutoAssignSurface() {
               />
             </label>
             <label className="block text-sm text-[color:var(--color-text)]">
-              <span className="text-xs text-[color:var(--color-text-muted)]">Iteration cap</span>
+              <span className="text-xs text-[color:var(--color-text-muted)]">Search budget</span>
               <input
                 className={inputClass + ' mt-1'}
-                data-testid="twinborn-iteration-cap"
+                data-testid="twinborn-search-budget"
                 min={1}
                 max={10000}
                 type="number"
@@ -535,8 +535,8 @@ export function TwinbornAutoAssignSurface() {
         <div className={panelClass}>
           <div className="flex items-center justify-between gap-3">
             <h2 className={labelClass}>Assignments</h2>
-            <span className="font-mono text-xs text-[color:var(--color-text-muted)]" data-testid="twinborn-iterations">
-              {result ? `${result.iterations} / ${result.iterationCap}` : `0 / ${iterationCap}`}
+            <span className="font-mono text-xs text-[color:var(--color-text-muted)]" data-testid="twinborn-run-status">
+              {result ? `${result.assignments.length} assignments` : 'Ready'}
             </span>
           </div>
           <div className="mt-3 overflow-x-auto">
@@ -1430,7 +1430,6 @@ export function TechPartsOptimizerSurface() {
                     key={`${build.label}-${index}`}
                     className="border-t border-[color:var(--color-border)]/50"
                     data-testid="tech-optimizer-result-row"
-                    data-raw-label={build.label}
                   >
                     <td className="max-w-[260px] truncate py-2 text-[color:var(--color-text)]">{copy.results.buildLabel(index)}</td>
                     <td>{formatCompactScientific(build.score)}</td>
