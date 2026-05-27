@@ -92,9 +92,21 @@ export function buildTechProfileShareUrl({
 }): string {
   const url = new URL(baseUrl);
   url.search = '';
-  url.searchParams.set(TECH_PROFILE_SHARE_PARAM, encodeTechProfileShareState(state, now));
-  url.hash = '';
+  url.hash = new URLSearchParams({
+    [TECH_PROFILE_SHARE_PARAM]: encodeTechProfileShareState(state, now),
+  }).toString();
   return url.toString();
+}
+
+export function getTechProfileSharePayloadFromUrl(value: string): string | null {
+  try {
+    const url = new URL(value);
+    const fragmentPayload = new URLSearchParams(url.hash.replace(/^#/, '')).get(TECH_PROFILE_SHARE_PARAM);
+    if (fragmentPayload) return fragmentPayload;
+    return url.searchParams.get(TECH_PROFILE_SHARE_PARAM);
+  } catch {
+    return null;
+  }
 }
 
 export function buildTechProfileBackupText(

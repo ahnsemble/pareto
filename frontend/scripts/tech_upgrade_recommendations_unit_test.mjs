@@ -148,7 +148,9 @@ const catalogOnlyRecommendations = buildTechUpgradeRecommendations({
 });
 const catalogOnlyCollectionRecommendation = catalogOnlyRecommendations.find((item) => item.id === 'collection-item');
 assert.ok(catalogOnlyCollectionRecommendation, 'expected source-backed collectible item after catalog-only rows are skipped');
-assert.doesNotMatch(catalogOnlyCollectionRecommendation.title, /Libra Starlight|Event 1/);
+for (const blockedName of ['Libra Starlight', 'Scorpio Starlight', 'Sagittarius Starlight', 'Capricorn Starlight', ...Array.from({ length: 42 }, (_, index) => `Event ${index + 1}`)]) {
+  assert.doesNotMatch(catalogOnlyCollectionRecommendation.title, new RegExp(blockedName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+}
 assert.match(catalogOnlyCollectionRecommendation.title, /Atomic Mech/);
 
 console.log('tech_upgrade_recommendations_unit_test: passed');

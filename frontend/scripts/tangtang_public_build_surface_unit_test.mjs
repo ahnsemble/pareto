@@ -31,9 +31,15 @@ const textDisallowedPatterns = [
   /No turf nodes registered/i,
   /matrix awaits/i,
   /\braw source\b/i,
+  /\braw payload\b/i,
+  /\?raw=/i,
+  /Survivor\.io public share payload/i,
   /\bpreselect\b/i,
   /exact node/i,
   /node cap/i,
+  /\bdebug\b/i,
+  /\bbeam\b/i,
+  /field\.key/,
 ];
 
 const wasmDisallowedPatterns = [

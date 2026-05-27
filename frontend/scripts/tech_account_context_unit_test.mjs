@@ -8,12 +8,16 @@ import ts from 'typescript';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const sourcePath = resolve(__dirname, '../components/v3/tech/techAccountContext.ts');
 const localeCopySourcePath = resolve(__dirname, '../components/v3/tech/techLocaleCopy.ts');
+const accountPanelSourcePath = resolve(__dirname, '../components/v3/tech/TechAccountContextPanel.tsx');
 
 if (!existsSync(sourcePath)) {
   throw new Error(`tech account context missing: ${sourcePath}`);
 }
 if (!existsSync(localeCopySourcePath)) {
   throw new Error(`tech locale copy missing: ${localeCopySourcePath}`);
+}
+if (!existsSync(accountPanelSourcePath)) {
+  throw new Error(`tech account context panel missing: ${accountPanelSourcePath}`);
 }
 
 const source = readFileSync(sourcePath, 'utf8');
@@ -40,6 +44,7 @@ const {
 } = await import(moduleUrl);
 
 const localeCopySource = readFileSync(localeCopySourcePath, 'utf8');
+const accountPanelSource = readFileSync(accountPanelSourcePath, 'utf8');
 const localeCopyTranspiled = ts.transpileModule(localeCopySource, {
   compilerOptions: {
     module: ts.ModuleKind.ES2022,
@@ -53,6 +58,7 @@ const {
   localizeTechEntityName,
   localizeTechInventoryMessage,
   localizeTechResourceWalletFields,
+  PENDING_KO_ENTITY_NAME_KEYS,
 } = await import(localeCopyModuleUrl);
 
 assert.equal(typeof normalizePetAssistContext, 'function');
@@ -62,6 +68,7 @@ assert.equal(typeof getTechOptimizerCopy, 'function');
 assert.equal(typeof localizeTechEntityName, 'function');
 assert.equal(typeof localizeTechResourceWalletFields, 'function');
 assert.equal(typeof localizeTechInventoryMessage, 'function');
+assert.deepEqual(PENDING_KO_ENTITY_NAME_KEYS.collectibleItem, ['Event 1-42']);
 
 const koCopy = getTechOptimizerCopy('ko');
 assert.equal(koCopy.titleSuffix, '테크 파츠');
@@ -110,6 +117,10 @@ for (const [sourceName, koName] of [
 ]) {
   assert.equal(localizeTechEntityName('collectibleItem', sourceName, 'ko'), koName);
 }
+assert.match(accountPanelSource, /SOURCE_BACKED_COLLECTIBLE_ITEM_OPTIONS/);
+assert.match(accountPanelSource, /CATALOG_ONLY_COLLECTIBLE_ITEM_IDS/);
+assert.match(accountPanelSource, /!item\.id\.startsWith\('event'\)/);
+assert.doesNotMatch(accountPanelSource, /COLLECTIBLE_ITEM_INDEX\.slice\(\s*0,\s*(12|20)\s*\)\.map/);
 
 const koWalletFields = localizeTechResourceWalletFields('ko');
 assert.equal(koWalletFields[0].label, '기술 공명 칩');

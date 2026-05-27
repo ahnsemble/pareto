@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  CATALOG_ONLY_COLLECTIBLE_ITEM_IDS,
   COLLECTIBLE_ITEM_INDEX,
   COLLECTIBLE_SET_INDEX,
   HERO_SCHEMA_INDEX,
@@ -25,6 +26,13 @@ import {
   type TechProfileModeId,
 } from './techAccountContext';
 import { getTechOptimizerCopy, localizeTechEntityName, type TechEntityNameKind } from './techLocaleCopy';
+
+const CATALOG_ONLY_COLLECTIBLE_ITEM_ID_SET = new Set<string>(CATALOG_ONLY_COLLECTIBLE_ITEM_IDS);
+const SOURCE_BACKED_COLLECTIBLE_ITEM_OPTIONS = COLLECTIBLE_ITEM_INDEX.filter(
+  (item) => !item.id.startsWith('event') && !CATALOG_ONLY_COLLECTIBLE_ITEM_ID_SET.has(item.id),
+);
+const TARGET_COLLECTIBLE_OPTIONS = SOURCE_BACKED_COLLECTIBLE_ITEM_OPTIONS.slice(0, 20);
+const FEATURED_COLLECTIBLE_ITEM_OPTIONS = SOURCE_BACKED_COLLECTIBLE_ITEM_OPTIONS.slice(0, 12);
 
 function contextNumber(value: number | null | undefined, digits = 0): string {
   return typeof value === 'number' && Number.isFinite(value) ? formatNumber(value, digits) : '0';
@@ -85,7 +93,7 @@ export function AccountContextPanel({
   const equipment = playerState.equipment;
   const selectedHeroName = displayNameById('hero', HERO_SCHEMA_INDEX, playerState.hero.selected_hero_id, locale, copy.account.selectedSurvivorFallback);
   const deployedPetName = displayNameById('pet', PET_SCHEMA_INDEX, playerState.pet.deployed_pet_id, locale, copy.account.petFallback);
-  const selectedCollectibleName = displayNameById('collectibleItem', COLLECTIBLE_ITEM_INDEX, playerState.collectible.target_collectible_id, locale, copy.account.selectedCollectibleFallback);
+  const selectedCollectibleName = displayNameById('collectibleItem', SOURCE_BACKED_COLLECTIBLE_ITEM_OPTIONS, playerState.collectible.target_collectible_id, locale, copy.account.selectedCollectibleFallback);
   const selectedMountName = displayNameById('mount', MOUNT_SCHEMA_INDEX, account.selectedMountId, locale, copy.account.selectedMountFallback);
   const collectionRows = COLLECTIBLE_SET_INDEX.slice(0, 3);
   const petRows = PET_SCHEMA_INDEX.slice(0, 5);
@@ -350,7 +358,7 @@ export function AccountContextPanel({
                     onChange={(event) => onNamedChange('targetCollectibleId', event.target.value)}
                   >
                     <option value="">{copy.common.none}</option>
-                    {COLLECTIBLE_ITEM_INDEX.slice(0, 20).map((item) => (
+                    {TARGET_COLLECTIBLE_OPTIONS.map((item) => (
                       <option key={item.id} value={item.id}>
                         {localizeTechEntityName('collectibleItem', item.display_name_en, locale)}
                       </option>
@@ -374,7 +382,7 @@ export function AccountContextPanel({
                   </div>
                 ))}
                 <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3" data-testid="tech-collection-item-editor">
-                  {COLLECTIBLE_ITEM_INDEX.slice(0, 12).map((item) => (
+                  {FEATURED_COLLECTIBLE_ITEM_OPTIONS.map((item) => (
                     <button
                       key={item.id}
                       type="button"

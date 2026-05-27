@@ -5,6 +5,7 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 
 const clientSurfaceFiles = [
+  'app/[locale]/page.tsx',
   'app/[locale]/v3/page.tsx',
   'components/v3/optimizer.tsx',
   'components/v3/index.tsx',
@@ -46,6 +47,9 @@ const disallowedPatterns = [
   /\bdebug\b/i,
   /data-raw-label/,
   /\braw source\b/i,
+  /\braw payload\b/i,
+  /\?raw=/i,
+  /Survivor\.io public share payload/i,
   /\bpreselect\b/i,
   /\bbeam\b/i,
   /exact node/i,

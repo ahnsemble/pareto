@@ -25,10 +25,10 @@ import {
   type TechProfileSaveState,
 } from '../../app/lib/pareto-store/tech-profile-storage';
 import {
-  TECH_PROFILE_SHARE_PARAM,
   buildTechProfileBackupText,
   buildTechProfileShareUrl,
   decodeTechProfileShareState,
+  getTechProfileSharePayloadFromUrl,
 } from '../../app/lib/pareto-store/tech-profile-share';
 import { getTechModePreset } from '../../app/lib/pareto-store/tech-mode-presets';
 import {
@@ -798,7 +798,7 @@ export function TechPartsOptimizerSurface() {
   useEffect(() => {
     if (profileShareLoadHandled.current || typeof window === 'undefined') return;
     profileShareLoadHandled.current = true;
-    const encoded = new URLSearchParams(window.location.search).get(TECH_PROFILE_SHARE_PARAM);
+    const encoded = getTechProfileSharePayloadFromUrl(window.location.href);
     if (!encoded) return;
     const decoded = decodeTechProfileShareState(encoded);
     if (!decoded.ok) {

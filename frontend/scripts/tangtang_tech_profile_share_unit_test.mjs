@@ -44,6 +44,7 @@ const {
   decodeTechProfileBackupText,
   decodeTechProfileShareState,
   encodeTechProfileShareState,
+  getTechProfileSharePayloadFromUrl,
 } = createRequire(import.meta.url)(outputPath);
 
 assert.equal(TECH_PROFILE_SHARE_PARAM, 'ttProfile');
@@ -52,6 +53,7 @@ assert.equal(typeof decodeTechProfileShareState, 'function');
 assert.equal(typeof buildTechProfileShareUrl, 'function');
 assert.equal(typeof buildTechProfileBackupText, 'function');
 assert.equal(typeof decodeTechProfileBackupText, 'function');
+assert.equal(typeof getTechProfileSharePayloadFromUrl, 'function');
 
 const sampleState = {
   activeProfileSlot: 'guildExpedition',
@@ -129,14 +131,29 @@ const shareUrl = buildTechProfileShareUrl({
   state: sampleState,
   now: fixedDate,
 });
-assert.match(shareUrl, /^https:\/\/example\.com\/en\/v3\/optimizer\/tech-parts\?ttProfile=/);
-assert.equal(shareUrl.includes('#'), false);
+assert.match(shareUrl, /^https:\/\/example\.com\/en\/v3\/optimizer\/tech-parts#ttProfile=/);
+assert.equal(shareUrl.includes('?'), false);
 assert.equal(/sio-tools|\{|\}/i.test(shareUrl), false);
 const parsedShareUrl = new URL(shareUrl);
 for (const key of ['old', 'debug', 'raw', 'beam', 'exact']) {
   assert.equal(parsedShareUrl.searchParams.has(key), false, `share URL must drop ${key}`);
 }
-assert.equal(parsedShareUrl.searchParams.getAll('ttProfile').length, 1);
+assert.equal(parsedShareUrl.searchParams.getAll('ttProfile').length, 0);
+assert.equal(new URLSearchParams(parsedShareUrl.hash.slice(1)).getAll('ttProfile').length, 1);
+
+const fragmentPayload = getTechProfileSharePayloadFromUrl(shareUrl);
+assert.equal(fragmentPayload, encoded);
+assert.equal(decodeTechProfileShareState(fragmentPayload).ok, true);
+assert.equal(
+  getTechProfileSharePayloadFromUrl(`https://example.com/ko/v3/optimizer/tech-parts?ttProfile=${encoded}`),
+  encoded,
+);
+const alternateEncoded = encodeTechProfileShareState({ ...sampleState, chips: 7 }, fixedDate);
+assert.equal(
+  getTechProfileSharePayloadFromUrl(`https://example.com/ko/v3/optimizer/tech-parts?ttProfile=${encoded}#ttProfile=${alternateEncoded}`),
+  alternateEncoded,
+  'fragment payload should take precedence over legacy query payload',
+);
 
 const backupText = buildTechProfileBackupText(sampleState, fixedDate);
 assert.match(backupText, /"kind": "tangtang-tech-profile-backup"/);
