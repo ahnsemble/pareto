@@ -6,7 +6,7 @@ import { join, resolve } from 'node:path';
 const root = process.cwd();
 const scanRoots = ['out', '.next/static'].map((item) => resolve(root, item)).filter(existsSync);
 const textExtensions = new Set(['.html', '.js', '.json', '.txt', '.map']);
-const disallowedPatterns = [
+const textDisallowedPatterns = [
   /\bSIO\b/,
   /sio-tools/i,
   /sio_full_lm_equivalence/,
@@ -36,6 +36,21 @@ const disallowedPatterns = [
   /node cap/i,
 ];
 
+const wasmDisallowedPatterns = [
+  /\bSIO\b/,
+  /sio-tools/i,
+  /sio_full_lm_equivalence/,
+  /sioLm/,
+  /sioTech/,
+  /sio_[A-Za-z0-9_]*/,
+  /sioCandidate/,
+  /full_sio_equivalent/,
+  /validate_sio/,
+  /sio_export/,
+  /data-full-sio-equivalent/,
+  /data-scoring-model/,
+];
+
 function extensionOf(filePath) {
   const match = filePath.match(/\.[^.]+$/);
   return match ? match[0] : '';
@@ -58,13 +73,13 @@ for (const rootDir of scanRoots) {
     const ext = extensionOf(filePath);
     if (textExtensions.has(ext)) {
       const text = readFileSync(filePath, 'utf8');
-      for (const pattern of disallowedPatterns) {
+      for (const pattern of textDisallowedPatterns) {
         if (pattern.test(text)) findings.push(`${filePath.replace(`${root}/`, '')}: ${pattern}`);
       }
     }
     if (ext === '.wasm') {
       const text = execFileSync('strings', [filePath], { encoding: 'utf8' });
-      for (const pattern of disallowedPatterns) {
+      for (const pattern of wasmDisallowedPatterns) {
         if (pattern.test(text)) findings.push(`${filePath.replace(`${root}/`, '')} strings: ${pattern}`);
       }
     }

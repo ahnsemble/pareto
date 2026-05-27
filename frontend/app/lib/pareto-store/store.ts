@@ -78,7 +78,6 @@ export function bootParetoStore(): ParetoStore {
     throw new Error(`[TangtangStore] Boot ABORTED — ${failures.length} count check invariant(s) failed: ${failureReport}`);
   }
 
-  console.info('[TangtangStore] Boot OK — 8/8 count check invariants passed.');
   return state;
 }
 
