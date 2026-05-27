@@ -576,6 +576,17 @@ function applyStatDeltas(baseStats: Record<string, unknown>, deltas: Record<stri
   }
 }
 
+function hasJudgmentSsCoreProfile(account: TechAccountContextInput): boolean {
+  return account.necklaceItemId === 'judgmentNecklace' && account.necklaceChaos > 0;
+}
+
+function applyGuildExpeditionSpecialTransforms(baseStats: Record<string, unknown>, account: TechAccountContextInput) {
+  const testaments = Number.isFinite(account.guildExpeditionTestaments) ? Math.trunc(account.guildExpeditionTestaments) : 0;
+  if (testaments >= 73500 && !hasJudgmentSsCoreProfile(account)) {
+    applyStatDeltas(baseStats, { weakened: 30 });
+  }
+}
+
 export function buildTechCalculationContext(
   account: TechAccountContextInput,
   profileMode: TechProfileModeId = 'endersEcho',
@@ -596,6 +607,7 @@ export function buildTechCalculationContext(
   };
   if (profileMode === 'guildExpedition') {
     applyStatDeltas(nextBaseStats, buildGuildExpeditionDebuffStats(account.guildExpeditionTestaments));
+    applyGuildExpeditionSpecialTransforms(nextBaseStats, account);
   }
 
   return {

@@ -27,6 +27,7 @@ const transpiled = ts.transpileModule(source, {
 const moduleUrl = `data:text/javascript;base64,${Buffer.from(transpiled.outputText).toString('base64')}`;
 const {
   DEFAULT_TECH_ACCOUNT_CONTEXT,
+  buildGuildExpeditionDebuffStats,
   buildTechCalculationContext,
   collectibleItemReviewMarker,
   formatPassiveCritOptionLabel,
@@ -55,6 +56,7 @@ const {
 } = await import(localeCopyModuleUrl);
 
 assert.equal(typeof normalizePetAssistContext, 'function');
+assert.equal(typeof buildGuildExpeditionDebuffStats, 'function');
 assert.equal(typeof petXenoStatusLabel, 'function');
 assert.equal(typeof getTechOptimizerCopy, 'function');
 assert.equal(typeof localizeTechEntityName, 'function');
@@ -182,6 +184,32 @@ assert.equal(guildContext.baseStats.skillDamage, DEFAULT_TECH_ACCOUNT_CONTEXT.sk
 assert.equal(guildContext.baseStats.critDamage, DEFAULT_TECH_ACCOUNT_CONTEXT.critDamage - 30);
 assert.equal(guildContext.baseStats.shieldDamage, DEFAULT_TECH_ACCOUNT_CONTEXT.shieldDamage - 5);
 assert.equal(guildContext.baseStats.damageDealt, -5);
+
+const highTestamentWithoutCoreBelow = buildTechCalculationContext({
+  ...DEFAULT_TECH_ACCOUNT_CONTEXT,
+  necklaceItemId: 'judgmentNecklace',
+  necklaceChaos: 0,
+  guildExpeditionTestaments: 73499,
+}, 'guildExpedition');
+const belowWeakenedDelta = buildGuildExpeditionDebuffStats(73499).weakened ?? 0;
+assert.equal(highTestamentWithoutCoreBelow.baseStats.weakened, DEFAULT_TECH_ACCOUNT_CONTEXT.weakenedDamage + belowWeakenedDelta);
+
+const highTestamentWithoutCore = buildTechCalculationContext({
+  ...DEFAULT_TECH_ACCOUNT_CONTEXT,
+  necklaceItemId: 'judgmentNecklace',
+  necklaceChaos: 0,
+  guildExpeditionTestaments: 73500,
+}, 'guildExpedition');
+const thresholdWeakenedDelta = buildGuildExpeditionDebuffStats(73500).weakened ?? 0;
+assert.equal(highTestamentWithoutCore.baseStats.weakened, DEFAULT_TECH_ACCOUNT_CONTEXT.weakenedDamage + thresholdWeakenedDelta + 30);
+
+const highTestamentWithJudgmentCore = buildTechCalculationContext({
+  ...DEFAULT_TECH_ACCOUNT_CONTEXT,
+  necklaceItemId: 'judgmentNecklace',
+  necklaceChaos: 1,
+  guildExpeditionTestaments: 73500,
+}, 'guildExpedition');
+assert.equal(highTestamentWithJudgmentCore.baseStats.weakened, DEFAULT_TECH_ACCOUNT_CONTEXT.weakenedDamage + thresholdWeakenedDelta);
 
 const endersContext = buildTechCalculationContext({
   ...DEFAULT_TECH_ACCOUNT_CONTEXT,
