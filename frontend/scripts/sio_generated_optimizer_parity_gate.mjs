@@ -75,11 +75,13 @@ function normalizeInputs(inputs) {
   );
 }
 
-function optimizerOptions(traceCase) {
+function optimizerOptions(traceCase, workerCase) {
   const optimizer = traceCase?.expandedConfig?.techsOptimizer ?? {};
+  const workerRequest = workerCase?.skillsRequests?.[workerCase?.best?.requestIndex ?? 0] ?? {};
   const strategy = typeof optimizer.strategy === 'number' ? 'optimize' : optimizer.strategy;
   const speedMode = typeof optimizer.speedMode === 'number' ? speedModeNames[optimizer.speedMode] : optimizer.speedMode;
   const fodder = typeof optimizer.fodder === 'number' ? 'excess' : optimizer.fodder;
+  const skills = Number.isFinite(workerRequest.skillsCount) ? workerRequest.skillsCount : optimizer.skills;
   return {
     topK: 5,
     beamWidth: 16,
@@ -88,7 +90,7 @@ function optimizerOptions(traceCase) {
       strategy,
       speedMode,
       fodder,
-      skills: optimizer.skills,
+      skills,
       chips: optimizer.chips,
       overloadable: optimizer.overloadable,
       overload: optimizer.overloadable ? 'full' : 'excess',
@@ -176,7 +178,7 @@ const rows = manifestCases.map((fixtureCase) => {
     ...(playerState.sioLm ?? {}),
     candidatePreselectTopK: 256,
   };
-  const result = tech_optimizer_run_js(playerState, optimizerOptions(traceCase));
+  const result = tech_optimizer_run_js(playerState, optimizerOptions(traceCase, workerCase));
   const actualTop = result.builds?.[0] ?? null;
   const expectedRows = workerCase?.best?.rowSignature ?? [];
   const actualTopRows = actualRows(actualTop);
