@@ -98,7 +98,7 @@ export async function resolveExternalCalculationCode(
         throw new Error('missing target url');
       }
       const parsed = parseExternalCalculationInput(String((payload as { url: unknown }).url));
-      if (parsed.kind !== 'raw') throw new Error('missing raw payload');
+      if (parsed.kind !== 'raw') throw new Error('missing calculation payload');
       return parsed.raw;
     } catch {
       if (attempt === 1) {
