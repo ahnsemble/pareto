@@ -180,8 +180,8 @@ function useV3OptimizerBoot(): BootState {
       })
       .catch((err) => {
         if (!mounted) return;
-        const message = err instanceof Error ? err.message : String(err);
-        setBootStatus(message);
+        console.error('Tangtang optimizer failed to start', err);
+        setBootStatus('error');
       });
     return () => {
       mounted = false;
@@ -197,7 +197,7 @@ function BootLine({ status }: { status: BootState }) {
       className={`mt-1 text-xs font-mono ${status === 'ok' ? 'text-[color:var(--color-accent)]' : status === 'pending' ? 'text-[color:var(--color-text-muted)]' : 'text-[color:var(--color-danger)]'}`}
       data-testid="v3-optimizer-boot-status"
     >
-      {status === 'pending' ? 'Booting store...' : status === 'ok' ? '[TangtangStore] Boot OK' : status}
+      {status === 'pending' ? 'Preparing...' : status === 'ok' ? 'Ready' : 'Unable to prepare optimizer.'}
     </p>
   );
 }

@@ -1,5 +1,5 @@
-// P3 07 — useParetoStore composition + bootParetoStore + 8 count check invariants
-// Single source of truth; do not duplicate. P4 components subscribe via slice-level selectors only.
+// Shared store composition and startup guard.
+// Keep state ownership centralized.
 
 import { create } from 'zustand';
 import {
@@ -10,7 +10,7 @@ import {
 } from './slices';
 import { TRANSLATION_DICTIONARY } from './i18n';
 
-// ───────────────────────────── UI Component Registry (P3 07:113-130) ─────────────────────────────
+// ───────────────────────────── UI Component Registry ─────────────────────────────
 export const UI_COMPONENT_REGISTRY = [
   'ModeSelectDropdown',
   'OutputPanel',
@@ -29,7 +29,7 @@ export const UI_COMPONENT_REGISTRY = [
   'ResourceLockButton',
 ] as const;
 
-// ───────────────────────────── Zustand store (P3 01:252-267) ─────────────────────────────
+// ───────────────────────────── Zustand store ─────────────────────────────
 export const useParetoStore = create<ParetoStore>()((...a) => ({
   ...createBaseSlice(...a),
   ...createEquipmentSlice(...a),
@@ -44,7 +44,7 @@ export const useParetoStore = create<ParetoStore>()((...a) => ({
   ...createXenoPendingSlice(...a),
 }));
 
-// ───────────────────────────── 8 Count Check Invariants (P3 07:23-85) ─────────────────────────────
+// ───────────────────────────── Startup Checks ─────────────────────────────
 export interface CountCheckResult {
   invariant_id: string;
   expected: number;
@@ -65,17 +65,14 @@ export function runCountCheckInvariants(state: ParetoStore): CountCheckResult[] 
   ];
 }
 
-// ───────────────────────────── bootParetoStore (P3 07:90-108) ─────────────────────────────
+// ───────────────────────────── Store Boot ─────────────────────────────
 export function bootParetoStore(): ParetoStore {
   const state = useParetoStore.getState();
   const results = runCountCheckInvariants(state);
   const failures = results.filter((r) => !r.passed);
 
   if (failures.length > 0) {
-    const failureReport = failures
-      .map((f) => `${f.invariant_id}: expected=${f.expected}, actual=${f.actual}`)
-      .join('; ');
-    throw new Error(`[TangtangStore] Boot ABORTED — ${failures.length} count check invariant(s) failed: ${failureReport}`);
+    throw new Error('Tangtang data model failed to start.');
   }
 
   return state;
