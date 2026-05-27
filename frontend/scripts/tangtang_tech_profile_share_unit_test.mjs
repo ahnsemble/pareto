@@ -70,6 +70,42 @@ const sampleState = {
 };
 
 const fixedDate = new Date('2026-05-24T12:00:00.000Z');
+function encodeLegacySharePayload(value) {
+  const bytes = new TextEncoder().encode(JSON.stringify(value));
+  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
+}
+
+const legacyShareState = {
+  accountContext: { finalAtk: 111111 },
+  resourceWallet: {},
+  rarityCounts: {},
+  chips: 0,
+  skillSlots: 1,
+  overloadable: false,
+  maxOverload: 0,
+  speedMode: 'normal',
+  limit: 'basic',
+  skillStatus: {},
+  importedRunSnapshot: {
+    accountContext: { finalAtk: 111111 },
+    inventory: { chips: 0 },
+  },
+};
+const legacyShareDecoded = decodeTechProfileShareState(encodeLegacySharePayload({
+  kind: 'tangtang-tech-profile-share',
+  version: 1,
+  document: {
+    version: 1,
+    slotId: 'guildExpedition',
+    savedAt: fixedDate.toISOString(),
+    state: legacyShareState,
+  },
+}));
+assert.equal(legacyShareDecoded.ok, true);
+assert.equal(legacyShareDecoded.document.state.activeProfileSlot, 'guildExpedition');
+assert.equal(legacyShareDecoded.document.state.accountContext.guildExpeditionTestaments, 0);
+assert.equal(legacyShareDecoded.document.state.importedRunSnapshot.activeProfileSlot, 'guildExpedition');
+
 const encoded = encodeTechProfileShareState(sampleState, fixedDate);
 assert.match(encoded, /^[0-9a-f]+$/);
 assert.equal(/sio-tools|profileImportText|\{|\}/i.test(encoded), false);

@@ -96,9 +96,11 @@ const document = buildTechProfileSaveDocument('endersEcho', sampleState, fixedDa
 assert.equal(document.version, 1);
 assert.equal(document.slotId, 'endersEcho');
 assert.equal(document.savedAt, fixedDate.toISOString());
+assert.equal(document.state.activeProfileSlot, 'endersEcho');
 assert.equal(document.state.accountContext.finalAtk, 123456);
 assert.equal(document.state.accountContext.guildExpeditionTestaments, 600);
 assert.equal(document.state.chips, 91);
+assert.equal(document.state.importedRunSnapshot.activeProfileSlot, 'endersEcho');
 assert.equal(document.state.importedRunSnapshot.inventory.chips, 91);
 assert.equal(document.state.profileImportText ?? '', '');
 assert.equal(document.state.profileImportSummary ?? '', '');
@@ -120,6 +122,41 @@ const storage = {
     memory.delete(key);
   },
 };
+
+const legacyState = {
+  accountContext: { finalAtk: 222222 },
+  resourceWallet: {},
+  rarityCounts: {},
+  chips: 0,
+  skillSlots: 1,
+  overloadable: false,
+  maxOverload: 0,
+  speedMode: 'normal',
+  limit: 'basic',
+  skillStatus: {},
+  importedRunSnapshot: {
+    accountContext: { finalAtk: 222222 },
+    inventory: { chips: 0 },
+  },
+};
+const legacyDocument = buildTechProfileSaveDocument('guildExpedition', legacyState, fixedDate);
+assert.equal(legacyDocument.state.activeProfileSlot, 'guildExpedition');
+assert.equal(legacyDocument.state.accountContext.guildExpeditionTestaments, 0);
+assert.equal(legacyDocument.state.importedRunSnapshot.activeProfileSlot, 'guildExpedition');
+assert.equal(legacyDocument.state.importedRunSnapshot.accountContext.guildExpeditionTestaments, 0);
+
+memory.set(storageKeyForTechProfileSlot('guildExpedition'), JSON.stringify({
+  version: 1,
+  slotId: 'guildExpedition',
+  savedAt: fixedDate.toISOString(),
+  state: legacyState,
+}));
+const loadedLegacy = loadTechProfileSlot(storage, 'guildExpedition');
+assert.equal(loadedLegacy.ok, true);
+assert.equal(loadedLegacy.document.state.activeProfileSlot, 'guildExpedition');
+assert.equal(loadedLegacy.document.state.accountContext.guildExpeditionTestaments, 0);
+assert.equal(loadedLegacy.document.state.importedRunSnapshot.activeProfileSlot, 'guildExpedition');
+memory.delete(storageKeyForTechProfileSlot('guildExpedition'));
 
 const saveEnders = saveTechProfileSlot(storage, 'endersEcho', sampleState, fixedDate);
 assert.equal(saveEnders.ok, true);

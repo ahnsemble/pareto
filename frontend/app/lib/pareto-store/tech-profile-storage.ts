@@ -88,11 +88,25 @@ function validSlotId(value: unknown): TechProfileSaveSlotId | undefined {
   return value === 'endersEcho' || value === 'guildExpedition' ? value : undefined;
 }
 
-function normalizeSaveState(input: TechProfileSaveState | Record<string, unknown>): TechProfileSaveState {
+function normalizeAccountContext(value: unknown): Record<string, unknown> {
+  const accountContext = cloneRecord(value);
+  if (typeof accountContext.guildExpeditionTestaments !== 'number') {
+    accountContext.guildExpeditionTestaments = 0;
+  }
+  return accountContext;
+}
+
+function normalizeSaveState(
+  input: TechProfileSaveState | Record<string, unknown>,
+  fallbackSlotId?: TechProfileSaveSlotId,
+): TechProfileSaveState {
+  const activeProfileSlot = validSlotId(input.activeProfileSlot) ?? fallbackSlotId;
   const importedRunSnapshot = isRecord(input.importedRunSnapshot)
     ? {
-        ...(validSlotId(input.importedRunSnapshot.activeProfileSlot) ? { activeProfileSlot: validSlotId(input.importedRunSnapshot.activeProfileSlot) } : {}),
-        accountContext: cloneRecord(input.importedRunSnapshot.accountContext),
+        ...(validSlotId(input.importedRunSnapshot.activeProfileSlot) || activeProfileSlot
+          ? { activeProfileSlot: validSlotId(input.importedRunSnapshot.activeProfileSlot) ?? activeProfileSlot }
+          : {}),
+        accountContext: normalizeAccountContext(input.importedRunSnapshot.accountContext),
         inventory: cloneRecord(input.importedRunSnapshot.inventory),
       }
     : input.importedRunSnapshot === null
@@ -100,8 +114,8 @@ function normalizeSaveState(input: TechProfileSaveState | Record<string, unknown
       : undefined;
 
   return {
-    ...(validSlotId(input.activeProfileSlot) ? { activeProfileSlot: validSlotId(input.activeProfileSlot) } : {}),
-    accountContext: cloneRecord(input.accountContext),
+    ...(activeProfileSlot ? { activeProfileSlot } : {}),
+    accountContext: normalizeAccountContext(input.accountContext),
     resourceWallet: cloneRecord(input.resourceWallet),
     rarityCounts: cloneRecord(input.rarityCounts),
     chips: Number(input.chips ?? 0),
@@ -127,7 +141,7 @@ function parseDocument(raw: string): TechProfileSaveDocument | null {
       version: TECH_PROFILE_STORAGE_VERSION,
       slotId: parsed.slotId,
       savedAt: parsed.savedAt,
-      state: normalizeSaveState(parsed.state),
+      state: normalizeSaveState(parsed.state, parsed.slotId),
     };
   } catch {
     return null;
@@ -153,7 +167,7 @@ export function buildTechProfileSaveDocument(
     version: TECH_PROFILE_STORAGE_VERSION,
     slotId,
     savedAt: now.toISOString(),
-    state: normalizeSaveState(state),
+    state: normalizeSaveState(state, slotId),
   };
 }
 
