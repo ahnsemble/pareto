@@ -12,6 +12,7 @@ const require = createRequire(import.meta.url);
 const tmpDir = resolve(tmpdir(), 'pareto-external-calculation-link-tests');
 const modulePath = resolve(__dirname, '../app/lib/pareto-store/external-calculation-link.ts');
 const profileModulePath = resolve(__dirname, '../app/lib/pareto-store/external-calculation-profile.ts');
+const profileImportModulePath = resolve(__dirname, '../app/lib/pareto-store/profile-import.ts');
 const recommendationModulePath = resolve(__dirname, '../app/lib/pareto-store/tech-upgrade-recommendations.ts');
 const collectionRecommendationModulePath = resolve(__dirname, '../app/lib/pareto-store/collectible-upgrade-recommendations.ts');
 const schemaModulePath = resolve(__dirname, '../app/lib/pareto-store/schemas/index.ts');
@@ -129,6 +130,38 @@ assert.ok(normalized.importedTechSnapshot.parts.length >= 6);
 assert.ok(normalized.importedCollectibleSnapshot.items.length > 0);
 assert.match(normalized.summary, /Imported/);
 assert.equal(JSON.stringify(normalized).includes('sioLm'), false);
+assert.equal(normalized.sourceGameMode, 'ee');
+
+const { resolveImportedProfileSlot } = await loadTsModule(
+  profileImportModulePath,
+  'profile-import',
+);
+assert.equal(typeof resolveImportedProfileSlot, 'function');
+assert.equal(resolveImportedProfileSlot('endersEcho', normalized), 'endersEcho');
+
+const endersNormalized = normalizeExternalCalculationProfile({
+  _V: 5,
+  a: {
+    I: 'ee',
+    J: 86500,
+  },
+});
+assert.equal(endersNormalized.ok, true);
+assert.equal(endersNormalized.sourceGameMode, 'ee');
+assert.equal(endersNormalized.account.guildExpeditionTestaments, 86500);
+assert.equal(resolveImportedProfileSlot('endersEcho', endersNormalized), 'endersEcho');
+
+const lme1Normalized = normalizeExternalCalculationProfile({
+  _V: 5,
+  a: {
+    I: 'lme1',
+    J: 86500,
+  },
+});
+assert.equal(lme1Normalized.ok, true);
+assert.equal(lme1Normalized.sourceGameMode, 'lme1');
+assert.equal(lme1Normalized.account.guildExpeditionTestaments, 86500);
+assert.equal(resolveImportedProfileSlot('endersEcho', lme1Normalized), 'endersEcho');
 
 const guildNormalized = normalizeExternalCalculationProfile({
   _V: 5,
@@ -138,7 +171,9 @@ const guildNormalized = normalizeExternalCalculationProfile({
   },
 });
 assert.equal(guildNormalized.ok, true);
+assert.equal(guildNormalized.sourceGameMode, 'lme2');
 assert.equal(guildNormalized.account.guildExpeditionTestaments, 600);
+assert.equal(resolveImportedProfileSlot('endersEcho', guildNormalized), 'guildExpedition');
 
 const { buildTechUpgradeRecommendations } = loadRecommendationModule();
 const recommendations = buildTechUpgradeRecommendations({

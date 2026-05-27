@@ -151,6 +151,7 @@ export type ProductProfileImportResult =
       importedTechSnapshot?: ImportedTechSnapshot;
       importedCollectibleSnapshot?: ImportedCollectibleSnapshot;
       coverage?: ProductImportCoverage[];
+      sourceGameMode?: string;
       summary: string;
     }
   | {

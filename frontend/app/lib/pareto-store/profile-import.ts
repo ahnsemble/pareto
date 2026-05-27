@@ -8,6 +8,7 @@ import type {
   ProductProfileTechImport,
   ProductProfileWalletImport,
 } from './profile-import-types';
+import type { TechProfileSaveSlotId } from './tech-profile-storage';
 
 export type {
   ImportedCollectibleSnapshot,
@@ -172,6 +173,15 @@ function formatImportValue(value: string | number | Record<string, number>): str
   return Object.entries(value)
     .map(([key, count]) => `${key} ${count}`)
     .join(', ');
+}
+
+type ImportedProfileSlotSource = Extract<ProductProfileImportResult, { ok: true }>;
+
+export function resolveImportedProfileSlot(
+  currentSlot: TechProfileSaveSlotId,
+  imported: ImportedProfileSlotSource,
+): TechProfileSaveSlotId {
+  return imported.sourceGameMode?.toLowerCase() === 'lme2' ? 'guildExpedition' : currentSlot;
 }
 
 export function buildProductImportFieldSummary(
@@ -366,6 +376,7 @@ export function parseProductProfileImport(text: string): ProductProfileImportRes
   const walletSource = readPath(source, 'wallet');
   const techSource = readPath(source, 'tech');
   const accountSource = readPath(source, 'account');
+  const sourceGameMode = readString(source, ['sourceGameMode', 'source_game_mode', 'gameMode', 'game_mode', 'settings.gameMode']);
 
   const wallet: ProductProfileWalletImport = {};
   const tech: ProductProfileTechImport = {};
@@ -436,6 +447,7 @@ export function parseProductProfileImport(text: string): ProductProfileImportRes
     wallet,
     tech,
     account,
+    ...(sourceGameMode ? { sourceGameMode } : {}),
     summary: buildSummary(wallet, tech, account),
   };
 }

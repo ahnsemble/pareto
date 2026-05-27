@@ -12,6 +12,7 @@ import {
 import {
   buildProductImportFieldSummary,
   importProductProfileInput,
+  resolveImportedProfileSlot,
 } from '../../app/lib/pareto-store/profile-import';
 import { buildTechDataConfidenceSummary } from '../../app/lib/pareto-store/tech-data-confidence';
 import {
@@ -971,7 +972,7 @@ export function TechPartsOptimizerSurface() {
           Object.entries(imported.account).filter(([, value]) => value !== undefined),
         ) as Partial<TechAccountContextInput>,
       };
-      const nextActiveProfileSlot = imported.account.guildExpeditionTestaments !== undefined ? 'guildExpedition' : activeProfileSlot;
+      const nextActiveProfileSlot = resolveImportedProfileSlot(activeProfileSlot, imported);
       const nextResourceWallet = {
         ...resourceWallet,
         ...Object.fromEntries(

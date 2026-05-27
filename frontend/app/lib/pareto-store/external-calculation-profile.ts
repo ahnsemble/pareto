@@ -358,6 +358,8 @@ function buildCoverage(expanded: Record<string, unknown>, partsCount: number, co
 export function normalizeExternalCalculationProfile(compact: Record<string, unknown>): ProductProfileImportResult {
   try {
     const expanded = expandExternalCalculationProfile(compact);
+    const meta = isRecord(expanded.meta) ? expanded.meta : {};
+    const sourceGameMode = readString(meta, 'gameMode');
     const { wallet, tech, importedTechSnapshot } = normalizeTech(expanded);
     const account = normalizeAccount(expanded);
     const importedCollectibleSnapshot = normalizeCollectibles(expanded);
@@ -371,6 +373,7 @@ export function normalizeExternalCalculationProfile(compact: Record<string, unkn
       importedTechSnapshot,
       importedCollectibleSnapshot,
       coverage,
+      ...(sourceGameMode ? { sourceGameMode } : {}),
       summary: 'Imported calculation link / Imported account context / Imported tech inventory',
     };
   } catch (error) {
