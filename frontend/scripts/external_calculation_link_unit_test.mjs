@@ -15,6 +15,7 @@ const profileModulePath = resolve(__dirname, '../app/lib/pareto-store/external-c
 const profileImportModulePath = resolve(__dirname, '../app/lib/pareto-store/profile-import.ts');
 const recommendationModulePath = resolve(__dirname, '../app/lib/pareto-store/tech-upgrade-recommendations.ts');
 const collectionRecommendationModulePath = resolve(__dirname, '../app/lib/pareto-store/collectible-upgrade-recommendations.ts');
+const techLocaleCopyModulePath = resolve(__dirname, '../components/v3/tech/techLocaleCopy.ts');
 const schemaModulePath = resolve(__dirname, '../app/lib/pareto-store/schemas/index.ts');
 const rawPath = resolve(__dirname, '../fixtures/external-calculation-links/4ZgaBw.raw.txt');
 const expectedPath = resolve(__dirname, '../fixtures/external-calculation-links/4ZgaBw.expected.json');
@@ -42,7 +43,7 @@ function loadTsModule(sourcePath, outputName) {
   return import(pathToFileURL(outputPath));
 }
 
-function writeCjsModule(sourcePath, outputPath) {
+function writeCjsModule(sourcePath, outputPath, replacements = []) {
   if (!existsSync(sourcePath)) {
     throw new Error(`module missing: ${sourcePath}`);
   }
@@ -55,12 +56,21 @@ function writeCjsModule(sourcePath, outputPath) {
       strict: true,
     },
   });
-  writeFileSync(outputPath, transpiled.outputText);
+  let outputText = transpiled.outputText;
+  for (const [from, to] of replacements) {
+    outputText = outputText.replaceAll(from, to);
+  }
+  writeFileSync(outputPath, outputText);
 }
 
 function loadRecommendationModule() {
   writeCjsModule(schemaModulePath, resolve(tmpDir, 'schemas/index.js'));
-  writeCjsModule(collectionRecommendationModulePath, resolve(tmpDir, 'collectible-upgrade-recommendations.js'));
+  writeCjsModule(techLocaleCopyModulePath, resolve(tmpDir, 'techLocaleCopy.js'));
+  writeCjsModule(
+    collectionRecommendationModulePath,
+    resolve(tmpDir, 'collectible-upgrade-recommendations.js'),
+    [['../../../components/v3/tech/techLocaleCopy', './techLocaleCopy']],
+  );
   writeCjsModule(recommendationModulePath, resolve(tmpDir, 'tech-upgrade-recommendations.js'));
   return require(resolve(tmpDir, 'tech-upgrade-recommendations.js'));
 }

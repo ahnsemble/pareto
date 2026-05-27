@@ -92,6 +92,24 @@ assert.equal(localizeTechEntityName('collectibleSet', 'Impression Idols', 'ko'),
 assert.equal(localizeTechEntityName('collectibleSet', 'Open Void Gate', 'ko'), '열린 공허의 문');
 assert.equal(localizeTechEntityName('collectibleSet', 'Close to Creation', 'ko'), '창조에 가까운');
 assert.equal(localizeTechEntityName('collectibleItem', 'Dimension Foil', 'en'), 'Dimension Foil');
+for (const [sourceName, koName] of [
+  ['Aquarius Starlight', '물병자리 별빛'],
+  ['Pisces Starlight', '물고기자리 별빛'],
+  ['Aries Starlight', '양자리 별빛'],
+  ['Taurus Starlight', '황소자리 별빛'],
+  ['Golden Cutlery', '황금 식기'],
+  ['Safehouse Map', '안전가옥 지도'],
+  ["Scientific Luminary's Journal", '과학 거장의 일지'],
+  ['Golden Horn', '황금 뿔'],
+  ['Elemental Ring', '원소 반지'],
+  ['Superhuman Pill', '초인 알약'],
+  ['Gemini Starlight', '쌍둥이자리 별빛'],
+  ['Cancer Starlight', '게자리 별빛'],
+  ['Leo Starlight', '사자자리 별빛'],
+  ['Virgo Starlight', '처녀자리 별빛'],
+]) {
+  assert.equal(localizeTechEntityName('collectibleItem', sourceName, 'ko'), koName);
+}
 
 const koWalletFields = localizeTechResourceWalletFields('ko');
 assert.equal(koWalletFields[0].label, '기술 공명 칩');

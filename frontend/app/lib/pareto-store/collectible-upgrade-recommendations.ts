@@ -1,31 +1,16 @@
 import { CATALOG_ONLY_COLLECTIBLE_ITEM_IDS, COLLECTIBLE_ITEM_INDEX } from './schemas';
+import { localizeTechEntityName } from '../../../components/v3/tech/techLocaleCopy';
 import type { ImportedCollectibleSnapshot } from './profile-import-types';
 import type { TechRecommendationInput, TechUpgradeRecommendation } from './tech-upgrade-recommendation-types';
 
 const FIRST_EVENT_ITEM_INDEX = COLLECTIBLE_ITEM_INDEX.findIndex((item) => item.id === 'event1');
 const KNOWN_COLLECTIBLE_ITEM_COUNT = FIRST_EVENT_ITEM_INDEX >= 0 ? FIRST_EVENT_ITEM_INDEX : COLLECTIBLE_ITEM_INDEX.length;
 const CATALOG_ONLY_COLLECTIBLE_ITEM_ID_SET = new Set<string>(CATALOG_ONLY_COLLECTIBLE_ITEM_IDS);
-const KO_COLLECTIBLE_ITEM_NAMES: Record<string, string> = {
-  atomicMech: '아토믹 메카',
-  timeEssenceBottle: '시간 정수 병',
-  lifeHourglass: '생명의 모래시계',
-  dimensionFoil: '차원 포일',
-  superCircuitBoard: '슈퍼 회로 기판',
-  commsConch: '통신 소라',
-  shuttleCapsule: '셔틀 캡슐',
-  neurochip: '뉴로칩',
-  angelicTearCrystal: '천사의 눈물 결정',
-  otherworldKey: '이세계 열쇠',
-  nanoMimeticMask: '나노 모방 마스크',
-  cloneMirror: '복제 거울',
-  cosmicCompass: '우주 나침반',
-  infinityScore: '무한 악보',
-};
 
 function collectibleName(itemIndex: number, locale?: string): string {
   const row = COLLECTIBLE_ITEM_INDEX[itemIndex];
   if (!row) return `Event ${itemIndex - KNOWN_COLLECTIBLE_ITEM_COUNT + 1}`;
-  if (locale === 'ko') return KO_COLLECTIBLE_ITEM_NAMES[row.id] ?? row.display_name_ko ?? row.display_name_en;
+  if (locale === 'ko') return localizeTechEntityName('collectibleItem', row.display_name_en, locale);
   return row.display_name_en;
 }
 

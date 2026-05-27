@@ -8,7 +8,7 @@ import ts from 'typescript';
 const root = process.cwd();
 const buildDir = path.join(tmpdir(), 'pareto-tech-upgrade-recommendations-tests');
 
-async function transpileModule(sourcePath, outPath) {
+async function transpileModule(sourcePath, outPath, replacements = []) {
   const source = await fs.readFile(sourcePath, 'utf8');
   const result = ts.transpileModule(source, {
     compilerOptions: {
@@ -19,8 +19,12 @@ async function transpileModule(sourcePath, outPath) {
     },
     fileName: sourcePath,
   });
+  let outputText = result.outputText;
+  for (const [from, to] of replacements) {
+    outputText = outputText.replaceAll(from, to);
+  }
   await fs.mkdir(path.dirname(outPath), { recursive: true });
-  await fs.writeFile(outPath, result.outputText);
+  await fs.writeFile(outPath, outputText);
 }
 
 await fs.rm(buildDir, { recursive: true, force: true });
@@ -29,8 +33,13 @@ await transpileModule(
   path.join(buildDir, 'schemas/index.js'),
 );
 await transpileModule(
+  path.join(root, 'components/v3/tech/techLocaleCopy.ts'),
+  path.join(buildDir, 'techLocaleCopy.js'),
+);
+await transpileModule(
   path.join(root, 'app/lib/pareto-store/collectible-upgrade-recommendations.ts'),
   path.join(buildDir, 'collectible-upgrade-recommendations.js'),
+  [['../../../components/v3/tech/techLocaleCopy', './techLocaleCopy']],
 );
 await transpileModule(
   path.join(root, 'app/lib/pareto-store/tech-upgrade-recommendations.ts'),
@@ -38,7 +47,14 @@ await transpileModule(
 );
 
 const require = createRequire(import.meta.url);
+const { COLLECTIBLE_ITEM_INDEX } = require(path.join(buildDir, 'schemas/index.js'));
 const { buildTechUpgradeRecommendations } = require(path.join(buildDir, 'tech-upgrade-recommendations.js'));
+
+function collectibleIndexByName(name) {
+  const index = COLLECTIBLE_ITEM_INDEX.findIndex((item) => item.display_name_en === name);
+  assert.notEqual(index, -1, `expected collectible item ${name}`);
+  return index;
+}
 
 const result = {
   builds: [
@@ -103,6 +119,22 @@ assert.doesNotMatch(koChipRecommendation.title, /Allocate chips/);
 assert.ok(Array.isArray(koChipRecommendation.reasonDetails), 'expected Korean chip recommendation details');
 assert.match(koChipRecommendation.reasonDetails.join('\n'), /최상위 빌드는 .*12칩/);
 assert.match(koChipRecommendation.reasonDetails.join('\n'), /6칩 사용 가능/);
+
+const koMemoryEditorRecommendations = buildTechUpgradeRecommendations({
+  result,
+  locale: 'ko',
+  importedCollectibleSnapshot: {
+    items: [
+      { itemIndex: collectibleIndexByName('Memory Editor'), stars: 2 },
+    ],
+  },
+});
+const koMemoryEditorRecommendation = koMemoryEditorRecommendations.find((item) => item.id === 'collection-item');
+assert.ok(koMemoryEditorRecommendation, 'expected Memory Editor recommendation in Korean');
+assert.match(koMemoryEditorRecommendation.title, /기억 편집기/);
+assert.match(koMemoryEditorRecommendation.action, /기억 편집기/);
+assert.match(koMemoryEditorRecommendation.beforeAfter.current, /기억 편집기/);
+assert.doesNotMatch(JSON.stringify(koMemoryEditorRecommendation), /Memory Editor/);
 
 const catalogOnlyRecommendations = buildTechUpgradeRecommendations({
   result,
