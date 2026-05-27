@@ -10298,7 +10298,7 @@
       "sourcePath": "heroes.Nezha.stars.vals.3.divineFire",
       "statChannel": "divineFire",
       "statOrderIndex": 69,
-      "value": 60
+      "value": 70
     },
     {
       "domainRoot": "heroes",
@@ -10328,7 +10328,7 @@
       "sourcePath": "heroes.Nezha.stars.vals.4.divineFire",
       "statChannel": "divineFire",
       "statOrderIndex": 69,
-      "value": 90
+      "value": 100
     },
     {
       "domainRoot": "heroes",
@@ -41188,7 +41188,7 @@
       "sourcePath": "techs.Antimatter Maintainer.Drill Shot Mode.deployedResonance.vals.0.chilled",
       "statChannel": "chilled",
       "statOrderIndex": 11,
-      "value": 30
+      "value": 29.05
     },
     {
       "domainRoot": "techs",
@@ -41198,7 +41198,7 @@
       "sourcePath": "techs.Antimatter Maintainer.Drill Shot Mode.deployedResonance.vals.1.chilled",
       "statChannel": "chilled",
       "statOrderIndex": 11,
-      "value": 60
+      "value": 58.57
     },
     {
       "domainRoot": "techs",
@@ -41208,7 +41208,7 @@
       "sourcePath": "techs.Antimatter Maintainer.Drill Shot Mode.deployedResonance.vals.2.chilled",
       "statChannel": "chilled",
       "statOrderIndex": 11,
-      "value": 90
+      "value": 87.15
     },
     {
       "domainRoot": "techs",
@@ -41218,7 +41218,7 @@
       "sourcePath": "techs.Antimatter Maintainer.Drill Shot Mode.deployedResonance.vals.3.chilled",
       "statChannel": "chilled",
       "statOrderIndex": 11,
-      "value": 120
+      "value": 115.25
     },
     {
       "domainRoot": "techs",
@@ -41228,7 +41228,7 @@
       "sourcePath": "techs.Antimatter Maintainer.Drill Shot Mode.deployedResonance.vals.4.chilled",
       "statChannel": "chilled",
       "statOrderIndex": 11,
-      "value": 150
+      "value": 147.15
     },
     {
       "domainRoot": "techs",
@@ -41238,7 +41238,7 @@
       "sourcePath": "techs.Antimatter Maintainer.Drill Shot Mode.deployedResonance.vals.5.chilled",
       "statChannel": "chilled",
       "statOrderIndex": 11,
-      "value": 160
+      "value": 157.15
     },
     {
       "domainRoot": "techs",

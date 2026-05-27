@@ -232,6 +232,23 @@ Existing comparison evidence used first:
 - Formula/scoring behavior did not change; `sio_full_lm_equivalence` remains the scorer contract.
 - User-facing UI wording did not expose internal source/debug vocabulary.
 
+## Live Source Freshness / Custom Collection Update
+
+- Current live source extraction refreshed on 2026-05-27 KST:
+  - `Drill Shot Mode` source coefficient is observed as `46.21`; the extractor now records this as an observed finite live value instead of failing on the old `36.8` reference.
+  - `fullSioEquivalent` and `sio_full_lm_equivalence` product/scorer contracts were not changed by this extraction evidence update.
+- Collection taxonomy after refresh:
+  - source collectible rows: 119 total;
+  - effect-bearing collectible rows: 118;
+  - `Excellent` is tracked separately as a no-effect source placeholder row;
+  - source-missing effect rows: 0.
+- Custom Collection Sets / 맞춤형 컬렉션관:
+  - live source exposes 4 `customSets` slots;
+  - Tangtang import/scoring evidence keeps the custom-set path covered through the compact profile and live-evidence matrix.
+- Recent survivor check:
+  - Nezha is present in the current live source and Tangtang schema;
+  - Nita is not present in the current live source table, so no Tangtang product row/scoring change was applied for Nita.
+
 ## Planned Gate: Tangtang Calculation Link Import
 
 - Plan path:

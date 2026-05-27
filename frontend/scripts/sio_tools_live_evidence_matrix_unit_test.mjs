@@ -13,10 +13,7 @@ const collectibleMatrixPath = path.join(root, 'artifacts/td11/collectible_effect
 const mountSourceFixturePath = path.join(root, 'artifacts/td11/mount_damage_source_fixture.json');
 const targetedLiveEvidencePath = path.join(root, 'artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json');
 const deployedDataPath = path.join(root, 'artifacts/td11/sio_tools_formula_table_extract/extracted_tables/module37013_c_deployed_data_table.json');
-const compactCodecAssetPath = path.join(
-  root,
-  'artifacts/td11/sio_tools_asset_discovery/mirrored_assets/9730c42f92d7-797-9e5ce5eee251b4e4.js',
-);
+const assetDiscoverySummaryPath = path.join(root, 'artifacts/td11/sio_tools_asset_discovery/asset_discovery_summary.json');
 const schemaPath = path.join(root, 'app/lib/pareto-store/schemas/index.ts');
 
 const COLLECTIBLE_LIVE_CASE_IDS = [
@@ -108,6 +105,33 @@ function parseStringArrayExpression(source, regex, label) {
   return Function(`"use strict"; return ${match[1]};`)();
 }
 
+async function readCompactCodecAssetSource() {
+  const assetDiscoverySummary = JSON.parse(await fs.readFile(assetDiscoverySummaryPath, 'utf8'));
+  for (const asset of assetDiscoverySummary.fetchedAssets ?? []) {
+    if (typeof asset.mirrorPath !== 'string') continue;
+    const mirrorPath = path.isAbsolute(asset.mirrorPath) ? asset.mirrorPath : path.join(root, asset.mirrorPath);
+    let source;
+    try {
+      source = await fs.readFile(mirrorPath, 'utf8');
+    } catch (error) {
+      if (error?.code === 'ENOENT') continue;
+      throw error;
+    }
+    if (
+      source.includes('"meta","synergy","mainHero"') &&
+      source.includes('"customSets"') &&
+      /,v=(\[[\s\S]*?\]),b=\[/.test(source) &&
+      /,[A-Za-z_$][\w$]*=("abcdefghijklmnopqrstuvwxyz[^"]*"),[A-Za-z_$][\w$]*=[A-Za-z_$][\w$]*\.length/.test(source)
+    ) {
+      return {
+        source,
+        sourceArtifact: path.relative(root, mirrorPath),
+      };
+    }
+  }
+  throw new Error('compact codec asset not found in current asset discovery summary');
+}
+
 function shortKeyForIndex(index, alphabet) {
   assert.ok(index >= 0, 'short key index must be non-negative');
   let encoded = '';
@@ -127,7 +151,7 @@ const [
   mountSourceFixture,
   targetedLiveEvidence,
   deployedData,
-  compactCodecAsset,
+  compactCodecAssetInfo,
   schemaSource,
 ] = await Promise.all([
   fs.readFile(liveCapturePath, 'utf8').then(JSON.parse),
@@ -137,9 +161,10 @@ const [
   fs.readFile(mountSourceFixturePath, 'utf8').then(JSON.parse),
   fs.readFile(targetedLiveEvidencePath, 'utf8').then(JSON.parse),
   fs.readFile(deployedDataPath, 'utf8').then(JSON.parse),
-  fs.readFile(compactCodecAssetPath, 'utf8'),
+  readCompactCodecAssetSource(),
   fs.readFile(schemaPath, 'utf8'),
 ]);
+const compactCodecAsset = compactCodecAssetInfo.source;
 
 const liveCaseById = new Map((liveCapture.cases ?? []).map((item) => [item.id, item]));
 const traceCaseById = new Map((lmTrace.cases ?? []).map((item) => [item.id, item]));
@@ -154,7 +179,11 @@ assert.equal(collectibleMatrix.summary.inGameDescriptionVerifiedRows, 0, 'this g
 assert.equal(mountSourceFixture.summary.nonZeroMountDamageRows, 2, 'source fixture must keep two non-zero mount damage rows');
 
 const compactKeyList = parseStringArrayExpression(compactCodecAsset, /,v=(\[[\s\S]*?\]),b=\[/, 'compact key list');
-const compactAlphabet = parseStringArrayExpression(compactCodecAsset, /,p=("[\s\S]*?"),k=p\.length/, 'compact alphabet');
+const compactAlphabet = parseStringArrayExpression(
+  compactCodecAsset,
+  /,[A-Za-z_$][\w$]*=("abcdefghijklmnopqrstuvwxyz[^"]*"),[A-Za-z_$][\w$]*=[A-Za-z_$][\w$]*\.length/,
+  'compact alphabet',
+);
 const mountOrder = Object.keys(deployedData.mounts);
 
 const compactKeys = Object.fromEntries(
@@ -237,7 +266,7 @@ rows.push({
   key: 'source:compact-codec:mount-active-key',
   domain: 'mounts',
   evidenceType: 'sio-tools-public-mirrored-asset',
-  sourceArtifact: path.relative(root, compactCodecAssetPath),
+  sourceArtifact: compactCodecAssetInfo.sourceArtifact,
   sourceMeaning: 'module73755 export codec maps mounts.active string values to Object.keys(c.c.mounts) indexes and compresses long key active to bj.',
   compactKeys: stableObject(compactKeys),
   mountOrder,
@@ -325,7 +354,7 @@ const artifact = {
     collectibleEffectMappingMatrix: path.relative(root, collectibleMatrixPath),
     mountDamageSourceFixture: path.relative(root, mountSourceFixturePath),
     targetedLiveEvidence: path.relative(root, targetedLiveEvidencePath),
-    compactCodecAsset: path.relative(root, compactCodecAssetPath),
+    compactCodecAsset: compactCodecAssetInfo.sourceArtifact,
   },
   summary: {
     liveCaptureCases: liveCapture.summary.cases,

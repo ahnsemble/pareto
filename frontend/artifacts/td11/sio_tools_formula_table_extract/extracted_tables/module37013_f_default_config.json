@@ -1,0 +1,6635 @@
+{
+  "baseStats": {
+    "critDamage": 200,
+    "poisonedUptime": 0,
+    "weakenedUptime": 0,
+    "chilledUptime": 0,
+    "lacerationUptime": 0,
+    "divineFireUptime": 0,
+    "shieldDamageUptime": 1,
+    "voidNeckBoostUptime": 1
+  },
+  "heroes": {
+    "Common": {
+      "rarity": "Common",
+      "level": {
+        "40": {
+          "critDamage": 5
+        },
+        "120": {
+          "critRate": 5
+        }
+      },
+      "stars": {
+        "8": {
+          "skillDamage": 5
+        },
+        "10": {
+          "critDamage": 10
+        },
+        "12": {
+          "skillDamage": 10
+        }
+      }
+    },
+    "Tsukuyomi": {
+      "rarity": "Common",
+      "level": {
+        "40": {
+          "atkHeroPercent": 5
+        },
+        "80": {
+          "critRate": 5
+        },
+        "120": {
+          "critDamage": 5
+        }
+      },
+      "stars": {
+        "5": {
+          "atkHeroPercent": 4
+        }
+      },
+      "passives": {
+        "9": {
+          "vulnerability": 5
+        },
+        "10": {
+          "skillDamage": 20
+        },
+        "11": {
+          "vulnerability": 5
+        }
+      }
+    },
+    "Catnips": {
+      "rarity": "Common",
+      "level": {
+        "120": {
+          "atkHeroPercent": 5
+        }
+      },
+      "stars": {
+        "10": {
+          "critDamage": 20
+        }
+      }
+    },
+    "Worm": {
+      "rarity": "Common",
+      "level": {
+        "120": {
+          "atkHeroPercent": 5
+        }
+      },
+      "stars": {
+        "5": {
+          "atkHeroPercent": 4
+        },
+        "7": {
+          "critDamage": 10
+        },
+        "8": {
+          "critDamage": 10
+        },
+        "10": {
+          "skillDamage": 10
+        },
+        "12": {
+          "critDamage": 15,
+          "skillDamage": 15
+        }
+      },
+      "passives": {
+        "0": {
+          "vulnerability": 50
+        }
+      }
+    },
+    "King": {
+      "rarity": "Common",
+      "level": {
+        "40": {
+          "atkHeroPercent": 5
+        },
+        "80": {
+          "critRate": 5
+        },
+        "120": {
+          "critDamage": 5
+        }
+      },
+      "stars": {
+        "8": {
+          "vulnerability": 5
+        },
+        "10": {
+          "vulnerability": 5
+        },
+        "12": {
+          "vulnerability": 10
+        }
+      },
+      "passives": {
+        "3": {
+          "critDamage": 25
+        },
+        "11": {
+          "critDamage": 30
+        }
+      }
+    },
+    "Wesson": {
+      "rarity": "Common",
+      "stars": {
+        "5": {
+          "atkHeroPercent": 4
+        }
+      },
+      "level": {
+        "40": {
+          "atkHeroPercent": 5
+        },
+        "80": {
+          "critRate": 5
+        },
+        "120": {
+          "critDamage": 5
+        }
+      },
+      "passives": {
+        "7": {
+          "skillDamage": 10
+        },
+        "8": {
+          "skillDamage": 20
+        }
+      }
+    },
+    "Yelena": {
+      "rarity": "Common",
+      "stars": {
+        "10": {
+          "critDamage": 20
+        },
+        "12": {
+          "critDamage": 25
+        }
+      },
+      "level": {
+        "120": {
+          "atkHeroPercent": 5
+        }
+      },
+      "passives": {
+        "9": {
+          "vulnerability": 5
+        },
+        "11": {
+          "vulnerability": 5
+        }
+      }
+    },
+    "Master Yang": {
+      "starsLimit": 14,
+      "rarity": "S",
+      "level": {
+        "40": {
+          "atkHeroPercent": 10
+        },
+        "120": {
+          "critRate": 10
+        }
+      },
+      "stars": {
+        "5": {
+          "atkHeroPercent": 8
+        },
+        "7": {
+          "critRate": 5,
+          "critDamage": 5
+        },
+        "8": {
+          "skillDamage": 15
+        },
+        "10": {
+          "critRate": 10,
+          "critDamage": 10
+        },
+        "12": {
+          "critRate": 15,
+          "critDamage": 25,
+          "skillDamage": 15
+        },
+        "14": {
+          "critRate": 30,
+          "critDamage": 50,
+          "skillDamage": 30
+        }
+      },
+      "passives": {
+        "0": {
+          "critRate": 20,
+          "atkHero": 19515
+        },
+        "1": {
+          "vulnerability": 25
+        },
+        "2": {
+          "atkHero": 600
+        },
+        "3": {
+          "vulnerability": 50
+        },
+        "4": {
+          "atkHero": 1500
+        },
+        "6": {
+          "atkHeroPercent": 20
+        },
+        "9": {
+          "vulnerability": 10
+        },
+        "11": {
+          "vulnerability": 15
+        },
+        "13": {
+          "vulnerability": 30
+        }
+      }
+    },
+    "Metalia": {
+      "starsLimit": 14,
+      "rarity": "S",
+      "level": {
+        "40": {
+          "atkHeroPercent": 10
+        },
+        "120": {
+          "critDamage": 10
+        }
+      },
+      "stars": {
+        "5": {
+          "atkHeroPercent": 8
+        },
+        "7": {
+          "shieldDamage": 10
+        },
+        "8": {
+          "poisoned": 5
+        },
+        "10": {
+          "chilled": 5
+        },
+        "12": {
+          "chilled": 15
+        },
+        "14": {
+          "shieldDamage": 25,
+          "poisoned": 80,
+          "chilled": 40
+        }
+      },
+      "passives": {
+        "0": {
+          "metaliaPoisoned": 60,
+          "metaliaChilled": 30,
+          "atkHero": 19515
+        },
+        "2": {
+          "atkHero": 600
+        },
+        "4": {
+          "atkHero": 1500
+        },
+        "6": {
+          "atkHeroPercent": 20
+        },
+        "7": {
+          "critDamage": 20
+        },
+        "9": {
+          "critDamage": 20
+        },
+        "11": {
+          "critDamage": 20
+        },
+        "13": {
+          "critDamage": 60
+        }
+      }
+    },
+    "Joey": {
+      "starsLimit": 14,
+      "rarity": "S",
+      "level": {
+        "40": {
+          "atkHeroPercent": 10
+        },
+        "120": {
+          "critDamage": 10
+        }
+      },
+      "stars": {
+        "5": {
+          "atkHeroPercent": 8
+        },
+        "8": {
+          "exposedDamage": 2
+        },
+        "12": {
+          "exposedDamage": 3
+        },
+        "14": {
+          "exposedDamage": 4
+        }
+      },
+      "passives": {
+        "0": {
+          "exposedDamage": 3,
+          "joeyWeakSpot": 15,
+          "flashriftRipFinal": 200,
+          "flashriftRipEfficiency": 800,
+          "atkHero": 19515
+        },
+        "2": {
+          "atkHero": 600
+        },
+        "4": {
+          "atkHero": 1500
+        },
+        "6": {
+          "joeyWeakSpot": 10,
+          "atkHeroPercent": 20
+        },
+        "7": {
+          "skillDamage": 60,
+          "joeyWeakSpot": 10,
+          "flashriftRipFinal": 400
+        },
+        "9": {
+          "joeyWeakSpot": 10,
+          "flashriftRipFinal": 500,
+          "flashriftRipEfficiency": 200
+        },
+        "11": {
+          "critDamage": 60,
+          "flashriftRipFinal": 525
+        },
+        "13": {
+          "critDamage": 30,
+          "flashriftRipFinal": 1000
+        }
+      }
+    },
+    "Taloxa": {
+      "starsLimit": 14,
+      "rarity": "S",
+      "level": {
+        "40": {
+          "atkHeroPercent": 10
+        },
+        "120": {
+          "critDamage": 10
+        }
+      },
+      "stars": {
+        "5": {
+          "atkHeroPercent": 8
+        },
+        "7": {
+          "laceration": 10
+        },
+        "8": {
+          "laceration": 15
+        },
+        "10": {
+          "laceration": 25
+        },
+        "14": {
+          "laceration": 50
+        }
+      },
+      "passives": {
+        "0": {
+          "taloxaMaxSync": 300,
+          "taloxaSyncLoss": 10,
+          "lacerationUptime": 1,
+          "atkHero": 19515
+        },
+        "1": {
+          "taloxaOverloadEff": 10,
+          "taloxaOverload": 20
+        },
+        "2": {
+          "atkHero": 600
+        },
+        "3": {
+          "laceration": 15,
+          "taloxaMaxSync": 50,
+          "taloxaOverloadEff": 5
+        },
+        "4": {
+          "atkHero": 1500
+        },
+        "6": {
+          "laceration": 15,
+          "taloxaOverload": 20,
+          "atkHeroPercent": 20
+        },
+        "7": {
+          "skillDamage": 30,
+          "taloxaMaxSync": 50,
+          "taloxaSyncLoss": -2
+        },
+        "9": {
+          "critDamage": 30,
+          "taloxaOverload": 20
+        },
+        "11": {
+          "critDamage": 30,
+          "skillDamage": 30,
+          "taloxaSyncLoss": -3,
+          "taloxaOverloadEff": 5
+        },
+        "13": {
+          "skillDamage": 60,
+          "critDamage": 60,
+          "taloxaBeam": 35
+        }
+      }
+    },
+    "Raphael": {
+      "rarity": "SP",
+      "stars": {
+        "5": {
+          "critRate": 8
+        },
+        "7": {
+          "laceration": 10
+        },
+        "8": {
+          "laceration": 10
+        },
+        "10": {
+          "laceration": 10
+        },
+        "12": {
+          "laceration": 20
+        }
+      },
+      "level": {
+        "120": {
+          "atkHeroPercent": 5
+        }
+      }
+    },
+    "April": {
+      "rarity": "SP",
+      "stars": {
+        "5": {
+          "critRate": 8
+        },
+        "7": {},
+        "8": {},
+        "10": {},
+        "12": {}
+      },
+      "level": {
+        "120": {
+          "atkHeroPercent": 5
+        }
+      }
+    },
+    "Donatello": {
+      "rarity": "SP",
+      "stars": {
+        "5": {
+          "critRate": 8
+        },
+        "7": {},
+        "8": {},
+        "10": {},
+        "12": {}
+      },
+      "level": {
+        "120": {
+          "atkHeroPercent": 5
+        }
+      }
+    },
+    "Splinter": {
+      "rarity": "SP",
+      "stars": {
+        "5": {
+          "critRate": 8
+        },
+        "7": {},
+        "8": {},
+        "10": {},
+        "12": {}
+      },
+      "level": {
+        "120": {
+          "atkHeroPercent": 5
+        }
+      }
+    },
+    "Leonardo": {
+      "rarity": "SP",
+      "stars": {
+        "5": {
+          "critRate": 8
+        },
+        "7": {
+          "laceration": 2,
+          "lacerationUptime": 1
+        },
+        "8": {
+          "laceration": 2
+        },
+        "10": {
+          "laceration": 3
+        },
+        "12": {
+          "laceration": 3
+        }
+      },
+      "level": {
+        "120": {
+          "atkHeroPercent": 5
+        }
+      }
+    },
+    "Michelangelo": {
+      "rarity": "SP",
+      "stars": {
+        "5": {
+          "critRate": 8
+        },
+        "7": {
+          "laceration": 10
+        },
+        "8": {
+          "laceration": 10
+        },
+        "10": {
+          "laceration": 10
+        },
+        "12": {
+          "laceration": 20
+        }
+      },
+      "level": {
+        "120": {
+          "atkHeroPercent": 5
+        }
+      }
+    },
+    "Squidward": {
+      "starsLimit": 6,
+      "rarity": "SP",
+      "stars": {
+        "5": {
+          "atkHeroPercent": 4
+        }
+      },
+      "level": {
+        "40": {
+          "critDamage": 5
+        },
+        "120": {
+          "critRate": 5
+        }
+      }
+    },
+    "Spongebob": {
+      "starsLimit": 6,
+      "rarity": "SP",
+      "stars": {
+        "5": {
+          "atkHeroPercent": 4
+        }
+      },
+      "level": {
+        "40": {
+          "critDamage": 5
+        },
+        "120": {
+          "critRate": 5
+        }
+      }
+    },
+    "Sandy": {
+      "starsLimit": 6,
+      "rarity": "SP",
+      "level": {
+        "40": {
+          "critDamage": 5
+        },
+        "120": {
+          "critRate": 5
+        }
+      }
+    },
+    "Patrick": {
+      "starsLimit": 6,
+      "rarity": "SP",
+      "level": {
+        "40": {
+          "critDamage": 5
+        },
+        "120": {
+          "critRate": 5
+        }
+      }
+    },
+    "Venato": {
+      "starsLimit": 14,
+      "rarity": "S",
+      "level": {
+        "40": {
+          "atkHeroPercent": 10
+        },
+        "120": {
+          "critDamage": 10
+        }
+      },
+      "stars": {
+        "5": {
+          "atkHeroPercent": 8
+        },
+        "7": {
+          "critDamage": 10
+        },
+        "8": {
+          "critDamage": 20
+        },
+        "10": {
+          "critDamage": 10
+        },
+        "12": {
+          "critDamage": 40
+        },
+        "14": {
+          "critDamage": 60
+        }
+      },
+      "passives": {
+        "0": {
+          "atkHero": 19515
+        },
+        "1": {
+          "adrenaline": 10
+        },
+        "2": {
+          "atkHero": 600
+        },
+        "3": {
+          "adrenaline": 20
+        },
+        "4": {
+          "atkHero": 1500
+        },
+        "6": {
+          "damageBoss": 20
+        },
+        "7": {
+          "crimsonBat": 50
+        },
+        "9": {
+          "damageBoss": 30
+        },
+        "11": {
+          "adrenaline": 30
+        },
+        "13": {
+          "damageBoss": 60,
+          "crimsonBat": 50
+        }
+      }
+    },
+    "Nezha": {
+      "rarity": "SP",
+      "stars": {
+        "5": {
+          "critRate": 8
+        },
+        "7": {
+          "divineFire": 20,
+          "divineFireUptime": 0.25
+        },
+        "8": {
+          "divineFire": 20
+        },
+        "10": {
+          "divineFire": 30
+        },
+        "12": {
+          "divineFire": 30,
+          "divineFireUptime": 0.25
+        }
+      },
+      "level": {
+        "120": {
+          "atkHeroPercent": 5
+        }
+      }
+    }
+  },
+  "collectibles": {
+    "Human Genome Mapping": {
+      "rarity": "Legend",
+      "edition": 1,
+      "stars": {
+        "8": {
+          "critDamage": 10
+        }
+      }
+    },
+    "Book of Ancient Wisdom": {
+      "rarity": "Legend",
+      "edition": 1,
+      "stars": {
+        "8": {
+          "critRate": 10
+        }
+      }
+    },
+    "Immortal Lucky Coin": {
+      "rarity": "Legend",
+      "edition": 2,
+      "stars": {
+        "8": {
+          "critDamage": 10
+        }
+      }
+    },
+    "Instellar Transition Matrix Design": {
+      "rarity": "Legend",
+      "edition": 2,
+      "stars": {
+        "8": {
+          "critRate": 10
+        }
+      }
+    },
+    "Angelic Tear Crystal": {
+      "rarity": "Legend",
+      "edition": 3,
+      "stars": {
+        "8": {
+          "critDamage": 10
+        }
+      }
+    },
+    "Unicorn's Horn": {
+      "rarity": "Legend",
+      "edition": 3,
+      "stars": {
+        "8": {
+          "critDamage": 10
+        }
+      }
+    },
+    "Otherworld Key": {
+      "rarity": "Legend",
+      "edition": 3,
+      "stars": {
+        "8": {
+          "critRate": 10
+        }
+      }
+    },
+    "Starcore Diamond": {
+      "rarity": "Legend",
+      "edition": 3,
+      "stars": {
+        "8": {
+          "critRate": 10
+        }
+      }
+    },
+    "High-Lat Energy Cube": {
+      "rarity": "Legend",
+      "edition": 4,
+      "stars": {
+        "8": {
+          "critDamage": 10
+        }
+      }
+    },
+    "Void Bloom": {
+      "rarity": "Legend",
+      "edition": 4,
+      "stars": {
+        "8": {
+          "critDamage": 10
+        }
+      }
+    },
+    "Eye of True Vision": {
+      "rarity": "Legend",
+      "edition": 4,
+      "stars": {
+        "8": {
+          "critRate": 10
+        }
+      }
+    },
+    "Life Hourglass": {
+      "rarity": "Legend",
+      "edition": 4,
+      "stars": {
+        "8": {
+          "critRate": 10
+        }
+      }
+    },
+    "Nano-Mimetic Mask": {
+      "rarity": "Legend",
+      "edition": 5,
+      "stars": {
+        "8": {
+          "critDamage": 10
+        }
+      }
+    },
+    "Dice of Destiny": {
+      "rarity": "Legend",
+      "edition": 5,
+      "stars": {
+        "8": {
+          "critDamage": 10
+        }
+      }
+    },
+    "Dimension Foil": {
+      "rarity": "Legend",
+      "edition": 5,
+      "stars": {
+        "8": {
+          "critRate": 10
+        }
+      }
+    },
+    "Mental Sync Helm": {
+      "rarity": "Legend",
+      "edition": 5,
+      "stars": {
+        "8": {
+          "critRate": 10
+        }
+      }
+    },
+    "Atomic Mech": {
+      "rarity": "Legend",
+      "edition": 6,
+      "stars": {
+        "8": {
+          "critDamage": 10
+        }
+      }
+    },
+    "Time Essence Bottle": {
+      "rarity": "Legend",
+      "edition": 6,
+      "stars": {
+        "8": {
+          "critDamage": 10
+        }
+      }
+    },
+    "Dragon Tooth": {
+      "rarity": "Legend",
+      "edition": 6,
+      "stars": {
+        "8": {
+          "critRate": 10
+        }
+      }
+    },
+    "Hyper Neuron": {
+      "rarity": "Legend",
+      "edition": 6,
+      "stars": {
+        "8": {
+          "critRate": 10
+        }
+      }
+    },
+    "Cyber Totem": {
+      "rarity": "Legend",
+      "edition": 7,
+      "stars": {
+        "8": {
+          "critDamage": 10
+        }
+      }
+    },
+    "Clone Mirror": {
+      "rarity": "Legend",
+      "edition": 7,
+      "stars": {
+        "8": {
+          "critDamage": 10
+        }
+      }
+    },
+    "Dreamscape Puzzle": {
+      "rarity": "Legend",
+      "edition": 7,
+      "stars": {
+        "8": {
+          "critRate": 10
+        }
+      }
+    },
+    "Gene Splicer": {
+      "rarity": "Legend",
+      "edition": 7,
+      "stars": {
+        "8": {
+          "critRate": 10
+        }
+      }
+    },
+    "Memory Editor": {
+      "rarity": "Legend",
+      "edition": 8,
+      "stars": {
+        "8": {
+          "critDamage": 10
+        }
+      }
+    },
+    "Temporal Rewinder": {
+      "rarity": "Legend",
+      "edition": 8,
+      "stars": {
+        "8": {
+          "critDamage": 10
+        }
+      }
+    },
+    "Spatial Rewinder": {
+      "rarity": "Legend",
+      "edition": 8,
+      "stars": {
+        "8": {
+          "critRate": 10
+        }
+      }
+    },
+    "Holodream Fluid": {
+      "rarity": "Legend",
+      "edition": 8,
+      "stars": {
+        "8": {
+          "critRate": 10
+        }
+      }
+    },
+    "Dark Matter Construct": {
+      "rarity": "Legend",
+      "edition": 9,
+      "stars": {
+        "8": {
+          "critDamage": 10
+        }
+      }
+    },
+    "Timeline Cube": {
+      "rarity": "Legend",
+      "edition": 9,
+      "stars": {
+        "8": {
+          "critDamage": 10
+        }
+      }
+    },
+    "Omni-Symbiote": {
+      "rarity": "Legend",
+      "edition": 9,
+      "stars": {
+        "8": {
+          "critRate": 10
+        }
+      }
+    },
+    "Prophet's Tarot": {
+      "rarity": "Legend",
+      "edition": 9,
+      "stars": {
+        "8": {
+          "critRate": 10
+        }
+      }
+    },
+    "Aquarius Starlight": {
+      "rarity": "Legend",
+      "edition": 10,
+      "stars": {
+        "8": {
+          "critDamage": 10
+        }
+      }
+    },
+    "Pisces Starlight": {
+      "rarity": "Legend",
+      "edition": 10,
+      "stars": {
+        "8": {
+          "critDamage": 10
+        }
+      }
+    },
+    "Aries Starlight": {
+      "rarity": "Legend",
+      "edition": 10,
+      "stars": {
+        "8": {
+          "critRate": 10
+        }
+      }
+    },
+    "Taurus Starlight": {
+      "rarity": "Legend",
+      "edition": 10,
+      "stars": {
+        "8": {
+          "critRate": 10
+        }
+      }
+    },
+    "Golden Cutlery": {
+      "rarity": "Epic",
+      "edition": 1,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Old Medical Book": {
+      "rarity": "Epic",
+      "edition": 1,
+      "stars": {
+        "8": {
+          "critRate": 5
+        }
+      }
+    },
+    "Savior's Memento": {
+      "rarity": "Epic",
+      "edition": 1,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Safehouse Map": {
+      "rarity": "Epic",
+      "edition": 1,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Event 1": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Lucky Charm": {
+      "rarity": "Epic",
+      "edition": 2,
+      "stars": {
+        "8": {
+          "critRate": 5
+        }
+      }
+    },
+    "Scientific Luminary's Journal": {
+      "rarity": "Epic",
+      "edition": 2,
+      "stars": {
+        "8": {
+          "critRate": 5
+        }
+      }
+    },
+    "Super Circuit Board": {
+      "rarity": "Epic",
+      "edition": 2,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Mystical Halo": {
+      "rarity": "Epic",
+      "edition": 2,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Event 2": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 3": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Tablet of Epics": {
+      "rarity": "Epic",
+      "edition": 3,
+      "stars": {
+        "8": {
+          "critRate": 5
+        }
+      }
+    },
+    "Primordial War Drum": {
+      "rarity": "Epic",
+      "edition": 3,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Flaming Plume": {
+      "rarity": "Epic",
+      "edition": 3,
+      "stars": {
+        "8": {
+          "critRate": 5
+        }
+      }
+    },
+    "Astral Dewdrop": {
+      "rarity": "Epic",
+      "edition": 3,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Event 4": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 5": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 6": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 7": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 8": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 9": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Nuclear Battery": {
+      "rarity": "Epic",
+      "edition": 4,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Plasma Sword": {
+      "rarity": "Epic",
+      "edition": 4,
+      "stars": {
+        "8": {
+          "critRate": 5
+        }
+      }
+    },
+    "Golden Horn": {
+      "rarity": "Epic",
+      "edition": 4,
+      "stars": {
+        "8": {
+          "critRate": 5
+        }
+      }
+    },
+    "Elemental Ring": {
+      "rarity": "Epic",
+      "edition": 4,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Event 10": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 11": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 12": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 13": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 14": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 15": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 16": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Anti-Gravity Device": {
+      "rarity": "Epic",
+      "edition": 5,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Event 17": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Hydraulic Flipper": {
+      "rarity": "Epic",
+      "edition": 5,
+      "stars": {
+        "8": {
+          "critRate": 5
+        }
+      }
+    },
+    "Superhuman Pill": {
+      "rarity": "Epic",
+      "edition": 5,
+      "stars": {
+        "8": {
+          "critRate": 5
+        }
+      }
+    },
+    "Comms Conch": {
+      "rarity": "Epic",
+      "edition": 5,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Event 18": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 19": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 20": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 21": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 22": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Mini Dyson Sphere": {
+      "rarity": "Epic",
+      "edition": 6,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Micro Artificial Sun": {
+      "rarity": "Epic",
+      "edition": 6,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Klein Bottle": {
+      "rarity": "Epic",
+      "edition": 6,
+      "stars": {
+        "8": {
+          "critRate": 5
+        }
+      }
+    },
+    "Antiparticle Gourd": {
+      "rarity": "Epic",
+      "edition": 6,
+      "stars": {
+        "8": {
+          "critRate": 5
+        }
+      }
+    },
+    "Event 23": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 24": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 25": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 26": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 27": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Wildfire Furnace": {
+      "rarity": "Epic",
+      "edition": 7,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Infinity Score": {
+      "rarity": "Epic",
+      "edition": 7,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Cosmic Compass": {
+      "rarity": "Epic",
+      "edition": 7,
+      "stars": {
+        "8": {
+          "critRate": 5
+        }
+      }
+    },
+    "Wormhole Detector": {
+      "rarity": "Epic",
+      "edition": 7,
+      "stars": {
+        "8": {
+          "critRate": 5
+        }
+      }
+    },
+    "Event 28": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 29": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 30": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 31": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Shuttle Capsule": {
+      "rarity": "Epic",
+      "edition": 8,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Neurochip": {
+      "rarity": "Epic",
+      "edition": 8,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Star-Rail Passenger Card": {
+      "rarity": "Epic",
+      "edition": 8,
+      "stars": {
+        "8": {
+          "critRate": 5
+        }
+      }
+    },
+    "Portable Mech Case": {
+      "rarity": "Epic",
+      "edition": 8,
+      "stars": {
+        "8": {
+          "critRate": 5
+        }
+      }
+    },
+    "Event 32": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 33": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 34": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 35": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Geocore Orb": {
+      "rarity": "Epic",
+      "edition": 9,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Aquacore Orb": {
+      "rarity": "Epic",
+      "edition": 9,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Pyrocore Orb": {
+      "rarity": "Epic",
+      "edition": 9,
+      "stars": {
+        "8": {
+          "critRate": 5
+        }
+      }
+    },
+    "Aerocore Orb": {
+      "rarity": "Epic",
+      "edition": 9,
+      "stars": {
+        "8": {
+          "critRate": 5
+        }
+      }
+    },
+    "Event 36": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 37": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 38": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 39": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 40": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Event 41": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Gemini Starlight": {
+      "rarity": "Epic",
+      "edition": 10,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Cancer Starlight": {
+      "rarity": "Epic",
+      "edition": 10,
+      "stars": {
+        "8": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Leo Starlight": {
+      "rarity": "Epic",
+      "edition": 10,
+      "stars": {
+        "8": {
+          "critRate": 5
+        }
+      }
+    },
+    "Virgo Starlight": {
+      "rarity": "Epic",
+      "edition": 10,
+      "stars": {
+        "8": {
+          "critRate": 5
+        }
+      }
+    },
+    "Event 42": {
+      "rarity": "Epic",
+      "starsCount": 6
+    },
+    "Excellent": {
+      "rarity": "Excellent",
+      "starsCount": 8
+    }
+  },
+  "harmony": {
+    "stars": {
+      "1": {
+        "critRate": 2
+      },
+      "3": {
+        "critRate": 3
+      },
+      "6": {
+        "critRate": 5
+      },
+      "9": {
+        "critRate": 5
+      },
+      "12": {
+        "critRate": 5
+      },
+      "15": {
+        "critRate": 5
+      },
+      "18": {
+        "critRate": 5
+      }
+    },
+    "level": {
+      "Common": {
+        "1": {
+          "harmonyCommon": 30
+        },
+        "2": {
+          "harmonyCommon": 15
+        },
+        "4": {
+          "harmonyCommon": 15
+        },
+        "5": {
+          "skillDamage": 20
+        }
+      },
+      "King": {
+        "1": {
+          "harmonyKing": 16.6544
+        },
+        "2": {
+          "harmonyKing": 16.6544
+        },
+        "3": {
+          "vulnerability": 5
+        },
+        "4": {
+          "harmonyKing": 16.6544
+        },
+        "5": {
+          "vulnerability": 5
+        }
+      },
+      "Master Yang": {
+        "1": {
+          "harmonyYang": 131
+        },
+        "2": {
+          "harmonyYang": 86.46000000000001
+        },
+        "3": {
+          "vulnerability": 25
+        },
+        "4": {
+          "harmonyYang": 22.270000000000003
+        },
+        "5": {
+          "vulnerability": 25
+        }
+      },
+      "Metalia": {
+        "1": {
+          "harmonyMetalia": 35.68,
+          "poisonedUptime": 0.1111111111111111,
+          "weakenedUptime": 0.1111111111111111,
+          "chilledUptime": 0.1111111111111111
+        },
+        "2": {
+          "weakened": 25,
+          "chilled": 25
+        },
+        "3": {
+          "poisoned": 25,
+          "chilled": 25
+        },
+        "4": {
+          "harmonyMetalia": 71.36,
+          "poisonedUptime": 1,
+          "weakenedUptime": 1,
+          "chilledUptime": 1
+        },
+        "5": {
+          "poisoned": 25,
+          "weakened": 25,
+          "harmonyMetalia": 53.519999999999996
+        }
+      },
+      "Joey": {
+        "1": {
+          "harmonyJoey": 89.2
+        },
+        "2": {
+          "harmonyJoey": 11.863600000000002
+        },
+        "3": {
+          "exposedDamage": 1.5,
+          "harmonyJoey": 35.68,
+          "weakenedUptime": 0.625
+        },
+        "4": {
+          "harmonyJoey": 34.5204
+        },
+        "5": {
+          "exposedDamage": 1.5,
+          "harmonyJoey": 85.632
+        }
+      },
+      "Taloxa": {
+        "1": {
+          "harmonyTaloxa": 33
+        },
+        "2": {
+          "harmonyTaloxa": 9.9
+        },
+        "3": {
+          "laceration": 20,
+          "harmonyTaloxa": 42.9
+        },
+        "4": {
+          "harmonyTaloxa": 33
+        },
+        "5": {
+          "laceration": 30,
+          "harmonyTaloxa": 9.9
+        }
+      },
+      "Venato": {
+        "1": {},
+        "2": {},
+        "3": {
+          "damageBoss": 15
+        },
+        "4": {},
+        "5": {
+          "damageBoss": 25
+        }
+      }
+    }
+  },
+  "items": {
+    "Twin Lance": {
+      "baseAtk": 952,
+      "atkGrowth": 60,
+      "rarity": "SS",
+      "type": "Weapon",
+      "stats": {
+        "skillDamage": 60,
+        "vulnerability": 10,
+        "atkPercent": 40
+      },
+      "af": {
+        "e": {
+          "2": {
+            "atkPercent": 10
+          },
+          "3": {
+            "skillDamage": 10
+          },
+          "4": {
+            "atkFinal": 4000
+          },
+          "5": {
+            "skillDamage": 35
+          }
+        },
+        "v": {
+          "1": {
+            "atkPercent": 10
+          },
+          "2": {
+            "vulnerability": 10
+          },
+          "3": {
+            "atkFinal": 4000
+          },
+          "4": {
+            "ssMiscPath": 80
+          },
+          "5": {
+            "atkFinal": 8000
+          }
+        },
+        "c": {
+          "2": {
+            "vulnerability": 10,
+            "ssMiscPath": 80
+          },
+          "4": {
+            "weakened": 20
+          },
+          "6": {
+            "ssMiscPath": 30
+          },
+          "8": {
+            "chilled": 30
+          },
+          "10": {
+            "ssMiscPath": 80
+          }
+        },
+        "cfp": {
+          "3": {
+            "vulnerability": 10
+          },
+          "6": {
+            "vulnerability": 20,
+            "ssMiscPath": 30
+          },
+          "12": {
+            "skillDamage": 10,
+            "shieldDamage": 10,
+            "ssMiscPath": 30
+          },
+          "15": {
+            "skillDamage": 10,
+            "shieldDamage": 10,
+            "ssMiscPath": 30
+          },
+          "18": {
+            "skillDamage": 20,
+            "shieldDamage": 10
+          },
+          "21": {
+            "vulnerability": 30
+          },
+          "24": {
+            "critDamage": 50
+          },
+          "27": {
+            "critDamage": 80,
+            "skillDamage": 60
+          },
+          "30": {
+            "shieldDamage": 20,
+            "weakened": 25,
+            "weakenedUptime": 1
+          },
+          "33": {
+            "critDamage": 40,
+            "skillDamage": 40,
+            "ssMiscPath": 12
+          },
+          "36": {
+            "critDamage": 75,
+            "shieldDamage": 60
+          },
+          "42": {
+            "damageBoss": 10
+          },
+          "45": {
+            "damageBoss": 10,
+            "shieldDamage": 20
+          }
+        },
+        "x": {
+          "1": {
+            "ssMiscPath": 5
+          },
+          "2": {
+            "atkPercent": 10
+          },
+          "4": {
+            "laceration": 15
+          },
+          "6": {
+            "atkPercent": 15
+          },
+          "7": {
+            "ssMiscPath": 10
+          },
+          "9": {
+            "skillDamage": 105
+          },
+          "10": {
+            "atkPercent": 20
+          },
+          "11": {
+            "skillDamage": 50
+          },
+          "12": {
+            "laceration": 25
+          }
+        }
+      },
+      "sets": {
+        "Erudite Heirloom": {
+          "collectibles": [
+            "Human Genome Mapping",
+            "Book of Ancient Wisdom",
+            "Otherworld Key",
+            "Starcore Diamond"
+          ],
+          "stars": {
+            "total": {
+              "25": {
+                "vulnerability": 15
+              }
+            },
+            "goldEach": {
+              "3": {
+                "ssMiscPath": 20
+              }
+            }
+          }
+        },
+        "Summon the Stand-in!": {
+          "collectibles": [
+            "Dark Matter Construct",
+            "Timeline Cube",
+            "Omni-Symbiote",
+            "Prophet's Tarot"
+          ],
+          "stars": {
+            "redEach": {
+              "3": {
+                "damageBoss": 20
+              }
+            }
+          }
+        }
+      }
+    },
+    "Evervoid Armor": {
+      "rarity": "SS",
+      "type": "Armor",
+      "stats": {
+        "clarity": 20
+      },
+      "af": {
+        "e": {
+          "1": {
+            "shieldDamage": 10
+          },
+          "3": {
+            "shieldDamage": 10
+          },
+          "5": {
+            "shieldDamage": 20
+          }
+        },
+        "v": {
+          "2": {
+            "skillDamage": 10
+          },
+          "4": {
+            "clarity": 15
+          }
+        },
+        "c": {
+          "2": {
+            "shieldDamage": 10
+          },
+          "4": {
+            "skillDamage": 20
+          },
+          "6": {
+            "skillDamage": 20
+          },
+          "8": {
+            "poisoned": 30
+          },
+          "10": {
+            "shieldDamage": 30
+          }
+        },
+        "x": {
+          "1": {
+            "ssMiscPath": 5
+          },
+          "3": {
+            "ssMiscPath": 5
+          },
+          "4": {
+            "critDamage": 40
+          },
+          "7": {
+            "ssMiscPath": 5
+          },
+          "8": {
+            "shieldDamage": 20
+          },
+          "9": {
+            "laceration": 15
+          },
+          "11": {
+            "shieldDamage": 20
+          },
+          "12": {
+            "skillDamage": 40
+          }
+        }
+      },
+      "sets": {
+        "Otherworld Treasure": {
+          "collectibles": [
+            "Immortal Lucky Coin",
+            "Instellar Transition Matrix Design",
+            "Angelic Tear Crystal",
+            "Unicorn's Horn"
+          ],
+          "stars": {
+            "goldEach": {
+              "3": {
+                "shieldDamage": 5
+              }
+            },
+            "redEach": {
+              "3": {
+                "clarity": 10
+              }
+            },
+            "total": {
+              "25": {
+                "skillDamage": 20
+              }
+            }
+          }
+        }
+      }
+    },
+    "Eternal Suit": {
+      "rarity": "Legend",
+      "type": "Armor",
+      "coreType": "e",
+      "stats": {
+        "eternalSuitBoost": 15
+      },
+      "af": {
+        "base": {
+          "3": {
+            "eternalSuitBoost": 5
+          }
+        }
+      },
+      "collectibles": {
+        "High-Lat Energy Cube": {
+          "stars": {
+            "10": {
+              "skillDamage": 20
+            }
+          }
+        },
+        "Klein Bottle": {
+          "stars": {
+            "10": {
+              "skillDamage": 10
+            }
+          }
+        },
+        "Omni-Symbiote": {
+          "stars": {
+            "10": {
+              "skillDamage": 20
+            }
+          }
+        }
+      }
+    },
+    "Judgment Necklace": {
+      "baseAtk": 793,
+      "atkGrowth": 50,
+      "rarity": "SS",
+      "type": "Necklace",
+      "stats": {
+        "weakened": 25,
+        "weakenedUptime": 1,
+        "atkPercent": 40
+      },
+      "af": {
+        "e": {
+          "1": {
+            "skillDamage": 50
+          },
+          "2": {
+            "atkPercent": 10
+          },
+          "3": {
+            "weakened": 10
+          },
+          "4": {
+            "atkFinal": 4000
+          },
+          "5": {
+            "weakened": 4
+          }
+        },
+        "v": {
+          "1": {
+            "atkPercent": 10
+          },
+          "2": {
+            "critDamage": 36
+          },
+          "3": {
+            "atkFinal": 4000
+          },
+          "4": {
+            "critRate": 0,
+            "critDamage": 60
+          },
+          "5": {
+            "atkFinal": 8000
+          }
+        },
+        "c": {
+          "2": {
+            "critDamage": 25
+          },
+          "4": {
+            "skillDamage": 20
+          },
+          "6": {
+            "skillDamage": 40
+          },
+          "8": {
+            "weakened": 30
+          },
+          "10": {
+            "weakened": 40
+          }
+        },
+        "x": {
+          "1": {
+            "ssMiscPath": 5
+          },
+          "2": {
+            "atkPercent": 10
+          },
+          "3": {
+            "ssMiscPath": 5
+          },
+          "4": {
+            "weakened": 60
+          },
+          "6": {
+            "atkPercent": 15
+          },
+          "7": {
+            "ssMiscPath": 10
+          },
+          "8": {
+            "weakened": 100
+          },
+          "9": {
+            "critDamage": 120
+          },
+          "10": {
+            "atkPercent": 20
+          },
+          "11": {
+            "shieldDamage": 60
+          },
+          "12": {
+            "laceration": 15
+          }
+        }
+      },
+      "sets": {
+        "Meaning of Life": {
+          "collectibles": [
+            "High-Lat Energy Cube",
+            "Void Bloom",
+            "Eye of True Vision",
+            "Life Hourglass"
+          ],
+          "stars": {
+            "goldEach": {
+              "3": {
+                "skillDamage": 10
+              }
+            },
+            "redEach": {
+              "3": {
+                "weakened": 10
+              }
+            },
+            "total": {
+              "25": {
+                "critDamage": 18
+              }
+            }
+          }
+        }
+      }
+    },
+    "Voidwaker Emblem": {
+      "baseAtk": 508,
+      "atkGrowth": 32,
+      "rarity": "Legend",
+      "type": "Necklace",
+      "coreType": "v",
+      "stats": {
+        "critRate": 40,
+        "voidNeckBoost": 40,
+        "atkPercent": 40
+      },
+      "af": {
+        "base": {
+          "2": {
+            "atkPercent": 20
+          }
+        }
+      },
+      "collectibles": {
+        "Lucky Charm": {
+          "stars": {
+            "5": {
+              "voidNeckBoost": 10
+            },
+            "10": {
+              "critRate": 10
+            }
+          }
+        },
+        "Memory Editor": {
+          "stars": {
+            "3": {
+              "critRate": 20
+            },
+            "5": {
+              "critRate": 20
+            },
+            "10": {
+              "voidNeckBoost": 20
+            }
+          }
+        }
+      }
+    },
+    "Stardust Sash": {
+      "rarity": "SS",
+      "type": "Belt",
+      "stats": {
+        "skillDamage": 30,
+        "eternalMultiplier": 25
+      },
+      "af": {
+        "e": {
+          "1": {
+            "eternalMultiplier": 25
+          },
+          "3": {
+            "skillDamage": 25
+          },
+          "5": {
+            "critDamage": 50
+          }
+        },
+        "v": {
+          "2": {
+            "shieldDamage": 10
+          },
+          "4": {
+            "shieldDamage": 20
+          }
+        },
+        "c": {
+          "2": {
+            "skillDamage": 20
+          },
+          "4": {
+            "critDamage": 20
+          },
+          "6": {
+            "eternalMultiplier": 15
+          },
+          "8": {
+            "skillDamage": 30
+          },
+          "10": {
+            "shieldDamage": 30
+          }
+        }
+      },
+      "sets": {
+        "Interdimension Movement": {
+          "collectibles": [
+            "Nano-Mimetic Mask",
+            "Dice of Destiny",
+            "Dimension Foil",
+            "Mental Sync Helm"
+          ],
+          "stars": {
+            "goldEach": {
+              "3": {
+                "shieldDamage": 10
+              }
+            },
+            "redEach": {
+              "3": {
+                "skillDamage": 25
+              }
+            },
+            "total": {
+              "25": {
+                "eternalMultiplier": 5
+              }
+            }
+          }
+        }
+      }
+    },
+    "Twisting Belt": {
+      "rarity": "Legend",
+      "type": "Belt",
+      "coreType": "c",
+      "stats": {
+        "minEnergyFlux": 90,
+        "maxEnergyFlux": 160
+      },
+      "af": {
+        "base": {
+          "1": {
+            "minEnergyFlux": -10,
+            "maxEnergyFlux": 20
+          },
+          "3": {
+            "maxEnergyFlux": 20
+          }
+        }
+      },
+      "collectibles": {
+        "Safehouse Map": {
+          "stars": {
+            "5": {
+              "maxEnergyFlux": 10
+            },
+            "10": {
+              "maxEnergyFlux": 10
+            }
+          }
+        },
+        "Holodream Fluid": {
+          "stars": {
+            "3": {
+              "maxEnergyFlux": 15
+            },
+            "5": {
+              "maxEnergyFlux": 15
+            },
+            "10": {
+              "maxEnergyFlux": 30
+            }
+          }
+        },
+        "Taurus Starlight": {
+          "stars": {
+            "3": {
+              "maxEnergyFlux": 15
+            },
+            "5": {
+              "maxEnergyFlux": 15
+            },
+            "10": {
+              "maxEnergyFlux": 30
+            }
+          }
+        }
+      }
+    },
+    "Moonscar Bracer": {
+      "baseAtk": 793,
+      "atkGrowth": 50,
+      "rarity": "SS",
+      "type": "Gloves",
+      "stats": {
+        "critRate": 30,
+        "shieldDamage": 10,
+        "ssGlovesLaser": 100,
+        "atkPercent": 40
+      },
+      "af": {
+        "e": {
+          "2": {
+            "atkPercent": 10
+          },
+          "4": {
+            "atkFinal": 4000
+          }
+        },
+        "v": {
+          "1": {
+            "atkPercent": 10
+          },
+          "2": {
+            "shieldDamage": 20
+          },
+          "3": {
+            "atkFinal": 4000
+          },
+          "4": {
+            "ssGlovesLaser": 30
+          },
+          "5": {
+            "atkFinal": 8000
+          }
+        },
+        "c": {
+          "2": {
+            "shieldDamage": 20
+          },
+          "4": {
+            "critDamage": 20
+          },
+          "6": {
+            "critDamage": 60
+          },
+          "8": {
+            "poisoned": 30
+          },
+          "10": {
+            "critDamage": 60,
+            "critRate": 40,
+            "shieldDamage": 20
+          }
+        }
+      },
+      "sets": {
+        "Summon the Divine Dragon": {
+          "collectibles": [
+            "Atomic Mech",
+            "Time Essence Bottle",
+            "Dragon Tooth",
+            "Hyper Neuron"
+          ],
+          "stars": {
+            "goldEach": {
+              "3": {
+                "shieldDamage": 10
+              }
+            }
+          }
+        }
+      }
+    },
+    "Voidwaker Handguards": {
+      "baseAtk": 445,
+      "atkGrowth": 28,
+      "rarity": "Legend",
+      "type": "Gloves",
+      "coreType": "v",
+      "stats": {
+        "damageBoss": 50,
+        "atkPercent": 40
+      },
+      "af": {
+        "base": {
+          "2": {
+            "atkPercent": 20
+          },
+          "3": {
+            "voidGlovesInstakill": 1.06951871657754
+          }
+        }
+      },
+      "collectibles": {
+        "Savior's Memento": {
+          "stars": {
+            "5": {
+              "damageBoss": 20
+            }
+          }
+        },
+        "Hyper Neuron": {
+          "stars": {
+            "10": {
+              "damageBoss": 30
+            }
+          }
+        },
+        "Portable Mech Case": {}
+      }
+    },
+    "Glacial Warboots": {
+      "rarity": "SS",
+      "type": "Boots",
+      "stats": {
+        "chilled": 15,
+        "glacialBloodline": 60,
+        "chilledUptime": 1
+      },
+      "af": {
+        "e": {
+          "1": {
+            "shieldDamage": 20
+          },
+          "3": {
+            "shieldDamage": 21
+          },
+          "5": {
+            "shieldDamage": 4,
+            "glacialBloodline": 12
+          }
+        },
+        "v": {
+          "2": {
+            "chilled": 20
+          },
+          "4": {
+            "vulnerability": 10,
+            "chilled": 20
+          }
+        },
+        "c": {
+          "2": {
+            "shieldDamage": 20
+          },
+          "4": {
+            "skillDamage": 20
+          },
+          "8": {
+            "chilled": 30
+          },
+          "10": {
+            "chilled": 30
+          }
+        }
+      },
+      "sets": {
+        "Conduct Experiments": {
+          "collectibles": [
+            "Cyber Totem",
+            "Clone Mirror",
+            "Dreamscape Puzzle",
+            "Gene Splicer"
+          ],
+          "stars": {
+            "redEach": {
+              "3": {
+                "shieldDamage": 10,
+                "glacialBloodline": 12
+              }
+            },
+            "total": {
+              "25": {
+                "chilled": 50
+              }
+            }
+          }
+        }
+      }
+    },
+    "Voidwaker Treads": {
+      "rarity": "Legend",
+      "type": "Boots",
+      "coreType": "v",
+      "stats": {
+        "voidBootsBoost": 50
+      },
+      "af": {},
+      "collectibles": {
+        "Flaming Plume": {
+          "stars": {}
+        },
+        "Gene Splicer": {
+          "stars": {}
+        }
+      }
+    }
+  },
+  "evoTree": {
+    "Expose Weakness": {
+      "critRate": 8
+    },
+    "Viva la Materia": {
+      "skillDamage": 5
+    },
+    "Overreaction": {},
+    "Watchmaker": {
+      "atkEquipPercent": 5
+    }
+  },
+  "turf": {
+    "atkEquipPercent": [
+      [
+        0,
+        3,
+        6,
+        9,
+        12,
+        15
+      ],
+      [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24
+      ]
+    ],
+    "atkHeroPercent": [
+      [
+        0,
+        2,
+        4,
+        6,
+        8
+      ],
+      [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24
+      ]
+    ],
+    "lme1Damage": [
+      [
+        0,
+        5,
+        10,
+        15,
+        20
+      ],
+      [
+        0,
+        10,
+        20,
+        30,
+        40,
+        50
+      ],
+      [
+        0,
+        15,
+        30,
+        45,
+        60,
+        75,
+        90
+      ],
+      [
+        0,
+        15,
+        30,
+        45,
+        60,
+        75,
+        90
+      ]
+    ]
+  },
+  "petSkills": {
+    "Default": {
+      "Motivation": {
+        "Excellent": {
+          "critRate": 3
+        },
+        "Advanced": {
+          "critRate": 4
+        },
+        "Super": {
+          "critRate": 5
+        }
+      },
+      "Inspiration": {
+        "Excellent": {
+          "critDamage": 6
+        },
+        "Super": {
+          "critDamage": 10
+        }
+      },
+      "Encouragement": {
+        "Excellent": {
+          "skillDamage": 3
+        },
+        "Super": {
+          "skillDamage": 5
+        }
+      },
+      "Battle Lust": {
+        "Excellent": {},
+        "Advanced": {},
+        "Super": {}
+      },
+      "Gary": {
+        "Excellent": {},
+        "Advanced": {},
+        "Super": {}
+      }
+    },
+    "Xeno": {
+      "Sync Rate": "xenoSyncRate",
+      "Resonance Chance": "xenoResChance",
+      "Resonance Damage": "xenoResDamage",
+      "Shield Damage": "shieldDamage",
+      "Dmg to Poisoned": "poisoned",
+      "Dmg to Weakened": "weakened",
+      "Dmg to Chilled": "chilled",
+      "Atk Percent": "atkPercent"
+    }
+  },
+  "techs": {
+    "Energy Guidance System": {
+      "Drone Mode": {
+        "type": "twin",
+        "rarity": {
+          "Eternal": {
+            "weakened": 50
+          },
+          "Legend": {
+            "skillDamage": 75
+          }
+        },
+        "deployedRarity": {},
+        "resonance": {
+          "100": {
+            "skillDamage": 20
+          },
+          "300": {
+            "weakened": 20
+          },
+          "450": {
+            "weakened": 10
+          },
+          "600": {
+            "skillDamage": 25,
+            "weakened": 20
+          },
+          "1200": {
+            "weakened": 15
+          },
+          "1650": {
+            "skillDamage": 15
+          },
+          "2550": {
+            "weakened": 15
+          },
+          "3000": {
+            "skillDamage": 15
+          },
+          "7500": {
+            "weakened": 20
+          },
+          "9000": {
+            "skillDamage": 30
+          },
+          "12000": {
+            "skillDamage": 30
+          },
+          "15000": {
+            "skillDamage": 30
+          }
+        },
+        "deployedResonance": {
+          "200": {
+            "vulnerability": 15
+          },
+          "300": {
+            "weakenedUptime": 1
+          },
+          "900": {
+            "vulnerability": 15
+          },
+          "2100": {
+            "vulnerability": 15
+          },
+          "6000": {
+            "vulnerability": 15
+          },
+          "10500": {
+            "vulnerability": 20,
+            "weakened": 25
+          },
+          "13500": {
+            "vulnerability": 20,
+            "weakened": 25
+          }
+        },
+        "overload": {
+          "1": {
+            "weakened": 10
+          },
+          "2": {
+            "vulnerability": 5,
+            "skillDamage": 25
+          },
+          "3": {
+            "weakened": 15
+          },
+          "5": {
+            "vulnerability": 10,
+            "skillDamage": 30
+          },
+          "6": {
+            "weakened": 20
+          },
+          "8": {
+            "skillDamage": 35,
+            "laceration": 5
+          },
+          "9": {
+            "weakened": 30
+          },
+          "11": {
+            "vulnerability": 20,
+            "weakened": 35
+          },
+          "12": {
+            "laceration": 5
+          },
+          "14": {
+            "skillDamage": 40,
+            "laceration": 10
+          },
+          "15": {
+            "weakened": 40
+          },
+          "17": {
+            "vulnerability": 30,
+            "laceration": 15
+          },
+          "18": {
+            "skillDamage": 50
+          }
+        },
+        "collectibles": {
+          "Dark Matter Construct": {
+            "stars": {}
+          }
+        },
+        "sets": {
+          "Transgalactic Tentacle": {
+            "collectibles": [
+              "Instellar Transition Matrix Design",
+              "Hyper Neuron",
+              "Hydraulic Flipper",
+              "Klein Bottle"
+            ],
+            "stars": {}
+          }
+        }
+      },
+      "Forcefield Mode": {
+        "type": "twin",
+        "rarity": {
+          "Eternal": {
+            "critRate": 20,
+            "critDamage": 160
+          },
+          "Legend": {
+            "skillDamage": 120
+          }
+        },
+        "deployedRarity": {},
+        "resonance": {
+          "100": {
+            "critRate": 5
+          },
+          "200": {
+            "skillDamage": 20
+          },
+          "450": {
+            "critRate": 5
+          },
+          "600": {
+            "skillDamage": 20
+          },
+          "1200": {
+            "skillDamage": 10
+          },
+          "1650": {
+            "critRate": 5
+          },
+          "2550": {
+            "skillDamage": 10
+          },
+          "4500": {
+            "skillDamage": 10
+          },
+          "6000": {
+            "critRate": 5
+          },
+          "7500": {
+            "critDamage": 20
+          },
+          "9000": {
+            "skillDamage": 10
+          },
+          "10500": {
+            "critRate": 15
+          },
+          "12000": {
+            "critDamage": 35
+          },
+          "13500": {
+            "skillDamage": 40
+          }
+        },
+        "deployedResonance": {
+          "300": {
+            "critRate": 5,
+            "critDamage": 15,
+            "vulnerability": 20
+          },
+          "900": {
+            "critRate": 5,
+            "critDamage": 15,
+            "vulnerability": 20
+          },
+          "2100": {
+            "critRate": 5,
+            "critDamage": 10,
+            "vulnerability": 25
+          },
+          "3000": {
+            "critRate": 5,
+            "critDamage": 10,
+            "vulnerability": 25
+          },
+          "15000": {
+            "critRate": 5,
+            "critDamage": 5,
+            "vulnerability": 45
+          }
+        },
+        "overload": {
+          "1": {
+            "skillDamage": 10
+          },
+          "2": {
+            "vulnerability": 10,
+            "critDamage": 15
+          },
+          "3": {
+            "skillDamage": 20,
+            "critDamage": 15
+          },
+          "4": {
+            "shieldDamage": 10
+          },
+          "5": {
+            "vulnerability": 15,
+            "critRate": 10
+          },
+          "6": {
+            "skillDamage": 25,
+            "critDamage": 20
+          },
+          "7": {
+            "shieldDamage": 15
+          },
+          "8": {
+            "vulnerability": 15,
+            "critRate": 10
+          },
+          "9": {
+            "skillDamage": 35,
+            "critDamage": 30
+          },
+          "10": {
+            "shieldDamage": 20
+          },
+          "11": {
+            "vulnerability": 20,
+            "critRate": 10
+          },
+          "12": {
+            "skillDamage": 40,
+            "critDamage": 45
+          },
+          "13": {
+            "shieldDamage": 25
+          },
+          "14": {
+            "vulnerability": 20,
+            "critRate": 10
+          },
+          "15": {
+            "skillDamage": 50,
+            "critDamage": 55
+          },
+          "16": {
+            "shieldDamage": 30
+          },
+          "17": {
+            "vulnerability": 20,
+            "critRate": 10
+          },
+          "18": {
+            "skillDamage": 60,
+            "critDamage": 60
+          }
+        },
+        "sets": {
+          "Impression Idols": {
+            "collectibles": [
+              "Nano-Mimetic Mask",
+              "Clone Mirror",
+              "Cosmic Compass",
+              "Infinity Score"
+            ],
+            "stars": {
+              "gold": {
+                "20": {
+                  "critDamage": 15,
+                  "vulnerability": 10
+                }
+              },
+              "red": {
+                "20": {
+                  "critDamage": 15,
+                  "skillDamage": 20,
+                  "vulnerability": 10
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Antimatter Maintainer": {
+      "Drill Shot Mode": {
+        "type": "twin",
+        "rarity": {
+          "Eternal": {
+            "shieldDamage": 75
+          },
+          "Legend": {
+            "critDamage": 50
+          }
+        },
+        "deployedRarity": {
+          "Eternal": {
+            "vulnerability": 5
+          },
+          "Legend": {
+            "chilledUptime": 1
+          }
+        },
+        "resonance": {
+          "100": {
+            "shieldDamage": 15
+          },
+          "300": {
+            "chilled": 10
+          },
+          "450": {
+            "critDamage": 20
+          },
+          "900": {
+            "laceration": 30
+          },
+          "1650": {
+            "critDamage": 20
+          },
+          "2550": {
+            "chilled": 20
+          },
+          "4500": {
+            "shieldDamage": 20
+          },
+          "7500": {
+            "laceration": 30
+          },
+          "10500": {
+            "critDamage": 30,
+            "shieldDamage": 30
+          },
+          "12000": {
+            "chilled": 10
+          },
+          "13500": {
+            "laceration": 20
+          }
+        },
+        "deployedResonance": {
+          "200": {
+            "chilled": 29.05
+          },
+          "450": {
+            "chilled": 29.52
+          },
+          "900": {
+            "chilled": 28.580000000000005
+          },
+          "9000": {
+            "chilled": 28.099999999999994
+          },
+          "13500": {
+            "chilled": 31.900000000000006
+          },
+          "15000": {
+            "chilled": 10
+          }
+        },
+        "overload": {
+          "1": {
+            "chilled": 10
+          },
+          "2": {
+            "critDamage": 15,
+            "shieldDamage": 10
+          },
+          "3": {
+            "chilled": 15
+          },
+          "4": {
+            "critDamage": 15
+          },
+          "5": {
+            "critDamage": 15,
+            "shieldDamage": 15
+          },
+          "6": {
+            "chilled": 15
+          },
+          "7": {
+            "critDamage": 15
+          },
+          "8": {
+            "critDamage": 30,
+            "shieldDamage": 20
+          },
+          "9": {
+            "laceration": 5
+          },
+          "10": {
+            "chilled": 20
+          },
+          "11": {
+            "critDamage": 30,
+            "shieldDamage": 25
+          },
+          "12": {
+            "laceration": 10
+          },
+          "13": {
+            "chilled": 25
+          },
+          "14": {
+            "critDamage": 30,
+            "shieldDamage": 35
+          },
+          "15": {
+            "laceration": 10
+          },
+          "16": {
+            "chilled": 30
+          },
+          "17": {
+            "critDamage": 30,
+            "shieldDamage": 45
+          },
+          "18": {
+            "laceration": 15,
+            "chilled": 35
+          }
+        },
+        "sets": {
+          "Multiverse Perspective": {
+            "collectibles": [
+              "Eye of True Vision",
+              "Dreamscape Puzzle",
+              "Wildfire Furnace",
+              "Wormhole Detector"
+            ],
+            "stars": {}
+          }
+        }
+      },
+      "Rocket Mode": {
+        "type": "twin",
+        "rarity": {
+          "Eternal": {
+            "skillDamage": 75
+          },
+          "Legend": {
+            "shieldDamage": 50
+          }
+        },
+        "deployedRarity": {
+          "Legend": {
+            "poisonedUptime": 1
+          }
+        },
+        "resonance": {
+          "200": {
+            "skillDamage": 25
+          },
+          "900": {
+            "shieldDamage": 30,
+            "laceration": 25
+          },
+          "1650": {
+            "skillDamage": 20
+          },
+          "3000": {
+            "shieldDamage": 20
+          },
+          "4500": {
+            "skillDamage": 15,
+            "shieldDamage": 15
+          },
+          "9000": {
+            "laceration": 25
+          },
+          "10500": {
+            "shieldDamage": 35
+          },
+          "12000": {
+            "skillDamage": 40
+          },
+          "15000": {
+            "laceration": 25
+          }
+        },
+        "deployedResonance": {
+          "200": {
+            "chilledUptime": 1
+          },
+          "300": {
+            "poisoned": 50
+          },
+          "600": {
+            "poisoned": 50
+          },
+          "2550": {
+            "poisoned": 20
+          },
+          "7500": {
+            "poisoned": 30
+          },
+          "13500": {
+            "poisoned": 50
+          }
+        },
+        "overload": {
+          "1": {
+            "poisoned": 10
+          },
+          "2": {
+            "skillDamage": 15,
+            "shieldDamage": 15
+          },
+          "3": {
+            "poisoned": 15
+          },
+          "4": {
+            "skillDamage": 20
+          },
+          "5": {
+            "skillDamage": 20,
+            "shieldDamage": 20
+          },
+          "6": {
+            "poisoned": 15
+          },
+          "7": {
+            "laceration": 5
+          },
+          "8": {
+            "skillDamage": 25,
+            "shieldDamage": 25
+          },
+          "9": {
+            "laceration": 5
+          },
+          "10": {
+            "poisoned": 20
+          },
+          "11": {
+            "skillDamage": 35,
+            "shieldDamage": 30
+          },
+          "12": {
+            "laceration": 10
+          },
+          "13": {
+            "poisoned": 25
+          },
+          "14": {
+            "skillDamage": 40,
+            "shieldDamage": 40
+          },
+          "15": {
+            "laceration": 10
+          },
+          "16": {
+            "poisoned": 30
+          },
+          "17": {
+            "skillDamage": 45,
+            "shieldDamage": 50
+          },
+          "18": {
+            "poisoned": 35,
+            "laceration": 15
+          }
+        },
+        "sets": {
+          "Hyperrift Tech": {
+            "collectibles": [
+              "Life Hourglass",
+              "Dimension Foil",
+              "Super Circuit Board",
+              "Comms Conch"
+            ],
+            "stars": {}
+          }
+        }
+      }
+    },
+    "Quantum Nanobot": {
+      "Soccer Mode": {
+        "type": "twin",
+        "rarity": {
+          "Eternal": {
+            "shieldDamage": 20,
+            "chilled": 30
+          },
+          "Legend": {
+            "critDamage": 80
+          }
+        },
+        "deployedRarity": {},
+        "resonance": {
+          "100": {
+            "chilled": 25
+          },
+          "200": {
+            "shieldDamage": 10
+          },
+          "450": {
+            "critDamage": 30
+          },
+          "600": {
+            "shieldDamage": 10,
+            "chilled": 25
+          },
+          "900": {
+            "critDamage": 30
+          }
+        },
+        "deployedResonance": {
+          "100": {
+            "chilledUptime": 1
+          },
+          "1200": {
+            "critDamage": 10
+          },
+          "1650": {
+            "shieldDamage": 10
+          },
+          "2100": {
+            "chilled": 10
+          },
+          "2550": {
+            "critDamage": 15
+          },
+          "3000": {
+            "shieldDamage": 15
+          },
+          "4500": {
+            "chilled": 15
+          },
+          "6000": {
+            "shieldDamage": 15,
+            "chilled": 15
+          },
+          "7500": {
+            "critDamage": 15
+          },
+          "9000": {
+            "critDamage": 20,
+            "chilled": 20
+          },
+          "10500": {
+            "chilled": 35
+          },
+          "12000": {
+            "shieldDamage": 20
+          },
+          "13500": {
+            "critDamage": 30,
+            "chilled": 35
+          },
+          "15000": {
+            "critDamage": 30,
+            "shieldDamage": 20
+          }
+        },
+        "sets": {
+          "Open Void Gate": {
+            "collectibles": [
+              "Angelic Tear Crystal",
+              "Otherworld Key",
+              "Micro Artificial Sun",
+              "Antiparticle Gourd"
+            ],
+            "stars": {}
+          }
+        }
+      },
+      "Durian Mode": {
+        "type": "twin",
+        "rarity": {
+          "Eternal": {
+            "critDamage": 75
+          },
+          "Legend": {
+            "skillDamage": 75
+          }
+        },
+        "deployedRarity": {},
+        "resonance": {
+          "450": {
+            "shieldDamage": 20
+          },
+          "1200": {
+            "shieldDamage": 10
+          },
+          "2100": {
+            "shieldDamage": 10
+          },
+          "6000": {
+            "shieldDamage": 10
+          },
+          "12000": {
+            "shieldDamage": 10
+          }
+        },
+        "deployedResonance": {
+          "300": {
+            "poisonedUptime": 1
+          },
+          "600": {
+            "skillDamage": 45
+          },
+          "900": {
+            "poisoned": 50
+          },
+          "2550": {
+            "skillDamage": 25
+          },
+          "3000": {
+            "poisoned": 15
+          },
+          "4500": {
+            "skillDamage": 30
+          },
+          "7500": {
+            "poisoned": 15
+          },
+          "9000": {
+            "poisoned": 20
+          },
+          "10500": {
+            "poisoned": 20
+          },
+          "13500": {
+            "skillDamage": 65
+          },
+          "15000": {
+            "poisoned": 30
+          }
+        },
+        "collectibles": {
+          "Pyrocore Orb": {
+            "stars": {}
+          }
+        },
+        "sets": {
+          "Close to Creation": {
+            "collectibles": [
+              "Atomic Mech",
+              "Time Essence Bottle",
+              "Micro Artificial Sun",
+              "Antiparticle Gourd"
+            ],
+            "stars": {}
+          }
+        }
+      }
+    },
+    "Phase Driver": {
+      "Lightning Mode": {
+        "type": "twin",
+        "rarity": {
+          "Eternal": {
+            "skillDamage": 80
+          },
+          "Legend": {
+            "critDamage": 80
+          }
+        },
+        "deployedRarity": {},
+        "resonance": {
+          "200": {
+            "critDamage": 40
+          },
+          "450": {
+            "skillDamage": 40
+          },
+          "1650": {
+            "skillDamage": 30
+          },
+          "2550": {
+            "critDamage": 30
+          },
+          "7500": {
+            "critDamage": 20
+          },
+          "9000": {
+            "critDamage": 10,
+            "skillDamage": 30
+          },
+          "10500": {
+            "critDamage": 20
+          },
+          "13500": {
+            "skillDamage": 20
+          },
+          "15000": {
+            "critDamage": 40,
+            "skillDamage": 40
+          }
+        },
+        "deployedResonance": {
+          "900": {
+            "vulnerability": 50
+          },
+          "4500": {
+            "vulnerability": 30
+          },
+          "7500": {
+            "vulnerability": 20
+          },
+          "12000": {
+            "vulnerability": 75
+          }
+        },
+        "sets": {
+          "Rewriting the Stars' Memories": {
+            "collectibles": [
+              "Starcore Diamond",
+              "Memory Editor",
+              "Mini Dyson Sphere",
+              "Star-Rail Passenger Card"
+            ],
+            "stars": {}
+          }
+        }
+      },
+      "Boomerang Mode": {
+        "type": "twin",
+        "rarity": {
+          "Eternal": {
+            "skillDamage": 100
+          },
+          "Legend": {
+            "weakened": 50
+          }
+        },
+        "deployedRarity": {},
+        "resonance": {
+          "450": {
+            "skillDamage": 40
+          },
+          "600": {
+            "weakened": 40
+          },
+          "900": {
+            "skillDamage": 10,
+            "weakened": 10
+          },
+          "1200": {
+            "skillDamage": 20
+          },
+          "2100": {
+            "weakened": 20
+          },
+          "6000": {
+            "skillDamage": 20
+          },
+          "7500": {
+            "weakened": 20
+          },
+          "9000": {
+            "skillDamage": 10,
+            "weakened": 10
+          },
+          "10500": {
+            "skillDamage": 20
+          },
+          "13500": {
+            "weakened": 20
+          },
+          "15000": {
+            "skillDamage": 30,
+            "weakened": 30
+          }
+        },
+        "deployedResonance": {
+          "200": {
+            "vulnerability": 30
+          },
+          "900": {
+            "vulnerability": 20
+          },
+          "2550": {
+            "vulnerability": 20
+          },
+          "3000": {
+            "vulnerability": 20
+          },
+          "9000": {
+            "vulnerability": 20
+          },
+          "12000": {
+            "vulnerability": 40
+          },
+          "15000": {
+            "vulnerability": 25
+          }
+        },
+        "collectibles": {},
+        "sets": {
+          "Goldfinger": {
+            "collectibles": [
+              "Dice of Destiny",
+              "Spatial Rewinder",
+              "Shuttle Capsule",
+              "Neurochip"
+            ],
+            "stars": {
+              "gold": {
+                "20": {
+                  "vulnerability": 10
+                }
+              },
+              "red": {
+                "20": {
+                  "vulnerability": 15
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Exo-radicator": {
+      "Guardian Mode": {
+        "type": "twin",
+        "rarity": {
+          "Eternal": {
+            "skillDamage": 100
+          },
+          "Legend": {
+            "chilled": 70
+          }
+        },
+        "deployedRarity": {
+          "Eternal": {
+            "lacerationUptime": 1
+          },
+          "Legend": {
+            "chilledUptime": 1
+          }
+        },
+        "resonance": {
+          "300": {
+            "shieldDamage": 50
+          },
+          "450": {
+            "chilled": 30
+          },
+          "600": {
+            "skillDamage": 20
+          },
+          "900": {
+            "laceration": 20
+          },
+          "1200": {
+            "chilled": 15
+          },
+          "1650": {
+            "skillDamage": 10
+          },
+          "2100": {
+            "shieldDamage": 15
+          },
+          "2550": {
+            "chilled": 15
+          },
+          "3000": {
+            "skillDamage": 10
+          },
+          "4500": {
+            "shieldDamage": 15
+          },
+          "6000": {
+            "laceration": 10
+          },
+          "7500": {
+            "shieldDamage": 20,
+            "chilled": 10
+          },
+          "9000": {
+            "laceration": 10
+          },
+          "10500": {
+            "chilled": 20
+          },
+          "12000": {
+            "shieldDamage": 25
+          },
+          "13500": {
+            "shieldDamage": 25,
+            "chilled": 20
+          },
+          "15000": {
+            "laceration": 20,
+            "skillDamage": 20
+          }
+        },
+        "deployedResonance": {
+          "100": {
+            "chilledUptime": 1
+          },
+          "200": {
+            "chilledUptime": 1
+          }
+        },
+        "sets": {
+          "Cyber Wonderland": {
+            "collectibles": [
+              "Unicorn's Horn",
+              "Spatial Rewinder",
+              "Anti-Gravity Device",
+              "Portable Mech Case"
+            ],
+            "stars": {}
+          }
+        }
+      },
+      "Laser Mode": {
+        "type": "twin",
+        "rarity": {
+          "Eternal": {
+            "skillDamage": 80,
+            "critDamage": 40
+          },
+          "Legend": {
+            "critRate": 20,
+            "critDamage": 40
+          }
+        },
+        "deployedRarity": {},
+        "resonance": {
+          "300": {
+            "laceration": 10
+          },
+          "600": {
+            "critDamage": 40,
+            "laceration": 15
+          },
+          "900": {
+            "skillDamage": 40
+          },
+          "1200": {
+            "critDamage": 20
+          },
+          "1650": {
+            "skillDamage": 20
+          },
+          "2100": {
+            "laceration": 10
+          },
+          "2550": {
+            "critDamage": 20
+          },
+          "3000": {
+            "laceration": 15
+          },
+          "4500": {
+            "skillDamage": 20
+          },
+          "6000": {
+            "critRate": 10,
+            "critDamage": 20
+          },
+          "9000": {
+            "critRate": 10,
+            "skillDamage": 20
+          },
+          "10500": {
+            "skillDamage": 60
+          },
+          "12000": {
+            "critRate": 20
+          },
+          "13500": {
+            "critDamage": 60
+          },
+          "15000": {
+            "laceration": 25
+          }
+        },
+        "deployedResonance": {
+          "300": {
+            "lacerationUptime": 1
+          },
+          "450": {
+            "vulnerability": 20
+          },
+          "900": {
+            "vulnerability": 30
+          },
+          "3000": {
+            "vulnerability": 25
+          },
+          "7500": {
+            "vulnerability": 25
+          },
+          "12000": {
+            "vulnerability": 35
+          },
+          "15000": {
+            "vulnerability": 40
+          }
+        },
+        "collectibles": {},
+        "sets": {
+          "Try all possibilities": {
+            "collectibles": [
+              "Atomic Mech",
+              "Timeline Cube",
+              "Plasma Sword",
+              "Geocore Orb"
+            ],
+            "stars": {}
+          }
+        }
+      }
+    },
+    "Energy Diffuser": {
+      "Molotov": {
+        "type": "atk",
+        "rarity": {},
+        "deployedRarity": {
+          "Legend": {
+            "vulnerability": 10
+          }
+        },
+        "deployedResonance": {
+          "200": {
+            "poisonedUptime": 0.25
+          },
+          "450": {
+            "vulnerability": 5
+          },
+          "600": {
+            "poisonedUptime": 0.0625
+          },
+          "1650": {
+            "poisonedUptime": 0.125
+          },
+          "2100": {
+            "poisonedUptime": 0.14583333333333334
+          },
+          "3000": {
+            "vulnerability": 5
+          },
+          "9000": {
+            "vulnerability": 5
+          }
+        },
+        "collectibles": {
+          "Cyber Totem": {
+            "stars": {
+              "5": {
+                "vulnerability": 10
+              }
+            }
+          },
+          "Mystical Halo": {
+            "stars": {
+              "5": {
+                "vulnerability": 5
+              }
+            }
+          }
+        }
+      }
+    },
+    "Hi-Maintainer": {
+      "Rocket": {
+        "type": "def",
+        "rarity": {},
+        "deployedRarity": {},
+        "deployedResonance": {
+          "900": {
+            "chilledUptime": 1
+          }
+        }
+      }
+    },
+    "Precision Device": {
+      "Drone": {
+        "type": "atk",
+        "rarity": {},
+        "deployedRarity": {},
+        "resonance": {}
+      }
+    },
+    "Antimatter Generator": {
+      "Drill": {
+        "type": "atk",
+        "rarity": {},
+        "deployedRarity": {
+          "Eternal": {
+            "vulnerability": 5
+          }
+        }
+      }
+    },
+    "Hi-Gravity Pulser": {
+      "Brick Mode": {
+        "type": "twin",
+        "rarity": {
+          "Eternal": {
+            "weakened": 70
+          },
+          "Legend": {
+            "critDamage": 80
+          }
+        },
+        "deployedRarity": {
+          "Eternal": {
+            "weakenedUptime": 1
+          }
+        },
+        "resonance": {
+          "200": {
+            "shieldDamage": 20
+          },
+          "450": {
+            "critDamage": 40,
+            "damageBoss": 7.5
+          },
+          "600": {
+            "shieldDamage": 30
+          },
+          "900": {
+            "weakened": 30,
+            "damageBoss": 7.5
+          },
+          "1650": {
+            "critDamage": 15
+          },
+          "2100": {
+            "weakened": 10,
+            "damageBoss": 7.5
+          },
+          "2550": {
+            "shieldDamage": 10
+          },
+          "3000": {
+            "critDamage": 15,
+            "damageBoss": 7.5
+          },
+          "4500": {
+            "shieldDamage": 15,
+            "weakened": 10
+          },
+          "6000": {
+            "weakened": 10
+          },
+          "7500": {
+            "shieldDamage": 15,
+            "weakened": 10
+          },
+          "9000": {
+            "shieldDamage": 10
+          },
+          "10500": {
+            "weakened": 20,
+            "damageBoss": 7.5
+          },
+          "12000": {
+            "critDamage": 15,
+            "shieldDamage": 25
+          },
+          "13500": {
+            "weakened": 20,
+            "damageBoss": 7.5
+          },
+          "15000": {
+            "critDamage": 15,
+            "shieldDamage": 25
+          }
+        },
+        "deployedResonance": {},
+        "sets": {
+          "Brewing Recipe": {
+            "collectibles": [
+              "Time Essence Bottle",
+              "Omni-Symbiote",
+              "Nuclear Battery",
+              "Aquacore Orb"
+            ],
+            "stars": {}
+          }
+        }
+      },
+      "Molotov Mode": {
+        "type": "twin",
+        "rarity": {
+          "Eternal": {
+            "shieldDamage": 50,
+            "skillDamage": 30
+          },
+          "Legend": {
+            "skillDamage": 50
+          }
+        },
+        "deployedRarity": {
+          "Legend": {
+            "vulnerability": 10
+          }
+        },
+        "resonance": {
+          "100": {
+            "poisoned": 20
+          },
+          "200": {
+            "laceration": 10
+          },
+          "300": {
+            "poisoned": 30
+          },
+          "450": {
+            "skillDamage": 20,
+            "laceration": 15
+          },
+          "600": {
+            "skillDamage": 20,
+            "shieldDamage": 30
+          },
+          "900": {
+            "poisoned": 30
+          },
+          "1650": {
+            "skillDamage": 10,
+            "shieldDamage": 10
+          },
+          "2100": {
+            "poisoned": 15
+          },
+          "2550": {
+            "laceration": 10
+          },
+          "3000": {
+            "skillDamage": 10,
+            "shieldDamage": 10
+          },
+          "4500": {
+            "laceration": 15
+          },
+          "6000": {
+            "poisoned": 15
+          },
+          "7500": {
+            "skillDamage": 10,
+            "shieldDamage": 15
+          },
+          "9000": {
+            "poisoned": 20
+          },
+          "10500": {
+            "laceration": 25,
+            "shieldDamage": 15
+          },
+          "12000": {
+            "poisoned": 25
+          },
+          "13500": {
+            "skillDamage": 30,
+            "shieldDamage": 20
+          },
+          "15000": {
+            "poisoned": 25
+          }
+        },
+        "deployedResonance": {
+          "100": {
+            "poisonedUptime": 1
+          },
+          "200": {
+            "lacerationUptime": 1
+          },
+          "300": {
+            "vulnerability": 10
+          },
+          "900": {
+            "vulnerability": 10
+          },
+          "2100": {
+            "vulnerability": 10
+          },
+          "6000": {
+            "vulnerability": 10
+          },
+          "9000": {
+            "vulnerability": 10
+          },
+          "12000": {
+            "vulnerability": 20
+          },
+          "15000": {
+            "vulnerability": 20
+          }
+        },
+        "sets": {
+          "Wind Totem": {
+            "collectibles": [
+              "Cyber Totem",
+              "Prophet's Tarot",
+              "Mystical Halo",
+              "Aerocore Orb"
+            ],
+            "stars": {
+              "gold": {
+                "10": {
+                  "vulnerability": 10
+                },
+                "20": {
+                  "vulnerability": 15
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "skills": {
+    "Energy Cube": {
+      "type": "passive"
+    },
+    "HP Bullet": {
+      "type": "passive",
+      "stats": {
+        "hpBulletBoost": 50
+      }
+    },
+    "Exo Bracer": {
+      "type": "passive"
+    },
+    "Ammo Thruster": {
+      "type": "passive"
+    },
+    "HE Fuel": {
+      "type": "passive"
+    }
+  },
+  "customSets": {
+    "0": {
+      "size": 4,
+      "Legend": {
+        "1": {
+          "critDamage": 10
+        },
+        "2": {
+          "skillDamage": 10
+        },
+        "3": {
+          "critDamage": 15
+        },
+        "4": {
+          "poisoned": 5,
+          "weakened": 5,
+          "chilled": 5
+        }
+      },
+      "advanced": {
+        "5": {
+          "critDamage": 20
+        },
+        "12": {
+          "skillDamage": 20
+        },
+        "24": {
+          "poisoned": 10,
+          "weakened": 10,
+          "chilled": 10
+        },
+        "36": {
+          "critDamage": 40
+        }
+      }
+    },
+    "1": {
+      "size": 8,
+      "Legend": {
+        "1": {
+          "critDamage": 10
+        },
+        "2": {
+          "skillDamage": 10
+        },
+        "3": {
+          "critDamage": 15
+        },
+        "4": {
+          "poisoned": 5,
+          "weakened": 5,
+          "chilled": 5
+        },
+        "5": {
+          "skillDamage": 30
+        },
+        "6": {
+          "poisoned": 10,
+          "weakened": 10,
+          "chilled": 10
+        },
+        "7": {
+          "critDamage": 30
+        },
+        "8": {
+          "poisoned": 10,
+          "weakened": 10,
+          "chilled": 10
+        }
+      },
+      "advanced": {
+        "5": {
+          "critDamage": 20
+        },
+        "12": {
+          "skillDamage": 20
+        },
+        "24": {
+          "poisoned": 10,
+          "weakened": 10,
+          "chilled": 10
+        },
+        "36": {
+          "critDamage": 40
+        },
+        "50": {},
+        "60": {
+          "poisoned": 15,
+          "weakened": 15,
+          "chilled": 15
+        },
+        "70": {
+          "skillDamage": 40
+        },
+        "80": {
+          "poisoned": 25,
+          "weakened": 25,
+          "chilled": 25,
+          "damageBoss": 20
+        }
+      }
+    },
+    "2": {
+      "size": 8,
+      "Legend": {
+        "1": {
+          "critDamage": 10
+        },
+        "2": {
+          "skillDamage": 10
+        },
+        "3": {
+          "critDamage": 15
+        },
+        "4": {
+          "poisoned": 5,
+          "weakened": 5,
+          "chilled": 5
+        },
+        "5": {
+          "skillDamage": 30
+        },
+        "6": {
+          "poisoned": 10,
+          "weakened": 10,
+          "chilled": 10
+        },
+        "7": {
+          "critDamage": 30
+        },
+        "8": {
+          "poisoned": 10,
+          "weakened": 10,
+          "chilled": 10
+        }
+      },
+      "advanced": {
+        "5": {
+          "critDamage": 20
+        },
+        "12": {
+          "skillDamage": 20
+        },
+        "24": {
+          "poisoned": 10,
+          "weakened": 10,
+          "chilled": 10
+        },
+        "36": {
+          "critDamage": 40
+        },
+        "50": {},
+        "60": {
+          "poisoned": 15,
+          "weakened": 15,
+          "chilled": 15
+        },
+        "70": {
+          "skillDamage": 40
+        },
+        "80": {
+          "poisoned": 25,
+          "weakened": 25,
+          "chilled": 25,
+          "damageBoss": 20
+        }
+      }
+    },
+    "3": {
+      "size": 8,
+      "Legend": {
+        "1": {
+          "critDamage": 10
+        },
+        "2": {
+          "skillDamage": 10
+        },
+        "3": {
+          "critDamage": 15
+        },
+        "4": {
+          "poisoned": 5,
+          "weakened": 5,
+          "chilled": 5
+        },
+        "5": {
+          "skillDamage": 30
+        },
+        "6": {
+          "poisoned": 10,
+          "weakened": 10,
+          "chilled": 10
+        },
+        "7": {
+          "critDamage": 30
+        },
+        "8": {
+          "poisoned": 10,
+          "weakened": 10,
+          "chilled": 10
+        }
+      },
+      "advanced": {
+        "5": {
+          "critDamage": 20
+        },
+        "12": {
+          "skillDamage": 20
+        },
+        "24": {
+          "poisoned": 10,
+          "weakened": 10,
+          "chilled": 10
+        },
+        "36": {
+          "critDamage": 40
+        },
+        "50": {},
+        "60": {
+          "poisoned": 15,
+          "weakened": 15,
+          "chilled": 15
+        },
+        "70": {
+          "skillDamage": 40
+        },
+        "80": {
+          "poisoned": 25,
+          "weakened": 25,
+          "chilled": 25,
+          "damageBoss": 20
+        }
+      }
+    }
+  },
+  "synergy": {
+    "5": {
+      "critDamage": 5,
+      "skillDamage": 5,
+      "shieldDamage": 5
+    },
+    "10": {
+      "critDamage": 5,
+      "skillDamage": 5,
+      "weakened": 5
+    },
+    "15": {
+      "critDamage": 10,
+      "skillDamage": 10,
+      "poisoned": 10
+    },
+    "20": {
+      "critDamage": 10,
+      "skillDamage": 10,
+      "chilled": 10
+    },
+    "25": {
+      "critDamage": 15,
+      "skillDamage": 15,
+      "shieldDamage": 15
+    },
+    "30": {
+      "critDamage": 15,
+      "skillDamage": 15,
+      "weakened": 15
+    },
+    "35": {
+      "critDamage": 15,
+      "skillDamage": 15,
+      "poisoned": 15
+    },
+    "40": {
+      "critDamage": 15,
+      "skillDamage": 15,
+      "chilled": 15
+    },
+    "45": {
+      "critDamage": 25,
+      "skillDamage": 25,
+      "shieldDamage": 25
+    },
+    "50": {
+      "critDamage": 25,
+      "skillDamage": 25,
+      "weakened": 25
+    },
+    "55": {
+      "critDamage": 25,
+      "skillDamage": 25,
+      "poisoned": 25
+    },
+    "60": {
+      "critDamage": 25,
+      "skillDamage": 25,
+      "chilled": 25
+    },
+    "61": {
+      "weakened": 10
+    },
+    "62": {
+      "poisoned": 10
+    },
+    "63": {
+      "chilled": 10
+    },
+    "64": {
+      "shieldDamage": 5,
+      "laceration": 5
+    },
+    "65": {
+      "shieldDamage": 5,
+      "damageBoss": 5
+    },
+    "66": {
+      "weakened": 10
+    },
+    "67": {
+      "poisoned": 10
+    },
+    "68": {
+      "chilled": 10
+    },
+    "69": {
+      "shieldDamage": 5,
+      "laceration": 5
+    },
+    "70": {
+      "shieldDamage": 5,
+      "damageBoss": 5
+    },
+    "71": {
+      "weakened": 10
+    },
+    "72": {
+      "poisoned": 10
+    },
+    "73": {
+      "chilled": 10
+    },
+    "74": {
+      "shieldDamage": 5,
+      "laceration": 5
+    },
+    "75": {
+      "shieldDamage": 5,
+      "damageBoss": 5
+    },
+    "76": {
+      "weakened": 10
+    },
+    "77": {
+      "poisoned": 10
+    },
+    "78": {
+      "chilled": 10
+    },
+    "79": {
+      "shieldDamage": 5,
+      "laceration": 5
+    },
+    "80": {
+      "shieldDamage": 5,
+      "damageBoss": 5
+    }
+  },
+  "sets": {
+    "Impression Idols": {
+      "collectibles": [
+        "Nano-Mimetic Mask",
+        "Clone Mirror",
+        "Cosmic Compass",
+        "Infinity Score"
+      ],
+      "stars": {
+        "gold": {
+          "20": {
+            "critDamage": 15
+          }
+        },
+        "red": {
+          "20": {
+            "critDamage": 15,
+            "skillDamage": 20
+          }
+        },
+        "total": {
+          "25": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Open Void Gate": {
+      "collectibles": [
+        "Angelic Tear Crystal",
+        "Otherworld Key",
+        "Micro Artificial Sun",
+        "Antiparticle Gourd"
+      ],
+      "stars": {
+        "gold": {
+          "20": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "20": {
+            "atkPercent": 6
+          }
+        },
+        "goldEach": {
+          "3": {
+            "shieldDamage": 5
+          }
+        },
+        "redEach": {
+          "3": {
+            "skillDamage": 10
+          }
+        },
+        "total": {
+          "25": {
+            "critDamage": 10,
+            "shieldDamage": 10
+          }
+        }
+      }
+    },
+    "Close to Creation": {
+      "collectibles": [
+        "Atomic Mech",
+        "Time Essence Bottle",
+        "Micro Artificial Sun",
+        "Antiparticle Gourd"
+      ],
+      "stars": {
+        "gold": {
+          "20": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "20": {
+            "atkPercent": 6
+          }
+        },
+        "redEach": {
+          "3": {
+            "shieldDamage": 10
+          }
+        },
+        "total": {
+          "25": {
+            "shieldDamage": 15
+          }
+        }
+      }
+    },
+    "Hyperrift Tech": {
+      "collectibles": [
+        "Life Hourglass",
+        "Dimension Foil",
+        "Super Circuit Board",
+        "Comms Conch"
+      ],
+      "stars": {
+        "gold": {
+          "20": {
+            "laceration": 5
+          }
+        },
+        "red": {
+          "20": {
+            "laceration": 5
+          }
+        },
+        "total": {
+          "25": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Realizing Childhood Dreams": {
+      "collectibles": [
+        "Memory Editor",
+        "Temporal Rewinder",
+        "Spatial Rewinder",
+        "Holodream Fluid"
+      ],
+      "stars": {}
+    },
+    "Summon the Divine Dragon": {
+      "collectibles": [
+        "Atomic Mech",
+        "Time Essence Bottle",
+        "Dragon Tooth",
+        "Hyper Neuron"
+      ],
+      "stars": {
+        "gold": {
+          "20": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "20": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Erudite Heirloom": {
+      "collectibles": [
+        "Human Genome Mapping",
+        "Book of Ancient Wisdom",
+        "Otherworld Key",
+        "Starcore Diamond"
+      ],
+      "stars": {
+        "gold": {
+          "20": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "20": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Conduct Experiments": {
+      "collectibles": [
+        "Cyber Totem",
+        "Clone Mirror",
+        "Dreamscape Puzzle",
+        "Gene Splicer"
+      ],
+      "stars": {
+        "gold": {
+          "20": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "20": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Otherworld Treasure": {
+      "collectibles": [
+        "Immortal Lucky Coin",
+        "Instellar Transition Matrix Design",
+        "Angelic Tear Crystal",
+        "Unicorn's Horn"
+      ],
+      "stars": {}
+    },
+    "Meaning of Life": {
+      "collectibles": [
+        "High-Lat Energy Cube",
+        "Void Bloom",
+        "Eye of True Vision",
+        "Life Hourglass"
+      ],
+      "stars": {
+        "gold": {
+          "20": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "20": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Interdimension Movement": {
+      "collectibles": [
+        "Nano-Mimetic Mask",
+        "Dice of Destiny",
+        "Dimension Foil",
+        "Mental Sync Helm"
+      ],
+      "stars": {}
+    },
+    "Transgalactic Tentacle": {
+      "collectibles": [
+        "Instellar Transition Matrix Design",
+        "Hyper Neuron",
+        "Hydraulic Flipper",
+        "Klein Bottle"
+      ],
+      "stars": {
+        "total": {
+          "25": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Multiverse Perspective": {
+      "collectibles": [
+        "Eye of True Vision",
+        "Dreamscape Puzzle",
+        "Wildfire Furnace",
+        "Wormhole Detector"
+      ],
+      "stars": {
+        "total": {
+          "25": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Rewriting the Stars' Memories": {
+      "collectibles": [
+        "Starcore Diamond",
+        "Memory Editor",
+        "Mini Dyson Sphere",
+        "Star-Rail Passenger Card"
+      ],
+      "stars": {
+        "total": {
+          "25": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Goldfinger": {
+      "collectibles": [
+        "Dice of Destiny",
+        "Spatial Rewinder",
+        "Shuttle Capsule",
+        "Neurochip"
+      ],
+      "stars": {
+        "gold": {
+          "10": {
+            "skillDamage": 20
+          }
+        },
+        "red": {
+          "10": {
+            "skillDamage": 20,
+            "weakened": 10
+          },
+          "20": {
+            "weakened": 20
+          }
+        },
+        "total": {
+          "25": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Cyber Wonderland": {
+      "collectibles": [
+        "Unicorn's Horn",
+        "Spatial Rewinder",
+        "Anti-Gravity Device",
+        "Portable Mech Case"
+      ],
+      "stars": {
+        "gold": {
+          "20": {
+            "skillDamage": 10
+          }
+        },
+        "red": {
+          "10": {
+            "poisoned": 10
+          },
+          "20": {
+            "poisoned": 10,
+            "skillDamage": 10
+          }
+        },
+        "total": {
+          "25": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Summon the Stand-in!": {
+      "collectibles": [
+        "Dark Matter Construct",
+        "Timeline Cube",
+        "Omni-Symbiote",
+        "Prophet's Tarot"
+      ],
+      "stars": {
+        "gold": {
+          "20": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "20": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Try all possibilities": {
+      "collectibles": [
+        "Atomic Mech",
+        "Timeline Cube",
+        "Plasma Sword",
+        "Geocore Orb"
+      ],
+      "stars": {
+        "gold": {
+          "10": {
+            "critDamage": 20
+          },
+          "20": {
+            "shieldDamage": 20,
+            "poisoned": 10
+          }
+        },
+        "red": {
+          "10": {
+            "skillDamage": 20
+          },
+          "20": {
+            "critDamage": 20,
+            "poisoned": 10
+          }
+        },
+        "total": {
+          "25": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Brewing Recipe": {
+      "collectibles": [
+        "Time Essence Bottle",
+        "Omni-Symbiote",
+        "Nuclear Battery",
+        "Aquacore Orb"
+      ],
+      "stars": {
+        "gold": {
+          "10": {
+            "shieldDamage": 10
+          },
+          "20": {
+            "skillDamage": 20
+          }
+        },
+        "red": {
+          "10": {
+            "critDamage": 20
+          },
+          "20": {
+            "shieldDamage": 20
+          }
+        },
+        "total": {
+          "25": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Wind Totem": {
+      "collectibles": [
+        "Cyber Totem",
+        "Prophet's Tarot",
+        "Mystical Halo",
+        "Aerocore Orb"
+      ],
+      "stars": {
+        "total": {
+          "25": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "When Cosmic Stars Shine": {
+      "collectibles": [
+        "Aquarius Starlight",
+        "Pisces Starlight",
+        "Aries Starlight",
+        "Taurus Starlight"
+      ],
+      "stars": {
+        "goldEach": {
+          "3": {
+            "shieldDamage": 30,
+            "ssMiscPath": 13
+          }
+        },
+        "redEach": {
+          "3": {
+            "skillDamage": 60,
+            "ssMiscPath": 25
+          }
+        },
+        "total": {
+          "25": {
+            "shieldDamage": 30,
+            "damageBoss": 20,
+            "ssMiscPath": 38
+          }
+        }
+      }
+    },
+    "Genesis": {
+      "collectibles": [
+        "Human Genome Mapping",
+        "Old Medical Book",
+        "Savior's Memento"
+      ],
+      "stars": {
+        "gold": {
+          "15": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "15": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Luck Through the Roof": {
+      "collectibles": [
+        "Immortal Lucky Coin",
+        "Lucky Charm",
+        "Mystical Halo"
+      ],
+      "stars": {
+        "gold": {
+          "15": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "15": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "First Myth": {
+      "collectibles": [
+        "Angelic Tear Crystal",
+        "Tablet of Epics",
+        "Primordial War Drum"
+      ],
+      "stars": {
+        "gold": {
+          "15": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "15": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Parallel Dimension": {
+      "collectibles": [
+        "Otherworld Key",
+        "Flaming Plume",
+        "Astral Dewdrop"
+      ],
+      "stars": {
+        "gold": {
+          "15": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "15": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Uncontrollable Superpower": {
+      "collectibles": [
+        "High-Lat Energy Cube",
+        "Nuclear Battery",
+        "Plasma Sword"
+      ],
+      "stars": {
+        "gold": {
+          "15": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "15": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Just Enough to Ignore the Fog": {
+      "collectibles": [
+        "Eye of True Vision",
+        "Nuclear Battery",
+        "Plasma Sword"
+      ],
+      "stars": {
+        "gold": {
+          "15": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "15": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Merfolk Disguise Attempt": {
+      "collectibles": [
+        "Nano-Mimetic Mask",
+        "Hydraulic Flipper",
+        "Comms Conch"
+      ],
+      "stars": {
+        "gold": {
+          "15": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "15": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Drones are Safest": {
+      "collectibles": [
+        "Mental Sync Helm",
+        "Hydraulic Flipper",
+        "Comms Conch"
+      ],
+      "stars": {
+        "gold": {
+          "15": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "15": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Unbreakable": {
+      "collectibles": [
+        "Dragon Tooth",
+        "Mini Dyson Sphere",
+        "Micro Artificial Sun"
+      ],
+      "stars": {
+        "gold": {
+          "15": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "15": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Extraterrestrial Ritual": {
+      "collectibles": [
+        "Cyber Totem",
+        "Wildfire Furnace",
+        "Infinity Score"
+      ],
+      "stars": {
+        "gold": {
+          "15": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "15": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Dreamseeker Voyage": {
+      "collectibles": [
+        "Dreamscape Puzzle",
+        "Wildfire Furnace",
+        "Infinity Score"
+      ],
+      "stars": {
+        "gold": {
+          "15": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "15": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Deleted Memories": {
+      "collectibles": [
+        "Memory Editor",
+        "Shuttle Capsule",
+        "Neurochip"
+      ],
+      "stars": {
+        "gold": {
+          "15": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "15": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Inescapable": {
+      "collectibles": [
+        "Spatial Rewinder",
+        "Shuttle Capsule",
+        "Neurochip"
+      ],
+      "stars": {
+        "gold": {
+          "15": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "15": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Dream or Reality?": {
+      "collectibles": [
+        "Dark Matter Construct",
+        "Geocore Orb",
+        "Aquacore Orb"
+      ],
+      "stars": {
+        "gold": {
+          "15": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "15": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Life Reboot Device": {
+      "collectibles": [
+        "Omni-Symbiote",
+        "Geocore Orb",
+        "Aquacore Orb"
+      ],
+      "stars": {
+        "gold": {
+          "15": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "15": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Corner of the Universe I": {
+      "collectibles": [
+        "Aquarius Starlight",
+        "Gemini Starlight",
+        "Cancer Starlight"
+      ],
+      "stars": {
+        "gold": {
+          "15": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "15": {
+            "atkPercent": 6
+          }
+        }
+      }
+    },
+    "Corner of the Universe III": {
+      "collectibles": [
+        "Aries Starlight",
+        "Gemini Starlight",
+        "Cancer Starlight"
+      ],
+      "stars": {
+        "gold": {
+          "15": {
+            "atkPercent": 4
+          }
+        },
+        "red": {
+          "15": {
+            "atkPercent": 6
+          }
+        }
+      }
+    }
+  },
+  "pets": {
+    "Rex": {
+      "type": "Default",
+      "stars": {
+        "3": {
+          "critDamage": 5
+        },
+        "10": {
+          "critDamage": 5
+        }
+      }
+    },
+    "Croaky": {
+      "type": "Default",
+      "stars": {
+        "1": {
+          "vulnerability": 12
+        },
+        "10": {
+          "vulnerability": 8
+        }
+      }
+    },
+    "Capy": {
+      "type": "Xeno",
+      "stars": {
+        "4": {
+          "skillDamage": 40
+        },
+        "10": {
+          "skillDamage": 40
+        }
+      },
+      "globalStars": {
+        "10": {
+          "skillDamage": 50,
+          "xenoSkillDamage": 60
+        }
+      },
+      "damage": {
+        "0": 6,
+        "1": 9.18,
+        "2": 11.808,
+        "3": 16.409,
+        "4": 17.026,
+        "5": 27.717,
+        "6": 39.942,
+        "7": 47.529,
+        "8": 78.247,
+        "9": 87.172,
+        "10": 96.089
+      }
+    },
+    "Crucker": {
+      "type": "Xeno",
+      "stars": {
+        "4": {
+          "critRate": 15,
+          "critDamage": 40
+        },
+        "10": {
+          "critRate": 15,
+          "critDamage": 40
+        }
+      },
+      "globalStars": {
+        "10": {
+          "critDamage": 50,
+          "xenoSkillDamage": 60
+        }
+      },
+      "damage": {
+        "0": 2.6,
+        "1": 4.264,
+        "2": 6.182,
+        "3": 9.768,
+        "4": 14.36,
+        "5": 25.417,
+        "6": 40.668,
+        "7": 50.021,
+        "8": 76.032,
+        "9": 91.239,
+        "10": 109.487
+      }
+    },
+    "Puffo": {
+      "type": "Xeno",
+      "stars": {
+        "0": {
+          "poisonedUptime": 1,
+          "weakenedUptime": 1
+        },
+        "4": {
+          "poisoned": 70
+        },
+        "10": {
+          "weakened": 70
+        }
+      },
+      "globalStars": {
+        "10": {
+          "poisoned": 30,
+          "xenoSkillDamage": 60
+        }
+      },
+      "damage": {
+        "0": 2.079,
+        "1": 2.426,
+        "2": 2.973,
+        "3": 3.475,
+        "4": 5.473,
+        "5": 6.828,
+        "6": 10.75,
+        "7": 11.912,
+        "8": 23.626,
+        "9": 24.648,
+        "10": 24.932
+      }
+    },
+    "King Blizzblast": {
+      "type": "Xeno",
+      "stars": {
+        "0": {
+          "chilledUptime": 1
+        },
+        "4": {
+          "chilled": 70,
+          "damageBoss": 2
+        },
+        "10": {
+          "chilled": 70,
+          "damageBoss": 3
+        }
+      },
+      "globalStars": {
+        "10": {
+          "chilled": 30,
+          "xenoSkillDamage": 60
+        }
+      },
+      "damage": {
+        "0": 2.743,
+        "1": 4.498,
+        "2": 9.728,
+        "3": 13.699,
+        "4": 23.523,
+        "5": 30.817,
+        "6": 52.087,
+        "7": 59.403,
+        "8": 74.119,
+        "9": 78.276,
+        "10": 98.884
+      }
+    },
+    "Nutjob": {
+      "type": "Xeno",
+      "stars": {
+        "0": {
+          "weakenedUptime": 1
+        },
+        "4": {
+          "weakened": 75,
+          "damageBoss": 4
+        },
+        "10": {
+          "weakened": 75,
+          "damageBoss": 6
+        }
+      },
+      "globalStars": {
+        "10": {
+          "weakened": 30,
+          "xenoSkillDamage": 60
+        }
+      },
+      "damage": {
+        "0": 12.24,
+        "1": 17.047,
+        "2": 23.74,
+        "3": 26.607,
+        "4": 29.438,
+        "5": 40.478,
+        "6": 50.996,
+        "7": 54.094,
+        "8": 59.611,
+        "9": 62.441,
+        "10": 70.948
+      }
+    },
+    "Gourmeow": {
+      "type": "Xeno",
+      "stars": {
+        "4": {
+          "shieldDamage": 50,
+          "damageBoss": 7
+        },
+        "10": {
+          "shieldDamage": 50,
+          "damageBoss": 8
+        }
+      },
+      "globalStars": {
+        "10": {
+          "shieldDamage": 25,
+          "xenoSkillDamage": 60
+        }
+      },
+      "damage": {
+        "0": 12.24,
+        "1": 17.047,
+        "2": 23.74,
+        "3": 26.607,
+        "4": 29.438,
+        "5": 40.478,
+        "6": 50.996,
+        "7": 54.094,
+        "8": 59.611,
+        "9": 62.441,
+        "10": 70.948
+      }
+    }
+  },
+  "xenoPetAwakening": [
+    {
+      "stat": "skillDamage",
+      "values": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        10
+      ]
+    },
+    {
+      "stat": "critDamage",
+      "values": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        10
+      ]
+    },
+    {
+      "stat": "xenoResDamage",
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        5
+      ]
+    },
+    {
+      "stat": "chilled",
+      "values": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        10
+      ]
+    },
+    {
+      "stat": "poisoned",
+      "values": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        10
+      ]
+    },
+    {
+      "stat": "weakened",
+      "values": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        10
+      ]
+    },
+    {
+      "stat": "xenoResDamage",
+      "values": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        10
+      ]
+    },
+    {
+      "stat": "shieldDamage",
+      "values": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        10
+      ]
+    },
+    {
+      "stat": "xenoSyncRate",
+      "values": [
+        0,
+        5,
+        10,
+        15,
+        20,
+        20,
+        25
+      ]
+    },
+    {
+      "stat": "xenoResDamage",
+      "values": [
+        0,
+        3,
+        6,
+        9,
+        12,
+        15,
+        15
+      ]
+    }
+  ],
+  "mounts": {
+    "Doomsteed": {
+      "rarity": "Legend",
+      "lines": {
+        "1": {
+          "poisoned": 20
+        },
+        "3": {
+          "poisoned": 40,
+          "skillDamage": 50
+        },
+        "4": {
+          "skillDamage": 150
+        },
+        "6": {
+          "poisoned": 60,
+          "laceration": 30
+        },
+        "7": {
+          "poisoned": 80,
+          "damageBoss": 5
+        },
+        "8": {
+          "damageBoss": 25
+        }
+      },
+      "damage": {
+        "0": 153,
+        "1": 180,
+        "2": 180,
+        "3": 200,
+        "4": 200,
+        "5": 200,
+        "6": 200,
+        "7": 260,
+        "8": 260
+      }
+    },
+    "Tech Hoverboard": {
+      "rarity": "Excellent",
+      "lines": {
+        "1": {
+          "chilled": 15,
+          "skillDamage": 10
+        },
+        "3": {
+          "chilled": 25,
+          "skillDamage": 15
+        },
+        "4": {
+          "shieldDamage": 40
+        },
+        "5": {
+          "chilled": 60
+        },
+        "6": {
+          "chilled": 40,
+          "skillDamage": 30
+        },
+        "7": {
+          "chilled": 60,
+          "skillDamage": 45
+        },
+        "8": {
+          "shieldDamage": 60
+        }
+      },
+      "damage": {
+        "0": 193.6,
+        "1": 194.084,
+        "2": 199.496,
+        "3": 204.424,
+        "4": 204.424,
+        "5": 387,
+        "6": 387,
+        "7": 500,
+        "8": 500
+      }
+    },
+    "Electric Scooter": {
+      "rarity": "Better",
+      "lines": {
+        "1": {
+          "weakened": 10
+        },
+        "3": {
+          "weakened": 15,
+          "critDamage": 20
+        },
+        "4": {
+          "critDamage": 35
+        },
+        "5": {
+          "laceration": 10
+        },
+        "6": {
+          "weakened": 20,
+          "critDamage": 55
+        },
+        "7": {
+          "weakened": 35,
+          "critDamage": 90
+        },
+        "8": {
+          "laceration": 20
+        }
+      },
+      "damage": {
+        "0": 153,
+        "1": 160,
+        "2": 160,
+        "3": 180,
+        "4": 180,
+        "5": 200,
+        "6": 200,
+        "7": 230,
+        "8": 230
+      }
+    }
+  },
+  "lme": {
+    "80": {
+      "critRate": -10
+    },
+    "120": {
+      "skillDamage": -10
+    },
+    "160": {
+      "critDamage": -10
+    },
+    "200": {
+      "shieldDamage": -5
+    },
+    "280": {
+      "vulnerability": -5
+    },
+    "320": {
+      "critDamage": -10
+    },
+    "360": {
+      "skillDamage": -10
+    },
+    "400": {
+      "weakened": -10
+    },
+    "500": {
+      "critDamage": -10
+    },
+    "550": {
+      "skillDamage": -10
+    },
+    "600": {
+      "damageDealt": -5
+    },
+    "650": {
+      "poisoned": -10
+    },
+    "750": {
+      "skillDamage": -10
+    },
+    "800": {
+      "shieldDamage": -5
+    },
+    "850": {
+      "critDamage": -10
+    },
+    "900": {
+      "chilled": -10
+    },
+    "1000": {
+      "critRate": -10
+    },
+    "1050": {
+      "skillDamage": -10
+    },
+    "1100": {
+      "critDamage": -10
+    },
+    "1150": {
+      "vulnerability": -5
+    },
+    "1260": {
+      "skillDamage": -10
+    },
+    "1320": {
+      "shieldDamage": -5
+    },
+    "1380": {
+      "vulnerability": -5
+    },
+    "1440": {
+      "damageDealt": -5
+    },
+    "1640": {
+      "skillDamage": -10
+    },
+    "1710": {
+      "weakened": -10
+    },
+    "1780": {
+      "critDamage": -10
+    },
+    "1850": {
+      "vulnerability": -5
+    },
+    "1990": {
+      "skillDamage": -10
+    },
+    "2060": {
+      "poisoned": -10
+    },
+    "2130": {
+      "critDamage": -10
+    },
+    "2200": {
+      "damageDealt": -5
+    },
+    "2340": {
+      "shieldDamage": -5
+    },
+    "2410": {
+      "chilled": -10
+    },
+    "2480": {
+      "critRate": -10
+    },
+    "2550": {
+      "critDamage": -10
+    },
+    "2690": {
+      "damageDealt": -5
+    },
+    "2760": {
+      "skillDamage": -10
+    },
+    "2840": {
+      "critDamage": -10
+    },
+    "2920": {
+      "shieldDamage": -5
+    },
+    "3160": {
+      "critRate": -10
+    },
+    "3240": {
+      "skillDamage": -10
+    },
+    "3400": {
+      "vulnerability": -5
+    },
+    "3480": {
+      "critDamage": -10
+    },
+    "3640": {
+      "shieldDamage": -5
+    },
+    "3800": {
+      "vulnerability": -5
+    },
+    "3880": {
+      "critDamage": -15
+    },
+    "4040": {
+      "skillDamage": -15
+    },
+    "4130": {
+      "weakened": -10,
+      "poisoned": -10,
+      "chilled": -10
+    },
+    "4310": {
+      "shieldDamage": -5
+    },
+    "4400": {
+      "damageDealt": -5
+    },
+    "4700": {
+      "shieldDamage": -5
+    },
+    "4800": {
+      "critRate": -10
+    },
+    "4900": {
+      "skillDamage": -15
+    },
+    "5100": {
+      "shieldDamage": -5
+    },
+    "5200": {
+      "critDamage": -15
+    },
+    "5300": {
+      "skillDamage": -15
+    },
+    "5400": {
+      "critRate": -10
+    },
+    "5600": {
+      "shieldDamage": -5
+    },
+    "5700": {
+      "critDamage": -15
+    },
+    "5800": {
+      "damageDealt": -5
+    },
+    "5900": {
+      "skillDamage": -15
+    },
+    "6200": {
+      "shieldDamage": -10
+    },
+    "6300": {
+      "weakened": -20,
+      "poisoned": -20,
+      "chilled": -20
+    },
+    "6400": {
+      "critDamage": -20
+    },
+    "6600": {
+      "vulnerability": -10
+    },
+    "6700": {
+      "critDamage": -20
+    },
+    "6800": {
+      "skillDamage": -20
+    },
+    "6900": {
+      "shieldDamage": -10
+    },
+    "7100": {
+      "critRate": -10
+    },
+    "7200": {
+      "skillDamage": -20
+    },
+    "7300": {
+      "shieldDamage": -15
+    },
+    "7400": {
+      "damageDealt": -5
+    },
+    "7700": {
+      "critRate": -15
+    },
+    "7800": {
+      "skillDamage": -25
+    },
+    "7900": {
+      "vulnerability": -15
+    },
+    "8000": {
+      "critDamage": -25
+    },
+    "8200": {
+      "skillDamage": -25
+    },
+    "8300": {
+      "critDamage": -25
+    },
+    "8400": {
+      "shieldDamage": -15
+    },
+    "8500": {
+      "weakened": -20,
+      "poisoned": -20,
+      "chilled": -20
+    },
+    "8700": {
+      "critDamage": -25
+    },
+    "8800": {
+      "skillDamage": -25
+    },
+    "8900": {
+      "damageDealt": -5
+    },
+    "9200": {
+      "critRate": -15
+    },
+    "9300": {
+      "skillDamage": -25
+    },
+    "9400": {
+      "shieldDamage": -15
+    },
+    "9500": {
+      "critDamage": -25
+    },
+    "9700": {
+      "vulnerability": -15
+    },
+    "9800": {
+      "skillDamage": -25
+    },
+    "9900": {
+      "critDamage": -25
+    },
+    "10000": {
+      "shieldDamage": -15
+    },
+    "10200": {
+      "skillDamage": -25
+    },
+    "10300": {
+      "critDamage": -25
+    },
+    "10400": {
+      "weakened": -20,
+      "poisoned": -20,
+      "chilled": -20
+    },
+    "10700": {
+      "vulnerability": -20
+    },
+    "10800": {
+      "critDamage": -30
+    },
+    "10900": {
+      "skillDamage": -30
+    },
+    "11000": {
+      "shieldDamage": -20
+    },
+    "11200": {
+      "critRate": -20
+    },
+    "11300": {
+      "shieldDamage": -20
+    },
+    "11400": {
+      "damageDealt": -5
+    },
+    "11500": {
+      "skillDamage": -30
+    },
+    "11700": {
+      "weakened": -20,
+      "poisoned": -20,
+      "chilled": -20
+    },
+    "11800": {
+      "critDamage": -30
+    },
+    "11900": {
+      "skillDamage": -30
+    },
+    "12200": {
+      "critDamage": -40
+    },
+    "12300": {
+      "skillDamage": -40
+    },
+    "12400": {
+      "weakened": -30,
+      "poisoned": -30,
+      "chilled": -30
+    },
+    "12500": {
+      "vulnerability": -20
+    },
+    "12700": {
+      "shieldDamage": -30
+    },
+    "12800": {
+      "critDamage": -50
+    },
+    "12900": {
+      "skillDamage": -50
+    },
+    "13000": {
+      "damageDealt": -5,
+      "critRate": -40
+    },
+    "13200": {
+      "weakened": -30,
+      "poisoned": -30,
+      "chilled": -30
+    },
+    "13300": {
+      "vulnerability": -20
+    },
+    "13400": {
+      "shieldDamage": -30
+    },
+    "14100": {
+      "skillDamage": -60
+    },
+    "14400": {
+      "weakened": -40,
+      "poisoned": -40,
+      "chilled": -40
+    },
+    "14700": {
+      "critDamage": -60
+    },
+    "15000": {
+      "shieldDamage": -40
+    },
+    "15600": {
+      "vulnerability": -20
+    },
+    "15900": {
+      "damageDealt": -5
+    },
+    "16200": {
+      "skillDamage": -60
+    },
+    "16500": {
+      "shieldDamage": -40
+    },
+    "17100": {
+      "weakened": -40,
+      "poisoned": -40,
+      "chilled": -40
+    },
+    "17400": {
+      "vulnerability": -20
+    },
+    "17700": {
+      "critDamage": -60
+    },
+    "19000": {
+      "skillDamage": -60
+    },
+    "19500": {
+      "critDamage": -60
+    },
+    "20000": {
+      "shieldDamage": -40
+    },
+    "20500": {
+      "vulnerability": -20
+    },
+    "21500": {
+      "skillDamage": -60
+    },
+    "22000": {
+      "critRate": -20,
+      "critDamage": -60
+    },
+    "22500": {
+      "weakened": -40,
+      "poisoned": -40,
+      "chilled": -40
+    },
+    "23000": {
+      "critDamage": -60
+    },
+    "23500": {
+      "skillDamage": -60
+    },
+    "24500": {
+      "damageDealt": -5
+    },
+    "25000": {
+      "vulnerability": -20
+    },
+    "25500": {
+      "critRate": -20,
+      "critDamage": -60
+    },
+    "26000": {
+      "shieldDamage": -40
+    },
+    "26500": {
+      "weakened": -40,
+      "poisoned": -40,
+      "chilled": -40
+    },
+    "29000": {
+      "critDamage": -60
+    },
+    "30000": {
+      "shieldDamage": -40
+    },
+    "31000": {
+      "vulnerability": -20
+    },
+    "32000": {
+      "skillDamage": -60
+    },
+    "34000": {
+      "critRate": -20,
+      "critDamage": -60
+    },
+    "35000": {
+      "weakened": -40,
+      "poisoned": -40,
+      "chilled": -40
+    },
+    "36000": {
+      "skillDamage": -60
+    },
+    "37000": {
+      "critDamage": -60
+    },
+    "38000": {
+      "damageDealt": -5
+    },
+    "40000": {
+      "skillDamage": -60
+    },
+    "41000": {
+      "vulnerability": -20
+    },
+    "42000": {
+      "critRate": -20,
+      "critDamage": -60
+    },
+    "43000": {
+      "skillDamage": -60
+    },
+    "44000": {
+      "shieldDamage": -40
+    },
+    "46000": {
+      "vulnerability": -20
+    },
+    "46500": {
+      "critDamage": -60
+    },
+    "47000": {
+      "skillDamage": -60
+    },
+    "47500": {
+      "weakened": -40,
+      "poisoned": -40,
+      "chilled": -40
+    },
+    "48000": {
+      "vulnerability": -20
+    },
+    "48500": {
+      "shieldDamage": -40
+    },
+    "49500": {
+      "skillDamage": -60
+    },
+    "50000": {
+      "vulnerability": -20
+    },
+    "50500": {
+      "critRate": -20,
+      "critDamage": -60
+    },
+    "51000": {
+      "shieldDamage": -40
+    },
+    "51500": {
+      "laceration": -10
+    },
+    "52500": {
+      "vulnerability": -20
+    },
+    "53000": {
+      "weakened": -40,
+      "poisoned": -40,
+      "chilled": -40
+    },
+    "53500": {
+      "shieldDamage": -40
+    },
+    "54000": {
+      "critDamage": -60
+    },
+    "54500": {
+      "vulnerability": -20
+    },
+    "55000": {
+      "laceration": -20
+    },
+    "56500": {
+      "shieldDamage": -40
+    },
+    "57000": {
+      "weakened": -50,
+      "poisoned": -50,
+      "chilled": -50
+    },
+    "57500": {
+      "vulnerability": -30
+    },
+    "58000": {
+      "skillDamage": -75
+    },
+    "58500": {
+      "critRate": -30,
+      "critDamage": -75
+    },
+    "59000": {
+      "shieldDamage": -40
+    },
+    "60000": {
+      "laceration": -20
+    },
+    "60500": {
+      "damageDealt": -5
+    },
+    "61000": {
+      "skillDamage": -100
+    },
+    "61500": {
+      "vulnerability": -30
+    },
+    "62000": {
+      "critDamage": -100
+    },
+    "63000": {
+      "weakened": -50,
+      "poisoned": -50,
+      "chilled": -50
+    },
+    "63500": {
+      "skillDamage": -100
+    },
+    "64000": {
+      "shieldDamage": -40
+    },
+    "64500": {
+      "vulnerability": -30
+    },
+    "65000": {
+      "critDamage": -100
+    },
+    "65500": {
+      "laceration": -20
+    },
+    "67000": {
+      "skillDamage": -100
+    },
+    "67500": {
+      "vulnerability": -30
+    },
+    "68000": {
+      "critDamage": -100
+    },
+    "68500": {
+      "shieldDamage": -40
+    },
+    "69000": {
+      "laceration": -30
+    },
+    "69500": {
+      "xenoResDamage": -20
+    },
+    "70500": {
+      "weakened": -50,
+      "poisoned": -50,
+      "chilled": -50
+    },
+    "71000": {
+      "vulnerability": -30
+    },
+    "71500": {
+      "skillDamage": -100
+    },
+    "72000": {
+      "damageDealt": -5
+    },
+    "72500": {
+      "damageBoss": -10
+    },
+    "73500": {
+      "vulnerability": -40
+    },
+    "74000": {
+      "laceration": -30
+    },
+    "74500": {
+      "shieldDamage": -40
+    },
+    "75000": {
+      "critRate": -30,
+      "critDamage": -100
+    },
+    "75500": {
+      "xenoResDamage": -20
+    },
+    "76000": {
+      "damageBoss": -20
+    },
+    "77500": {
+      "weakened": -60,
+      "poisoned": -60,
+      "chilled": -60
+    },
+    "78000": {
+      "shieldDamage": -40
+    },
+    "78500": {
+      "critRate": -40,
+      "critDamage": -100
+    },
+    "79000": {
+      "vulnerability": -40
+    },
+    "79500": {
+      "skillDamage": -100
+    },
+    "80000": {
+      "laceration": -30
+    },
+    "81000": {
+      "critDamage": -100
+    },
+    "81500": {
+      "skillDamage": -100
+    },
+    "82000": {
+      "shieldDamage": -40
+    },
+    "82500": {
+      "damageDealt": -5
+    },
+    "83000": {
+      "xenoResDamage": -20
+    },
+    "84000": {
+      "skillDamage": -100
+    },
+    "84500": {
+      "shieldDamage": -40
+    },
+    "85000": {
+      "critRate": -40,
+      "critDamage": -100
+    },
+    "85500": {
+      "vulnerability": -40
+    },
+    "86000": {
+      "laceration": -30
+    },
+    "86500": {
+      "damageBoss": -20
+    }
+  },
+  "ee": [
+    [
+      {
+        "name": "Pain Strike",
+        "stats": {
+          "critDamage": 30
+        }
+      },
+      {
+        "name": "Pain Strike: Frailty",
+        "stats": {
+          "critDamage": 90,
+          "damageDealt": -5
+        }
+      },
+      {
+        "name": "Pain strike: Last stand",
+        "type": "mix",
+        "stats": {
+          "critDamage": 60
+        }
+      },
+      {
+        "name": "Pain strike: Mediocrity",
+        "type": "mix",
+        "stats": {
+          "critDamage": 60,
+          "critRate": -15
+        }
+      },
+      {
+        "name": "Pain Point",
+        "stats": {
+          "critRate": 15
+        }
+      },
+      {
+        "name": "Pain Point: Frailty",
+        "stats": {
+          "critRate": 30,
+          "damageDealt": -5
+        }
+      },
+      {
+        "name": "Pain Point: Last Stand",
+        "type": "mix",
+        "stats": {
+          "critRate": 30
+        }
+      },
+      {
+        "name": "Enrage: Weaken",
+        "stats": {
+          "damageDealt": 30,
+          "critRate": 15,
+          "critDamage": -60
+        }
+      },
+      {
+        "name": "Violent: Ordinary",
+        "stats": {
+          "damageDealt": 15,
+          "critRate": -15
+        }
+      },
+      {
+        "name": "Enrage: Last Stand",
+        "type": "mix",
+        "stats": {
+          "damageDealt": 15
+        }
+      }
+    ],
+    [
+      {
+        "name": "Omnipower Part",
+        "icon": "good",
+        "stats": {}
+      }
+    ],
+    [
+      {
+        "name": "Hi-Energy Quantum Shield",
+        "stats": {
+          "shieldDamage": 30
+        }
+      },
+      {
+        "name": "Death Towards Life",
+        "stats": {
+          "damageDealt": 20
+        },
+        "icon": "buff_4"
+      },
+      {
+        "name": "Breath of Fresh Air",
+        "icon": "buff_5",
+        "stats": {
+          "damageDealt": 20
+        }
+      },
+      {
+        "name": "Knowledge is Power",
+        "icon": "buff_3",
+        "stats": {
+          "skillDamage": 50
+        }
+      },
+      {
+        "name": "Elementalist",
+        "stats": {
+          "poisoned": 10,
+          "chilled": 10,
+          "weakened": 10
+        }
+      },
+      {
+        "name": "Treasure Hunter",
+        "icon": "buff_1",
+        "stats": {
+          "skillDamage": 100
+        }
+      },
+      {
+        "name": "Major Fortune",
+        "icon": "buff_2",
+        "stats": {
+          "skillDamage": 76.66666666666666
+        }
+      }
+    ]
+  ]
+}

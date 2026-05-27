@@ -8,7 +8,7 @@
     "collectibleEffectMappingMatrix": "artifacts/td11/collectible_effect_mapping_matrix.json",
     "mountDamageSourceFixture": "artifacts/td11/mount_damage_source_fixture.json",
     "targetedLiveEvidence": "artifacts/td11/targeted_live_evidence/targeted_live_evidence_matrix.json",
-    "compactCodecAsset": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/9730c42f92d7-797-9e5ce5eee251b4e4.js"
+    "compactCodecAsset": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/72385b1f6095-4665-52a811e00015684b.js"
   },
   "summary": {
     "liveCaptureCases": 26,
@@ -486,7 +486,7 @@
       "key": "source:compact-codec:mount-active-key",
       "domain": "mounts",
       "evidenceType": "sio-tools-public-mirrored-asset",
-      "sourceArtifact": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/9730c42f92d7-797-9e5ce5eee251b4e4.js",
+      "sourceArtifact": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/72385b1f6095-4665-52a811e00015684b.js",
       "sourceMeaning": "module73755 export codec maps mounts.active string values to Object.keys(c.c.mounts) indexes and compresses long key active to bj.",
       "compactKeys": {
         "active": {

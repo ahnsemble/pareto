@@ -37,6 +37,14 @@
         "status": "catalog-only-pending-source-row"
       }
     ],
+    "collectionSourcePlaceholderRows": [
+      {
+        "domain": "collectibles",
+        "rarity": "Excellent",
+        "sourceKey": "Excellent",
+        "status": "source-placeholder-no-effect-row"
+      }
+    ],
     "directGapRows": [],
     "petSkillOnlyRows": [
       {
@@ -69,7 +77,8 @@
     ]
   },
   "sourceEffectLeafCounts": {
-    "collectibles": 270,
+    "collectibles": 271,
+    "customSets": 275,
     "heroes": 623,
     "items": 528,
     "pets": 147,
@@ -81,9 +90,18 @@
     "collectionCatalogOnlyRows": 4,
     "collectionEventSlotRows": 42,
     "collectionSourceMissingRows": 0,
+    "collectionSourcePlaceholderRows": 1,
+    "customSetExpectedSlots": 4,
+    "customSetSourceMissingRows": 0,
+    "customSetSourceRows": 4,
     "directGapRows": 0,
     "heroSourceMissingRows": 0,
     "itemSourceMissingRows": 0,
+    "nezhaSourcePresent": true,
+    "nezhaTangtangPresent": true,
+    "nitaSourcePresent": false,
+    "nitaStatus": "not-present-in-current-source",
+    "nitaTangtangPresent": false,
     "noRawDebugExposure": true,
     "noScoringChange": true,
     "noUiSioWordingChange": true,
@@ -92,7 +110,8 @@
     "petXenoTypeMismatchRows": 0,
     "productAliasRows": 3,
     "setSourceMissingRows": 0,
-    "sourceCollectibleRows": 118,
+    "sourceCollectibleEffectRows": 118,
+    "sourceCollectibleRows": 119,
     "sourceHeroRows": 23,
     "sourceItemRows": 11,
     "sourcePetRows": 8,

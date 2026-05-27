@@ -134,11 +134,12 @@ async function writeMirror(url, text, extensionHint = '') {
   const filename = `${safeAssetName(url)}${extensionHint}`;
   const filePath = path.join(mirrorDir, filename);
   await fs.writeFile(filePath, text);
-  return filePath;
+  return path.relative(process.cwd(), filePath);
 }
 
 async function main() {
   await fs.mkdir(outputDir, { recursive: true });
+  await fs.rm(mirrorDir, { recursive: true, force: true });
 
   const errors = [];
   const htmlResponse = await fetchText(sourceUrl);

@@ -1,0 +1,1007 @@
+{
+  "status": "[MINIFIED-FORMULA-TABLE-RUNTIME-EXPORTS-GREEN-NOT-FULL-SIO]",
+  "generatedAt": "2026-05-27T10:28:15.047Z",
+  "fullSioEquivalent": false,
+  "freshness": {
+    "currentSourceLabel": "sio-tools-live-bundle",
+    "sourceUrl": "https://sio-tools.vercel.app",
+    "sourceFetchedAt": "2026-05-27T10:28:14.841Z",
+    "fullSioEquivalentChanged": false,
+    "damageCoefficientAnchors": {
+      "drillShotMode": {
+        "name": "Drill Shot Mode",
+        "status": "observed-finite",
+        "value": 46.21,
+        "historicalReferenceValue": 36.8,
+        "changedFromHistoricalReference": true
+      }
+    }
+  },
+  "mirrorDir": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_asset_discovery/mirrored_assets",
+  "mirroredFiles": 29,
+  "loadedWebpackModules": 1771,
+  "evalErrors": [
+    {
+      "file": "43bccd1e69dd-webpack-ce937cc85ad8c1df.js",
+      "message": "Cannot read properties of undefined (reading 'href')"
+    },
+    {
+      "file": "d8a5a6fcf25b-script.js",
+      "message": "Cannot read properties of undefined (reading 'width')"
+    }
+  ],
+  "tablePaths": {
+    "module37013DataTable": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/extracted_tables/module37013_c_deployed_data_table.json",
+    "module37013DefaultConfig": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/extracted_tables/module37013_f_default_config.json",
+    "module32085DamageCoefficients": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/extracted_tables/module32085_mg_damage_coefficients.json"
+  },
+  "helperFormulaPaths": {
+    "module91252.Dp": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module91252_Dp.js",
+    "module91252.Ln": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module91252_Ln.js",
+    "module91252.t6": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module91252_t6.js",
+    "module91252.w9": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module91252_w9.js",
+    "module73755.Z": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module73755_Z.js",
+    "module73755.P": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module73755_P.js"
+  },
+  "module32085FormulaPaths": {},
+  "formulaCandidateExports": [],
+  "internalFormulaCandidates": [
+    {
+      "keyword": "ee",
+      "offset": 450,
+      "nearbyFunctionOrBinding": "__module",
+      "arithmeticOperatorCount": 81,
+      "snippet": "const __module = (e, t, l) => {\n    \"use strict\";\n    l.d(t, {\n        $S: () => ef,\n        $t: () => q,\n        Ae: () => eO,\n        Ai: () => G,\n        CI: () => eT,\n        DU: () => N,\n        Dc: () => e1,\n        Dh: () => el,\n        Di: () => eS,\n        EF: () => V,\n        EW: () => eM,\n        Ep: () => e_,\n        FQ: () => eH,\n        Fd: () => ed,\n        G3: () => em,\n        GJ: () => ep,\n        Gx: () => $,\n        HD: () => ee,\n        IY: () => e2,\n        Ie: () => P,\n        Ii: () => eL,\n        J3: () => eB,\n        M0: () => I,\n        Ox: () => B,\n        PT: () => R,\n        Pg: () => O,\n        RL: () => eo,\n        S9: () => eg,\n        Ui: () => eU,\n        Us: () => F,\n        VF: () => ea,\n        VJ: () => er,\n        YC: () => L,\n        YQ: () => eb,\n        Yj: () => eA,\n        Yx: () => ey,\n        ZA: () => es,\n        ZM: () => eF,\n        Zt: () => e3,\n        _0: () => eX,\n        _b: () => eJ,\n        cc: () => K,\n        cl: () => ej,\n        d1: () => Y,\n        dO: () => T,\n        dt: () => ek,\n        en: () => ew,\n        f: () => eE,\n        fo: () => ez,\n        gE: () => E,\n        gs: () => ei,\n        hM: () => eZ,\n        ib: () => eG,\n        ik: () => eD,\n        iv: () => H,\n        jc: () => ec,\n        kJ: () => eN,\n        m1: () => eR,\n        mg: () => S,\n        mh: () => ex,\n        n3: () => _,\n        nk: () => en,\n        on: () => X,\n        op: () => eu,\n        pA: () => J,\n        pe: () => eW,\n        pq: () => e$,\n        pv: () => W,\n        q9: () => eQ,\n        qM: () => eq,\n        rP: () => Z,\n        sm: () => et,\n        vh: () => eh,\n        vo: () => U,\n        wY: () => eP,\n        x3: () => M,\n        x5: () => D,\n        xp: () => eI,\n        xw: () => ev,\n        zD: () => eC\n    });\n    var s, n, r, i, a, o, c, d, u, h, p = l(90639), m = l(43809), x = l(69339), g = l(20330), j = l(64778), y = l(4215), v = l(74801), f = l(79061)"
+    },
+    {
+      "keyword": "damage",
+      "offset": 3908,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 40,
+      "snippet": "\n        mounts: \"mount\"\n    }, D = .7, F = 14.75, E = 30, _ = 10, K = .5, P = {\n        xenoSyncRate: {\n            icon: \"pets/skills/xeno_sync_rate\"\n        },\n        xenoResChance: {\n            icon: \"pets/skills/xeno_res_chance\"\n        },\n        xenoResDamage: {\n            icon: \"pets/skills/xeno_res_damage\"\n        },\n        xenoResDuration: {\n            unit: \"s\",\n            icon: \"pets/skills/xeno_res_duration\"\n        }\n    }, T = {\n        atkPercent: {\n            icon: \"pets/skills/atk_percent\"\n        },\n        critRate: {\n            icon: \"pets/skills/motivation\"\n        },\n        critDamage: {\n            icon: \"pets/skills/inspiration\"\n        },\n        skillDamage: {\n            icon: \"pets/skills/encouragement\"\n        },\n        vulnerability: {\n            icon: \"stats/vulnerability\"\n        },\n        shieldDamage: {\n            icon: \"pets/skills/shield_damage\"\n        },\n        poisoned: {\n            icon: \"pets/skills/poisoned\"\n        },\n        weakened: {\n            icon: \"pets/skills/weakened\"\n        },\n        chilled: {\n            icon: \"pets/skills/chilled\"\n        },\n        exposedDamage: {\n            icon: \"pets/skills/exposed\"\n        },\n        clarity: {\n            icon: \"items/evervoid_armor\"\n        },\n        eternalMultiplier: {\n            icon: \"items/stardust_sash\"\n        },\n        glacialBloodline: {\n            icon: \"items/glacial_warboots\"\n        },\n        laceration: {\n            icon: \"stats/laceration\"\n        },\n        divineFire: {\n            icon: \"stats/divineFire\"\n        },\n        cooldownReduction: {\n            icon: \"stats/cooldown_reduction\",\n            type: \"multiplier\",\n            unit: \"%\"\n        },\n        ssGlovesLaser: {\n            icon: \"items/moonscar_bracer\"\n        },\n        eternalSuitBoost: {\n            type: \"multiplier\",\n            icon: \"items/eternal_suit\"\n        },\n        voidNeckBoost: {\n            type: \"multiplier\",\n            icon: \"items/voidwaker_emblem\",\n            help: \"uptime\"\n        },\n        voidGlovesInstakill: {\n            type: \"multiplier\",\n            icon: \"items/voidwaker_handguards\"\n        },\n        voidBootsBoost: {\n            type: \"multiplier\",\n            icon: \"items/voidwaker_treads\"\n        },\n        chaosBeltBoost: {\n            type: \"multiplier\",\n            icon: \"items/twisting_belt\"\n        },\n        j"
+    },
+    {
+      "keyword": "skillDamage",
+      "offset": 3698,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 38,
+      "snippet": "fo: 308.67,\n        \"King Blizzblast\": 198.74,\n        Nutjob: 300,\n        Gourmeow: 300,\n        \"Electric Scooter\": 77,\n        \"Tech Hoverboard\": 100,\n        Doomsteed: 0\n    }, L = {\n        pets: \"xeno\",\n        mounts: \"mount\"\n    }, D = .7, F = 14.75, E = 30, _ = 10, K = .5, P = {\n        xenoSyncRate: {\n            icon: \"pets/skills/xeno_sync_rate\"\n        },\n        xenoResChance: {\n            icon: \"pets/skills/xeno_res_chance\"\n        },\n        xenoResDamage: {\n            icon: \"pets/skills/xeno_res_damage\"\n        },\n        xenoResDuration: {\n            unit: \"s\",\n            icon: \"pets/skills/xeno_res_duration\"\n        }\n    }, T = {\n        atkPercent: {\n            icon: \"pets/skills/atk_percent\"\n        },\n        critRate: {\n            icon: \"pets/skills/motivation\"\n        },\n        critDamage: {\n            icon: \"pets/skills/inspiration\"\n        },\n        skillDamage: {\n            icon: \"pets/skills/encouragement\"\n        },\n        vulnerability: {\n            icon: \"stats/vulnerability\"\n        },\n        shieldDamage: {\n            icon: \"pets/skills/shield_damage\"\n        },\n        poisoned: {\n            icon: \"pets/skills/poisoned\"\n        },\n        weakened: {\n            icon: \"pets/skills/weakened\"\n        },\n        chilled: {\n            icon: \"pets/skills/chilled\"\n        },\n        exposedDamage: {\n            icon: \"pets/skills/exposed\"\n        },\n        clarity: {\n            icon: \"items/evervoid_armor\"\n        },\n        eternalMultiplier: {\n            icon: \"items/stardust_sash\"\n        },\n        glacialBloodline: {\n            icon: \"items/glacial_warboots\"\n        },\n        laceration: {\n            icon: \"stats/laceration\"\n        },\n        divineFire: {\n            icon: \"stats/divineFire\"\n        },\n        cooldownReduction: {\n            icon: \"stats/cooldown_reduction\",\n            type: \"multiplier\",\n            unit: \"%\"\n        },\n        ssGlovesLaser: {\n            icon: \"items/moonscar_bracer\"\n        },\n        eternalSuitBoost: {\n            type: \"multiplier\",\n            icon: \"items/eternal_suit\"\n        },\n        voidNeckBoost: {\n            type: \"multiplier\",\n            icon: \"items/voidwaker_emblem\",\n            help: \"uptime\"\n        },\n        voidGlovesInstakill: {\n            type: \"multiplier\",\n            icon: \"items/voidwaker_handguards\"\n        },\n        voidBootsBoo"
+    },
+    {
+      "keyword": "critRate",
+      "offset": 3547,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 37,
+      "snippet": "24.36,\n        \"Guardian Mode\": 18.94,\n        \"Laser Mode\": 38.16,\n        \"Brick Mode\": 70,\n        Capy: 188.26,\n        Crucker: 158.7,\n        Puffo: 308.67,\n        \"King Blizzblast\": 198.74,\n        Nutjob: 300,\n        Gourmeow: 300,\n        \"Electric Scooter\": 77,\n        \"Tech Hoverboard\": 100,\n        Doomsteed: 0\n    }, L = {\n        pets: \"xeno\",\n        mounts: \"mount\"\n    }, D = .7, F = 14.75, E = 30, _ = 10, K = .5, P = {\n        xenoSyncRate: {\n            icon: \"pets/skills/xeno_sync_rate\"\n        },\n        xenoResChance: {\n            icon: \"pets/skills/xeno_res_chance\"\n        },\n        xenoResDamage: {\n            icon: \"pets/skills/xeno_res_damage\"\n        },\n        xenoResDuration: {\n            unit: \"s\",\n            icon: \"pets/skills/xeno_res_duration\"\n        }\n    }, T = {\n        atkPercent: {\n            icon: \"pets/skills/atk_percent\"\n        },\n        critRate: {\n            icon: \"pets/skills/motivation\"\n        },\n        critDamage: {\n            icon: \"pets/skills/inspiration\"\n        },\n        skillDamage: {\n            icon: \"pets/skills/encouragement\"\n        },\n        vulnerability: {\n            icon: \"stats/vulnerability\"\n        },\n        shieldDamage: {\n            icon: \"pets/skills/shield_damage\"\n        },\n        poisoned: {\n            icon: \"pets/skills/poisoned\"\n        },\n        weakened: {\n            icon: \"pets/skills/weakened\"\n        },\n        chilled: {\n            icon: \"pets/skills/chilled\"\n        },\n        exposedDamage: {\n            icon: \"pets/skills/exposed\"\n        },\n        clarity: {\n            icon: \"items/evervoid_armor\"\n        },\n        eternalMultiplier: {\n            icon: \"items/stardust_sash\"\n        },\n        glacialBloodline: {\n            icon: \"items/glacial_warboots\"\n        },\n        laceration: {\n            icon: \"stats/laceration\"\n        },\n        divineFire: {\n            icon: \"stats/divineFire\"\n        },\n        cooldownReduction: {\n            icon: \"stats/cooldown_reduction\",\n            type: \"multiplier\",\n            unit: \"%\"\n        },\n        ssGlovesLaser: {\n            icon: \"items/moonscar_bracer\"\n        },\n        eternalSuitBoost: {\n            type: \"multiplier\",\n            icon: \"items/eternal_suit\"\n        },\n        voidNeckBoost: {\n            type: \"multiplier\",\n            icon: \"items/voidwaker_emblem\",\n            help: \"uptime\"\n "
+    },
+    {
+      "keyword": "critDamage",
+      "offset": 3621,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 37,
+      "snippet": "  \"Brick Mode\": 70,\n        Capy: 188.26,\n        Crucker: 158.7,\n        Puffo: 308.67,\n        \"King Blizzblast\": 198.74,\n        Nutjob: 300,\n        Gourmeow: 300,\n        \"Electric Scooter\": 77,\n        \"Tech Hoverboard\": 100,\n        Doomsteed: 0\n    }, L = {\n        pets: \"xeno\",\n        mounts: \"mount\"\n    }, D = .7, F = 14.75, E = 30, _ = 10, K = .5, P = {\n        xenoSyncRate: {\n            icon: \"pets/skills/xeno_sync_rate\"\n        },\n        xenoResChance: {\n            icon: \"pets/skills/xeno_res_chance\"\n        },\n        xenoResDamage: {\n            icon: \"pets/skills/xeno_res_damage\"\n        },\n        xenoResDuration: {\n            unit: \"s\",\n            icon: \"pets/skills/xeno_res_duration\"\n        }\n    }, T = {\n        atkPercent: {\n            icon: \"pets/skills/atk_percent\"\n        },\n        critRate: {\n            icon: \"pets/skills/motivation\"\n        },\n        critDamage: {\n            icon: \"pets/skills/inspiration\"\n        },\n        skillDamage: {\n            icon: \"pets/skills/encouragement\"\n        },\n        vulnerability: {\n            icon: \"stats/vulnerability\"\n        },\n        shieldDamage: {\n            icon: \"pets/skills/shield_damage\"\n        },\n        poisoned: {\n            icon: \"pets/skills/poisoned\"\n        },\n        weakened: {\n            icon: \"pets/skills/weakened\"\n        },\n        chilled: {\n            icon: \"pets/skills/chilled\"\n        },\n        exposedDamage: {\n            icon: \"pets/skills/exposed\"\n        },\n        clarity: {\n            icon: \"items/evervoid_armor\"\n        },\n        eternalMultiplier: {\n            icon: \"items/stardust_sash\"\n        },\n        glacialBloodline: {\n            icon: \"items/glacial_warboots\"\n        },\n        laceration: {\n            icon: \"stats/laceration\"\n        },\n        divineFire: {\n            icon: \"stats/divineFire\"\n        },\n        cooldownReduction: {\n            icon: \"stats/cooldown_reduction\",\n            type: \"multiplier\",\n            unit: \"%\"\n        },\n        ssGlovesLaser: {\n            icon: \"items/moonscar_bracer\"\n        },\n        eternalSuitBoost: {\n            type: \"multiplier\",\n            icon: \"items/eternal_suit\"\n        },\n        voidNeckBoost: {\n            type: \"multiplier\",\n            icon: \"items/voidwaker_emblem\",\n            help: \"uptime\"\n        },\n        voidGlovesInstakill: {\n            type: \"multiplier\",\n "
+    },
+    {
+      "keyword": "damage",
+      "offset": 3320,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 35,
+      "snippet": "ode\": 9.38,\n        \"Soccer Mode\": 19.7,\n        \"Drone Mode\": 48.22,\n        \"Forcefield Mode\": 18.94,\n        \"Drill Shot Mode\": 46.21,\n        \"Rocket Mode\": 49.04,\n        \"Lightning Mode\": 56.59,\n        \"Boomerang Mode\": 24.36,\n        \"Guardian Mode\": 18.94,\n        \"Laser Mode\": 38.16,\n        \"Brick Mode\": 70,\n        Capy: 188.26,\n        Crucker: 158.7,\n        Puffo: 308.67,\n        \"King Blizzblast\": 198.74,\n        Nutjob: 300,\n        Gourmeow: 300,\n        \"Electric Scooter\": 77,\n        \"Tech Hoverboard\": 100,\n        Doomsteed: 0\n    }, L = {\n        pets: \"xeno\",\n        mounts: \"mount\"\n    }, D = .7, F = 14.75, E = 30, _ = 10, K = .5, P = {\n        xenoSyncRate: {\n            icon: \"pets/skills/xeno_sync_rate\"\n        },\n        xenoResChance: {\n            icon: \"pets/skills/xeno_res_chance\"\n        },\n        xenoResDamage: {\n            icon: \"pets/skills/xeno_res_damage\"\n        },\n        xenoResDuration: {\n            unit: \"s\",\n            icon: \"pets/skills/xeno_res_duration\"\n        }\n    }, T = {\n        atkPercent: {\n            icon: \"pets/skills/atk_percent\"\n        },\n        critRate: {\n            icon: \"pets/skills/motivation\"\n        },\n        critDamage: {\n            icon: \"pets/skills/inspiration\"\n        },\n        skillDamage: {\n            icon: \"pets/skills/encouragement\"\n        },\n        vulnerability: {\n            icon: \"stats/vulnerability\"\n        },\n        shieldDamage: {\n            icon: \"pets/skills/shield_damage\"\n        },\n        poisoned: {\n            icon: \"pets/skills/poisoned\"\n        },\n        weakened: {\n            icon: \"pets/skills/weakened\"\n        },\n        chilled: {\n            icon: \"pets/skills/chilled\"\n        },\n        exposedDamage: {\n            icon: \"pets/skills/exposed\"\n        },\n        clarity: {\n            icon: \"items/evervoid_armor\"\n        },\n        eternalMultiplier: {\n            icon: \"items/stardust_sash\"\n        },\n        glacialBloodline: {\n            icon: \"items/glacial_warboots\"\n        },\n        laceration: {\n            icon: \"stats/laceration\"\n        },\n        divineFire: {\n            icon: \"stats/divineFire\"\n        },\n        cooldownReduction: {\n            icon: \"stats/cooldown_reduction\",\n            type: \"multiplier\",\n            unit: \"%\"\n        },\n        ssGlovesLaser: {\n            icon: \"items/moonscar_bracer\"\n        },\n        eter"
+    },
+    {
+      "keyword": "xeno",
+      "offset": 3227,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 34,
+      "snippet": "        \"Molotov Mode\": 40.92,\n        Drill: 50.02,\n        Rocket: 31.66,\n        \"Durian Mode\": 9.38,\n        \"Soccer Mode\": 19.7,\n        \"Drone Mode\": 48.22,\n        \"Forcefield Mode\": 18.94,\n        \"Drill Shot Mode\": 46.21,\n        \"Rocket Mode\": 49.04,\n        \"Lightning Mode\": 56.59,\n        \"Boomerang Mode\": 24.36,\n        \"Guardian Mode\": 18.94,\n        \"Laser Mode\": 38.16,\n        \"Brick Mode\": 70,\n        Capy: 188.26,\n        Crucker: 158.7,\n        Puffo: 308.67,\n        \"King Blizzblast\": 198.74,\n        Nutjob: 300,\n        Gourmeow: 300,\n        \"Electric Scooter\": 77,\n        \"Tech Hoverboard\": 100,\n        Doomsteed: 0\n    }, L = {\n        pets: \"xeno\",\n        mounts: \"mount\"\n    }, D = .7, F = 14.75, E = 30, _ = 10, K = .5, P = {\n        xenoSyncRate: {\n            icon: \"pets/skills/xeno_sync_rate\"\n        },\n        xenoResChance: {\n            icon: \"pets/skills/xeno_res_chance\"\n        },\n        xenoResDamage: {\n            icon: \"pets/skills/xeno_res_damage\"\n        },\n        xenoResDuration: {\n            unit: \"s\",\n            icon: \"pets/skills/xeno_res_duration\"\n        }\n    }, T = {\n        atkPercent: {\n            icon: \"pets/skills/atk_percent\"\n        },\n        critRate: {\n            icon: \"pets/skills/motivation\"\n        },\n        critDamage: {\n            icon: \"pets/skills/inspiration\"\n        },\n        skillDamage: {\n            icon: \"pets/skills/encouragement\"\n        },\n        vulnerability: {\n            icon: \"stats/vulnerability\"\n        },\n        shieldDamage: {\n            icon: \"pets/skills/shield_damage\"\n        },\n        poisoned: {\n            icon: \"pets/skills/poisoned\"\n        },\n        weakened: {\n            icon: \"pets/skills/weakened\"\n        },\n        chilled: {\n            icon: \"pets/skills/chilled\"\n        },\n        exposedDamage: {\n            icon: \"pets/skills/exposed\"\n        },\n        clarity: {\n            icon: \"items/evervoid_armor\"\n        },\n        eternalMultiplier: {\n            icon: \"items/stardust_sash\"\n        },\n        glacialBloodline: {\n            icon: \"items/glacial_warboots\"\n        },\n        laceration: {\n            icon: \"stats/laceration\"\n        },\n        divineFire: {\n            icon: \"stats/divineFire\"\n        },\n        cooldownReduction: {\n            icon: \"stats/cooldown_reduction\",\n            type: \"multiplier\",\n            unit: \"%\"\n        "
+    },
+    {
+      "keyword": "xeno",
+      "offset": 3144,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 33,
+      "snippet": "   King: 112.03,\n        Common: 54.72,\n        Drone: 26.21,\n        Molotov: 38,\n        \"Molotov Mode\": 40.92,\n        Drill: 50.02,\n        Rocket: 31.66,\n        \"Durian Mode\": 9.38,\n        \"Soccer Mode\": 19.7,\n        \"Drone Mode\": 48.22,\n        \"Forcefield Mode\": 18.94,\n        \"Drill Shot Mode\": 46.21,\n        \"Rocket Mode\": 49.04,\n        \"Lightning Mode\": 56.59,\n        \"Boomerang Mode\": 24.36,\n        \"Guardian Mode\": 18.94,\n        \"Laser Mode\": 38.16,\n        \"Brick Mode\": 70,\n        Capy: 188.26,\n        Crucker: 158.7,\n        Puffo: 308.67,\n        \"King Blizzblast\": 198.74,\n        Nutjob: 300,\n        Gourmeow: 300,\n        \"Electric Scooter\": 77,\n        \"Tech Hoverboard\": 100,\n        Doomsteed: 0\n    }, L = {\n        pets: \"xeno\",\n        mounts: \"mount\"\n    }, D = .7, F = 14.75, E = 30, _ = 10, K = .5, P = {\n        xenoSyncRate: {\n            icon: \"pets/skills/xeno_sync_rate\"\n        },\n        xenoResChance: {\n            icon: \"pets/skills/xeno_res_chance\"\n        },\n        xenoResDamage: {\n            icon: \"pets/skills/xeno_res_damage\"\n        },\n        xenoResDuration: {\n            unit: \"s\",\n            icon: \"pets/skills/xeno_res_duration\"\n        }\n    }, T = {\n        atkPercent: {\n            icon: \"pets/skills/atk_percent\"\n        },\n        critRate: {\n            icon: \"pets/skills/motivation\"\n        },\n        critDamage: {\n            icon: \"pets/skills/inspiration\"\n        },\n        skillDamage: {\n            icon: \"pets/skills/encouragement\"\n        },\n        vulnerability: {\n            icon: \"stats/vulnerability\"\n        },\n        shieldDamage: {\n            icon: \"pets/skills/shield_damage\"\n        },\n        poisoned: {\n            icon: \"pets/skills/poisoned\"\n        },\n        weakened: {\n            icon: \"pets/skills/weakened\"\n        },\n        chilled: {\n            icon: \"pets/skills/chilled\"\n        },\n        exposedDamage: {\n            icon: \"pets/skills/exposed\"\n        },\n        clarity: {\n            icon: \"items/evervoid_armor\"\n        },\n        eternalMultiplier: {\n            icon: \"items/stardust_sash\"\n        },\n        glacialBloodline: {\n            icon: \"items/glacial_warboots\"\n        },\n        laceration: {\n            icon: \"stats/laceration\"\n        },\n        divineFire: {\n            icon: \"stats/divineFire\"\n        },\n        cooldownReduction: {\n            icon: \"stats/"
+    },
+    {
+      "keyword": "xeno",
+      "offset": 3179,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 33,
+      "snippet": ".72,\n        Drone: 26.21,\n        Molotov: 38,\n        \"Molotov Mode\": 40.92,\n        Drill: 50.02,\n        Rocket: 31.66,\n        \"Durian Mode\": 9.38,\n        \"Soccer Mode\": 19.7,\n        \"Drone Mode\": 48.22,\n        \"Forcefield Mode\": 18.94,\n        \"Drill Shot Mode\": 46.21,\n        \"Rocket Mode\": 49.04,\n        \"Lightning Mode\": 56.59,\n        \"Boomerang Mode\": 24.36,\n        \"Guardian Mode\": 18.94,\n        \"Laser Mode\": 38.16,\n        \"Brick Mode\": 70,\n        Capy: 188.26,\n        Crucker: 158.7,\n        Puffo: 308.67,\n        \"King Blizzblast\": 198.74,\n        Nutjob: 300,\n        Gourmeow: 300,\n        \"Electric Scooter\": 77,\n        \"Tech Hoverboard\": 100,\n        Doomsteed: 0\n    }, L = {\n        pets: \"xeno\",\n        mounts: \"mount\"\n    }, D = .7, F = 14.75, E = 30, _ = 10, K = .5, P = {\n        xenoSyncRate: {\n            icon: \"pets/skills/xeno_sync_rate\"\n        },\n        xenoResChance: {\n            icon: \"pets/skills/xeno_res_chance\"\n        },\n        xenoResDamage: {\n            icon: \"pets/skills/xeno_res_damage\"\n        },\n        xenoResDuration: {\n            unit: \"s\",\n            icon: \"pets/skills/xeno_res_duration\"\n        }\n    }, T = {\n        atkPercent: {\n            icon: \"pets/skills/atk_percent\"\n        },\n        critRate: {\n            icon: \"pets/skills/motivation\"\n        },\n        critDamage: {\n            icon: \"pets/skills/inspiration\"\n        },\n        skillDamage: {\n            icon: \"pets/skills/encouragement\"\n        },\n        vulnerability: {\n            icon: \"stats/vulnerability\"\n        },\n        shieldDamage: {\n            icon: \"pets/skills/shield_damage\"\n        },\n        poisoned: {\n            icon: \"pets/skills/poisoned\"\n        },\n        weakened: {\n            icon: \"pets/skills/weakened\"\n        },\n        chilled: {\n            icon: \"pets/skills/chilled\"\n        },\n        exposedDamage: {\n            icon: \"pets/skills/exposed\"\n        },\n        clarity: {\n            icon: \"items/evervoid_armor\"\n        },\n        eternalMultiplier: {\n            icon: \"items/stardust_sash\"\n        },\n        glacialBloodline: {\n            icon: \"items/glacial_warboots\"\n        },\n        laceration: {\n            icon: \"stats/laceration\"\n        },\n        divineFire: {\n            icon: \"stats/divineFire\"\n        },\n        cooldownReduction: {\n            icon: \"stats/cooldown_reduction\",\n            ty"
+    },
+    {
+      "keyword": "xeno",
+      "offset": 3097,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 32,
+      "snippet": "talia: 28.4,\n        \"Master Yang\": 57.2,\n        King: 112.03,\n        Common: 54.72,\n        Drone: 26.21,\n        Molotov: 38,\n        \"Molotov Mode\": 40.92,\n        Drill: 50.02,\n        Rocket: 31.66,\n        \"Durian Mode\": 9.38,\n        \"Soccer Mode\": 19.7,\n        \"Drone Mode\": 48.22,\n        \"Forcefield Mode\": 18.94,\n        \"Drill Shot Mode\": 46.21,\n        \"Rocket Mode\": 49.04,\n        \"Lightning Mode\": 56.59,\n        \"Boomerang Mode\": 24.36,\n        \"Guardian Mode\": 18.94,\n        \"Laser Mode\": 38.16,\n        \"Brick Mode\": 70,\n        Capy: 188.26,\n        Crucker: 158.7,\n        Puffo: 308.67,\n        \"King Blizzblast\": 198.74,\n        Nutjob: 300,\n        Gourmeow: 300,\n        \"Electric Scooter\": 77,\n        \"Tech Hoverboard\": 100,\n        Doomsteed: 0\n    }, L = {\n        pets: \"xeno\",\n        mounts: \"mount\"\n    }, D = .7, F = 14.75, E = 30, _ = 10, K = .5, P = {\n        xenoSyncRate: {\n            icon: \"pets/skills/xeno_sync_rate\"\n        },\n        xenoResChance: {\n            icon: \"pets/skills/xeno_res_chance\"\n        },\n        xenoResDamage: {\n            icon: \"pets/skills/xeno_res_damage\"\n        },\n        xenoResDuration: {\n            unit: \"s\",\n            icon: \"pets/skills/xeno_res_duration\"\n        }\n    }, T = {\n        atkPercent: {\n            icon: \"pets/skills/atk_percent\"\n        },\n        critRate: {\n            icon: \"pets/skills/motivation\"\n        },\n        critDamage: {\n            icon: \"pets/skills/inspiration\"\n        },\n        skillDamage: {\n            icon: \"pets/skills/encouragement\"\n        },\n        vulnerability: {\n            icon: \"stats/vulnerability\"\n        },\n        shieldDamage: {\n            icon: \"pets/skills/shield_damage\"\n        },\n        poisoned: {\n            icon: \"pets/skills/poisoned\"\n        },\n        weakened: {\n            icon: \"pets/skills/weakened\"\n        },\n        chilled: {\n            icon: \"pets/skills/chilled\"\n        },\n        exposedDamage: {\n            icon: \"pets/skills/exposed\"\n        },\n        clarity: {\n            icon: \"items/evervoid_armor\"\n        },\n        eternalMultiplier: {\n            icon: \"items/stardust_sash\"\n        },\n        glacialBloodline: {\n            icon: \"items/glacial_warboots\"\n        },\n        laceration: {\n            icon: \"stats/laceration\"\n        },\n        divineFire: {\n            icon: \"stats/divineFire\"\n        },\n       "
+    },
+    {
+      "keyword": "xeno",
+      "offset": 3002,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 31,
+      "snippet": "Overload: 1634.416,\n        crimsonBat: 3545.66,\n        Taloxa: 1,\n        Joey: 1,\n        Metalia: 28.4,\n        \"Master Yang\": 57.2,\n        King: 112.03,\n        Common: 54.72,\n        Drone: 26.21,\n        Molotov: 38,\n        \"Molotov Mode\": 40.92,\n        Drill: 50.02,\n        Rocket: 31.66,\n        \"Durian Mode\": 9.38,\n        \"Soccer Mode\": 19.7,\n        \"Drone Mode\": 48.22,\n        \"Forcefield Mode\": 18.94,\n        \"Drill Shot Mode\": 46.21,\n        \"Rocket Mode\": 49.04,\n        \"Lightning Mode\": 56.59,\n        \"Boomerang Mode\": 24.36,\n        \"Guardian Mode\": 18.94,\n        \"Laser Mode\": 38.16,\n        \"Brick Mode\": 70,\n        Capy: 188.26,\n        Crucker: 158.7,\n        Puffo: 308.67,\n        \"King Blizzblast\": 198.74,\n        Nutjob: 300,\n        Gourmeow: 300,\n        \"Electric Scooter\": 77,\n        \"Tech Hoverboard\": 100,\n        Doomsteed: 0\n    }, L = {\n        pets: \"xeno\",\n        mounts: \"mount\"\n    }, D = .7, F = 14.75, E = 30, _ = 10, K = .5, P = {\n        xenoSyncRate: {\n            icon: \"pets/skills/xeno_sync_rate\"\n        },\n        xenoResChance: {\n            icon: \"pets/skills/xeno_res_chance\"\n        },\n        xenoResDamage: {\n            icon: \"pets/skills/xeno_res_damage\"\n        },\n        xenoResDuration: {\n            unit: \"s\",\n            icon: \"pets/skills/xeno_res_duration\"\n        }\n    }, T = {\n        atkPercent: {\n            icon: \"pets/skills/atk_percent\"\n        },\n        critRate: {\n            icon: \"pets/skills/motivation\"\n        },\n        critDamage: {\n            icon: \"pets/skills/inspiration\"\n        },\n        skillDamage: {\n            icon: \"pets/skills/encouragement\"\n        },\n        vulnerability: {\n            icon: \"stats/vulnerability\"\n        },\n        shieldDamage: {\n            icon: \"pets/skills/shield_damage\"\n        },\n        poisoned: {\n            icon: \"pets/skills/poisoned\"\n        },\n        weakened: {\n            icon: \"pets/skills/weakened\"\n        },\n        chilled: {\n            icon: \"pets/skills/chilled\"\n        },\n        exposedDamage: {\n            icon: \"pets/skills/exposed\"\n        },\n        clarity: {\n            icon: \"items/evervoid_armor\"\n        },\n        eternalMultiplier: {\n            icon: \"items/stardust_sash\"\n        },\n        glacialBloodline: {\n            icon: \"items/glacial_warboots\"\n        },\n        laceration: {\n            icon: \"stats/lacer"
+    },
+    {
+      "keyword": "mounts",
+      "offset": 3017,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 31,
+      "snippet": "416,\n        crimsonBat: 3545.66,\n        Taloxa: 1,\n        Joey: 1,\n        Metalia: 28.4,\n        \"Master Yang\": 57.2,\n        King: 112.03,\n        Common: 54.72,\n        Drone: 26.21,\n        Molotov: 38,\n        \"Molotov Mode\": 40.92,\n        Drill: 50.02,\n        Rocket: 31.66,\n        \"Durian Mode\": 9.38,\n        \"Soccer Mode\": 19.7,\n        \"Drone Mode\": 48.22,\n        \"Forcefield Mode\": 18.94,\n        \"Drill Shot Mode\": 46.21,\n        \"Rocket Mode\": 49.04,\n        \"Lightning Mode\": 56.59,\n        \"Boomerang Mode\": 24.36,\n        \"Guardian Mode\": 18.94,\n        \"Laser Mode\": 38.16,\n        \"Brick Mode\": 70,\n        Capy: 188.26,\n        Crucker: 158.7,\n        Puffo: 308.67,\n        \"King Blizzblast\": 198.74,\n        Nutjob: 300,\n        Gourmeow: 300,\n        \"Electric Scooter\": 77,\n        \"Tech Hoverboard\": 100,\n        Doomsteed: 0\n    }, L = {\n        pets: \"xeno\",\n        mounts: \"mount\"\n    }, D = .7, F = 14.75, E = 30, _ = 10, K = .5, P = {\n        xenoSyncRate: {\n            icon: \"pets/skills/xeno_sync_rate\"\n        },\n        xenoResChance: {\n            icon: \"pets/skills/xeno_res_chance\"\n        },\n        xenoResDamage: {\n            icon: \"pets/skills/xeno_res_damage\"\n        },\n        xenoResDuration: {\n            unit: \"s\",\n            icon: \"pets/skills/xeno_res_duration\"\n        }\n    }, T = {\n        atkPercent: {\n            icon: \"pets/skills/atk_percent\"\n        },\n        critRate: {\n            icon: \"pets/skills/motivation\"\n        },\n        critDamage: {\n            icon: \"pets/skills/inspiration\"\n        },\n        skillDamage: {\n            icon: \"pets/skills/encouragement\"\n        },\n        vulnerability: {\n            icon: \"stats/vulnerability\"\n        },\n        shieldDamage: {\n            icon: \"pets/skills/shield_damage\"\n        },\n        poisoned: {\n            icon: \"pets/skills/poisoned\"\n        },\n        weakened: {\n            icon: \"pets/skills/weakened\"\n        },\n        chilled: {\n            icon: \"pets/skills/chilled\"\n        },\n        exposedDamage: {\n            icon: \"pets/skills/exposed\"\n        },\n        clarity: {\n            icon: \"items/evervoid_armor\"\n        },\n        eternalMultiplier: {\n            icon: \"items/stardust_sash\"\n        },\n        glacialBloodline: {\n            icon: \"items/glacial_warboots\"\n        },\n        laceration: {\n            icon: \"stats/laceration\"\n        "
+    },
+    {
+      "keyword": "ee",
+      "offset": 2967,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 30,
+      "snippet": "   ssWeapon: 148.02,\n        taloxaOverload: 1634.416,\n        crimsonBat: 3545.66,\n        Taloxa: 1,\n        Joey: 1,\n        Metalia: 28.4,\n        \"Master Yang\": 57.2,\n        King: 112.03,\n        Common: 54.72,\n        Drone: 26.21,\n        Molotov: 38,\n        \"Molotov Mode\": 40.92,\n        Drill: 50.02,\n        Rocket: 31.66,\n        \"Durian Mode\": 9.38,\n        \"Soccer Mode\": 19.7,\n        \"Drone Mode\": 48.22,\n        \"Forcefield Mode\": 18.94,\n        \"Drill Shot Mode\": 46.21,\n        \"Rocket Mode\": 49.04,\n        \"Lightning Mode\": 56.59,\n        \"Boomerang Mode\": 24.36,\n        \"Guardian Mode\": 18.94,\n        \"Laser Mode\": 38.16,\n        \"Brick Mode\": 70,\n        Capy: 188.26,\n        Crucker: 158.7,\n        Puffo: 308.67,\n        \"King Blizzblast\": 198.74,\n        Nutjob: 300,\n        Gourmeow: 300,\n        \"Electric Scooter\": 77,\n        \"Tech Hoverboard\": 100,\n        Doomsteed: 0\n    }, L = {\n        pets: \"xeno\",\n        mounts: \"mount\"\n    }, D = .7, F = 14.75, E = 30, _ = 10, K = .5, P = {\n        xenoSyncRate: {\n            icon: \"pets/skills/xeno_sync_rate\"\n        },\n        xenoResChance: {\n            icon: \"pets/skills/xeno_res_chance\"\n        },\n        xenoResDamage: {\n            icon: \"pets/skills/xeno_res_damage\"\n        },\n        xenoResDuration: {\n            unit: \"s\",\n            icon: \"pets/skills/xeno_res_duration\"\n        }\n    }, T = {\n        atkPercent: {\n            icon: \"pets/skills/atk_percent\"\n        },\n        critRate: {\n            icon: \"pets/skills/motivation\"\n        },\n        critDamage: {\n            icon: \"pets/skills/inspiration\"\n        },\n        skillDamage: {\n            icon: \"pets/skills/encouragement\"\n        },\n        vulnerability: {\n            icon: \"stats/vulnerability\"\n        },\n        shieldDamage: {\n            icon: \"pets/skills/shield_damage\"\n        },\n        poisoned: {\n            icon: \"pets/skills/poisoned\"\n        },\n        weakened: {\n            icon: \"pets/skills/weakened\"\n        },\n        chilled: {\n            icon: \"pets/skills/chilled\"\n        },\n        exposedDamage: {\n            icon: \"pets/skills/exposed\"\n        },\n        clarity: {\n            icon: \"items/evervoid_armor\"\n        },\n        eternalMultiplier: {\n            icon: \"items/stardust_sash\"\n        },\n        glacialBloodline: {\n            icon: \"items/glacial_warboots\"\n        },\n        laceratio"
+    },
+    {
+      "keyword": "collectibles",
+      "offset": 15390,
+      "nearbyFunctionOrBinding": "eb",
+      "arithmeticOperatorCount": 21,
+      "snippet": "  [z.LZ.Epic1]: 0,\n        [z.LZ.Epic2]: 0,\n        [z.LZ.Epic3]: 0,\n        [z.LZ.Legend]: 1,\n        [z.LZ.Legend1]: 2,\n        [z.LZ.Legend2]: 3,\n        [z.LZ.Legend3]: 4,\n        [z.LZ.Legend4]: 5,\n        [z.LZ.Eternal]: 0\n    }, eh = Object.entries(C.c.items).reduce(((e, t) => {\n        let [l, s] = t;\n        return (null == s ? void 0 : s.rarity) === z.sn.SS && (null == s ? void 0 : s.type) && !e[s.type] && (e[s.type] = l), e;\n    }), {}), ep = z.wc.flatMap((e => {\n        var t;\n        return (0, g.A)(null != (t = C.c.techs[e]) ? t : {});\n    })), em = (0, g.A)(null != (s = C.c.collectibles) ? s : {}), ex = Object.entries(null != (n = C.c.collectibles) ? n : {}).filter((e => {\n        let [, {rarity: t, starsCount: l = 10}] = e;\n        return l >= 10 && t === z.Fy.Legend;\n    })).map((e => {\n        let [t] = e;\n        return t;\n    })), eg = Object.entries(null != (r = C.c.collectibles) ? r : {}).filter((e => {\n        let [, {rarity: t, starsCount: l = 10}] = e;\n        return l >= 10 && t === z.Fy.Epic;\n    })).map((e => {\n        let [t] = e;\n        return t;\n    })), ej = [ ...ex, ...eg ], ey = [ 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 4 ], ev = (0, b.j)(ey), ef = 30;\n    ev.map((e => e * ef));\n    let eb = z.wc.filter((e => {\n        var t;\n        return (0, g.A)(null != (t = C.c.techs[e]) ? t : {}).length > 1;\n    })), ew = z.wc.filter((e => {\n        var t;\n        return 1 === (0, g.A)(null != (t = C.c.techs[e]) ? t : {}).length;\n    })), ek = Object.fromEntries(Object.entries(C.c.techs).flatMap((e => {\n        let [t, l] = e;\n        return (0, g.A)(null != l ? l : {}).map((e => [ e, t ]));\n    }))), eC = Object.fromEntries(Object.entries(Object.fromEntries(Object.entries(C.c.techs).map((e => {\n        let [t, l] = e;\n        return [ t, (0, g.A)(null != l ? l : {}) ];\n    })))).map((e => {\n        let [t, l] = e;\n        return [ t, l[0] ];\n    }))), eA = (0, x.A)((e => Object.values(e)[0].type), C.c.techs), ez = (0, p.A)(ep.map((e => {\n        var t;\n        let l = null == (t = (0, g.A)(C.c.techs[ek[e]] || {}).find((t => t !== e))) ? void 0 : t.split(\" \")[0];\n        return [ e, ep.find((e => e === l)) ];\n    })).filter((e => {\n        let [, t] = e;\n        return t;\n    }))), eM = (0, j.A)(ez), eS = Object.entries(C.c.items).sort(((e, t) => {\n        let [, l] = e, [, s] = t;\n        return Number(s.rarity === z.sn.SS) - Number(l.rarity ="
+    },
+    {
+      "keyword": "collectibles",
+      "offset": 15086,
+      "nearbyFunctionOrBinding": "eb",
+      "arithmeticOperatorCount": 18,
+      "snippet": "ntries(ea).map((e => {\n        let [t, l] = e;\n        return [ l, Number(t) ];\n    })))), ec = (0, b.j)([ 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 5 ]), ed = (0, b.j)([ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 ]), eu = {\n        [z.LZ.None]: 0,\n        [z.LZ.Epic]: 0,\n        [z.LZ.Epic1]: 0,\n        [z.LZ.Epic2]: 0,\n        [z.LZ.Epic3]: 0,\n        [z.LZ.Legend]: 1,\n        [z.LZ.Legend1]: 2,\n        [z.LZ.Legend2]: 3,\n        [z.LZ.Legend3]: 4,\n        [z.LZ.Legend4]: 5,\n        [z.LZ.Eternal]: 0\n    }, eh = Object.entries(C.c.items).reduce(((e, t) => {\n        let [l, s] = t;\n        return (null == s ? void 0 : s.rarity) === z.sn.SS && (null == s ? void 0 : s.type) && !e[s.type] && (e[s.type] = l), e;\n    }), {}), ep = z.wc.flatMap((e => {\n        var t;\n        return (0, g.A)(null != (t = C.c.techs[e]) ? t : {});\n    })), em = (0, g.A)(null != (s = C.c.collectibles) ? s : {}), ex = Object.entries(null != (n = C.c.collectibles) ? n : {}).filter((e => {\n        let [, {rarity: t, starsCount: l = 10}] = e;\n        return l >= 10 && t === z.Fy.Legend;\n    })).map((e => {\n        let [t] = e;\n        return t;\n    })), eg = Object.entries(null != (r = C.c.collectibles) ? r : {}).filter((e => {\n        let [, {rarity: t, starsCount: l = 10}] = e;\n        return l >= 10 && t === z.Fy.Epic;\n    })).map((e => {\n        let [t] = e;\n        return t;\n    })), ej = [ ...ex, ...eg ], ey = [ 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 4 ], ev = (0, b.j)(ey), ef = 30;\n    ev.map((e => e * ef));\n    let eb = z.wc.filter((e => {\n        var t;\n        return (0, g.A)(null != (t = C.c.techs[e]) ? t : {}).length > 1;\n    })), ew = z.wc.filter((e => {\n        var t;\n        return 1 === (0, g.A)(null != (t = C.c.techs[e]) ? t : {}).length;\n    })), ek = Object.fromEntries(Object.entries(C.c.techs).flatMap((e => {\n        let [t, l] = e;\n        return (0, g.A)(null != l ? l : {}).map((e => [ e, t ]));\n    }))), eC = Object.fromEntries(Object.entries(Object.fromEntries(Object.entries(C.c.techs).map((e => {\n        let [t, l] = e;\n        return [ t, (0, g.A)(null != l ? l : {}) ];\n    })))).map((e => {\n        let [t, l] = e;\n        return [ t, l[0] ];\n    }))), eA = (0, x.A)((e => Object.values(e)[0].type), C.c.techs), ez = (0, p.A)(ep.map((e => {\n        var t;\n        let l = null == (t = (0, g.A)(C.c.techs[ek[e]] || {}).find((t => t !== e))) ? void 0 :"
+    },
+    {
+      "keyword": "collectibles",
+      "offset": 15148,
+      "nearbyFunctionOrBinding": "eb",
+      "arithmeticOperatorCount": 18,
+      "snippet": "[ l, Number(t) ];\n    })))), ec = (0, b.j)([ 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 5 ]), ed = (0, b.j)([ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 ]), eu = {\n        [z.LZ.None]: 0,\n        [z.LZ.Epic]: 0,\n        [z.LZ.Epic1]: 0,\n        [z.LZ.Epic2]: 0,\n        [z.LZ.Epic3]: 0,\n        [z.LZ.Legend]: 1,\n        [z.LZ.Legend1]: 2,\n        [z.LZ.Legend2]: 3,\n        [z.LZ.Legend3]: 4,\n        [z.LZ.Legend4]: 5,\n        [z.LZ.Eternal]: 0\n    }, eh = Object.entries(C.c.items).reduce(((e, t) => {\n        let [l, s] = t;\n        return (null == s ? void 0 : s.rarity) === z.sn.SS && (null == s ? void 0 : s.type) && !e[s.type] && (e[s.type] = l), e;\n    }), {}), ep = z.wc.flatMap((e => {\n        var t;\n        return (0, g.A)(null != (t = C.c.techs[e]) ? t : {});\n    })), em = (0, g.A)(null != (s = C.c.collectibles) ? s : {}), ex = Object.entries(null != (n = C.c.collectibles) ? n : {}).filter((e => {\n        let [, {rarity: t, starsCount: l = 10}] = e;\n        return l >= 10 && t === z.Fy.Legend;\n    })).map((e => {\n        let [t] = e;\n        return t;\n    })), eg = Object.entries(null != (r = C.c.collectibles) ? r : {}).filter((e => {\n        let [, {rarity: t, starsCount: l = 10}] = e;\n        return l >= 10 && t === z.Fy.Epic;\n    })).map((e => {\n        let [t] = e;\n        return t;\n    })), ej = [ ...ex, ...eg ], ey = [ 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 4 ], ev = (0, b.j)(ey), ef = 30;\n    ev.map((e => e * ef));\n    let eb = z.wc.filter((e => {\n        var t;\n        return (0, g.A)(null != (t = C.c.techs[e]) ? t : {}).length > 1;\n    })), ew = z.wc.filter((e => {\n        var t;\n        return 1 === (0, g.A)(null != (t = C.c.techs[e]) ? t : {}).length;\n    })), ek = Object.fromEntries(Object.entries(C.c.techs).flatMap((e => {\n        let [t, l] = e;\n        return (0, g.A)(null != l ? l : {}).map((e => [ e, t ]));\n    }))), eC = Object.fromEntries(Object.entries(Object.fromEntries(Object.entries(C.c.techs).map((e => {\n        let [t, l] = e;\n        return [ t, (0, g.A)(null != l ? l : {}) ];\n    })))).map((e => {\n        let [t, l] = e;\n        return [ t, l[0] ];\n    }))), eA = (0, x.A)((e => Object.values(e)[0].type), C.c.techs), ez = (0, p.A)(ep.map((e => {\n        var t;\n        let l = null == (t = (0, g.A)(C.c.techs[ek[e]] || {}).find((t => t !== e))) ? void 0 : t.split(\" \")[0];\n        return [ e, ep.find((e => e === l)) "
+    },
+    {
+      "keyword": "damage",
+      "offset": 6146,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 17,
+      "snippet": "  icon: \"items/voidwaker_treads\"\n        },\n        chaosBeltBoost: {\n            type: \"multiplier\",\n            icon: \"items/twisting_belt\"\n        },\n        joeyWeakSpot: {\n            icon: \"stats/weakspot\"\n        },\n        flashriftRipEfficiency: {\n            icon: \"stats/rip\"\n        },\n        flashriftRip: {\n            icon: \"stats/rip\"\n        },\n        flashriftRipFinal: {\n            type: \"count\",\n            icon: \"stats/rip\"\n        },\n        taloxaMaxSync: {\n            icon: \"stats/sync\"\n        },\n        taloxaSyncLoss: {\n            icon: \"stats/sync\"\n        },\n        taloxaBeam: {\n            icon: \"skill/beam_gun\"\n        },\n        taloxaOverloadEff: {\n            icon: \"skill/overload\"\n        },\n        taloxaOverload: {\n            icon: \"skill/overload\"\n        },\n        xenoResMultiplier: {\n            icon: \"pets/skills/resonance\"\n        },\n        damageDealt: {\n            icon: \"damage_dealt\"\n        },\n        damageTransmute: {\n            icon: \"damage_dealt\"\n        },\n        damageBoss: {\n            icon: \"damage_boss\"\n        },\n        lme1Damage: {\n            icon: \"stats/lme1Damage\"\n        },\n        adrenaline: {\n            icon: \"stats/adrenaline_e\"\n        },\n        crimsonBat: {\n            type: \"multiplier\",\n            icon: \"skill/crimson_bat\"\n        }\n    }, R = {\n        ...T,\n        ...P\n    }, O = {\n        chilled: \"#8ed3ff\",\n        critDamage: \"#ffc438\",\n        critRate: \"#ffde76\",\n        damageBoss: \"#f8807e\",\n        damageDealt: \"#fff9b7\",\n        laceration: \"#fa6d6d\",\n        poisoned: \"#bfe488\",\n        shieldDamage: \"#cfe0ea\",\n        skillDamage: \"#cb8cd5\",\n        vulnerability: \"#fd8a5e\",\n        weakened: \"#ec70ff\",\n        xenoResDamage: \"#ffd5ff\"\n    }, I = {\n        numberFormat: {},\n        revives: {\n            help: !0\n        },\n        multithread: {\n            help: !0,\n            direction: \"column\"\n        },\n        computePool: {\n            direction: \"column\"\n        },\n        experimentalFeatures: {\n            help: !0,\n            direction: \"column\"\n        }\n    }, H = (0, p.A)((0, m.A)({\n        e: [ 0, 1, 2, 3, 5, 8 ],\n        v: [ 0, 1, 2, 3, 5, 8 ],\n        c: [ 0, 1, 2, 3, 3, 4, 4, 6, 6, 8, 8 ]\n    }).map((e => {\n        let [t, l] = e;\n        return [ t, (0, b.j)(l) ];\n    }))), U = (0, p.A)((0, m.A)({\n        base: [ 0, 5, 10, 20 ],\n        "
+    },
+    {
+      "keyword": "petSkills",
+      "offset": 17365,
+      "nearbyFunctionOrBinding": "l",
+      "arithmeticOperatorCount": 17,
+      "snippet": "map((e => {\n        var t;\n        let l = null == (t = (0, g.A)(C.c.techs[ek[e]] || {}).find((t => t !== e))) ? void 0 : t.split(\" \")[0];\n        return [ e, ep.find((e => e === l)) ];\n    })).filter((e => {\n        let [, t] = e;\n        return t;\n    }))), eM = (0, j.A)(ez), eS = Object.entries(C.c.items).sort(((e, t) => {\n        let [, l] = e, [, s] = t;\n        return Number(s.rarity === z.sn.SS) - Number(l.rarity === z.sn.SS);\n    })), eL = eS.reduce(((e, t) => {\n        var l;\n        let [s, n] = t, r = null != (l = n.type) ? l : \"unknown\";\n        return e[r] || (e[r] = []), e[r].push(s), e;\n    }), {}), eD = {\n        enabled: \"enabled\",\n        stash: \"stash\",\n        disabled: \"disabled\"\n    }, eF = [ eD.enabled, eD.stash, eD.disabled ], eE = (0, g.A)(null != (i = C.c.pets) ? i : {}), e_ = eE.filter((e => C.c.pets[e].type === z.RX.Xeno)), eK = (0, \n    y.A)(null != (a = C.c.petSkills[z.RX.Default]) ? a : {}), eP = (0, y.A)(null != (o = C.c.petSkills[z.RX.Xeno]) ? o : {});\n    [ ...eK, ...eP ];\n    let eT = (0, g.A)(null != (c = C.c.petSkills[z.RX.Default]) ? c : {}), eR = [ ...eT, ...(0, g.A)(null != (d = C.c.petSkills[z.RX.Xeno]) ? d : {}) ], eO = {\n        xenoResChance: [ 0, 3, 6, 6, 9, 9, 15, 15, 22.5, 22.5, 30 ],\n        xenoResDamage: [ 0, 3, 6, 6, 9, 9, 15, 15, 22.5, 22.5, 30 ],\n        shieldDamage: [ 0, 4, 8, 8, 12, 12, 20, 20, 30, 30, 40 ],\n        poisoned: [ 0, 5, 10, 10, 15, 15, 25, 25, 37.5, 37.5, 50 ],\n        weakened: [ 0, 5, 10, 10, 15, 15, 25, 25, 37.5, 37.5, 50 ],\n        chilled: [ 0, 5, 10, 10, 15, 15, 25, 25, 37.5, 37.5, 50 ],\n        atkPercent: [ 0, 4, 8, 8, 12, 12, 20, 20, 30, 30, 40 ]\n    };\n    eO.xenoResDamage.map(((e, t, l) => e !== l[t - 1]));\n    let eI = Object.entries(null != (u = C.c.mounts) ? u : {}).sort(((e, t) => {\n        let [, l] = e, [, s] = t;\n        return A.oV.indexOf(s.rarity) - A.oV.indexOf(l.rarity);\n    })).map((e => {\n        let [t] = e;\n        return t;\n    })), eH = (0, g.A)(null != (h = C.c.skills) ? h : {}).filter((e => \"passive\" === C.c.skills[e].type)), eU = ep.slice(), eB = [ ...eH, ...eU ], eN = [ \"Twin Lance\", ...eb.flatMap((e => (0, \n    g.A)(C.c.techs[e]))) ], eq = {\n        enabled: \"enabled\",\n        forced: \"forced\",\n        disabled: \"disabled\"\n    }, eW = (0, g.A)(eq), eG = (0, k.Ln)(C.c), eZ = (0, v.A)((e => e.edition), Object.values(C.c.collectibles)).map((e => e.edition)), "
+    },
+    {
+      "keyword": "petSkills",
+      "offset": 17432,
+      "nearbyFunctionOrBinding": "eT",
+      "arithmeticOperatorCount": 17,
+      "snippet": "c.techs[ek[e]] || {}).find((t => t !== e))) ? void 0 : t.split(\" \")[0];\n        return [ e, ep.find((e => e === l)) ];\n    })).filter((e => {\n        let [, t] = e;\n        return t;\n    }))), eM = (0, j.A)(ez), eS = Object.entries(C.c.items).sort(((e, t) => {\n        let [, l] = e, [, s] = t;\n        return Number(s.rarity === z.sn.SS) - Number(l.rarity === z.sn.SS);\n    })), eL = eS.reduce(((e, t) => {\n        var l;\n        let [s, n] = t, r = null != (l = n.type) ? l : \"unknown\";\n        return e[r] || (e[r] = []), e[r].push(s), e;\n    }), {}), eD = {\n        enabled: \"enabled\",\n        stash: \"stash\",\n        disabled: \"disabled\"\n    }, eF = [ eD.enabled, eD.stash, eD.disabled ], eE = (0, g.A)(null != (i = C.c.pets) ? i : {}), e_ = eE.filter((e => C.c.pets[e].type === z.RX.Xeno)), eK = (0, \n    y.A)(null != (a = C.c.petSkills[z.RX.Default]) ? a : {}), eP = (0, y.A)(null != (o = C.c.petSkills[z.RX.Xeno]) ? o : {});\n    [ ...eK, ...eP ];\n    let eT = (0, g.A)(null != (c = C.c.petSkills[z.RX.Default]) ? c : {}), eR = [ ...eT, ...(0, g.A)(null != (d = C.c.petSkills[z.RX.Xeno]) ? d : {}) ], eO = {\n        xenoResChance: [ 0, 3, 6, 6, 9, 9, 15, 15, 22.5, 22.5, 30 ],\n        xenoResDamage: [ 0, 3, 6, 6, 9, 9, 15, 15, 22.5, 22.5, 30 ],\n        shieldDamage: [ 0, 4, 8, 8, 12, 12, 20, 20, 30, 30, 40 ],\n        poisoned: [ 0, 5, 10, 10, 15, 15, 25, 25, 37.5, 37.5, 50 ],\n        weakened: [ 0, 5, 10, 10, 15, 15, 25, 25, 37.5, 37.5, 50 ],\n        chilled: [ 0, 5, 10, 10, 15, 15, 25, 25, 37.5, 37.5, 50 ],\n        atkPercent: [ 0, 4, 8, 8, 12, 12, 20, 20, 30, 30, 40 ]\n    };\n    eO.xenoResDamage.map(((e, t, l) => e !== l[t - 1]));\n    let eI = Object.entries(null != (u = C.c.mounts) ? u : {}).sort(((e, t) => {\n        let [, l] = e, [, s] = t;\n        return A.oV.indexOf(s.rarity) - A.oV.indexOf(l.rarity);\n    })).map((e => {\n        let [t] = e;\n        return t;\n    })), eH = (0, g.A)(null != (h = C.c.skills) ? h : {}).filter((e => \"passive\" === C.c.skills[e].type)), eU = ep.slice(), eB = [ ...eH, ...eU ], eN = [ \"Twin Lance\", ...eb.flatMap((e => (0, \n    g.A)(C.c.techs[e]))) ], eq = {\n        enabled: \"enabled\",\n        forced: \"forced\",\n        disabled: \"disabled\"\n    }, eW = (0, g.A)(eq), eG = (0, k.Ln)(C.c), eZ = (0, v.A)((e => e.edition), Object.values(C.c.collectibles)).map((e => e.edition)), eX = (() => {\n        let e = [ {\n            e: 0,\n            v: "
+    },
+    {
+      "keyword": "damage",
+      "offset": 6180,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 16,
+      "snippet": "       },\n        chaosBeltBoost: {\n            type: \"multiplier\",\n            icon: \"items/twisting_belt\"\n        },\n        joeyWeakSpot: {\n            icon: \"stats/weakspot\"\n        },\n        flashriftRipEfficiency: {\n            icon: \"stats/rip\"\n        },\n        flashriftRip: {\n            icon: \"stats/rip\"\n        },\n        flashriftRipFinal: {\n            type: \"count\",\n            icon: \"stats/rip\"\n        },\n        taloxaMaxSync: {\n            icon: \"stats/sync\"\n        },\n        taloxaSyncLoss: {\n            icon: \"stats/sync\"\n        },\n        taloxaBeam: {\n            icon: \"skill/beam_gun\"\n        },\n        taloxaOverloadEff: {\n            icon: \"skill/overload\"\n        },\n        taloxaOverload: {\n            icon: \"skill/overload\"\n        },\n        xenoResMultiplier: {\n            icon: \"pets/skills/resonance\"\n        },\n        damageDealt: {\n            icon: \"damage_dealt\"\n        },\n        damageTransmute: {\n            icon: \"damage_dealt\"\n        },\n        damageBoss: {\n            icon: \"damage_boss\"\n        },\n        lme1Damage: {\n            icon: \"stats/lme1Damage\"\n        },\n        adrenaline: {\n            icon: \"stats/adrenaline_e\"\n        },\n        crimsonBat: {\n            type: \"multiplier\",\n            icon: \"skill/crimson_bat\"\n        }\n    }, R = {\n        ...T,\n        ...P\n    }, O = {\n        chilled: \"#8ed3ff\",\n        critDamage: \"#ffc438\",\n        critRate: \"#ffde76\",\n        damageBoss: \"#f8807e\",\n        damageDealt: \"#fff9b7\",\n        laceration: \"#fa6d6d\",\n        poisoned: \"#bfe488\",\n        shieldDamage: \"#cfe0ea\",\n        skillDamage: \"#cb8cd5\",\n        vulnerability: \"#fd8a5e\",\n        weakened: \"#ec70ff\",\n        xenoResDamage: \"#ffd5ff\"\n    }, I = {\n        numberFormat: {},\n        revives: {\n            help: !0\n        },\n        multithread: {\n            help: !0,\n            direction: \"column\"\n        },\n        computePool: {\n            direction: \"column\"\n        },\n        experimentalFeatures: {\n            help: !0,\n            direction: \"column\"\n        }\n    }, H = (0, p.A)((0, m.A)({\n        e: [ 0, 1, 2, 3, 5, 8 ],\n        v: [ 0, 1, 2, 3, 5, 8 ],\n        c: [ 0, 1, 2, 3, 3, 4, 4, 6, 6, 8, 8 ]\n    }).map((e => {\n        let [t, l] = e;\n        return [ t, (0, b.j)(l) ];\n    }))), U = (0, p.A)((0, m.A)({\n        base: [ 0, 5, 10, 20 ],\n        e: [ 0, 10, 20, 40, 60, 80 ],\n    "
+    },
+    {
+      "keyword": "damage",
+      "offset": 6213,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 16,
+      "snippet": " {\n            type: \"multiplier\",\n            icon: \"items/twisting_belt\"\n        },\n        joeyWeakSpot: {\n            icon: \"stats/weakspot\"\n        },\n        flashriftRipEfficiency: {\n            icon: \"stats/rip\"\n        },\n        flashriftRip: {\n            icon: \"stats/rip\"\n        },\n        flashriftRipFinal: {\n            type: \"count\",\n            icon: \"stats/rip\"\n        },\n        taloxaMaxSync: {\n            icon: \"stats/sync\"\n        },\n        taloxaSyncLoss: {\n            icon: \"stats/sync\"\n        },\n        taloxaBeam: {\n            icon: \"skill/beam_gun\"\n        },\n        taloxaOverloadEff: {\n            icon: \"skill/overload\"\n        },\n        taloxaOverload: {\n            icon: \"skill/overload\"\n        },\n        xenoResMultiplier: {\n            icon: \"pets/skills/resonance\"\n        },\n        damageDealt: {\n            icon: \"damage_dealt\"\n        },\n        damageTransmute: {\n            icon: \"damage_dealt\"\n        },\n        damageBoss: {\n            icon: \"damage_boss\"\n        },\n        lme1Damage: {\n            icon: \"stats/lme1Damage\"\n        },\n        adrenaline: {\n            icon: \"stats/adrenaline_e\"\n        },\n        crimsonBat: {\n            type: \"multiplier\",\n            icon: \"skill/crimson_bat\"\n        }\n    }, R = {\n        ...T,\n        ...P\n    }, O = {\n        chilled: \"#8ed3ff\",\n        critDamage: \"#ffc438\",\n        critRate: \"#ffde76\",\n        damageBoss: \"#f8807e\",\n        damageDealt: \"#fff9b7\",\n        laceration: \"#fa6d6d\",\n        poisoned: \"#bfe488\",\n        shieldDamage: \"#cfe0ea\",\n        skillDamage: \"#cb8cd5\",\n        vulnerability: \"#fd8a5e\",\n        weakened: \"#ec70ff\",\n        xenoResDamage: \"#ffd5ff\"\n    }, I = {\n        numberFormat: {},\n        revives: {\n            help: !0\n        },\n        multithread: {\n            help: !0,\n            direction: \"column\"\n        },\n        computePool: {\n            direction: \"column\"\n        },\n        experimentalFeatures: {\n            help: !0,\n            direction: \"column\"\n        }\n    }, H = (0, p.A)((0, m.A)({\n        e: [ 0, 1, 2, 3, 5, 8 ],\n        v: [ 0, 1, 2, 3, 5, 8 ],\n        c: [ 0, 1, 2, 3, 3, 4, 4, 6, 6, 8, 8 ]\n    }).map((e => {\n        let [t, l] = e;\n        return [ t, (0, b.j)(l) ];\n    }))), U = (0, p.A)((0, m.A)({\n        base: [ 0, 5, 10, 20 ],\n        e: [ 0, 10, 20, 40, 60, 80 ],\n        v: [ 0, 10, 20, 40, 60, 80 ],"
+    },
+    {
+      "keyword": "petSkills",
+      "offset": 17526,
+      "nearbyFunctionOrBinding": "eT",
+      "arithmeticOperatorCount": 16,
+      "snippet": ".find((e => e === l)) ];\n    })).filter((e => {\n        let [, t] = e;\n        return t;\n    }))), eM = (0, j.A)(ez), eS = Object.entries(C.c.items).sort(((e, t) => {\n        let [, l] = e, [, s] = t;\n        return Number(s.rarity === z.sn.SS) - Number(l.rarity === z.sn.SS);\n    })), eL = eS.reduce(((e, t) => {\n        var l;\n        let [s, n] = t, r = null != (l = n.type) ? l : \"unknown\";\n        return e[r] || (e[r] = []), e[r].push(s), e;\n    }), {}), eD = {\n        enabled: \"enabled\",\n        stash: \"stash\",\n        disabled: \"disabled\"\n    }, eF = [ eD.enabled, eD.stash, eD.disabled ], eE = (0, g.A)(null != (i = C.c.pets) ? i : {}), e_ = eE.filter((e => C.c.pets[e].type === z.RX.Xeno)), eK = (0, \n    y.A)(null != (a = C.c.petSkills[z.RX.Default]) ? a : {}), eP = (0, y.A)(null != (o = C.c.petSkills[z.RX.Xeno]) ? o : {});\n    [ ...eK, ...eP ];\n    let eT = (0, g.A)(null != (c = C.c.petSkills[z.RX.Default]) ? c : {}), eR = [ ...eT, ...(0, g.A)(null != (d = C.c.petSkills[z.RX.Xeno]) ? d : {}) ], eO = {\n        xenoResChance: [ 0, 3, 6, 6, 9, 9, 15, 15, 22.5, 22.5, 30 ],\n        xenoResDamage: [ 0, 3, 6, 6, 9, 9, 15, 15, 22.5, 22.5, 30 ],\n        shieldDamage: [ 0, 4, 8, 8, 12, 12, 20, 20, 30, 30, 40 ],\n        poisoned: [ 0, 5, 10, 10, 15, 15, 25, 25, 37.5, 37.5, 50 ],\n        weakened: [ 0, 5, 10, 10, 15, 15, 25, 25, 37.5, 37.5, 50 ],\n        chilled: [ 0, 5, 10, 10, 15, 15, 25, 25, 37.5, 37.5, 50 ],\n        atkPercent: [ 0, 4, 8, 8, 12, 12, 20, 20, 30, 30, 40 ]\n    };\n    eO.xenoResDamage.map(((e, t, l) => e !== l[t - 1]));\n    let eI = Object.entries(null != (u = C.c.mounts) ? u : {}).sort(((e, t) => {\n        let [, l] = e, [, s] = t;\n        return A.oV.indexOf(s.rarity) - A.oV.indexOf(l.rarity);\n    })).map((e => {\n        let [t] = e;\n        return t;\n    })), eH = (0, g.A)(null != (h = C.c.skills) ? h : {}).filter((e => \"passive\" === C.c.skills[e].type)), eU = ep.slice(), eB = [ ...eH, ...eU ], eN = [ \"Twin Lance\", ...eb.flatMap((e => (0, \n    g.A)(C.c.techs[e]))) ], eq = {\n        enabled: \"enabled\",\n        forced: \"forced\",\n        disabled: \"disabled\"\n    }, eW = (0, g.A)(eq), eG = (0, k.Ln)(C.c), eZ = (0, v.A)((e => e.edition), Object.values(C.c.collectibles)).map((e => e.edition)), eX = (() => {\n        let e = [ {\n            e: 0,\n            v: 0,\n            c: 0,\n            x: 0,\n            cores: 0,\n            eCores: 0,\n          "
+    },
+    {
+      "keyword": "lme",
+      "offset": 6349,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 15,
+      "snippet": "eakspot\"\n        },\n        flashriftRipEfficiency: {\n            icon: \"stats/rip\"\n        },\n        flashriftRip: {\n            icon: \"stats/rip\"\n        },\n        flashriftRipFinal: {\n            type: \"count\",\n            icon: \"stats/rip\"\n        },\n        taloxaMaxSync: {\n            icon: \"stats/sync\"\n        },\n        taloxaSyncLoss: {\n            icon: \"stats/sync\"\n        },\n        taloxaBeam: {\n            icon: \"skill/beam_gun\"\n        },\n        taloxaOverloadEff: {\n            icon: \"skill/overload\"\n        },\n        taloxaOverload: {\n            icon: \"skill/overload\"\n        },\n        xenoResMultiplier: {\n            icon: \"pets/skills/resonance\"\n        },\n        damageDealt: {\n            icon: \"damage_dealt\"\n        },\n        damageTransmute: {\n            icon: \"damage_dealt\"\n        },\n        damageBoss: {\n            icon: \"damage_boss\"\n        },\n        lme1Damage: {\n            icon: \"stats/lme1Damage\"\n        },\n        adrenaline: {\n            icon: \"stats/adrenaline_e\"\n        },\n        crimsonBat: {\n            type: \"multiplier\",\n            icon: \"skill/crimson_bat\"\n        }\n    }, R = {\n        ...T,\n        ...P\n    }, O = {\n        chilled: \"#8ed3ff\",\n        critDamage: \"#ffc438\",\n        critRate: \"#ffde76\",\n        damageBoss: \"#f8807e\",\n        damageDealt: \"#fff9b7\",\n        laceration: \"#fa6d6d\",\n        poisoned: \"#bfe488\",\n        shieldDamage: \"#cfe0ea\",\n        skillDamage: \"#cb8cd5\",\n        vulnerability: \"#fd8a5e\",\n        weakened: \"#ec70ff\",\n        xenoResDamage: \"#ffd5ff\"\n    }, I = {\n        numberFormat: {},\n        revives: {\n            help: !0\n        },\n        multithread: {\n            help: !0,\n            direction: \"column\"\n        },\n        computePool: {\n            direction: \"column\"\n        },\n        experimentalFeatures: {\n            help: !0,\n            direction: \"column\"\n        }\n    }, H = (0, p.A)((0, m.A)({\n        e: [ 0, 1, 2, 3, 5, 8 ],\n        v: [ 0, 1, 2, 3, 5, 8 ],\n        c: [ 0, 1, 2, 3, 3, 4, 4, 6, 6, 8, 8 ]\n    }).map((e => {\n        let [t, l] = e;\n        return [ t, (0, b.j)(l) ];\n    }))), U = (0, p.A)((0, m.A)({\n        base: [ 0, 5, 10, 20 ],\n        e: [ 0, 10, 20, 40, 60, 80 ],\n        v: [ 0, 10, 20, 40, 60, 80 ],\n        c: [ 0, 20, 20, 50, 50, 100, 100, 150, 150, 200, 200 ]\n    }).map((e => {\n        let [t, l] = e;\n        return [ t, (0, b.j)("
+    },
+    {
+      "keyword": "lme",
+      "offset": 6388,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 15,
+      "snippet": "pEfficiency: {\n            icon: \"stats/rip\"\n        },\n        flashriftRip: {\n            icon: \"stats/rip\"\n        },\n        flashriftRipFinal: {\n            type: \"count\",\n            icon: \"stats/rip\"\n        },\n        taloxaMaxSync: {\n            icon: \"stats/sync\"\n        },\n        taloxaSyncLoss: {\n            icon: \"stats/sync\"\n        },\n        taloxaBeam: {\n            icon: \"skill/beam_gun\"\n        },\n        taloxaOverloadEff: {\n            icon: \"skill/overload\"\n        },\n        taloxaOverload: {\n            icon: \"skill/overload\"\n        },\n        xenoResMultiplier: {\n            icon: \"pets/skills/resonance\"\n        },\n        damageDealt: {\n            icon: \"damage_dealt\"\n        },\n        damageTransmute: {\n            icon: \"damage_dealt\"\n        },\n        damageBoss: {\n            icon: \"damage_boss\"\n        },\n        lme1Damage: {\n            icon: \"stats/lme1Damage\"\n        },\n        adrenaline: {\n            icon: \"stats/adrenaline_e\"\n        },\n        crimsonBat: {\n            type: \"multiplier\",\n            icon: \"skill/crimson_bat\"\n        }\n    }, R = {\n        ...T,\n        ...P\n    }, O = {\n        chilled: \"#8ed3ff\",\n        critDamage: \"#ffc438\",\n        critRate: \"#ffde76\",\n        damageBoss: \"#f8807e\",\n        damageDealt: \"#fff9b7\",\n        laceration: \"#fa6d6d\",\n        poisoned: \"#bfe488\",\n        shieldDamage: \"#cfe0ea\",\n        skillDamage: \"#cb8cd5\",\n        vulnerability: \"#fd8a5e\",\n        weakened: \"#ec70ff\",\n        xenoResDamage: \"#ffd5ff\"\n    }, I = {\n        numberFormat: {},\n        revives: {\n            help: !0\n        },\n        multithread: {\n            help: !0,\n            direction: \"column\"\n        },\n        computePool: {\n            direction: \"column\"\n        },\n        experimentalFeatures: {\n            help: !0,\n            direction: \"column\"\n        }\n    }, H = (0, p.A)((0, m.A)({\n        e: [ 0, 1, 2, 3, 5, 8 ],\n        v: [ 0, 1, 2, 3, 5, 8 ],\n        c: [ 0, 1, 2, 3, 3, 4, 4, 6, 6, 8, 8 ]\n    }).map((e => {\n        let [t, l] = e;\n        return [ t, (0, b.j)(l) ];\n    }))), U = (0, p.A)((0, m.A)({\n        base: [ 0, 5, 10, 20 ],\n        e: [ 0, 10, 20, 40, 60, 80 ],\n        v: [ 0, 10, 20, 40, 60, 80 ],\n        c: [ 0, 20, 20, 50, 50, 100, 100, 150, 150, 200, 200 ]\n    }).map((e => {\n        let [t, l] = e;\n        return [ t, (0, b.j)(l) ];\n    }))), B = (0, b.j)([ 0, 1, 1,"
+    },
+    {
+      "keyword": "petSkills",
+      "offset": 17605,
+      "nearbyFunctionOrBinding": "eT",
+      "arithmeticOperatorCount": 14,
+      "snippet": "return t;\n    }))), eM = (0, j.A)(ez), eS = Object.entries(C.c.items).sort(((e, t) => {\n        let [, l] = e, [, s] = t;\n        return Number(s.rarity === z.sn.SS) - Number(l.rarity === z.sn.SS);\n    })), eL = eS.reduce(((e, t) => {\n        var l;\n        let [s, n] = t, r = null != (l = n.type) ? l : \"unknown\";\n        return e[r] || (e[r] = []), e[r].push(s), e;\n    }), {}), eD = {\n        enabled: \"enabled\",\n        stash: \"stash\",\n        disabled: \"disabled\"\n    }, eF = [ eD.enabled, eD.stash, eD.disabled ], eE = (0, g.A)(null != (i = C.c.pets) ? i : {}), e_ = eE.filter((e => C.c.pets[e].type === z.RX.Xeno)), eK = (0, \n    y.A)(null != (a = C.c.petSkills[z.RX.Default]) ? a : {}), eP = (0, y.A)(null != (o = C.c.petSkills[z.RX.Xeno]) ? o : {});\n    [ ...eK, ...eP ];\n    let eT = (0, g.A)(null != (c = C.c.petSkills[z.RX.Default]) ? c : {}), eR = [ ...eT, ...(0, g.A)(null != (d = C.c.petSkills[z.RX.Xeno]) ? d : {}) ], eO = {\n        xenoResChance: [ 0, 3, 6, 6, 9, 9, 15, 15, 22.5, 22.5, 30 ],\n        xenoResDamage: [ 0, 3, 6, 6, 9, 9, 15, 15, 22.5, 22.5, 30 ],\n        shieldDamage: [ 0, 4, 8, 8, 12, 12, 20, 20, 30, 30, 40 ],\n        poisoned: [ 0, 5, 10, 10, 15, 15, 25, 25, 37.5, 37.5, 50 ],\n        weakened: [ 0, 5, 10, 10, 15, 15, 25, 25, 37.5, 37.5, 50 ],\n        chilled: [ 0, 5, 10, 10, 15, 15, 25, 25, 37.5, 37.5, 50 ],\n        atkPercent: [ 0, 4, 8, 8, 12, 12, 20, 20, 30, 30, 40 ]\n    };\n    eO.xenoResDamage.map(((e, t, l) => e !== l[t - 1]));\n    let eI = Object.entries(null != (u = C.c.mounts) ? u : {}).sort(((e, t) => {\n        let [, l] = e, [, s] = t;\n        return A.oV.indexOf(s.rarity) - A.oV.indexOf(l.rarity);\n    })).map((e => {\n        let [t] = e;\n        return t;\n    })), eH = (0, g.A)(null != (h = C.c.skills) ? h : {}).filter((e => \"passive\" === C.c.skills[e].type)), eU = ep.slice(), eB = [ ...eH, ...eU ], eN = [ \"Twin Lance\", ...eb.flatMap((e => (0, \n    g.A)(C.c.techs[e]))) ], eq = {\n        enabled: \"enabled\",\n        forced: \"forced\",\n        disabled: \"disabled\"\n    }, eW = (0, g.A)(eq), eG = (0, k.Ln)(C.c), eZ = (0, v.A)((e => e.edition), Object.values(C.c.collectibles)).map((e => e.edition)), eX = (() => {\n        let e = [ {\n            e: 0,\n            v: 0,\n            c: 0,\n            x: 0,\n            cores: 0,\n            eCores: 0,\n            vCores: 0,\n            cCores: 0\n        }, {\n            e: 1,\n            v"
+    },
+    {
+      "keyword": "critDamage",
+      "offset": 6674,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 12,
+      "snippet": "       taloxaSyncLoss: {\n            icon: \"stats/sync\"\n        },\n        taloxaBeam: {\n            icon: \"skill/beam_gun\"\n        },\n        taloxaOverloadEff: {\n            icon: \"skill/overload\"\n        },\n        taloxaOverload: {\n            icon: \"skill/overload\"\n        },\n        xenoResMultiplier: {\n            icon: \"pets/skills/resonance\"\n        },\n        damageDealt: {\n            icon: \"damage_dealt\"\n        },\n        damageTransmute: {\n            icon: \"damage_dealt\"\n        },\n        damageBoss: {\n            icon: \"damage_boss\"\n        },\n        lme1Damage: {\n            icon: \"stats/lme1Damage\"\n        },\n        adrenaline: {\n            icon: \"stats/adrenaline_e\"\n        },\n        crimsonBat: {\n            type: \"multiplier\",\n            icon: \"skill/crimson_bat\"\n        }\n    }, R = {\n        ...T,\n        ...P\n    }, O = {\n        chilled: \"#8ed3ff\",\n        critDamage: \"#ffc438\",\n        critRate: \"#ffde76\",\n        damageBoss: \"#f8807e\",\n        damageDealt: \"#fff9b7\",\n        laceration: \"#fa6d6d\",\n        poisoned: \"#bfe488\",\n        shieldDamage: \"#cfe0ea\",\n        skillDamage: \"#cb8cd5\",\n        vulnerability: \"#fd8a5e\",\n        weakened: \"#ec70ff\",\n        xenoResDamage: \"#ffd5ff\"\n    }, I = {\n        numberFormat: {},\n        revives: {\n            help: !0\n        },\n        multithread: {\n            help: !0,\n            direction: \"column\"\n        },\n        computePool: {\n            direction: \"column\"\n        },\n        experimentalFeatures: {\n            help: !0,\n            direction: \"column\"\n        }\n    }, H = (0, p.A)((0, m.A)({\n        e: [ 0, 1, 2, 3, 5, 8 ],\n        v: [ 0, 1, 2, 3, 5, 8 ],\n        c: [ 0, 1, 2, 3, 3, 4, 4, 6, 6, 8, 8 ]\n    }).map((e => {\n        let [t, l] = e;\n        return [ t, (0, b.j)(l) ];\n    }))), U = (0, p.A)((0, m.A)({\n        base: [ 0, 5, 10, 20 ],\n        e: [ 0, 10, 20, 40, 60, 80 ],\n        v: [ 0, 10, 20, 40, 60, 80 ],\n        c: [ 0, 20, 20, 50, 50, 100, 100, 150, 150, 200, 200 ]\n    }).map((e => {\n        let [t, l] = e;\n        return [ t, (0, b.j)(l) ];\n    }))), B = (0, b.j)([ 0, 1, 1, 2, 2, 4, 4, 4, 6, 6, 6, 8, 8, 8 ]), N = (0, p.A)((0, m.A)({\n        e: [ 0, 40, 40, 0, 80, 0, 100, 0, 150, 0, 150, 0, 250, 0 ],\n        v: [ 0, 0, 0, 80, 0, 100, 0, 100, 0, 150, 0, 250, 0, 250 ]\n    }).map((e => {\n        let [t, l] = e;\n        return [ t, (0, b.j)(l) ];\n    }))), q "
+    },
+    {
+      "keyword": "critRate",
+      "offset": 6705,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 12,
+      "snippet": "      icon: \"stats/sync\"\n        },\n        taloxaBeam: {\n            icon: \"skill/beam_gun\"\n        },\n        taloxaOverloadEff: {\n            icon: \"skill/overload\"\n        },\n        taloxaOverload: {\n            icon: \"skill/overload\"\n        },\n        xenoResMultiplier: {\n            icon: \"pets/skills/resonance\"\n        },\n        damageDealt: {\n            icon: \"damage_dealt\"\n        },\n        damageTransmute: {\n            icon: \"damage_dealt\"\n        },\n        damageBoss: {\n            icon: \"damage_boss\"\n        },\n        lme1Damage: {\n            icon: \"stats/lme1Damage\"\n        },\n        adrenaline: {\n            icon: \"stats/adrenaline_e\"\n        },\n        crimsonBat: {\n            type: \"multiplier\",\n            icon: \"skill/crimson_bat\"\n        }\n    }, R = {\n        ...T,\n        ...P\n    }, O = {\n        chilled: \"#8ed3ff\",\n        critDamage: \"#ffc438\",\n        critRate: \"#ffde76\",\n        damageBoss: \"#f8807e\",\n        damageDealt: \"#fff9b7\",\n        laceration: \"#fa6d6d\",\n        poisoned: \"#bfe488\",\n        shieldDamage: \"#cfe0ea\",\n        skillDamage: \"#cb8cd5\",\n        vulnerability: \"#fd8a5e\",\n        weakened: \"#ec70ff\",\n        xenoResDamage: \"#ffd5ff\"\n    }, I = {\n        numberFormat: {},\n        revives: {\n            help: !0\n        },\n        multithread: {\n            help: !0,\n            direction: \"column\"\n        },\n        computePool: {\n            direction: \"column\"\n        },\n        experimentalFeatures: {\n            help: !0,\n            direction: \"column\"\n        }\n    }, H = (0, p.A)((0, m.A)({\n        e: [ 0, 1, 2, 3, 5, 8 ],\n        v: [ 0, 1, 2, 3, 5, 8 ],\n        c: [ 0, 1, 2, 3, 3, 4, 4, 6, 6, 8, 8 ]\n    }).map((e => {\n        let [t, l] = e;\n        return [ t, (0, b.j)(l) ];\n    }))), U = (0, p.A)((0, m.A)({\n        base: [ 0, 5, 10, 20 ],\n        e: [ 0, 10, 20, 40, 60, 80 ],\n        v: [ 0, 10, 20, 40, 60, 80 ],\n        c: [ 0, 20, 20, 50, 50, 100, 100, 150, 150, 200, 200 ]\n    }).map((e => {\n        let [t, l] = e;\n        return [ t, (0, b.j)(l) ];\n    }))), B = (0, b.j)([ 0, 1, 1, 2, 2, 4, 4, 4, 6, 6, 6, 8, 8, 8 ]), N = (0, p.A)((0, m.A)({\n        e: [ 0, 40, 40, 0, 80, 0, 100, 0, 150, 0, 150, 0, 250, 0 ],\n        v: [ 0, 0, 0, 80, 0, 100, 0, 100, 0, 150, 0, 250, 0, 250 ]\n    }).map((e => {\n        let [t, l] = e;\n        return [ t, (0, b.j)(l) ];\n    }))), q = {\n        [z.Nt.Weapon]: [ \"c"
+    },
+    {
+      "keyword": "mounts",
+      "offset": 18226,
+      "nearbyFunctionOrBinding": "eT",
+      "arithmeticOperatorCount": 10,
+      "snippet": "), eK = (0, \n    y.A)(null != (a = C.c.petSkills[z.RX.Default]) ? a : {}), eP = (0, y.A)(null != (o = C.c.petSkills[z.RX.Xeno]) ? o : {});\n    [ ...eK, ...eP ];\n    let eT = (0, g.A)(null != (c = C.c.petSkills[z.RX.Default]) ? c : {}), eR = [ ...eT, ...(0, g.A)(null != (d = C.c.petSkills[z.RX.Xeno]) ? d : {}) ], eO = {\n        xenoResChance: [ 0, 3, 6, 6, 9, 9, 15, 15, 22.5, 22.5, 30 ],\n        xenoResDamage: [ 0, 3, 6, 6, 9, 9, 15, 15, 22.5, 22.5, 30 ],\n        shieldDamage: [ 0, 4, 8, 8, 12, 12, 20, 20, 30, 30, 40 ],\n        poisoned: [ 0, 5, 10, 10, 15, 15, 25, 25, 37.5, 37.5, 50 ],\n        weakened: [ 0, 5, 10, 10, 15, 15, 25, 25, 37.5, 37.5, 50 ],\n        chilled: [ 0, 5, 10, 10, 15, 15, 25, 25, 37.5, 37.5, 50 ],\n        atkPercent: [ 0, 4, 8, 8, 12, 12, 20, 20, 30, 30, 40 ]\n    };\n    eO.xenoResDamage.map(((e, t, l) => e !== l[t - 1]));\n    let eI = Object.entries(null != (u = C.c.mounts) ? u : {}).sort(((e, t) => {\n        let [, l] = e, [, s] = t;\n        return A.oV.indexOf(s.rarity) - A.oV.indexOf(l.rarity);\n    })).map((e => {\n        let [t] = e;\n        return t;\n    })), eH = (0, g.A)(null != (h = C.c.skills) ? h : {}).filter((e => \"passive\" === C.c.skills[e].type)), eU = ep.slice(), eB = [ ...eH, ...eU ], eN = [ \"Twin Lance\", ...eb.flatMap((e => (0, \n    g.A)(C.c.techs[e]))) ], eq = {\n        enabled: \"enabled\",\n        forced: \"forced\",\n        disabled: \"disabled\"\n    }, eW = (0, g.A)(eq), eG = (0, k.Ln)(C.c), eZ = (0, v.A)((e => e.edition), Object.values(C.c.collectibles)).map((e => e.edition)), eX = (() => {\n        let e = [ {\n            e: 0,\n            v: 0,\n            c: 0,\n            x: 0,\n            cores: 0,\n            eCores: 0,\n            vCores: 0,\n            cCores: 0\n        }, {\n            e: 1,\n            v: 0,\n            c: 0,\n            x: 0,\n            cores: 1,\n            eCores: 10,\n            vCores: 0,\n            cCores: 0\n        }, {\n            e: 0,\n            v: 2,\n            c: 0,\n            x: 0,\n            cores: 3,\n            eCores: 0,\n            vCores: 30,\n            cCores: 0\n        }, {\n            e: 1,\n            v: 2,\n            c: 0,\n            x: 0,\n            cores: 4,\n            eCores: 10,\n            vCores: 30,\n            cCores: 0\n        }, {\n            e: 1,\n            v: 2,\n            c: 1,\n            x: 0,\n            cores: 5,\n            eCores: 10,\n     "
+    },
+    {
+      "keyword": "collectibles",
+      "offset": 18827,
+      "nearbyFunctionOrBinding": "eI",
+      "arithmeticOperatorCount": 10,
+      "snippet": "weakened: [ 0, 5, 10, 10, 15, 15, 25, 25, 37.5, 37.5, 50 ],\n        chilled: [ 0, 5, 10, 10, 15, 15, 25, 25, 37.5, 37.5, 50 ],\n        atkPercent: [ 0, 4, 8, 8, 12, 12, 20, 20, 30, 30, 40 ]\n    };\n    eO.xenoResDamage.map(((e, t, l) => e !== l[t - 1]));\n    let eI = Object.entries(null != (u = C.c.mounts) ? u : {}).sort(((e, t) => {\n        let [, l] = e, [, s] = t;\n        return A.oV.indexOf(s.rarity) - A.oV.indexOf(l.rarity);\n    })).map((e => {\n        let [t] = e;\n        return t;\n    })), eH = (0, g.A)(null != (h = C.c.skills) ? h : {}).filter((e => \"passive\" === C.c.skills[e].type)), eU = ep.slice(), eB = [ ...eH, ...eU ], eN = [ \"Twin Lance\", ...eb.flatMap((e => (0, \n    g.A)(C.c.techs[e]))) ], eq = {\n        enabled: \"enabled\",\n        forced: \"forced\",\n        disabled: \"disabled\"\n    }, eW = (0, g.A)(eq), eG = (0, k.Ln)(C.c), eZ = (0, v.A)((e => e.edition), Object.values(C.c.collectibles)).map((e => e.edition)), eX = (() => {\n        let e = [ {\n            e: 0,\n            v: 0,\n            c: 0,\n            x: 0,\n            cores: 0,\n            eCores: 0,\n            vCores: 0,\n            cCores: 0\n        }, {\n            e: 1,\n            v: 0,\n            c: 0,\n            x: 0,\n            cores: 1,\n            eCores: 10,\n            vCores: 0,\n            cCores: 0\n        }, {\n            e: 0,\n            v: 2,\n            c: 0,\n            x: 0,\n            cores: 3,\n            eCores: 0,\n            vCores: 30,\n            cCores: 0\n        }, {\n            e: 1,\n            v: 2,\n            c: 0,\n            x: 0,\n            cores: 4,\n            eCores: 10,\n            vCores: 30,\n            cCores: 0\n        }, {\n            e: 1,\n            v: 2,\n            c: 1,\n            x: 0,\n            cores: 5,\n            eCores: 10,\n            vCores: 30,\n            cCores: 20\n        }, {\n            e: 3,\n            v: 0,\n            c: 0,\n            x: 0,\n            cores: 6,\n            eCores: 70,\n            vCores: 0,\n            cCores: 0\n        }, {\n            e: 1,\n            v: 2,\n            c: 2,\n            x: 0,\n            cores: 7,\n            eCores: 10,\n            vCores: 30,\n            cCores: 40\n        }, {\n            e: 3,\n            v: 0,\n            c: 1,\n            x: 0,\n            cores: 7,\n            eCores: 70,\n            vCores: 0,\n            cCores: 20\n        }, {\n            e: "
+    },
+    {
+      "keyword": "skillDamage",
+      "offset": 6890,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 9,
+      "snippet": "  taloxaOverload: {\n            icon: \"skill/overload\"\n        },\n        xenoResMultiplier: {\n            icon: \"pets/skills/resonance\"\n        },\n        damageDealt: {\n            icon: \"damage_dealt\"\n        },\n        damageTransmute: {\n            icon: \"damage_dealt\"\n        },\n        damageBoss: {\n            icon: \"damage_boss\"\n        },\n        lme1Damage: {\n            icon: \"stats/lme1Damage\"\n        },\n        adrenaline: {\n            icon: \"stats/adrenaline_e\"\n        },\n        crimsonBat: {\n            type: \"multiplier\",\n            icon: \"skill/crimson_bat\"\n        }\n    }, R = {\n        ...T,\n        ...P\n    }, O = {\n        chilled: \"#8ed3ff\",\n        critDamage: \"#ffc438\",\n        critRate: \"#ffde76\",\n        damageBoss: \"#f8807e\",\n        damageDealt: \"#fff9b7\",\n        laceration: \"#fa6d6d\",\n        poisoned: \"#bfe488\",\n        shieldDamage: \"#cfe0ea\",\n        skillDamage: \"#cb8cd5\",\n        vulnerability: \"#fd8a5e\",\n        weakened: \"#ec70ff\",\n        xenoResDamage: \"#ffd5ff\"\n    }, I = {\n        numberFormat: {},\n        revives: {\n            help: !0\n        },\n        multithread: {\n            help: !0,\n            direction: \"column\"\n        },\n        computePool: {\n            direction: \"column\"\n        },\n        experimentalFeatures: {\n            help: !0,\n            direction: \"column\"\n        }\n    }, H = (0, p.A)((0, m.A)({\n        e: [ 0, 1, 2, 3, 5, 8 ],\n        v: [ 0, 1, 2, 3, 5, 8 ],\n        c: [ 0, 1, 2, 3, 3, 4, 4, 6, 6, 8, 8 ]\n    }).map((e => {\n        let [t, l] = e;\n        return [ t, (0, b.j)(l) ];\n    }))), U = (0, p.A)((0, m.A)({\n        base: [ 0, 5, 10, 20 ],\n        e: [ 0, 10, 20, 40, 60, 80 ],\n        v: [ 0, 10, 20, 40, 60, 80 ],\n        c: [ 0, 20, 20, 50, 50, 100, 100, 150, 150, 200, 200 ]\n    }).map((e => {\n        let [t, l] = e;\n        return [ t, (0, b.j)(l) ];\n    }))), B = (0, b.j)([ 0, 1, 1, 2, 2, 4, 4, 4, 6, 6, 6, 8, 8, 8 ]), N = (0, p.A)((0, m.A)({\n        e: [ 0, 40, 40, 0, 80, 0, 100, 0, 150, 0, 150, 0, 250, 0 ],\n        v: [ 0, 0, 0, 80, 0, 100, 0, 100, 0, 150, 0, 250, 0, 250 ]\n    }).map((e => {\n        let [t, l] = e;\n        return [ t, (0, b.j)(l) ];\n    }))), q = {\n        [z.Nt.Weapon]: [ \"chilled\", \"poisoned\", \"weakened\" ],\n        [z.Nt.Armor]: [ \"chilled\", \"poisoned\", \"weakened\" ],\n        [z.Nt.Necklace]: [ \"chilled\", \"poisoned\", \"weakened\" ]\n    }, W = {\n        [z.Nt"
+    },
+    {
+      "keyword": "ee",
+      "offset": 11591,
+      "nearbyFunctionOrBinding": null,
+      "arithmeticOperatorCount": 6,
+      "snippet": ": [ 50, 80, 150, 200, 250, 300, 350, 400, 500, 600, 700, 800 ].reduce(((e, t) => [ ...e, 0, 0, 0, 0, t ]), [ 0 ]).concat([ 100, 100, 100, 200, 300, 100, 100, 100, 200, 300, 100, 100, 100, 200, 300, 100, 100, 100, 200, 300 ]),\n        [z.RX.Default]: [ 0, 5, 5, 10, 20, 30, 40, 60, 60, 60, 60 ],\n        [z.RX.Xeno]: [ 0, 10, 20, 40, 60, 60, 60, 60, 60, 60, 60 ]\n    }, J = (0, p.A)((0, m.A)(Q).map((e => {\n        let [t, l] = e;\n        return [ t, (0, b.j)(l) ];\n    }))), $ = {\n        \"Antimatter Maintainer\": [ \"Antimatter Generator\", \"Hi-Maintainer\" ],\n        \"Antimatter Generator\": [ \"Antimatter Maintainer\" ],\n        \"Energy Guidance System\": [ \"Precision Device\" ],\n        \"Precision Device\": [ \"Energy Guidance System\" ],\n        \"Hi-Maintainer\": [ \"Antimatter Maintainer\" ],\n        \"Hi-Gravity Pulser\": [ \"Energy Diffuser\" ],\n        \"Energy Diffuser\": [ \"Hi-Gravity Pulser\" ]\n    }, ee = {\n        [z.LZ.Eternal]: 1e3,\n        [z.LZ.Legend4]: 850,\n        [z.LZ.Legend3]: 700,\n        [z.LZ.Legend2]: 550,\n        [z.LZ.Legend1]: 400,\n        [z.LZ.Legend]: 300,\n        [z.LZ.Epic3]: 200,\n        [z.LZ.Epic2]: 150,\n        [z.LZ.Epic1]: 100,\n        [z.LZ.Epic]: 50,\n        [z.LZ.None]: 0\n    }, et = [ 0, 900, 1200, 1650, 2100, 2550, 3e3, 3500, 4500, 5e3, 6e3, 7500, 9e3, 10500, 12e3, 13500, 15e3 ], el = [ 0, 100, 200, 300, 450, 600, 900, 1200, 1650, 2100, 2550, 3e3, 3500, 4e3, 4500, 5e3, 5500, 6e3, 7e3, 7500, 8e3, 9e3, 1e4, 10500, 11e3, 12e3, 13e3, 13500, 14e3, 15e3 ], es = {\n        atk: {\n            0: 1,\n            1: 1.2,\n            2: 1.4,\n            4: 1.6,\n            7: 1.8,\n            12: 2,\n            17: 2.2,\n            24: 2.4,\n            33: 2.6,\n            45: 2.8,\n            60: 3\n        },\n        def: {\n            0: 1,\n            1: 1.2,\n            2: 1.4,\n            4: 1.6,\n            7: 1.8,\n            12: 2,\n            17: 2.2,\n            24: 2.4,\n            33: 2.6,\n            45: 2.8,\n            60: 3\n        },\n        twin: {\n            0: 1,\n            1: 1.2,\n            2: 1.4,\n            4: 1.6,\n            6: 1.8,\n            9: 2,\n            12: 2.2,\n            16: 2.4,\n            20: 2.6,\n            25: 2.8,\n            30: 3,\n            36: 3.2,\n            42: 3.4,\n            48: 3.6,\n            54: 3.8,\n            60: 4,\n            66: 4.2,\n            72: 4.4,\n            78: 4.6,\n       "
+    }
+  ],
+  "keyFormulaModules": {
+    "module5005": {
+      "id": "5005",
+      "label": "synergyThresholdStats",
+      "status": "extracted",
+      "exportKeys": [
+        "Q"
+      ],
+      "exportSummaries": {
+        "Q": {
+          "kind": "function",
+          "name": "r",
+          "sourceBytes": 147,
+          "sourcePreview": "e=>{var a;let{synergy:t,synergyLevel:r}=e;if(!t)return;let s=null!=(a=(0,i.nX)(l.c.synergy,null!=r?r:0))?a:{};return s.atkHero=(null!=r?r:0)*400,s}"
+        }
+      },
+      "fullPrettyPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module5005_synergyThresholdStats_full_pretty.js",
+      "exportFunctionPaths": {
+        "Q": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module5005_synergyThresholdStats_Q.js"
+      }
+    },
+    "module5834": {
+      "id": "5834",
+      "label": "percentMultiplier",
+      "status": "extracted",
+      "exportKeys": [
+        "K"
+      ],
+      "exportSummaries": {
+        "K": {
+          "kind": "function",
+          "name": "i",
+          "sourceBytes": 14,
+          "sourcePreview": "e=>(e+100)*.01"
+        }
+      },
+      "fullPrettyPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module5834_percentMultiplier_full_pretty.js",
+      "exportFunctionPaths": {
+        "K": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module5834_percentMultiplier_K.js"
+      }
+    },
+    "module40498": {
+      "id": "40498",
+      "label": "lmeThresholdStats",
+      "status": "extracted",
+      "exportKeys": [
+        "N"
+      ],
+      "exportSummaries": {
+        "N": {
+          "kind": "function",
+          "name": "r",
+          "sourceBytes": 81,
+          "sourcePreview": "e=>{let{gameMode:a,lmeTestaments:t}=e;if(\"lme2\"===a&&t)return(0,i.nX)(l.c.lme,t)}"
+        }
+      },
+      "fullPrettyPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module40498_lmeThresholdStats_full_pretty.js",
+      "exportFunctionPaths": {
+        "N": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module40498_lmeThresholdStats_N.js"
+      }
+    },
+    "module42806": {
+      "id": "42806",
+      "label": "customSetsStats",
+      "status": "extracted",
+      "exportKeys": [
+        "x"
+      ],
+      "exportSummaries": {
+        "x": {
+          "kind": "function",
+          "name": "n",
+          "sourceBytes": 600,
+          "sourcePreview": "e=>{let{collectibles:a,customSets:t}=e,n={};for(let e=0;e<Object.entries(null!=t?t:{}).length;e++){var o,c,m,d,g,u,y;let[,p]=Object.entries(null!=t?t:{})[e],D=null!=(m=null==p?void 0:p.collectibles.filter(e=>e&&e!==l.x3).length)?m:0;if((0,r.Dp)(n,(0,i.nX)(null==(o=s.c.customSets[e])?void 0:o.Legend,D)),D===(null==(c=s.c.customSets[e])?void 0:c.size)){let t=0;for(let e=0;e<(null!=(g=null==p?void 0:"
+        }
+      },
+      "fullPrettyPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module42806_customSetsStats_full_pretty.js",
+      "exportFunctionPaths": {
+        "x": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module42806_customSetsStats_x.js"
+      }
+    },
+    "module57223": {
+      "id": "57223",
+      "label": "collectiblesStats",
+      "status": "extracted",
+      "exportKeys": [
+        "T",
+        "m"
+      ],
+      "exportSummaries": {
+        "T": {
+          "kind": "function",
+          "name": "c",
+          "sourceBytes": 283,
+          "sourcePreview": "e=>{let{data:a,collectibles:t,upgradedCollectibles:s,out:n}=e;if(!a)return n;let c=(0,i.A)(null!=a?a:{});for(let e=0;e<c.length;e++){var m,d;let i=c[e],g=a[i],u=(0,l.nX)(null==g?void 0:g.stars,null!=(d=null==(m=t[i])?void 0:m.stars)?d:0);u&&(0,r.Dp)(n,s.has(i)?o(u,1.33):u)}return n}"
+        },
+        "m": {
+          "kind": "function",
+          "name": "m",
+          "sourceBytes": 244,
+          "sourcePreview": "e=>{let{collectibles:a,upgradedCollectibles:t}=e,i={};for(let e=0;e<s.cl.length;e++){var o;let c=s.cl[e],m=a[c];if(!m||!c)continue;let d=(0,l.nX)(null==(o=n.c.collectibles[c])?void 0:o.stars,m.stars);(0,r.Dp)(i,d,t.has(c)?1.33:void 0)}return i}"
+        }
+      },
+      "fullPrettyPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module57223_collectiblesStats_full_pretty.js",
+      "exportFunctionPaths": {
+        "T": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module57223_collectiblesStats_T.js",
+        "m": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module57223_collectiblesStats_m.js"
+      }
+    },
+    "module24804": {
+      "id": "24804",
+      "label": "equipmentItemStats",
+      "status": "extracted",
+      "exportKeys": [
+        "IE",
+        "zP"
+      ],
+      "exportSummaries": {
+        "IE": {
+          "kind": "function",
+          "name": "x",
+          "sourceBytes": 1404,
+          "sourcePreview": "e=>{var l,a,s;let{evolvePassives:t,gameMode:i,stats:n,settings:r}=e;return null!=n.eternalSuitBoost&&(n.eternalSuitBoost=(0,c.g)(d.h5,null!=(l=r.revives)?l:[0,0,0],n.eternalSuitBoost)),null!=n.voidNeckBoost&&(n.voidNeckBoost=(n.voidNeckBoost+100)/100*(i===d.pd.ee?1.4:1)),i===d.pd.ee&&delete n.voidGlovesInstakill,null!=n.voidBootsBoost&&(n.voidBootsBoost=(n.voidBootsBoost+100)/100),null!=n.minEnerg"
+        },
+        "zP": {
+          "kind": "function",
+          "name": "v",
+          "sourceBytes": 9933,
+          "sourcePreview": "e=>{var l,a,o,c,g,v,x,y,B,f,k,M,D,P,b,F,j,K,U,S,w,_,E,A,R,C,N,z,T,q,W,G,L,O,H,J,I,V,Y,$,Q,Z,X,ee,el,ea,es,et,ei,en,eo,er,ec,em,eu,ed,ep,eg,eh,ev,ex,ey,eB,ef,ek,eM,eD,eP,eb,eF,ej,eK,eU,eS,ew,e_,eE,eA,eR,eC,eN,ez,eT,eq,eW,eG,eL,eO,eH,eJ,eI,eV,eY,e$,eQ,eZ,eX,e0,e1,e5,e8,e3,e2,e4,e6,e9,e7,le,ll,la,ls,lt;let{withNotes:li,venato:ln,stats:lo,collectibles:lr,items:lc,settings:lm,gameMode:lu,eeSkills:ld,ee"
+        }
+      },
+      "fullPrettyPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module24804_equipmentItemStats_full_pretty.js",
+      "exportFunctionPaths": {
+        "IE": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module24804_equipmentItemStats_IE.js",
+        "zP": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module24804_equipmentItemStats_zP.js"
+      }
+    },
+    "module30396": {
+      "id": "30396",
+      "label": "cooldownReduction",
+      "status": "extracted",
+      "exportKeys": [
+        "i"
+      ],
+      "exportSummaries": {
+        "i": {
+          "kind": "function",
+          "name": "s",
+          "sourceBytes": 971,
+          "sourcePreview": "e=>{var a,t,s,n,o,c,m,d,g;let{evolvePassives:u,withNotes:y,mainHero:p,synergy:D,teamwork:h,heroes:k,evoTree:v,skills:b,pets:E,petSkills:f}=e,S=y?[]:void 0,x=1,R=1;if(v.Overreaction&&(x*=95*.01),b[\"Energy Cube\"]&&(x*=(100-(u?48:40))*.01),\"Worm\"===p||D&&Array.isArray(h)&&h.includes(\"Worm\")){let e=null!=(t=null==(a=k.Worm)?void 0:a.stars)?t:0,r=e>=12?20:10*(e>=10);r>0&&(x*=(100-r)*.01,y&&(null==S||S."
+        }
+      },
+      "fullPrettyPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module30396_cooldownReduction_full_pretty.js",
+      "exportFunctionPaths": {
+        "i": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module30396_cooldownReduction_i.js"
+      }
+    },
+    "module67727": {
+      "id": "67727",
+      "label": "finalScoreProduct",
+      "status": "extracted",
+      "exportKeys": [
+        "f"
+      ],
+      "exportSummaries": {
+        "f": {
+          "kind": "function",
+          "name": "o",
+          "sourceBytes": 1872,
+          "sourcePreview": "(e,l,a,o,r,c,m,u)=>{let{critRate:d=0,critDamage:p=0,skillDamage:g=0,vulnerability:h=0,shieldDamage:v=0,shieldDamageUptime:x=0,poisoned:y=0,poisonedUptime:B=0,weakened:f=0,weakenedUptime:k=0,chilled:M=0,chilledUptime:D=0,laceration:P=0,lacerationUptime:b=0,divineFire:F=0,divineFireUptime:j=0,exposedDamage:K=0,clarity:U=0,eternalMultiplier:S=0,glacialBloodline:w=0,cooldownReduction:_=0,joeyWeakSpot:"
+        }
+      },
+      "fullPrettyPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module67727_finalScoreProduct_full_pretty.js",
+      "exportFunctionPaths": {
+        "f": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module67727_finalScoreProduct_f.js"
+      }
+    }
+  },
+  "modules": {
+    "module37013": {
+      "moduleId": "37013",
+      "exportKeys": [
+        "c",
+        "f"
+      ],
+      "deployedDataTableTopLevelCounts": {
+        "baseStats": 8,
+        "heroes": 23,
+        "collectibles": 119,
+        "harmony": 2,
+        "items": 11,
+        "evoTree": 4,
+        "petSkills": 2,
+        "techs": 10,
+        "customSets": 4,
+        "synergy": 2,
+        "sets": 38,
+        "pets": 8,
+        "skills": 5,
+        "lme": 2,
+        "turf": 3,
+        "ee": 4,
+        "xenoPetAwakening": 10,
+        "mounts": 3
+      },
+      "deployedDataTableTopLevelKeys": [
+        "baseStats",
+        "collectibles",
+        "customSets",
+        "ee",
+        "evoTree",
+        "harmony",
+        "heroes",
+        "items",
+        "lme",
+        "mounts",
+        "petSkills",
+        "pets",
+        "sets",
+        "skills",
+        "synergy",
+        "techs",
+        "turf",
+        "xenoPetAwakening"
+      ],
+      "sampleKeys": {
+        "heroes": [
+          "April",
+          "Catnips",
+          "Common",
+          "Donatello",
+          "Joey",
+          "King",
+          "Leonardo",
+          "Master Yang",
+          "Metalia",
+          "Michelangelo",
+          "Nezha",
+          "Patrick",
+          "Raphael",
+          "Sandy",
+          "Splinter",
+          "Spongebob",
+          "Squidward",
+          "Taloxa",
+          "Tsukuyomi",
+          "Venato",
+          "Wesson",
+          "Worm",
+          "Yelena"
+        ],
+        "collectibles": [
+          "Aerocore Orb",
+          "Angelic Tear Crystal",
+          "Anti-Gravity Device",
+          "Antiparticle Gourd",
+          "Aquacore Orb",
+          "Aquarius Starlight",
+          "Aries Starlight",
+          "Astral Dewdrop",
+          "Atomic Mech",
+          "Book of Ancient Wisdom",
+          "Cancer Starlight",
+          "Clone Mirror",
+          "Comms Conch",
+          "Cosmic Compass",
+          "Cyber Totem",
+          "Dark Matter Construct",
+          "Dice of Destiny",
+          "Dimension Foil",
+          "Dragon Tooth",
+          "Dreamscape Puzzle",
+          "Elemental Ring",
+          "Event 1",
+          "Event 10",
+          "Event 11",
+          "Event 12",
+          "Event 13",
+          "Event 14",
+          "Event 15",
+          "Event 16",
+          "Event 17"
+        ],
+        "items": [
+          "Eternal Suit",
+          "Evervoid Armor",
+          "Glacial Warboots",
+          "Judgment Necklace",
+          "Moonscar Bracer",
+          "Stardust Sash",
+          "Twin Lance",
+          "Twisting Belt",
+          "Voidwaker Emblem",
+          "Voidwaker Handguards",
+          "Voidwaker Treads"
+        ],
+        "techs": [
+          "Antimatter Generator",
+          "Antimatter Maintainer",
+          "Energy Diffuser",
+          "Energy Guidance System",
+          "Exo-radicator",
+          "Hi-Gravity Pulser",
+          "Hi-Maintainer",
+          "Phase Driver",
+          "Precision Device",
+          "Quantum Nanobot"
+        ],
+        "pets": [
+          "Capy",
+          "Croaky",
+          "Crucker",
+          "Gourmeow",
+          "King Blizzblast",
+          "Nutjob",
+          "Puffo",
+          "Rex"
+        ],
+        "mounts": [
+          "Doomsteed",
+          "Electric Scooter",
+          "Tech Hoverboard"
+        ],
+        "customSets": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ]
+      }
+    },
+    "module32085": {
+      "moduleId": "32085",
+      "exportKeys": [
+        "$S",
+        "$t",
+        "Ae",
+        "Ai",
+        "CI",
+        "DU",
+        "Dc",
+        "Dh",
+        "Di",
+        "EF",
+        "EW",
+        "Ep",
+        "FQ",
+        "Fd",
+        "G3",
+        "GJ",
+        "Gx",
+        "HD",
+        "IY",
+        "Ie",
+        "Ii",
+        "J3",
+        "M0",
+        "Ox",
+        "PT",
+        "Pg",
+        "RL",
+        "S9",
+        "Ui",
+        "Us",
+        "VF",
+        "VJ",
+        "YC",
+        "YQ",
+        "Yj",
+        "Yx",
+        "ZA",
+        "ZM",
+        "Zt",
+        "_0",
+        "_b",
+        "cc",
+        "cl",
+        "d1",
+        "dO",
+        "dt",
+        "en",
+        "f",
+        "fo",
+        "gE",
+        "gs",
+        "hM",
+        "ib",
+        "ik",
+        "iv",
+        "jc",
+        "kJ",
+        "m1",
+        "mg",
+        "mh",
+        "n3",
+        "nk",
+        "on",
+        "op",
+        "pA",
+        "pe",
+        "pq",
+        "pv",
+        "q9",
+        "qM",
+        "rP",
+        "sm",
+        "vh",
+        "vo",
+        "wY",
+        "x3",
+        "x5",
+        "xp",
+        "xw",
+        "zD"
+      ],
+      "damageCoefficientCount": 34,
+      "damageCoefficientTable": {
+        "ssWeapon": 148.02,
+        "taloxaOverload": 1634.416,
+        "crimsonBat": 3545.66,
+        "Taloxa": 1,
+        "Joey": 1,
+        "Metalia": 28.4,
+        "Master Yang": 57.2,
+        "King": 112.03,
+        "Common": 54.72,
+        "Drone": 26.21,
+        "Molotov": 38,
+        "Molotov Mode": 40.92,
+        "Drill": 50.02,
+        "Rocket": 31.66,
+        "Durian Mode": 9.38,
+        "Soccer Mode": 19.7,
+        "Drone Mode": 48.22,
+        "Forcefield Mode": 18.94,
+        "Drill Shot Mode": 46.21,
+        "Rocket Mode": 49.04,
+        "Lightning Mode": 56.59,
+        "Boomerang Mode": 24.36,
+        "Guardian Mode": 18.94,
+        "Laser Mode": 38.16,
+        "Brick Mode": 70,
+        "Capy": 188.26,
+        "Crucker": 158.7,
+        "Puffo": 308.67,
+        "King Blizzblast": 198.74,
+        "Nutjob": 300,
+        "Gourmeow": 300,
+        "Electric Scooter": 77,
+        "Tech Hoverboard": 100,
+        "Doomsteed": 0
+      },
+      "formulaSnippetCount": 0,
+      "topFormulaCandidateExports": [],
+      "fullPrettyPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/formula_snippets/module32085_full_pretty.js",
+      "exportLocalMapPath": "/Users/woosung/Desktop/Dev/Projects/pareto/frontend/artifacts/td11/sio_tools_formula_table_extract/extracted_tables/module32085_export_local_map.json",
+      "exportLocalMap": {
+        "$S": "ef",
+        "$t": "q",
+        "Ae": "eO",
+        "Ai": "G",
+        "CI": "eT",
+        "DU": "N",
+        "Dc": "e1",
+        "Dh": "el",
+        "Di": "eS",
+        "EF": "V",
+        "EW": "eM",
+        "Ep": "e_",
+        "FQ": "eH",
+        "Fd": "ed",
+        "G3": "em",
+        "GJ": "ep",
+        "Gx": "$",
+        "HD": "ee",
+        "IY": "e2",
+        "Ie": "P",
+        "Ii": "eL",
+        "J3": "eB",
+        "M0": "I",
+        "Ox": "B",
+        "PT": "R",
+        "Pg": "O",
+        "RL": "eo",
+        "S9": "eg",
+        "Ui": "eU",
+        "Us": "F",
+        "VF": "ea",
+        "VJ": "er",
+        "YC": "L",
+        "YQ": "eb",
+        "Yj": "eA",
+        "Yx": "ey",
+        "ZA": "es",
+        "ZM": "eF",
+        "Zt": "e3",
+        "_0": "eX",
+        "_b": "eJ",
+        "cc": "K",
+        "cl": "ej",
+        "d1": "Y",
+        "dO": "T",
+        "dt": "ek",
+        "en": "ew",
+        "f": "eE",
+        "fo": "ez",
+        "gE": "E",
+        "gs": "ei",
+        "hM": "eZ",
+        "ib": "eG",
+        "ik": "eD",
+        "iv": "H",
+        "jc": "ec",
+        "kJ": "eN",
+        "m1": "eR",
+        "mg": "S",
+        "mh": "ex",
+        "n3": "_",
+        "nk": "en",
+        "on": "X",
+        "op": "eu",
+        "pA": "J",
+        "pe": "eW",
+        "pq": "e$",
+        "pv": "W",
+        "q9": "eQ",
+        "qM": "eq",
+        "rP": "Z",
+        "sm": "et",
+        "vh": "eh",
+        "vo": "U",
+        "wY": "eP",
+        "x3": "M",
+        "x5": "D",
+        "xp": "eI",
+        "xw": "ev",
+        "zD": "eC"
+      },
+      "internalFormulaCandidateCount": 31,
+      "topInternalFormulaCandidates": [
+        {
+          "keyword": "ee",
+          "offset": 450,
+          "nearbyFunctionOrBinding": "__module",
+          "arithmeticOperatorCount": 81,
+          "snippetPreview": "const __module = (e, t, l) => {\n    \"use strict\";\n    l.d(t, {\n        $S: () => ef,\n        $t: () => q,\n        Ae: () => eO,\n        Ai: () => G,\n        CI: () => eT,\n        DU: () => N,\n        Dc: () => e1,\n        Dh: () => el,\n        Di: () => eS,\n        EF: () => V,\n        EW: () => eM,\n        Ep: () => e_,\n        FQ: () => eH,\n        Fd: () => ed,\n        G3: () => em,\n        GJ: () => ep,\n        Gx: () => $,\n        HD: () => ee,\n        IY: () => e2,\n        Ie: () => P,\n   "
+        },
+        {
+          "keyword": "damage",
+          "offset": 3908,
+          "nearbyFunctionOrBinding": null,
+          "arithmeticOperatorCount": 40,
+          "snippetPreview": "\n        mounts: \"mount\"\n    }, D = .7, F = 14.75, E = 30, _ = 10, K = .5, P = {\n        xenoSyncRate: {\n            icon: \"pets/skills/xeno_sync_rate\"\n        },\n        xenoResChance: {\n            icon: \"pets/skills/xeno_res_chance\"\n        },\n        xenoResDamage: {\n            icon: \"pets/skills/xeno_res_damage\"\n        },\n        xenoResDuration: {\n            unit: \"s\",\n            icon: \"pets/skills/xeno_res_duration\"\n        }\n    }, T = {\n        atkPercent: {\n            icon: \"pets/"
+        },
+        {
+          "keyword": "skillDamage",
+          "offset": 3698,
+          "nearbyFunctionOrBinding": null,
+          "arithmeticOperatorCount": 38,
+          "snippetPreview": "fo: 308.67,\n        \"King Blizzblast\": 198.74,\n        Nutjob: 300,\n        Gourmeow: 300,\n        \"Electric Scooter\": 77,\n        \"Tech Hoverboard\": 100,\n        Doomsteed: 0\n    }, L = {\n        pets: \"xeno\",\n        mounts: \"mount\"\n    }, D = .7, F = 14.75, E = 30, _ = 10, K = .5, P = {\n        xenoSyncRate: {\n            icon: \"pets/skills/xeno_sync_rate\"\n        },\n        xenoResChance: {\n            icon: \"pets/skills/xeno_res_chance\"\n        },\n        xenoResDamage: {\n            icon: "
+        },
+        {
+          "keyword": "critRate",
+          "offset": 3547,
+          "nearbyFunctionOrBinding": null,
+          "arithmeticOperatorCount": 37,
+          "snippetPreview": "24.36,\n        \"Guardian Mode\": 18.94,\n        \"Laser Mode\": 38.16,\n        \"Brick Mode\": 70,\n        Capy: 188.26,\n        Crucker: 158.7,\n        Puffo: 308.67,\n        \"King Blizzblast\": 198.74,\n        Nutjob: 300,\n        Gourmeow: 300,\n        \"Electric Scooter\": 77,\n        \"Tech Hoverboard\": 100,\n        Doomsteed: 0\n    }, L = {\n        pets: \"xeno\",\n        mounts: \"mount\"\n    }, D = .7, F = 14.75, E = 30, _ = 10, K = .5, P = {\n        xenoSyncRate: {\n            icon: \"pets/skills/xen"
+        },
+        {
+          "keyword": "critDamage",
+          "offset": 3621,
+          "nearbyFunctionOrBinding": null,
+          "arithmeticOperatorCount": 37,
+          "snippetPreview": "  \"Brick Mode\": 70,\n        Capy: 188.26,\n        Crucker: 158.7,\n        Puffo: 308.67,\n        \"King Blizzblast\": 198.74,\n        Nutjob: 300,\n        Gourmeow: 300,\n        \"Electric Scooter\": 77,\n        \"Tech Hoverboard\": 100,\n        Doomsteed: 0\n    }, L = {\n        pets: \"xeno\",\n        mounts: \"mount\"\n    }, D = .7, F = 14.75, E = 30, _ = 10, K = .5, P = {\n        xenoSyncRate: {\n            icon: \"pets/skills/xeno_sync_rate\"\n        },\n        xenoResChance: {\n            icon: \"pets/s"
+        },
+        {
+          "keyword": "damage",
+          "offset": 3320,
+          "nearbyFunctionOrBinding": null,
+          "arithmeticOperatorCount": 35,
+          "snippetPreview": "ode\": 9.38,\n        \"Soccer Mode\": 19.7,\n        \"Drone Mode\": 48.22,\n        \"Forcefield Mode\": 18.94,\n        \"Drill Shot Mode\": 46.21,\n        \"Rocket Mode\": 49.04,\n        \"Lightning Mode\": 56.59,\n        \"Boomerang Mode\": 24.36,\n        \"Guardian Mode\": 18.94,\n        \"Laser Mode\": 38.16,\n        \"Brick Mode\": 70,\n        Capy: 188.26,\n        Crucker: 158.7,\n        Puffo: 308.67,\n        \"King Blizzblast\": 198.74,\n        Nutjob: 300,\n        Gourmeow: 300,\n        \"Electric Scooter\": 77,"
+        },
+        {
+          "keyword": "xeno",
+          "offset": 3227,
+          "nearbyFunctionOrBinding": null,
+          "arithmeticOperatorCount": 34,
+          "snippetPreview": "        \"Molotov Mode\": 40.92,\n        Drill: 50.02,\n        Rocket: 31.66,\n        \"Durian Mode\": 9.38,\n        \"Soccer Mode\": 19.7,\n        \"Drone Mode\": 48.22,\n        \"Forcefield Mode\": 18.94,\n        \"Drill Shot Mode\": 46.21,\n        \"Rocket Mode\": 49.04,\n        \"Lightning Mode\": 56.59,\n        \"Boomerang Mode\": 24.36,\n        \"Guardian Mode\": 18.94,\n        \"Laser Mode\": 38.16,\n        \"Brick Mode\": 70,\n        Capy: 188.26,\n        Crucker: 158.7,\n        Puffo: 308.67,\n        \"King Bli"
+        },
+        {
+          "keyword": "xeno",
+          "offset": 3144,
+          "nearbyFunctionOrBinding": null,
+          "arithmeticOperatorCount": 33,
+          "snippetPreview": "   King: 112.03,\n        Common: 54.72,\n        Drone: 26.21,\n        Molotov: 38,\n        \"Molotov Mode\": 40.92,\n        Drill: 50.02,\n        Rocket: 31.66,\n        \"Durian Mode\": 9.38,\n        \"Soccer Mode\": 19.7,\n        \"Drone Mode\": 48.22,\n        \"Forcefield Mode\": 18.94,\n        \"Drill Shot Mode\": 46.21,\n        \"Rocket Mode\": 49.04,\n        \"Lightning Mode\": 56.59,\n        \"Boomerang Mode\": 24.36,\n        \"Guardian Mode\": 18.94,\n        \"Laser Mode\": 38.16,\n        \"Brick Mode\": 70,\n   "
+        },
+        {
+          "keyword": "xeno",
+          "offset": 3179,
+          "nearbyFunctionOrBinding": null,
+          "arithmeticOperatorCount": 33,
+          "snippetPreview": ".72,\n        Drone: 26.21,\n        Molotov: 38,\n        \"Molotov Mode\": 40.92,\n        Drill: 50.02,\n        Rocket: 31.66,\n        \"Durian Mode\": 9.38,\n        \"Soccer Mode\": 19.7,\n        \"Drone Mode\": 48.22,\n        \"Forcefield Mode\": 18.94,\n        \"Drill Shot Mode\": 46.21,\n        \"Rocket Mode\": 49.04,\n        \"Lightning Mode\": 56.59,\n        \"Boomerang Mode\": 24.36,\n        \"Guardian Mode\": 18.94,\n        \"Laser Mode\": 38.16,\n        \"Brick Mode\": 70,\n        Capy: 188.26,\n        Crucker:"
+        },
+        {
+          "keyword": "xeno",
+          "offset": 3097,
+          "nearbyFunctionOrBinding": null,
+          "arithmeticOperatorCount": 32,
+          "snippetPreview": "talia: 28.4,\n        \"Master Yang\": 57.2,\n        King: 112.03,\n        Common: 54.72,\n        Drone: 26.21,\n        Molotov: 38,\n        \"Molotov Mode\": 40.92,\n        Drill: 50.02,\n        Rocket: 31.66,\n        \"Durian Mode\": 9.38,\n        \"Soccer Mode\": 19.7,\n        \"Drone Mode\": 48.22,\n        \"Forcefield Mode\": 18.94,\n        \"Drill Shot Mode\": 46.21,\n        \"Rocket Mode\": 49.04,\n        \"Lightning Mode\": 56.59,\n        \"Boomerang Mode\": 24.36,\n        \"Guardian Mode\": 18.94,\n        \"La"
+        },
+        {
+          "keyword": "xeno",
+          "offset": 3002,
+          "nearbyFunctionOrBinding": null,
+          "arithmeticOperatorCount": 31,
+          "snippetPreview": "Overload: 1634.416,\n        crimsonBat: 3545.66,\n        Taloxa: 1,\n        Joey: 1,\n        Metalia: 28.4,\n        \"Master Yang\": 57.2,\n        King: 112.03,\n        Common: 54.72,\n        Drone: 26.21,\n        Molotov: 38,\n        \"Molotov Mode\": 40.92,\n        Drill: 50.02,\n        Rocket: 31.66,\n        \"Durian Mode\": 9.38,\n        \"Soccer Mode\": 19.7,\n        \"Drone Mode\": 48.22,\n        \"Forcefield Mode\": 18.94,\n        \"Drill Shot Mode\": 46.21,\n        \"Rocket Mode\": 49.04,\n        \"Light"
+        },
+        {
+          "keyword": "mounts",
+          "offset": 3017,
+          "nearbyFunctionOrBinding": null,
+          "arithmeticOperatorCount": 31,
+          "snippetPreview": "416,\n        crimsonBat: 3545.66,\n        Taloxa: 1,\n        Joey: 1,\n        Metalia: 28.4,\n        \"Master Yang\": 57.2,\n        King: 112.03,\n        Common: 54.72,\n        Drone: 26.21,\n        Molotov: 38,\n        \"Molotov Mode\": 40.92,\n        Drill: 50.02,\n        Rocket: 31.66,\n        \"Durian Mode\": 9.38,\n        \"Soccer Mode\": 19.7,\n        \"Drone Mode\": 48.22,\n        \"Forcefield Mode\": 18.94,\n        \"Drill Shot Mode\": 46.21,\n        \"Rocket Mode\": 49.04,\n        \"Lightning Mode\": 56."
+        },
+        {
+          "keyword": "ee",
+          "offset": 2967,
+          "nearbyFunctionOrBinding": null,
+          "arithmeticOperatorCount": 30,
+          "snippetPreview": "   ssWeapon: 148.02,\n        taloxaOverload: 1634.416,\n        crimsonBat: 3545.66,\n        Taloxa: 1,\n        Joey: 1,\n        Metalia: 28.4,\n        \"Master Yang\": 57.2,\n        King: 112.03,\n        Common: 54.72,\n        Drone: 26.21,\n        Molotov: 38,\n        \"Molotov Mode\": 40.92,\n        Drill: 50.02,\n        Rocket: 31.66,\n        \"Durian Mode\": 9.38,\n        \"Soccer Mode\": 19.7,\n        \"Drone Mode\": 48.22,\n        \"Forcefield Mode\": 18.94,\n        \"Drill Shot Mode\": 46.21,\n        \""
+        },
+        {
+          "keyword": "collectibles",
+          "offset": 15390,
+          "nearbyFunctionOrBinding": "eb",
+          "arithmeticOperatorCount": 21,
+          "snippetPreview": "  [z.LZ.Epic1]: 0,\n        [z.LZ.Epic2]: 0,\n        [z.LZ.Epic3]: 0,\n        [z.LZ.Legend]: 1,\n        [z.LZ.Legend1]: 2,\n        [z.LZ.Legend2]: 3,\n        [z.LZ.Legend3]: 4,\n        [z.LZ.Legend4]: 5,\n        [z.LZ.Eternal]: 0\n    }, eh = Object.entries(C.c.items).reduce(((e, t) => {\n        let [l, s] = t;\n        return (null == s ? void 0 : s.rarity) === z.sn.SS && (null == s ? void 0 : s.type) && !e[s.type] && (e[s.type] = l), e;\n    }), {}), ep = z.wc.flatMap((e => {\n        var t;\n      "
+        },
+        {
+          "keyword": "collectibles",
+          "offset": 15086,
+          "nearbyFunctionOrBinding": "eb",
+          "arithmeticOperatorCount": 18,
+          "snippetPreview": "ntries(ea).map((e => {\n        let [t, l] = e;\n        return [ l, Number(t) ];\n    })))), ec = (0, b.j)([ 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 5 ]), ed = (0, b.j)([ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 ]), eu = {\n        [z.LZ.None]: 0,\n        [z.LZ.Epic]: 0,\n        [z.LZ.Epic1]: 0,\n        [z.LZ.Epic2]: 0,\n        [z.LZ.Epic3]: 0,\n        [z.LZ.Legend]: 1,\n        [z.LZ.Legend1]: 2,\n        [z.LZ.Legend2]: 3,\n        [z.LZ.Legend3]: 4,\n        [z.LZ.Legend"
+        },
+        {
+          "keyword": "collectibles",
+          "offset": 15148,
+          "nearbyFunctionOrBinding": "eb",
+          "arithmeticOperatorCount": 18,
+          "snippetPreview": "[ l, Number(t) ];\n    })))), ec = (0, b.j)([ 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 5 ]), ed = (0, b.j)([ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 ]), eu = {\n        [z.LZ.None]: 0,\n        [z.LZ.Epic]: 0,\n        [z.LZ.Epic1]: 0,\n        [z.LZ.Epic2]: 0,\n        [z.LZ.Epic3]: 0,\n        [z.LZ.Legend]: 1,\n        [z.LZ.Legend1]: 2,\n        [z.LZ.Legend2]: 3,\n        [z.LZ.Legend3]: 4,\n        [z.LZ.Legend4]: 5,\n        [z.LZ.Eternal]: 0\n    }, eh = Object.entries(C."
+        },
+        {
+          "keyword": "damage",
+          "offset": 6146,
+          "nearbyFunctionOrBinding": null,
+          "arithmeticOperatorCount": 17,
+          "snippetPreview": "  icon: \"items/voidwaker_treads\"\n        },\n        chaosBeltBoost: {\n            type: \"multiplier\",\n            icon: \"items/twisting_belt\"\n        },\n        joeyWeakSpot: {\n            icon: \"stats/weakspot\"\n        },\n        flashriftRipEfficiency: {\n            icon: \"stats/rip\"\n        },\n        flashriftRip: {\n            icon: \"stats/rip\"\n        },\n        flashriftRipFinal: {\n            type: \"count\",\n            icon: \"stats/rip\"\n        },\n        taloxaMaxSync: {\n            ico"
+        },
+        {
+          "keyword": "petSkills",
+          "offset": 17365,
+          "nearbyFunctionOrBinding": "l",
+          "arithmeticOperatorCount": 17,
+          "snippetPreview": "map((e => {\n        var t;\n        let l = null == (t = (0, g.A)(C.c.techs[ek[e]] || {}).find((t => t !== e))) ? void 0 : t.split(\" \")[0];\n        return [ e, ep.find((e => e === l)) ];\n    })).filter((e => {\n        let [, t] = e;\n        return t;\n    }))), eM = (0, j.A)(ez), eS = Object.entries(C.c.items).sort(((e, t) => {\n        let [, l] = e, [, s] = t;\n        return Number(s.rarity === z.sn.SS) - Number(l.rarity === z.sn.SS);\n    })), eL = eS.reduce(((e, t) => {\n        var l;\n        le"
+        },
+        {
+          "keyword": "petSkills",
+          "offset": 17432,
+          "nearbyFunctionOrBinding": "eT",
+          "arithmeticOperatorCount": 17,
+          "snippetPreview": "c.techs[ek[e]] || {}).find((t => t !== e))) ? void 0 : t.split(\" \")[0];\n        return [ e, ep.find((e => e === l)) ];\n    })).filter((e => {\n        let [, t] = e;\n        return t;\n    }))), eM = (0, j.A)(ez), eS = Object.entries(C.c.items).sort(((e, t) => {\n        let [, l] = e, [, s] = t;\n        return Number(s.rarity === z.sn.SS) - Number(l.rarity === z.sn.SS);\n    })), eL = eS.reduce(((e, t) => {\n        var l;\n        let [s, n] = t, r = null != (l = n.type) ? l : \"unknown\";\n        ret"
+        },
+        {
+          "keyword": "damage",
+          "offset": 6180,
+          "nearbyFunctionOrBinding": null,
+          "arithmeticOperatorCount": 16,
+          "snippetPreview": "       },\n        chaosBeltBoost: {\n            type: \"multiplier\",\n            icon: \"items/twisting_belt\"\n        },\n        joeyWeakSpot: {\n            icon: \"stats/weakspot\"\n        },\n        flashriftRipEfficiency: {\n            icon: \"stats/rip\"\n        },\n        flashriftRip: {\n            icon: \"stats/rip\"\n        },\n        flashriftRipFinal: {\n            type: \"count\",\n            icon: \"stats/rip\"\n        },\n        taloxaMaxSync: {\n            icon: \"stats/sync\"\n        },\n       "
+        }
+      ]
+    },
+    "module91252": {
+      "moduleId": "91252",
+      "exportKeys": [
+        "Dp",
+        "Ln",
+        "t6",
+        "w9"
+      ],
+      "exportSummaries": {
+        "Dp": {
+          "kind": "function",
+          "name": "u",
+          "sourceBytes": 148,
+          "sourcePreview": "function u(e,a,t){if(!a)return;let i=Object.keys(a);for(let r=0;r<i.length;r++){var l;let s=i[r],n=a[s];t&&(n*=t),n&&(e[s]=(null!=(l=e[s])?l:0)+n)}}"
+        },
+        "Ln": {
+          "kind": "function",
+          "name": "p",
+          "sourceBytes": 1396,
+          "sourcePreview": "e=>{let a={},t=(e,t,i)=>{let l=(e=>(a[e]||(a[e]={items:new Set,techs:new Set}),a[e]))(e);\"item\"===t?l.items.add(i):l.techs.add(i)};Object.entries(e.items).sort((e,a)=>d.QJ.indexOf(e[1].rarity)-d.QJ.indexOf(a[1].rarity)).forEach(e=>{let[a,i]=e;if((null==i?void 0:i.collectibles)&&\"object\"==typeof i.collectibles){var l;Object.keys(null!=(l=i.collectibles)?l:{}).forEach(e=>t(e,\"item\",a))}(null==i?void"
+        },
+        "t6": {
+          "kind": "function",
+          "name": "y",
+          "sourceBytes": 2729,
+          "sourcePreview": "function y(e){var a,t,c,d,g,u,y,p,D,h,k,v,b,E,f,S,x,R,w,M;let P={baseStats:e.baseStats,heroes:{},collectibles:{},harmony:{stars:{vals:[],nums:[]},level:{}},items:{},evoTree:e.evoTree,petSkills:e.petSkills,techs:{},customSets:{},synergy:{vals:[],nums:[]},sets:m.s,pets:{},skills:e.skills,lme:{vals:[],nums:[]},turf:e.turf,ee:[...e.ee,(0,i.A)(-1,e.ee)],xenoPetAwakening:[],mounts:{}},F=(0,l.A)(null!=(c"
+        },
+        "w9": {
+          "kind": "function",
+          "name": "g",
+          "sourceBytes": 137,
+          "sourcePreview": "function g(e,a){if(!e)return e;let t={},i=Object.keys(e);for(let l=0;l<i.length;l++){let r=i[l],s=e[r];s&&a&&(s*=a),s&&(t[r]=s)}return t}"
+        }
+      }
+    },
+    "module73755": {
+      "moduleId": "73755",
+      "exportKeys": [
+        "Z",
+        "P"
+      ],
+      "exportSummaries": {
+        "Z": {
+          "kind": "function",
+          "name": "f",
+          "sourceBytes": 2740,
+          "sourcePreview": "function(e){let a=arguments.length>1&&void 0!==arguments[1]?arguments[1]:[],t=(0,i.A)(-1,a);if(null==e)return e;if(Array.isArray(e))return e.map((e,t)=>f(e,[...a,t]));if(b.includes((0,i.A)(-1,a))||\"evoTree\"===(0,i.A)(-2,a)||\"skills\"===(0,i.A)(-2,a))return+e;if(\"string\"==typeof e){var s,k,S;return[\"mainHero\",\"harmonyR\",\"harmonyL\"].includes(t)||\"teamwork\"===(0,i.A)(-2,a)?[o.x3,...Object.keys(null!=("
+        },
+        "P": {
+          "kind": "function",
+          "name": "S",
+          "sourceBytes": 2879,
+          "sourcePreview": "function(e){var a,t,l,r,D,h,f,x,R,w,M,P,F,L,C,A,O,T;let j=arguments.length>1&&void 0!==arguments[1]?arguments[1]:[],H=arguments.length>2?arguments[2]:void 0;if(0===j.length&&!H&&5!==e._V)throw new s.u(\"Outdated export string.\",s.b.OUTDATED_EXPORT);let B=(0,i.A)(-1,j),Y=e=>{var a,t;switch(e){case\"heroes\":return Object.keys(null!=(a=c.c.heroes)?a:{});case\"techs\":return u;case\"collectibles\":if(j.incl"
+        }
+      }
+    }
+  },
+  "decision": "Runtime exports from deployed minified modules are decoded into local table/formula artifacts. These artifacts are extraction evidence only and do not flip fullSioEquivalent."
+}

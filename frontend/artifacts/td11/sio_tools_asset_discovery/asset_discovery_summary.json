@@ -1,0 +1,1184 @@
+{
+  "status": "source-maps-not-found",
+  "sourceUrl": "https://sio-tools.vercel.app",
+  "fetchedAt": "2026-05-27T10:28:14.841Z",
+  "htmlBytes": 288772,
+  "jsAssetsDiscovered": 29,
+  "jsAssetsFetched": 29,
+  "workerAssetCandidates": [
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/87c73c54-c7bd5612c9f55656.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "bytes": 172787,
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/4d661587c309-87c73c54-c7bd5612c9f55656.js",
+      "keywordHits": [
+        "ee",
+        "worker"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/7418-b1912615b29b906c.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "bytes": 1496343,
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/c2e420edd842-7418-b1912615b29b906c.js",
+      "keywordHits": [
+        "evo",
+        "ee",
+        "items",
+        "importScripts",
+        "worker"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/222-7a54e0482788d7cb.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "bytes": 36022,
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/d41dcf3104a0-222-7a54e0482788d7cb.js",
+      "keywordHits": [
+        "ee",
+        "importScripts"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/3474-70f75b24b4df9b40.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "bytes": 52433,
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/38894ff148c4-3474-70f75b24b4df9b40.js",
+      "keywordHits": [
+        "collectibles",
+        "xeno",
+        "evo",
+        "ee",
+        "items",
+        "stats",
+        "worker"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/app/%5Blng%5D/page-6bb316ffa53ad672.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "bytes": 477528,
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/c2c74f89b65d-page-6bb316ffa53ad672.js",
+      "keywordHits": [
+        "collectibles",
+        "customSets",
+        "petSkills",
+        "xeno",
+        "mounts",
+        "evo",
+        "lme",
+        "ee",
+        "items",
+        "stats",
+        "worker"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/polyfills-42372ed130431b0a.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "bytes": 112594,
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/8885e2890553-polyfills-42372ed130431b0a.js",
+      "keywordHits": [
+        "lm(",
+        "evo",
+        "ee",
+        "importScripts"
+      ]
+    }
+  ],
+  "sourceMapCandidates": [
+    "https://sio-tools.vercel.app/_next/static/chunks/87c73c54-c7bd5612c9f55656.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/87c73c54-c7bd5612c9f55656.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/4401-4328a58f9d7bfe7a.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/4401-4328a58f9d7bfe7a.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/main-app-30482e34e96fec25.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/main-app-30482e34e96fec25.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/795-87f0eb07c8547a92.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/795-87f0eb07c8547a92.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/618-87e3a9fbe0aaf66a.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/618-87e3a9fbe0aaf66a.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/5338-c0ea762dc26a63d1.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/5338-c0ea762dc26a63d1.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/2687-7872dd0ab176ede0.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/2687-7872dd0ab176ede0.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/6337-8dc21234afdae9ed.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/6337-8dc21234afdae9ed.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/9628-0c67ad3b214d36ae.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/9628-0c67ad3b214d36ae.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/7808-4a77549d05241afe.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/7808-4a77549d05241afe.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/7418-b1912615b29b906c.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/7418-b1912615b29b906c.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/6688-37dc217e628f093d.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/6688-37dc217e628f093d.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/222-7a54e0482788d7cb.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/222-7a54e0482788d7cb.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/6582-67b690b727d0aa43.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/6582-67b690b727d0aa43.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/6562-c6b82f17387531e2.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/6562-c6b82f17387531e2.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/4665-52a811e00015684b.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/4665-52a811e00015684b.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/2796-0c65d0e753429231.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/2796-0c65d0e753429231.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/3837-756dc4457baad9bd.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/3837-756dc4457baad9bd.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/3024-f3049a092af37611.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/3024-f3049a092af37611.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/3474-70f75b24b4df9b40.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/3474-70f75b24b4df9b40.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/177-6f3839dc348e2483.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/177-6f3839dc348e2483.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/9553-94ce7e5f3aa74d8b.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/9553-94ce7e5f3aa74d8b.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/app/%5Blng%5D/page-6bb316ffa53ad672.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/app/%5Blng%5D/page-6bb316ffa53ad672.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/app/%5Blng%5D/layout-09523113b24bef60.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/app/%5Blng%5D/layout-09523113b24bef60.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/polyfills-42372ed130431b0a.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/polyfills-42372ed130431b0a.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/webpack-ce937cc85ad8c1df.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/webpack-ce937cc85ad8c1df.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+    "https://sio-cdn.exp0.dev/stats/script.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/3846-6dbb0e6cd9047ccf.js.map",
+    "https://sio-tools.vercel.app/_next/static/chunks/3452-6a47d499cb627f3a.js.map"
+  ],
+  "sourceMapsFound": [],
+  "notFoundSourceMaps": [
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/87c73c54-c7bd5612c9f55656.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/4401-4328a58f9d7bfe7a.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/main-app-30482e34e96fec25.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/795-87f0eb07c8547a92.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/618-87e3a9fbe0aaf66a.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/5338-c0ea762dc26a63d1.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/2687-7872dd0ab176ede0.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/6337-8dc21234afdae9ed.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/9628-0c67ad3b214d36ae.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/7808-4a77549d05241afe.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/7418-b1912615b29b906c.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/6688-37dc217e628f093d.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/222-7a54e0482788d7cb.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/6582-67b690b727d0aa43.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/6562-c6b82f17387531e2.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/4665-52a811e00015684b.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/2796-0c65d0e753429231.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/3837-756dc4457baad9bd.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/3024-f3049a092af37611.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/3474-70f75b24b4df9b40.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/177-6f3839dc348e2483.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/9553-94ce7e5f3aa74d8b.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/app/%5Blng%5D/page-6bb316ffa53ad672.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/app/%5Blng%5D/layout-09523113b24bef60.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/polyfills-42372ed130431b0a.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/webpack-ce937cc85ad8c1df.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-cdn.exp0.dev/stats/script.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 10298,
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/3846-6dbb0e6cd9047ccf.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/3452-6a47d499cb627f3a.js.map",
+      "status": 404,
+      "ok": false,
+      "bytes": 9,
+      "contentType": "text/plain; charset=utf-8"
+    }
+  ],
+  "fetchedAssets": [
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/87c73c54-c7bd5612c9f55656.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 172787,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/4d661587c309-87c73c54-c7bd5612c9f55656.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/87c73c54-c7bd5612c9f55656.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/87c73c54-c7bd5612c9f55656.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": [
+        "ee",
+        "worker"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/4401-4328a58f9d7bfe7a.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 171102,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/da1bb1f64cdd-4401-4328a58f9d7bfe7a.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/4401-4328a58f9d7bfe7a.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/4401-4328a58f9d7bfe7a.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": [
+        "ee"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/main-app-30482e34e96fec25.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 636,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/b2e8e6523a31-main-app-30482e34e96fec25.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/main-app-30482e34e96fec25.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/main-app-30482e34e96fec25.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": []
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/795-87f0eb07c8547a92.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 41836,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/8ca13b48c1cf-795-87f0eb07c8547a92.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/795-87f0eb07c8547a92.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/795-87f0eb07c8547a92.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": [
+        "ee"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/618-87e3a9fbe0aaf66a.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 217467,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/0597a05211fc-618-87e3a9fbe0aaf66a.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/618-87e3a9fbe0aaf66a.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/618-87e3a9fbe0aaf66a.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": [
+        "ee",
+        "items"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/5338-c0ea762dc26a63d1.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 16609,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/3790f25d0c61-5338-c0ea762dc26a63d1.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/5338-c0ea762dc26a63d1.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/5338-c0ea762dc26a63d1.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": []
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/2687-7872dd0ab176ede0.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 6101,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/d9a8795d329e-2687-7872dd0ab176ede0.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/2687-7872dd0ab176ede0.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/2687-7872dd0ab176ede0.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": [
+        "items"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/6337-8dc21234afdae9ed.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 7293,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/d24b476a4a4e-6337-8dc21234afdae9ed.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/6337-8dc21234afdae9ed.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/6337-8dc21234afdae9ed.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": []
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/9628-0c67ad3b214d36ae.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 55082,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/25f56fe944f9-9628-0c67ad3b214d36ae.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/9628-0c67ad3b214d36ae.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/9628-0c67ad3b214d36ae.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": [
+        "ee",
+        "items"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/7808-4a77549d05241afe.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 423213,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/eeb808add083-7808-4a77549d05241afe.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/7808-4a77549d05241afe.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/7808-4a77549d05241afe.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": [
+        "lm(",
+        "ee",
+        "items"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/7418-b1912615b29b906c.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 1496343,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/c2e420edd842-7418-b1912615b29b906c.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/7418-b1912615b29b906c.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/7418-b1912615b29b906c.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": [
+        "evo",
+        "ee",
+        "items",
+        "importScripts",
+        "worker"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/6688-37dc217e628f093d.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 12567,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/6a173ef00c0e-6688-37dc217e628f093d.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/6688-37dc217e628f093d.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/6688-37dc217e628f093d.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": []
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/222-7a54e0482788d7cb.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 36022,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/d41dcf3104a0-222-7a54e0482788d7cb.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/222-7a54e0482788d7cb.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/222-7a54e0482788d7cb.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": [
+        "ee",
+        "importScripts"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/6582-67b690b727d0aa43.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 4639,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/c6c3dcf10270-6582-67b690b727d0aa43.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/6582-67b690b727d0aa43.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/6582-67b690b727d0aa43.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": []
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/6562-c6b82f17387531e2.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 101011,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/027ca04cc7ad-6562-c6b82f17387531e2.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/6562-c6b82f17387531e2.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/6562-c6b82f17387531e2.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": [
+        "ee"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/4665-52a811e00015684b.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 85141,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/72385b1f6095-4665-52a811e00015684b.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/4665-52a811e00015684b.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/4665-52a811e00015684b.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": [
+        "collectibles",
+        "customSets",
+        "petSkills",
+        "xeno",
+        "mounts",
+        "evo",
+        "lme",
+        "ee",
+        "items",
+        "stats"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/2796-0c65d0e753429231.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 17125,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/c669111ea386-2796-0c65d0e753429231.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/2796-0c65d0e753429231.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/2796-0c65d0e753429231.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": [
+        "collectibles",
+        "xeno",
+        "evo",
+        "lme",
+        "ee",
+        "items",
+        "stats"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/3837-756dc4457baad9bd.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 17003,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/be4e82aa5fa6-3837-756dc4457baad9bd.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/3837-756dc4457baad9bd.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/3837-756dc4457baad9bd.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": [
+        "ee"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/3024-f3049a092af37611.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 5133,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/2d16c44462d0-3024-f3049a092af37611.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/3024-f3049a092af37611.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/3024-f3049a092af37611.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": [
+        "collectibles",
+        "evo",
+        "ee",
+        "stats"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/3474-70f75b24b4df9b40.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 52433,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/38894ff148c4-3474-70f75b24b4df9b40.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/3474-70f75b24b4df9b40.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/3474-70f75b24b4df9b40.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": [
+        "collectibles",
+        "xeno",
+        "evo",
+        "ee",
+        "items",
+        "stats",
+        "worker"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/177-6f3839dc348e2483.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 21732,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/72ba5f26458b-177-6f3839dc348e2483.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/177-6f3839dc348e2483.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/177-6f3839dc348e2483.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": [
+        "ee"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/9553-94ce7e5f3aa74d8b.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 136034,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/36e46139365c-9553-94ce7e5f3aa74d8b.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/9553-94ce7e5f3aa74d8b.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/9553-94ce7e5f3aa74d8b.js.map"
+      ],
+      "keywordHits": [
+        "collectibles",
+        "evo",
+        "lme",
+        "ee",
+        "items"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/app/%5Blng%5D/page-6bb316ffa53ad672.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 477528,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/c2c74f89b65d-page-6bb316ffa53ad672.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/app/%5Blng%5D/page-6bb316ffa53ad672.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/app/%5Blng%5D/page-6bb316ffa53ad672.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": [
+        "collectibles",
+        "customSets",
+        "petSkills",
+        "xeno",
+        "mounts",
+        "evo",
+        "lme",
+        "ee",
+        "items",
+        "stats",
+        "worker"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/app/%5Blng%5D/layout-09523113b24bef60.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 18847,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/4ac9cbe17e74-layout-09523113b24bef60.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/app/%5Blng%5D/layout-09523113b24bef60.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/app/%5Blng%5D/layout-09523113b24bef60.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": []
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/polyfills-42372ed130431b0a.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 112594,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/8885e2890553-polyfills-42372ed130431b0a.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/polyfills-42372ed130431b0a.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/polyfills-42372ed130431b0a.js.map"
+      ],
+      "keywordHits": [
+        "lm(",
+        "evo",
+        "ee",
+        "importScripts"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/webpack-ce937cc85ad8c1df.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ",
+      "status": 200,
+      "bytes": 6383,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/43bccd1e69dd-webpack-ce937cc85ad8c1df.js",
+      "chunkCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/3846-6dbb0e6cd9047ccf.js",
+        "https://sio-tools.vercel.app/_next/static/chunks/3452-6a47d499cb627f3a.js"
+      ],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/webpack-ce937cc85ad8c1df.js.map",
+        "https://sio-tools.vercel.app/_next/static/chunks/webpack-ce937cc85ad8c1df.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ.map"
+      ],
+      "keywordHits": [
+        "ee"
+      ]
+    },
+    {
+      "url": "https://sio-cdn.exp0.dev/stats/script.js",
+      "status": 200,
+      "bytes": 2688,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/d8a5a6fcf25b-script.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-cdn.exp0.dev/stats/script.js.map"
+      ],
+      "keywordHits": [
+        "ee"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/3846-6dbb0e6cd9047ccf.js",
+      "status": 200,
+      "bytes": 333197,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/432625ae24bb-3846-6dbb0e6cd9047ccf.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/3846-6dbb0e6cd9047ccf.js.map"
+      ],
+      "keywordHits": [
+        "evo",
+        "ee",
+        "items"
+      ]
+    },
+    {
+      "url": "https://sio-tools.vercel.app/_next/static/chunks/3452-6a47d499cb627f3a.js",
+      "status": 200,
+      "bytes": 15125,
+      "contentType": "application/javascript; charset=utf-8",
+      "mirrorPath": "artifacts/td11/sio_tools_asset_discovery/mirrored_assets/ed65bf6f9811-3452-6a47d499cb627f3a.js",
+      "chunkCandidates": [],
+      "sourceMapCandidates": [
+        "https://sio-tools.vercel.app/_next/static/chunks/3452-6a47d499cb627f3a.js.map"
+      ],
+      "keywordHits": [
+        "ee"
+      ]
+    }
+  ],
+  "keywordIndexes": {
+    "https://sio-tools.vercel.app/_next/static/chunks/87c73c54-c7bd5612c9f55656.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "ee": {
+        "index": 5035,
+        "snippet": "eturn\"\"}}(e,t),t=e,e=e.return;while(e);return n}catch(e){return\"\\nError generating stack: \"+e.message+\"\\n\"+e.stack}}var ee=Object.prototype.hasOwnProperty,en=a.unstable_scheduleCallback,et=a.unstable_cancelCallback,er=a.unstable_shouldYield,el=a.unstable_requestPaint,ea=a.unstable_now,eo=a.unstable_getCurrentPriorityLevel,eu=a.unstable_Im"
+      },
+      "worker": {
+        "index": 154420,
+        "snippet": "rel=\"modulepreload\"][as=\"'+nr(t)+'\"][href=\"'+nr(e)+'\"]',l=r;switch(t){case\"audioworklet\":case\"paintworklet\":case\"serviceworker\":case\"sharedworker\":case\"worker\":case\"script\":l=sq(e)}if(!sR.has(l)&&(e=m({rel:\"modulepreload\",href:e},n),sR.set(l,e),null===sj.querySelector(r))){switch(t){case\"audioworklet\":case\"paintworklet\":case\"serviceworker"
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/4401-4328a58f9d7bfe7a.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "ee": {
+        "index": 524,
+        "snippet": "d.preserveCustomHistoryState=!1,\"string\"==typeof r)return(0,u.handleExternalUrl)(e,d,r,e.pushRef.pendingPush);let p=e.tree,h=e.cache;for(let t of r){let{segmentPath:r,tree:i}=t,_=(0,o.applyRouterStatePatchToTree)([\"\",...r],p,i,e.canonicalUrl);if(null===_)return e;if((0,l.isNavigatingToNewRootLayout)(p,_))return(0,u.handleExternalUrl)(e,d,"
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/main-app-30482e34e96fec25.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {},
+    "https://sio-tools.vercel.app/_next/static/chunks/795-87f0eb07c8547a92.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "ee": {
+        "index": 1065,
+        "snippet": "(e,t)})}},12669:(e,t,r)=>{\"use strict\";r.d(t,{A:()=>i,r:()=>n});let n={blue:\"#1677FF\",purple:\"#722ED1\",cyan:\"#13C2C2\",green:\"#52C41A\",magenta:\"#EB2F96\",pink:\"#EB2F96\",red:\"#F5222D\",orange:\"#FA8C16\",yellow:\"#FADB14\",volcano:\"#FA541C\",geekblue:\"#2F54EB\",gold:\"#FAAD14\",lime:\"#A0D911\"},i={...n,colorPrimary:\"#1677ff\",colorSuccess:\"#52c41a\",col"
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/618-87e3a9fbe0aaf66a.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "ee": {
+        "index": 797,
+        "snippet": "(n,t))})}return e}},204:(e,t,n)=>{n.d(t,{A:()=>function e(t,n={}){let a=[];return o.Children.forEach(t,t=>{(null!=t||n.keepEmpty)&&(Array.isArray(t)?a=a.concat(e(t)):(0,r.A)(t)&&t.props?a=a.concat(e(t.props.children,n)):a.push(t))}),a}});var r=n(73326),o=n(7620)},712:(e,t,n)=>{n.d(t,{A:()=>x});var r=n(86189),o=n(7620),a=n(77093),i=n(32987"
+      },
+      "items": {
+        "index": 11354,
+        "snippet": ".style,...n}}))})(e,t,n,r))}[\"default\",\"primary\",\"danger\"].concat((0,r.A)(l.s))},4695:(e,t,n)=>{n.d(t,{A:()=>r});let r={items_per_page:\"/ page\",jump_to:\"Go to\",jump_to_confirm:\"confirm\",page:\"Page\",prev_page:\"Previous Page\",next_page:\"Next Page\",prev_5:\"Previous 5 Pages\",next_5:\"Next 5 Pages\",prev_3:\"Previous 3 Pages\",next_3:\"Next 3 Pages"
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/5338-c0ea762dc26a63d1.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {},
+    "https://sio-tools.vercel.app/_next/static/chunks/2687-7872dd0ab176ede0.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "items": {
+        "index": 3266,
+        "snippet": ")=>{n.d(t,{A:()=>o});var r=n(72654),i=function(){function e(){this._nativeSet=\"function\"==typeof Set?new Set:null,this._items={}}return e.prototype.add=function(e){return!u(e,!0,this)},e.prototype.has=function(e){return u(e,!1,this)},e}();function u(e,t,n){var i,u=typeof e;switch(u){case\"string\":case\"number\":if(0===e&&1/e==-1/0)if(n._item"
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/6337-8dc21234afdae9ed.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {},
+    "https://sio-tools.vercel.app/_next/static/chunks/9628-0c67ad3b214d36ae.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "ee": {
+        "index": 1210,
+        "snippet": "Og:()=>nj,zMY:()=>nE,k5n:()=>nV,euz:()=>nJ,aig:()=>n$,Ikc:()=>nN,jgl:()=>nM,g1P:()=>nR,YjP:()=>nn,KCZ:()=>nU}),Object.freeze({status:\"aborted\"}),Symbol(\"zod_brand\");class o extends Error{constructor(){super(\"Encountered Promise during synchronous parse. Use .parseAsync() instead.\")}}class a extends Error{constructor(e){super(`Encountered "
+      },
+      "items": {
+        "index": 51375,
+        "snippet": "),u({localeError:(()=>{let e={string:{unit:\"characters\",verb:\"to have\"},file:{unit:\"bytes\",verb:\"to have\"},array:{unit:\"items\",verb:\"to have\"},set:{unit:\"items\",verb:\"to have\"}},t={regex:\"input\",email:\"email address\",url:\"URL\",emoji:\"emoji\",uuid:\"UUID\",uuidv4:\"UUIDv4\",uuidv6:\"UUIDv6\",nanoid:\"nanoid\",guid:\"GUID\",cuid:\"cuid\",cuid2:\"cuid2\",u"
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/7808-4a77549d05241afe.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "lm(": {
+        "index": 152206,
+        "snippet": "al|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\\/|plucker|pocket|psp|redmi|series[46]0|samsungbrowser.*mobile|symbian|treo|up\\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i,n=/CrOS/,o=/android|ipad|playbook|silk/i;function r(e){e|"
+      },
+      "ee": {
+        "index": 647,
+        "snippet": "}=e,a=o.useContext(d),c=o.useMemo(()=>{let e={...a};return r&&delete e.isFormItemInput,n&&(delete e.status,delete e.hasFeedback,delete e.feedbackIcon),e},[n,r,a]);return o.createElement(d.Provider,{value:c},t)},p=o.createContext(void 0)},696:(e,t,n)=>{\"use strict\";n.d(t,{A:()=>A});var o=n(7620),r=n(56453),a=n(32987),c=n(26925),i=n(78e3);f"
+      },
+      "items": {
+        "index": 75896,
+        "snippet": "{prefixCls:y,className:x,style:w,classNames:E,styles:A,variant:C=\"outlined\",mode:S,orientation:k=\"vertical\",titleSpan:z,items:I,children:N,reverse:R,pending:M,pendingDot:O,...B}=e,T=t(\"timeline\",y),[$,P]=g(T),_=r.useMemo(()=>({item:\"\".concat(T,\"-item\"),itemTitle:\"\".concat(T,\"-item-title\"),itemIcon:\"\".concat(T,\"-item-icon\"),itemContent:\"\"."
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/7418-b1912615b29b906c.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "evo": {
+        "index": 91668,
+        "snippet": "umerable:!0}),u(eq,\"toString\",function(){return k(this).serialize()},{enumerable:!0}),M){var eX=M.createObjectURL,eY=M.revokeObjectURL;eX&&u(eU,\"createObjectURL\",c(eX,M)),eY&&u(eU,\"revokeObjectURL\",c(eY,M))}w(eU,\"URL\"),o({global:!0,constructor:!0,forced:!a,sham:!i},{URL:eU})},6617:(e,t,n)=>{\"use strict\";e.exports=n(23901)(n(45829).proto,\""
+      },
+      "ee": {
+        "index": 1410,
+        "snippet": ":t,icon:o})))},223:function(e){e.exports=function(){\"use strict\";var e=\"millisecond\",t=\"second\",n=\"minute\",r=\"hour\",o=\"week\",i=\"month\",a=\"quarter\",l=\"year\",c=\"date\",s=\"Invalid Date\",u=/^(\\d{4})[-/]?(\\d{1,2})?[-/]?(\\d{0,2})[Tt\\s]*(\\d{1,2})?:?(\\d{1,2})?:?(\\d{1,2})?[.:]?(\\d+)?$/,d=/\\[([^\\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{"
+      },
+      "items": {
+        "index": 141343,
+        "snippet": "s:\"\".concat(u,\"-menu\"),className:X,onSelect:D,onDeselect:D,selectedKeys:e,getPopupContainer:w,openKeys:L,onOpenChange:$,items:i}))})(),r.createElement(\"div\",{className:\"\".concat(l,\"-dropdown-btns\")},r.createElement(th.Ay,{type:\"link\",size:\"small\",disabled:S?(0,c.A)((A||[]).map(e=>String(e)),e,!0):0===e.length,onClick:()=>V()},y.filterRese"
+      },
+      "importScripts": {
+        "index": 373579,
+        "snippet": ".now(_(e))}:A&&!v?(a=(i=new A).port2,i.port1.onmessage=P,o=s(a.postMessage,a)):l.addEventListener&&u(l.postMessage)&&!l.importScripts&&r&&\"file:\"!==r.protocol&&!f(R)?(o=R,l.addEventListener(\"message\",P,!1)):o=M in m(\"script\")?function(e){p.appendChild(m(\"script\"))[M]=function(){p.removeChild(this),I(e)}}:function(e){setTimeout(_(e),0)}),e"
+      },
+      "worker": {
+        "index": 500158,
+        "snippet": "ent=\"string\"==typeof l?l:Array.isArray(l)?l.join(\"\"):\"\",m()):t&&(g.src=t,d.set(t,v)),(0,s.setAttributesFromProps)(g,e),\"worker\"===c&&g.setAttribute(\"type\",\"text/partytown\"),g.setAttribute(\"data-nscript\",c),p&&(e=>{if(a.default.preinit)return e.forEach(e=>{a.default.preinit(e,{as:\"style\"})});{let t=document.head;e.forEach(e=>{let n=documen"
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/6688-37dc217e628f093d.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {},
+    "https://sio-tools.vercel.app/_next/static/chunks/222-7a54e0482788d7cb.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "ee": {
+        "index": 4839,
+        "snippet": " r,n=[];for(;null!==(r=e.exec(t));)n.push(r);return n},isHTMLForm:k,hasOwnProperty:I,hasOwnProp:I,reduceDescriptors:M,freezeMethods:e=>{M(e,(t,r)=>{if(E(e)&&-1!==[\"arguments\",\"caller\",\"callee\"].indexOf(r))return!1;if(E(e[r])){if(t.enumerable=!1,\"writable\"in t){t.writable=!1;return}t.set||(t.set=()=>{throw Error(\"Can not rewrite read-only "
+      },
+      "importScripts": {
+        "index": 10318,
+        "snippet": "dexOf(ef.product)),eh=\"undefined\"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope&&\"function\"==typeof self.importScripts,ep=ec&&window.location.href||\"http://localhost\",em={...i,isBrowser:!0,classes:{URLSearchParams:ea,FormData:el,Blob:eu},protocols:[\"http\",\"https\",\"file\",\"blob\",\"url\",\"data\"]},eb=function(e){if(W.isFormData(e"
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/6582-67b690b727d0aa43.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {},
+    "https://sio-tools.vercel.app/_next/static/chunks/6562-c6b82f17387531e2.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "ee": {
+        "index": 43387,
+        "snippet": "f e||tv(e);default:return!1}}(t.type,t.data)}function tm(t,e,r){return t.on(e,r),function(){t.off(e,r)}}let ty=Object.freeze({connect:1,connect_error:1,disconnect:1,disconnecting:1,newListener:1,removeListener:1});class tb extends E{constructor(t,e,r){super(),this.connected=!1,this.recovered=!1,this.receiveBuffer=[],this.sendBuffer=[],thi"
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/4665-52a811e00015684b.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "collectibles": {
+        "index": 546,
+        "snippet": ");let r=e=>{let a=new Set;for(let r=0;r<Object.values(e).length;r++){var t;let s=Object.values(e)[r];if(!s)continue;let{collectibles:n,level:o=0}=s,c=0;for(let e=0;e<n.length;e++){let a=n[e];a&&a!==i.x3&&c++}if(c===(null==(t=l.c.customSets[r])?void 0:t.size))for(let e=0;e<o;e++){let t=n[e];t&&t!==i.x3&&a.add(t)}}return a}},6914:(e,a,t)=>{"
+      },
+      "customSets": {
+        "index": 655,
+        "snippet": "ntinue;let{collectibles:n,level:o=0}=s,c=0;for(let e=0;e<n.length;e++){let a=n[e];a&&a!==i.x3&&c++}if(c===(null==(t=l.c.customSets[r])?void 0:t.size))for(let e=0;e<o;e++){let t=n[e];t&&t!==i.x3&&a.add(t)}}return a}},6914:(e,a,t)=>{\"use strict\";t.d(a,{AS:()=>r,tF:()=>i,y7:()=>l});let i={\"Exo Bracer\":{ssWeapon:e=>1+-.025*e,\"Lightning Mode\":"
+      },
+      "petSkills": {
+        "index": 4990,
+        "snippet": "r a,t,s,n,o,c,m,d,g;let{evolvePassives:u,withNotes:y,mainHero:p,synergy:D,teamwork:h,heroes:k,evoTree:v,skills:b,pets:E,petSkills:f}=e,S=y?[]:void 0,x=1,R=1;if(v.Overreaction&&(x*=95*.01),b[\"Energy Cube\"]&&(x*=(100-(u?48:40))*.01),\"Worm\"===p||D&&Array.isArray(h)&&h.includes(\"Worm\")){let e=null!=(t=null==(a=k.Worm)?void 0:a.stars)?t:0,r=e>"
+      },
+      "xeno": {
+        "index": 28377,
+        "snippet": ".Advanced]:{},[n.wy.Super]:{}},Gary:{[n.wy.Excellent]:{},[n.wy.Advanced]:{},[n.wy.Super]:{}}},[n.RX.Xeno]:{\"Sync Rate\":\"xenoSyncRate\",\"Resonance Chance\":\"xenoResChance\",\"Resonance Damage\":\"xenoResDamage\",\"Shield Damage\":\"shieldDamage\",\"Dmg to Poisoned\":\"poisoned\",\"Dmg to Weakened\":\"weakened\",\"Dmg to Chilled\":\"chilled\",\"Atk Percent\":\"atkPe"
+      },
+      "mounts": {
+        "index": 45235,
+        "snippet": ":[0,2,4,6,8,10,10]},{stat:\"xenoSyncRate\",values:[0,5,10,15,20,20,25]},{stat:\"xenoResDamage\",values:[0,3,6,9,12,15,15]}],mounts:{Doomsteed:{rarity:r.kF.Legend,lines:{1:{poisoned:20},3:{poisoned:40,skillDamage:50},4:{skillDamage:150},6:{poisoned:60,laceration:30},7:{poisoned:80,damageBoss:5},8:{damageBoss:25}},damage:{0:153,1:180,2:180,3:20"
+      },
+      "evo": {
+        "index": 4894,
+        "snippet": "t)=>{\"use strict\";t.d(a,{i:()=>s});var i=t(54568);t(7620);var l=t(35891),r=t(39513);let s=e=>{var a,t,s,n,o,c,m,d,g;let{evolvePassives:u,withNotes:y,mainHero:p,synergy:D,teamwork:h,heroes:k,evoTree:v,skills:b,pets:E,petSkills:f}=e,S=y?[]:void 0,x=1,R=1;if(v.Overreaction&&(x*=95*.01),b[\"Energy Cube\"]&&(x*=(100-(u?48:40))*.01),\"Worm\"===p||D"
+      },
+      "lme": {
+        "index": 27847,
+        "snippet": "ercent:5}},turf:{atkEquipPercent:[[0,3,6,9,12,15],[0,4,8,12,16,20,24]],atkHeroPercent:[[0,2,4,6,8],[0,4,8,12,16,20,24]],lme1Damage:[[0,5,10,15,20],[0,10,20,30,40,50],[0,15,30,45,60,75,90],[0,15,30,45,60,75,90]]},petSkills:{[n.RX.Default]:{Motivation:{[n.wy.Excellent]:{critRate:3},[n.wy.Advanced]:{critRate:4},[n.wy.Super]:{critRate:5}},Ins"
+      },
+      "ee": {
+        "index": 4969,
+        "snippet": "t(39513);let s=e=>{var a,t,s,n,o,c,m,d,g;let{evolvePassives:u,withNotes:y,mainHero:p,synergy:D,teamwork:h,heroes:k,evoTree:v,skills:b,pets:E,petSkills:f}=e,S=y?[]:void 0,x=1,R=1;if(v.Overreaction&&(x*=95*.01),b[\"Energy Cube\"]&&(x*=(100-(u?48:40))*.01),\"Worm\"===p||D&&Array.isArray(h)&&h.includes(\"Worm\")){let e=null!=(t=null==(a=k.Worm)?voi"
+      },
+      "items": {
+        "index": 21813,
+        "snippet": "4:{harmonyTaloxa:33},5:{laceration:30,harmonyTaloxa:9.9}},Venato:{1:{},2:{},3:{damageBoss:15},4:{},5:{damageBoss:25}}}},items:{\"Twin Lance\":{baseAtk:952,atkGrowth:60,rarity:n.sn.SS,type:n.Nt.Weapon,stats:{skillDamage:60,vulnerability:10,atkPercent:40},af:{e:{2:{atkPercent:10},3:{skillDamage:10},4:{atkFinal:4e3},5:{skillDamage:35}},v:{1:{a"
+      },
+      "stats": {
+        "index": 21891,
+        "snippet": "{damageBoss:15},4:{},5:{damageBoss:25}}}},items:{\"Twin Lance\":{baseAtk:952,atkGrowth:60,rarity:n.sn.SS,type:n.Nt.Weapon,stats:{skillDamage:60,vulnerability:10,atkPercent:40},af:{e:{2:{atkPercent:10},3:{skillDamage:10},4:{atkFinal:4e3},5:{skillDamage:35}},v:{1:{atkPercent:10},2:{vulnerability:10},3:{atkFinal:4e3},4:{ssMiscPath:80},5:{atkFi"
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/2796-0c65d0e753429231.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "collectibles": {
+        "index": 761,
+        "snippet": "eW,eG,eL,eO,eH,eJ,eI,eV,eY,e$,eQ,eZ,eX,e0,e1,e5,e8,e3,e2,e4,e6,e9,e7,le,ll,la,ls,lt;let{withNotes:li,venato:ln,stats:lo,collectibles:lr,items:lc,settings:lm,gameMode:lu,eeSkills:ld,eeOmnipower:lp}=e,lg=li?[]:void 0,lh=(null==(l=u.c.items[null!=(j=null==(a=lc.Weapon)?void 0:a.name)?j:\"\"])?void 0:l.rarity)===d.sn.SS,lv=(null==(o=u.c.items[n"
+      },
+      "xeno": {
+        "index": 12772,
+        "snippet": "idBootsBoost:W=1,chaosBeltBoost:G=1,hpBulletBoost:L=1,damageDealt:O=0,adrenaline:H=0,damageTransmute:J=0,damageBoss:I=0,xenoResMultiplier:V=0,atkEquip:Y=0,atkEquipPercent:$=0,atkHero:Q=0,atkHeroPercent:Z=0,atkPercent:X=0,atkFinal:ee=0,lme1Damage:el=0}=e,ea=(0,s.q)(d/100),es=Math.max(p/100,2),et=[null!=l.atkBase&&null!=l.atkFinal?(l.atkBas"
+      },
+      "evo": {
+        "index": 10378,
+        "snippet": ".pd.ee&&(null==ld?void 0:ld[1])!==-1&&\"Twin Lance\"===lp&&(lo.ssMiscPath*=1.5)),{stats:lo,notes:lg}},x=e=>{var l,a,s;let{evolvePassives:t,gameMode:i,stats:n,settings:r}=e;return null!=n.eternalSuitBoost&&(n.eternalSuitBoost=(0,c.g)(d.h5,null!=(l=r.revives)?l:[0,0,0],n.eternalSuitBoost)),null!=n.voidNeckBoost&&(n.voidNeckBoost=(n.voidNeckBo"
+      },
+      "lme": {
+        "index": 12887,
+        "snippet": ":I=0,xenoResMultiplier:V=0,atkEquip:Y=0,atkEquipPercent:$=0,atkHero:Q=0,atkHeroPercent:Z=0,atkPercent:X=0,atkFinal:ee=0,lme1Damage:el=0}=e,ea=(0,s.q)(d/100),es=Math.max(p/100,2),et=[null!=l.atkBase&&null!=l.atkFinal?(l.atkBase+Y*(0,t.K)($)+Q*(0,t.K)(Z))*(0,t.K)(X)+l.atkFinal+ee:0,ea*es+(1-ea),(0,t.K)(Math.max(0,g)),(0,t.K)(Math.max(0,h)),"
+      },
+      "ee": {
+        "index": 518,
+        "snippet": "*i)<=0?0:n>=1?1:n))*.5},v=e=>{var l,a,o,c,g,v,x,y,B,f,k,M,D,P,b,F,j,K,U,S,w,_,E,A,R,C,N,z,T,q,W,G,L,O,H,J,I,V,Y,$,Q,Z,X,ee,el,ea,es,et,ei,en,eo,er,ec,em,eu,ed,ep,eg,eh,ev,ex,ey,eB,ef,ek,eM,eD,eP,eb,eF,ej,eK,eU,eS,ew,e_,eE,eA,eR,eC,eN,ez,eT,eq,eW,eG,eL,eO,eH,eJ,eI,eV,eY,e$,eQ,eZ,eX,e0,e1,e5,e8,e3,e2,e4,e6,e9,e7,le,ll,la,ls,lt;let{withNotes"
+      },
+      "items": {
+        "index": 777,
+        "snippet": "J,eI,eV,eY,e$,eQ,eZ,eX,e0,e1,e5,e8,e3,e2,e4,e6,e9,e7,le,ll,la,ls,lt;let{withNotes:li,venato:ln,stats:lo,collectibles:lr,items:lc,settings:lm,gameMode:lu,eeSkills:ld,eeOmnipower:lp}=e,lg=li?[]:void 0,lh=(null==(l=u.c.items[null!=(j=null==(a=lc.Weapon)?void 0:a.name)?j:\"\"])?void 0:l.rarity)===d.sn.SS,lv=(null==(o=u.c.items[null!=(K=null==(c"
+      },
+      "stats": {
+        "index": 752,
+        "snippet": "ez,eT,eq,eW,eG,eL,eO,eH,eJ,eI,eV,eY,e$,eQ,eZ,eX,e0,e1,e5,e8,e3,e2,e4,e6,e9,e7,le,ll,la,ls,lt;let{withNotes:li,venato:ln,stats:lo,collectibles:lr,items:lc,settings:lm,gameMode:lu,eeSkills:ld,eeOmnipower:lp}=e,lg=li?[]:void 0,lh=(null==(l=u.c.items[null!=(j=null==(a=lc.Weapon)?void 0:a.name)?j:\"\"])?void 0:l.rarity)===d.sn.SS,lv=(null==(o=u."
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/3837-756dc4457baad9bd.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "ee": {
+        "index": 2250,
+        "snippet": "L1:()=>s,_n:()=>u});var n=r(56764),l=r(86285),o=r(13091),a=r(27066),i=r.n(a);let c=[\"#65dcfd\",\"#eb7ae7\",\"#ebdbff\",\"#a5aaee\"],s={dark:\"#21222C\",accent:\"#333543\",secondary:\"#5c5c6d\",gray:\"#aeaeae\",blue:\"#4a93e8\",red:\"#FE4C6A\",yellow:\"#FCCF0A\",green:\"#60cb00\",orange:\"#E69138\",purple:\"#DB25FF\",gradient1:c[0],gradient2:c[1],gradient3:c[2],grad"
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/3024-f3049a092af37611.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "collectibles": {
+        "index": 1838,
+        "snippet": "?r:0)+u[e]})}let h=function(l){var e,r,h,m,f,b,H,F,g,A,B,M;let{evolvePassives:k,cooldownReduction:D,techs:O={},skills:T,collectibles:C,upgradedCollectibles:W,settings:S,gameMode:x,eeOmnipower:j,eeSkills:w,staticCache:P,stableTechEntries:R}=l,_=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},G={};y.fill(1);let L=k?.6:.5;y[n.AS.ss"
+      },
+      "evo": {
+        "index": 382,
+        "snippet": ".length*n.y7.length);function p(l,e,r,s,d,i,c){var v,y,p,E,h,m,f,b,H,F,g,A,B,M;let{mode:k,rarity:D,resonance:O,skills:T,evolvePassives:C,cooldownReduction:W,gameMode:S,eeOmnipower:x,eeSkills:j,passivePools:w}=c,P=t.f[k];if(!P||!T[k])return 0;let R=1+l,_=e+1,G=r+1;switch(k){case\"Drone\":R*=_*G;break;case\"Soccer Mode\":R*=_}R*=null!=(v=P.rari"
+      },
+      "ee": {
+        "index": 430,
+        "snippet": "ar v,y,p,E,h,m,f,b,H,F,g,A,B,M;let{mode:k,rarity:D,resonance:O,skills:T,evolvePassives:C,cooldownReduction:W,gameMode:S,eeOmnipower:x,eeSkills:j,passivePools:w}=c,P=t.f[k];if(!P||!T[k])return 0;let R=1+l,_=e+1,G=r+1;switch(k){case\"Drone\":R*=_*G;break;case\"Soccer Mode\":R*=_}R*=null!=(v=P.rarity[D])?v:1;let L=null!=(y=(0,o.nX)(P.resonance,n"
+      },
+      "stats": {
+        "index": 5043,
+        "snippet": "y:z.rarity}),J&&V(\"Energy Diffuser\",{deployed:!0,rarity:I.rarity}),S.calcMode===u.AW.damage&&(_.resonanceMultiplier=X),{stats:_,ceDamage:G,passivePools:y}}}}]);\n//# sourceMappingURL=3024-f3049a092af37611.js.map"
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/3474-70f75b24b4df9b40.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "collectibles": {
+        "index": 2097,
+        "snippet": "a050ad7,type:I.feature,text:\"Added new survivor Nezha\"},{date:0x69f1bdc9,type:I.improvement,text:\"Added Advanced custom collectibles to Collectibles Upgrade Order\"},{date:0x69ef6a0b,type:I.feature,text:\"Added bulk actions for profiles\"},{date:0x69ed642d,type:I.feature,text:\"Added Twinborn Drill Shot Resonance Overload\"},{date:0x69ea4304,t"
+      },
+      "xeno": {
+        "index": 3787,
+        "snippet": "2dd,type:I.feature,text:\"Added Custom Collection Set Upgrade\"},{date:0x699d868a,type:I.improvement,text:\"Removed manual xeno stats input\"},{date:0x699ccd72,type:I.improvement,text:\"Added Xeno Pet Awakening Power stats to total pet stats\"},{date:0x699ccd71,type:I.improvement,text:\"Added accounting for the Sync Rate set\"},{date:0x699b8591,t"
+      },
+      "evo": {
+        "index": 43652,
+        "snippet": "(\"a\");a.href=t,a.download=\"\".concat(i,\".json\"),document.body.appendChild(a),a.click(),document.body.removeChild(a),URL.revokeObjectURL(t)},children:(0,d.jsxs)(M.s,{direction:\"column\",gap:16,children:[(0,d.jsx)(S.D,{whiteSpace:\"pre-wrap\",children:(0,d.jsx)(j.F,{components:[(0,d.jsx)(S.D,{type:\"info\"},0)],i18nKey:\"shared.menu:translate.desc"
+      },
+      "ee": {
+        "index": 815,
+        "snippet": "74),E=a(20330);let I={feature:\"feature\",improvement:\"improvement\",bug:\"bug\"},N=(0,E.A)(I),X={[I.feature]:{marker:F.L1.green,tag:\"success\"},[I.improvement]:{marker:F.L1.yellow,tag:\"warning\"},[I.bug]:{marker:F.L1.red,tag:\"error\"}},U=[{date:0x6a160109,type:I.feature,text:\"Added Mount Puzzles Optimization\"},{date:0x6a12c855,type:I.feature,tex"
+      },
+      "items": {
+        "index": 15708,
+        "snippet": "8c9be47,type:I.improvement,text:\"Improved TB Drill damage calculation\"},{date:0x68c97d41,type:I.improvement,text:\"Added items and Tech Optimization config to export/import\"},{date:0x68c93d36,type:I.bug,text:\"Fixed long profile name display\"},{date:0x68c9298a,type:I.bug,text:\"Fixed e/v/c cores limit in Items Optimization\"},{date:0x68c9298a"
+      },
+      "stats": {
+        "index": 2362,
+        "snippet": "ure,text:\"Added Twinborn Drill Shot Resonance Overload\"},{date:0x69ea4304,type:I.feature,text:\"Added autofill for mount stats from screenshots\"},{date:0x69e7ecdc,type:I.feature,text:\"Added Mounts section\"},{date:0x69da1ec8,type:I.feature,text:\"Added Gourmeow pet\"},{date:0x69d8093e,type:I.feature,text:\"Added the Xeno Transmute for Judgment"
+      },
+      "worker": {
+        "index": 22061,
+        "snippet": "46e4c,type:I.bug,text:\"Fixed c cores calculation\"},{date:0x68b46d0a,type:I.improvement,text:\"Moved Tech Optimization to workers\"},{date:0x68b46965,type:I.bug,text:\"Fixed heroes stars stats\"},{date:0x68b42e62,type:I.bug,text:\"Fixed Void Neck multiplier\"},{date:0x68b33650,type:I.feature,text:\"Added number formatting setting\"},{date:0x68b2e6"
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/177-6f3839dc348e2483.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "ee": {
+        "index": 12933,
+        "snippet": "ff\",distance:150,enable:!0,opacity:.3,width:1},move:{direction:\"none\",enable:!0,outModes:{default:\"bounce\"},random:!0,speed:2,straight:!1},number:{density:{enable:!0},value:60,limit:{mode:\"delete\",value:60}},opacity:{value:.5},shape:{type:\"circle\"},size:{value:{min:1,max:4}}},detectRetina:!0,pauseOnBlur:!0,pauseOnOutsideViewport:!0},u=(0,"
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/9553-94ce7e5f3aa74d8b.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "collectibles": {
+        "index": 106310,
+        "snippet": "gy that each collectible possesses. Obtained from salvaging surplus collectible shards, and can be used to exchange for collectibles.\",\"CollectionPiece/shoucangpinzhixin\"],\"8000\":[\"Advanced Collector\\'s Heart\",\"Used to evolve custom collection set. Obtained from Legend Collection Choice Packs\",\"CollectionPiece/shoucangpinhuangxin\"],\"9001\""
+      },
+      "evo": {
+        "index": 40793,
+        "snippet": " sword that glints with glory\",\"AttachmentUI/Accessory_5222\"],\"5223\":[\"Catnips Anniversary Cherry\",\"A tasty cherry that evokes sweet memories\",\"AttachmentUI/Accessory_5223\"],\"5224\":[\"Tsukuyomi Anniversary Scepter\",\"A scepter raised in a magnificent visage\",\"AttachmentUI/Accessory_5224\"],\"5225\":[\"Worm Anniversary Poker Card\",\"Card magic - "
+      },
+      "lme": {
+        "index": 50080,
+        "snippet": "xa\\'s Valkyrie Helm\",\"Obtained when Taloxa activates Valkyrie mode.\",\"AttachmentUI/Head_5097\"],\"5409\":[\"Taloxa Alpine Helmet\",\"Has built-in tech that helps track hidden targets in snow.\",\"AttachmentUI/Head_5098\"],\"5410\":[\"Taloxa Alpine Helmet\",\"Has built-in tech that helps track hidden targets in snow.\",\"AttachmentUI/Head_5098\"],\"5411\":[\""
+      },
+      "ee": {
+        "index": 3125,
+        "snippet": "electBox1_shard\"],\"95\":[\"Good Collectible Shard Choice Pack\",\"Select 1 Collectible Shard\",\"CollectionPiece/collection_green_selection\"],\"96\":[\"Better Collectible Shard Choice Pack\",\"Select 1 Collectible Shard\",\"CollectionPiece/collection_blue_selection\"],\"97\":[\"Excellent Collectible Shard Choice Pack\",\"Select 1 Collectible Shard\",\"Collect"
+      },
+      "items": {
+        "index": 135238,
+        "snippet": "sary red packet. Open and get up to 888 Gems\",\"ItemCommon/hongbao_02\"],\"400000001\":[\"Clan Coins\",\"Used to buy Clan Shop items\",\"GuildUI_new/GongHuiBi\"],\"400000013\":[\"Moon Mine Mayhem Revival Coin\",\"Used to instantly revive in Moon Mine Mayhem\",\"MainUITopCurrency/GvGReviveItem\"],\"400000016\":[\"Gem Clan Gift\",\"Clan gifts that contain plenty "
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/app/%5Blng%5D/page-6bb316ffa53ad672.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "collectibles": {
+        "index": 18813,
+        "snippet": "11,900:1.2544,1200:1.2875,1650:1.3222,2100:1.4093,2550:1.5655,3e3:1.7686,4500:1.9371,6e3:2.0282,7500:2.1001,9e3:2.2302},collectibles:{\"Instellar Transition Matrix Design\":{stars:{3:{h1:.05},5:{h2:.05},10:{h1:.15,h2:.15}}},\"Dark Matter Construct\":{stars:{3:{h2:.05},5:{h2:.15},10:{h2:.3}}},\"Hydraulic Flipper\":{stars:{5:{h1:.03},3:{h2:.03},1"
+      },
+      "customSets": {
+        "index": 32262,
+        "snippet": ";let F=(0,L.j)([1e3,2e3,5e3,1e4,3e4,6e4,1e5,2e5]),E=(0,L.j)([0,40,70,90,120,200,250,350,500]),_=(0,u.p)(function(e){let{customSets:t}=e,l=(0,S.useIsMobile)(),n=(0,c.useMemo)(()=>({shards:Object.keys(D.c.customSets).reduce((e,l)=>{var s,n,r;return e+(null!=(r=F[null!=(n=null==(s=t[l])?void 0:s.collectibles.findLastIndex(e=>e!==b.x3))?n:0])"
+      },
+      "petSkills": {
+        "index": 40595,
+        "snippet": "a[e])?l:0)+(null!=(s=null==(t=c.Ae[e])?void 0:t[o])?s:0))})}),a},g=e=>{var t,l,a,p,g,j,y,v,f,b,w,k,C,A,z,M,S;let{pets:L,petSkills:D,collectibles:F,lmeStats:E}=e;if(!L.active)return;let _=L.active,K=null!=(t=L.stars[_])?t:0,P=o.c.pets[_],T=null==P?void 0:P.type,R={};if((0,d.Dp)(R,(0,n.nX)(null==P?void 0:P.stars,null!=K?K:0)),T===u.RX.Xeno)"
+      },
+      "xeno": {
+        "index": 39640,
+        "snippet": "3);let h={\"Realizing Childhood Dreams\":{collectibles:a.s[\"Realizing Childhood Dreams\"].collectibles,stars:{goldEach:{3:{xenoSyncRate:10}},total:{25:{xenoResDuration:1}}}}},p=e=>{let t=[],l=o.c.xenoPetAwakening.length,s=c.Ep.length;for(let n=0;n<l;n++){let l=0;for(let t=0;t<s;t++){let s=e.stars[c.Ep[t]];s&&s>n&&l++}t[n]=l}return t},m=e=>{l"
+      },
+      "mounts": {
+        "index": 14154,
+        "snippet": "k)(e=>{var t;return!!e&&(w(!0),C.current.parse(e,...(0,d.A)(e=>!e.includes(\"pets\")&&!e.includes(\"heroes\")&&!e.includes(\"mounts\"),l),null!=(t=k.current)?t:void 0).then(x).catch(()=>{x([]),f.error(v({i18nKey:\"shared.error:title\"}))}).finally(()=>w(!1)),!1)},[l,x,f,v]),M=t?a.A.Dragger:a.A;return(0,s.jsxs)(g.s,{align:\"flex-start\",gap:8,childr"
+      },
+      "evo": {
+        "index": 10952,
+        "snippet": ";let[n]=await Promise.all([A(),this.loadTemplates(l,t)]);this.cv=n;let r=URL.createObjectURL(e),i=await (0,v.y)(r);URL.revokeObjectURL(r);let a=this.cv.imread(i),o=a.clone(),c=null,d=this.findLargestContour(a,S.BACKGROUND,S.BACKGROUND_THRESHOLD);d&&(c=this.findZoneRect(a,S.BACKGROUND,S.BACKGROUND_THRESHOLD));let u=this.findPetZoneRect(o),"
+      },
+      "lme": {
+        "index": 40622,
+        "snippet": "(t=c.Ae[e])?void 0:t[o])?s:0))})}),a},g=e=>{var t,l,a,p,g,j,y,v,f,b,w,k,C,A,z,M,S;let{pets:L,petSkills:D,collectibles:F,lmeStats:E}=e;if(!L.active)return;let _=L.active,K=null!=(t=L.stars[_])?t:0,P=o.c.pets[_],T=null==P?void 0:P.type,R={};if((0,d.Dp)(R,(0,n.nX)(null==P?void 0:P.stars,null!=K?K:0)),T===u.RX.Xeno){(0,d.Dp)(R,x(D,L)),(0,d.Dp"
+      },
+      "ee": {
+        "index": 31099,
+        "snippet": "yle:{position:\"absolute\",right:-2,top:0,transform:\"rotate(90deg)\",filter:\"drop-shadow(1px -1px 1px black)\",color:x.L1.green,fontSize:12}}):null,(0,s.jsx)(f._,{alt:e,size:c,src:\"/icons/collectibles/\".concat(e,\".webp\")}),(0,s.jsx)(r.A,{disabled:!0,className:v()(j().stars,j().compact,{[j().red]:(null!=(a=null==(l=h[e])?void 0:l.stars)?a:0)>5"
+      },
+      "items": {
+        "index": 42176,
+        "snippet": "(()=>{let e=Array.from({length:t},(e,t)=>({label:h?(0,s.jsx)(\"span\",{children:d[t]}):(0,s.jsx)(a.F,{i18nKey:\"pages.calc:items.plan\",params:{name:d[t]}}),value:t,style:{maxWidth:120}}));return o&&e.push({label:(0,s.jsxs)(\"span\",{children:[(0,s.jsx)(n.A,{}),\" \",!h&&(0,s.jsx)(a.F,{i18nKey:\"pages.calc:items.revert\"})]}),value:-1,style:{maxWid"
+      },
+      "stats": {
+        "index": 44614,
+        "snippet": ",{gap:8,children:[(0,s.jsx)(p._,{alt:\"\",size:16,src:\"/icons/status/\".concat(e,\".webp\")}),(0,s.jsx)(j.F,{i18nKey:\"shared.stats:\".concat(e)})]})})),mode:\"inline\",selectedKeys:[null==n?void 0:n.toString()],style:{width:\"calc(100% + 24px)\",maxWidth:\"min(100vw, 360px)\",margin:\"0 -12px\"},onSelect:e=>{let{key:t}=e;return i(()=>({[l]:{transmuteEf"
+      },
+      "worker": {
+        "index": 128506,
+        "snippet": "tionDelayMax:5e3}),this.attachSocketHandlers(this.socket),this.socket.on(\"connect\",()=>{this.patch({connected:!0}),this.workerActive&&this.sendWorkerReg()}),this.socket.on(\"disconnect\",()=>this.patch({connected:!1,helping:!1,taskPct:0})),this.socket.connect(),this.workerActive=!0,document.addEventListener(\"visibilitychange\",this.onVisibil"
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/app/%5Blng%5D/layout-09523113b24bef60.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {},
+    "https://sio-tools.vercel.app/_next/static/chunks/polyfills-42372ed130431b0a.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "lm(": {
+        "index": 100258,
+        "snippet": "):(t.value=e,t.state=1,Rm(t,!1))}catch(e){Tm({done:!1},e,t)}}};if(sm&&(vm=function(t){ko(this,dm),J(t),f(Ky,this);var e=lm(this);try{t(Im(Mm,e),Im(Tm,e))}catch(t){Tm(e,t)}},(Ky=function(t){hm(this,{type:um,done:!1,notified:!1,parent:!1,reactions:new Ny,rejection:!1,state:0,value:null})}).prototype=ie(dm=vm.prototype,\"then\",function(t,e){v"
+      },
+      "evo": {
+        "index": 92043,
+        "snippet": "ble:!0}),ie(Pg,\"toString\",function(){return hd(this).serialize()},{enumerable:!0}),dd){var jg=dd.createObjectURL,kg=dd.revokeObjectURL;jg&&ie(Rg,\"createObjectURL\",ar(jg,dd)),kg&&ie(Rg,\"revokeObjectURL\",ar(kg,dd))}an(Rg,\"URL\"),Ce({global:!0,constructor:!0,forced:!Mp,sham:!u},{URL:Rg});var Ig=L(\"URL\"),Tg=Mp&&a(function(){Ig.canParse()}),Mg="
+      },
+      "ee": {
+        "index": 5921,
+        "snippet": " Zt(Qt);return e.facade=t,te.set(t,e),e},Ht=function(t){return te.get(t)||{}},$t=function(t){return te.has(t)}}else{var ee=Xt(\"state\");Jt[ee]=!0,qt=function(t,e){if(ut(t,ee))throw new Zt(Qt);return e.facade=t,_t(t,ee,e),e},Ht=function(t){return ut(t,ee)?t[ee]:{}},$t=function(t){return ut(t,ee)}}var re,ne={set:qt,get:Ht,has:$t,enforce:func"
+      },
+      "importScripts": {
+        "index": 96394,
+        "snippet": ":by&&!py?(cy=(sy=new by).port2,sy.port1.onmessage=Py,uy=ar(cy.postMessage,cy)):i.addEventListener&&T(i.postMessage)&&!i.importScripts&&ay&&\"file:\"!==ay.protocol&&!a(Ay)?(uy=Ay,i.addEventListener(\"message\",Py,!1)):uy=Oy in Et(\"script\")?function(t){De.appendChild(Et(\"script\"))[Oy]=function(){De.removeChild(this),xy(t)}}:function(t){setTimeo"
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/webpack-ce937cc85ad8c1df.js?dpl=dpl_3SpVRjQhekawJy9rXs5k8apUdDVJ": {
+      "ee": {
+        "index": 1499,
+        "snippet": "bae\":e)+\".\"+({536:\"1f223b3053791439\",607:\"2ab80bdd86492b68\",767:\"c21031901707dc5a\",809:\"b96f6a80fb66d95a\",836:\"3907db473ee67a3b\",958:\"d3caefbe7cdc7fa4\",1456:\"1479d0ffaff8c40b\",1645:\"97b429685da7c07e\",1653:\"b4a4cafe590af08e\",1675:\"2c0d17f641c52d04\",1953:\"f808a3698b0561a1\",2366:\"44c584d7bee2e801\",2435:\"606a564783c973ff\",2850:\"f6d33ed010974b"
+      }
+    },
+    "https://sio-cdn.exp0.dev/stats/script.js": {
+      "ee": {
+        "index": 39,
+        "snippet": "!function(){\"use strict\";(t=>{const{screen:{width:e,height:a},navigator:{language:r,doNotTrack:n,msDoNotTrack:i},location:o,document:c,history:s,top:u,doNotTrack:d}=t,{currentScript:l,referrer:f}=c;if(!l)return;const{hostname:h,href:m,origin:p}=o,y=m.startsWi"
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/3846-6dbb0e6cd9047ccf.js": {
+      "evo": {
+        "index": 4766,
+        "snippet": "fts_:[],parent_:n,immer_:e,canAutoFreeze_:!0,unfinalizedDrafts_:0}}function C(e){let t=e[o];0===t.type_||1===t.type_?t.revoke_():t.revoked_=!0}function T(e,t){t.unfinalizedDrafts_=t.drafts_.length;let r=t.drafts_[0];return void 0!==e&&e!==r?(r[o].modified_&&(E(t),l(4)),s(e)&&(e=D(t,e),t.parent_||N(t,e)),t.patches_&&_(\"Patches\").generateRe"
+      },
+      "ee": {
+        "index": 4236,
+        "snippet": "unction O(e,t=!1){return P(e)||c(e)||!s(e)||(y(e)>1&&Object.defineProperties(e,{set:j,add:j,clear:j,delete:j}),Object.freeze(e),t&&Object.values(e).forEach(e=>O(e,!0))),e}var j={value:function(){l(2)}};function P(e){return null===e||\"object\"!=typeof e||Object.isFrozen(e)}var M={};function _(e){let t=M[e];return t||l(0,e),t}function S(e,t)"
+      },
+      "items": {
+        "index": 57679,
+        "snippet": "Checks:d={}}={...r,...o},h=n(c),p=n(f),y=function(e){let t=Array.isArray(e[0])?e[0]:e;return!function(e,t=\"expected all items to be functions, instead received the following types: \"){if(!e.every(e=>\"function\"==typeof e)){let r=e.map(e=>\"function\"==typeof e?`function ${e.name||\"unnamed\"}()`:typeof e).join(\", \");throw TypeError(`${t}[${r}]"
+      }
+    },
+    "https://sio-tools.vercel.app/_next/static/chunks/3452-6a47d499cb627f3a.js": {
+      "ee": {
+        "index": 2893,
+        "snippet": "eateElement(p,g({},u,{className:l}))}function x(e){var{points:t,dot:r,className:a,dotClassName:l,dataKey:o,baseProps:c,needClip:u,clipPathId:s,zIndex:p=v.I.scatter}=e;if(null==t||!r&&1!==t.length)return null;var m=(0,f.y$)(r),h=(0,d.y)(r),x=t.map((e,a)=>{var i,u,s=b(b(b({r:3},c),h),{},{index:a,cx:null!=(i=e.x)?i:void 0,cy:null!=(u=e.y)?u:"
+      }
+    }
+  },
+  "errors": [],
+  "decision": "Public assets were mirrored, but probed source maps were not available; continue minified-bundle reverse indexing and later cross-check with user-provided DevTools exports."
+}

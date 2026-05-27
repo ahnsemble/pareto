@@ -16,6 +16,13 @@ const tableDir = path.join(outputDir, 'extracted_tables');
 const formulaDir = path.join(outputDir, 'formula_snippets');
 const jsonPath = path.join(outputDir, 'formula_table_runtime_exports.json');
 const reportPath = path.join(outputDir, 'formula_table_runtime_exports.md');
+const assetDiscoverySummaryPath = path.join(path.dirname(mirrorDir), 'asset_discovery_summary.json');
+const historicalDamageCoefficientAnchors = {
+  drillShotMode: {
+    name: 'Drill Shot Mode',
+    value: 36.8,
+  },
+};
 const formulaModuleIds = {
   module5005: { id: '5005', label: 'synergyThresholdStats' },
   module5834: { id: '5834', label: 'percentMultiplier' },
@@ -129,6 +136,17 @@ async function loadWebpackModules() {
   }
 
   return { modules, evalErrors, files };
+}
+
+async function readJsonIfExists(filePath) {
+  try {
+    return JSON.parse(await fs.readFile(filePath, 'utf8'));
+  } catch (error) {
+    if (error?.code === 'ENOENT') {
+      return null;
+    }
+    throw error;
+  }
 }
 
 function makeRequire(modules) {
@@ -407,12 +425,14 @@ async function main() {
   const deployedDataTable = module37013.exports.c;
   const deployedDefaultConfig = module37013.exports.f;
   const damageCoefficientTable = module32085.exports.mg;
+  const drillShotModeCoefficient = damageCoefficientTable?.['Drill Shot Mode'];
+  const assetDiscoverySummary = await readJsonIfExists(assetDiscoverySummaryPath);
 
   if (!deployedDataTable?.heroes || !deployedDataTable?.collectibles || !deployedDataTable?.items) {
     throw new Error('module37013 deployed data table is missing expected heroes/collectibles/items');
   }
-  if (damageCoefficientTable?.['Drill Shot Mode'] !== 36.8) {
-    throw new Error('module32085 damage coefficient table does not expose live Drill Shot Mode coefficient 36.8');
+  if (!Number.isFinite(drillShotModeCoefficient) || drillShotModeCoefficient <= 0) {
+    throw new Error('module32085 damage coefficient table does not expose a finite Drill Shot Mode coefficient');
   }
   if (keyFormulaModules.module67727?.status !== 'extracted') {
     throw new Error('module67727 final score formula module was not extracted');
@@ -498,6 +518,22 @@ async function main() {
     status: '[MINIFIED-FORMULA-TABLE-RUNTIME-EXPORTS-GREEN-NOT-FULL-SIO]',
     generatedAt: new Date().toISOString(),
     fullSioEquivalent: false,
+    freshness: {
+      currentSourceLabel: 'sio-tools-live-bundle',
+      sourceUrl: assetDiscoverySummary?.sourceUrl ?? 'https://sio-tools.vercel.app',
+      sourceFetchedAt: assetDiscoverySummary?.fetchedAt ?? null,
+      fullSioEquivalentChanged: false,
+      damageCoefficientAnchors: {
+        drillShotMode: {
+          name: 'Drill Shot Mode',
+          status: 'observed-finite',
+          value: drillShotModeCoefficient,
+          historicalReferenceValue: historicalDamageCoefficientAnchors.drillShotMode.value,
+          changedFromHistoricalReference:
+            drillShotModeCoefficient !== historicalDamageCoefficientAnchors.drillShotMode.value,
+        },
+      },
+    },
     mirrorDir,
     mirroredFiles: files.length,
     loadedWebpackModules: Object.keys(modules).length,

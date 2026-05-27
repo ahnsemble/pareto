@@ -76,6 +76,20 @@ function sourceKeyForProductName(domain, productName) {
   return aliases[domain]?.[productName] ?? productName;
 }
 
+function collectibleSourcePlaceholderRows(collectibles) {
+  return Object.entries(collectibles)
+    .filter(([sourceKey, row]) => {
+      if (sourceKey !== 'Excellent') return false;
+      return row?.rarity === 'Excellent' && Array.isArray(row?.stars?.nums) && row.stars.nums.length === 0;
+    })
+    .map(([sourceKey, row]) => ({
+      domain: 'collectibles',
+      sourceKey,
+      rarity: row.rarity,
+      status: 'source-placeholder-no-effect-row',
+    }));
+}
+
 function compareSourceBackedRows({ domain, sourceKeys, productRows, productName = (row) => row.display_name_en }) {
   const productSourceKeys = productRows.map((row) => sourceKeyForProductName(domain, productName(row)));
   const productSourceKeySet = new Set(productSourceKeys);
@@ -138,9 +152,11 @@ const {
   TECH_TWINBORN_PARTS,
 } = schemas;
 
+const collectionSourcePlaceholderRows = collectibleSourcePlaceholderRows(deployedData.collectibles);
+const collectionSourcePlaceholderKeySet = new Set(collectionSourcePlaceholderRows.map((row) => row.sourceKey));
 const collectibleCompare = compareSourceBackedRows({
   domain: 'collectibles',
-  sourceKeys: Object.keys(deployedData.collectibles).sort(),
+  sourceKeys: Object.keys(deployedData.collectibles).filter((key) => !collectionSourcePlaceholderKeySet.has(key)).sort(),
   productRows: COLLECTIBLE_ITEM_INDEX,
 });
 const setCompare = compareSourceBackedRows({
@@ -214,6 +230,7 @@ const directGapRows = [
 
 const sourceEffectLeafCounts = {
   collectibles: numericLeafRows('collectibles', deployedData.collectibles).length,
+  customSets: numericLeafRows('customSets', deployedData.customSets).length,
   sets: numericLeafRows('sets', deployedData.sets).length,
   items: numericLeafRows('items', deployedData.items).length,
   heroes: numericLeafRows('heroes', deployedData.heroes).length,
@@ -236,10 +253,15 @@ const artifact = {
   },
   summary: {
     sourceCollectibleRows: Object.keys(deployedData.collectibles).length,
+    sourceCollectibleEffectRows: Object.keys(deployedData.collectibles).length - collectionSourcePlaceholderRows.length,
+    collectionSourcePlaceholderRows: collectionSourcePlaceholderRows.length,
     tangtangCollectibleRows: COLLECTIBLE_ITEM_INDEX.length,
     collectionSourceMissingRows: collectibleCompare.missingSourceRows.length,
     collectionCatalogOnlyRows: CATALOG_ONLY_COLLECTIBLE_ITEM_IDS.length,
     collectionEventSlotRows: COLLECTIBLE_EVENT_SLOTS.length,
+    customSetSourceRows: Object.keys(deployedData.customSets ?? {}).length,
+    customSetExpectedSlots: 4,
+    customSetSourceMissingRows: Object.keys(deployedData.customSets ?? {}).length === 4 ? 0 : 4 - Object.keys(deployedData.customSets ?? {}).length,
     sourceSetRows: Object.keys(deployedData.sets).length,
     tangtangSetRows: COLLECTIBLE_SET_INDEX.length,
     setSourceMissingRows: setCompare.missingSourceRows.length,
@@ -249,6 +271,11 @@ const artifact = {
     sourceHeroRows: Object.keys(deployedData.heroes).length,
     tangtangHeroRows: HERO_SCHEMA_INDEX.length,
     heroSourceMissingRows: heroCompare.missingSourceRows.length,
+    nezhaSourcePresent: Boolean(deployedData.heroes?.Nezha),
+    nezhaTangtangPresent: HERO_SCHEMA_INDEX.some((hero) => hero.display_name_en === 'Nezha'),
+    nitaSourcePresent: Boolean(deployedData.heroes?.Nita),
+    nitaTangtangPresent: HERO_SCHEMA_INDEX.some((hero) => hero.display_name_en === 'Nita'),
+    nitaStatus: deployedData.heroes?.Nita ? 'source-present-needs-product-row' : 'not-present-in-current-source',
     sourcePetRows: Object.keys(deployedData.pets).length,
     tangtangPetRows: PET_SCHEMA_INDEX.length,
     petSourceMissingRows: petCompareRaw.missingSourceRows.length,
@@ -268,6 +295,7 @@ const artifact = {
     directGapRows,
     productAliasRows,
     petSkillOnlyRows,
+    collectionSourcePlaceholderRows,
     collectionCatalogOnlyRows: CATALOG_ONLY_COLLECTIBLE_ITEM_IDS.map((id) => ({
       domain: 'collectibles',
       productId: id,
@@ -294,16 +322,22 @@ const md = [
   '| Metric | Count |',
   '|---|---:|',
   rowCount('Source collectible rows', Object.keys(deployedData.collectibles)),
+  rowCount('Source collectible effect rows', Object.keys(deployedData.collectibles).filter((key) => !collectionSourcePlaceholderKeySet.has(key))),
+  rowCount('Collection source placeholder rows', collectionSourcePlaceholderRows),
   rowCount('Tangtang collectible rows', COLLECTIBLE_ITEM_INDEX),
   rowCount('Collection source-missing rows', collectibleCompare.missingSourceRows),
   rowCount('Collection catalog-only pending rows', CATALOG_ONLY_COLLECTIBLE_ITEM_IDS),
   rowCount('Collection event slots', COLLECTIBLE_EVENT_SLOTS),
+  rowCount('Custom collection source slots', Object.keys(deployedData.customSets ?? {})),
+  '| Custom collection expected slots | 4 |',
   rowCount('Source set rows', Object.keys(deployedData.sets)),
   rowCount('Tangtang set rows', COLLECTIBLE_SET_INDEX),
   rowCount('Source item rows', Object.keys(deployedData.items)),
   rowCount('Tangtang item rows', SS_EQUIPMENT_SCHEMA_INDEX),
   rowCount('Source hero rows', Object.keys(deployedData.heroes)),
   rowCount('Tangtang hero rows', HERO_SCHEMA_INDEX),
+  `| Nezha source/product covered | ${artifact.summary.nezhaSourcePresent && artifact.summary.nezhaTangtangPresent ? 1 : 0} |`,
+  `| Nita current-source rows | ${artifact.summary.nitaSourcePresent ? 1 : 0} |`,
   rowCount('Source pet rows', Object.keys(deployedData.pets)),
   rowCount('Tangtang pet rows', PET_SCHEMA_INDEX),
   rowCount('Source tech rows', Object.keys(deployedData.techs)),
@@ -319,15 +353,32 @@ const md = [
   '',
   '## Notes',
   '',
-  '- Collections are the priority domain: all 118 internal source collectible keys are covered by Tangtang rows; the four zodiac catalog-only rows remain explicitly pending because the source table has no effect rows for them yet.',
+  `- Collections are the priority domain: all ${artifact.summary.sourceCollectibleEffectRows} effect-bearing internal source collectible keys are covered by Tangtang rows; ${artifact.summary.collectionSourcePlaceholderRows} no-effect source placeholder row is tracked separately; the four zodiac catalog-only rows remain explicitly pending because the source table has no effect rows for them yet.`,
+  '- Custom Collection Sets are covered as four source slots through the customSets formula/import path.',
+  '- Nezha is present in the current source and Tangtang schema; Nita is not present in the current source table as of this audit.',
   '- Product-facing pet aliases stay as Clucker and Blizzblast while internal source aliases remain Crucker and King Blizzblast.',
   '- Formula effects are already source-backed through the scoring/evidence table. Human-readable in-game effect copy is not promoted without direct capture.',
 ].join('\n');
 
 assert.equal(artifact.summary.collectionSourceMissingRows, 0);
+assert.equal(artifact.summary.collectionSourcePlaceholderRows, 1);
+assert.deepEqual(collectionSourcePlaceholderRows, [{
+  domain: 'collectibles',
+  sourceKey: 'Excellent',
+  rarity: 'Excellent',
+  status: 'source-placeholder-no-effect-row',
+}]);
+assert.equal(artifact.summary.customSetSourceRows, 4);
+assert.equal(artifact.summary.customSetExpectedSlots, 4);
+assert.equal(artifact.summary.customSetSourceMissingRows, 0);
 assert.equal(artifact.summary.setSourceMissingRows, 0);
 assert.equal(artifact.summary.itemSourceMissingRows, 0);
 assert.equal(artifact.summary.heroSourceMissingRows, 0);
+assert.equal(artifact.summary.nezhaSourcePresent, true);
+assert.equal(artifact.summary.nezhaTangtangPresent, true);
+assert.equal(artifact.summary.nitaSourcePresent, false);
+assert.equal(artifact.summary.nitaTangtangPresent, false);
+assert.equal(artifact.summary.nitaStatus, 'not-present-in-current-source');
 assert.equal(artifact.summary.petSourceMissingRows, 0);
 assert.equal(artifact.summary.petXenoTypeMismatchRows, 0);
 assert.equal(artifact.summary.techSourceMissingRows, 0);
