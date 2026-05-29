@@ -84,6 +84,8 @@ pub struct SioLmScoringContext {
     pub scoring_model: String,
     pub candidate_preselect_top_k: Option<usize>,
     pub tech_mode_overload_templates: HashMap<String, SioLmTechModeOverloadTemplate>,
+    compact_config: Option<Value>,
+    dynamic_skill_transform: bool,
 }
 
 #[derive(Clone, Copy, Debug, Default)]
@@ -279,6 +281,8 @@ impl SioLmScoringContext {
             scoring_model: SIO_LM_CAPTURED_TRACE_BRIDGE_SCORER.to_string(),
             candidate_preselect_top_k: None,
             tech_mode_overload_templates: HashMap::new(),
+            compact_config: None,
+            dynamic_skill_transform: false,
         }
     }
 }
@@ -317,11 +321,18 @@ pub fn sio_lm_context_from_player_state_with_options(
     let tech_mode_overload_templates =
         tech_mode_overload_templates_from_compact(compact_config.as_ref());
     let has_fixed_compact_templates = !tech_mode_overload_templates.is_empty();
+    let active_skill_slots = if explicit_enabled_skills || has_fixed_compact_templates {
+        None
+    } else {
+        active_skill_slots_from_decoded(decoded.as_ref())
+    };
     let enabled_skills = enabled_skills_value
         .and_then(string_array)
         .or_else(|| {
             if has_fixed_compact_templates {
                 enabled_skills_from_decoded(decoded.as_ref())
+            } else if active_skill_slots.is_some() {
+                passive_enabled_skills_from_decoded(decoded.as_ref())
             } else {
                 base_enabled_skills_from_decoded(decoded.as_ref())
             }
@@ -355,6 +366,7 @@ pub fn sio_lm_context_from_player_state_with_options(
         .get("statTransform")
         .or_else(|| raw.get("stat_transform"))
         .or_else(|| raw.get("transform"));
+    let dynamic_skill_transform = transform_value.is_none() && compact_config.is_some();
     let transform = if transform_value.is_some() {
         SioLmStatTransform::from_value(transform_value)
     } else {
@@ -369,12 +381,6 @@ pub fn sio_lm_context_from_player_state_with_options(
         .or_else(|| raw.get("candidate_preselect_top_k"))
         .and_then(Value::as_u64)
         .map(|value| value as usize);
-    let active_skill_slots = if explicit_enabled_skills || has_fixed_compact_templates {
-        None
-    } else {
-        active_skill_slots_from_decoded(decoded.as_ref())
-    };
-
     Some(SioLmScoringContext {
         base_stats,
         attack_meta,
@@ -388,7 +394,23 @@ pub fn sio_lm_context_from_player_state_with_options(
         scoring_model: SIO_LM_FULL_EQUIVALENCE_SCORER.to_string(),
         candidate_preselect_top_k,
         tech_mode_overload_templates,
+        compact_config,
+        dynamic_skill_transform,
     })
+}
+
+pub fn sio_lm_transform_for_enabled_skills(
+    context: &SioLmScoringContext,
+    enabled_skills: &[String],
+) -> SioLmStatTransform {
+    if !context.dynamic_skill_transform {
+        return context.transform.clone();
+    }
+    stat_transform_from_compact_config_with_options(
+        context.compact_config.as_ref(),
+        &SioLmContextOptions::default(),
+        Some(enabled_skills),
+    )
 }
 
 pub fn captured_sio_lm_default_base_stats() -> Value {
@@ -1060,18 +1082,24 @@ fn enabled_skills_from_decoded(decoded: Option<&Value>) -> Option<Vec<String>> {
     Some(output)
 }
 
-fn base_enabled_skills_from_decoded(decoded: Option<&Value>) -> Option<Vec<String>> {
+fn passive_enabled_skills_from_decoded(decoded: Option<&Value>) -> Option<Vec<String>> {
     let skills = decoded?.get("skills")?.as_object()?;
-    let output = SIO_LM_BASE_PASSIVE_SKILLS
-        .iter()
-        .filter(|skill| {
-            skills
-                .get(**skill)
-                .and_then(Value::as_bool)
-                .unwrap_or(false)
-        })
-        .map(|skill| (*skill).to_string())
-        .collect::<Vec<_>>();
+    Some(
+        SIO_LM_BASE_PASSIVE_SKILLS
+            .iter()
+            .filter(|skill| {
+                skills
+                    .get(**skill)
+                    .and_then(Value::as_bool)
+                    .unwrap_or(false)
+            })
+            .map(|skill| (*skill).to_string())
+            .collect(),
+    )
+}
+
+fn base_enabled_skills_from_decoded(decoded: Option<&Value>) -> Option<Vec<String>> {
+    let output = passive_enabled_skills_from_decoded(decoded)?;
     if output.is_empty() {
         enabled_skills_from_decoded(decoded)
     } else {
@@ -3503,19 +3531,9 @@ fn drill_shot_resonance_output(
     let beam = h5 * h3;
     let eternal_scale = if eternal { 2.0 } else { 1.0 };
     let eternal_count = if eternal { 10.0 } else { 1.0 };
-    31.5
-        * eternal_scale
-        * beam
-        * (h1 + h1_add + 0.9 * row_i)
-        * (1.0 + (row_o - 1.0) * 0.95)
-        * 0.95
+    31.5 * eternal_scale * beam * (h1 + h1_add + 0.9 * row_i) * (1.0 + (row_o - 1.0) * 0.95) * 0.95
         / 0.57
-        + 6.3
-            * (h2 + h2_add)
-            * beam
-            * (1.0 + (eternal_count + row_a - 2.0) * 0.95)
-            * 0.95
-            / 0.57
+        + 6.3 * (h2 + h2_add) * beam * (1.0 + (eternal_count + row_a - 2.0) * 0.95) * 0.95 / 0.57
         + 39.06 * (h4 + h4_add) * h3 / 0.6
         + if eternal {
             60.48 * h3 * 3.0 / 2.666_666_666_666_666_5

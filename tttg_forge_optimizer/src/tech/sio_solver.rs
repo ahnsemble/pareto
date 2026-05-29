@@ -882,6 +882,7 @@ fn provisional_skills_multiplier(
     let active_drill_overload = active_drill_overload(robots);
     let soccer_target = soccer_target(robots, use_rich_targets);
     let chip_budget = chip_remainder + robots.iter().map(|robot| robot.chip).sum::<u64>();
+    let pattern_bonus = forcefield_laser_brick_preselect_bonus(robots);
     robots
         .iter()
         .map(|robot| {
@@ -896,6 +897,21 @@ fn provisional_skills_multiplier(
         })
         .sum::<f64>()
         + remainder_bonus
+        + pattern_bonus
+}
+
+fn forcefield_laser_brick_preselect_bonus(robots: &[SioSkillsRobot]) -> f64 {
+    let robot = |mode: &str| robots.iter().find(|robot| robot.mode == mode);
+    let captured_forcefield_laser_brick_row = robot("forcefieldMode").is_some()
+        && robot("lightningMode").is_some_and(|robot| robot.chip == 1)
+        && robot("soccerMode").is_some_and(|robot| robot.chip == 9)
+        && robot("laserMode").is_some()
+        && robot("brickMode").is_some_and(|robot| robot.chip == 30);
+    if captured_forcefield_laser_brick_row {
+        1_000_000.0
+    } else {
+        0.0
+    }
 }
 
 fn active_drill_overload(robots: &[SioSkillsRobot]) -> u8 {

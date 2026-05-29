@@ -7,14 +7,15 @@ use std::time::Instant;
 
 use crate::tech::sio_solver::{
     expand_rarity_inventory, generate_chip_distributions, generate_resonance_prefix_tasks,
-    run_resonance_search, run_skills_candidate_search, SioModeConstraint, SioRarity,
-    SioResonanceSearchOptions, SioSkillsCandidate, SioSkillsSearchOptions,
+    resonance_for_parts, rich_target_for_resonance, run_resonance_search,
+    run_skills_candidate_search, target_for_resonance, SioModeConstraint, SioRarity,
+    SioResonanceSearchOptions, SioSkillsCandidate, SioSkillsRobot, SioSkillsSearchOptions,
 };
 use crate::tech::{mode_weight, skill_name_to_mode, TECH_MODES, TECH_PART_IDS};
 use crate::tech::{
-    reconstruct_sio_lm_inputs, sio_lm_context_from_player_state, SioLmScoringContext,
-    SIO_LM_CAPTURED_TRACE_BRIDGE_SCORER, SIO_LM_COMPACT_BASE_STATS_TRANSFORMER_SCORER,
-    SIO_LM_FULL_EQUIVALENCE_SCORER,
+    reconstruct_sio_lm_inputs, sio_lm_context_from_player_state,
+    sio_lm_transform_for_enabled_skills, SioLmScoringContext, SIO_LM_CAPTURED_TRACE_BRIDGE_SCORER,
+    SIO_LM_COMPACT_BASE_STATS_TRANSFORMER_SCORER, SIO_LM_FULL_EQUIVALENCE_SCORER,
 };
 pub use crate::tech::{
     SioInventoryContract, SioInventoryValidationResult, SioModeEntry, SioRarityInput,
@@ -596,13 +597,17 @@ fn run_sio_candidate_generation_optimizer(
     if resonance_candidates.is_empty() {
         return None;
     }
-    let resonance_preselect_cap = sio_resonance_preselect_cap(top_k, profile);
+    let mut lm_context = sio_lm_context_from_player_state(player_state)
+        .unwrap_or_else(SioLmScoringContext::captured_trace_defaults);
+    if lm_context.active_skill_slots.is_some() {
+        lm_context.active_skill_slots = Some(profile.skills);
+    }
+    let lm_preselect_top_k = sio_lm_preselect_top_k(top_k, &lm_context, profile);
+    let resonance_preselect_cap = sio_resonance_preselect_cap(lm_preselect_top_k, profile);
     if resonance_candidates.len() > resonance_preselect_cap {
         resonance_candidates.truncate(resonance_preselect_cap);
     }
 
-    let lm_context = sio_lm_context_from_player_state(player_state)
-        .unwrap_or_else(SioLmScoringContext::captured_trace_defaults);
     let robot_names = default_sio_robot_names(robot_count);
     let modes_by_robot = robot_names
         .iter()
@@ -637,9 +642,7 @@ fn run_sio_candidate_generation_optimizer(
     } else {
         HashSet::new()
     };
-    let lm_preselect_top_k = sio_lm_preselect_top_k(top_k, &lm_context, profile);
-
-    let skills_candidates = run_skills_candidate_search(
+    let mut skills_candidates = run_skills_candidate_search(
         &resonance_candidates,
         &SioSkillsSearchOptions {
             robot_names,
@@ -652,6 +655,7 @@ fn run_sio_candidate_generation_optimizer(
             permute_robots: true,
         },
     );
+    push_sio_lm_bridge_candidates(&mut skills_candidates, &lm_context, profile);
     if skills_candidates.is_empty() {
         return None;
     }
@@ -870,7 +874,36 @@ fn sio_modes_for_robot(
             return vec![template.mode.clone()];
         }
     }
+    if robot == "energyGuidanceSystem"
+        && !profile.overloadable
+        && allowed.iter().any(|mode| mode == "forcefieldMode")
+        && sio_lm_forcefield_candidate_enabled(lm_context)
+    {
+        return ["droneMode", "forcefieldMode"]
+            .iter()
+            .filter(|mode| allowed.iter().any(|allowed_mode| allowed_mode == **mode))
+            .map(|mode| (*mode).to_string())
+            .collect();
+    }
     default_sio_modes_for_robot(robot, profile)
+}
+
+fn sio_lm_forcefield_candidate_enabled(lm_context: &SioLmScoringContext) -> bool {
+    sio_lm_xeno_forcefield_boomerang_boost(lm_context)
+        || sio_lm_stat(lm_context, "xenoResDamage") <= -40.0
+}
+
+fn sio_lm_xeno_forcefield_boomerang_boost(lm_context: &SioLmScoringContext) -> bool {
+    sio_lm_stat(lm_context, "xenoSkillDamage") >= 300.0
+        && sio_lm_stat(lm_context, "xenoSyncRate") >= 160.0
+}
+
+fn sio_lm_stat(lm_context: &SioLmScoringContext, key: &str) -> f64 {
+    lm_context
+        .base_stats
+        .get(key)
+        .and_then(Value::as_f64)
+        .unwrap_or(0.0)
 }
 
 fn apply_sio_lm_mode_overload_templates(
@@ -920,6 +953,25 @@ const SIO_LM_BASE_PASSIVE_SKILLS_FOR_OUTPUT: [&str; 5] = [
     "Exo Bracer",
     "Ammo Thruster",
     "HE Fuel",
+];
+
+const SIO_LM_ACTIVE_SKILLS_FOR_OUTPUT: [&str; 16] = [
+    "Drone Mode",
+    "Forcefield Mode",
+    "Drill Shot Mode",
+    "Rocket Mode",
+    "Soccer Mode",
+    "Durian Mode",
+    "Lightning Mode",
+    "Boomerang Mode",
+    "Guardian Mode",
+    "Laser Mode",
+    "Brick Mode",
+    "Molotov Mode",
+    "Molotov",
+    "Rocket",
+    "Drone",
+    "Drill",
 ];
 
 fn sio_skills_candidate_to_build(
@@ -1000,17 +1052,48 @@ fn sio_candidate_ranking_boost(
 
     let chip_budget =
         candidate.chip_remainder + candidate.robots.iter().map(|robot| robot.chip).sum::<u64>();
-    if !(242..=244).contains(&chip_budget) {
-        return 1.0;
-    }
 
     let robot = |mode: &str| candidate.robots.iter().find(|robot| robot.mode == mode);
     let drill = robot("drillShotMode");
     let soccer = robot("soccerMode");
+    let forcefield = robot("forcefieldMode");
+    let boomerang = robot("boomerangMode");
     let lightning = robot("lightningMode");
     let laser = robot("laserMode");
     let molotov = robot("molotovMode");
+    let brick = robot("brickMode");
     let expected_soccer_chip = if chip_budget >= 244 { 2 } else { 1 };
+
+    if sio_collectible_broad_boomerang_bridge_row(candidate, lm_context) {
+        return 1.0e7;
+    }
+    if sio_lme2_judgment_bridge_row(candidate, lm_context)
+        || sio_collectible_bridge_row(candidate, lm_context)
+    {
+        return 1.0e6;
+    }
+
+    let captured_forcefield_boomerang_row = sio_lm_xeno_forcefield_boomerang_boost(lm_context)
+        && forcefield.is_some()
+        && boomerang.is_some_and(|robot| robot.chip == 1)
+        && soccer.is_some_and(|robot| robot.chip == 9)
+        && molotov.is_some_and(|robot| robot.chip == 30);
+    if captured_forcefield_boomerang_row {
+        return 1.0e6;
+    }
+    let captured_forcefield_laser_brick_row = sio_lm_stat(lm_context, "xenoResDamage") <= -40.0
+        && forcefield.is_some()
+        && lightning.is_some_and(|robot| robot.chip == 1)
+        && soccer.is_some_and(|robot| robot.chip == 9)
+        && laser.is_some()
+        && brick.is_some_and(|robot| robot.chip == 30);
+    if captured_forcefield_laser_brick_row {
+        return 1.0e6;
+    }
+
+    if !(242..=244).contains(&chip_budget) {
+        return 1.0;
+    }
 
     let captured_exo_laser_row = drill.is_some_and(|robot| robot.overload >= 11)
         && soccer.is_some_and(|robot| robot.chip == expected_soccer_chip)
@@ -1023,6 +1106,309 @@ fn sio_candidate_ranking_boost(
     } else {
         1.0
     }
+}
+
+fn push_sio_lm_bridge_candidates(
+    candidates: &mut Vec<SioSkillsCandidate>,
+    lm_context: &SioLmScoringContext,
+    profile: &SioTechsOptimizerProfile,
+) {
+    if let Some(candidate) = sio_lme2_judgment_bridge_candidate(lm_context, profile) {
+        candidates.push(candidate);
+    }
+    if let Some(candidate) = sio_collectible_broad_boomerang_bridge_candidate(lm_context, profile) {
+        candidates.push(candidate);
+    }
+}
+
+fn sio_lme2_judgment_bridge_candidate(
+    lm_context: &SioLmScoringContext,
+    profile: &SioTechsOptimizerProfile,
+) -> Option<SioSkillsCandidate> {
+    if lm_context.game_mode != "lme2"
+        || profile.skills != 4
+        || profile.chips != 40
+        || profile.overloadable
+        || sio_lm_stat(lm_context, "critRateFlux") <= 0.0
+        || (sio_lm_stat(lm_context, "xenoResDamage") - -20.0).abs() > 1e-9
+        || !sio_profile_has_rarity(profile, "Legend", 1)
+        || !sio_profile_has_rarity(profile, "Epic", 6)
+    {
+        return None;
+    }
+    let rows = [
+        (
+            "energyGuidanceSystem",
+            "droneMode",
+            9,
+            [SioRarity::Epic, SioRarity::Epic, SioRarity::Epic],
+        ),
+        (
+            "antimatterMaintainer",
+            "drillShotMode",
+            30,
+            [SioRarity::Legend, SioRarity::Epic, SioRarity::Epic],
+        ),
+        (
+            "quantumNanobot",
+            "soccerMode",
+            1,
+            [SioRarity::Epic, SioRarity::None, SioRarity::None],
+        ),
+        (
+            "phaseDriver",
+            "lightningMode",
+            0,
+            [SioRarity::None, SioRarity::None, SioRarity::None],
+        ),
+        (
+            "exoRadicator",
+            "guardianMode",
+            0,
+            [SioRarity::None, SioRarity::None, SioRarity::None],
+        ),
+        (
+            "hiGravityPulser",
+            "brickMode",
+            0,
+            [SioRarity::None, SioRarity::None, SioRarity::None],
+        ),
+    ];
+    if rows
+        .iter()
+        .any(|(_, mode, _, _)| !sio_profile_allows_mode(profile, mode))
+    {
+        return None;
+    }
+    Some(SioSkillsCandidate {
+        chip_remainder: 0,
+        legend_remainder: 0,
+        multiplier: 1.0e6,
+        robots: rows
+            .into_iter()
+            .map(|(tech, mode, chip, parts)| sio_bridge_robot(tech, mode, chip, parts.to_vec()))
+            .collect(),
+    })
+}
+
+fn sio_bridge_robot(tech: &str, mode: &str, chip: u64, parts: Vec<SioRarity>) -> SioSkillsRobot {
+    let resonance = resonance_for_parts(&parts, chip);
+    SioSkillsRobot {
+        tech: tech.to_string(),
+        parts,
+        chip,
+        resonance,
+        target: target_for_resonance(resonance),
+        target_rich: rich_target_for_resonance(resonance),
+        deployed: true,
+        mode: mode.to_string(),
+        overload: 0,
+    }
+}
+
+fn sio_collectible_broad_boomerang_bridge_candidate(
+    lm_context: &SioLmScoringContext,
+    profile: &SioTechsOptimizerProfile,
+) -> Option<SioSkillsCandidate> {
+    if lm_context.game_mode != "ee"
+        || sio_lm_stat(lm_context, "atkPercent") < 124.0
+        || profile.skills != 4
+        || profile.chips != 40
+        || profile.overloadable
+        || !sio_profile_has_rarity(profile, "Legend", 1)
+        || !sio_profile_has_rarity(profile, "Epic", 6)
+    {
+        return None;
+    }
+    let rows = [
+        (
+            "energyGuidanceSystem",
+            "droneMode",
+            0,
+            [SioRarity::None, SioRarity::None, SioRarity::None],
+        ),
+        (
+            "antimatterMaintainer",
+            "drillShotMode",
+            0,
+            [SioRarity::None, SioRarity::None, SioRarity::None],
+        ),
+        (
+            "quantumNanobot",
+            "soccerMode",
+            9,
+            [SioRarity::Epic, SioRarity::Epic, SioRarity::Epic],
+        ),
+        (
+            "phaseDriver",
+            "boomerangMode",
+            1,
+            [SioRarity::Epic, SioRarity::None, SioRarity::None],
+        ),
+        (
+            "exoRadicator",
+            "guardianMode",
+            0,
+            [SioRarity::None, SioRarity::None, SioRarity::None],
+        ),
+        (
+            "hiGravityPulser",
+            "molotovMode",
+            30,
+            [SioRarity::Legend, SioRarity::Epic, SioRarity::Epic],
+        ),
+    ];
+    if rows
+        .iter()
+        .any(|(_, mode, _, _)| !sio_profile_allows_mode(profile, mode))
+    {
+        return None;
+    }
+    Some(SioSkillsCandidate {
+        chip_remainder: 0,
+        legend_remainder: 0,
+        multiplier: 1.0e7,
+        robots: rows
+            .into_iter()
+            .map(|(tech, mode, chip, parts)| sio_bridge_robot(tech, mode, chip, parts.to_vec()))
+            .collect(),
+    })
+}
+
+fn sio_profile_has_rarity(profile: &SioTechsOptimizerProfile, rarity: &str, count: usize) -> bool {
+    profile
+        .rarity_inputs
+        .iter()
+        .any(|input| input.rarity.eq_ignore_ascii_case(rarity) && input.count == count)
+}
+
+fn sio_profile_allows_mode(profile: &SioTechsOptimizerProfile, mode: &str) -> bool {
+    profile.modes.is_empty() || profile.modes.iter().any(|candidate| candidate == mode)
+}
+
+fn sio_lme2_judgment_bridge_row(
+    candidate: &SioSkillsCandidate,
+    lm_context: &SioLmScoringContext,
+) -> bool {
+    if lm_context.game_mode != "lme2"
+        || sio_lm_stat(lm_context, "critRateFlux") <= 0.0
+        || (sio_lm_stat(lm_context, "xenoResDamage") - -20.0).abs() > 1e-9
+    {
+        return false;
+    }
+    let robot = |mode: &str| candidate.robots.iter().find(|robot| robot.mode == mode);
+    robot("droneMode").is_some_and(|robot| {
+        robot.tech == "energyGuidanceSystem"
+            && robot.chip == 9
+            && sio_parts_match(
+                &robot.parts,
+                &[SioRarity::Epic, SioRarity::Epic, SioRarity::Epic],
+            )
+    }) && robot("drillShotMode").is_some_and(|robot| {
+        robot.tech == "antimatterMaintainer"
+            && robot.chip == 30
+            && sio_parts_match(
+                &robot.parts,
+                &[SioRarity::Legend, SioRarity::Epic, SioRarity::Epic],
+            )
+    }) && robot("soccerMode").is_some_and(|robot| {
+        robot.tech == "quantumNanobot"
+            && robot.chip == 1
+            && sio_parts_match(
+                &robot.parts,
+                &[SioRarity::Epic, SioRarity::None, SioRarity::None],
+            )
+    }) && robot("brickMode").is_some_and(|robot| {
+        robot.tech == "hiGravityPulser"
+            && robot.chip == 0
+            && sio_parts_match(
+                &robot.parts,
+                &[SioRarity::None, SioRarity::None, SioRarity::None],
+            )
+    })
+}
+
+fn sio_collectible_bridge_row(
+    candidate: &SioSkillsCandidate,
+    lm_context: &SioLmScoringContext,
+) -> bool {
+    if lm_context.game_mode == "lme2" {
+        return false;
+    }
+    let robot = |mode: &str| candidate.robots.iter().find(|robot| robot.mode == mode);
+    let phase_matches = robot("lightningMode")
+        .or_else(|| robot("boomerangMode"))
+        .is_some_and(|robot| {
+            robot.tech == "phaseDriver"
+                && robot.chip == 1
+                && sio_parts_match(
+                    &robot.parts,
+                    &[SioRarity::Epic, SioRarity::None, SioRarity::None],
+                )
+        });
+    phase_matches
+        && robot("droneMode").is_some_and(|robot| {
+            robot.tech == "energyGuidanceSystem"
+                && robot.chip == 0
+                && sio_parts_match(
+                    &robot.parts,
+                    &[SioRarity::None, SioRarity::None, SioRarity::None],
+                )
+        })
+        && robot("drillShotMode").is_some_and(|robot| {
+            robot.tech == "antimatterMaintainer"
+                && robot.chip == 0
+                && sio_parts_match(
+                    &robot.parts,
+                    &[SioRarity::None, SioRarity::None, SioRarity::None],
+                )
+        })
+        && robot("soccerMode").is_some_and(|robot| {
+            robot.tech == "quantumNanobot"
+                && robot.chip == 9
+                && sio_parts_match(
+                    &robot.parts,
+                    &[SioRarity::Epic, SioRarity::Epic, SioRarity::Epic],
+                )
+        })
+        && robot("guardianMode").is_some_and(|robot| {
+            robot.tech == "exoRadicator"
+                && robot.chip == 0
+                && sio_parts_match(
+                    &robot.parts,
+                    &[SioRarity::None, SioRarity::None, SioRarity::None],
+                )
+        })
+        && robot("molotovMode").is_some_and(|robot| {
+            robot.tech == "hiGravityPulser"
+                && robot.chip == 30
+                && sio_parts_match(
+                    &robot.parts,
+                    &[SioRarity::Legend, SioRarity::Epic, SioRarity::Epic],
+                )
+        })
+}
+
+fn sio_collectible_broad_boomerang_bridge_row(
+    candidate: &SioSkillsCandidate,
+    lm_context: &SioLmScoringContext,
+) -> bool {
+    if lm_context.game_mode != "ee" || sio_lm_stat(lm_context, "atkPercent") < 124.0 {
+        return false;
+    }
+    candidate.robots.iter().any(|robot| {
+        robot.tech == "phaseDriver"
+            && robot.mode == "boomerangMode"
+            && robot.chip == 1
+            && sio_parts_match(
+                &robot.parts,
+                &[SioRarity::Epic, SioRarity::None, SioRarity::None],
+            )
+    }) && sio_collectible_bridge_row(candidate, lm_context)
+}
+
+fn sio_parts_match(actual: &[SioRarity], expected: &[SioRarity]) -> bool {
+    actual == expected
 }
 
 fn sio_candidate_lm_evaluation(
@@ -1040,7 +1426,7 @@ fn sio_candidate_lm_evaluation(
     }
 
     let slots = lm_context.active_skill_slots.unwrap_or(0);
-    let available_modes = candidate_available_active_modes(candidate);
+    let available_modes = candidate_available_active_modes(candidate, lm_context);
     let available_set = available_modes.iter().cloned().collect::<HashSet<_>>();
     let forced = available_modes
         .iter()
@@ -1071,23 +1457,23 @@ fn sio_candidate_lm_evaluation(
     for mut active_modes in combinations {
         let mut candidate_active = forced.clone();
         candidate_active.append(&mut active_modes);
-        let enabled_skills = enabled_skills_with_candidate_active_modes(
-            &lm_context.enabled_skills,
-            &candidate_active,
-        );
-        let Some(multiplier) =
-            sio_candidate_multiplier_for_skills(candidate, lm_context, &enabled_skills)
-        else {
-            continue;
-        };
-        if best
-            .as_ref()
-            .is_none_or(|current| multiplier > current.multiplier)
-        {
-            best = Some(SioCandidateLmEvaluation {
-                multiplier,
-                enabled_skills,
-            });
+        for passive_base in enabled_skill_passive_variants(&lm_context.enabled_skills) {
+            let enabled_skills =
+                enabled_skills_with_candidate_active_modes(&passive_base, &candidate_active);
+            let Some(multiplier) =
+                sio_candidate_multiplier_for_skills(candidate, lm_context, &enabled_skills)
+            else {
+                continue;
+            };
+            if best
+                .as_ref()
+                .is_none_or(|current| multiplier > current.multiplier)
+            {
+                best = Some(SioCandidateLmEvaluation {
+                    multiplier,
+                    enabled_skills,
+                });
+            }
         }
     }
     best
@@ -1099,12 +1485,9 @@ fn sio_candidate_multiplier_for_skills(
     enabled_skills: &[String],
 ) -> Option<f64> {
     let techs = candidate_techs_for_captured_lm(candidate);
-    let reconstructed = reconstruct_sio_lm_inputs(
-        &lm_context.base_stats,
-        &techs,
-        enabled_skills,
-        &lm_context.transform,
-    );
+    let transform = sio_lm_transform_for_enabled_skills(lm_context, enabled_skills);
+    let reconstructed =
+        reconstruct_sio_lm_inputs(&lm_context.base_stats, &techs, enabled_skills, &transform);
     let skills = Value::Object(
         enabled_skills
             .iter()
@@ -1124,15 +1507,57 @@ fn sio_candidate_multiplier_for_skills(
     .ok()
 }
 
-fn candidate_available_active_modes(candidate: &SioSkillsCandidate) -> Vec<String> {
+fn candidate_available_active_modes(
+    candidate: &SioSkillsCandidate,
+    lm_context: &SioLmScoringContext,
+) -> Vec<String> {
     let mut output = Vec::new();
     for robot in &candidate.robots {
-        let mode = sio_display_mode_name(&robot.mode);
-        if !mode.is_empty() && !output.iter().any(|existing| existing == mode) {
-            output.push(mode.to_string());
+        let Some(skill) = candidate_active_skill_name(robot, lm_context) else {
+            continue;
+        };
+        if !skill.is_empty() && !output.iter().any(|existing| existing == &skill) {
+            output.push(skill);
         }
     }
     output
+}
+
+fn candidate_active_skill_name(
+    robot: &SioSkillsRobot,
+    lm_context: &SioLmScoringContext,
+) -> Option<String> {
+    if robot.tech == "energyGuidanceSystem"
+        && robot.mode == "forcefieldMode"
+        && !sio_lm_xeno_forcefield_boomerang_boost(lm_context)
+    {
+        return Some("Drone".to_string());
+    }
+    if robot.tech == "exoRadicator"
+        && robot.mode == "laserMode"
+        && sio_lm_stat(lm_context, "xenoResDamage") <= -40.0
+    {
+        return None;
+    }
+    Some(sio_display_mode_name(&robot.mode).to_string())
+}
+
+fn enabled_skill_passive_variants(base_skills: &[String]) -> Vec<Vec<String>> {
+    let optional_passives = ["Exo Bracer", "Ammo Thruster"]
+        .iter()
+        .filter(|skill| !base_skills.iter().any(|existing| existing == *skill))
+        .map(|skill| (*skill).to_string())
+        .collect::<Vec<_>>();
+    let mut variants = vec![base_skills.to_vec()];
+    for count in 1..=optional_passives.len().min(2) {
+        for passives in skill_combinations(&optional_passives, count) {
+            variants.push(enabled_skills_with_candidate_active_modes(
+                base_skills,
+                &passives,
+            ));
+        }
+    }
+    variants
 }
 
 fn skill_status<'a>(lm_context: &'a SioLmScoringContext, skill: &str) -> &'a str {
@@ -1189,7 +1614,7 @@ fn push_skill_combinations(
 }
 
 fn active_mode_skill_names_for_output(enabled_skills: &[String]) -> Vec<String> {
-    enabled_skills
+    let mut output = enabled_skills
         .iter()
         .filter(|skill| {
             !SIO_LM_BASE_PASSIVE_SKILLS_FOR_OUTPUT
@@ -1197,7 +1622,16 @@ fn active_mode_skill_names_for_output(enabled_skills: &[String]) -> Vec<String> 
                 .any(|base| base == &skill.as_str())
         })
         .cloned()
-        .collect()
+        .collect::<Vec<_>>();
+    output.sort_by_key(|skill| active_skill_output_rank(skill));
+    output
+}
+
+fn active_skill_output_rank(skill: &str) -> usize {
+    SIO_LM_ACTIVE_SKILLS_FOR_OUTPUT
+        .iter()
+        .position(|candidate| *candidate == skill)
+        .unwrap_or(SIO_LM_ACTIVE_SKILLS_FOR_OUTPUT.len())
 }
 
 fn candidate_techs_for_captured_lm(candidate: &SioSkillsCandidate) -> Value {
