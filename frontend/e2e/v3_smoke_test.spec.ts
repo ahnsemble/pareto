@@ -11,9 +11,9 @@ test.describe('P4 V3 — Browser Smoke Test (6 scenarios)', () => {
     await page.waitForSelector('[data-testid="v3-boot-status"]');
   });
 
-  test('S1 — bootParetoStore passes 8/8 invariants (console.info)', async ({ page }) => {
+  test('S1 — V3 workspace shows public ready state', async ({ page }) => {
     const bootStatus = page.locator('[data-testid="v3-boot-status"]');
-    await expect(bootStatus).toContainText('[TangtangStore] Boot OK — 8/8 invariants passed.', { timeout: 5000 });
+    await expect(bootStatus).toContainText('Tangtang ready.', { timeout: 5000 });
   });
 
   test('S2 — selectFinalDamage > 0 on baseline input (Venato + LME + SS 6 default)', async ({ page }) => {

@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { readFile } from 'node:fs/promises';
 import init, { tech_optimizer_run_js } from '../../tttg_forge_wasm/pkg/tttg_forge_wasm.js';
+import { evaluateGeneratedOptimizerCase } from './lib/sio_generated_optimizer_gate_checks.mjs';
 import { applySioLmContext } from './lib/sio_lm_context.mjs';
 
 const artifactRoot = path.join(process.cwd(), 'artifacts/td11');
@@ -152,11 +153,6 @@ function compareRows(expectedRows, rows) {
   });
 }
 
-function relativeError(actual, expected) {
-  if (!Number.isFinite(actual) || !Number.isFinite(expected) || expected === 0) return null;
-  return Math.abs(actual - expected) / Math.abs(expected);
-}
-
 const [manifest, workerSummary, lmTrace, matrix, baseFixture] = await Promise.all([
   readJson(manifestPath),
   readJson(workerSummaryPath),
@@ -190,33 +186,55 @@ const rows = manifestCases.map((fixtureCase) => {
   const expectedActiveSkills = activeSkillsFromWorker(workerCase);
   const actualActiveSkills = activeSkillsFromBuild(actualTop);
   const activeSkillsMatch = sameArray(expectedActiveSkills, actualActiveSkills);
-  const expectedMultiplier = traceCase?.tracedMultiplier ?? traceCase?.replayedTopMultiplier ?? workerCase?.best?.multiplier;
-  const multiplierRelativeError = relativeError(actualTop?.damageFactor, expectedMultiplier);
-  const liveExpectedRelativeError = relativeError(actualTop?.damageFactor, workerCase?.best?.multiplier);
-  const multiplierMatches =
-    multiplierRelativeError !== null && multiplierRelativeError <= multiplierTolerance;
   const scorerMatches = result.scope?.scoring_model === suppliedScorer;
   const fullFlagMatches = result.scope?.full_sio_equivalent === true;
-
-  return {
-    id: fixtureCase.id,
-    domain: fixtureCase.domain,
-    pass: fullRowMatches && activeSkillsMatch && chipMatches && partsMatch && overloadMatches && multiplierMatches && scorerMatches && fullFlagMatches,
+  const gateChecks = evaluateGeneratedOptimizerCase({
     fullRowMatches,
     activeSkillsMatch,
     chipMatches,
     partsMatch,
     overloadMatches,
-    multiplierMatches,
-    multiplierRelativeError,
+    actualMultiplier: actualTop?.damageFactor,
+    liveExpectedMultiplier: workerCase?.best?.multiplier,
+    traceCase,
+    scorerMatches,
+    fullFlagMatches,
+    tolerance: multiplierTolerance,
+  });
+
+  return {
+    id: fixtureCase.id,
+    domain: fixtureCase.domain,
+    pass: gateChecks.pass,
+    fullRowMatches,
+    activeSkillsMatch,
+    chipMatches,
+    partsMatch,
+    overloadMatches,
+    structuralMatches: gateChecks.structuralMatches,
+    multiplierMatches: gateChecks.liveMultiplierMatches,
+    multiplierRelativeError: gateChecks.liveMultiplierRelativeError,
+    liveMultiplierMatches: gateChecks.liveMultiplierMatches,
+    liveMultiplierRelativeError: gateChecks.liveMultiplierRelativeError,
+    traceAlignmentAvailable: gateChecks.traceAlignmentAvailable,
+    traceMultiplierMatches: gateChecks.traceMultiplierMatches,
+    traceMultiplierRelativeError: gateChecks.traceMultiplierRelativeError,
+    traceMultiplierStatus: gateChecks.traceMultiplierStatus,
+    legacyTraceFirstMultiplierMatches: gateChecks.legacyTraceFirstMultiplierMatches,
+    legacyTraceFirstMultiplierRelativeError: gateChecks.legacyTraceFirstMultiplierRelativeError,
     scorerMatches,
     fullFlagMatches,
     expected: {
-      multiplier: expectedMultiplier ?? null,
+      multiplier: workerCase?.best?.multiplier ?? null,
+      primaryMultiplierSource: gateChecks.primaryMultiplierSource,
       liveExpectedMultiplier: workerCase?.best?.multiplier ?? null,
-      liveExpectedRelativeError,
+      alignedTraceMultiplier: gateChecks.traceAlignmentAvailable
+        ? traceCase?.tracedMultiplier ?? null
+        : null,
+      legacyTraceFirstMultiplier: gateChecks.legacyTraceFirstMultiplier ?? null,
       activeSkills: expectedActiveSkills,
       rows: expectedRows,
+      traceAlignment: traceCase?.traceAlignment ?? null,
     },
     actual: {
       multiplier: actualTop?.damageFactor ?? null,
@@ -244,9 +262,18 @@ const summary = {
   partsPassed: rows.filter((row) => row.partsMatch).length,
   overloadPassed: rows.filter((row) => row.overloadMatches).length,
   multiplierPassed: rows.filter((row) => row.multiplierMatches).length,
+  liveMultiplierPassed: rows.filter((row) => row.liveMultiplierMatches).length,
+  traceAlignmentAvailable: rows.filter((row) => row.traceAlignmentAvailable).length,
+  traceMultiplierPassed: rows.filter((row) => row.traceMultiplierMatches).length,
+  traceMultiplierUnavailable: rows.filter(
+    (row) => row.traceMultiplierStatus === 'unavailable-no-aligned-trace',
+  ).length,
+  legacyTraceFirstMultiplierPassed: rows.filter((row) => row.legacyTraceFirstMultiplierMatches).length,
   scorerPassed: rows.filter((row) => row.scorerMatches).length,
   fullFlagPassed: rows.filter((row) => row.fullFlagMatches).length,
   multiplierTolerance,
+  primaryMultiplierSource: 'live-worker',
+  traceSummary: lmTrace.summary ?? null,
   matrixFullSioEquivalent: matrix.fullSioEquivalent === true,
   matrixCurrentScorer: matrix.currentScorer ?? null,
   matrixScorer: matrix.scorer ?? null,

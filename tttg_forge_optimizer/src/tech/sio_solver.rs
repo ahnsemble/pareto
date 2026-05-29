@@ -85,6 +85,7 @@ pub struct SioSkillsSearchOptions {
 pub struct SioSkillsRobot {
     pub tech: String,
     pub parts: Vec<SioRarity>,
+    pub rarity: Option<SioRarity>,
     pub chip: u64,
     pub resonance: u64,
     pub target: u64,
@@ -857,6 +858,7 @@ fn build_skills_robots(
         .map(|(index, robot)| SioSkillsRobot {
             tech: robot_names[index].clone(),
             parts: robot.parts.clone(),
+            rarity: None,
             chip: robot.chip,
             resonance: robot.resonance,
             target: robot.target,

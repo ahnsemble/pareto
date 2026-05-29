@@ -3,6 +3,7 @@ import fsp from 'node:fs/promises';
 import path from 'node:path';
 import vm from 'node:vm';
 import { webcrypto } from 'node:crypto';
+import { selectAlignedLmTrace } from './lib/sio_lm_trace_alignment.mjs';
 
 const workerSummaryPath =
   process.env.WORKER_SUMMARY_PATH ??
@@ -334,7 +335,7 @@ async function loadPatchedWorker(sourceDir, posted) {
         '(0,v.Dp)(la,ls[s]),__recordLmStatSnapshot("afterEquipmentTransmute"),(0,_.zP)(ld),__recordLmStatSnapshot("afterEquipmentDynamicSpecials");',
       scoreNeedle: 'return(0,_.IE)(lv),(0,H.f)(la,lu,a,i,e5.calcMode,lh,n,eb)',
       scoreReplacement:
-        'return(()=>{(0,_.IE)(lv);__recordLmStatSnapshot("afterEvolvePassivesPostprocess");let __score=(0,H.f)(la,lu,a,i,e5.calcMode,lh,n,eb);if(__score>((self.__bestLmTrace&&self.__bestLmTrace.score)||0))self.__bestLmTrace={score:__score,mask:l,calcMode:e5.calcMode,gameMode:eb,attackMeta:{...lu},damageFactor:a,ceDamage:i,baseStats:{...__baseStatsBeforeTech},baseStatComponents:self.__traceLmBaseComponentsEnabled?__llParts.map(e=>e&&typeof e==="object"?{...e}:e):void 0,statSnapshots:self.__traceLmStatAttributionEnabled?__lmStatSnapshots.map(e=>({label:e.label,stats:{...e.stats}})):void 0,techStageSnapshots:self.__traceLmTechStageEnabled&&self.__activeLmTechStageSnapshots?self.__activeLmTechStageSnapshots.map(e=>({tech:e.tech,mode:e.mode,rarity:e.rarity,resonance:e.resonance,overload:e.overload,active:e.active,beforeStats:{...e.beforeStats},stats:{...e.stats}})):void 0,stats:{...la},skills:{...lh},techs:JSON.parse(JSON.stringify(e)),passivePools:Array.from(n||[])};return __score})()',
+        'return(()=>{(0,_.IE)(lv);__recordLmStatSnapshot("afterEvolvePassivesPostprocess");let __score=(0,H.f)(la,lu,a,i,e5.calcMode,lh,n,eb),__trace={score:__score,mask:l,calcMode:e5.calcMode,gameMode:eb,attackMeta:{...lu},damageFactor:a,ceDamage:i,baseStats:{...__baseStatsBeforeTech},baseStatComponents:self.__traceLmBaseComponentsEnabled?__llParts.map(e=>e&&typeof e==="object"?{...e}:e):void 0,statSnapshots:self.__traceLmStatAttributionEnabled?__lmStatSnapshots.map(e=>({label:e.label,stats:{...e.stats}})):void 0,techStageSnapshots:self.__traceLmTechStageEnabled&&self.__activeLmTechStageSnapshots?self.__activeLmTechStageSnapshots.map(e=>({tech:e.tech,mode:e.mode,rarity:e.rarity,resonance:e.resonance,overload:e.overload,active:e.active,beforeStats:{...e.beforeStats},stats:{...e.stats}})):void 0,stats:{...la},skills:{...lh},techs:JSON.parse(JSON.stringify(e)),passivePools:Array.from(n||[])};self.__lmTraces=self.__lmTraces||[];self.__lmTraces.push(__trace);if(__score>((self.__bestLmTrace&&self.__bestLmTrace.score)||0))self.__bestLmTrace=__trace;return __score})()',
     },
     {
       techStageStartNeedle:
@@ -357,7 +358,7 @@ async function loadPatchedWorker(sourceDir, posted) {
         '(0,h.Dp)(rl,rt[n]),__recordLmStatSnapshot("afterEquipmentTransmute"),(0,R.zP)(rc),__recordLmStatSnapshot("afterEquipmentDynamicSpecials");',
       scoreNeedle: 'return(0,R.IE)(ra),(0,W.f)(rl,rn,c,a,e1.calcMode,ri,s,eN)',
       scoreReplacement:
-        'return(()=>{(0,R.IE)(ra);__recordLmStatSnapshot("afterEvolvePassivesPostprocess");let __score=(0,W.f)(rl,rn,c,a,e1.calcMode,ri,s,eN);if(__score>((self.__bestLmTrace&&self.__bestLmTrace.score)||0))self.__bestLmTrace={score:__score,mask:r,calcMode:e1.calcMode,gameMode:eN,attackMeta:{...rn},damageFactor:c,ceDamage:a,baseStats:{...__baseStatsBeforeTech},baseStatComponents:self.__traceLmBaseComponentsEnabled?__llParts.map(e=>e&&typeof e==="object"?{...e}:e):void 0,statSnapshots:self.__traceLmStatAttributionEnabled?__lmStatSnapshots.map(e=>({label:e.label,stats:{...e.stats}})):void 0,techStageSnapshots:self.__traceLmTechStageEnabled&&self.__activeLmTechStageSnapshots?self.__activeLmTechStageSnapshots.map(e=>({tech:e.tech,mode:e.mode,rarity:e.rarity,resonance:e.resonance,overload:e.overload,active:e.active,beforeStats:{...e.beforeStats},stats:{...e.stats}})):void 0,stats:{...rl},skills:{...ri},techs:JSON.parse(JSON.stringify(e)),passivePools:Array.from(s||[])};return __score})()',
+        'return(()=>{(0,R.IE)(ra);__recordLmStatSnapshot("afterEvolvePassivesPostprocess");let __score=(0,W.f)(rl,rn,c,a,e1.calcMode,ri,s,eN),__trace={score:__score,mask:r,calcMode:e1.calcMode,gameMode:eN,attackMeta:{...rn},damageFactor:c,ceDamage:a,baseStats:{...__baseStatsBeforeTech},baseStatComponents:self.__traceLmBaseComponentsEnabled?__llParts.map(e=>e&&typeof e==="object"?{...e}:e):void 0,statSnapshots:self.__traceLmStatAttributionEnabled?__lmStatSnapshots.map(e=>({label:e.label,stats:{...e.stats}})):void 0,techStageSnapshots:self.__traceLmTechStageEnabled&&self.__activeLmTechStageSnapshots?self.__activeLmTechStageSnapshots.map(e=>({tech:e.tech,mode:e.mode,rarity:e.rarity,resonance:e.resonance,overload:e.overload,active:e.active,beforeStats:{...e.beforeStats},stats:{...e.stats}})):void 0,stats:{...rl},skills:{...ri},techs:JSON.parse(JSON.stringify(e)),passivePools:Array.from(s||[])};self.__lmTraces=self.__lmTraces||[];self.__lmTraces.push(__trace);if(__score>((self.__bestLmTrace&&self.__bestLmTrace.score)||0))self.__bestLmTrace=__trace;return __score})()',
     },
   ];
   const patchSet = patchSets.find(
@@ -529,7 +530,8 @@ async function traceCase(sourceDir, workerCase) {
     },
   });
   const result = posted.filter((message) => message?.type === 'result').at(-1);
-  const trace = context.__bestLmTrace;
+  const highestTrace = context.__bestLmTrace;
+  const { trace, alignment } = selectAlignedLmTrace(context.__lmTraces, workerCase, catalog.J3);
   if (!result || !trace) {
     throw new Error(`No traced result for ${workerCase.id}`);
   }
@@ -542,6 +544,9 @@ async function traceCase(sourceDir, workerCase) {
     expectedMultiplier: workerCase.best?.multiplier ?? null,
     replayedTopMultiplier: result.value?.[0]?.[1] ?? null,
     tracedMultiplier: trace.score,
+    highestTraceMultiplier: highestTrace?.score ?? null,
+    traceAlignment: alignment,
+    traceCandidateCount: Array.isArray(context.__lmTraces) ? context.__lmTraces.length : 0,
     recomputedStageProduct: stages.product,
     stageProductRelativeError:
       trace.score !== 0 ? Math.abs(stages.product - trace.score) / Math.abs(trace.score) : null,

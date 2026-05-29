@@ -413,6 +413,12 @@ pub fn sio_lm_transform_for_enabled_skills(
     )
 }
 
+pub fn sio_lm_context_stat_value(context: &SioLmScoringContext, key: &str) -> f64 {
+    let mut stats = numeric_map(&context.base_stats);
+    apply_stat_transform(&mut stats, &context.transform);
+    stats.get(key).and_then(Value::as_f64).unwrap_or(0.0)
+}
+
 pub fn captured_sio_lm_default_base_stats() -> Value {
     json!({
         "atkEquipPercent": 5.0,

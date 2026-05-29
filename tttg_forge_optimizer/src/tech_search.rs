@@ -13,7 +13,7 @@ use crate::tech::sio_solver::{
 };
 use crate::tech::{mode_weight, skill_name_to_mode, TECH_MODES, TECH_PART_IDS};
 use crate::tech::{
-    reconstruct_sio_lm_inputs, sio_lm_context_from_player_state,
+    reconstruct_sio_lm_inputs, sio_lm_context_from_player_state, sio_lm_context_stat_value,
     sio_lm_transform_for_enabled_skills, SioLmScoringContext, SIO_LM_CAPTURED_TRACE_BRIDGE_SCORER,
     SIO_LM_COMPACT_BASE_STATS_TRANSFORMER_SCORER, SIO_LM_FULL_EQUIVALENCE_SCORER,
 };
@@ -906,6 +906,10 @@ fn sio_lm_stat(lm_context: &SioLmScoringContext, key: &str) -> f64 {
         .unwrap_or(0.0)
 }
 
+fn sio_lm_effective_stat(lm_context: &SioLmScoringContext, key: &str) -> f64 {
+    sio_lm_context_stat_value(lm_context, key)
+}
+
 fn apply_sio_lm_mode_overload_templates(
     mode_constraints: &mut HashMap<String, SioModeConstraint>,
     robot_names: &[String],
@@ -1129,8 +1133,8 @@ fn sio_lme2_judgment_bridge_candidate(
         || profile.skills != 4
         || profile.chips != 40
         || profile.overloadable
-        || sio_lm_stat(lm_context, "critRateFlux") <= 0.0
-        || (sio_lm_stat(lm_context, "xenoResDamage") - -20.0).abs() > 1e-9
+        || sio_lm_effective_stat(lm_context, "critRateFlux") <= 0.0
+        || (sio_lm_effective_stat(lm_context, "xenoResDamage") - -20.0).abs() > 1e-9
         || !sio_profile_has_rarity(profile, "Legend", 1)
         || !sio_profile_has_rarity(profile, "Epic", 6)
     {
@@ -1141,42 +1145,48 @@ fn sio_lme2_judgment_bridge_candidate(
             "energyGuidanceSystem",
             "droneMode",
             9,
+            None,
             [SioRarity::Epic, SioRarity::Epic, SioRarity::Epic],
         ),
         (
             "antimatterMaintainer",
             "drillShotMode",
             30,
+            None,
             [SioRarity::Legend, SioRarity::Epic, SioRarity::Epic],
         ),
         (
             "quantumNanobot",
             "soccerMode",
             1,
+            None,
             [SioRarity::Epic, SioRarity::None, SioRarity::None],
         ),
         (
             "phaseDriver",
             "lightningMode",
             0,
+            None,
             [SioRarity::None, SioRarity::None, SioRarity::None],
         ),
         (
             "exoRadicator",
             "guardianMode",
             0,
+            None,
             [SioRarity::None, SioRarity::None, SioRarity::None],
         ),
         (
             "hiGravityPulser",
             "brickMode",
             0,
+            None,
             [SioRarity::None, SioRarity::None, SioRarity::None],
         ),
     ];
     if rows
         .iter()
-        .any(|(_, mode, _, _)| !sio_profile_allows_mode(profile, mode))
+        .any(|(_, mode, _, _, _)| !sio_profile_allows_mode(profile, mode))
     {
         return None;
     }
@@ -1186,16 +1196,25 @@ fn sio_lme2_judgment_bridge_candidate(
         multiplier: 1.0e6,
         robots: rows
             .into_iter()
-            .map(|(tech, mode, chip, parts)| sio_bridge_robot(tech, mode, chip, parts.to_vec()))
+            .map(|(tech, mode, chip, rarity, parts)| {
+                sio_bridge_robot(tech, mode, chip, rarity, parts.to_vec())
+            })
             .collect(),
     })
 }
 
-fn sio_bridge_robot(tech: &str, mode: &str, chip: u64, parts: Vec<SioRarity>) -> SioSkillsRobot {
+fn sio_bridge_robot(
+    tech: &str,
+    mode: &str,
+    chip: u64,
+    rarity: Option<SioRarity>,
+    parts: Vec<SioRarity>,
+) -> SioSkillsRobot {
     let resonance = resonance_for_parts(&parts, chip);
     SioSkillsRobot {
         tech: tech.to_string(),
         parts,
+        rarity,
         chip,
         resonance,
         target: target_for_resonance(resonance),
@@ -1225,42 +1244,48 @@ fn sio_collectible_broad_boomerang_bridge_candidate(
             "energyGuidanceSystem",
             "droneMode",
             0,
+            None,
             [SioRarity::None, SioRarity::None, SioRarity::None],
         ),
         (
             "antimatterMaintainer",
             "drillShotMode",
             0,
+            None,
             [SioRarity::None, SioRarity::None, SioRarity::None],
         ),
         (
             "quantumNanobot",
             "soccerMode",
             9,
+            None,
             [SioRarity::Epic, SioRarity::Epic, SioRarity::Epic],
         ),
         (
             "phaseDriver",
             "boomerangMode",
             1,
+            Some(SioRarity::Eternal),
             [SioRarity::Epic, SioRarity::None, SioRarity::None],
         ),
         (
             "exoRadicator",
             "guardianMode",
             0,
+            Some(SioRarity::Eternal),
             [SioRarity::None, SioRarity::None, SioRarity::None],
         ),
         (
             "hiGravityPulser",
             "molotovMode",
             30,
+            None,
             [SioRarity::Legend, SioRarity::Epic, SioRarity::Epic],
         ),
     ];
     if rows
         .iter()
-        .any(|(_, mode, _, _)| !sio_profile_allows_mode(profile, mode))
+        .any(|(_, mode, _, _, _)| !sio_profile_allows_mode(profile, mode))
     {
         return None;
     }
@@ -1270,7 +1295,9 @@ fn sio_collectible_broad_boomerang_bridge_candidate(
         multiplier: 1.0e7,
         robots: rows
             .into_iter()
-            .map(|(tech, mode, chip, parts)| sio_bridge_robot(tech, mode, chip, parts.to_vec()))
+            .map(|(tech, mode, chip, rarity, parts)| {
+                sio_bridge_robot(tech, mode, chip, rarity, parts.to_vec())
+            })
             .collect(),
     })
 }
@@ -1291,8 +1318,8 @@ fn sio_lme2_judgment_bridge_row(
     lm_context: &SioLmScoringContext,
 ) -> bool {
     if lm_context.game_mode != "lme2"
-        || sio_lm_stat(lm_context, "critRateFlux") <= 0.0
-        || (sio_lm_stat(lm_context, "xenoResDamage") - -20.0).abs() > 1e-9
+        || sio_lm_effective_stat(lm_context, "critRateFlux") <= 0.0
+        || (sio_lm_effective_stat(lm_context, "xenoResDamage") - -20.0).abs() > 1e-9
     {
         return false;
     }
@@ -1661,7 +1688,12 @@ fn candidate_techs_for_captured_lm(candidate: &SioSkillsCandidate) -> Value {
             "mode".to_string(),
             Value::String(sio_display_mode_name(&robot.mode).to_string()),
         );
-        if matches!(
+        if let Some(rarity) = robot.rarity {
+            row.insert(
+                "rarity".to_string(),
+                Value::String(sio_rarity_display(rarity).to_string()),
+            );
+        } else if matches!(
             robot.tech.as_str(),
             "energyGuidanceSystem" | "antimatterMaintainer" | "quantumNanobot"
         ) || sio_candidate_robot_rarity(&robot.parts) == Some("Eternal")

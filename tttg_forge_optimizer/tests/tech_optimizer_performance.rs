@@ -7917,6 +7917,14 @@ fn tech_optimizer_uses_lm_preselect_width_for_resonance_candidates() {
             .collect()
     }
 
+    fn assert_number_close(id: &str, path: &str, actual: f64, expected: f64) {
+        let tolerance = 1e-9_f64.max(expected.abs() * 1e-12);
+        assert!(
+            (actual - expected).abs() <= tolerance,
+            "{id} {path}: actual {actual} expected {expected}"
+        );
+    }
+
     let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..");
     let worker_path =
         repo_root.join("frontend/artifacts/td11/arbitrary_compact_s59/worker_decoded_summary.json");
@@ -8016,7 +8024,146 @@ fn tech_optimizer_uses_lm_preselect_width_for_resonance_candidates() {
             Value::Array(expected_active_skills(worker_case)),
             "{id} active skills"
         );
+        if id == "collectibles_broad_item_tech_set_endgame_fold" {
+            assert_number_close(
+                id,
+                "multiplier",
+                top.damage_factor,
+                trace_case["tracedMultiplier"].as_f64().unwrap(),
+            );
+        }
     }
+}
+
+#[test]
+fn tech_optimizer_uses_lme2_judgment_bridge_with_compact_only_context() {
+    use serde_json::Value;
+    use std::path::PathBuf;
+
+    fn rarity_inputs_from_fixture(inputs: &Value) -> Vec<tttg_forge_optimizer::SioRarityInput> {
+        inputs
+            .as_object()
+            .into_iter()
+            .flat_map(|inputs| inputs.iter())
+            .filter_map(|(rarity, count)| {
+                Some(tttg_forge_optimizer::SioRarityInput {
+                    rarity: rarity.clone(),
+                    count: count.as_u64()? as usize,
+                })
+            })
+            .collect()
+    }
+
+    fn skills_map_from_fixture(skills_map: &Value) -> Vec<SioSkillPreference> {
+        skills_map
+            .as_object()
+            .into_iter()
+            .flat_map(|skills_map| skills_map.iter())
+            .filter_map(|(skill, status)| {
+                Some(SioSkillPreference {
+                    skill: skill.clone(),
+                    status: status.as_str()?.to_string(),
+                })
+            })
+            .collect()
+    }
+
+    fn comparable_rows(rows: &[serde_json::Value]) -> Vec<serde_json::Value> {
+        rows.iter()
+            .map(|row| {
+                json!({
+                    "tech": row.get("tech").or_else(|| row.get("id")).cloned().unwrap_or(Value::Null),
+                    "mode": row["mode"],
+                    "chip": row.get("chip").cloned().unwrap_or_else(|| row["sio"]["chip"].clone()),
+                    "overload": row["overload"],
+                    "parts": row.get("parts").cloned().unwrap_or_else(|| row["sio"]["parts"].clone()),
+                })
+            })
+            .collect()
+    }
+
+    let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..");
+    let worker_path =
+        repo_root.join("frontend/artifacts/td11/arbitrary_compact_s59/worker_decoded_summary.json");
+    let trace_path =
+        repo_root.join("frontend/artifacts/td11/arbitrary_compact_s59/lm_trace_summary.json");
+    if !worker_path.exists() || !trace_path.exists() {
+        eprintln!(
+            "skipping compact-only lme2 judgment bridge check; artifacts missing: {} {}",
+            worker_path.display(),
+            trace_path.display()
+        );
+        return;
+    }
+
+    let worker: Value =
+        serde_json::from_str(&std::fs::read_to_string(worker_path).unwrap()).unwrap();
+    let trace: Value = serde_json::from_str(&std::fs::read_to_string(trace_path).unwrap()).unwrap();
+    let id = "equipment_lme2_judgment_profile";
+    let worker_case = worker["cases"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|case| case["id"].as_str() == Some(id))
+        .unwrap();
+    let trace_case = trace["cases"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|case| case["id"].as_str() == Some(id))
+        .unwrap();
+    let best_request_index = worker_case["best"]["requestIndex"].as_u64().unwrap_or(0) as usize;
+    let config_string = worker_case["skillsRequests"][best_request_index]["configString"]
+        .as_str()
+        .unwrap();
+    let optimizer = &trace_case["expandedConfig"]["techsOptimizer"];
+    let options = TechOptimizerOptions {
+        top_k: 5,
+        max_exact_nodes: 10,
+        sio_profile: SioTechsOptimizerProfile {
+            schema_active: true,
+            strategy: "optimize".to_string(),
+            speed_mode: "precise".to_string(),
+            fodder: "excess".to_string(),
+            skills: worker_case["skillsRequests"][best_request_index]["skillsCount"]
+                .as_u64()
+                .unwrap() as usize,
+            chips: optimizer["chips"].as_u64().unwrap() as usize,
+            overloadable: optimizer["overloadable"].as_bool().unwrap(),
+            rarity_inputs: rarity_inputs_from_fixture(&optimizer["inputs"]),
+            modes: optimizer["modes"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .filter_map(|mode| {
+                    mode.as_str()
+                        .and_then(tttg_forge_optimizer::tech::skill_name_to_mode)
+                })
+                .collect(),
+            skills_map: skills_map_from_fixture(&optimizer["skillsMap"]),
+            ..SioTechsOptimizerProfile::default()
+        },
+        ..TechOptimizerOptions::default()
+    };
+
+    let result = run_tech_optimizer(
+        &json!({
+            "tech_configs": {},
+            "sioLm": {
+                "compactConfig": config_string,
+                "candidatePreselectTopK": 256
+            }
+        }),
+        &options,
+    )
+    .unwrap();
+    let top = result.builds.first().expect("top build");
+
+    assert_eq!(
+        comparable_rows(top.config["loadout"].as_array().unwrap()),
+        comparable_rows(worker_case["best"]["rowSignature"].as_array().unwrap()),
+        "{id} compact-only row signature"
+    );
 }
 
 #[test]

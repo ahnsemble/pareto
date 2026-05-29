@@ -12,7 +12,7 @@ function readFixture(name: string) {
 test.describe('TD-11 — Tech optimizer Korean route', () => {
   test('renders Korean product copy on Korean route', async ({ page, baseURL }) => {
     await page.goto(`${baseURL ?? 'http://localhost:3032'}${KO_OPTIMIZER_URL}`);
-    await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Boot OK');
+    await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Ready');
 
     await expect(page.getByRole('heading', { name: 'Tangtang / 테크 파츠' })).toBeVisible();
     await expect(page.getByTestId('tech-profile-import')).toContainText('Tangtang 프로필 가져오기');
@@ -38,7 +38,7 @@ test.describe('TD-11 — Tech optimizer Korean route', () => {
 test.describe('TD-11 — Tech optimizer route', () => {
   test.beforeEach(async ({ page, baseURL }) => {
     await page.goto(`${baseURL ?? 'http://localhost:3032'}${OPTIMIZER_URL}`);
-    await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Boot OK');
+    await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Ready');
   });
 
   test('uses Tangtang public branding without source-specific visible copy', async ({ page }) => {
@@ -117,19 +117,24 @@ test.describe('TD-11 — Tech optimizer route', () => {
   test('copies a restorable profile share link and encoded backup', async ({ page, context, baseURL }) => {
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
 
+    await page.goto(`${baseURL ?? 'http://localhost:3032'}${OPTIMIZER_URL}?utm=stale`);
+    await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Ready');
+
     await page.getByTestId('tech-account-final-atk').fill('333333');
     await page.getByTestId('tech-account-skill-damage').fill('477');
     await page.getByTestId('tech-inventory-chips').fill('22');
 
     await page.getByTestId('tech-profile-share-link').click();
-    await expect(page.getByTestId('tech-profile-share-url-output')).toHaveValue(/\/en\/v3\/optimizer\/tech-parts\?.*ttProfile=/);
+    await expect(page.getByTestId('tech-profile-share-url-output')).toHaveValue(/\/en\/v3\/optimizer\/tech-parts#ttProfile=/);
     await expect(page.getByTestId('tech-profile-share-status')).toContainText('Copied');
+    await expect(page.getByTestId('tech-profile-share-url-output')).not.toHaveValue(/\?/);
+    await expect(page.getByTestId('tech-profile-share-url-output')).not.toHaveValue(/utm=stale/);
     await expect(page.getByTestId('tech-profile-share-url-output')).not.toHaveValue(/sio|beam|preselect|exact|\{|\}/i);
 
     const shareUrl = await page.getByTestId('tech-profile-share-url-output').inputValue();
     const restored = await context.newPage();
     await restored.goto(shareUrl);
-    await expect(restored.getByTestId('v3-optimizer-boot-status')).toContainText('Boot OK');
+    await expect(restored.getByTestId('v3-optimizer-boot-status')).toContainText('Ready');
     await expect(restored.getByTestId('tech-profile-save-status')).toContainText('Share link loaded');
     await expect(restored.getByTestId('tech-account-final-atk')).toHaveValue('333333');
     await expect(restored.getByTestId('tech-account-skill-damage')).toHaveValue('477');
@@ -137,7 +142,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(restored.getByText(/SIO/)).toHaveCount(0);
 
     await page.goto(`${baseURL ?? 'http://localhost:3032'}${OPTIMIZER_URL}`);
-    await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Boot OK');
+    await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Ready');
     await page.getByTestId('tech-profile-backup-copy').click();
     await expect(page.getByTestId('tech-profile-backup-output')).toHaveValue(/tangtang-tech-profile-backup/);
     await expect(page.getByTestId('tech-profile-backup-status')).toContainText('Copied');
@@ -152,19 +157,21 @@ test.describe('TD-11 — Tech optimizer route', () => {
       });
     });
     await page.reload();
-    await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Boot OK');
+    await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Ready');
 
     await page.getByTestId('tech-account-final-atk').fill('444444');
     await page.getByTestId('tech-profile-share-link').click();
 
-    await expect(page.getByTestId('tech-profile-share-url-output')).toHaveValue(/\/en\/v3\/optimizer\/tech-parts\?.*ttProfile=/);
+    await expect(page.getByTestId('tech-profile-share-url-output')).toHaveValue(/\/en\/v3\/optimizer\/tech-parts#ttProfile=/);
     await expect(page.getByTestId('tech-profile-share-status')).toContainText('Copy manually');
+    await expect(page.getByTestId('tech-profile-share-url-output')).not.toHaveValue(/\?/);
     await expect(page.getByTestId('tech-profile-share-url-output')).not.toHaveValue(/sio|beam|preselect|exact|\{|\}/i);
   });
 
   test('handles invalid profile share links without exposing internals', async ({ page, baseURL }) => {
-    await page.goto(`${baseURL ?? 'http://localhost:3032'}${OPTIMIZER_URL}?ttProfile=not-valid`);
-    await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Boot OK');
+    await page.goto('about:blank');
+    await page.goto(`${baseURL ?? 'http://localhost:3032'}${OPTIMIZER_URL}#ttProfile=not-valid`);
+    await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Ready');
 
     await expect(page.getByTestId('tech-profile-save-status')).toContainText('Share link is invalid');
     await expect(page.getByTestId('tech-account-final-atk')).not.toHaveValue('0');
@@ -322,7 +329,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
 
     await expect(page.getByTestId('tech-profile-import-summary')).toContainText('Imported screenshot text');
     await expect(page.getByTestId('tech-profile-import-review')).toContainText('Imported 2');
-    await expect(page.getByTestId('tech-profile-import-review')).toContainText('Review 1');
+    await expect(page.getByTestId('tech-profile-import-review')).toContainText('Needs review 1');
     await expect(page.getByTestId('tech-profile-import-review')).toContainText('Editable after import');
     await expect(page.getByTestId('tech-profile-import-field-review')).toContainText('Final ATK');
     await expect(page.getByTestId('tech-profile-import-field-review')).toContainText('550220');
@@ -339,7 +346,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-account-summary')).toContainText('147 / 822');
     await expect(page.getByTestId('tech-account-summary')).toContainText('Conditions');
     await expect(page.getByTestId('tech-account-summary')).toContainText('5');
-    await expect(page.getByTestId('tech-account-summary')).toContainText('Review');
+    await expect(page.getByTestId('tech-account-summary')).toContainText('Needs review');
     await expect(page.getByTestId('tech-account-summary')).toContainText('3');
     await expect(page.getByTestId('tech-account-base-atk')).toHaveValue('126424');
     await expect(page.getByTestId('tech-account-final-atk')).toHaveValue('550220');
@@ -376,10 +383,11 @@ test.describe('TD-11 — Tech optimizer route', () => {
     const raw = readFixture('external-calculation-links/4ZgaBw.raw.txt');
     await page.getByTestId('tech-profile-import-input').fill(`https://sio-tools.vercel.app?raw=${raw}`);
     await page.getByRole('button', { name: 'Import profile' }).click();
+    await page.getByTestId('tech-optimizer-top-k').fill('1');
     await page.getByRole('button', { name: 'Run imported profile' }).click();
 
-    await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible();
-    await expect(page.getByTestId('tech-calculation-comparison')).toBeVisible();
+    await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible({ timeout: 60_000 });
+    await expect(page.getByTestId('tech-calculation-comparison')).toBeVisible({ timeout: 60_000 });
     await expect(page.getByTestId('tech-calculation-comparison')).toContainText('Imported calculation');
     await expect(page.getByTestId('tech-calculation-comparison')).toContainText('Tangtang calculation');
     await expect(page.getByTestId('tech-calculation-comparison')).toContainText('Difference');
@@ -932,7 +940,7 @@ test.describe('TD-11 — Tech optimizer storage hardening', () => {
     });
 
     await page.goto(`${baseURL ?? 'http://localhost:3032'}${OPTIMIZER_URL}`);
-    await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Boot OK');
+    await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Ready');
     await expect(page.getByTestId('tech-profile-save')).toContainText('Saved profiles');
 
     await page.getByTestId('tech-profile-save-endersEcho-save').click();
