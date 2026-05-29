@@ -1659,11 +1659,11 @@ fn decode_compact_pets(compact: &Value) -> Value {
 }
 
 fn decode_compact_mounts(compact: &Value) -> Value {
-    let Some(items) = compact
-        .get("bJ")
-        .and_then(|value| value.get("bM"))
-        .and_then(Value::as_array)
-    else {
+    let Some(mounts) = compact.get("bJ") else {
+        return json!([]);
+    };
+    let active_index = mounts.get("bj").and_then(Value::as_u64);
+    let Some(items) = mounts.get("bM").and_then(Value::as_array) else {
         return json!([]);
     };
     Value::Array(
@@ -1673,8 +1673,11 @@ fn decode_compact_mounts(compact: &Value) -> Value {
             .map(|(index, item)| {
                 json!({
                     "index": index,
+                    "name": compact_mount_name(index).unwrap_or("Unknown"),
+                    "active": active_index == Some(index as u64),
                     "enabled": bool_from_number(item.get("s")),
                     "stars": number_or_null(item.get("r")),
+                    "lines": number_or_null(item.get("bL")),
                     "stats": item.get("bK").cloned().unwrap_or_else(|| json!({})),
                 })
             })
@@ -2432,20 +2435,35 @@ fn derive_generic_compact_base_stats(compact: &Value, account_inputs: &Value) ->
         {
             continue;
         }
+        let index = mount.get("index").and_then(Value::as_u64).unwrap_or(0) as usize;
+        let stars = mount.get("stars").and_then(Value::as_f64).unwrap_or(0.0);
         for (stat, value) in mount
             .get("stats")
             .and_then(Value::as_object)
             .into_iter()
             .flatten()
         {
-            let index = mount.get("index").and_then(Value::as_u64).unwrap_or(0) as usize;
-            let stars = mount.get("stars").and_then(Value::as_f64).unwrap_or(0.0);
             let multiplier = compact_mount_puzzle_stat_multiplier(index, stars);
             add_stat(
                 &mut output,
                 stat,
                 value.as_f64().unwrap_or(0.0) * multiplier,
             );
+        }
+        if mount
+            .get("active")
+            .and_then(Value::as_bool)
+            .unwrap_or(false)
+        {
+            add_stat(
+                &mut output,
+                "mountDamage",
+                compact_mount_damage(index, stars),
+            );
+            let lines = mount.get("lines").and_then(Value::as_f64).unwrap_or(0.0);
+            for (stat, value) in compact_mount_line_stats(index, stars, lines) {
+                add_stat(&mut output, stat, *value);
+            }
         }
     }
 
@@ -3642,14 +3660,140 @@ fn apply_compact_evo_tree_stats(output: &mut Map<String, Value>, account_inputs:
 fn compact_mount_puzzle_stat_multiplier(index: usize, stars: f64) -> f64 {
     const LEGEND: [f64; 9] = [0.4, 0.44, 0.48, 0.55, 0.62, 0.71, 0.8, 0.9, 1.0];
     const EXCELLENT: [f64; 9] = [0.3, 0.33, 0.36, 0.4, 0.45, 0.5, 0.55, 0.6, 0.75];
-    const BETTER: [f64; 9] = [0.2, 0.22, 0.24, 0.28, 0.32, 0.28, 0.44, 0.52, 0.6];
+    const BETTER: [f64; 9] = [0.2, 0.22, 0.24, 0.28, 0.32, 0.38, 0.44, 0.52, 0.6];
 
-    let stars = stars.clamp(0.0, 8.0).floor() as usize;
+    let stars = compact_mount_star_index(stars);
     match index {
         0 => LEGEND[stars],
         1 => EXCELLENT[stars],
         2 => BETTER[stars],
         _ => 1.0,
+    }
+}
+
+fn compact_mount_name(index: usize) -> Option<&'static str> {
+    match index {
+        0 => Some("Doomsteed"),
+        1 => Some("Tech Hoverboard"),
+        2 => Some("Electric Scooter"),
+        _ => None,
+    }
+}
+
+fn compact_mount_star_index(stars: f64) -> usize {
+    stars.clamp(0.0, 8.0).floor() as usize
+}
+
+fn compact_mount_damage(index: usize, stars: f64) -> f64 {
+    const DOOMSTEED: [f64; 9] = [
+        153.0, 180.0, 180.0, 200.0, 200.0, 200.0, 200.0, 260.0, 260.0,
+    ];
+    const TECH_HOVERBOARD: [f64; 9] = [
+        193.6, 194.084, 199.496, 204.424, 204.424, 387.0, 387.0, 500.0, 500.0,
+    ];
+    const ELECTRIC_SCOOTER: [f64; 9] = [
+        153.0, 160.0, 160.0, 180.0, 180.0, 200.0, 200.0, 230.0, 230.0,
+    ];
+    let stars = compact_mount_star_index(stars);
+    match index {
+        0 => DOOMSTEED[stars] * 0.0,
+        1 => TECH_HOVERBOARD[stars] * 100.0,
+        2 => ELECTRIC_SCOOTER[stars] * 77.0,
+        _ => 0.0,
+    }
+}
+
+fn compact_mount_line_stats(
+    index: usize,
+    stars: f64,
+    lines: f64,
+) -> &'static [(&'static str, f64)] {
+    const MAX_LINES_BY_STARS: [f64; 9] = [4.0, 4.0, 5.0, 5.0, 6.0, 6.0, 7.0, 7.0, 8.0];
+    let effective_lines = lines
+        .max(0.0)
+        .min(MAX_LINES_BY_STARS[compact_mount_star_index(stars)])
+        .floor() as u8;
+    match index {
+        0 => match effective_lines {
+            8.. => &[
+                ("poisoned", 200.0),
+                ("skillDamage", 200.0),
+                ("laceration", 30.0),
+                ("damageBoss", 30.0),
+            ],
+            7 => &[
+                ("poisoned", 200.0),
+                ("skillDamage", 200.0),
+                ("laceration", 30.0),
+                ("damageBoss", 5.0),
+            ],
+            6 => &[
+                ("poisoned", 120.0),
+                ("skillDamage", 200.0),
+                ("laceration", 30.0),
+            ],
+            4..=5 => &[("poisoned", 60.0), ("skillDamage", 200.0)],
+            3 => &[("poisoned", 60.0), ("skillDamage", 50.0)],
+            1..=2 => &[("poisoned", 20.0)],
+            _ => &[],
+        },
+        1 => match effective_lines {
+            8.. => &[
+                ("chilled", 200.0),
+                ("skillDamage", 100.0),
+                ("shieldDamage", 100.0),
+            ],
+            7 => &[
+                ("chilled", 200.0),
+                ("skillDamage", 100.0),
+                ("shieldDamage", 40.0),
+            ],
+            6 => &[
+                ("chilled", 140.0),
+                ("skillDamage", 55.0),
+                ("shieldDamage", 40.0),
+            ],
+            5 => &[
+                ("chilled", 100.0),
+                ("skillDamage", 25.0),
+                ("shieldDamage", 40.0),
+            ],
+            4 => &[
+                ("chilled", 40.0),
+                ("skillDamage", 25.0),
+                ("shieldDamage", 40.0),
+            ],
+            3 => &[("chilled", 40.0), ("skillDamage", 25.0)],
+            1..=2 => &[("chilled", 15.0), ("skillDamage", 10.0)],
+            _ => &[],
+        },
+        2 => match effective_lines {
+            8.. => &[
+                ("weakened", 80.0),
+                ("critDamage", 200.0),
+                ("laceration", 30.0),
+            ],
+            7 => &[
+                ("weakened", 80.0),
+                ("critDamage", 200.0),
+                ("laceration", 10.0),
+            ],
+            6 => &[
+                ("weakened", 45.0),
+                ("critDamage", 110.0),
+                ("laceration", 10.0),
+            ],
+            5 => &[
+                ("weakened", 25.0),
+                ("critDamage", 55.0),
+                ("laceration", 10.0),
+            ],
+            4 => &[("weakened", 25.0), ("critDamage", 55.0)],
+            3 => &[("weakened", 25.0), ("critDamage", 20.0)],
+            1..=2 => &[("weakened", 10.0)],
+            _ => &[],
+        },
+        _ => &[],
     }
 }
 

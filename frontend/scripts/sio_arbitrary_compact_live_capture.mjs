@@ -210,7 +210,7 @@ function createWorkerContext(sourceDir, posted) {
     BroadcastChannel: BroadcastChannelStub,
     localStorage: storage,
     sessionStorage: storage,
-    document: { cookie: '' },
+    document: { cookie: '', hasFocus: () => false },
     addEventListener() {},
     removeEventListener() {},
   };
@@ -251,13 +251,30 @@ async function loadPatchedWorker(sourceDir, posted) {
       scoreReplacement:
         'return(()=>{(0,R.IE)(ra);let __score=(0,W.f)(rl,rn,c,a,e1.calcMode,ri,s,eN);if(__score>((self.__bestLmTrace&&self.__bestLmTrace.score)||0))self.__bestLmTrace={score:__score,mask:r,calcMode:e1.calcMode,gameMode:eN,attackMeta:{...rn},damageFactor:c,ceDamage:a,baseStats:{...__baseStatsBeforeTech},stats:{...rl},skills:{...ri},techs:JSON.parse(JSON.stringify(e)),passivePools:Array.from(s||[])};return __score})()',
     },
+    {
+      baseNeedle:
+        'let{ceDamage:o,passivePools:n}=D({evolvePassives:ts,cooldownReduction:l,techs:e,skills:td,collectibles:eV,upgradedCollectibles:e6,settings:e3,gameMode:eP,eeOmnipower:eI,eeSkills:eG,staticCache:e7,stableTechEntries:r?ep:void 0},tn);',
+      baseReplacement:
+        'let __baseStatsBeforeTech={...tn};let{ceDamage:o,passivePools:n}=D({evolvePassives:ts,cooldownReduction:l,techs:e,skills:td,collectibles:eV,upgradedCollectibles:e6,settings:e3,gameMode:eP,eeOmnipower:eI,eeSkills:eG,staticCache:e7,stableTechEntries:r?ep:void 0},tn);',
+      scoreNeedle: 'return(0,N.IE)(tu),(0,W.f)(tn,tc,a,c,e3.calcMode,td,n,eP)',
+      scoreReplacement:
+        'return(()=>{(0,N.IE)(tu);let __score=(0,W.f)(tn,tc,a,c,e3.calcMode,td,n,eP);if(__score>((self.__bestLmTrace&&self.__bestLmTrace.score)||0))self.__bestLmTrace={score:__score,mask:t,calcMode:e3.calcMode,gameMode:eP,attackMeta:{...tc},damageFactor:a,ceDamage:c,baseStats:{...__baseStatsBeforeTech},stats:{...tn},skills:{...td},techs:JSON.parse(JSON.stringify(e)),passivePools:Array.from(n||[])};return __score})()',
+    },
   ];
   const patchSet = patchSets.find((item) => code.includes(item.baseNeedle) && code.includes(item.scoreNeedle));
   if (!patchSet) {
     throw new Error('Unable to patch worker-skills lm() base stats expression');
   }
   code = code.replace(patchSet.baseNeedle, patchSet.baseReplacement).replace(patchSet.scoreNeedle, patchSet.scoreReplacement);
-  code = code.replace('_N_E=t.x()', 'self.__webpack_require__=t;self.__webpack_ready__=t.x()');
+  const webpackReadyNeedles = [
+    ['_N_E=t.x()', 'self.__webpack_require__=t;self.__webpack_ready__=t.x()'],
+    ['_N_E=r.x()', 'self.__webpack_require__=r;self.__webpack_ready__=r.x()'],
+  ];
+  const webpackReadyNeedle = webpackReadyNeedles.find(([needle]) => code.includes(needle));
+  if (!webpackReadyNeedle) {
+    throw new Error('Unable to patch worker bootstrap: webpack ready needle not found');
+  }
+  code = code.replace(webpackReadyNeedle[0], webpackReadyNeedle[1]);
   vm.runInContext(code, context, { filename: sourcePath });
   await context.__webpack_ready__;
   return context;

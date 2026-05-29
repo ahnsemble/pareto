@@ -147,3 +147,15 @@ fn damage_factor_sums_numeric_ce_damage_entries() {
     assert_eq!(actual.ce_damage["x"], json!(2.0));
     assert_eq!(actual.ce_damage["bad"], json!(0.0));
 }
+
+#[test]
+fn damage_factor_counts_mount_damage_with_laser_divisor() {
+    let actual = calculate_damage_factor(
+        &stats(&[("mountDamage", 4047.468857542808), ("ssGlovesLaser", 50.0)]),
+        &json!({}),
+    )
+    .unwrap();
+
+    assert_eq!(actual.ce_damage["mount"], json!(2698.3125716952054));
+    assert!(actual.damage_factor >= 2698.3125716952054);
+}

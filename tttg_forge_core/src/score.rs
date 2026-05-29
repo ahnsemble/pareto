@@ -144,6 +144,10 @@ pub fn calculate_damage_factor(stats: &Value, ce_damage_techs: &Value) -> JsonRe
     ce_damage.insert("xeno".to_string(), json!(xeno_damage));
     damage_factor += xeno_damage;
 
+    let mount_damage = num(stats, "mountDamage") * laser_divisor;
+    ce_damage.insert("mount".to_string(), json!(mount_damage));
+    damage_factor += mount_damage;
+
     Ok(DamageResult {
         damage_factor,
         ce_damage: Value::Object(ce_damage),

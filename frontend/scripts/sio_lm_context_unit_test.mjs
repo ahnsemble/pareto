@@ -22,15 +22,21 @@ const traceCase = {
   gameMode: 'lme2',
 };
 
-process.env.SIO_LM_COMPACT_ONLY = '1';
-const playerState = applySioLmContext({}, workerCase, traceCase);
-delete process.env.SIO_LM_COMPACT_ONLY;
+const defaultPlayerState = applySioLmContext({}, workerCase, traceCase);
 
-assert.deepEqual(playerState.sioLm, {
+assert.deepEqual(defaultPlayerState.sioLm, {
   compactConfig: {
     a: { I: 'lme2' },
     p: [1],
   },
 });
+
+process.env.SIO_LM_LEGACY_EXPLICIT_CONTEXT = '1';
+const legacyPlayerState = applySioLmContext({}, workerCase, traceCase);
+delete process.env.SIO_LM_LEGACY_EXPLICIT_CONTEXT;
+
+assert.deepEqual(legacyPlayerState.sioLm.baseStats, traceCase.baseStats);
+assert.deepEqual(legacyPlayerState.sioLm.enabledSkills, traceCase.enabledSkills);
+assert.equal(legacyPlayerState.sioLm.gameMode, 'lme2');
 
 console.log('sio_lm_context_unit_test passed');

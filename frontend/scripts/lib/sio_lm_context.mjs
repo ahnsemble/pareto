@@ -66,14 +66,11 @@ export function capturedStatTransform() {
 
 export function applySioLmContext(playerState, workerCase, traceCase) {
   const legacyExplicitContext = process.env.SIO_LM_LEGACY_EXPLICIT_CONTEXT === '1';
-  const compactOnlyContext = process.env.SIO_LM_COMPACT_ONLY === '1';
   playerState.sioLm = {
     compactConfig: bestCompactConfigWithoutFingerprint(workerCase),
   };
-  if (!compactOnlyContext) {
-    playerState.sioLm.baseStats = traceCase?.baseStats ?? {};
-  }
   if (legacyExplicitContext) {
+    playerState.sioLm.baseStats = traceCase?.baseStats ?? {};
     playerState.sioLm.enabledSkills = traceCase?.enabledSkills ?? [];
     playerState.sioLm.attackMeta = traceCase?.attackMeta ?? undefined;
     playerState.sioLm.calcMode = traceCase?.calcMode ?? undefined;

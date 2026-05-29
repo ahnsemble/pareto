@@ -170,6 +170,27 @@ pub fn reconstruct_sio_lm_inputs(
             ce_damage.insert("Drone".to_string(), json!(contribution));
         }
     }
+    if let Some(row) = techs.get("Antimatter Maintainer") {
+        if row
+            .get("deployed")
+            .and_then(Value::as_bool)
+            .unwrap_or(false)
+            && str_value(row, "mode") == "Rocket Mode"
+            && enabled.contains("Drill")
+        {
+            let contribution = ce_damage_for_mode(
+                "Drill",
+                0.0,
+                0,
+                rarity_value(row),
+                &mut passive_pools,
+                transform,
+                transform.ce_profile.as_deref(),
+            );
+            resonance_multiplier += contribution;
+            ce_damage.insert("Drill".to_string(), json!(contribution));
+        }
+    }
     set_stat(&mut stats, "resonanceMultiplier", resonance_multiplier);
     if transform.derive_ce_damage {
         ce_damage = ce_damage::core_ce_damage(&stats, &ce_damage);
@@ -284,6 +305,10 @@ impl SioLmScoringContext {
             compact_config: None,
             dynamic_skill_transform: false,
         }
+    }
+
+    pub fn compact_config(&self) -> Option<&Value> {
+        self.compact_config.as_ref()
     }
 }
 
@@ -715,16 +740,6 @@ fn apply_generic_account_input_transform(
             set_passive_level(transform, passive, if evolve_passives { 0.6 } else { 0.5 });
         }
     }
-    if !decoded_has_judgment_ss_core_profile(decoded)
-        && decoded["accountInputs"]["ee"]["gameMode"].as_str() == Some("lme2")
-        && decoded["accountInputs"]["lme"]["testaments"]
-            .as_f64()
-            .unwrap_or(0.0)
-            >= 73_500.0
-    {
-        add_transform_stat(transform, "weakened", 30.0);
-    }
-
     let Some(cooldown_reduction) =
         generic_cooldown_reduction_from_account_inputs(decoded, evolve_passives)
     else {
@@ -747,20 +762,6 @@ fn decoded_has_judgment_necklace(decoded: &Value) -> bool {
             item.get("id")
                 .and_then(Value::as_str)
                 .is_some_and(|id| id == "judgmentNecklace")
-        })
-}
-
-fn decoded_has_judgment_ss_core_profile(decoded: &Value) -> bool {
-    decoded
-        .get("ssEquipment")
-        .and_then(Value::as_array)
-        .into_iter()
-        .flatten()
-        .any(|item| {
-            item.get("id")
-                .and_then(Value::as_str)
-                .is_some_and(|id| id == "judgmentNecklace")
-                && item.get("c").and_then(Value::as_f64).unwrap_or(0.0) > 0.0
         })
 }
 
@@ -923,12 +924,6 @@ fn apply_trace_environment_transform_defaults(
                 LIVE_TRACE_BASE_COOLDOWN_REDUCTION
             },
         );
-    }
-
-    for (key, value) in [("mount", 0.0)] {
-        transform
-            .ce_damage_static
-            .insert(key.to_string(), json!(value));
     }
 }
 
@@ -2892,7 +2887,7 @@ fn ce_damage_for_mode(
     ce_profile: Option<&str>,
 ) -> f64 {
     match mode {
-        "Drone" => {
+        "Drone" | "Drill" => {
             sio_simple_live_ce_damage(mode, resonance, overload, rarity, passive_pools, transform)
         }
         "Drone Mode" => {

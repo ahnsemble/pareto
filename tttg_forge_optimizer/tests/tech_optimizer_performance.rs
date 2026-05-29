@@ -169,6 +169,31 @@ fn reconstructed_td11_calibration_off_stat(
 }
 
 #[test]
+fn sio_lm_reconstructs_antimatter_rocket_row_drill_alias_ce_damage() {
+    use tttg_forge_optimizer::tech::SioLmStatTransform;
+
+    let reconstructed = reconstruct_sio_lm_inputs(
+        &json!({}),
+        &json!({
+            "Antimatter Maintainer": {
+                "deployed": true,
+                "mode": "Rocket Mode",
+                "resonance": 0,
+                "overload": 0,
+                "rarity": "Legend"
+            }
+        }),
+        &["Drill".to_string()],
+        &SioLmStatTransform::empty(),
+    );
+
+    assert!(
+        reconstructed["ceDamage"]["Drill"].as_f64().unwrap_or(0.0) > 0.0,
+        "Drill fallback should contribute CE damage for Antimatter Maintainer rocket rows"
+    );
+}
+
+#[test]
 fn sio_lm_stats_equivalence_ignores_only_registered_non_scoring_mutable_trace_artifacts() {
     let actual = json!({
         "critRate": 213.6,
@@ -5052,6 +5077,108 @@ fn sio_lm_compact_generic_mount_payload_stats_use_puzzle_multiplier() {
 }
 
 #[test]
+fn sio_lm_compact_generic_better_mount_star_five_uses_live_puzzle_multiplier() {
+    use tttg_forge_optimizer::tech::decode_sio_lm_compact_summary;
+
+    let compact = json!({
+        "bJ": {
+            "bM": [
+                null,
+                null,
+                {"s": 1, "r": 5, "bK": {"weakened": 100}}
+            ]
+        }
+    });
+    let baseline = decode_sio_lm_compact_summary(&json!({}));
+    let decoded = decode_sio_lm_compact_summary(&compact);
+    let baseline_value = baseline["derivedBaseStats"]["weakened"]
+        .as_f64()
+        .unwrap_or(0.0);
+    let actual_value = decoded["derivedBaseStats"]["weakened"]
+        .as_f64()
+        .unwrap_or(0.0);
+
+    assert!(
+        (actual_value - baseline_value - 38.0).abs() <= 1e-12,
+        "Better star 5 puzzle multiplier must be 0.38: actual {actual_value}, baseline {baseline_value}"
+    );
+}
+
+#[test]
+fn sio_lm_compact_generic_active_hoverboard_derives_lines_and_mount_damage() {
+    use tttg_forge_optimizer::tech::decode_sio_lm_compact_summary;
+
+    let compact = json!({
+        "bJ": {
+            "bj": 1,
+            "bM": [
+                null,
+                {"s": 1, "r": 8, "bL": 8}
+            ]
+        }
+    });
+    let baseline = decode_sio_lm_compact_summary(&json!({}));
+    let decoded = decode_sio_lm_compact_summary(&compact);
+
+    assert_eq!(
+        decoded["accountInputs"]["mounts"][1]["name"],
+        json!("Tech Hoverboard")
+    );
+    assert_eq!(decoded["accountInputs"]["mounts"][1]["active"], json!(true));
+    assert_eq!(decoded["accountInputs"]["mounts"][1]["lines"], json!(8));
+    assert_eq!(decoded["derivedBaseStats"]["mountDamage"], json!(50000.0));
+    for (stat, expected_delta) in [
+        ("chilled", 200.0),
+        ("skillDamage", 100.0),
+        ("shieldDamage", 100.0),
+    ] {
+        let baseline_value = baseline["derivedBaseStats"][stat].as_f64().unwrap_or(0.0);
+        let actual_value = decoded["derivedBaseStats"][stat].as_f64().unwrap_or(0.0);
+        assert!(
+            (actual_value - baseline_value - expected_delta).abs() <= 1e-12,
+            "{stat} delta must match active Tech Hoverboard line table: actual {actual_value}, baseline {baseline_value}, expected delta {expected_delta}"
+        );
+    }
+}
+
+#[test]
+fn sio_lm_compact_generic_active_electric_scooter_uses_live_better_tables() {
+    use tttg_forge_optimizer::tech::decode_sio_lm_compact_summary;
+
+    let compact = json!({
+        "bJ": {
+            "bj": 2,
+            "bM": [
+                null,
+                null,
+                {"s": 1, "r": 8, "bL": 8, "bK": {"critDamage": 100}}
+            ]
+        }
+    });
+    let baseline = decode_sio_lm_compact_summary(&json!({}));
+    let decoded = decode_sio_lm_compact_summary(&compact);
+
+    assert_eq!(
+        decoded["accountInputs"]["mounts"][2]["name"],
+        json!("Electric Scooter")
+    );
+    assert_eq!(decoded["accountInputs"]["mounts"][2]["active"], json!(true));
+    assert_eq!(decoded["derivedBaseStats"]["mountDamage"], json!(17710.0));
+    for (stat, expected_delta) in [
+        ("weakened", 80.0),
+        ("critDamage", 260.0),
+        ("laceration", 30.0),
+    ] {
+        let baseline_value = baseline["derivedBaseStats"][stat].as_f64().unwrap_or(0.0);
+        let actual_value = decoded["derivedBaseStats"][stat].as_f64().unwrap_or(0.0);
+        assert!(
+            (actual_value - baseline_value - expected_delta).abs() <= 1e-12,
+            "{stat} delta must match Electric Scooter line plus puzzle tables: actual {actual_value}, baseline {baseline_value}, expected delta {expected_delta}"
+        );
+    }
+}
+
+#[test]
 fn sio_lm_compact_generic_teamwork_taloxa_uses_active_skill_laceration_uptime() {
     use tttg_forge_optimizer::tech::decode_sio_lm_compact_summary;
 
@@ -6956,6 +7083,7 @@ fn sio_lm_static_bonus_ce_damage_follows_base_stats() {
     base_stats["crimsonBat"] = json!(2.0);
     base_stats["harmonyKing"] = json!(3.0);
     base_stats["xenoDamage"] = json!(120.0);
+    base_stats["mountDamage"] = json!(4047.468857542808);
 
     let context = sio_lm_context_from_player_state(&json!({
         "sioLm": {
@@ -6985,6 +7113,10 @@ fn sio_lm_static_bonus_ce_damage_follows_base_stats() {
     assert_eq!(
         reconstructed["ceDamage"]["xeno"],
         json!(120.0 * laser_divisor)
+    );
+    assert_eq!(
+        reconstructed["ceDamage"]["mount"],
+        json!(4047.468857542808 * laser_divisor)
     );
 }
 
@@ -8023,6 +8155,12 @@ fn tech_optimizer_uses_lm_preselect_width_for_resonance_candidates() {
             top.config["sioCandidate"]["activeSkills"],
             Value::Array(expected_active_skills(worker_case)),
             "{id} active skills"
+        );
+        assert_number_close(
+            id,
+            "live multiplier",
+            top.damage_factor,
+            worker_case["best"]["multiplier"].as_f64().unwrap(),
         );
         if id == "collectibles_broad_item_tech_set_endgame_fold" {
             assert_number_close(
