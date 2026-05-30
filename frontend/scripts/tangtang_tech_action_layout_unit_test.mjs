@@ -43,5 +43,12 @@ assert.match(accountPanel, /\$\{field\.testId\}-slider/, 'account context slider
 assert.match(accountPanel, /localizeTechEntityName/, 'account panel must localize named collection and account entities');
 assert.doesNotMatch(accountPanel, /\{item\.display_name_en\}/, 'collectible item rows must not render English names directly');
 assert.doesNotMatch(accountPanel, /\{set\.display_name_en\}/, 'collectible set rows must not render English names directly');
+assert.doesNotMatch(accountPanel, /SOURCE_BACKED_COLLECTIBLE_ITEM_OPTIONS\.slice\(\s*0,\s*12\s*\)/, 'collection item editor must not silently truncate source-backed items');
+assert.doesNotMatch(accountPanel, /COLLECTIBLE_SET_INDEX\.slice\(\s*0,\s*3\s*\)/, 'collection set editor must not silently truncate source-backed sets');
+assert.match(accountPanel, /tech-collection-item-icon/, 'collection item editor must render source-safe visual icon substitutes');
+assert.match(accountPanel, /tech-collection-item-status/, 'collection item editor must render imported star/custom-set status');
+assert.match(optimizer, /importedCollectibleSnapshot=\{importedCollectibleSnapshot\}/, 'account context panel must receive imported collectible status');
+assert.match(accountPanel, /tech-account-collection-yellow-stars/, 'collection context must expose yellow star totals separately from red stars');
+assert.match(accountPanel, /tech-lme-turf-color-token/, 'LME turf context must expose red/yellow/black visual tokens');
 
 console.log('tangtang_tech_action_layout_unit_test: passed');

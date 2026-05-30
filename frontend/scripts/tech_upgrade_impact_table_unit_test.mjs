@@ -118,6 +118,35 @@ const lowerRows = buildTechUpgradeImpactRows({
 
 assert.deepEqual(lowerRows, [], 'impact rows must not present negative comparison deltas as expected gains');
 
+const equalRows = buildTechUpgradeImpactRows({
+  recommendations: [
+    {
+      id: 'chip-allocation',
+      priority: 80,
+      title: 'Allocate chips to Energy Guidance System',
+      action: 'Use spare resonance chips on Drone Mode first.',
+      reason: 'The top build assigns 12 chips to this slot.',
+      confidence: 'high',
+      beforeAfter: {
+        current: '6 chips unassigned',
+        recommended: 'Drone Mode chip target 12',
+      },
+    },
+  ],
+  comparison: {
+    status: 'ready',
+    importedDamage: 1000,
+    tangtangDamage: 1000,
+    delta: 0,
+    deltaPct: 0,
+    changed: false,
+  },
+  locale: 'en',
+});
+
+assert.equal(equalRows.length, 1, 'equal comparison should still show actionable before/after rows');
+assert.equal(equalRows[0].gainLabel, '0 / 0%');
+
 assert.deepEqual(
   buildTechUpgradeImpactRows({
     recommendations: rows,

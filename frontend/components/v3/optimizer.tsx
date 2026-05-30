@@ -1165,6 +1165,7 @@ export function TechPartsOptimizerSurface() {
           }
           locale={locale}
           profileSlotId={activeProfileSlot}
+          importedCollectibleSnapshot={importedCollectibleSnapshot}
         />
 
         <div className="grid min-w-0 gap-4 lg:grid-cols-[minmax(280px,0.95fr)_minmax(0,1.55fr)]">

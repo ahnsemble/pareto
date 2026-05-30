@@ -9,6 +9,7 @@ import {
   PET_SCHEMA_INDEX,
   SS_EQUIPMENT_SCHEMA_INDEX,
 } from '../../../app/lib/pareto-store/schemas';
+import type { ImportedCollectibleSnapshot } from '../../../app/lib/pareto-store/profile-import-types';
 import type { PlayerState } from '../../../app/lib/pareto-store/types';
 import { formatNumber, inputClass, labelClass, panelClass, selectClass } from '../optimizerUi';
 import {
@@ -31,8 +32,8 @@ const CATALOG_ONLY_COLLECTIBLE_ITEM_ID_SET = new Set<string>(CATALOG_ONLY_COLLEC
 const SOURCE_BACKED_COLLECTIBLE_ITEM_OPTIONS = COLLECTIBLE_ITEM_INDEX.filter(
   (item) => !item.id.startsWith('event') && !CATALOG_ONLY_COLLECTIBLE_ITEM_ID_SET.has(item.id),
 );
-const TARGET_COLLECTIBLE_OPTIONS = SOURCE_BACKED_COLLECTIBLE_ITEM_OPTIONS.slice(0, 20);
-const FEATURED_COLLECTIBLE_ITEM_OPTIONS = SOURCE_BACKED_COLLECTIBLE_ITEM_OPTIONS.slice(0, 12);
+const TARGET_COLLECTIBLE_OPTIONS = SOURCE_BACKED_COLLECTIBLE_ITEM_OPTIONS;
+const SOURCE_BACKED_COLLECTIBLE_ITEM_ID_SET = new Set(SOURCE_BACKED_COLLECTIBLE_ITEM_OPTIONS.map((item) => item.id));
 
 function contextNumber(value: number | null | undefined, digits = 0): string {
   return typeof value === 'number' && Number.isFinite(value) ? formatNumber(value, digits) : '0';
@@ -72,6 +73,68 @@ type AccountContextSection = {
   fields: AccountContextField[];
   summary?: Array<[string, string]>;
 };
+
+type CollectibleSnapshotItem = ImportedCollectibleSnapshot['items'][number];
+type CollectibleVisualTone = 'target' | 'custom' | 'red' | 'gold' | 'review';
+
+const collectibleToneClass: Record<CollectibleVisualTone, string> = {
+  target: 'border-[color:var(--color-primary)] bg-[color:var(--color-primary)]/15 text-[color:var(--color-primary)]',
+  custom: 'border-orange-400/80 bg-orange-400/15 text-orange-200',
+  red: 'border-red-400/80 bg-red-500/15 text-red-200',
+  gold: 'border-amber-300/80 bg-amber-300/15 text-amber-100',
+  review: 'border-[color:var(--color-border)] bg-[color:var(--color-bg)] text-[color:var(--color-text-muted)]',
+};
+
+const turfColorTokens = [
+  { id: 'red', label: 'Red', className: 'border-red-400/80 bg-red-500/15 text-red-200' },
+  { id: 'yellow', label: 'Yellow', className: 'border-amber-300/80 bg-amber-300/15 text-amber-100' },
+  { id: 'black', label: 'Black', className: 'border-zinc-500/80 bg-zinc-950 text-zinc-200' },
+] as const;
+
+function collectibleInitials(name: string): string {
+  const words = name.split(/\s+/).filter(Boolean);
+  const initials = words.slice(0, 2).map((word) => word[0] ?? '').join('');
+  return (initials || name.slice(0, 2)).toUpperCase();
+}
+
+function collectibleTone(isTarget: boolean, snapshotItem: CollectibleSnapshotItem | undefined): CollectibleVisualTone {
+  if (isTarget) return 'target';
+  if ((snapshotItem?.customSetLevel ?? 0) > 0) return 'custom';
+  const stars = snapshotItem?.stars;
+  if (typeof stars === 'number' && stars >= 6) return 'red';
+  if (typeof stars === 'number' && stars > 0) return 'gold';
+  return 'review';
+}
+
+function collectibleStatusLabel({
+  isTarget,
+  locale,
+  snapshotItem,
+}: {
+  isTarget: boolean;
+  locale: string | undefined;
+  snapshotItem: CollectibleSnapshotItem | undefined;
+}): string {
+  if (isTarget) return collectibleItemReviewMarker(true, locale);
+  const parts: string[] = [];
+  if (typeof snapshotItem?.stars === 'number' && Number.isFinite(snapshotItem.stars)) {
+    parts.push(locale === 'ko' ? `${snapshotItem.stars}성` : `${snapshotItem.stars} stars`);
+  }
+  if (typeof snapshotItem?.customSetLevel === 'number' && snapshotItem.customSetLevel > 0) {
+    parts.push(locale === 'ko' ? `커스텀 ${snapshotItem.customSetLevel}` : `Custom ${snapshotItem.customSetLevel}`);
+  }
+  return parts.length > 0 ? parts.join(' / ') : collectibleItemReviewMarker(false, locale);
+}
+
+function buildCollectibleSnapshotById(snapshot: ImportedCollectibleSnapshot | null | undefined): Map<string, CollectibleSnapshotItem> {
+  const output = new Map<string, CollectibleSnapshotItem>();
+  for (const item of snapshot?.items ?? []) {
+    const row = COLLECTIBLE_ITEM_INDEX[item.itemIndex];
+    if (!row || !SOURCE_BACKED_COLLECTIBLE_ITEM_ID_SET.has(row.id)) continue;
+    output.set(row.id, item);
+  }
+  return output;
+}
 
 function normalizeControlValue(value: unknown): number {
   return typeof value === 'number' && Number.isFinite(value) ? value : 0;
@@ -130,6 +193,7 @@ export function AccountContextPanel({
   onNamedChange,
   locale,
   profileSlotId = 'endersEcho',
+  importedCollectibleSnapshot = null,
 }: {
   playerState: PlayerState;
   account: TechAccountContextInput;
@@ -137,6 +201,7 @@ export function AccountContextPanel({
   onNamedChange: (field: TechAccountContextNamedField, value: string) => void;
   locale?: string;
   profileSlotId?: TechProfileModeId;
+  importedCollectibleSnapshot?: ImportedCollectibleSnapshot | null;
 }) {
   const copy = getTechOptimizerCopy(locale);
   const labels = copy.account.labels;
@@ -145,7 +210,8 @@ export function AccountContextPanel({
   const deployedPetName = displayNameById('pet', PET_SCHEMA_INDEX, playerState.pet.deployed_pet_id, locale, copy.account.petFallback);
   const selectedCollectibleName = displayNameById('collectibleItem', SOURCE_BACKED_COLLECTIBLE_ITEM_OPTIONS, playerState.collectible.target_collectible_id, locale, copy.account.selectedCollectibleFallback);
   const selectedMountName = displayNameById('mount', MOUNT_SCHEMA_INDEX, account.selectedMountId, locale, copy.account.selectedMountFallback);
-  const collectionRows = COLLECTIBLE_SET_INDEX.slice(0, 3);
+  const collectionRows = COLLECTIBLE_SET_INDEX;
+  const collectibleSnapshotById = buildCollectibleSnapshotById(importedCollectibleSnapshot);
   const petRows = PET_SCHEMA_INDEX.slice(0, 5);
   const mountRows = MOUNT_SCHEMA_INDEX.slice(0, 3);
   const assistPet1Rows = petRows.filter((pet) => pet.id !== account.deployedPetId && pet.id !== account.assistPet2Id);
@@ -296,6 +362,7 @@ export function AccountContextPanel({
       fields: [
         { id: 'collectionSets', label: labels.setProgress, testId: 'tech-account-collection-sets', min: 0, max: 38 },
         { id: 'collectionStars', label: labels.setStars, testId: 'tech-account-collection-stars', min: 0 },
+        { id: 'collectionYellowStars', label: labels.setYellowStars, testId: 'tech-account-collection-yellow-stars', min: 0 },
         { id: 'customCollectionSets', label: labels.customSets, testId: 'tech-account-collection-custom-sets', min: 0 },
       ],
       summary: [
@@ -421,31 +488,48 @@ export function AccountContextPanel({
                     {copy.account.selectedTargetPrefix}: {selectedCollectibleName}
                   </span>
                 </label>
-                {collectionRows.map((set) => (
-                  <div
-                    key={set.id}
-                    className="grid grid-cols-[minmax(0,1fr)_auto] gap-2 rounded-md border border-[color:var(--color-border)]/60 p-2 text-xs"
-                    data-testid="tech-collection-named-row"
-                  >
-                    <span className="truncate text-[color:var(--color-text)]">{localizeTechEntityName('collectibleSet', set.display_name_en, locale)}</span>
-                    <span className="font-mono text-[color:var(--color-text-muted)]">{labels.set} {set.collectible_count}</span>
-                  </div>
-                ))}
-                <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3" data-testid="tech-collection-item-editor">
-                  {FEATURED_COLLECTIBLE_ITEM_OPTIONS.map((item) => (
-                    <button
-                      key={item.id}
-                      type="button"
-                      className="grid grid-cols-[minmax(0,1fr)_auto] gap-2 rounded-md border border-[color:var(--color-border)]/60 p-2 text-left text-xs"
-                      data-testid="tech-collection-item-row"
-                      onClick={() => onNamedChange('targetCollectibleId', item.id)}
+                <div className="grid max-h-52 gap-2 overflow-y-auto pr-1 sm:grid-cols-2" data-testid="tech-collection-set-editor">
+                  {collectionRows.map((set) => (
+                    <div
+                      key={set.id}
+                      className="grid grid-cols-[minmax(0,1fr)_auto] gap-2 rounded-md border border-[color:var(--color-border)]/60 p-2 text-xs"
+                      data-testid="tech-collection-named-row"
                     >
-                      <span className="truncate text-[color:var(--color-text)]">{localizeTechEntityName('collectibleItem', item.display_name_en, locale)}</span>
-                      <span className="font-mono text-[color:var(--color-text-muted)]">
-                        {collectibleItemReviewMarker(account.targetCollectibleId === item.id, locale)}
-                      </span>
-                    </button>
+                      <span className="truncate text-[color:var(--color-text)]">{localizeTechEntityName('collectibleSet', set.display_name_en, locale)}</span>
+                      <span className="font-mono text-[color:var(--color-text-muted)]">{labels.set} {set.collectible_count}</span>
+                    </div>
                   ))}
+                </div>
+                <div className="grid max-h-72 gap-2 overflow-y-auto pr-1 sm:grid-cols-2 xl:grid-cols-3" data-testid="tech-collection-item-editor">
+                  {SOURCE_BACKED_COLLECTIBLE_ITEM_OPTIONS.map((item) => {
+                    const snapshotItem = collectibleSnapshotById.get(item.id);
+                    const isTarget = account.targetCollectibleId === item.id;
+                    const tone = collectibleTone(isTarget, snapshotItem);
+                    const itemName = localizeTechEntityName('collectibleItem', item.display_name_en, locale);
+                    return (
+                      <button
+                        key={item.id}
+                        type="button"
+                        className={`grid min-h-[44px] grid-cols-[2rem_minmax(0,1fr)_auto] items-center gap-2 rounded-md border p-2 text-left text-xs ${
+                          isTarget ? 'border-[color:var(--color-primary)]/70 bg-[color:var(--color-primary)]/10' : 'border-[color:var(--color-border)]/60'
+                        }`}
+                        data-testid="tech-collection-item-row"
+                        onClick={() => onNamedChange('targetCollectibleId', item.id)}
+                      >
+                        <span
+                          aria-hidden="true"
+                          className={`inline-flex h-8 w-8 items-center justify-center rounded-md border font-mono text-[10px] font-semibold ${collectibleToneClass[tone]}`}
+                          data-testid="tech-collection-item-icon"
+                        >
+                          {collectibleInitials(item.display_name_en)}
+                        </span>
+                        <span className="truncate text-[color:var(--color-text)]">{itemName}</span>
+                        <span className="font-mono text-[color:var(--color-text-muted)]" data-testid="tech-collection-item-status">
+                          {collectibleStatusLabel({ isTarget, locale, snapshotItem })}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             ) : null}
@@ -620,17 +704,40 @@ export function AccountContextPanel({
               </div>
             ) : null}
             {section.title === labels.lunarMine ? (
-              <div className="mt-2 grid grid-cols-5 gap-2" data-testid="tech-lme-turf-presets">
-                {[0, 3, 6, 9, 12].map((value) => (
-                  <button
-                    key={value}
-                    type="button"
-                    className="rounded-md border border-[color:var(--color-border)]/60 px-2 py-1 text-xs"
-                    onClick={() => onChange('lmeTurf', value)}
-                  >
-                    {lmeTurfPresetLabel(value, locale)}
-                  </button>
-                ))}
+              <div className="mt-2 grid gap-2" data-testid="tech-lme-turf-visual">
+                <div className="grid grid-cols-3 gap-2" data-testid="tech-lme-turf-color-legend">
+                  {turfColorTokens.map((token) => (
+                    <span
+                      key={token.id}
+                      className={`inline-flex min-h-[32px] items-center justify-center rounded-md border px-2 py-1 font-mono text-[10px] uppercase ${token.className}`}
+                      data-testid="tech-lme-turf-color-token"
+                    >
+                      {locale === 'ko'
+                        ? token.id === 'red'
+                          ? '빨강'
+                          : token.id === 'yellow'
+                            ? '노랑'
+                            : '검정'
+                        : token.label}
+                    </span>
+                  ))}
+                </div>
+                <div className="grid grid-cols-5 gap-2" data-testid="tech-lme-turf-presets">
+                  {[0, 3, 6, 9, 12].map((value) => (
+                    <button
+                      key={value}
+                      type="button"
+                      className={`rounded-md border px-2 py-1 text-xs ${
+                        value === account.lmeTurf
+                          ? 'border-[color:var(--color-primary)] bg-[color:var(--color-primary)]/10 text-[color:var(--color-primary)]'
+                          : 'border-[color:var(--color-border)]/60'
+                      }`}
+                      onClick={() => onChange('lmeTurf', value)}
+                    >
+                      {lmeTurfPresetLabel(value, locale)}
+                    </button>
+                  ))}
+                </div>
               </div>
             ) : null}
             <div className="mt-2 grid gap-2 sm:grid-cols-2">

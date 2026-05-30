@@ -649,6 +649,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-collection-named-editor')).toBeVisible();
     await expect(page.getByTestId('tech-collection-named-row').first()).toContainText(/Collection|Event|Set/);
     await expect(page.getByTestId('tech-account-collection-stars')).toBeVisible();
+    await expect(page.getByTestId('tech-account-collection-yellow-stars')).toBeVisible();
     await expect(page.getByTestId('tech-account-collection-custom-sets')).toBeVisible();
   });
 
@@ -883,9 +884,21 @@ test.describe('TD-11 — Tech optimizer route', () => {
   test('shows a compact per-item collectible editor', async ({ page }) => {
     await expect(page.getByTestId('tech-collection-item-editor')).toBeVisible();
     await expect(page.getByTestId('tech-collection-item-row').first()).toBeVisible();
+    await expect(page.getByTestId('tech-collection-named-row')).toHaveCount(38);
+    await expect(page.getByTestId('tech-collection-item-row')).toHaveCount(76);
+    await expect(page.getByTestId('tech-collection-item-icon').first()).toBeVisible();
     await page.getByTestId('tech-collection-target-select').selectOption('atomicMech');
     await expect(page.getByTestId('tech-collection-item-editor')).toContainText('Atomic Mech');
+    await expect(page.getByTestId('tech-collection-item-editor')).toContainText('Virgo Starlight');
     await expect(page.getByTestId('tech-collection-selected-target')).toContainText('Atomic Mech');
+  });
+
+  test('shows LME turf color tokens with the turf presets', async ({ page }) => {
+    await expect(page.getByTestId('tech-lme-turf-visual')).toBeVisible();
+    await expect(page.getByTestId('tech-lme-turf-color-token')).toHaveCount(3);
+    await expect(page.getByTestId('tech-lme-turf-color-legend')).toContainText('Red');
+    await expect(page.getByTestId('tech-lme-turf-color-legend')).toContainText('Yellow');
+    await expect(page.getByTestId('tech-lme-turf-color-legend')).toContainText('Black');
   });
 
   test('keeps default search usable without exposing diagnostic controls', async ({ page }) => {

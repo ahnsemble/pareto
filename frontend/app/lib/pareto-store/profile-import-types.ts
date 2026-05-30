@@ -87,6 +87,7 @@ type ProductProfileAccountImportShape = {
   otherworldPetSyncRate: number;
   collectionSets: number;
   collectionStars: number;
+  collectionYellowStars: number;
   customCollectionSets: number;
   survivorLevel: number;
   survivorStar: number;

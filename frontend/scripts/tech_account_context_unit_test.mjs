@@ -121,6 +121,14 @@ assert.match(accountPanelSource, /SOURCE_BACKED_COLLECTIBLE_ITEM_OPTIONS/);
 assert.match(accountPanelSource, /CATALOG_ONLY_COLLECTIBLE_ITEM_IDS/);
 assert.match(accountPanelSource, /!item\.id\.startsWith\('event'\)/);
 assert.doesNotMatch(accountPanelSource, /COLLECTIBLE_ITEM_INDEX\.slice\(\s*0,\s*(12|20)\s*\)\.map/);
+assert.doesNotMatch(accountPanelSource, /SOURCE_BACKED_COLLECTIBLE_ITEM_OPTIONS\.slice\(\s*0,\s*12\s*\)/);
+assert.doesNotMatch(accountPanelSource, /COLLECTIBLE_SET_INDEX\.slice\(\s*0,\s*3\s*\)/);
+assert.match(accountPanelSource, /importedCollectibleSnapshot/, 'collection editor must use imported collectible status where available');
+assert.match(accountPanelSource, /tech-collection-item-icon/, 'collection item rows must expose visual icon substitutes');
+assert.match(accountPanelSource, /tech-collection-item-status/, 'collection item rows must expose per-item status text');
+assert.match(accountPanelSource, /collectibleToneClass/, 'collection item rows must include source-safe colored state tokens');
+assert.match(accountPanelSource, /tech-account-collection-yellow-stars/, 'collection context must expose yellow star totals separately from red stars');
+assert.match(accountPanelSource, /tech-lme-turf-color-token/, 'LME turf context must expose red/yellow/black visual tokens');
 
 const koWalletFields = localizeTechResourceWalletFields('ko');
 assert.equal(koWalletFields[0].label, '기술 공명 칩');

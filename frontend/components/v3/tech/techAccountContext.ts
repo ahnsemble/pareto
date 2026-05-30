@@ -30,6 +30,7 @@ export type TechAccountContextInput = {
   otherworldPetSyncRate: number;
   collectionSets: number;
   collectionStars: number;
+  collectionYellowStars: number;
   customCollectionSets: number;
   survivorLevel: number;
   survivorStar: number;
@@ -111,6 +112,7 @@ export const DEFAULT_TECH_ACCOUNT_CONTEXT: TechAccountContextInput = {
   otherworldPetSyncRate: 0,
   collectionSets: 38,
   collectionStars: 0,
+  collectionYellowStars: 0,
   customCollectionSets: 0,
   survivorLevel: 120,
   survivorStar: 6,
@@ -707,6 +709,7 @@ export function playerStateWithAccountContext(playerState: PlayerState, account:
       ...playerState.collectible,
       edition_progress: clampInteger(account.collectionSets, 0, 38),
       red_star_total: Math.max(0, Math.trunc(account.collectionStars)),
+      yellow_star_total: Math.max(0, Math.trunc(account.collectionYellowStars)),
       custom_collection_slots: Math.max(0, Math.trunc(account.customCollectionSets)),
       target_collectible_id: account.targetCollectibleId,
     },
