@@ -38,6 +38,8 @@ assert.match(impactTable, /copy\.impact\.empty/, 'impact panel must have an empt
 assert.match(copy, /empty: 'Run an imported profile/, 'English impact copy must explain the empty state');
 assert.match(copy, /empty: '가져온 프로필을 계산하면/, 'Korean impact copy must explain the empty state');
 assert.match(accountPanel, /tech-account-guild-expedition-testaments/, 'guild expedition context must expose a dedicated debuff input');
+assert.match(accountPanel, /type="range"/, 'bounded account context fields must expose slider controls');
+assert.match(accountPanel, /\$\{field\.testId\}-slider/, 'account context sliders must keep stable per-field test ids');
 assert.match(accountPanel, /localizeTechEntityName/, 'account panel must localize named collection and account entities');
 assert.doesNotMatch(accountPanel, /\{item\.display_name_en\}/, 'collectible item rows must not render English names directly');
 assert.doesNotMatch(accountPanel, /\{set\.display_name_en\}/, 'collectible set rows must not render English names directly');

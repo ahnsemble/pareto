@@ -73,6 +73,56 @@ type AccountContextSection = {
   summary?: Array<[string, string]>;
 };
 
+function normalizeControlValue(value: unknown): number {
+  return typeof value === 'number' && Number.isFinite(value) ? value : 0;
+}
+
+function AccountNumberControl({
+  field,
+  onChange,
+  value,
+}: {
+  field: AccountContextField;
+  value: number;
+  onChange: (field: keyof TechAccountContextInput, value: number) => void;
+}) {
+  const step = field.step ?? 1;
+  const hasSlider = typeof field.max === 'number' && Number.isFinite(field.max);
+  const sliderMax = hasSlider ? Math.max(field.max ?? field.min, value, field.min) : undefined;
+  const sliderValue = hasSlider && sliderMax !== undefined ? Math.min(Math.max(value, field.min), sliderMax) : value;
+  const setValue = (nextValue: number) => onChange(field.id, Number.isFinite(nextValue) ? Math.max(field.min, nextValue) : field.min);
+
+  return (
+    <label className="block text-sm text-[color:var(--color-text)]">
+      <span className="text-xs text-[color:var(--color-text-muted)]">{field.label}</span>
+      <input
+        className={inputClass + ' mt-1'}
+        data-testid={field.testId}
+        min={field.min}
+        max={field.max}
+        step={step}
+        type="number"
+        value={value}
+        onChange={(event) => setValue(Number(event.target.value))}
+      />
+      {hasSlider && sliderMax !== undefined ? (
+        <input
+          aria-label={`${field.label} slider`}
+          className="mt-2 h-2 w-full cursor-pointer"
+          data-testid={`${field.testId}-slider`}
+          min={field.min}
+          max={sliderMax}
+          step={step}
+          type="range"
+          value={sliderValue}
+          onChange={(event) => setValue(Number(event.target.value))}
+          style={{ accentColor: 'var(--color-primary)' }}
+        />
+      ) : null}
+    </label>
+  );
+}
+
 export function AccountContextPanel({
   playerState,
   account,
@@ -585,19 +635,12 @@ export function AccountContextPanel({
             ) : null}
             <div className="mt-2 grid gap-2 sm:grid-cols-2">
               {section.fields.map((field) => (
-                <label key={field.id} className="block text-sm text-[color:var(--color-text)]">
-                  <span className="text-xs text-[color:var(--color-text-muted)]">{field.label}</span>
-                  <input
-                    className={inputClass + ' mt-1'}
-                    data-testid={field.testId}
-                    min={field.min}
-                    max={field.max}
-                    step={field.step ?? 1}
-                    type="number"
-                    value={account[field.id]}
-                    onChange={(event) => onChange(field.id, Math.max(field.min, Number(event.target.value)))}
-                  />
-                </label>
+                <AccountNumberControl
+                  key={field.id}
+                  field={field}
+                  value={normalizeControlValue(account[field.id])}
+                  onChange={onChange}
+                />
               ))}
             </div>
             {section.title === labels.equipmentForging ? (
@@ -626,19 +669,12 @@ export function AccountContextPanel({
                     </label>
                     <div className="mt-2 grid gap-2 sm:grid-cols-4">
                       {slot.fields.map((field) => (
-                        <label key={field.id} className="block text-sm text-[color:var(--color-text)]">
-                          <span className="text-xs text-[color:var(--color-text-muted)]">{field.label}</span>
-                          <input
-                            className={inputClass + ' mt-1'}
-                            data-testid={field.testId}
-                            min={field.min}
-                            max={field.max}
-                            step={1}
-                            type="number"
-                            value={account[field.id]}
-                            onChange={(event) => onChange(field.id, Math.max(field.min, Number(event.target.value)))}
-                          />
-                        </label>
+                        <AccountNumberControl
+                          key={field.id}
+                          field={field}
+                          value={normalizeControlValue(account[field.id])}
+                          onChange={onChange}
+                        />
                       ))}
                     </div>
                   </div>
