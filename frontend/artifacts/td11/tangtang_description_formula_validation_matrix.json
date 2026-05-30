@@ -8237,7 +8237,7 @@
         "This atom must not change Tangtang scoring until direct description-derived comparison produces a divergence.",
         "SIO Tools-equivalent stage mapping only; not an independently captured first-party in-game formula.",
         "Source-derived rows must not be promoted to direct in-game-description-verified evidence.",
-        "Formula input channel(s) outside SIO_STATS_FIXED_ORDER: atkBase.",
+        "Formula input channel(s) outside TECH_STATS_FIXED_ORDER: atkBase.",
         "Attack aggregation depends on upstream compact stat reconstruction and is not a standalone in-game text claim."
       ],
       "comparisonVerdict": "insufficient-direct-description-evidence",

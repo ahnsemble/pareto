@@ -212,7 +212,7 @@ function createWorkerContext(sourceDir, posted) {
     BroadcastChannel: BroadcastChannelStub,
     localStorage: storage,
     sessionStorage: storage,
-    document: { cookie: '' },
+    document: { cookie: '', hasFocus: () => false },
     addEventListener() {},
     removeEventListener() {},
   };
@@ -241,6 +241,11 @@ function patchBaseStatComponentCapture(code) {
       needle: 'e7=(0,a.x)([',
       callStart: 'e7=(0,a.x)(',
       replacement: 'e7=(0,a.x)(__llParts)',
+    },
+    {
+      needle: 'e9=(0,c.x)([',
+      callStart: 'e9=(0,c.x)(',
+      replacement: 'e9=(0,c.x)(__llParts)',
     },
   ];
   const candidate = candidates
@@ -344,6 +349,29 @@ async function loadPatchedWorker(sourceDir, posted) {
       scoreReplacement:
         'return(()=>{(0,R.IE)(ra);__recordLmStatSnapshot("afterEvolvePassivesPostprocess");let __score=(0,W.f)(rl,rn,c,a,e1.calcMode,ri,s,eN),__trace={score:__score,mask:r,calcMode:e1.calcMode,gameMode:eN,attackMeta:{...rn},damageFactor:c,ceDamage:a,baseStats:{...__baseStatsBeforeTech},baseStatComponents:self.__traceLmBaseComponentsEnabled?__llParts.map(e=>e&&typeof e==="object"?{...e}:e):void 0,statSnapshots:self.__traceLmStatAttributionEnabled?__lmStatSnapshots.map(e=>({label:e.label,stats:{...e.stats}})):void 0,techStageSnapshots:self.__traceLmTechStageEnabled&&self.__activeLmTechStageSnapshots?self.__activeLmTechStageSnapshots.map(e=>({tech:e.tech,mode:e.mode,rarity:e.rarity,resonance:e.resonance,overload:e.overload,active:e.active,beforeStats:{...e.beforeStats},stats:{...e.stats}})):void 0,stats:{...rl},skills:{...ri},techs:JSON.parse(JSON.stringify(e)),passivePools:Array.from(s||[])};self.__lmTraces=self.__lmTraces||[];self.__lmTraces.push(__trace);if(__score>((self.__bestLmTrace&&self.__bestLmTrace.score)||0))self.__bestLmTrace=__trace;return __score})()',
     },
+    {
+      techStageStartNeedle:
+        'function Q(e,t){var r,l,o,n,s,c;if(!(null==t?void 0:t.deployed))return;let{rarity:i=p.LZ.Legend,resonance:u,overload:y}=t,b=null!=(n=t.mode)?n:m.zD[e],D=!!M[b],A=null==(r=f.c.techs[e])?void 0:r[b];',
+      techStageStartReplacement:
+        'function Q(e,t){var r,l,o,n,s,c;if(!(null==t?void 0:t.deployed))return;let __beforeStats=self.__traceLmTechStageEnabled?{...N}:void 0;let{rarity:i=p.LZ.Legend,resonance:u,overload:y}=t,b=null!=(n=t.mode)?n:m.zD[e],D=!!M[b],A=null==(r=f.c.techs[e])?void 0:r[b];',
+      techStageEndNeedle: 'P[b]=w,G+=w}',
+      techStageEndReplacement:
+        'P[b]=w,G+=w,self.__traceLmTechStageEnabled&&self.__activeLmTechStageSnapshots&&self.__activeLmTechStageSnapshots.push({tech:e,mode:b,rarity:i,resonance:u,overload:y,active:D,beforeStats:__beforeStats,stats:{...N}})}',
+      baseNeedle:
+        'let{ceDamage:o,passivePools:n}=D({evolvePassives:ts,cooldownReduction:l,techs:e,skills:td,collectibles:eV,upgradedCollectibles:e6,settings:e3,gameMode:eP,eeOmnipower:eI,eeSkills:eG,staticCache:e7,stableTechEntries:r?ep:void 0},tn);',
+      baseReplacement:
+        'let __baseStatsBeforeTech={...tn},__lmStatSnapshots=[],__recordLmStatSnapshot=e=>{self.__traceLmStatAttributionEnabled&&__lmStatSnapshots.push({label:e,stats:{...tn}})};self.__activeLmTechStageSnapshots=self.__traceLmTechStageEnabled?[]:void 0;__recordLmStatSnapshot("beforeTech");let{ceDamage:o,passivePools:n}=D({evolvePassives:ts,cooldownReduction:l,techs:e,skills:td,collectibles:eV,upgradedCollectibles:e6,settings:e3,gameMode:eP,eeOmnipower:eI,eeSkills:eG,staticCache:e7,stableTechEntries:r?ep:void 0},tn);__recordLmStatSnapshot("afterTech");',
+      activeSkillNeedle:
+        'tn.cooldownReduction=l,e5>=7&&((td["Rocket Mode"]||td.Rocket)&&(tn.lacerationUptime=1),e5>=8&&td["Laser Mode"]&&(tn.lacerationUptime=1),e5>=10&&(td["Drone Mode"]||td.Drone)&&(tn.lacerationUptime=1));let s=0;',
+      activeSkillReplacement:
+        'tn.cooldownReduction=l,__recordLmStatSnapshot("afterCooldown"),e5>=7&&((td["Rocket Mode"]||td.Rocket)&&(tn.lacerationUptime=1),e5>=8&&td["Laser Mode"]&&(tn.lacerationUptime=1),e5>=10&&(td["Drone Mode"]||td.Drone)&&(tn.lacerationUptime=1));__recordLmStatSnapshot("afterActiveSkillPostprocess");let s=0;',
+      equipmentNeedle: '(0,h.Dp)(tn,to[s]),(0,N.zP)(ti);',
+      equipmentReplacement:
+        '(0,h.Dp)(tn,to[s]),__recordLmStatSnapshot("afterEquipmentTransmute"),(0,N.zP)(ti),__recordLmStatSnapshot("afterEquipmentDynamicSpecials");',
+      scoreNeedle: 'return(0,N.IE)(tu),(0,W.f)(tn,tc,a,c,e3.calcMode,td,n,eP)',
+      scoreReplacement:
+        'return(()=>{(0,N.IE)(tu);__recordLmStatSnapshot("afterEvolvePassivesPostprocess");let __score=(0,W.f)(tn,tc,a,c,e3.calcMode,td,n,eP),__trace={score:__score,mask:t,calcMode:e3.calcMode,gameMode:eP,attackMeta:{...tc},damageFactor:a,ceDamage:c,baseStats:{...__baseStatsBeforeTech},baseStatComponents:self.__traceLmBaseComponentsEnabled?__llParts.map(e=>e&&typeof e==="object"?{...e}:e):void 0,statSnapshots:self.__traceLmStatAttributionEnabled?__lmStatSnapshots.map(e=>({label:e.label,stats:{...e.stats}})):void 0,techStageSnapshots:self.__traceLmTechStageEnabled&&self.__activeLmTechStageSnapshots?self.__activeLmTechStageSnapshots.map(e=>({tech:e.tech,mode:e.mode,rarity:e.rarity,resonance:e.resonance,overload:e.overload,active:e.active,beforeStats:{...e.beforeStats},stats:{...e.stats}})):void 0,stats:{...tn},skills:{...td},techs:JSON.parse(JSON.stringify(e)),passivePools:Array.from(n||[])};self.__lmTraces=self.__lmTraces||[];self.__lmTraces.push(__trace);if(__score>((self.__bestLmTrace&&self.__bestLmTrace.score)||0))self.__bestLmTrace=__trace;return __score})()',
+    },
   ];
   const patchSet = patchSets.find(
     (item) =>
@@ -364,7 +392,15 @@ async function loadPatchedWorker(sourceDir, posted) {
     .replace(patchSet.activeSkillNeedle, patchSet.activeSkillReplacement)
     .replace(patchSet.equipmentNeedle, patchSet.equipmentReplacement)
     .replace(patchSet.scoreNeedle, patchSet.scoreReplacement);
-  code = code.replace('_N_E=t.x()', 'self.__webpack_require__=t;self.__webpack_ready__=t.x()');
+  if (process.env.TRACE_LM_TOP_ONLY === '1') {
+    code = code.replaceAll(
+      'self.__lmTraces=self.__lmTraces||[];self.__lmTraces.push(__trace);if(__score>((self.__bestLmTrace&&self.__bestLmTrace.score)||0))self.__bestLmTrace=__trace;return __score})()',
+      'self.__lmTraces=self.__lmTraces||[];if(__score>((self.__bestLmTrace&&self.__bestLmTrace.score)||0)){self.__bestLmTrace=__trace;self.__lmTraces=[__trace]}return __score})()',
+    );
+  }
+  code = code
+    .replace('_N_E=t.x()', 'self.__webpack_require__=t;self.__webpack_ready__=t.x()')
+    .replace('_N_E=r.x()', 'self.__webpack_require__=r;self.__webpack_ready__=r.x()');
   vm.runInContext(code, context, { filename: sourcePath });
   await context.__webpack_ready__;
   return context;
@@ -541,6 +577,11 @@ async function traceCase(sourceDir, workerCase) {
       meta: expandedConfig.meta,
       settings: expandedConfig.settings,
       skills: expandedConfig.skills,
+      petSkills: expandedConfig.petSkills,
+      pets: expandedConfig.pets,
+      mounts: expandedConfig.mounts,
+      collectibles: expandedConfig.collectibles,
+      customSets: expandedConfig.customSets,
       techsOptimizer: expandedConfig.techsOptimizer,
     },
     exportedSkillOrder: catalog.J3,

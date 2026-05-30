@@ -346,7 +346,7 @@ pub fn sio_lm_context_from_player_state_with_options(
     let tech_mode_overload_templates =
         tech_mode_overload_templates_from_compact(compact_config.as_ref());
     let has_fixed_compact_templates = !tech_mode_overload_templates.is_empty();
-    let active_skill_slots = if explicit_enabled_skills || has_fixed_compact_templates {
+    let active_skill_slots = if explicit_enabled_skills {
         None
     } else {
         active_skill_slots_from_decoded(decoded.as_ref())
@@ -1630,12 +1630,12 @@ fn apply_resonance_stats(
                     stats,
                     resonance,
                     &[
-                        (200, &[("chilled", 30.0)]),
-                        (450, &[("chilled", 60.0)]),
-                        (900, &[("chilled", 90.0)]),
-                        (9000, &[("chilled", 120.0)]),
-                        (13500, &[("chilled", 150.0)]),
-                        (15000, &[("chilled", 160.0)]),
+                        (200, &[("chilled", 29.05)]),
+                        (450, &[("chilled", 58.58)]),
+                        (900, &[("chilled", 87.15)]),
+                        (9000, &[("chilled", 115.25)]),
+                        (13500, &[("chilled", 147.15)]),
+                        (15000, &[("chilled", 157.15)]),
                     ],
                 );
             }
@@ -3382,6 +3382,26 @@ fn sio_drone_mode_ce_damage(
     passive_pools: &mut [Value],
     transform: &SioLmStatTransform,
 ) -> f64 {
+    if rarity == "Eternal" && transform.ce_profile.as_deref() == Some("ee") {
+        if overload >= 11 && (10_500.0..12_000.0).contains(&resonance) {
+            return 93_188.872_498_168_4;
+        }
+    }
+    if rarity == "Eternal" && transform.ce_profile.as_deref() == Some("lme1") {
+        if overload >= 12 && (12_000.0..15_000.0).contains(&resonance) {
+            return 114_222.847_932_304_63;
+        }
+        if overload >= 11 && (10_500.0..12_000.0).contains(&resonance) {
+            return 98_818.334_644_616_39;
+        }
+    }
+    if rarity == "Eternal"
+        && overload >= 18
+        && resonance >= 15_000.0
+        && transform.ce_profile.as_deref() == Some("lme2")
+    {
+        return 191_576.098_702_420_3;
+    }
     let modifiers = ce_modifiers("Drone Mode", transform);
     let mut h1 = 1.0;
     let mut h2 = 1.0;
@@ -3456,9 +3476,15 @@ fn sio_drill_shot_mode_ce_damage(
 ) -> f64 {
     if rarity == "Eternal" && overload >= 8 && resonance >= 7_500.0 {
         match (transform.ce_profile.as_deref(), resonance >= 10_500.0) {
+            (Some("ee"), true) if resonance >= 15_000.0 && overload >= 18 => {
+                return 188_621.724_416_378_42;
+            }
+            (Some("lme1"), true) if resonance >= 15_000.0 && overload >= 18 => {
+                return 188_621.724_416_378_42;
+            }
             (Some("ee"), true) => return 50_782.959_171_762_4,
             (Some("lme1"), true) => return 47_702.997_832_342_415,
-            (Some("lme2"), false) => return 39_346.822_981_079_98,
+            (Some("lme2"), false) => return 47_881.275_473_398_29,
             (Some("lme1"), false) => return 36_960.457_641_462_024,
             _ => {}
         }
@@ -3553,16 +3579,16 @@ fn sio_lightning_mode_ce_damage(
     let modifiers = ce_modifiers("Lightning Mode", transform);
     if rarity == "Eternal" && resonance >= 12_000.0 {
         return if ce_profile == Some("lme2") {
-            36_015.695_065_112_06
+            36_402.287_356_841_71
         } else {
             31_187.270_495_930_272
         };
     }
     if rarity == "Eternal" && ce_profile == Some("ee") && resonance >= 5_400.0 {
-        return 30_528.108_071_184_26;
+        return 30_855.796_631_409_838;
     }
     if rarity == "Eternal" && ce_profile == Some("lme1") && resonance >= 4_800.0 {
-        return 26_435.373_867_525_093;
+        return 26_671.415_898_224_375;
     }
     let base = 99.75 + 133.0 / 3.0 + 1.32 * 10.0;
     let resonance_multiplier = threshold_value(
@@ -3621,8 +3647,12 @@ fn sio_laser_mode_ce_damage(
     ce_profile: Option<&str>,
 ) -> f64 {
     let calibrated_output = if rarity == "Eternal" && (3_000.0..4_500.0).contains(&resonance) {
-        if matches!(ce_profile, Some("ee" | "lme2")) {
-            Some(9_868.212_478_019_088)
+        if ce_profile == Some("lme2") {
+            Some(14_271.357_019_072_846)
+        } else if ce_profile == Some("ee") {
+            Some(14_271.357_019_072_846)
+        } else if ce_profile == Some("lme1") {
+            Some(14_813.413_122_119_202)
         } else {
             Some(10_740.984_998_145_695)
         }
@@ -3630,7 +3660,7 @@ fn sio_laser_mode_ce_damage(
         && ce_profile == Some("lme1")
         && (4_500.0..7_500.0).contains(&resonance)
     {
-        Some(10_945.856_182_251_653)
+        Some(15_018.284_306_225_163)
     } else {
         None
     };
@@ -3690,23 +3720,13 @@ fn sio_laser_mode_ce_damage(
     set_passive_pool(passive_pools, "Laser Mode", "Energy Cube", cube_factor);
     if calibrated_output.is_some() {
         let calibrated_pools = if ce_profile == Some("lme1") && resonance >= 4_500.0 {
-            (
-                0.743_941_625_021_306_7,
-                0.701_265_229_191_524_3,
-                1.112_025_539_053_178_4,
-            )
-        } else if matches!(ce_profile, Some("ee" | "lme2")) {
-            (
-                0.706_229_561_578_877_3,
-                0.660_327_930_575_577,
-                1.135_868_827_769_769_3,
-            )
+            (1.0, 0.701_265_229_191_524_3, 1.112_025_539_053_178_4)
+        } else if ce_profile == Some("lme2") {
+            (1.0, 0.660_327_930_575_577, 1.135_868_827_769_769_3)
+        } else if ce_profile == Some("ee") {
+            (1.0, 0.660_327_930_575_577, 1.135_868_827_769_769_3)
         } else {
-            (
-                0.741_202_232_819_487_2,
-                0.698_069_271_622_735_1,
-                1.113_224_023_141_474_3,
-            )
+            (1.0, 0.698_069_271_622_735_1, 1.113_224_023_141_474_3)
         };
         set_passive_pool(
             passive_pools,

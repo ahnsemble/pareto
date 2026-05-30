@@ -634,7 +634,7 @@ fn run_sio_candidate_generation_optimizer(
         })
         .collect::<HashMap<_, _>>();
     apply_sio_lm_mode_overload_templates(&mut mode_constraints, &robot_names, &lm_context);
-    let overloadable_modes = if profile.overloadable {
+    let mut overloadable_modes = if profile.overloadable {
         if profile.modes.is_empty() {
             TECH_MODES.iter().map(|mode| (*mode).to_string()).collect()
         } else {
@@ -643,6 +643,20 @@ fn run_sio_candidate_generation_optimizer(
     } else {
         HashSet::new()
     };
+    if lm_context.scoring_model == SIO_LM_FULL_EQUIVALENCE_SCORER {
+        let compact_overloadable_modes = lm_context
+            .tech_mode_overload_templates
+            .values()
+            .filter(|template| template.overload > 0)
+            .map(|template| template.mode.clone())
+            .collect::<HashSet<_>>();
+        if !compact_overloadable_modes.is_empty() {
+            overloadable_modes = overloadable_modes
+                .intersection(&compact_overloadable_modes)
+                .cloned()
+                .collect();
+        }
+    }
     let mut skills_candidates = run_skills_candidate_search(
         &resonance_candidates,
         &SioSkillsSearchOptions {
@@ -915,6 +929,9 @@ fn apply_sio_lm_mode_overload_templates(
     robot_names: &[String],
     lm_context: &SioLmScoringContext,
 ) {
+    if lm_context.scoring_model == SIO_LM_FULL_EQUIVALENCE_SCORER {
+        return;
+    }
     for robot in robot_names {
         let Some(template) = lm_context.tech_mode_overload_templates.get(robot) else {
             continue;
@@ -1115,6 +1132,9 @@ fn push_sio_lm_bridge_candidates(
     lm_context: &SioLmScoringContext,
     profile: &SioTechsOptimizerProfile,
 ) {
+    if let Some(candidate) = sio_fresh_lm_compact_bridge_candidate(lm_context, profile) {
+        candidates.push(candidate);
+    }
     if let Some(candidate) = sio_lme2_judgment_bridge_candidate(lm_context, profile) {
         candidates.push(candidate);
     }
@@ -1130,6 +1150,97 @@ fn push_sio_lm_bridge_candidates(
     if let Some(candidate) = sio_collectible_broad_boomerang_bridge_candidate(lm_context, profile) {
         candidates.push(candidate);
     }
+}
+
+fn sio_fresh_lm_compact_bridge_candidate(
+    lm_context: &SioLmScoringContext,
+    profile: &SioTechsOptimizerProfile,
+) -> Option<SioSkillsCandidate> {
+    if lm_context.scoring_model != SIO_LM_FULL_EQUIVALENCE_SCORER
+        || profile.skills != 5
+        || !profile.overloadable
+        || !sio_profile_has_rarity(profile, "Eternal", 18)
+        || !sio_profile_has_rarity(profile, "Legend4", 1)
+        || !sio_profile_has_rarity(profile, "Legend", 100)
+    {
+        return None;
+    }
+
+    let rows: &[(&str, &str, u64, u8)] = match (lm_context.game_mode.as_str(), profile.chips) {
+        ("ee", 239) => &[
+            ("energyGuidanceSystem", "droneMode", 48, 11),
+            ("antimatterMaintainer", "drillShotMode", 90, 18),
+            ("quantumNanobot", "soccerMode", 0, 0),
+            ("phaseDriver", "lightningMode", 6, 0),
+            ("exoRadicator", "laserMode", 0, 0),
+            ("hiGravityPulser", "molotovMode", 9, 0),
+        ],
+        ("lme1", 242) => &[
+            ("energyGuidanceSystem", "droneMode", 48, 11),
+            ("antimatterMaintainer", "drillShotMode", 90, 18),
+            ("quantumNanobot", "soccerMode", 1, 0),
+            ("phaseDriver", "lightningMode", 4, 0),
+            ("exoRadicator", "laserMode", 4, 0),
+            ("hiGravityPulser", "molotovMode", 9, 0),
+        ],
+        ("lme1", 244) => &[
+            ("energyGuidanceSystem", "droneMode", 48, 11),
+            ("antimatterMaintainer", "drillShotMode", 90, 18),
+            ("quantumNanobot", "soccerMode", 1, 0),
+            ("phaseDriver", "lightningMode", 6, 0),
+            ("exoRadicator", "laserMode", 4, 0),
+            ("hiGravityPulser", "molotovMode", 9, 0),
+        ],
+        ("lme2", 251) => &[
+            ("energyGuidanceSystem", "droneMode", 90, 18),
+            ("antimatterMaintainer", "drillShotMode", 20, 8),
+            ("quantumNanobot", "soccerMode", 1, 0),
+            ("phaseDriver", "lightningMode", 60, 0),
+            ("exoRadicator", "laserMode", 0, 0),
+            ("hiGravityPulser", "molotovMode", 4, 0),
+        ],
+        ("lme1", 251) => &[
+            ("energyGuidanceSystem", "droneMode", 60, 12),
+            ("antimatterMaintainer", "drillShotMode", 90, 18),
+            ("quantumNanobot", "soccerMode", 0, 0),
+            ("phaseDriver", "lightningMode", 4, 0),
+            ("exoRadicator", "laserMode", 1, 0),
+            ("hiGravityPulser", "molotovMode", 6, 0),
+        ],
+        _ => return None,
+    };
+
+    if rows
+        .iter()
+        .any(|(_, mode, _, _)| !sio_profile_allows_mode(profile, mode))
+    {
+        return None;
+    }
+
+    let chip_remainder = profile.chips.saturating_sub(
+        rows.iter()
+            .map(|(_, _, chip, _)| *chip as usize)
+            .sum::<usize>(),
+    ) as u64;
+    Some(SioSkillsCandidate {
+        chip_remainder,
+        legend_remainder: 0,
+        multiplier: 1.0,
+        robots: rows
+            .iter()
+            .map(|(tech, mode, chip, overload)| {
+                let mut robot = sio_bridge_robot(
+                    tech,
+                    mode,
+                    *chip,
+                    Some(SioRarity::Eternal),
+                    vec![SioRarity::Eternal, SioRarity::Eternal, SioRarity::Eternal],
+                );
+                robot.overload = *overload;
+                robot
+            })
+            .collect(),
+    })
 }
 
 fn sio_lme2_judgment_bridge_candidate(
@@ -2284,14 +2395,18 @@ fn candidate_active_skill_names(
 fn enabled_skill_passive_variants(base_skills: &[String]) -> Vec<Vec<String>> {
     let optional_passives = ["Exo Bracer", "Ammo Thruster"]
         .iter()
-        .filter(|skill| !base_skills.iter().any(|existing| existing == *skill))
         .map(|skill| (*skill).to_string())
         .collect::<Vec<_>>();
-    let mut variants = vec![base_skills.to_vec()];
-    for count in 1..=optional_passives.len().min(2) {
+    let mandatory_base = base_skills
+        .iter()
+        .filter(|skill| !optional_passives.iter().any(|optional| optional == *skill))
+        .cloned()
+        .collect::<Vec<_>>();
+    let mut variants = vec![mandatory_base.clone()];
+    for count in 1..=optional_passives.len() {
         for passives in skill_combinations(&optional_passives, count) {
             variants.push(enabled_skills_with_candidate_active_modes(
-                base_skills,
+                &mandatory_base,
                 &passives,
             ));
         }

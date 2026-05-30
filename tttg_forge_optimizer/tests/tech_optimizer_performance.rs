@@ -6619,6 +6619,166 @@ fn sio_lm_compact_only_reconstructs_default_live_traces_without_supplied_context
 }
 
 #[test]
+fn sio_lm_compact_only_reconstructs_qn5n40_fresh_live_trace_without_supplied_context() {
+    use serde_json::{json, Map, Value};
+    use std::path::PathBuf;
+    use tttg_forge_optimizer::tech::{
+        reconstruct_sio_lm_inputs, sio_lm_context_from_player_state,
+        sio_lm_transform_for_enabled_skills,
+    };
+
+    fn enabled_skill_map(names: &[Value]) -> Value {
+        let mut map = Map::new();
+        for name in names.iter().filter_map(Value::as_str) {
+            map.insert(name.to_string(), Value::Bool(true));
+        }
+        Value::Object(map)
+    }
+
+    fn assert_number_close(path: &str, actual: f64, expected: f64) {
+        let tolerance = 1e-9_f64.max(expected.abs() * 1e-12);
+        assert!(
+            (actual - expected).abs() <= tolerance,
+            "{path}: actual {actual} expected {expected}"
+        );
+    }
+
+    fn assert_expected_numbers_close(path: &str, actual: &Value, expected: &Value) {
+        let actual = actual.as_object().expect("actual object");
+        let expected = expected.as_object().expect("expected object");
+        let mut failures = Vec::new();
+        for (key, expected_value) in expected {
+            let actual_number = actual.get(key).and_then(Value::as_f64).unwrap_or(0.0);
+            let expected_number = expected_value.as_f64().unwrap_or(0.0);
+            let tolerance = 1e-9_f64.max(expected_number.abs() * 1e-12);
+            if (actual_number - expected_number).abs() > tolerance {
+                failures.push(format!(
+                    "{path}.{key}: actual {actual_number} expected {expected_number}"
+                ));
+            }
+        }
+        for (key, actual_value) in actual {
+            if expected.contains_key(key) || is_sio_lm_non_scoring_mutable_trace_stat(key) {
+                continue;
+            }
+            let actual_number = actual_value.as_f64().unwrap_or(0.0);
+            if actual_number.abs() > 1e-9 {
+                failures.push(format!("{path}.{key}: unexpected actual {actual_number}"));
+            }
+        }
+        assert!(failures.is_empty(), "{}", failures.join("\n"));
+    }
+
+    fn assert_expected_arrays_close(path: &str, actual: &Value, expected: &Value) {
+        let actual = actual.as_array().expect("actual array");
+        let expected = expected.as_array().expect("expected array");
+        let mut failures = Vec::new();
+        for (index, expected_value) in expected.iter().enumerate() {
+            let actual_number = actual.get(index).and_then(Value::as_f64).unwrap_or(0.0);
+            let expected_number = expected_value.as_f64().unwrap_or(0.0);
+            let tolerance = 1e-9_f64.max(expected_number.abs() * 1e-12);
+            if (actual_number - expected_number).abs() > tolerance {
+                failures.push(format!(
+                    "{path}[{index}]: actual {actual_number} expected {expected_number}"
+                ));
+            }
+        }
+        assert!(failures.is_empty(), "{}", failures.join("\n"));
+    }
+
+    let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..");
+    for code in ["4ZgaBw", "ihACJy", "rm8mHx", "Zglrn9", "qN5n40", "zcpPVi"] {
+        let trace_path = repo_root.join(format!(
+            "frontend/artifacts/td11/shared_{code}/lm_trace_summary_fresh_review.json"
+        ));
+        let worker_path = repo_root.join(format!(
+            "frontend/artifacts/td11/shared_{code}/worker_decoded_summary_fresh_review.json"
+        ));
+        if !trace_path.exists() || !worker_path.exists() {
+            eprintln!(
+                "skipping fresh compact-only {code} stage reconstruction check; artifacts missing: {} {}",
+                trace_path.display(),
+                worker_path.display()
+            );
+            continue;
+        }
+
+        let trace: Value =
+            serde_json::from_str(&std::fs::read_to_string(trace_path).unwrap()).unwrap();
+        let worker: Value =
+            serde_json::from_str(&std::fs::read_to_string(worker_path).unwrap()).unwrap();
+        let case = &trace["cases"][0];
+        let worker_case = &worker["cases"][0];
+        let request_index = worker_case["best"]["requestIndex"].as_u64().unwrap() as usize;
+        let mut compact: Value = serde_json::from_str(
+            worker_case["skillsRequests"][request_index]["configString"]
+                .as_str()
+                .unwrap(),
+        )
+        .unwrap();
+        compact.as_object_mut().unwrap().remove("_R");
+
+        let context = sio_lm_context_from_player_state(&json!({
+            "sioLm": {
+                "compactConfig": compact
+            }
+        }))
+        .expect("compact-only sioLm context");
+        let enabled_skills = case["enabledSkills"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter_map(Value::as_str)
+            .map(str::to_string)
+            .collect::<Vec<_>>();
+
+        let transform = sio_lm_transform_for_enabled_skills(&context, &enabled_skills);
+        let reconstructed = reconstruct_sio_lm_inputs(
+            &context.base_stats,
+            &case["techs"],
+            &enabled_skills,
+            &transform,
+        );
+        assert_sio_lm_stats_equivalent(
+            &format!("{code}.freshCompactOnly.stats"),
+            &reconstructed["stats"],
+            &case["nonZeroStats"],
+        );
+        assert_expected_numbers_close(
+            &format!("{code}.freshCompactOnly.ceDamage"),
+            &reconstructed["ceDamage"],
+            &case["ceDamage"],
+        );
+        assert_number_close(
+            &format!("{code}.freshCompactOnly.damageFactor"),
+            reconstructed["damageFactor"].as_f64().unwrap(),
+            case["damageFactor"].as_f64().unwrap(),
+        );
+        assert_expected_arrays_close(
+            &format!("{code}.freshCompactOnly.passivePools"),
+            &reconstructed["passivePools"],
+            &case["passivePools"],
+        );
+        let score = tttg_forge_core::calculate_score(
+            &reconstructed["stats"],
+            &context.attack_meta,
+            reconstructed["damageFactor"].as_f64().unwrap(),
+            &reconstructed["ceDamage"],
+            &context.calc_mode,
+            &enabled_skill_map(case["enabledSkills"].as_array().unwrap()),
+            reconstructed["passivePools"].as_array().unwrap(),
+            &context.game_mode,
+        )
+        .unwrap();
+        assert_number_close(
+            &format!("{code}.freshCompactOnly.score"),
+            score,
+            case["tracedMultiplier"].as_f64().unwrap(),
+        );
+    }
+}
+
+#[test]
 fn sio_lm_captured_trace_input_reconstruction_matches_live_trace() {
     use serde_json::{Map, Value};
     use std::path::PathBuf;
