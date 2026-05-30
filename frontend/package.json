@@ -10,7 +10,12 @@
     "dev": "next dev --turbopack",
     "prebuild": "node scripts/build_public_wasm_surface.mjs",
     "build": "next build",
-    "start": "next start"
+    "postbuild": "node scripts/sanitize_public_no_sio_surface.mjs",
+    "start": "next start",
+    "verify:sio-default-golden": "node scripts/verify_sio_default_golden.mjs",
+    "verify:sio-parity": "node scripts/verify_sio_parity.mjs",
+    "verify:sio-all": "node scripts/verify_sio_all.mjs",
+    "verify:public-no-sio": "node scripts/verify_public_no_sio_surface.mjs"
   },
   "dependencies": {
     "comlink": "^4.4.2",

@@ -26,10 +26,12 @@ export default defineConfig({
       },
     },
   ],
-  webServer: {
-    command: `npm run dev -- --port ${port}`,
-    url: healthURL,
-    reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
-  },
+  webServer: process.env.PLAYWRIGHT_SKIP_WEBSERVER === '1'
+    ? undefined
+    : {
+        command: `npm run dev -- --port ${port}`,
+        url: healthURL,
+        reuseExistingServer: !process.env.CI,
+        timeout: 120_000,
+      },
 });
