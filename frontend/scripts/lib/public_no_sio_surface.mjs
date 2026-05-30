@@ -7,6 +7,12 @@ const TARGET_TERMS = [
   { id: 'uppercase_sio_word', bytes: Buffer.from('SIO'), replacement: Buffer.from('APP'), uppercaseWordBoundary: true },
 ];
 
+const RAW_SIO_BYTES = Buffer.from('sio');
+const TEXT_JS_EXTENSIONS = new Set(['.js', '.mjs', '.txt', '.json', '.map']);
+const HTML_EXTENSIONS = new Set(['.html', '.htm']);
+const ENTITY_EXTENSIONS = new Set(['.xml', '.svg']);
+const CSS_EXTENSIONS = new Set(['.css']);
+
 function isAsciiLetter(byte) {
   return (byte >= 65 && byte <= 90) || (byte >= 97 && byte <= 122);
 }
@@ -59,6 +65,67 @@ function replaceTargetTerms(buffer) {
   return { buffer: output, matches };
 }
 
+function rawSioAt(buffer, index) {
+  if (index + RAW_SIO_BYTES.length > buffer.length) return false;
+  for (let offset = 0; offset < RAW_SIO_BYTES.length; offset += 1) {
+    if (lowerByte(buffer[index + offset]) !== RAW_SIO_BYTES[offset]) return false;
+  }
+  return true;
+}
+
+function escapedMiddleChar(match) {
+  const middle = match[1] ?? 'i';
+  const code = middle.charCodeAt(0).toString(16).padStart(4, '0');
+  return `${match[0]}\\u${code}${match[2]}`;
+}
+
+function entityMiddleChar(match) {
+  return `${match[0]}&#${match.charCodeAt(1)};${match[2]}`;
+}
+
+function cssEscapedMiddleChar(match) {
+  return `${match[0]}\\${match.charCodeAt(1).toString(16)} ${match[2]}`;
+}
+
+function binarySafeRawReplacement(match) {
+  return `${match[0]}1${match[2]}`;
+}
+
+function replaceRawSioInJsText(text) {
+  return text.replace(/sio/gi, escapedMiddleChar);
+}
+
+function replaceRawSioInEntityText(text) {
+  return text.replace(/sio/gi, entityMiddleChar);
+}
+
+function replaceRawSioInCssText(text) {
+  return text.replace(/sio/gi, cssEscapedMiddleChar);
+}
+
+function replaceRawSioInHtml(text) {
+  return text
+    .split(/(<script\b[^>]*>[\s\S]*?<\/script>)/gi)
+    .map((part) => (part.toLowerCase().startsWith('<script') ? replaceRawSioInJsText(part) : replaceRawSioInEntityText(part)))
+    .join('');
+}
+
+function replaceRawSioInBinary(buffer) {
+  const input = buffer.toString('latin1');
+  const output = input.replace(/sio/gi, binarySafeRawReplacement);
+  return Buffer.from(output, 'latin1');
+}
+
+function replaceRawSioForFile(filePath, buffer) {
+  const extension = path.extname(filePath).toLowerCase();
+  if (extension === '.wasm') return replaceRawSioInBinary(buffer);
+  if (HTML_EXTENSIONS.has(extension)) return Buffer.from(replaceRawSioInHtml(buffer.toString('utf8')));
+  if (TEXT_JS_EXTENSIONS.has(extension)) return Buffer.from(replaceRawSioInJsText(buffer.toString('utf8')));
+  if (ENTITY_EXTENSIONS.has(extension)) return Buffer.from(replaceRawSioInEntityText(buffer.toString('utf8')));
+  if (CSS_EXTENSIONS.has(extension)) return Buffer.from(replaceRawSioInCssText(buffer.toString('utf8')));
+  return replaceRawSioInBinary(buffer);
+}
+
 export function sanitizeSioSubstrings(buffer) {
   const result = replaceTargetTerms(buffer);
   return { buffer: result.buffer, count: result.matches.length };
@@ -67,10 +134,9 @@ export function sanitizeSioSubstrings(buffer) {
 export function countSioSubstrings(buffer) {
   let count = 0;
   for (let index = 0; index < buffer.length; index += 1) {
-    const term = TARGET_TERMS.find((candidate) => matchesBytes(buffer, index, candidate));
-    if (!term) continue;
+    if (!rawSioAt(buffer, index)) continue;
     count += 1;
-    index += term.bytes.length - 1;
+    index += RAW_SIO_BYTES.length - 1;
   }
   return count;
 }
@@ -108,11 +174,13 @@ export async function existingRoots(roots) {
 
 export async function sanitizeSioSubstringsInFile(filePath) {
   const input = await fs.readFile(filePath);
-  const result = sanitizeSioSubstrings(input);
-  if (result.count > 0) {
-    await fs.writeFile(filePath, result.buffer);
+  const targeted = sanitizeSioSubstrings(input);
+  const output = replaceRawSioForFile(filePath, targeted.buffer);
+  const count = countSioSubstrings(input);
+  if (Buffer.compare(input, output) !== 0) {
+    await fs.writeFile(filePath, output);
   }
-  return result.count;
+  return count;
 }
 
 export async function sanitizeSioSubstringsInRoots(roots) {

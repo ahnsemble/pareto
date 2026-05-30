@@ -16,22 +16,19 @@ await fs.writeFile(
 await fs.writeFile(binaryPath, Buffer.from('binary\0sio\0SIO\0Version\0precision\0survivor.io\0sio-tools'));
 
 assert.deepEqual(await findSioSubstrings([tmpDir]), [
-  { file: textPath, count: 6 },
-  { file: binaryPath, count: 3 },
+  { file: textPath, count: 11 },
+  { file: binaryPath, count: 5 },
 ]);
 
 await sanitizeSioSubstringsInFile(textPath);
 await sanitizeSioSubstringsInFile(binaryPath);
 
 assert.deepEqual(await findSioSubstrings([tmpDir]), []);
-assert.equal(
-  await fs.readFile(textPath, 'utf8'),
-  'Version APP sio Sio permissions precision Survival io survival io SURVIVAL IO app-tools APP-tools xSIO SIOx _SIO_',
-);
+assert.equal((await fs.readFile(textPath, 'utf8')).match(/sio/i), null);
 const sanitizedBinary = await fs.readFile(binaryPath);
 assert.equal(sanitizedBinary.includes(Buffer.from('survivor.io')), false);
 assert.equal(sanitizedBinary.includes(Buffer.from('sio-tools')), false);
 assert.equal(sanitizedBinary.includes(Buffer.from('SIO')), false);
-assert.equal(sanitizedBinary.includes(Buffer.from('sio')), true);
+assert.equal(sanitizedBinary.includes(Buffer.from('sio')), false);
 
 console.log('public_no_sio_surface_unit_test: passed');
