@@ -44,6 +44,10 @@ export function enabledSkillNamesFromTraceSkills(traceSkills) {
     .sort((left, right) => left.localeCompare(right));
 }
 
+export function enabledSkillNamesFromSummary(traceCase) {
+  return (traceCase?.enabledSkills ?? []).filter(Boolean).sort((left, right) => left.localeCompare(right));
+}
+
 export function traceRowSignature(traceTechs) {
   const techs = traceTechs ?? {};
   return traceTechOrder
@@ -88,11 +92,13 @@ export function selectAlignedLmTrace(traces, workerCase, skillOrder) {
   );
 }
 
-function traceAlignment(trace, workerCase, skillOrder) {
+export function traceAlignmentFromSummary(traceCase, workerCase, skillOrder) {
   const expectedRows = workerCase?.best?.rowSignature ?? [];
-  const traceRows = traceRowSignature(trace?.techs);
+  const traceRows = traceRowSignature(traceCase?.techs);
   const expectedEnabledSkills = enabledSkillNamesFromBits(workerCase?.best?.skillBits, skillOrder);
-  const traceEnabledSkills = enabledSkillNamesFromTraceSkills(trace?.skills);
+  const traceEnabledSkills = traceCase?.skills
+    ? enabledSkillNamesFromTraceSkills(traceCase.skills)
+    : enabledSkillNamesFromSummary(traceCase);
   const rowMatches = sameJson(expectedRows, traceRows);
   const enabledSkillsMatch = sameArray([...expectedEnabledSkills].sort(), traceEnabledSkills);
   return {
@@ -104,6 +110,10 @@ function traceAlignment(trace, workerCase, skillOrder) {
     expectedEnabledSkills,
     traceEnabledSkills,
   };
+}
+
+function traceAlignment(trace, workerCase, skillOrder) {
+  return traceAlignmentFromSummary(trace, workerCase, skillOrder);
 }
 
 function sameJson(left, right) {

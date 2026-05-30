@@ -5,6 +5,7 @@ import vm from 'node:vm';
 import { createHash, webcrypto } from 'node:crypto';
 
 import { applyWorkerCapturePatch } from './lib/sio_arbitrary_compact_live_capture_patch.mjs';
+import { findWorkerSourceDir } from './lib/sio_worker_source_discovery.mjs';
 
 const manifestPath =
   process.env.MANIFEST_PATH ??
@@ -117,27 +118,6 @@ function mergeCompactConfigPatch(base, patch) {
     return merged;
   }
   return structuredClone(patch);
-}
-
-function findWorkerSourceDir() {
-  if (process.env.SIO_WORKER_SRC_DIR) {
-    return process.env.SIO_WORKER_SRC_DIR;
-  }
-  const preferred = '/tmp/sio-tools-src.current';
-  if (fs.existsSync(path.join(preferred, 'worker-skills-8663.js'))) {
-    return preferred;
-  }
-  const candidates = fs
-    .readdirSync('/tmp', { withFileTypes: true })
-    .filter((entry) => entry.isDirectory() && entry.name.startsWith('sio-tools-src.'))
-    .map((entry) => path.join('/tmp', entry.name))
-    .filter((dir) => fs.existsSync(path.join(dir, 'worker-skills-8663.js')))
-    .sort();
-  const latest = candidates.at(-1);
-  if (!latest) {
-    throw new Error('Unable to find /tmp/sio-tools-src.* with worker-skills-8663.js');
-  }
-  return latest;
 }
 
 class BroadcastChannelStub {

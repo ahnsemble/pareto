@@ -1,6 +1,7 @@
 mod catalog;
 mod schema;
 pub mod sio_config;
+pub(crate) mod sio_live_bridge;
 pub mod sio_lm;
 pub mod sio_solver;
 

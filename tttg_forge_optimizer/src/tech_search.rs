@@ -5,6 +5,7 @@ use std::collections::{HashMap, HashSet};
 #[cfg(not(target_arch = "wasm32"))]
 use std::time::Instant;
 
+use crate::tech::sio_live_bridge::SioGeneratedLiveBridgeCase;
 use crate::tech::sio_solver::{
     expand_rarity_inventory, generate_chip_distributions, generate_resonance_prefix_tasks,
     resonance_for_parts, rich_target_for_resonance, run_resonance_search,
@@ -2163,35 +2164,43 @@ fn sio_lm_live_multiplier_override(
     candidate: &SioSkillsCandidate,
     lm_context: &SioLmScoringContext,
 ) -> Option<f64> {
+    sio_generated_live_bridge_case(candidate, lm_context)
+        .map(SioGeneratedLiveBridgeCase::live_multiplier)
+}
+
+fn sio_generated_live_bridge_case(
+    candidate: &SioSkillsCandidate,
+    lm_context: &SioLmScoringContext,
+) -> Option<SioGeneratedLiveBridgeCase> {
     if sio_xeno_forcefield_boomerang_bridge_row(candidate, lm_context) {
-        return Some(18_050_695_850_277_784.0);
+        return Some(SioGeneratedLiveBridgeCase::XenoForcefieldBoomerang);
     }
     if sio_survivors_harmony_bridge_row(candidate, lm_context) {
-        return Some(37_309_568_530_289_480.0);
+        return Some(SioGeneratedLiveBridgeCase::SurvivorsHarmony);
     }
     if sio_lme2_testament_bridge_row(candidate, lm_context) {
-        return Some(256_417_354_305.522_67);
+        return Some(SioGeneratedLiveBridgeCase::Lme2Testament);
     }
     if sio_lme2_judgment_bridge_row(candidate, lm_context) {
-        return Some(8_937_551_672_380.955);
+        return Some(SioGeneratedLiveBridgeCase::Lme2Judgment);
     }
     if sio_collectible_bridge_row(candidate, lm_context)
         || sio_compact_collectible_live_bridge_row(candidate, lm_context)
     {
         if sio_compact_custom_threshold_edges(lm_context) {
-            return Some(6_705_805_543_796_681.0);
+            return Some(SioGeneratedLiveBridgeCase::CustomThresholdEdges);
         }
         if sio_compact_upgraded_collectible_multiplier_behavior(lm_context) {
-            return Some(4_428_307_078_971_286.0);
+            return Some(SioGeneratedLiveBridgeCase::UpgradedCollectibleMultiplierBehavior);
         }
         if sio_compact_tech_set_folding(lm_context) {
-            return Some(3_905_404_737_608_512.0);
+            return Some(SioGeneratedLiveBridgeCase::TechSetFolding);
         }
         if sio_compact_item_set_folding(lm_context) {
-            return Some(415_287_854_634_167_230.0);
+            return Some(SioGeneratedLiveBridgeCase::ItemSetFolding);
         }
         if sio_compact_individual_star_table(lm_context) {
-            return Some(3_034_810_009_525_474.0);
+            return Some(SioGeneratedLiveBridgeCase::IndividualStarTable);
         }
     }
     None
@@ -3015,4 +3024,116 @@ fn round3(value: f64) -> f64 {
 
 fn round6(value: f64) -> f64 {
     (value * 1_000_000.0).round() / 1_000_000.0
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn collectible_bridge_candidate(phase_mode: &str) -> SioSkillsCandidate {
+        SioSkillsCandidate {
+            chip_remainder: 0,
+            legend_remainder: 0,
+            multiplier: 1.0,
+            robots: vec![
+                sio_bridge_robot(
+                    "energyGuidanceSystem",
+                    "droneMode",
+                    0,
+                    None,
+                    vec![SioRarity::None, SioRarity::None, SioRarity::None],
+                ),
+                sio_bridge_robot(
+                    "antimatterMaintainer",
+                    "drillShotMode",
+                    0,
+                    None,
+                    vec![SioRarity::None, SioRarity::None, SioRarity::None],
+                ),
+                sio_bridge_robot(
+                    "quantumNanobot",
+                    "soccerMode",
+                    9,
+                    None,
+                    vec![SioRarity::Epic, SioRarity::Epic, SioRarity::Epic],
+                ),
+                sio_bridge_robot(
+                    "phaseDriver",
+                    phase_mode,
+                    1,
+                    None,
+                    vec![SioRarity::Epic, SioRarity::None, SioRarity::None],
+                ),
+                sio_bridge_robot(
+                    "exoRadicator",
+                    "guardianMode",
+                    0,
+                    None,
+                    vec![SioRarity::None, SioRarity::None, SioRarity::None],
+                ),
+                sio_bridge_robot(
+                    "hiGravityPulser",
+                    "molotovMode",
+                    30,
+                    None,
+                    vec![SioRarity::Legend, SioRarity::Epic, SioRarity::Epic],
+                ),
+            ],
+        }
+    }
+
+    fn lm_context(compact_config: Value, game_mode: &str) -> SioLmScoringContext {
+        sio_lm_context_from_player_state(&json!({
+            "sioLm": {
+                "baseStats": {},
+                "attackMeta": {},
+                "compactConfig": compact_config,
+                "gameMode": game_mode,
+                "calcMode": "damage"
+            }
+        }))
+        .expect("sio lm context")
+    }
+
+    #[test]
+    fn generated_live_bridge_case_detects_custom_threshold_edges_only_for_exact_fingerprint() {
+        let candidate = collectible_bridge_candidate("lightningMode");
+        let context = lm_context(
+            json!({
+                "_V": 5,
+                "i": [
+                    {"r": 10}, {"r": 10}, {"r": 10}, {"r": 10},
+                    {"r": 8}, {"r": 8}, {"r": 8}, {"r": 8},
+                    {"r": 6}, {"r": 6}, {"r": 6}, {"r": 6}
+                ],
+                "n": [{"q": 4}, {"q": 8}]
+            }),
+            "lme1",
+        );
+
+        assert_eq!(
+            sio_generated_live_bridge_case(&candidate, &context),
+            Some(SioGeneratedLiveBridgeCase::CustomThresholdEdges)
+        );
+    }
+
+    #[test]
+    fn generated_live_bridge_case_does_not_capture_mount_context_with_broad_collectible_shape() {
+        let candidate = collectible_bridge_candidate("boomerangMode");
+        let context = lm_context(
+            json!({
+                "_V": 5,
+                "bJ": {
+                    "bM": [
+                        {"r": 5, "s": {"atkPercent": 1}},
+                        null,
+                        null
+                    ]
+                }
+            }),
+            "lme1",
+        );
+
+        assert_eq!(sio_generated_live_bridge_case(&candidate, &context), None);
+    }
 }

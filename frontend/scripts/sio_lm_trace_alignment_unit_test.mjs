@@ -4,6 +4,7 @@ import {
   enabledSkillNamesFromBits,
   enabledSkillNamesFromTraceSkills,
   selectAlignedLmTrace,
+  traceAlignmentFromSummary,
   traceRowSignature,
 } from './lib/sio_lm_trace_alignment.mjs';
 
@@ -149,5 +150,17 @@ assert.equal(fallback.trace, higherWrongTrace);
 assert.equal(fallback.alignment.aligned, false);
 assert.equal(fallback.alignment.rowMatches, false);
 assert.equal(fallback.alignment.enabledSkillsMatch, false);
+
+const summaryAlignment = traceAlignmentFromSummary(
+  {
+    techs: alignedTrace.techs,
+    enabledSkills: Object.keys(alignedTrace.skills),
+  },
+  workerCase,
+  skillOrder,
+);
+assert.equal(summaryAlignment.aligned, true);
+assert.equal(summaryAlignment.rowMatches, true);
+assert.equal(summaryAlignment.enabledSkillsMatch, true);
 
 console.log('sio_lm_trace_alignment_unit_test: passed');

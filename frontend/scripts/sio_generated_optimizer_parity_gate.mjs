@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import init, { tech_optimizer_run_js } from '../../tttg_forge_wasm/pkg/tttg_forge_wasm.js';
 import { evaluateGeneratedOptimizerCase } from './lib/sio_generated_optimizer_gate_checks.mjs';
 import { applySioLmContext } from './lib/sio_lm_context.mjs';
+import { traceAlignmentFromSummary } from './lib/sio_lm_trace_alignment.mjs';
 
 const artifactRoot = path.join(process.cwd(), 'artifacts/td11');
 const generatedRoot = path.join(artifactRoot, 'arbitrary_compact_s59');
@@ -168,7 +169,14 @@ const basePlayerState = baseFixture.playerState ?? {};
 const manifestCases = caseLimit > 0 ? (manifest.cases ?? []).slice(0, caseLimit) : (manifest.cases ?? []);
 const rows = manifestCases.map((fixtureCase) => {
   const workerCase = workerCaseById.get(fixtureCase.id);
-  const traceCase = traceCaseById.get(fixtureCase.id);
+  const rawTraceCase = traceCaseById.get(fixtureCase.id);
+  const traceCase =
+    rawTraceCase && !rawTraceCase.traceAlignment
+      ? {
+          ...rawTraceCase,
+          traceAlignment: traceAlignmentFromSummary(rawTraceCase, workerCase, skillOrder),
+        }
+      : rawTraceCase;
   const playerState = applySioLmContext(structuredClone(basePlayerState), workerCase, traceCase);
   playerState.sioLm = {
     ...(playerState.sioLm ?? {}),
