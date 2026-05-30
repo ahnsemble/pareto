@@ -97,6 +97,17 @@ const koExplanation = buildCalculationComparisonExplanation({
 assert.match(koExplanation.headline, /tanggall 계산이 더 높습니다/);
 assert.match(koExplanation.details.join('\n'), /현재 화면 입력값/);
 
+const lowerExplanation = buildCalculationComparisonExplanation({
+  summary: buildCalculationComparisonSummary({
+    importedDamage: 1000,
+    tangtangDamage: 900,
+  }),
+  inputChanges: inputChangeSummary,
+  locale: 'en',
+});
+assert.match(lowerExplanation.headline, /tanggall calculation is lower/);
+assert.match(lowerExplanation.details.join('\n'), /Align the current inputs with the imported profile/i);
+
 assert.deepEqual(
   buildCalculationComparisonSummary({
     importedDamage: 0,

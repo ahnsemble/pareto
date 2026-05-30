@@ -22,3 +22,16 @@ declare module 'lzma/src/lzma-d-min.js' {
   };
   export default moduleValue;
 }
+
+declare module 'lzma/src/lzma-c-min.js' {
+  const moduleValue: {
+    LZMA_WORKER?: {
+      compress(
+        input: string | ArrayLike<number> | Buffer,
+        mode?: number,
+        callback?: (result: unknown, error?: unknown) => void,
+      ): unknown;
+    };
+  };
+  export default moduleValue;
+}

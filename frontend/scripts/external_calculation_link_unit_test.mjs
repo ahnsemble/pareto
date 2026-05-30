@@ -160,6 +160,7 @@ assert.equal(endersNormalized.ok, true);
 assert.equal(endersNormalized.sourceGameMode, 'ee');
 assert.equal(endersNormalized.account.guildExpeditionTestaments, 86500);
 assert.equal(resolveImportedProfileSlot('endersEcho', endersNormalized), 'endersEcho');
+assert.equal(resolveImportedProfileSlot('guildExpedition', endersNormalized), 'endersEcho');
 
 const lme1Normalized = normalizeExternalCalculationProfile({
   _V: 5,
@@ -172,6 +173,7 @@ assert.equal(lme1Normalized.ok, true);
 assert.equal(lme1Normalized.sourceGameMode, 'lme1');
 assert.equal(lme1Normalized.account.guildExpeditionTestaments, 86500);
 assert.equal(resolveImportedProfileSlot('endersEcho', lme1Normalized), 'endersEcho');
+assert.equal(resolveImportedProfileSlot('guildExpedition', lme1Normalized), 'endersEcho');
 
 const guildNormalized = normalizeExternalCalculationProfile({
   _V: 5,

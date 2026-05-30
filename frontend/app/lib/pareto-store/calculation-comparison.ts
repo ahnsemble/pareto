@@ -179,6 +179,12 @@ export function buildCalculationComparisonExplanation({
         ? '현재 입력값 차이가 감지되지 않았다면, 차이는 상위 빌드 선택이나 계산 반올림에서 온 것입니다.'
         : 'When editable inputs match, any remaining delta comes from top-build selection or rounding.',
     );
+  } else if (tone === 'lower') {
+    details.push(
+      ko
+        ? '가져온 프로필 대비 업그레이드 판단을 하려면 현재 입력값을 가져온 프로필과 맞춘 뒤 다시 계산하세요.'
+        : 'Align the current inputs with the imported profile before treating this as an upgrade delta.',
+    );
   }
 
   return { headline, details, tone };

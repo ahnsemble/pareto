@@ -9,6 +9,8 @@ export const TECH_PROFILE_SHARE_PARAM = 'ttProfile';
 const TECH_PROFILE_SHARE_KIND = 'tangtang-tech-profile-share';
 const TECH_PROFILE_BACKUP_KIND = 'tangtang-tech-profile-backup';
 const TECH_PROFILE_SHARE_VERSION = 1;
+const TECH_PROFILE_COMPACT_PREFIX = 'lz1.';
+const TECH_PROFILE_COMPACT_COMPRESSION_LEVEL = 1;
 
 export type TechProfileShareDecodeResult =
   | { ok: true; document: TechProfileSaveDocument }
@@ -18,12 +20,11 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
-function encodeUrlPayload(value: string): string {
-  const bytes = new TextEncoder().encode(value);
+function encodeBytesToHex(bytes: Uint8Array | number[]): string {
   return Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
 }
 
-function decodeUrlPayload(value: string): string {
+function decodeHexToUnsignedBytes(value: string): Uint8Array {
   if (value.length % 2 !== 0 || /[^0-9a-f]/i.test(value)) {
     throw new Error('invalid payload');
   }
@@ -31,7 +32,62 @@ function decodeUrlPayload(value: string): string {
   for (let index = 0; index < value.length; index += 2) {
     bytes[index / 2] = Number.parseInt(value.slice(index, index + 2), 16);
   }
+  return bytes;
+}
+
+function decodeHexToSignedBytes(value: string): number[] {
+  return Array.from(decodeHexToUnsignedBytes(value), (byte) => (byte > 127 ? byte - 256 : byte));
+}
+
+function unsignedBytesFromValue(value: unknown): Uint8Array {
+  if (value instanceof Uint8Array) return value;
+  if (Array.isArray(value)) {
+    return Uint8Array.from(value.map((byte) => {
+      const numberByte = Number(byte);
+      return numberByte < 0 ? numberByte + 256 : numberByte;
+    }));
+  }
+  if (typeof value === 'string') return new TextEncoder().encode(value);
+  throw new Error('invalid compressed payload');
+}
+
+function encodeUrlPayload(value: string): string {
+  return encodeBytesToHex(new TextEncoder().encode(value));
+}
+
+function decodeUrlPayload(value: string): string {
+  const bytes = decodeHexToUnsignedBytes(value);
   return new TextDecoder().decode(bytes);
+}
+
+async function compressUrlPayload(value: string): Promise<string> {
+  const lzma = await import('lzma/src/lzma-c-min.js');
+  const compressor = lzma.default.LZMA_WORKER;
+  if (!compressor) throw new Error('compact share compressor unavailable');
+  const compressed = await new Promise<unknown>((resolve, reject) => {
+    const maybe = compressor.compress(value, TECH_PROFILE_COMPACT_COMPRESSION_LEVEL, (result: unknown, error?: unknown) => {
+      if (error) reject(error);
+      else resolve(result);
+    });
+    if (maybe !== undefined) resolve(maybe);
+  });
+  return `${TECH_PROFILE_COMPACT_PREFIX}${encodeBytesToHex(unsignedBytesFromValue(compressed))}`;
+}
+
+async function decompressUrlPayload(value: string): Promise<string> {
+  if (!value.startsWith(TECH_PROFILE_COMPACT_PREFIX)) return decodeUrlPayload(value);
+  const lzma = await import('lzma/src/lzma-d-min.js');
+  const decompressor = lzma.default.LZMA_WORKER;
+  if (!decompressor) throw new Error('compact share decompressor unavailable');
+  const compressedBytes = decodeHexToSignedBytes(value.slice(TECH_PROFILE_COMPACT_PREFIX.length));
+  const decompressed = await new Promise<unknown>((resolve, reject) => {
+    const maybe = decompressor.decompress(compressedBytes, (result: unknown, error?: unknown) => {
+      if (error) reject(error);
+      else resolve(result);
+    });
+    if (maybe !== undefined) resolve(maybe);
+  });
+  return typeof decompressed === 'string' ? decompressed : new TextDecoder().decode(unsignedBytesFromValue(decompressed));
 }
 
 function validSlotId(value: unknown): TechProfileSaveSlotId | undefined {
@@ -73,9 +129,24 @@ export function encodeTechProfileShareState(
   return encodeUrlPayload(JSON.stringify(shareDocument(state, now)));
 }
 
+export async function encodeCompactTechProfileShareState(
+  state: TechProfileSaveState | Record<string, unknown>,
+  now = new Date(),
+): Promise<string> {
+  return compressUrlPayload(JSON.stringify(shareDocument(state, now)));
+}
+
 export function decodeTechProfileShareState(value: string): TechProfileShareDecodeResult {
   try {
     return normalizeDecodedDocument(JSON.parse(decodeUrlPayload(value)));
+  } catch {
+    return { ok: false, reason: 'invalid' };
+  }
+}
+
+export async function decodeTechProfileShareStateAsync(value: string): Promise<TechProfileShareDecodeResult> {
+  try {
+    return normalizeDecodedDocument(JSON.parse(await decompressUrlPayload(value)));
   } catch {
     return { ok: false, reason: 'invalid' };
   }
@@ -94,6 +165,23 @@ export function buildTechProfileShareUrl({
   url.search = '';
   url.hash = new URLSearchParams({
     [TECH_PROFILE_SHARE_PARAM]: encodeTechProfileShareState(state, now),
+  }).toString();
+  return url.toString();
+}
+
+export async function buildCompactTechProfileShareUrl({
+  baseUrl,
+  now = new Date(),
+  state,
+}: {
+  baseUrl: string;
+  state: TechProfileSaveState | Record<string, unknown>;
+  now?: Date;
+}): Promise<string> {
+  const url = new URL(baseUrl);
+  url.search = '';
+  url.hash = new URLSearchParams({
+    [TECH_PROFILE_SHARE_PARAM]: await encodeCompactTechProfileShareState(state, now),
   }).toString();
   return url.toString();
 }

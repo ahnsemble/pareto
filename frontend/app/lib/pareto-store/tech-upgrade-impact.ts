@@ -41,6 +41,7 @@ export function buildTechUpgradeImpactRows({
   locale?: string;
 }): TechUpgradeImpactRow[] {
   if (!comparison || comparison.status !== 'ready') return [];
+  if (comparison.delta <= 0) return [];
   const basis = locale === 'ko' ? '최상위 추천안 기준' : 'Top recommendation plan';
 
   return recommendations

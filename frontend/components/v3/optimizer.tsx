@@ -26,8 +26,9 @@ import {
 } from '../../app/lib/pareto-store/tech-profile-storage';
 import {
   buildTechProfileBackupText,
+  buildCompactTechProfileShareUrl,
   buildTechProfileShareUrl,
-  decodeTechProfileShareState,
+  decodeTechProfileShareStateAsync,
   getTechProfileSharePayloadFromUrl,
 } from '../../app/lib/pareto-store/tech-profile-share';
 import { getTechModePreset } from '../../app/lib/pareto-store/tech-mode-presets';
@@ -800,16 +801,23 @@ export function TechPartsOptimizerSurface() {
     profileShareLoadHandled.current = true;
     const encoded = getTechProfileSharePayloadFromUrl(window.location.href);
     if (!encoded) return;
-    const decoded = decodeTechProfileShareState(encoded);
-    if (!decoded.ok) {
-      setProfileSaveStatus(copy.profileSave.shareInvalid);
-      return;
-    }
-    applyProfileSaveState({
-      ...decoded.document.state,
-      activeProfileSlot: decoded.document.state.activeProfileSlot ?? decoded.document.slotId,
-    });
-    setProfileSaveStatus(copy.profileSave.shareLoaded);
+    let cancelled = false;
+    void (async () => {
+      const decoded = await decodeTechProfileShareStateAsync(encoded);
+      if (cancelled) return;
+      if (!decoded.ok) {
+        setProfileSaveStatus(copy.profileSave.shareInvalid);
+        return;
+      }
+      applyProfileSaveState({
+        ...decoded.document.state,
+        activeProfileSlot: decoded.document.state.activeProfileSlot ?? decoded.document.slotId,
+      });
+      setProfileSaveStatus(copy.profileSave.shareLoaded);
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, [applyProfileSaveState, copy.profileSave.shareInvalid, copy.profileSave.shareLoaded]);
   const copyProfileText = useCallback(async (value: string, setStatus: (status: string) => void) => {
     try {
@@ -825,10 +833,19 @@ export function TechPartsOptimizerSurface() {
   }, [copy.profileSave.copied, copy.profileSave.copyManually]);
   const handleProfileShare = useCallback(async () => {
     if (typeof window === 'undefined') return;
-    const nextShareUrl = buildTechProfileShareUrl({
-      baseUrl: window.location.href,
-      state: buildCurrentProfileSaveState(),
-    });
+    const currentState = buildCurrentProfileSaveState();
+    let nextShareUrl: string;
+    try {
+      nextShareUrl = await buildCompactTechProfileShareUrl({
+        baseUrl: window.location.href,
+        state: currentState,
+      });
+    } catch {
+      nextShareUrl = buildTechProfileShareUrl({
+        baseUrl: window.location.href,
+        state: currentState,
+      });
+    }
     setProfileShareUrl(nextShareUrl);
     await copyProfileText(nextShareUrl, setProfileShareStatus);
   }, [buildCurrentProfileSaveState, copyProfileText]);

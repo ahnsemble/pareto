@@ -181,7 +181,10 @@ export function resolveImportedProfileSlot(
   currentSlot: TechProfileSaveSlotId,
   imported: ImportedProfileSlotSource,
 ): TechProfileSaveSlotId {
-  return imported.sourceGameMode?.toLowerCase() === 'lme2' ? 'guildExpedition' : currentSlot;
+  const sourceGameMode = imported.sourceGameMode?.toLowerCase();
+  if (sourceGameMode === 'lme2') return 'guildExpedition';
+  if (sourceGameMode === 'ee' || sourceGameMode === 'lme1') return 'endersEcho';
+  return currentSlot;
 }
 
 export function buildProductImportFieldSummary(

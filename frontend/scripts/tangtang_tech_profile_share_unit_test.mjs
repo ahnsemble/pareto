@@ -3,7 +3,7 @@ import { createRequire } from 'node:module';
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import ts from 'typescript';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -30,7 +30,16 @@ function transpile(sourcePath, outputPath) {
     },
     fileName: sourcePath,
   });
-  writeFileSync(outputPath, transpiled.outputText);
+  const lzmaCompressPath = resolve(__dirname, '../node_modules/lzma/src/lzma-c-min.js');
+  const lzmaDecompressPath = resolve(__dirname, '../node_modules/lzma/src/lzma-d-min.js');
+  const outputText = transpiled.outputText
+    .replaceAll("import('lzma/src/lzma-c-min.js')", `import(${JSON.stringify(pathToFileURL(lzmaCompressPath).href)})`)
+    .replaceAll("import('lzma/src/lzma-d-min.js')", `import(${JSON.stringify(pathToFileURL(lzmaDecompressPath).href)})`)
+    .replaceAll("require('lzma/src/lzma-c-min.js')", `require(${JSON.stringify(lzmaCompressPath)})`)
+    .replaceAll("require('lzma/src/lzma-d-min.js')", `require(${JSON.stringify(lzmaDecompressPath)})`)
+    .replaceAll("require(\"lzma/src/lzma-c-min.js\")", `require(${JSON.stringify(lzmaCompressPath)})`)
+    .replaceAll("require(\"lzma/src/lzma-d-min.js\")", `require(${JSON.stringify(lzmaDecompressPath)})`);
+  writeFileSync(outputPath, outputText);
 }
 
 transpile(storageModulePath, resolve(tmpDir, 'tech-profile-storage.js'));
@@ -40,17 +49,23 @@ transpile(modulePath, outputPath);
 const {
   TECH_PROFILE_SHARE_PARAM,
   buildTechProfileBackupText,
+  buildCompactTechProfileShareUrl,
   buildTechProfileShareUrl,
   decodeTechProfileBackupText,
   decodeTechProfileShareState,
+  decodeTechProfileShareStateAsync,
+  encodeCompactTechProfileShareState,
   encodeTechProfileShareState,
   getTechProfileSharePayloadFromUrl,
 } = createRequire(import.meta.url)(outputPath);
 
 assert.equal(TECH_PROFILE_SHARE_PARAM, 'ttProfile');
 assert.equal(typeof encodeTechProfileShareState, 'function');
+assert.equal(typeof encodeCompactTechProfileShareState, 'function');
 assert.equal(typeof decodeTechProfileShareState, 'function');
+assert.equal(typeof decodeTechProfileShareStateAsync, 'function');
 assert.equal(typeof buildTechProfileShareUrl, 'function');
+assert.equal(typeof buildCompactTechProfileShareUrl, 'function');
 assert.equal(typeof buildTechProfileBackupText, 'function');
 assert.equal(typeof decodeTechProfileBackupText, 'function');
 assert.equal(typeof getTechProfileSharePayloadFromUrl, 'function');
@@ -112,6 +127,12 @@ const encoded = encodeTechProfileShareState(sampleState, fixedDate);
 assert.match(encoded, /^[0-9a-f]+$/);
 assert.equal(/sio-tools|profileImportText|\{|\}/i.test(encoded), false);
 
+const compactEncoded = await encodeCompactTechProfileShareState(sampleState, fixedDate);
+assert.match(compactEncoded, /^lz1\.[0-9a-f]+$/);
+assert.equal(/sio-tools|profileImportText|\{|\}|sio/i.test(compactEncoded), false);
+assert.ok(compactEncoded.length < encoded.length, 'compact share payload must be shorter than legacy hex JSON');
+assert.equal(decodeTechProfileShareState(compactEncoded).ok, false, 'sync decoder is intentionally legacy-only for compact payloads');
+
 const decoded = decodeTechProfileShareState(encoded);
 assert.equal(decoded.ok, true);
 assert.equal(decoded.document.savedAt, fixedDate.toISOString());
@@ -125,6 +146,13 @@ assert.equal(decoded.document.state.profileImportSummary ?? '', '');
 assert.deepEqual(decoded.document.state.profileImportCoverage ?? [], []);
 assert.deepEqual(decoded.document.state.profileImportDetails ?? [], []);
 assert.equal(/sio-tools|profileImportText|Imported calculation link/i.test(JSON.stringify(decoded.document.state)), false);
+
+const compactDecoded = await decodeTechProfileShareStateAsync(compactEncoded);
+assert.equal(compactDecoded.ok, true);
+assert.equal(compactDecoded.document.savedAt, fixedDate.toISOString());
+assert.equal(compactDecoded.document.state.accountContext.finalAtk, 333333);
+assert.equal(compactDecoded.document.state.activeProfileSlot, 'guildExpedition');
+assert.equal(compactDecoded.document.state.profileImportText ?? '', '');
 
 const shareUrl = buildTechProfileShareUrl({
   baseUrl: 'https://example.com/en/v3/optimizer/tech-parts?old=1&debug=1&raw=abc&beam=9&exact=1&ttProfile=stale#debug',
@@ -154,6 +182,19 @@ assert.equal(
   alternateEncoded,
   'fragment payload should take precedence over legacy query payload',
 );
+
+const compactShareUrl = await buildCompactTechProfileShareUrl({
+  baseUrl: 'https://example.com/en/v3/optimizer/tech-parts?old=1&debug=1&raw=abc&beam=9&exact=1&ttProfile=stale#debug',
+  state: sampleState,
+  now: fixedDate,
+});
+assert.match(compactShareUrl, /^https:\/\/example\.com\/en\/v3\/optimizer\/tech-parts#ttProfile=lz1\./);
+assert.equal(compactShareUrl.includes('?'), false);
+assert.equal(/sio-tools|\{|\}|sio/i.test(compactShareUrl), false);
+const compactFragmentPayload = getTechProfileSharePayloadFromUrl(compactShareUrl);
+assert.equal(compactFragmentPayload, compactEncoded);
+assert.equal((await decodeTechProfileShareStateAsync(compactFragmentPayload)).ok, true);
+assert.ok(compactShareUrl.length < shareUrl.length, 'compact share URL must be shorter than legacy share URL');
 
 const backupText = buildTechProfileBackupText(sampleState, fixedDate);
 assert.match(backupText, /"kind": "tangtang-tech-profile-backup"/);

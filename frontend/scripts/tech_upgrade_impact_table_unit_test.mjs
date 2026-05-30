@@ -90,6 +90,34 @@ assert.equal(rows[1].recommended, 'Drone Mode chip target 12');
 assert.equal(rows[1].gainLabel, '+125 / +12.5%');
 assert.equal(JSON.stringify(rows).includes('sio'), false);
 
+const lowerRows = buildTechUpgradeImpactRows({
+  recommendations: [
+    {
+      id: 'top-overload',
+      priority: 100,
+      title: 'Upgrade Energy Guidance System overload',
+      action: 'Raise Drone Mode overload from 1 toward 3.',
+      reason: 'The fastest build is spending its strongest upgrade pressure there.',
+      confidence: 'high',
+      beforeAfter: {
+        current: 'Drone Mode overload 1',
+        recommended: 'Drone Mode overload 3',
+      },
+    },
+  ],
+  comparison: {
+    status: 'ready',
+    importedDamage: 1000,
+    tangtangDamage: 900,
+    delta: -100,
+    deltaPct: -10,
+    changed: true,
+  },
+  locale: 'en',
+});
+
+assert.deepEqual(lowerRows, [], 'impact rows must not present negative comparison deltas as expected gains');
+
 assert.deepEqual(
   buildTechUpgradeImpactRows({
     recommendations: rows,
