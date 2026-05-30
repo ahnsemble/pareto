@@ -152,7 +152,7 @@ const HTML = `<!doctype html>
 <body>
   <div class="grid">
     <div class="zone-a">
-      <div class="chart-title">PARETO FRONTIER · DECK COMPARISON</div>
+      <div class="chart-title">TANGGALL FRONTIER · BUILD COMPARE</div>
       <svg class="curve" viewBox="0 0 580 480" preserveAspectRatio="none">
         <defs>
           <linearGradient id="g1" x1="0" x2="1">
@@ -196,7 +196,7 @@ const HTML = `<!doctype html>
       </div>
     </div>
     <div class="zone-b">
-      <div class="logo">PARETO</div>
+      <div class="logo">tanggall</div>
       <div class="slogan-line1">빌드, 계산하지 말고</div>
       <div class="slogan-line2">비교하세요</div>
       <div class="subcopy">탕탕특공대 빌드 최적화 도구</div>

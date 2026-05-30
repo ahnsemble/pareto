@@ -1,6 +1,6 @@
 {
-  "name": "Tangtang",
-  "short_name": "Tangtang",
+  "name": "tanggall",
+  "short_name": "tanggall",
   "description": "Fast TTTG Forge build optimization and efficient-frontier comparison.",
   "start_url": "/en",
   "display": "standalone",

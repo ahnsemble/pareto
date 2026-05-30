@@ -7,6 +7,7 @@ import {
   type TwinbornCategory,
 } from '../../../app/lib/pareto-store/tech/types';
 import type { TechPartSchema } from '../../../app/lib/pareto-store/types';
+import { localizeTechEntityName, normalizeTechOptimizerLocale } from './techLocaleCopy';
 
 interface TechPartConfigModalProps {
   part: TechPartSchema | null;
@@ -17,6 +18,7 @@ interface TechPartConfigModalProps {
   onResonance: (id: TwinbornCategory, resonance: number) => void;
   onOverload: (id: TwinbornCategory, overload: number) => void;
   onSupportParts: (id: TwinbornCategory, supportParts: boolean) => void;
+  locale?: string;
 }
 
 const MODE_LABELS: Record<TechMode, string> = {
@@ -34,6 +36,31 @@ const MODE_LABELS: Record<TechMode, string> = {
   brickMode: 'Brick Mode',
 };
 
+const COPY = {
+  en: {
+    title: 'Tech parts Configuration',
+    close: 'Close',
+    equip: (name: string) => `Equip ${name}`,
+    mode: 'Mode',
+    resonanceEnergy: 'Total Resonance Energy',
+    supportParts: 'Enter support parts manually',
+    overload: 'Overload',
+    max: 'max',
+    at: 'at',
+  },
+  ko: {
+    title: '테크 부품 설정',
+    close: '닫기',
+    equip: (name: string) => `${name} 장착`,
+    mode: '모드',
+    resonanceEnergy: '총 공명 에너지',
+    supportParts: '지원 부품 수동 입력',
+    overload: '오버로드',
+    max: '최대',
+    at: '필요',
+  },
+} as const;
+
 export function TechPartConfigModal({
   part,
   config,
@@ -43,8 +70,12 @@ export function TechPartConfigModal({
   onResonance,
   onOverload,
   onSupportParts,
+  locale,
 }: TechPartConfigModalProps) {
   if (!part || !config) return null;
+  const normalizedLocale = normalizeTechOptimizerLocale(locale);
+  const copy = COPY[normalizedLocale];
+  const partName = localizeTechEntityName('techPart', part.display_name_en, normalizedLocale);
   const id = config.id;
   const overloadMax = Math.floor(config.resonance / 3500) + 1;
   const overloadNext = overloadMax + 1;
@@ -54,16 +85,16 @@ export function TechPartConfigModal({
     <div className="fixed inset-0 z-40 grid place-items-center bg-black/70 p-4" role="presentation">
       <section
         role="dialog"
-        aria-label="Tech parts Configuration"
+        aria-label={copy.title}
         className="max-h-[90vh] w-full max-w-3xl overflow-auto rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface-elev)] p-4 shadow-xl"
       >
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h3 className="text-lg font-semibold text-[color:var(--color-text)]">Tech parts Configuration</h3>
-            <p className="text-xs text-[color:var(--color-text-muted)]">{part.display_name_en}</p>
+            <h3 className="text-lg font-semibold text-[color:var(--color-text)]">{copy.title}</h3>
+            <p className="text-xs text-[color:var(--color-text-muted)]">{partName}</p>
           </div>
           <button type="button" className="rounded-md px-3 py-2 text-sm text-[color:var(--color-text-muted)] hover:text-[color:var(--color-text)]" onClick={onClose}>
-            Close
+            {copy.close}
           </button>
         </div>
 
@@ -75,11 +106,11 @@ export function TechPartConfigModal({
                 checked={config.equipped}
                 onChange={(event) => onEquip(id, event.target.checked)}
               />
-              Equip {part.display_name_en}
+              {copy.equip(partName)}
             </label>
 
             <fieldset className="rounded-md border border-[color:var(--color-border)] p-3">
-              <legend className="px-1 text-xs uppercase text-[color:var(--color-text-muted)]">Mode</legend>
+              <legend className="px-1 text-xs uppercase text-[color:var(--color-text-muted)]">{copy.mode}</legend>
               <div className="grid gap-2 sm:grid-cols-2">
                 {TECH_MODES.map((mode) => (
                   <label key={mode} className="flex min-h-[36px] items-center gap-2 text-xs text-[color:var(--color-text)]">
@@ -89,16 +120,16 @@ export function TechPartConfigModal({
                       checked={config.mode === mode}
                       onChange={() => onMode(id, mode)}
                     />
-                    {MODE_LABELS[mode]}
+                    {localizeTechEntityName('techPart', MODE_LABELS[mode], normalizedLocale)}
                   </label>
                 ))}
               </div>
             </fieldset>
 
             <label className="block text-xs text-[color:var(--color-text-muted)]">
-              Total Resonance Energy
+              {copy.resonanceEnergy}
               <input
-                aria-label="Total Resonance Energy"
+                aria-label={copy.resonanceEnergy}
                 className="mt-1 min-h-[44px] w-full rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-bg)] px-3 py-2 font-mono text-sm text-[color:var(--color-text)]"
                 min={0}
                 type="number"
@@ -113,13 +144,13 @@ export function TechPartConfigModal({
                 checked={config.supportParts}
                 onChange={(event) => onSupportParts(id, event.target.checked)}
               />
-              Enter support parts manually
+              {copy.supportParts}
             </label>
 
             <label className="block text-xs text-[color:var(--color-text-muted)]">
-              Overload
+              {copy.overload}
               <input
-                aria-label="Overload"
+                aria-label={copy.overload}
                 className="mt-1 min-h-[44px] w-full rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-bg)] px-3 py-2 font-mono text-sm text-[color:var(--color-text)]"
                 min={0}
                 type="number"
@@ -128,7 +159,7 @@ export function TechPartConfigModal({
               />
             </label>
             <p className="text-xs text-[color:var(--color-text-muted)]">
-              max: {overloadMax} → {overloadNext} at {threshold}
+              {copy.max}: {overloadMax} → {overloadNext} {copy.at} {threshold}
             </p>
           </div>
 

@@ -84,7 +84,7 @@ const improvedExplanation = buildCalculationComparisonExplanation({
   inputChanges: inputChangeSummary,
   locale: 'en',
 });
-assert.match(improvedExplanation.headline, /Tangtang calculation is higher/);
+assert.match(improvedExplanation.headline, /tanggall calculation is higher/);
 assert.match(improvedExplanation.details.join('\n'), /current editable inputs/);
 assert.match(improvedExplanation.details.join('\n'), /Account context changed in 2 fields/);
 assert.match(improvedExplanation.details.join('\n'), /Tech inputs changed in 1 field/);
@@ -94,7 +94,7 @@ const koExplanation = buildCalculationComparisonExplanation({
   inputChanges: inputChangeSummary,
   locale: 'ko',
 });
-assert.match(koExplanation.headline, /Tangtang 계산이 더 높습니다/);
+assert.match(koExplanation.headline, /tanggall 계산이 더 높습니다/);
 assert.match(koExplanation.details.join('\n'), /현재 화면 입력값/);
 
 assert.deepEqual(

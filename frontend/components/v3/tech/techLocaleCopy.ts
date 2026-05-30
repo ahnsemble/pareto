@@ -165,7 +165,7 @@ const EN_COPY: TechOptimizerCopy = {
     unavailable: 'n/a',
   },
   profileImport: {
-    title: 'Tangtang profile import',
+    title: 'tanggall profile import',
     description: 'Paste a profile JSON, calculation link, or screenshot text to fill this optimizer.',
     inputLabel: 'Profile JSON, calculation link, or screenshot text',
     action: 'Import profile',
@@ -350,7 +350,7 @@ const EN_COPY: TechOptimizerCopy = {
     comparison: {
       title: 'Calculation comparison',
       imported: 'Imported calculation',
-      tangtang: 'Tangtang calculation',
+      tangtang: 'tanggall calculation',
       delta: 'Difference',
       explanation: 'Why the numbers differ',
       unchanged: 'No change',
@@ -401,7 +401,7 @@ const KO_COPY: TechOptimizerCopy = {
     unavailable: '없음',
   },
   profileImport: {
-    title: 'Tangtang 프로필 가져오기',
+    title: 'tanggall 프로필 가져오기',
     description: '프로필 JSON, 계산 링크 또는 스크린샷 텍스트를 붙여 넣으면 최적화 입력을 채웁니다.',
     inputLabel: '프로필 JSON, 계산 링크 또는 스크린샷 텍스트',
     action: '프로필 가져오기',
@@ -586,7 +586,7 @@ const KO_COPY: TechOptimizerCopy = {
     comparison: {
       title: '계산 비교',
       imported: '가져온 계산',
-      tangtang: 'Tangtang 계산',
+      tangtang: 'tanggall 계산',
       delta: '차이',
       explanation: '차이가 나는 이유',
       unchanged: '변화 없음',
@@ -656,7 +656,8 @@ export type TechEntityNameKind =
   | 'hero'
   | 'pet'
   | 'mount'
-  | 'equipment';
+  | 'equipment'
+  | 'techPart';
 
 const KO_ENTITY_NAME_OVERRIDES: Record<TechEntityNameKind, Record<string, string>> = {
   collectibleItem: {
@@ -820,6 +821,14 @@ const KO_ENTITY_NAME_OVERRIDES: Record<TechEntityNameKind, Record<string, string
   },
   equipment: {
     'Twin Lance': '트윈 랜스',
+    'Void Power': '파괴의 힘',
+    'Sword of Disorder': '혼돈의 검',
+    Lightchaser: '빛을 쫓는 자',
+    Kunai: '쿠나이',
+    'Baseball Bat': '야구빠따',
+    Katana: '카타나',
+    Shotgun: '산탄총',
+    Revolver: '리볼버',
     'Eternal Suit': '이터널 슈트',
     'Evervoid Armor': '에버보이드 아머',
     'Judgment Necklace': '심판 목걸이',
@@ -831,6 +840,48 @@ const KO_ENTITY_NAME_OVERRIDES: Record<TechEntityNameKind, Record<string, string
     'Glacial Warboots': '빙하 전투화',
     'Voidwaker Treads': '보이드워커 트레드',
   },
+  techPart: {
+    'Energy Guidance System': '에너지 유도 시스템',
+    'Antimatter Maintainer': '반물질 유지장치',
+    'Quantum Nanobot': '양자 나노봇',
+    'Phase Driver': '위상 드라이버',
+    'Energy Diffuser': '에너지 디퓨저',
+    'Hi-Maintainer': '고성능 유지장치',
+    'Precision Device': '정밀 장치',
+    'Antimatter Generator': '반물질 생성기',
+    'Exo-radicator': '엑소 제거기',
+    'Hi-Gravity Pulser': '고중력 펄서',
+    Drone: '드론',
+    Molotov: '화염병',
+    Drill: '드릴',
+    Rocket: '로켓',
+    Durian: '두리안',
+    Soccer: '축구공',
+    Forcefield: '방어막',
+    'Drill Shot': '드릴샷',
+    Lightning: '번개',
+    Boomerang: '부메랑',
+    'Energy Cube': '에너지 큐브',
+    'HP Bullet': 'HP 탄환',
+    'Exo Bracer': '외골격 브레이서',
+    'Ammo Thruster': '탄약 추진기',
+    'HE Fuel': '고성능 연료',
+    Guardian: '수호자',
+    Laser: '레이저',
+    Brick: '벽돌',
+    'Molotov Mode': '화염병 모드',
+    'Durian Mode': '두리안 모드',
+    'Soccer Mode': '축구공 모드',
+    'Drone Mode': '드론 모드',
+    'Forcefield Mode': '방어막 모드',
+    'Drill Shot Mode': '드릴샷 모드',
+    'Rocket Mode': '로켓 모드',
+    'Lightning Mode': '번개 모드',
+    'Boomerang Mode': '부메랑 모드',
+    'Guardian Mode': '수호자 모드',
+    'Laser Mode': '레이저 모드',
+    'Brick Mode': '벽돌 모드',
+  },
 };
 
 export const PENDING_KO_ENTITY_NAME_KEYS: Record<TechEntityNameKind, string[]> = {
@@ -840,6 +891,7 @@ export const PENDING_KO_ENTITY_NAME_KEYS: Record<TechEntityNameKind, string[]> =
   pet: [],
   mount: [],
   equipment: [],
+  techPart: [],
 };
 
 export function localizeTechEntityName(

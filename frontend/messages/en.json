@@ -91,10 +91,10 @@
     "fetchServerError": "The game data service returned a server error."
   },
   "meta": {
-    "appName": "Tangtang",
+    "appName": "tanggall",
     "tagline": "Fast build optimization for TTTG Forge",
     "description": "Compare builds, inspect trade-offs, and export deterministic optimizer results.",
-    "author": "Tangtang Team",
+    "author": "tanggall Team",
     "about": "About",
     "contact": "Contact",
     "terms": "Terms",
@@ -122,6 +122,16 @@
     "viewToGrid": "Switch to grid view",
     "viewListLabel": "☰ List",
     "viewGridLabel": "⊞ Grid"
+  },
+  "v3": {
+    "subtitle": "tanggall calculator workspace",
+    "statusPending": "Preparing tanggall…",
+    "statusReady": "tanggall ready.",
+    "nav": {
+      "relicCore": "Relic Core",
+      "twinborn": "Twinborn",
+      "techParts": "Tech Parts"
+    }
   },
   "equipment": {
     "unselected": "— none —",

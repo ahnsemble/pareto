@@ -23,14 +23,14 @@ export const viewport: Viewport = {
 
 const META_BY_LOCALE = {
   en: {
-    title: 'Tangtang — Build optimizer for Survivor.io',
-    description: 'WASM-powered efficient-frontier optimizer for Survivor.io builds. Compare decks, find optimal trade-offs.',
-    ogAlt: 'Tangtang — Build optimizer for Survivor.io',
+    title: 'tanggall — Build optimizer',
+    description: 'WASM-powered efficient-frontier optimizer for build planning. Compare decks, find optimal trade-offs.',
+    ogAlt: 'tanggall — Build optimizer',
   },
   ko: {
-    title: 'Tangtang — 탕탕특공대 빌드 최적화 도구',
+    title: 'tanggall — 탕탕특공대 빌드 최적화 도구',
     description: '빌드, 계산하지 말고 비교하세요. 효율 프론티어로 최적 빌드를 한눈에 찾으세요.',
-    ogAlt: 'Tangtang — 탕탕특공대 빌드 최적화 도구',
+    ogAlt: 'tanggall — 탕탕특공대 빌드 최적화 도구',
   },
 } as const;
 
@@ -54,7 +54,7 @@ export async function generateMetadata({
     },
     openGraph: {
       type: 'website',
-      siteName: 'Tangtang',
+      siteName: 'tanggall',
       title: meta.title,
       description: meta.description,
       url: `/${locale}`,

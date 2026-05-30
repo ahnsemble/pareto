@@ -145,19 +145,19 @@ export function buildCalculationComparisonExplanation({
   const pct = formatPct(summary.deltaPct);
   const headline = ko
     ? tone === 'same'
-      ? 'Tangtang 계산과 가져온 기준값이 같습니다.'
+      ? 'tanggall 계산과 가져온 기준값이 같습니다.'
       : tone === 'higher'
-        ? `Tangtang 계산이 더 높습니다 (${pct}%).`
-        : `Tangtang 계산이 더 낮습니다 (${pct}%).`
+        ? `tanggall 계산이 더 높습니다 (${pct}%).`
+        : `tanggall 계산이 더 낮습니다 (${pct}%).`
     : tone === 'same'
-      ? 'Tangtang calculation matches the imported baseline.'
+      ? 'tanggall calculation matches the imported baseline.'
       : tone === 'higher'
-        ? `Tangtang calculation is higher (${pct}%).`
-        : `Tangtang calculation is lower (${pct}%).`;
+        ? `tanggall calculation is higher (${pct}%).`
+        : `tanggall calculation is lower (${pct}%).`;
 
   const details = ko
-    ? ['가져온 기준값은 붙여넣은 프로필을 다시 계산한 값이고, Tangtang 계산은 현재 화면 입력값을 사용합니다.']
-    : ['The imported baseline is the pasted profile run; Tangtang calculation uses the current editable inputs on screen.'];
+    ? ['가져온 기준값은 붙여넣은 프로필을 다시 계산한 값이고, tanggall 계산은 현재 화면 입력값을 사용합니다.']
+    : ['The imported baseline is the pasted profile run; tanggall calculation uses the current editable inputs on screen.'];
 
   if (inputChanges.accountContextChanges > 0) {
     details.push(

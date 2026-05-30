@@ -25,7 +25,7 @@ const oldOptimizerImports = [
 assert.match(
   legacyOptimizePage,
   /LEGACY_OPTIMIZE_REDIRECT_TARGET\s*=\s*['"]\/v3\/optimizer\/tech-parts['"]/,
-  'legacy /optimize route must explicitly target the current Tangtang tech-parts optimizer',
+  'legacy /optimize route must explicitly target the current tanggall tech-parts optimizer',
 );
 assert.match(
   legacyOptimizePage,
@@ -34,7 +34,7 @@ assert.match(
 );
 assert.doesNotMatch(
   legacyOptimizePage,
-  /Pick a hero|Configure inputs on the left|efficient frontier|Tangtang \/ optimize/,
+  /Pick a hero|Configure inputs on the left|efficient frontier|tanggall \/ optimize/,
   'legacy /optimize route must not render the old WASM optimizer screen',
 );
 for (const token of oldOptimizerImports) {

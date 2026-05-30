@@ -180,7 +180,7 @@ function useV3OptimizerBoot(): BootState {
       })
       .catch((err) => {
         if (!mounted) return;
-        console.error('Tangtang optimizer failed to start', err);
+        console.error('tanggall optimizer failed to start', err);
         setBootStatus('error');
       });
     return () => {
@@ -364,7 +364,7 @@ export function RelicCoreOptimizerSurface() {
         <div className="flex items-baseline justify-between gap-4">
           <div>
             <h1 className="text-2xl font-semibold">
-              <span className="text-[color:var(--color-primary)]">Tangtang</span>{' '}
+              <span className="text-[color:var(--color-primary)]">tanggall</span>{' '}
               <span className="text-[color:var(--color-text)]">/ relic core</span>
             </h1>
             <BootLine status={bootStatus} />
@@ -474,7 +474,7 @@ export function TwinbornAutoAssignSurface() {
         <div className="flex items-baseline justify-between gap-4">
           <div>
             <h1 className="text-2xl font-semibold">
-              <span className="text-[color:var(--color-primary)]">Tangtang</span>{' '}
+              <span className="text-[color:var(--color-primary)]">tanggall</span>{' '}
               <span className="text-[color:var(--color-text)]">/ twinborn</span>
             </h1>
             <BootLine status={bootStatus} />
@@ -1040,7 +1040,7 @@ export function TechPartsOptimizerSurface() {
         <div className="flex items-baseline justify-between gap-4">
           <div>
             <h1 className="text-2xl font-semibold">
-              <span className="text-[color:var(--color-primary)]">Tangtang</span>{' '}
+              <span className="text-[color:var(--color-primary)]">tanggall</span>{' '}
               <span className="text-[color:var(--color-text)]">/ {copy.titleSuffix}</span>
             </h1>
             <BootLine status={bootStatus} />

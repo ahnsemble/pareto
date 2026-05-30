@@ -171,7 +171,7 @@ export default function TwoDeckPage() {
       <header className="flex items-baseline justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">
-            <span className="text-[color:var(--color-primary)]">Tangtang</span>{' '}
+            <span className="text-[color:var(--color-primary)]">tanggall</span>{' '}
             <span className="text-[color:var(--color-text)]">/ {tNav('twodeck').toLowerCase()}</span>
           </h1>
           <p className="mt-1 text-sm text-[color:var(--color-text-muted)]">

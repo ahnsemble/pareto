@@ -3,17 +3,16 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '../../../i18n/navigation';
 import { routing } from '../../../i18n/routing';
 
-const KO_TITLE = 'Tangtang — 탕탕특공대 빌드 최적화 도구';
+const KO_TITLE = 'tanggall — 탕탕특공대 빌드 최적화 도구';
 const KO_DESCRIPTION =
-  '탕탕특공대(Survivor.io) 장비·펫·테크 파츠 빌드를 효율 프론티어로 최적화하세요. 두 빌드 동시 비교, 한국어 UI 완벽 지원. 무료 웹 도구.';
+  '탕탕특공대 장비·펫·테크 파츠 빌드를 효율 프론티어로 최적화하세요. 두 빌드 동시 비교, 한국어 UI 완벽 지원. 무료 웹 도구.';
 const KO_KEYWORDS = [
   '탕탕특공대 빌드',
-  'Survivor.io 빌드 최적화',
   '효율 프론티어 최적화',
   '탕탕특공대 장비 계산기',
   '탕탕특공대 덱 비교',
-  'Survivor.io optimizer',
-  'Survivor.io build calculator',
+  'build optimizer',
+  'build calculator',
   '탕탕특공대 테크 파츠',
   '탕탕특공대 펫 티어',
   'efficient frontier tool',
@@ -44,15 +43,15 @@ export async function generateMetadata({
             url: '/og-community.png',
             width: 1200,
             height: 630,
-            alt: 'Tangtang — 탕탕특공대 빌드 최적화 도구',
+            alt: 'tanggall — 탕탕특공대 빌드 최적화 도구',
           },
         ],
       },
     };
   }
   return {
-    title: 'Tangtang Community — Coming Soon',
-    description: 'Korean community landing for Tangtang. English version coming soon.',
+    title: 'tanggall Community — Coming Soon',
+    description: 'Korean community landing for tanggall. English version coming soon.',
     robots: { index: false, follow: false },
   };
 }
@@ -73,7 +72,7 @@ const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: '카드 데이터는 어디서 가져오나요?',
-    a: 'Survivor.io (탕탕특공대) 인게임 데이터를 기반으로 합니다. 공식 그래픽 에셋은 사용하지 않으며, 능력치 수치와 합성 규칙을 수학적으로 모델링했어요. 업데이트 패치마다 데이터를 검증하고 반영합니다.',
+    a: '탕탕특공대 인게임 데이터를 기반으로 합니다. 공식 그래픽 에셋은 사용하지 않으며, 능력치 수치와 합성 규칙을 수학적으로 모델링했어요. 업데이트 패치마다 데이터를 검증하고 반영합니다.',
   },
   {
     q: '계산 결과가 정확한가요?',
@@ -284,7 +283,7 @@ function CommunityComingSoon() {
   return (
     <main className="mx-auto flex min-h-[60vh] max-w-2xl flex-col items-start justify-center gap-4 px-6 py-16">
       <h1 className="text-3xl font-semibold tracking-tight">
-        Tangtang Community — Coming Soon in English
+        tanggall Community — Coming Soon in English
       </h1>
       <p className="text-[color:var(--color-text-muted)]">
         Our community landing page is currently available in Korean. The English
@@ -325,7 +324,7 @@ function CommunityKorean() {
       >
         <div className="flex-1 space-y-6">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-[color:var(--color-primary)]">
-            Tangtang · Survivor.io 빌드 최적화
+            tanggall · 탕탕특공대 빌드 최적화
           </p>
           <h1
             id="hero-heading"

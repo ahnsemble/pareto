@@ -4,6 +4,7 @@
 import { test, expect } from '@playwright/test';
 
 const V3_URL = '/en/v3';
+const KO_V3_URL = '/ko/v3';
 
 test.describe('P4 V3 — Browser Smoke Test (6 scenarios)', () => {
   test.beforeEach(async ({ page, baseURL }) => {
@@ -13,7 +14,7 @@ test.describe('P4 V3 — Browser Smoke Test (6 scenarios)', () => {
 
   test('S1 — V3 workspace shows public ready state', async ({ page }) => {
     const bootStatus = page.locator('[data-testid="v3-boot-status"]');
-    await expect(bootStatus).toContainText('Tangtang ready.', { timeout: 5000 });
+    await expect(bootStatus).toContainText('tanggall ready.', { timeout: 5000 });
   });
 
   test('S2 — selectFinalDamage > 0 on baseline input (Venato + LME + SS 6 default)', async ({ page }) => {
@@ -99,5 +100,40 @@ test.describe('P4 V3 — Browser Smoke Test (6 scenarios)', () => {
       const judgmentEmpty = page.locator('[data-testid="v3-xeno-empty-judgment_necklace_future_xeno"]');
       await expect(judgmentEmpty).toBeVisible();
     }
+  });
+});
+
+test.describe('P4 V3 — Korean locale smoke', () => {
+  test('renders the v3 workspace chrome and primary inputs in Korean', async ({ page, baseURL }) => {
+    await page.goto(`${baseURL ?? 'http://localhost:3032'}${KO_V3_URL}`);
+    await page.waitForSelector('[data-testid="v3-boot-status"]');
+
+    await expect(page.locator('[data-testid="v3-boot-status"]')).toContainText('tanggall 준비 완료.', { timeout: 5000 });
+    await expect(page.getByTestId('v3-nav-relic-core')).toContainText('유물 코어');
+    await expect(page.getByTestId('v3-nav-twinborn-auto-assign')).toContainText('쌍생');
+    await expect(page.getByTestId('v3-nav-tech-parts')).toContainText('테크 부품');
+    await expect(page.getByTestId('v3-ModeSelectDropdown')).toContainText('모드');
+    await expect(page.getByTestId('v3-ModeSelectDropdown')).toContainText('달 광산 탐험');
+    await expect(page.getByTestId('v3-BaseInputsBox')).toContainText('기초 공격력');
+    await expect(page.getByTestId('v3-BaseInputsBox')).toContainText('보유 도면');
+    await expect(page.getByTestId('v3-HeroSelectModal')).toContainText('특공대');
+
+    const surfaceText = (
+      await Promise.all([
+        page.locator('header').innerText(),
+        page.getByTestId('v3-ModeSelectDropdown').innerText(),
+        page.getByTestId('v3-BaseInputsBox').innerText(),
+        page.getByTestId('v3-HeroSelectModal').innerText(),
+        page.getByTestId('v3-tech-parts-panel').innerText(),
+      ])
+    ).join('\n');
+    expect(surfaceText).not.toContain('tanggall calculator workspace');
+    expect(surfaceText).not.toContain('Relic Core');
+    expect(surfaceText).not.toContain('Twinborn');
+    expect(surfaceText).not.toContain('Tech Parts');
+    expect(surfaceText).not.toContain('Lunar Mine Expedition');
+    expect(surfaceText).not.toContain('Base attack');
+    expect(surfaceText).not.toContain('Designs owned');
+    expect(surfaceText).not.toContain('Hero (');
   });
 });

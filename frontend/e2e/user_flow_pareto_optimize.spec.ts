@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { chooseRepresentativeInputs, optimizeAndWait } from './helpers/user-flow';
 
-test.describe('User flow — Tangtang optimize end to end', () => {
+test.describe('User flow — tanggall optimize end to end', () => {
   test('defers the WASM worker fetch until the first optimize run', async ({ page }) => {
     const wasmUrls: string[] = [];
     page.on('requestfinished', (request) => {

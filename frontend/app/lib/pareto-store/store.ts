@@ -72,7 +72,7 @@ export function bootParetoStore(): ParetoStore {
   const failures = results.filter((r) => !r.passed);
 
   if (failures.length > 0) {
-    throw new Error('Tangtang data model failed to start.');
+    throw new Error('tanggall data model failed to start.');
   }
 
   return state;

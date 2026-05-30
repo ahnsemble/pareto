@@ -23,7 +23,7 @@ export default function OptimizePage() {
 
   return (
     <main className="mx-auto flex min-h-screen max-w-2xl flex-col items-start justify-center gap-4 px-6 py-16">
-      <h1 className="text-2xl font-semibold tracking-tight">Tangtang</h1>
+      <h1 className="text-2xl font-semibold tracking-tight">tanggall</h1>
       <p className="text-sm text-[color:var(--color-text-muted)]">
         Redirecting to the current optimizer.
       </p>

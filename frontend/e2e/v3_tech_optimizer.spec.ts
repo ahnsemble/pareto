@@ -14,8 +14,8 @@ test.describe('TD-11 — Tech optimizer Korean route', () => {
     await page.goto(`${baseURL ?? 'http://localhost:3032'}${KO_OPTIMIZER_URL}`);
     await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Ready');
 
-    await expect(page.getByRole('heading', { name: 'Tangtang / 테크 파츠' })).toBeVisible();
-    await expect(page.getByTestId('tech-profile-import')).toContainText('Tangtang 프로필 가져오기');
+    await expect(page.getByRole('heading', { name: 'tanggall / 테크 파츠' })).toBeVisible();
+    await expect(page.getByTestId('tech-profile-import')).toContainText('tanggall 프로필 가져오기');
     await expect(page.getByTestId('tech-profile-import')).toContainText('프로필 JSON, 계산 링크 또는 스크린샷 텍스트');
     await expect(page.getByRole('button', { name: '프로필 가져오기' })).toBeVisible();
     await expect(page.getByTestId('tech-profile-save')).toContainText('저장 프로필');
@@ -29,7 +29,7 @@ test.describe('TD-11 — Tech optimizer Korean route', () => {
     await expect(page.getByTestId('tech-inventory-contract')).toContainText('착용 중인 메인 파츠를 제외한 서브 파츠');
     await expect(page.getByRole('heading', { name: '계정 컨텍스트' })).toBeVisible();
     await expect(page.getByTestId('tech-optimizer-results')).toContainText('랭킹 테크 빌드');
-    await expect(page.getByText('Tangtang profile import')).toHaveCount(0);
+    await expect(page.getByText('tanggall profile import')).toHaveCount(0);
     await expect(page.getByText('Resource wallet')).toHaveCount(0);
     await expect(page.getByText(/SIO/)).toHaveCount(0);
   });
@@ -41,9 +41,9 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('v3-optimizer-boot-status')).toContainText('Ready');
   });
 
-  test('uses Tangtang public branding without source-specific visible copy', async ({ page }) => {
+  test('uses tanggall public branding without source-specific visible copy', async ({ page }) => {
     await expect(page.getByTestId('tech-parts-optimizer')).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Tangtang / tech parts' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'tanggall / tech parts' })).toBeVisible();
     await expect(page.getByText(/^Pareto$/)).toHaveCount(0);
     await expect(page.getByText(/SIO/)).toHaveCount(0);
     await expect(page.getByText('SIO LM context')).toHaveCount(0);
@@ -389,7 +389,7 @@ test.describe('TD-11 — Tech optimizer route', () => {
     await expect(page.getByTestId('tech-optimizer-result-row').first()).toBeVisible({ timeout: 60_000 });
     await expect(page.getByTestId('tech-calculation-comparison')).toBeVisible({ timeout: 60_000 });
     await expect(page.getByTestId('tech-calculation-comparison')).toContainText('Imported calculation');
-    await expect(page.getByTestId('tech-calculation-comparison')).toContainText('Tangtang calculation');
+    await expect(page.getByTestId('tech-calculation-comparison')).toContainText('tanggall calculation');
     await expect(page.getByTestId('tech-calculation-comparison')).toContainText('Difference');
     await expect(page.getByTestId('tech-calculation-comparison')).toContainText('Why the numbers differ');
     await expect(page.getByTestId('tech-calculation-comparison')).toContainText(/imported baseline|current editable inputs/i);
